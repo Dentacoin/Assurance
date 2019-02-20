@@ -1002,7 +1002,7 @@ if($('body').hasClass('logged-in')) {
             });
 
             if (check_public_key_ajax_result.success) {
-                $('.proof-of-address').removeClass('proof-failed');
+                $('.proof-of-address').remove();
                 error = false;
             } else if (check_public_key_ajax_result.error) {
                 if($('.step.one #dcn_address').is('input')) {
