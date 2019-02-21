@@ -851,6 +851,15 @@ if($('body').hasClass('logged-in')) {
                 }
 
                 if(!current_step_error) {
+                    //update the html of the NEXT button
+                    if(this_btn_step == 'one' || this_btn_step == 'two') {
+                        create_contract_form.find('.next').html('NEXT');
+                    } else if(this_btn_step == 'three') {
+                        create_contract_form.find('.next').html('GENERATE SAMPLE CONTRACT');
+                    } else if(this_btn_step == 'four') {
+                        create_contract_form.find('.next').html('SIGN CONTRACT');
+                    }
+
                     switch(create_contract_form.find('.next').attr('data-current-step')) {
                         case 'one':
                             firstStepPassedSuccessfully(create_contract_form.find('.next'), this_btn_step);
@@ -878,15 +887,15 @@ if($('body').hasClass('logged-in')) {
                 //updaing the NEXT button attr
                 create_contract_form.find('.next').attr('data-current-step', this_btn_step);
                 $('html, body').animate({scrollTop: $('.contract-creation-steps-container').offset().top}, 500);
-            }
 
-            //update the html of the NEXT button
-            if(this_btn_step == 'one' || this_btn_step == 'two') {
-                create_contract_form.find('.next').html('NEXT');
-            } else if(this_btn_step == 'three') {
-                create_contract_form.find('.next').html('GENERATE SAMPLE CONTRACT');
-            } else if(this_btn_step == 'four') {
-                create_contract_form.find('.next').html('SIGN CONTRACT');
+                //update the html of the NEXT button
+                if(this_btn_step == 'one' || this_btn_step == 'two') {
+                    create_contract_form.find('.next').html('NEXT');
+                } else if(this_btn_step == 'three') {
+                    create_contract_form.find('.next').html('GENERATE SAMPLE CONTRACT');
+                } else if(this_btn_step == 'four') {
+                    create_contract_form.find('.next').html('SIGN CONTRACT');
+                }
             }
         });
 

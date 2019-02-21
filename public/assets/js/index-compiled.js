@@ -26597,7 +26597,7 @@ if ($('body').hasClass('logged-in')) {
                             //if steping into one of the next buttons, NOT PREVIOUS
 
                             if (!(this_btn.index() > $('.contract-creation-steps-container button[data-step="' + create_contract_form.find('.next').attr('data-current-step') + '"]').index())) {
-                                _context6.next = 29;
+                                _context6.next = 30;
                                 break;
                             }
 
@@ -26659,31 +26659,40 @@ if ($('body').hasClass('logged-in')) {
                             }
 
                             if (current_step_error) {
-                                _context6.next = 27;
+                                _context6.next = 28;
                                 break;
                             }
 
+                            //update the html of the NEXT button
+                            if (this_btn_step == 'one' || this_btn_step == 'two') {
+                                create_contract_form.find('.next').html('NEXT');
+                            } else if (this_btn_step == 'three') {
+                                create_contract_form.find('.next').html('GENERATE SAMPLE CONTRACT');
+                            } else if (this_btn_step == 'four') {
+                                create_contract_form.find('.next').html('SIGN CONTRACT');
+                            }
+
                             _context6.t0 = create_contract_form.find('.next').attr('data-current-step');
-                            _context6.next = _context6.t0 === 'one' ? 21 : _context6.t0 === 'two' ? 23 : _context6.t0 === 'three' ? 25 : 27;
+                            _context6.next = _context6.t0 === 'one' ? 22 : _context6.t0 === 'two' ? 24 : _context6.t0 === 'three' ? 26 : 28;
                             break;
 
-                        case 21:
+                        case 22:
                             firstStepPassedSuccessfully(create_contract_form.find('.next'), this_btn_step);
-                            return _context6.abrupt('break', 27);
+                            return _context6.abrupt('break', 28);
 
-                        case 23:
+                        case 24:
                             secondStepPassedSuccessfully(create_contract_form.find('.next'), this_btn_step);
-                            return _context6.abrupt('break', 27);
+                            return _context6.abrupt('break', 28);
 
-                        case 25:
+                        case 26:
                             thirdStepPassedSuccessfully(create_contract_form.find('.next'), this_btn_step);
-                            return _context6.abrupt('break', 27);
+                            return _context6.abrupt('break', 28);
 
-                        case 27:
-                            _context6.next = 36;
+                        case 28:
+                            _context6.next = 38;
                             break;
 
-                        case 29:
+                        case 30:
                             //going backwards, no validation is needed here
                             showResponseLayer(500);
 
@@ -26699,8 +26708,6 @@ if ($('body').hasClass('logged-in')) {
                             create_contract_form.find('.next').attr('data-current-step', this_btn_step);
                             $('html, body').animate({ scrollTop: $('.contract-creation-steps-container').offset().top }, 500);
 
-                        case 36:
-
                             //update the html of the NEXT button
                             if (this_btn_step == 'one' || this_btn_step == 'two') {
                                 create_contract_form.find('.next').html('NEXT');
@@ -26710,7 +26717,7 @@ if ($('body').hasClass('logged-in')) {
                                 create_contract_form.find('.next').html('SIGN CONTRACT');
                             }
 
-                        case 37:
+                        case 38:
                         case 'end':
                             return _context6.stop();
                     }
