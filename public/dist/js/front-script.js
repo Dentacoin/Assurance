@@ -2940,6 +2940,15 @@ function bindVerifyAddressEvent(keystore_file) {
                         success: function success(response) {
                             //now with the address and the public key received from the nodejs api update the db
                             if (response.success) {
+                                //if remember me option is checked
+                                if ($('#remember-my-private-key').is(':checked')) {
+                                    localStorage.setItem('current-account', JSON.stringify({
+                                        address: $('.proof-of-address').attr('data-address'),
+                                        type: 'keystore',
+                                        keystore: response.success
+                                    }));
+                                }
+
                                 $.ajax({
                                     type: 'POST',
                                     url: '/update-public-keys',
@@ -2989,6 +2998,15 @@ function bindVerifyAddressEvent(keystore_file) {
                         success: function success(response) {
                             //now with the address and the public key received from the nodejs api update the db
                             if (response.success) {
+                                //if remember me option is checked
+                                if ($('.proof-of-address #remember-my-keystore-file').is(':checked')) {
+                                    localStorage.setItem('current-account', JSON.stringify({
+                                        address: '0x' + response.address,
+                                        type: 'key',
+                                        keystore: response.private_key
+                                    }));
+                                }
+
                                 $.ajax({
                                     type: 'POST',
                                     url: '/update-public-keys',
