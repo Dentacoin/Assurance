@@ -11,13 +11,13 @@ use App\Http\Controllers\UserController;
 class HomeController extends Controller
 {
     public function getView()   {
-        /*$session_arr = [
+        $session_arr = [
             'token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijc0MTY5NTA2YTNkMzc2YTJiZDllOTc0OTc3ZjNiNzlmOTk2MWUwZDRjMDJjYTIwZTE2YTI2Njc2MDBhNTNjZjgwZWI5YzcyNzRmZWY5MjAyIn0.eyJhdWQiOiIxIiwianRpIjoiNzQxNjk1MDZhM2QzNzZhMmJkOWU5NzQ5NzdmM2I3OWY5OTYxZTBkNGMwMmNhMjBlMTZhMjY2NzYwMGE1M2NmODBlYjljNzI3NGZlZjkyMDIiLCJpYXQiOjE1NDkyODMwNzAsIm5iZiI6MTU0OTI4MzA3MCwiZXhwIjoxNTgwODE5MDcwLCJzdWIiOiI2ODYyMiIsInNjb3BlcyI6W119.AIqHr8OSCVAukz9Tte5vlutFtrpCzZ1QazcRw8qunfxJ_sn3OHlrCAQ1BFDD2rsZFn5HuDzVnhGUEbic5I2XzTFIMVZApHbtCjomJKMdFGZUgBAVZ8r7_8Kej2KIPoxCuODFP3_qTkijTJopsgJ4ejLcvv8kEdR-5Ss2Tdq0MAA2YKtd1tAh2isivD3I4hPg42kAOr3Zp6hhB3DCzr67IcfJkP_Wty0AKH0fz2jnYrfd81iDi_gFBmGy7Zt9woyMkeAYx0Fz74be4Ai9h855rz1EWWzFW7_FhOBJCXpJNl720h4ym_aTbwzuSpZm0WIfsN9gy2BxHiQ5KZO4BYAh2yqi3yykYqv5wHIi6K8JO-H8g0oaJXGjsupTWu3YXn8TXZct36OhZL6sM5jTYLp9Ij3hgL_VL6YzTG5WlSVKFDreQirivLrwELfmppZc1mwZGsvfvAdZTFKFkI0fmLUg9scIhAuvzOASdantv7Y8uMirlMBb2SRxR99xlcc4_NNb3QQFQoYUKcfMCiOGwoiWzOd8Ofx_EqyVSeoHEV5Y0YOjPpUN_MfNMhP8AULTNQFMinelHzvDLhjMUIlTwCQpA8DQRiQTKihRnmKGE6iOT6NaS5P9JmyCY8Uik0pjlTL47D9z0BSH_BuWIqxZnQb1j3cXKh915qwChh2iXyy-xiw',
             'id' => '68622',
             'type' => 'dentist',
             'have_contracts' => true
         ];
-        session(['logged_user' => $session_arr]);*/
+        session(['logged_user' => $session_arr]);
 
         /*$session_arr = [
             'token' => 'enYh2KchyDUJdfslM9Xfd67qhjPQnIOKzx4ozEnqJECECb04PA1EFOs2KDYg',

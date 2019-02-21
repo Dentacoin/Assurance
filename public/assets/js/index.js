@@ -720,10 +720,12 @@ if($('body').hasClass('logged-in')) {
         var signature_pad_inited = false;
         styleAvatarUploadButton('.steps-body .avatar button label');
 
+
         if($('.single-row.proof-of-address').length) {
             bindVerifyAddressLogic();
         }
 
+        //bind the logic when address is not verified
         function bindVerifyAddressLogic() {
             styleUploadFileButton();
 
@@ -740,6 +742,7 @@ if($('body').hasClass('logged-in')) {
             });
         }
 
+        //showing the list for each service category
         $('.show-category-list a').click(function() {
             $(this).slideUp(300);
             $(this).closest('.show-category-list').find('ul').slideDown(300);
@@ -749,79 +752,204 @@ if($('body').hasClass('logged-in')) {
         var create_contract_form = $('form#dentist-create-contract');
         create_contract_form.find('.terms-and-conditions-long-list').mCustomScrollbar();
 
-        function validateStepFields(step_fields, step) {
+        //validation for all fields for each step
+        function validateStepFields(step_fields, step, style_rows) {
+            if(style_rows == undefined) {
+                style_rows = null;
+            }
+
             step_fields.removeClass('with-error');
             $('.step.'+step+' .single-row').removeClass('row-with-error');
             $('.step.'+step+' .single-row > label span').remove();
 
+            if(step == 'three' && $('.step.three [name="general-dentistry[]"]:checked').val() != undefined) {
+                $('.step.three .checkboxes-right-container').removeClass('with-error');
+            }
+
             var inner_error = false;
             for(var i = 0, len = step_fields.length; i < len; i+=1) {
                 if(step_fields.eq(i).val().trim() == '') {
-                    customCreateContractErrorHandle(step_fields.eq(i), 'Required field cannot be left blank.');
+                    if(style_rows) {
+                        customCreateContractErrorHandle(step_fields.eq(i), 'Required field cannot be left blank.');
+                    }
                     inner_error = true;
                 } else if(step_fields.eq(i).attr('data-type') == 'email' && !basic.validateEmail(step_fields.eq(i).val().trim())) {
-                    customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid email.');
+                    if(style_rows) {
+                        customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid email.');
+                    }
                     inner_error = true;
                 } else if(step_fields.eq(i).attr('data-type') == 'address' && !innerAddressCheck(step_fields.eq(i).val().trim())) {
-                    customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid wallet address.');
+                    if(style_rows) {
+                        customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid wallet address.');
+                    }
                     inner_error = true;
                 } else if(step_fields.eq(i).attr('data-type') == 'website' && !basic.validateUrl(step_fields.eq(i).val().trim())) {
-                    customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid website.');
+                    if(style_rows) {
+                        customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid website.');
+                    }
                     inner_error = true;
                 }else if(step_fields.eq(i).attr('data-type') == 'phone' && !basic.validatePhone(step_fields.eq(i).val().trim())) {
-                    customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid phone.');
+                    if(style_rows) {
+                        customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid phone.');
+                    }
                     inner_error = true;
                 }
             }
 
             if(inner_error) {
-                window.scrollTo(0, create_contract_form.offset().top);
+                $('html, body').animate({scrollTop: create_contract_form.offset().top}, 500);
             }
 
             return inner_error;
         }
 
+        //bind event for step buttons above the contract, adding true/false attribute
         $('.contract-creation-steps-container button').bind('click.validateStepsNav', async function() {
             var current_step_error = false;
             var this_btn = $(this);
+            var this_btn_step = this_btn.attr('data-step');
+            //if steping into one of the next buttons, NOT PREVIOUS
             if(this_btn.index() > $('.contract-creation-steps-container button[data-step="'+create_contract_form.find('.next').attr('data-current-step')+'"]').index()) {
-                current_step_error = validateStepFields($('.step.'+create_contract_form.find('.next').attr('data-current-step')+' input.right-field'), create_contract_form.find('.next').attr('data-current-step'));
-
-                if(this_btn.attr('data-step') == 'two') {
+                var validate_steps_arr;
+                if(this_btn_step == 'two') {
                     var validate_dentist_address = false;
-                    if(innerAddressCheck($('.step.one #dcn_address').val().trim()) && $('.step.one #dcn_address').is('input')) {
-                        validate_dentist_address = await validateFirstStepDentistAddress();
+                    var dentist_address;
+                    if($('.step.one #dcn_address').is('input')) {
+                        dentist_address = $('.step.one #dcn_address').val().trim();
+                    } else {
+                        dentist_address = $('.step.one #dcn_address').html().trim();
                     }
+
+                    if(innerAddressCheck(dentist_address)) {
+                        validate_dentist_address = await validateFirstStepDentistAddress(dentist_address);
+                    }
+
                     if(validate_dentist_address) {
                         current_step_error = true;
                     }
-                } else if(this_btn.attr('data-step') == 'four') {
-                    if($('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
 
+                    validate_steps_arr = ['one'];
+                } else if(this_btn_step == 'three') {
+                    validate_steps_arr = ['one', 'two'];
+                } else if(this_btn_step == 'four') {
+                    if($('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
+                        $('.step.three .checkboxes-right-container').prev().find('span').remove();
                         customCreateContractErrorHandle($('.step.three .checkboxes-right-container'), 'Please select at least one service.');
                         current_step_error = true;
                     }
+
+                    validate_steps_arr = ['one', 'two', 'three'];
                 }
+
+                //if validate_steps_arr is defined and if no errors until now
+                if(validate_steps_arr.length && !current_step_error) {
+                    for(var y = 0, len = validate_steps_arr.length; y < len; y+=1) {
+                        current_step_error = validateStepFields($('.step.'+validate_steps_arr[y]+' input.right-field'), validate_steps_arr[y], true);
+                    }
+                } else {
+                    $('html, body').animate({scrollTop: create_contract_form.offset().top}, 500);
+                }
+
+                if(!current_step_error) {
+                    switch(create_contract_form.find('.next').attr('data-current-step')) {
+                        case 'one':
+                            firstStepPassedSuccessfully(create_contract_form.find('.next'), this_btn_step);
+                            break;
+                        case 'two':
+                            secondStepPassedSuccessfully(create_contract_form.find('.next'), this_btn_step);
+                            break;
+                        case 'three':
+                            thirdStepPassedSuccessfully(create_contract_form.find('.next'), this_btn_step);
+                            break;
+                    }
+                }
+            } else {
+                //going backwards, no validation is needed here
+                showResponseLayer(500);
+
+                //update the active class
+                $('.contract-creation-steps-container button').removeClass('active');
+                this_btn.addClass('active');
+
+                //hide current step and show the current one
+                $('.step.'+create_contract_form.find('.next').attr('data-current-step')).hide();
+                $('.step.'+this_btn_step).show();
+
+                //updaing the NEXT button attr
+                create_contract_form.find('.next').attr('data-current-step', this_btn_step);
+                $('html, body').animate({scrollTop: $('.contract-creation-steps-container').offset().top}, 500);
             }
 
-            if(current_step_error) {
-                this_btn.attr('data-stopper', 'true');
-            } else {
-                this_btn.attr('data-stopper', 'false');
-                switch(create_contract_form.find('.next').attr('data-current-step')) {
-                    case 'one':
-                        firstStepPassedSuccessfully(create_contract_form.find('.next'));
-                        break;
-                    case 'two':
-                        secondStepPassedSuccessfully(create_contract_form.find('.next'));
-                        break;
-                    case 'three':
-                        thirdStepPassedSuccessfully(create_contract_form.find('.next'), this_btn.attr('data-step'));
-                        break;
-                }
+            //update the html of the NEXT button
+            if(this_btn_step == 'one' || this_btn_step == 'two') {
+                create_contract_form.find('.next').html('NEXT');
+            } else if(this_btn_step == 'three') {
+                create_contract_form.find('.next').html('GENERATE SAMPLE CONTRACT');
+            } else if(this_btn_step == 'four') {
+                create_contract_form.find('.next').html('SIGN CONTRACT');
             }
         });
 
+        //method
+        function onStepValidationSuccess(current_step, next_step, button) {
+            if(next_step == 'four') {
+                showContractResponseLayer(3000);
+            }else {
+                showResponseLayer(500);
+            }
+
+            $('.steps-body .step').hide();
+            $('.step.'+next_step).show();
+            button.attr('data-current-step', next_step);
+            window.scrollTo(0, $('.contract-creation-steps-container').offset().top);
+
+            if(next_step == 'four') {
+                fourthStepValidation(button);
+            }
+
+            $('.contract-creation-steps-container button[data-step="'+next_step+'"]').removeClass('not-allowed-cursor').addClass('active');
+            $('.contract-creation-steps-container button[data-step="'+current_step+'"]').removeClass('active not-passed').addClass('passed');
+        }
+
+        function firstStepPassedSuccessfully(button, next_step) {
+            onStepValidationSuccess('one', next_step, button);
+        }
+
+        function secondStepPassedSuccessfully(button, next_step) {
+            onStepValidationSuccess('two', next_step, button);
+        }
+
+        function thirdStepPassedSuccessfully(button, next_step) {
+            onStepValidationSuccess('three', next_step, button);
+
+            //update the fields on the sample contract
+            for(var i = 0, len = form_props_arr.length; i < len; i+=1) {
+                if(create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('input')) {
+                    $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('input[name="'+form_props_arr[i]+'"]').val().trim());
+                } else if(create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('select')) {
+                    $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('select[name="'+form_props_arr[i]+'"]').val().trim());
+                } else {
+                    $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('[name="'+form_props_arr[i]+'"]').html().trim());
+                }
+            }
+
+            //clear step three services error
+            $('.step.three .checkboxes-right-container').removeClass('with-error');
+
+            $('.step.four .checkboxes-right-container input[type="checkbox"]').prop('checked', false);
+            //update the disabled checkboxes on the sample contract
+            for(var i = 0, len = $('.step.three [name="general-dentistry[]"]:checked').length; i < len; i+=1) {
+                $('.step.four input[type="checkbox"]#'+$('[name="general-dentistry[]"]:checked').eq(i).val()).prop('checked', true);
+            }
+
+            //init the signature logic
+            if(!signature_pad_inited) {
+                initSignaturePad();
+                signature_pad_inited = true;
+            }
+        }
+
+        //method for final step validation
         function fourthStepValidation(button) {
             for(var i = 0, len = form_props_arr.length; i < len; i+=1) {
                 if(create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('input')) {
@@ -838,9 +966,6 @@ if($('body').hasClass('logged-in')) {
             for(var i = 0, len = $('.step.three [name="general-dentistry[]"]:checked').length; i < len; i+=1) {
                 $('.step.four input[type="checkbox"]#'+$('[name="general-dentistry[]"]:checked').eq(i).val()).prop('checked', true);
             }
-
-            button.hide();
-            create_contract_form.find('.form-btn-container').append('<input type="submit" value="SEND CONTRACT SAMPLE" class="white-blue-green-btn min-width-250"/>');
 
             create_contract_form.unbind().on('submit', function(event) {
                 var this_form = this;
@@ -869,125 +994,13 @@ if($('body').hasClass('logged-in')) {
                     setTimeout(function() {
                         this_form.submit();
                     }, 2000);
-
                 }
             });
         }
 
-        function onStepValidationSuccess(current_step, next_step, button) {
-            if(next_step == 'four') {
-                showContractResponseLayer(3000);
-            }else {
-                showResponseLayer(500);
-            }
-
-            $('.step.'+current_step).hide();
-            $('.step.'+next_step).show();
-            window.scrollTo(0, $('.contract-creation-steps-container').offset().top);
-
-            if(next_step == 'four') {
-                fourthStepValidation(button);
-            } else if(next_step == 'three') {
-                create_contract_form.find('.form-btn-container input[type="submit"]').remove();
-                button.show().html('GENERATE CONTRACT SAMPLE');
-            } else {
-                create_contract_form.find('.form-btn-container input[type="submit"]').remove();
-                button.show().html('NEXT');
-            }
-
-            $('.contract-creation-steps-container button[data-step="'+next_step+'"]').removeClass('not-allowed-cursor').addClass('active');
-            $('.contract-creation-steps-container button[data-step="'+current_step+'"]').removeClass('active not-passed').addClass('passed');
-
-            if(next_step != 'four') {
-                $('.contract-creation-steps-container button[data-step="'+next_step+'"]').unbind('.moveNextStep').bind('click.moveNextStep', function() {
-                    if($(this).attr('data-stopper') != 'true') {
-                        button.attr('data-current-step', next_step);
-                        $('.contract-creation-steps-container button[data-step="'+current_step+'"]').addClass('passed');
-                        $('.contract-creation-steps-container button').removeClass('active');
-                        $(this).addClass('active');
-
-                        if(next_step == 'four') {
-                            showContractResponseLayer(3000);
-                        }else {
-                            showResponseLayer(500);
-                        }
-
-                        $('.step').hide();
-                        $('.step.'+next_step).show();
-                        window.scrollTo(0, $('.contract-creation-steps-container').offset().top);
-
-                        if(next_step == 'four') {
-                            fourthStepValidation(button);
-                        } else if(next_step == 'three') {
-                            create_contract_form.find('.form-btn-container input[type="submit"]').remove();
-                            button.show().html('GENERATE CONTRACT SAMPLE');
-                        } else {
-                            create_contract_form.find('.form-btn-container input[type="submit"]').remove();
-                            button.show().html('NEXT');
-                        }
-                    }
-                });
-            }
-            button.attr('data-current-step', next_step);
-        }
-
-        function firstStepPassedSuccessfully(button) {
-            onStepValidationSuccess('one', 'two', button);
-
-            $('.contract-creation-steps-container button[data-step="one"]').unbind('.moveNextStep').bind('click.moveNextStep', function() {
-                if($(this).attr('data-stopper') != 'true') {
-                    button.attr('data-current-step', 'one');
-                    $('.contract-creation-steps-container button').removeClass('active');
-                    $(this).addClass('active');
-
-                    showResponseLayer(500);
-                    $('.step').hide();
-                    $('.step.one').show();
-                    window.scrollTo(0, $('.contract-creation-steps-container').offset().top);
-
-                    button.html('NEXT');
-                }
-            });
-        }
-
-        function secondStepPassedSuccessfully(button) {
-            onStepValidationSuccess('two', 'three', button);
-        }
-
-        function thirdStepPassedSuccessfully(button, next_step) {
-            onStepValidationSuccess('three', next_step, button);
-
-            //update the fields on the sample contract
-            for(var i = 0, len = form_props_arr.length; i < len; i+=1) {
-                if(create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('input')) {
-                    $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('input[name="'+form_props_arr[i]+'"]').val().trim());
-                } else if(create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('select')) {
-                    $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('select[name="'+form_props_arr[i]+'"]').val().trim());
-                } else {
-                    $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('[name="'+form_props_arr[i]+'"]').html().trim());
-                }
-            }
-
-            $('.step.four .checkboxes-right-container input[type="checkbox"]').prop('checked', false);
-            //update the disabled checkboxes on the sample contract
-            for(var i = 0, len = $('.step.three [name="general-dentistry[]"]:checked').length; i < len; i+=1) {
-                $('.step.four input[type="checkbox"]#'+$('[name="general-dentistry[]"]:checked').eq(i).val()).prop('checked', true);
-            }
-
-            if(!signature_pad_inited) {
-                initSignaturePad();
-                signature_pad_inited = true;
-            }
-        }
-
-        async function validateFirstStepDentistAddress() {
-            var dentist_address;
+        //method for first step validating the dentist address
+        async function validateFirstStepDentistAddress(dentist_address) {
             var error;
-            if($('.step.one #dcn_address').is('input')) {
-                dentist_address = $('.step.one #dcn_address').val();
-            } else {
-                dentist_address = $('.step.one #dcn_address').html();
-            }
 
             var check_public_key_ajax_result = await $.ajax({
                 type: 'POST',
@@ -1056,48 +1069,21 @@ if($('body').hasClass('logged-in')) {
             }
         });
 
+        //on button NEXT click which is below the contract, it's playing with the steps navigation above the contract
         create_contract_form.find('.next').click(async function() {
             var this_btn = $(this);
-            switch(this_btn.attr('data-current-step')) {
+            switch($('.contract-creation-steps-container button.active').attr('data-step')) {
                 case 'one':
-                    var first_step_fields = $('.step.one input.right-field');
-                    var first_step_errors = validateStepFields(first_step_fields, 'one');
-                    var validate_dentist_address = false;
-
-                    if(innerAddressCheck($('.step.one #dcn_address').val().trim()) && $('.step.one #dcn_address').is('input')) {
-                        validate_dentist_address = await validateFirstStepDentistAddress();
-                    }
-
-                    if(!first_step_errors && !validate_dentist_address) {
-                        firstStepPassedSuccessfully(this_btn);
-                    }
+                    $('.contract-creation-steps-container button[data-step="two"]').click();
                     break;
                 case 'two':
-                    var second_step_fields = $('.step.two input.right-field');
-                    var second_step_errors = validateStepFields(second_step_fields, 'two');
-
-                    if(!second_step_errors) {
-                        secondStepPassedSuccessfully(this_btn);
-                    }
+                    $('.contract-creation-steps-container button[data-step="three"]').click();
                     break;
                 case 'three':
-                    var third_step_fields = $('.step.three .right-field');
-                    var third_step_errors = validateStepFields(third_step_fields, 'three');
-                    $('.step.three .checkboxes-right-container').removeClass('with-error');
-
-                    if($('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
-
-                        customCreateContractErrorHandle($('.step.three .checkboxes-right-container'), 'Please select at least one service.');
-                        third_step_errors = true;
-                        window.scrollTo(0, create_contract_form.offset().top);
-                    }
-
-                    if(!third_step_errors) {
-                        thirdStepPassedSuccessfully(this_btn, 'four');
-                    }
+                    $('.contract-creation-steps-container button[data-step="four"]').click();
                     break;
                 case 'four':
-                    //no such case
+                    create_contract_form.submit();
                     break;
             }
         });
