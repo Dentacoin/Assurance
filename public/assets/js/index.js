@@ -753,11 +753,7 @@ if($('body').hasClass('logged-in')) {
         create_contract_form.find('.terms-and-conditions-long-list').mCustomScrollbar();
 
         //validation for all fields for each step
-        function validateStepFields(step_fields, step, style_rows) {
-            if(style_rows == undefined) {
-                style_rows = null;
-            }
-
+        function validateStepFields(step_fields, step) {
             step_fields.removeClass('with-error');
             $('.step.'+step+' .single-row').removeClass('row-with-error');
             $('.step.'+step+' .single-row > label span').remove();
@@ -769,29 +765,19 @@ if($('body').hasClass('logged-in')) {
             var inner_error = false;
             for(var i = 0, len = step_fields.length; i < len; i+=1) {
                 if(step_fields.eq(i).val().trim() == '') {
-                    if(style_rows) {
-                        customCreateContractErrorHandle(step_fields.eq(i), 'Required field cannot be left blank.');
-                    }
+                    customCreateContractErrorHandle(step_fields.eq(i), 'Required field cannot be left blank.');
                     inner_error = true;
                 } else if(step_fields.eq(i).attr('data-type') == 'email' && !basic.validateEmail(step_fields.eq(i).val().trim())) {
-                    if(style_rows) {
-                        customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid email.');
-                    }
+                    customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid email.');
                     inner_error = true;
                 } else if(step_fields.eq(i).attr('data-type') == 'address' && !innerAddressCheck(step_fields.eq(i).val().trim())) {
-                    if(style_rows) {
-                        customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid wallet address.');
-                    }
+                    customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid wallet address.');
                     inner_error = true;
                 } else if(step_fields.eq(i).attr('data-type') == 'website' && !basic.validateUrl(step_fields.eq(i).val().trim())) {
-                    if(style_rows) {
-                        customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid website.');
-                    }
+                    customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid website.');
                     inner_error = true;
                 }else if(step_fields.eq(i).attr('data-type') == 'phone' && !basic.validatePhone(step_fields.eq(i).val().trim())) {
-                    if(style_rows) {
-                        customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid phone.');
-                    }
+                    customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid phone.');
                     inner_error = true;
                 }
             }
@@ -844,9 +830,9 @@ if($('body').hasClass('logged-in')) {
                 //if validate_steps_arr is defined and if no errors until now
                 if(validate_steps_arr.length && !current_step_error) {
                     for(var y = 0, len = validate_steps_arr.length; y < len; y+=1) {
-                        current_step_error = validateStepFields($('.step.'+validate_steps_arr[y]+' input.right-field'), validate_steps_arr[y], true);
+                        current_step_error = validateStepFields($('.step.'+validate_steps_arr[y]+' input.right-field'), validate_steps_arr[y]);
                     }
-                } else {
+                } else if(!current_step_error) {
                     $('html, body').animate({scrollTop: create_contract_form.offset().top}, 500);
                 }
 
@@ -1034,8 +1020,6 @@ if($('body').hasClass('logged-in')) {
                     fixButtonsFocus();
                     bindVerifyAddressLogic();
                     error = true;
-
-                    $('html, body').animate({scrollTop: $('.camping-for-validation').offset().top - 50}, 500);
                 } else {
                     $('.proof-of-address').addClass('proof-failed');
                     error = true;
