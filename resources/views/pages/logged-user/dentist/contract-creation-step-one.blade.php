@@ -51,7 +51,7 @@
                 <input type="text" data-type="address" id="dcn_address" name="address" maxlength="42" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background"/>
             @endif
         </div>
-        <div class="camping-for-validation">
+        <div class="camping-for-validation module">
             {{--RARE CASE - if user have address, but not from wallet.dentacoin.com--}}
             @if(!empty($current_logged_dentist->dcn_address) && !(new \App\Http\Controllers\UserController())->checkIfWeHavePublicKeyOfAddress($current_logged_dentist->dcn_address))
                 <div class="single-row proof-of-address padding-bottom-20" data-address="{{$current_logged_dentist->dcn_address}}">

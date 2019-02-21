@@ -9,55 +9,6 @@
             display: none;
             &.one {
                 display: block;
-                .proof-success {
-                    display: none;
-                    padding-left: 15px;
-                    padding-right: 15px;
-                    color: $active;
-                }
-                .proof-of-address {
-                    background-color: #eaeaea;
-                    &.proof-failed {
-                        background-color: #ff8d8d;
-                    }
-                    .upload-file-container {
-                        button {
-                            margin: 0;
-                            padding: 0;
-                            border: 0;
-                            width: 100%;
-                            background: transparent;
-                            label {
-                                width: 100%;
-                                display: block;
-                                padding: 0;
-                                margin: 0;
-                            }
-                        }
-                    }
-                    .file-name {
-                        word-break: break-word;
-                    }
-                    .checkbox-container {
-                        padding-top: 10px;
-                        input[type="checkbox"] {
-                            width: auto;
-                            height: auto;
-                        }
-                        .pretty {
-                            label {
-                                padding-top: 3px;
-                                padding-left: 5px;
-                                cursor: pointer;
-                                width: 100%;
-                                i {
-                                    display: inline;
-                                    padding-left: 5px;
-                                }
-                            }
-                        }
-                    }
-                }
                 .avatar {
                     width: 150px;
                     margin: 0 auto;

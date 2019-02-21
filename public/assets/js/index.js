@@ -720,26 +720,8 @@ if($('body').hasClass('logged-in')) {
         var signature_pad_inited = false;
         styleAvatarUploadButton('.steps-body .avatar button label');
 
-
         if($('.single-row.proof-of-address').length) {
             bindVerifyAddressLogic();
-        }
-
-        //bind the logic when address is not verified
-        function bindVerifyAddressLogic() {
-            styleUploadFileButton();
-
-            $('.enter-private-key').unbind().click(function() {
-                $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 padding-left-30 padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-private-key"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-private-key">Remember my private key <i class="fa fa-info-circle" aria-hidden="true"  data-toggle="tooltip" data-placement="top" title="Remembering your key allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">VERIFY</a></div></div>');
-                initTooltips();
-                $('.proof-of-address #upload-keystore-file').val('');
-                bindGoogleAlikeButtonsEvents();
-                bindVerifyAddressEvent();
-            });
-
-            $('.upload-file-container button').unbind().click(function() {
-                $('.proof-of-address .on-change-result').html('');
-            });
         }
 
         //showing the list for each service category
@@ -823,7 +805,6 @@ if($('body').hasClass('logged-in')) {
                         customCreateContractErrorHandle($('.step.three .checkboxes-right-container'), 'Please select at least one service.');
                         current_step_error = true;
                     }
-
                     validate_steps_arr = ['one', 'two', 'three'];
                 }
 
@@ -832,7 +813,7 @@ if($('body').hasClass('logged-in')) {
                     for(var y = 0, len = validate_steps_arr.length; y < len; y+=1) {
                         current_step_error = validateStepFields($('.step.'+validate_steps_arr[y]+' input.right-field'), validate_steps_arr[y]);
                     }
-                } else if(!current_step_error) {
+                } else if(current_step_error) {
                     $('html, body').animate({scrollTop: create_contract_form.offset().top}, 500);
                 }
 
@@ -1083,6 +1064,10 @@ if($('body').hasClass('logged-in')) {
     }else if($('body').hasClass('contract-proposal')) {
         if($('.terms-and-conditions-long-list').length) {
             $('.terms-and-conditions-long-list').mCustomScrollbar();
+        }
+
+        if($('.single-row.proof-of-address').length) {
+            bindVerifyAddressLogic();
         }
 
         initSignaturePad();
@@ -2090,6 +2075,23 @@ function isJsonString(str) {
         return false;
     }
     return true;
+}
+
+//bind the logic when address is not verified
+function bindVerifyAddressLogic() {
+    styleUploadFileButton();
+
+    $('.enter-private-key').unbind().click(function() {
+        $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 padding-left-30 padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-private-key"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-private-key">Remember my private key <i class="fa fa-info-circle" aria-hidden="true"  data-toggle="tooltip" data-placement="top" title="Remembering your key allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">VERIFY</a></div></div>');
+        initTooltips();
+        $('.proof-of-address #upload-keystore-file').val('');
+        bindGoogleAlikeButtonsEvents();
+        bindVerifyAddressEvent();
+    });
+
+    $('.upload-file-container button').unbind().click(function() {
+        $('.proof-of-address .on-change-result').html('');
+    });
 }
 
 function bindVerifyAddressEvent(keystore_file) {

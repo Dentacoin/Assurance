@@ -99,6 +99,32 @@
                                         </div>
                                     @endif
                                 </div>
+                                <div class="camping-for-validation module">
+                                    {{--RARE CASE - if user have address, but not from wallet.dentacoin.com--}}
+                                    @if(!empty($patient->dcn_address) && !(new \App\Http\Controllers\UserController())->checkIfWeHavePublicKeyOfAddress($patient->dcn_address))
+                                        <div class="single-row proof-of-address padding-bottom-20" data-address="{{$patient->dcn_address}}">
+                                            <div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div>
+                                            <div class="container-fluid">
+                                                <div class="row fs-0">
+                                                    <div class="col-xs-12 col-sm-5 inline-block padding-left-30">
+                                                        <a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18">Enter your Private Key<div class="fs-16">(not recommended)</div></a>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div>
+                                                    <div class="col-xs-12 col-sm-5 inline-block padding-right-30">
+                                                        <div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file">
+                                                            <input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/>
+                                                            <button type="button" class="display-block"></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row on-change-result"></div>
+                                            </div>
+                                        </div>
+                                        <div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">
+                                            Successful address verification.
+                                        </div>
+                                    @endif
+                                </div>
                                 <div class="light-gray-color fs-14 padding-top-5">This is the wallet where you will send your monthly premiums from and collect your rewards from all Dentacoin tools. Please double-check if everything is correct. You don’t have a wallet? <a href="//wallet.dentacoin.com" class="blue-green-color calibri-bold" target="_blank">Create one here.</a></div>
                                 <h3 class="calibri-bold fs-30 dark-color padding-top-70">CONTRACT CONDITIONS</h3>
                                 <div class="single-row fs-0 padding-top-10">
