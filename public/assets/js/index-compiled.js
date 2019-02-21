@@ -27962,7 +27962,7 @@ function bindVerifyAddressEvent(keystore_file) {
                             //now with the address and the public key received from the nodejs api update the db
                             if (response.success) {
                                 //if remember me option is checked
-                                if ($('#remember-my-private-key').is(':checked')) {
+                                if ($('#remember-my-keystore-file').is(':checked')) {
                                     localStorage.setItem('current-account', JSON.stringify({
                                         address: $('.proof-of-address').attr('data-address'),
                                         type: 'keystore',
@@ -28020,7 +28020,7 @@ function bindVerifyAddressEvent(keystore_file) {
                             //now with the address and the public key received from the nodejs api update the db
                             if (response.success) {
                                 //if remember me option is checked
-                                if ($('.proof-of-address #remember-my-keystore-file').is(':checked')) {
+                                if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
                                     localStorage.setItem('current-account', JSON.stringify({
                                         address: '0x' + response.address,
                                         type: 'key',
