@@ -789,7 +789,8 @@ if($('body').hasClass('logged-in')) {
                     }
 
                     if(innerAddressCheck(dentist_address)) {
-                        validate_dentist_address = await validateFirstStepDentistAddress(dentist_address);
+                        //method for first step validating the dentist address
+                        validate_dentist_address = await validateUserAddress(dentist_address, $('.step.one #dcn_address'));
                     }
 
                     if(validate_dentist_address) {
@@ -974,41 +975,6 @@ if($('body').hasClass('logged-in')) {
             });
         }
 
-        //method for first step validating the dentist address
-        async function validateFirstStepDentistAddress(dentist_address) {
-            var error;
-
-            var check_public_key_ajax_result = await $.ajax({
-                type: 'POST',
-                url: '/check-public-key',
-                dataType: 'json',
-                data: {
-                    address: dentist_address
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            if (check_public_key_ajax_result.success) {
-                $('.proof-of-address').remove();
-                error = false;
-            } else if (check_public_key_ajax_result.error) {
-                if($('.step.one #dcn_address').is('input')) {
-                    $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="'+dentist_address+'"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-5 inline-block padding-left-30"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18">Enter your Private Key<div class="fs-16">(not recommended)</div></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-5 inline-block padding-right-30"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><button type="button" class="display-block"></button></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
-                    $('.proof-of-address').addClass('proof-failed');
-
-                    fixButtonsFocus();
-                    bindVerifyAddressLogic();
-                    error = true;
-                } else {
-                    $('.proof-of-address').addClass('proof-failed');
-                    error = true;
-                }
-            }
-            return error;
-        }
-
         //logic for showing the suggested price based on country and calculator parameters
         $('.step.three [name="general-dentistry[]"]').on('change', function() {
             var suggested_price;
@@ -1112,7 +1078,7 @@ if($('body').hasClass('logged-in')) {
         if($('form#dentist-update-and-sign-contract').length) {
             cancelContractEventInit();
 
-            $('form#dentist-update-and-sign-contract').on('submit', function(event) {
+            $('form#dentist-update-and-sign-contract').on('submit', async function(event) {
                 event.preventDefault();
                 var this_form_plain = this;
                 var this_form = $(this);
@@ -1137,13 +1103,39 @@ if($('body').hasClass('logged-in')) {
                             form_errors = true;
                         } else if(fields.eq(i).is('[name="dcn_address"]') && !innerAddressCheck(fields.eq(i).val().trim())) {
                             customCreateContractErrorHandle(fields.eq(i), 'Please enter valid Wallet Address.');
+                            if($('.proof-of-address').length) {
+                                $('.proof-of-address').remove();
+                            }
                             form_errors = true;
                         }
                     }
                 }
 
+                if(!form_errors) {
+                    var validate_patient_address = false;
+                    var patient_address;
+                    if($('.dcn-address-row #dcn_address').is('input')) {
+                        patient_address = $('.dcn-address-row #dcn_address').val().trim();
+                    } else {
+                        patient_address = $('.dcn-address-row #dcn_address').html().trim();
+                    }
+
+                    if(innerAddressCheck(patient_address)) {
+                        //method for first step validating the patient address
+                        validate_patient_address = await validateUserAddress(patient_address, $('.dcn-address-row #dcn_address'));
+                    }
+
+                    if(validate_patient_address) {
+                        form_errors = true;
+                    }
+                }
+
                 if(form_errors) {
-                    $('html, body').animate({scrollTop: $('.right-field.required-field.with-error').offset().top - 50}, 500);
+                    if($('.proof-of-address').length) {
+                        $('html, body').animate({scrollTop: $('.proof-of-address').offset().top - 50}, 500);
+                    } else {
+                        $('html, body').animate({scrollTop: $('.right-field.required-field.with-error').offset().top - 50}, 500);
+                    }
                 } else {
                     //check if patient signed if privacy policy and terms checkboxes are checked
                     //save the base64 signature image in hidden value
@@ -1999,8 +1991,6 @@ function styleUploadFileButton()    {
 
         var inputs = document.querySelectorAll('.custom-upload-file');
         Array.prototype.forEach.call( inputs, function( input ) {
-            var label    = input.nextElementSibling,
-                labelVal = label.innerHTML;
 
             input.addEventListener('change', function(e) {
                 var fileName = '';
@@ -2016,7 +2006,7 @@ function styleUploadFileButton()    {
                     reader.addEventListener('load', function (e) {
                         if (isJsonString(e.target.result) && has(JSON.parse(e.target.result), 'address')) {
                             var keystore_string = e.target.result;
-                            $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 col-sm-offset-7 padding-right-30 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Enter your secret key password:</label><input type="text" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-keystore-file"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-keystore-file">Remember my keystore file <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Remembering your keystore file allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">VERIFY</a></div></div>');
+                            $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 col-sm-offset-7 padding-right-30 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Enter your secret key password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-keystore-file"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-keystore-file">Remember my keystore file <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Remembering your keystore file allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">VERIFY</a></div></div>');
                             initTooltips();
                             bindGoogleAlikeButtonsEvents();
                             bindVerifyAddressEvent(keystore_string);
@@ -2201,6 +2191,40 @@ function bindVerifyAddressEvent(keystore_file) {
             }
         }
     });
+}
+
+async function validateUserAddress(user_address, value_element) {
+    var error;
+
+    var check_public_key_ajax_result = await $.ajax({
+        type: 'POST',
+        url: '/check-public-key',
+        dataType: 'json',
+        data: {
+            address: user_address
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    if (check_public_key_ajax_result.success) {
+        $('.proof-of-address').remove();
+        error = false;
+    } else if (check_public_key_ajax_result.error) {
+        if(value_element.is('input')) {
+            $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="'+user_address+'"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-5 inline-block padding-left-30"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18">Enter your Private Key<div class="fs-16">(not recommended)</div></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-5 inline-block padding-right-30"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><button type="button" class="display-block"></button></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
+            $('.proof-of-address').addClass('proof-failed');
+
+            fixButtonsFocus();
+            bindVerifyAddressLogic();
+            error = true;
+        } else {
+            $('.proof-of-address').addClass('proof-failed');
+            error = true;
+        }
+    }
+    return error;
 }
 
 function initTooltips() {

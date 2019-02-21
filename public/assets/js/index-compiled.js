@@ -25722,6 +25722,61 @@ var onDocumentReadyPageData = function () {
     };
 }();
 
+var validateUserAddress = function () {
+    var _ref16 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee16(user_address, value_element) {
+        var error, check_public_key_ajax_result;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee16$(_context16) {
+            while (1) {
+                switch (_context16.prev = _context16.next) {
+                    case 0:
+                        _context16.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/check-public-key',
+                            dataType: 'json',
+                            data: {
+                                address: user_address
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                    case 2:
+                        check_public_key_ajax_result = _context16.sent;
+
+
+                        if (check_public_key_ajax_result.success) {
+                            $('.proof-of-address').remove();
+                            error = false;
+                        } else if (check_public_key_ajax_result.error) {
+                            if (value_element.is('input')) {
+                                $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="' + user_address + '"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-5 inline-block padding-left-30"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18">Enter your Private Key<div class="fs-16">(not recommended)</div></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-5 inline-block padding-right-30"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><button type="button" class="display-block"></button></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
+                                $('.proof-of-address').addClass('proof-failed');
+
+                                fixButtonsFocus();
+                                bindVerifyAddressLogic();
+                                error = true;
+                            } else {
+                                $('.proof-of-address').addClass('proof-failed');
+                                error = true;
+                            }
+                        }
+                        return _context16.abrupt('return', error);
+
+                    case 5:
+                    case 'end':
+                        return _context16.stop();
+                }
+            }
+        }, _callee16, this);
+    }));
+
+    return function validateUserAddress(_x8, _x9) {
+        return _ref16.apply(this, arguments);
+    };
+}();
+
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var _require = __webpack_require__(115),
@@ -26476,64 +26531,6 @@ if ($('body').hasClass('logged-in')) {
             });
         };
 
-        //method for first step validating the dentist address
-
-
-        var validateFirstStepDentistAddress = function () {
-            var _ref7 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7(dentist_address) {
-                var error, check_public_key_ajax_result;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee7$(_context7) {
-                    while (1) {
-                        switch (_context7.prev = _context7.next) {
-                            case 0:
-                                _context7.next = 2;
-                                return $.ajax({
-                                    type: 'POST',
-                                    url: '/check-public-key',
-                                    dataType: 'json',
-                                    data: {
-                                        address: dentist_address
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    }
-                                });
-
-                            case 2:
-                                check_public_key_ajax_result = _context7.sent;
-
-
-                                if (check_public_key_ajax_result.success) {
-                                    $('.proof-of-address').remove();
-                                    error = false;
-                                } else if (check_public_key_ajax_result.error) {
-                                    if ($('.step.one #dcn_address').is('input')) {
-                                        $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="' + dentist_address + '"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-5 inline-block padding-left-30"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18">Enter your Private Key<div class="fs-16">(not recommended)</div></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-5 inline-block padding-right-30"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><button type="button" class="display-block"></button></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
-                                        $('.proof-of-address').addClass('proof-failed');
-
-                                        fixButtonsFocus();
-                                        bindVerifyAddressLogic();
-                                        error = true;
-                                    } else {
-                                        $('.proof-of-address').addClass('proof-failed');
-                                        error = true;
-                                    }
-                                }
-                                return _context7.abrupt('return', error);
-
-                            case 5:
-                            case 'end':
-                                return _context7.stop();
-                        }
-                    }
-                }, _callee7, this);
-            }));
-
-            return function validateFirstStepDentistAddress(_x) {
-                return _ref7.apply(this, arguments);
-            };
-        }();
-
         //logic for showing the suggested price based on country and calculator parameters
 
 
@@ -26587,7 +26584,7 @@ if ($('body').hasClass('logged-in')) {
                             }
 
                             _context6.next = 10;
-                            return validateFirstStepDentistAddress(dentist_address);
+                            return validateUserAddress(dentist_address, $('.step.one #dcn_address'));
 
                         case 10:
                             validate_dentist_address = _context6.sent;
@@ -26723,39 +26720,39 @@ if ($('body').hasClass('logged-in')) {
         });
 
         //on button NEXT click which is below the contract, it's playing with the steps navigation above the contract
-        create_contract_form.find('.next').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee8() {
+        create_contract_form.find('.next').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7() {
             var this_btn;
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee8$(_context8) {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee7$(_context7) {
                 while (1) {
-                    switch (_context8.prev = _context8.next) {
+                    switch (_context7.prev = _context7.next) {
                         case 0:
                             this_btn = $(this);
-                            _context8.t0 = $('.contract-creation-steps-container button.active').attr('data-step');
-                            _context8.next = _context8.t0 === 'one' ? 4 : _context8.t0 === 'two' ? 6 : _context8.t0 === 'three' ? 8 : _context8.t0 === 'four' ? 10 : 12;
+                            _context7.t0 = $('.contract-creation-steps-container button.active').attr('data-step');
+                            _context7.next = _context7.t0 === 'one' ? 4 : _context7.t0 === 'two' ? 6 : _context7.t0 === 'three' ? 8 : _context7.t0 === 'four' ? 10 : 12;
                             break;
 
                         case 4:
                             $('.contract-creation-steps-container button[data-step="two"]').click();
-                            return _context8.abrupt('break', 12);
+                            return _context7.abrupt('break', 12);
 
                         case 6:
                             $('.contract-creation-steps-container button[data-step="three"]').click();
-                            return _context8.abrupt('break', 12);
+                            return _context7.abrupt('break', 12);
 
                         case 8:
                             $('.contract-creation-steps-container button[data-step="four"]').click();
-                            return _context8.abrupt('break', 12);
+                            return _context7.abrupt('break', 12);
 
                         case 10:
                             create_contract_form.submit();
-                            return _context8.abrupt('break', 12);
+                            return _context7.abrupt('break', 12);
 
                         case 12:
                         case 'end':
-                            return _context8.stop();
+                            return _context7.stop();
                     }
                 }
-            }, _callee8, this);
+            }, _callee7, this);
         })));
     } else if ($('body').hasClass('contract-proposal')) {
         if ($('.terms-and-conditions-long-list').length) {
@@ -26808,53 +26805,111 @@ if ($('body').hasClass('logged-in')) {
         if ($('form#dentist-update-and-sign-contract').length) {
             cancelContractEventInit();
 
-            $('form#dentist-update-and-sign-contract').on('submit', function (event) {
-                event.preventDefault();
-                var this_form_plain = this;
-                var this_form = $(this);
-                var fields = this_form.find('.right-field.required-field');
-                var form_errors = false;
+            $('form#dentist-update-and-sign-contract').on('submit', function () {
+                var _ref8 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee8(event) {
+                    var this_form_plain, this_form, fields, form_errors, i, len, validate_patient_address, patient_address;
+                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee8$(_context8) {
+                        while (1) {
+                            switch (_context8.prev = _context8.next) {
+                                case 0:
+                                    event.preventDefault();
+                                    this_form_plain = this;
+                                    this_form = $(this);
+                                    fields = this_form.find('.right-field.required-field');
+                                    form_errors = false;
 
-                //clear previous submits errors
-                this_form.find('.error-in-label').remove();
-                this_form.find('.single-row').removeClass('row-with-error');
-                fields.removeClass('with-error');
+                                    //clear previous submits errors
 
-                //checking the validation for the patient fields
-                for (var i = 0, len = fields.length; i < len; i += 1) {
-                    if (fields.eq(i).is('select')) {
-                        if (fields.eq(i).val() == null) {
-                            customCreateContractErrorHandle(fields.eq(i), 'Required field cannot be left blank.');
-                            form_errors = true;
+                                    this_form.find('.error-in-label').remove();
+                                    this_form.find('.single-row').removeClass('row-with-error');
+                                    fields.removeClass('with-error');
+
+                                    //checking the validation for the patient fields
+                                    for (i = 0, len = fields.length; i < len; i += 1) {
+                                        if (fields.eq(i).is('select')) {
+                                            if (fields.eq(i).val() == null) {
+                                                customCreateContractErrorHandle(fields.eq(i), 'Required field cannot be left blank.');
+                                                form_errors = true;
+                                            }
+                                        } else if (fields.eq(i).is('input')) {
+                                            if (fields.eq(i).val().trim() == '') {
+                                                customCreateContractErrorHandle(fields.eq(i), 'Required field cannot be left blank.');
+                                                form_errors = true;
+                                            } else if (fields.eq(i).is('[name="dcn_address"]') && !innerAddressCheck(fields.eq(i).val().trim())) {
+                                                customCreateContractErrorHandle(fields.eq(i), 'Please enter valid Wallet Address.');
+                                                if ($('.proof-of-address').length) {
+                                                    $('.proof-of-address').remove();
+                                                }
+                                                form_errors = true;
+                                            }
+                                        }
+                                    }
+
+                                    if (form_errors) {
+                                        _context8.next = 17;
+                                        break;
+                                    }
+
+                                    validate_patient_address = false;
+
+                                    if ($('.dcn-address-row #dcn_address').is('input')) {
+                                        patient_address = $('.dcn-address-row #dcn_address').val().trim();
+                                    } else {
+                                        patient_address = $('.dcn-address-row #dcn_address').html().trim();
+                                    }
+
+                                    if (!innerAddressCheck(patient_address)) {
+                                        _context8.next = 16;
+                                        break;
+                                    }
+
+                                    _context8.next = 15;
+                                    return validateUserAddress(patient_address, $('.dcn-address-row #dcn_address'));
+
+                                case 15:
+                                    validate_patient_address = _context8.sent;
+
+                                case 16:
+
+                                    if (validate_patient_address) {
+                                        form_errors = true;
+                                    }
+
+                                case 17:
+
+                                    if (form_errors) {
+                                        if ($('.proof-of-address').length) {
+                                            $('html, body').animate({ scrollTop: $('.proof-of-address').offset().top - 50 }, 500);
+                                        } else {
+                                            $('html, body').animate({ scrollTop: $('.right-field.required-field.with-error').offset().top - 50 }, 500);
+                                        }
+                                    } else {
+                                        //check if patient signed if privacy policy and terms checkboxes are checked
+                                        //save the base64 signature image in hidden value
+                                        this_form.find('input[name="patient_signature"]').val(signature_pad.toDataURL('image/png'));
+                                        if (signature_pad.isEmpty()) {
+                                            basic.showAlert('Please sign the contract sample. Use your mouse or touch screen to sign.', '', true);
+                                        } else if (!this_form.find('input#terms').is(':checked')) {
+                                            basic.showAlert('Please accept the Terms and Conditions', '', true);
+                                        } else if (!this_form.find('input#privacy-policy').is(':checked')) {
+                                            basic.showAlert('Please accept the Privacy Policy', '', true);
+                                        } else {
+                                            this_form_plain.submit();
+                                        }
+                                    }
+
+                                case 18:
+                                case 'end':
+                                    return _context8.stop();
+                            }
                         }
-                    } else if (fields.eq(i).is('input')) {
-                        if (fields.eq(i).val().trim() == '') {
-                            customCreateContractErrorHandle(fields.eq(i), 'Required field cannot be left blank.');
-                            form_errors = true;
-                        } else if (fields.eq(i).is('[name="dcn_address"]') && !innerAddressCheck(fields.eq(i).val().trim())) {
-                            customCreateContractErrorHandle(fields.eq(i), 'Please enter valid Wallet Address.');
-                            form_errors = true;
-                        }
-                    }
-                }
+                    }, _callee8, this);
+                }));
 
-                if (form_errors) {
-                    $('html, body').animate({ scrollTop: $('.right-field.required-field.with-error').offset().top - 50 }, 500);
-                } else {
-                    //check if patient signed if privacy policy and terms checkboxes are checked
-                    //save the base64 signature image in hidden value
-                    this_form.find('input[name="patient_signature"]').val(signature_pad.toDataURL('image/png'));
-                    if (signature_pad.isEmpty()) {
-                        basic.showAlert('Please sign the contract sample. Use your mouse or touch screen to sign.', '', true);
-                    } else if (!this_form.find('input#terms').is(':checked')) {
-                        basic.showAlert('Please accept the Terms and Conditions', '', true);
-                    } else if (!this_form.find('input#privacy-policy').is(':checked')) {
-                        basic.showAlert('Please accept the Privacy Policy', '', true);
-                    } else {
-                        this_form_plain.submit();
-                    }
-                }
-            });
+                return function (_x) {
+                    return _ref8.apply(this, arguments);
+                };
+            }());
         }
     }
 }
@@ -27782,8 +27837,6 @@ function styleUploadFileButton() {
 
         var inputs = document.querySelectorAll('.custom-upload-file');
         Array.prototype.forEach.call(inputs, function (input) {
-            var label = input.nextElementSibling,
-                labelVal = label.innerHTML;
 
             input.addEventListener('change', function (e) {
                 var fileName = '';
@@ -27799,7 +27852,7 @@ function styleUploadFileButton() {
                     reader.addEventListener('load', function (e) {
                         if (isJsonString(e.target.result) && has(JSON.parse(e.target.result), 'address')) {
                             var keystore_string = e.target.result;
-                            $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 col-sm-offset-7 padding-right-30 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">' + fileName + '</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Enter your secret key password:</label><input type="text" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-keystore-file"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-keystore-file">Remember my keystore file <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Remembering your keystore file allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">VERIFY</a></div></div>');
+                            $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 col-sm-offset-7 padding-right-30 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">' + fileName + '</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Enter your secret key password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-keystore-file"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-keystore-file">Remember my keystore file <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Remembering your keystore file allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">VERIFY</a></div></div>');
                             initTooltips();
                             bindGoogleAlikeButtonsEvents();
                             bindVerifyAddressEvent(keystore_string);
