@@ -13,7 +13,7 @@ class HomeController extends Controller
     public function getView()   {
         /*$session_arr = [
             'token' => 'enYh2KchyDUJdfslM9Xfd67qhjPQnIOKzx4ozEnqJECECb04PA1EFOs2KDYg',
-            'id' => '68622',
+            'id' => '68856',
             'type' => 'dentist',
             'have_contracts' => true
         ];
