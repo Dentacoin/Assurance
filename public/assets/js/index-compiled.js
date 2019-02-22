@@ -27099,7 +27099,7 @@ if ($('body').hasClass('logged-in')) {
                         case 3:
                             encrypted_pdf_content = _context9.sent;
                             _context9.next = 6;
-                            return getDecryptedPdfContent(encrypted_pdf_content, '16590c4613e7202cf0c19fda8ffc44e0e3d01ee1c28972192420bb4fec2233e7');
+                            return getDecryptedPdfContent(encrypted_pdf_content.success, '16590c4613e7202cf0c19fda8ffc44e0e3d01ee1c28972192420bb4fec2233e7');
 
                         case 6:
                             decrypted_pdf_content = _context9.sent;
