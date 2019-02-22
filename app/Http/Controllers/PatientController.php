@@ -243,7 +243,7 @@ class PatientController extends Controller {
         }
 
         //getting the public key for this address stored in the assurance db (this table is getting updated by wallet.dentacoin.com)
-        $patient_pub_key = PublicKey::where(array('address' => $logged_patient->dcn_address))->get()->first();
+        $patient_pub_key = PublicKey::where(array('address' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->dcn_address))->get()->first();
         $dentist_pub_key = PublicKey::where(array('address' => (new APIRequestsController())->getUserData($contract->dentist_id)->dcn_address))->get()->first();
 
         if(empty($patient_pub_key) || empty($dentist_pub_key)) {
