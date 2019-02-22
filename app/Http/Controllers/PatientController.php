@@ -216,6 +216,7 @@ class PatientController extends Controller {
             //if user trying to fake the contract slug
             return abort(404);
         }
+        die(123);
 
         //update CoreDB api data for this patient
         if(isset($data['country']) || isset($data['dcn_address'])) {
@@ -245,7 +246,6 @@ class PatientController extends Controller {
         //getting the public key for this address stored in the assurance db (this table is getting updated by wallet.dentacoin.com)
         $patient_pub_key = PublicKey::where(array('address' => $logged_patient->dcn_address))->get()->first();
         $dentist_pub_key = PublicKey::where(array('address' => (new APIRequestsController())->getUserData($contract->dentist_id)->dcn_address))->get()->first();
-        die(123);
 
         if(empty($patient_pub_key) || empty($dentist_pub_key)) {
             return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'No such public keys in the database.']);
