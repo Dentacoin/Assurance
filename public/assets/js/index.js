@@ -11,7 +11,7 @@ $(document).ready(function() {
 });
 
 $(window).on('load', function() {
-
+    onWindowLoadPageData();
 });
 
 $(window).on('resize', function(){
@@ -636,6 +636,14 @@ if($('body').hasClass('home')) {
             console.log($(this).val());
         });
     }
+
+    if($('.contracts-list.slider').length) {
+        $('.contracts-list.slider').slick({
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            autoplaySpeed: 8000
+        });
+    }
 }else if($('body').hasClass('support-guide')) {
     if($('.support-guide-slider').length) {
         $('.support-guide-slider').slick({
@@ -696,7 +704,36 @@ if($('body').hasClass('logged-in')) {
                 event.preventDefault();
             }
         });
-    }else if($('body').hasClass('my-profile')) {
+    } else if($('body').hasClass('manage-privacy')) {
+        if(localStorage.getItem('current-account') != null)   {
+            var title;
+            var text;
+            var btn_label;
+            var alert_response;
+
+            if(JSON.parse(localStorage.getItem('current-account')).type == 'key') {
+                title = 'Delete my private key';
+                text = 'Your private key is locally stored in your browser for easier and faster transactions. If you are sure about that, just click the button below.';
+                btn_label = 'DELETE MY PRIVATE KEY';
+                alert_response = 'Your private key has been deleted from your browser successfully.';
+            } else if(JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
+                title = 'Delete my keystore file';
+                text = 'Your private key is locally stored in your browser for easier and faster transactions. If you are sure about that, just click the button below.';
+                btn_label = 'DELETE MY KEYSTORE FILE';
+                alert_response = 'Your keystore file has been deleted from your browser successfully.';
+            }
+
+            $('.delete-local-storage').html('<div class="padding-bottom-50 padding-top-60 delete-local-storage-border-bottom"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block-top"><img alt="Cancel icon" src="/assets/uploads/cancel.svg"/></figure><div class="text inline-block-top"><h3 class="fs-20 padding-bottom-20 lato-bold dark-color">'+title+'</h3><div class="fs-16 dark-color">'+text+'</div></div><div class="btn-container text-right padding-top-30"><a href="javascript:void(0);" class="white-blue-green-btn clear-current-account-local-storage" onclick="return confirm(\'Are you sure you want to continue?\')">'+btn_label+'</a></div></div>');
+
+            $('.clear-current-account-local-storage').click(function() {
+                localStorage.removeItem('current-account');
+                $('.delete-local-storage').html('');
+                basic.showAlert(alert_response, '', true);
+            });
+
+
+        }
+    } else if($('body').hasClass('my-profile')) {
         $('.my-profile-page-content .dropdown-hidden-menu button').click(function() {
             var this_btn = $(this);
             $('.my-profile-page-content .current-converted-price .amount').html((parseFloat($('.current-dcn-amount').html()) * parseFloat(this_btn.attr('data-multiple-with'))).toFixed(6));
@@ -716,7 +753,7 @@ if($('body').hasClass('logged-in')) {
                 }
             });
         }
-    }else if($('body').hasClass('create-contract')) {
+    } else if($('body').hasClass('create-contract')) {
         var signature_pad_inited = false;
         styleAvatarUploadButton('.steps-body .avatar button label');
 
@@ -1162,14 +1199,6 @@ if($('body').hasClass('logged-in')) {
     }, function(){
         $('.logged-user .hidden-box').hide();
     });
-
-    if($('.contracts-list.slider').length) {
-        $('.contracts-list.slider').slick({
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            autoplaySpeed: 8000
-        });
-    }
 
     if($('section.open-new-assurance-contact-section input[type="text"].combobox').length) {
         $('section.open-new-assurance-contact-section input[type="text"].combobox').attr('placeholder', 'Search for a clinic...');
@@ -1908,20 +1937,55 @@ function customCreateContractErrorHandle(el, text) {
     el.parent().find('> label').append('<span class="error-in-label">'+text+'</span>');
 }
 
+function onWindowLoadPageData() {
+    if($('body').hasClass('logged-in')) {
+
+    }
+}
+
 async function onDocumentReadyPageData() {
     if($('body').hasClass('logged-in')) {
         if($('body').hasClass('congratulations')) {
             var next_transfer_timestamp = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
             if($('.converted-date').length > 0) {
                 var date_obj = new Date(next_transfer_timestamp * 1000);
-                $('.converted-date').html(date_obj.getDate() + '/' + (date_obj.getMonth() + 1) + '/' + date_obj.getFullYear());
+                $('.converted-date').html(dateObjToFormattedDate(date_obj));
             }
             initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
+        } else if ($('body').hasClass('my-contracts')) {
+            initDataTable();
+
+            var table_trs_with_timestamp = $('.table-container table tr[data-timestamp-signed]');
+            var smart_contract_withdraw_period = parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
+            var now_timestamp = Math.round((new Date()).getTime() / 1000);
+
+            for(var i = 0, len = table_trs_with_timestamp.length; i < len; i+=1) {
+                var time_passed_since_creation = now_timestamp - parseInt(table_trs_with_timestamp.eq(i).attr('data-timestamp-signed'));
+                if(time_passed_since_creation > smart_contract_withdraw_period) {
+                    var remainder = time_passed_since_creation % smart_contract_withdraw_period;
+                    var next_payment_timestamp_date_obj = new Date((now_timestamp + smart_contract_withdraw_period - remainder) * 1000);
+                } else {
+                    var next_payment_timestamp_date_obj = new Date((now_timestamp + smart_contract_withdraw_period - time_passed_since_creation) * 1000);
+                }
+
+                table_trs_with_timestamp.eq(i).find('.next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
+            }
+        } else if ($('body').hasClass('patient-access')) {
+            //make all contracts in the slider with same height
+            if ($('.contract-tile').length) {
+                var max_height = 0;
+                for (var i = 0, len = $('.contract-tile .tile-wrapper').length; i < len; i += 1) {
+                    if ($('.contract-tile .tile-wrapper').eq(i).outerHeight() > max_height) {
+                        max_height = $('.contract-tile .tile-wrapper').eq(i).outerHeight();
+                    }
+                }
+                $('.contract-tile .tile-wrapper').outerHeight(max_height);
+            }
         }else if($('body').hasClass('patient-contract-view')) {
             var next_transfer_timestamp = parseInt($('.contract-body').attr('data-time-left-next-transfer')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
             if($('.converted-date').length > 0) {
                 var date_obj = new Date(next_transfer_timestamp * 1000);
-                $('.converted-date').html(date_obj.getDate() + '/' + (date_obj.getMonth() + 1) + '/' + date_obj.getFullYear());
+                $('.converted-date').html(dateObjToFormattedDate(date_obj));
             }
             initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
 
@@ -1929,7 +1993,7 @@ async function onDocumentReadyPageData() {
         }else if($('body').hasClass('contract-proposal')) {
             if ($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined) {
                 var date_obj = new Date((parseInt($('.contract-proposal.section').attr('data-created-at-timestamp')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw())) * 1000);
-                $('.active-until').html(date_obj.getDate() + '/' + (date_obj.getMonth() + 1) + '/' + date_obj.getFullYear());
+                $('.active-until').html(dateObjToFormattedDate(date_obj));
             }
         }
     }
@@ -2174,7 +2238,7 @@ function bindVerifyAddressEvent(keystore_file) {
                                     localStorage.setItem('current-account', JSON.stringify({
                                         address: '0x' + response.address,
                                         type: 'key',
-                                        keystore: response.private_key
+                                        key: response.private_key
                                     }));
                                 }
 
@@ -2248,4 +2312,72 @@ function initTooltips() {
     if($('[data-toggle="tooltip"]')) {
         $('[data-toggle="tooltip"]').tooltip();
     }
+}
+
+function initDataTable()    {
+    if($('table.table.table-without-reorder').length > 0) {
+        if($('table.table.table-without-reorder').hasClass('media-table'))  {
+            $('table.table.table-without-reorder.media-table').DataTable().on('draw.dt', function (){
+                var pagination_id = null;
+                if($(this).attr('data-id-in-action') != undefined) {
+                    pagination_id = $(this).attr('data-id-in-action');
+                }
+                var close_button;
+                if($(this).attr('data-close-btn') == 'false')   {
+                    close_button = false;
+                }else if($(this).attr('data-close-btn') == 'true')   {
+                    close_button = true;
+                }
+                useMediaEvent(pagination_id, close_button);
+            });
+        }else {
+            $('table.table.table-without-reorder').DataTable({
+                sort: false
+            });
+
+            if($('table.table.table-without-reorder').hasClass('my-contracts')) {
+                $('.dataTables_filter input').addClass('custom-input green-arrow-background').attr('placeholder', 'Search for contract');
+            }
+        }
+    }
+    if($('table.table.table-with-reorder').length > 0) {
+        var table = $('table.table.table-with-reorder').DataTable({
+            rowReorder: true
+        });
+        $('table.table.table-with-reorder').addClass('sortable');
+        table.on('row-reorder', function(e, diff, edit) {
+            var order_object = {};
+            for(let i = 0, len = diff.length; i < len; i+=1) {
+                order_object[$(diff[i].node).data('id')] = diff[i].newPosition;
+            }
+            $.ajax({
+                type: 'POST',
+                url: SITE_URL + '/'+$('table.table.table-with-reorder').attr('data-action')+'/update-order',
+                data: {
+                    'order_object' : order_object
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if(response.success)    {
+                        basic.showAlert(response.success, '', true);
+                    }
+                }
+            });
+        });
+    }
+}
+
+function dateObjToFormattedDate(object) {
+    if(object.getDate() < 10) {
+        var date = '0' + object.getDate();
+    } else {
+        var date = object.getDate();
+    }
+
+    if(object.getMonth() + 1 < 10) {
+        var month = '0' + (object.getMonth() + 1);
+    } else {
+        var month = object.getMonth() + 1;
+    }
+    return date + '/' + month + '/' + object.getFullYear();
 }

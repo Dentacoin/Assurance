@@ -2,7 +2,7 @@
     -webkit-box-shadow: $radius;
     -moz-box-shadow: $radius;
     -ms-box-shadow: $radius;
-    box-shadow: $radius;
+    box-shadow: $radius;;
 }
 
 @mixin vertical-align($position: relative) {

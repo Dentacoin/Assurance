@@ -1,6 +1,9 @@
 .manage-privacy-container {
-    .delete, .download {
-        > figure {
+    .delete-local-storage-border-bottom {
+        border-bottom: 3px solid black;
+    }
+    .delete, .download, .delete-local-storage {
+        figure {
             width: 100px;
         }
         .text {

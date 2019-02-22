@@ -276,13 +276,13 @@ var buildCurrentPatientContractHistory = function () {
 
 var onDocumentReadyPageData = function () {
     var _ref15 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee15() {
-        var next_transfer_timestamp, date_obj;
+        var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_creation, remainder, next_payment_timestamp_date_obj, max_height;
         return _regeneratorRuntime.wrap(function _callee15$(_context15) {
             while (1) {
                 switch (_context15.prev = _context15.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context15.next = 39;
+                            _context15.next = 55;
                             break;
                         }
 
@@ -304,66 +304,120 @@ var onDocumentReadyPageData = function () {
                         if ($('.converted-date').length > 0) {
                             date_obj = new Date(next_transfer_timestamp * 1000);
 
-                            $('.converted-date').html(date_obj.getDate() + '/' + (date_obj.getMonth() + 1) + '/' + date_obj.getFullYear());
+                            $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context15.next = 39;
+                        _context15.next = 55;
                         break;
 
                     case 13:
-                        if (!$('body').hasClass('patient-contract-view')) {
-                            _context15.next = 26;
+                        if (!$('body').hasClass('my-contracts')) {
+                            _context15.next = 25;
                             break;
                         }
 
-                        _context15.t4 = parseInt($('.contract-body').attr('data-time-left-next-transfer'));
-                        _context15.t5 = parseInt;
-                        _context15.next = 18;
+                        initDataTable();
+
+                        table_trs_with_timestamp = $('.table-container table tr[data-timestamp-signed]');
+                        _context15.t4 = parseInt;
+                        _context15.next = 19;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
-                    case 18:
-                        _context15.t6 = _context15.sent;
-                        _context15.t7 = (0, _context15.t5)(_context15.t6);
-                        next_transfer_timestamp = _context15.t4 + _context15.t7;
+                    case 19:
+                        _context15.t5 = _context15.sent;
+                        smart_contract_withdraw_period = (0, _context15.t4)(_context15.t5);
+                        now_timestamp = Math.round(new Date().getTime() / 1000);
+
+
+                        for (i = 0, len = table_trs_with_timestamp.length; i < len; i += 1) {
+                            time_passed_since_creation = now_timestamp - parseInt(table_trs_with_timestamp.eq(i).attr('data-timestamp-signed'));
+
+                            if (time_passed_since_creation > smart_contract_withdraw_period) {
+                                remainder = time_passed_since_creation % smart_contract_withdraw_period;
+                                next_payment_timestamp_date_obj = new Date((now_timestamp + smart_contract_withdraw_period - remainder) * 1000);
+                            } else {
+                                next_payment_timestamp_date_obj = new Date((now_timestamp + smart_contract_withdraw_period - time_passed_since_creation) * 1000);
+                            }
+
+                            table_trs_with_timestamp.eq(i).find('.next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
+                        }
+                        _context15.next = 55;
+                        break;
+
+                    case 25:
+                        if (!$('body').hasClass('patient-access')) {
+                            _context15.next = 29;
+                            break;
+                        }
+
+                        //make all contracts in the slider with same height
+                        if ($('.contract-tile').length) {
+                            max_height = 0;
+
+                            for (i = 0, len = $('.contract-tile .tile-wrapper').length; i < len; i += 1) {
+                                if ($('.contract-tile .tile-wrapper').eq(i).outerHeight() > max_height) {
+                                    max_height = $('.contract-tile .tile-wrapper').eq(i).outerHeight();
+                                }
+                            }
+                            $('.contract-tile .tile-wrapper').outerHeight(max_height);
+                        }
+                        _context15.next = 55;
+                        break;
+
+                    case 29:
+                        if (!$('body').hasClass('patient-contract-view')) {
+                            _context15.next = 42;
+                            break;
+                        }
+
+                        _context15.t6 = parseInt($('.contract-body').attr('data-time-left-next-transfer'));
+                        _context15.t7 = parseInt;
+                        _context15.next = 34;
+                        return App.assurance_state_methods.getPeriodToWithdraw();
+
+                    case 34:
+                        _context15.t8 = _context15.sent;
+                        _context15.t9 = (0, _context15.t7)(_context15.t8);
+                        next_transfer_timestamp = _context15.t6 + _context15.t9;
 
                         if ($('.converted-date').length > 0) {
                             date_obj = new Date(next_transfer_timestamp * 1000);
 
-                            $('.converted-date').html(date_obj.getDate() + '/' + (date_obj.getMonth() + 1) + '/' + date_obj.getFullYear());
+                            $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
 
                         cancelContractEventInit();
-                        _context15.next = 39;
+                        _context15.next = 55;
                         break;
 
-                    case 26:
+                    case 42:
                         if (!$('body').hasClass('contract-proposal')) {
-                            _context15.next = 39;
+                            _context15.next = 55;
                             break;
                         }
 
                         if (!($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined)) {
-                            _context15.next = 39;
+                            _context15.next = 55;
                             break;
                         }
 
-                        _context15.t8 = Date;
-                        _context15.t9 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
-                        _context15.t10 = parseInt;
-                        _context15.next = 33;
+                        _context15.t10 = Date;
+                        _context15.t11 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
+                        _context15.t12 = parseInt;
+                        _context15.next = 49;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
-                    case 33:
-                        _context15.t11 = _context15.sent;
-                        _context15.t12 = (0, _context15.t10)(_context15.t11);
-                        _context15.t13 = _context15.t9 + _context15.t12;
-                        _context15.t14 = _context15.t13 * 1000;
-                        date_obj = new _context15.t8(_context15.t14);
+                    case 49:
+                        _context15.t13 = _context15.sent;
+                        _context15.t14 = (0, _context15.t12)(_context15.t13);
+                        _context15.t15 = _context15.t11 + _context15.t14;
+                        _context15.t16 = _context15.t15 * 1000;
+                        date_obj = new _context15.t10(_context15.t16);
 
-                        $('.active-until').html(date_obj.getDate() + '/' + (date_obj.getMonth() + 1) + '/' + date_obj.getFullYear());
+                        $('.active-until').html(dateObjToFormattedDate(date_obj));
 
-                    case 39:
+                    case 55:
                     case "end":
                         return _context15.stop();
                 }
@@ -772,7 +826,9 @@ $(document).ready(function () {
     onDocumentReadyPageData();
 });
 
-$(window).on('load', function () {});
+$(window).on('load', function () {
+    onWindowLoadPageData();
+});
 
 $(window).on('resize', function () {});
 
@@ -1278,6 +1334,14 @@ if ($('body').hasClass('home')) {
             console.log($(this).val());
         });
     }
+
+    if ($('.contracts-list.slider').length) {
+        $('.contracts-list.slider').slick({
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            autoplaySpeed: 8000
+        });
+    }
 } else if ($('body').hasClass('support-guide')) {
     if ($('.support-guide-slider').length) {
         $('.support-guide-slider').slick({
@@ -1338,6 +1402,33 @@ if ($('body').hasClass('logged-in')) {
                 event.preventDefault();
             }
         });
+    } else if ($('body').hasClass('manage-privacy')) {
+        if (localStorage.getItem('current-account') != null) {
+            var title;
+            var text;
+            var btn_label;
+            var alert_response;
+
+            if (JSON.parse(localStorage.getItem('current-account')).type == 'key') {
+                title = 'Delete my private key';
+                text = 'Your private key is locally stored in your browser for easier and faster transactions. If you are sure about that, just click the button below.';
+                btn_label = 'DELETE MY PRIVATE KEY';
+                alert_response = 'Your private key has been deleted from your browser successfully.';
+            } else if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
+                title = 'Delete my keystore file';
+                text = 'Your private key is locally stored in your browser for easier and faster transactions. If you are sure about that, just click the button below.';
+                btn_label = 'DELETE MY KEYSTORE FILE';
+                alert_response = 'Your keystore file has been deleted from your browser successfully.';
+            }
+
+            $('.delete-local-storage').html('<div class="padding-bottom-50 padding-top-60 delete-local-storage-border-bottom"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block-top"><img alt="Cancel icon" src="/assets/uploads/cancel.svg"/></figure><div class="text inline-block-top"><h3 class="fs-20 padding-bottom-20 lato-bold dark-color">' + title + '</h3><div class="fs-16 dark-color">' + text + '</div></div><div class="btn-container text-right padding-top-30"><a href="javascript:void(0);" class="white-blue-green-btn clear-current-account-local-storage" onclick="return confirm(\'Are you sure you want to continue?\')">' + btn_label + '</a></div></div>');
+
+            $('.clear-current-account-local-storage').click(function () {
+                localStorage.removeItem('current-account');
+                $('.delete-local-storage').html('');
+                basic.showAlert(alert_response, '', true);
+            });
+        }
     } else if ($('body').hasClass('my-profile')) {
         $('.my-profile-page-content .dropdown-hidden-menu button').click(function () {
             var this_btn = $(this);
@@ -1900,14 +1991,6 @@ if ($('body').hasClass('logged-in')) {
     }, function () {
         $('.logged-user .hidden-box').hide();
     });
-
-    if ($('.contracts-list.slider').length) {
-        $('.contracts-list.slider').slick({
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            autoplaySpeed: 8000
-        });
-    }
 
     if ($('section.open-new-assurance-contact-section input[type="text"].combobox').length) {
         $('section.open-new-assurance-contact-section input[type="text"].combobox').attr('placeholder', 'Search for a clinic...');
@@ -2760,6 +2843,10 @@ function customCreateContractErrorHandle(el, text) {
     el.parent().find('> label').append('<span class="error-in-label">' + text + '</span>');
 }
 
+function onWindowLoadPageData() {
+    if ($('body').hasClass('logged-in')) {}
+}
+
 function initFlipClockTimer(time_left) {
     var clock;
     if (time_left > 0) {
@@ -3003,7 +3090,7 @@ function bindVerifyAddressEvent(keystore_file) {
                                     localStorage.setItem('current-account', JSON.stringify({
                                         address: '0x' + response.address,
                                         type: 'key',
-                                        keystore: response.private_key
+                                        key: response.private_key
                                     }));
                                 }
 
@@ -3044,4 +3131,72 @@ function initTooltips() {
     if ($('[data-toggle="tooltip"]')) {
         $('[data-toggle="tooltip"]').tooltip();
     }
+}
+
+function initDataTable() {
+    if ($('table.table.table-without-reorder').length > 0) {
+        if ($('table.table.table-without-reorder').hasClass('media-table')) {
+            $('table.table.table-without-reorder.media-table').DataTable().on('draw.dt', function () {
+                var pagination_id = null;
+                if ($(this).attr('data-id-in-action') != undefined) {
+                    pagination_id = $(this).attr('data-id-in-action');
+                }
+                var close_button;
+                if ($(this).attr('data-close-btn') == 'false') {
+                    close_button = false;
+                } else if ($(this).attr('data-close-btn') == 'true') {
+                    close_button = true;
+                }
+                useMediaEvent(pagination_id, close_button);
+            });
+        } else {
+            $('table.table.table-without-reorder').DataTable({
+                sort: false
+            });
+
+            if ($('table.table.table-without-reorder').hasClass('my-contracts')) {
+                $('.dataTables_filter input').addClass('custom-input green-arrow-background').attr('placeholder', 'Search for contract');
+            }
+        }
+    }
+    if ($('table.table.table-with-reorder').length > 0) {
+        var table = $('table.table.table-with-reorder').DataTable({
+            rowReorder: true
+        });
+        $('table.table.table-with-reorder').addClass('sortable');
+        table.on('row-reorder', function (e, diff, edit) {
+            var order_object = {};
+            for (var i = 0, len = diff.length; i < len; i += 1) {
+                order_object[$(diff[i].node).data('id')] = diff[i].newPosition;
+            }
+            $.ajax({
+                type: 'POST',
+                url: SITE_URL + '/' + $('table.table.table-with-reorder').attr('data-action') + '/update-order',
+                data: {
+                    'order_object': order_object
+                },
+                dataType: 'json',
+                success: function success(response) {
+                    if (response.success) {
+                        basic.showAlert(response.success, '', true);
+                    }
+                }
+            });
+        });
+    }
+}
+
+function dateObjToFormattedDate(object) {
+    if (object.getDate() < 10) {
+        var date = '0' + object.getDate();
+    } else {
+        var date = object.getDate();
+    }
+
+    if (object.getMonth() + 1 < 10) {
+        var month = '0' + (object.getMonth() + 1);
+    } else {
+        var month = object.getMonth() + 1;
+    }
+    return date + '/' + month + '/' + object.getFullYear();
 }

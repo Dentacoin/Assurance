@@ -6,13 +6,14 @@
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1 fs-0">
                     @include('partials.my-profile-menu')
                     <div class="my-profile-page-content inline-block-top">
-                        <div class="profile-page-title padding-bottom-50">
+                        <div class="profile-page-title">
                             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                                 <img alt="Privacy icon" src="/assets/uploads/privacy-icon.svg"/>
                             </figure>
                             <h2 class="fs-24 lato-bold inline-block">Manage privacy</h2>
                         </div>
-                        <div class="delete padding-bottom-50 fs-0">
+                        <div class="delete-local-storage fs-0"></div>
+                        <div class="delete padding-bottom-50 padding-top-60 fs-0">
                             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block-top">
                                 <img alt="Cancel icon" src="/assets/uploads/cancel.svg"/>
                             </figure>

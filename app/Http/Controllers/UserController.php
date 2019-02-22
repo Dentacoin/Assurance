@@ -20,7 +20,11 @@ class UserController extends Controller {
     }
 
     protected function getMyContractsView()     {
-        return view('pages/logged-user/my-contracts');
+        if($this->checkPatientSession()) {
+            return view('pages/logged-user/my-contracts', ['other_side_label' => 'Dentist', 'contracts' => TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->sortByDesc('created_at')]);
+        } else if($this->checkDentistSession()) {
+            return view('pages/logged-user/my-contracts', ['other_side_label' => 'Patient', 'contracts' => TemporallyContract::where(array('dentist_id' => (new APIRequestsController())->getUserData(session('logged_user')['id'])))->get()->sortByDesc('created_at')]);
+        }
     }
 
     protected function getForgottenPasswordView() {

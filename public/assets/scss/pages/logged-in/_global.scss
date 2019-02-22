@@ -61,8 +61,10 @@ body.logged-in {
         font-size: 16px;
         .profile-page-title {
             font-size: 0;
-            img {
-                width: 30px;
+            > figure {
+                img {
+                    width: 30px;
+                }
             }
             h2 {
                 width: calc(100% - 30px);

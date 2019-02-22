@@ -43,6 +43,7 @@ mix.scripts([
     'public/assets/libs/signature-pad/signature-pad.js',
     'public/assets/libs/jquery-animate-number/jquery.animateNumber.min.js',
     'public/assets/libs/FlipClock-master/compiled/flipclock.min.js',
+    'node_modules/datatables.net/js/jquery.dataTables.min.js',
 ], 'public/dist/js/front-libs-script.js');
 
 mix.babel([

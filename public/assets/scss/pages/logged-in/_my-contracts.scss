@@ -1,0 +1,96 @@
+.my-contracts {
+    .table-container {
+        padding-top: 30px;
+        .dataTables_empty {
+            text-align: center;
+        }
+        table {
+            -webkit-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
+            -moz-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
+            -ms-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
+            box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3
+        }
+        .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+            border: 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .table>thead>tr>th {
+            border-bottom: 3px solid $light_gray;
+            font-size: 18px;
+            vertical-align: top;
+            padding-top: 20px;
+        }
+        .table>tbody>tr {
+            cursor: pointer;
+            td {
+                padding-bottom: 20px;
+                padding-top: 15px;
+                vertical-align: middle;
+            }
+        }
+        .table-striped>tbody>tr:nth-of-type(odd) {
+            background-color: transparent;
+        }
+        .dataTables_length, .dataTables_info {
+            display: none;
+        }
+        .dataTables_filter {
+            text-align: center;
+            padding-bottom: 15px;
+            label {
+                font-size: 0;
+                display: block;
+                input {
+                    font-size: 16px;
+                    width: 100%;
+                    display: block;
+                    max-width: 350px;
+                    margin: 0 auto;
+                    font-weight: normal;
+                }
+            }
+        }
+        .dataTables_paginate {
+            text-align: center;
+            a {
+                display: inline-block;
+                padding: 0 10px;
+                cursor: pointer;
+            }
+            .disabled {
+                display: none;
+            }
+        }
+        .avatar-and-name {
+            white-space: nowrap;
+            figure {
+                width: 45px;
+                padding-right: 5px;
+            }
+        }
+        .status {
+            text-align: left;
+            .alike-btn {
+                font-size: 16px;
+                color: white;
+                padding: 5px 15px;
+                width: 90px;
+                display: inline-block;
+                text-align: center;
+                @include rounded(4px);
+                &.active {
+                    background-color: $active;
+                }
+                &.pending {
+                    background-color: $pending;
+                }
+                &.awaiting-payment {
+                    background-color: $awaiting_payment_awaiting_approval;
+                }
+                &.awaiting-approval {
+                    background-color: $awaiting_payment_awaiting_approval;
+                }
+            }
+        }
+    }
+}
