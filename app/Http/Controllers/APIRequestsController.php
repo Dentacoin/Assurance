@@ -294,13 +294,14 @@ class APIRequestsController extends Controller {
     public function decryptFile($key, $html) {
         $curl = curl_init();
         $json = '{"private_key":"'.$key.'", "encrypted_html":"'+$html+'"}';
+        var_dump($json);
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
             CURLOPT_URL => 'https://dev-test.dentacoin.com/decrypt',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => $json,
-            CURLOPT_BUFFERSIZE => 84000
+            CURLOPT_BUFFERSIZE => 840000
         ));
 
 
@@ -311,8 +312,8 @@ class APIRequestsController extends Controller {
 
         $resp = json_decode(curl_exec($curl));
 
-        curl_error($curl);
-        curl_errno($curl);
+        var_dump(curl_error($curl));
+        var_dump(curl_errno($curl));
 
         curl_close($curl);
 
