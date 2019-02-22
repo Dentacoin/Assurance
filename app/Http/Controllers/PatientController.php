@@ -216,7 +216,6 @@ class PatientController extends Controller {
             //if user trying to fake the contract slug
             return abort(404);
         }
-        die(123);
 
         //update CoreDB api data for this patient
         if(isset($data['country']) || isset($data['dcn_address'])) {
@@ -235,9 +234,12 @@ class PatientController extends Controller {
                     return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'Wallet Address is required']);
                 }
             }
+            var_dump($curl_arr);
 
             //handle the API response
             $api_response = (new APIRequestsController())->updateUserData($curl_arr);
+            var_dump($api_response);
+            die('asdsad');
             if(!$api_response) {
                 return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['errors_response' => $api_response['errors']]);
             }
