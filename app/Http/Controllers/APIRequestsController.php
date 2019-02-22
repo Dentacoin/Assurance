@@ -299,8 +299,11 @@ class APIRequestsController extends Controller {
             CURLOPT_POST => 1,
             CURLOPT_URL => 'https://dev-test.dentacoin.com/decrypt',
             CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POSTFIELDS => $json
+            CURLOPT_POSTFIELDS => $json,
+            CURLOPT_BUFFERSIZE => 84000
         ));
+
+
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
             'Content-Type: application/json',
             'Content-Length: ' . strlen($json))
