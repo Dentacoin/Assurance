@@ -25,7 +25,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::get('/wallet-instructions', 'WalletInstructionsController@getView')->name('wallet-instructions');
 
     Route::get('/test', function() {
-        var_dump((new \App\Http\Controllers\UserController())->readAndDecryptIPFSZip('Qmcsujah2sVjkrvn9dUzhWF2zQJ1csJnbEZBcmbRPfywmN', '16590c4613e7202cf0c19fda8ffc44e0e3d01ee1c28972192420bb4fec2233e7', null, true));
         //var_dump((new \App\Http\Controllers\Controller())->fillCountriesFromCsv());
         //var_dump((new \App\Http\Controllers\Controller())->testZipCreation());
         //var_dump((new \App\Http\Controllers\APIRequestsController())->getAllEnums());

@@ -244,33 +244,30 @@ class UserController extends Controller {
     }
 
     protected function readAndDecryptIPFSZip(Request $request) {
-        //ipfs_hash, $key, $dentist = null, $patient = null
         $this->validate($request, [
             'ipfs_hash' => 'required',
-            'key' => 'required',
             'type' => 'required'
         ], [
             'ipfs_hash.required' => 'IPFS hash is required.',
-            'key.required' => 'Key is required.',
             'type.required' => 'Type is required.'
         ]);
 
-        $data = $this->clearPostData($request);
+        //$data = $this->clearPostData($request);
         $response = array();
 
-        $folder_path = ZIP_EXTRACTS . $data['ipfs_hash'] . '-' . time();
+        $folder_path = ZIP_EXTRACTS . $request->input('ipfs_hash') . '-' . time();
         if (!file_exists($folder_path)) {
             try {
                 mkdir($folder_path, 0777, true);
-                file_put_contents($folder_path . DS . $data['ipfs_hash'] . '.zip', fopen('http://ipfs.io/ipfs/' . $data['ipfs_hash'], 'r'));
+                file_put_contents($folder_path . DS . $request->input('ipfs_hash') . '.zip', fopen('http://ipfs.io/ipfs/' . $request->input('ipfs_hash'), 'r'));
 
                 $zipper = new \Chumper\Zipper\Zipper;
-                $zipper->make($folder_path . DS . $data['ipfs_hash'] . '.zip')->extractTo($folder_path);
+                $zipper->make($folder_path . DS . $request->input('ipfs_hash') . '.zip')->extractTo($folder_path);
                 $zipper->close();
 
-                if($data['type'] == 'dentist') {
+                if($request->input('type') == 'dentist') {
                     $file_name = 'dentist-pdf-file.pdf';
-                } else if($data['type'] == 'patient') {
+                } else if($request->input('type') == 'patient') {
                     $file_name = 'patient-pdf-file.pdf';
                 }
 

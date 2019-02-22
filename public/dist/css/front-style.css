@@ -6408,10 +6408,12 @@ section.congratulation-and-time-section {
     font-size: 18px;
     vertical-align: top;
     padding-top: 20px; }
-  .my-contracts .table-container .table > tbody > tr > td {
-    padding-bottom: 20px;
-    padding-top: 15px;
-    vertical-align: middle; }
+  .my-contracts .table-container .table > tbody > tr {
+    cursor: pointer; }
+    .my-contracts .table-container .table > tbody > tr td {
+      padding-bottom: 20px;
+      padding-top: 15px;
+      vertical-align: middle; }
   .my-contracts .table-container .table-striped > tbody > tr:nth-of-type(odd) {
     background-color: transparent; }
   .my-contracts .table-container .dataTables_length, .my-contracts .table-container .dataTables_info {
@@ -6443,13 +6445,14 @@ section.congratulation-and-time-section {
       width: 45px;
       padding-right: 5px; }
   .my-contracts .table-container .status {
-    text-align: center; }
+    text-align: left; }
     .my-contracts .table-container .status .alike-btn {
       font-size: 16px;
       color: white;
       padding: 5px 15px;
       width: 90px;
       display: inline-block;
+      text-align: center;
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
       -ms-border-radius: 4px;

@@ -11,7 +11,7 @@
                 <nav class="col-xs-12 text-center contract-single-page-nav module">
                     <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
                         <li class="inline-block">
-                            <a href="//ipfs.io/ipfs/{{$contract->document_hash}}" itemprop="url" target="_blank">
+                            <a href="javascript:void(0);" class="contract-decrypt" data-hash="{{$contract->document_hash}}" data-type="patient" itemprop="url" target="_blank">
                                 <span itemprop="name">Contract sample (pdf)</span>
                             </a>
                         </li>

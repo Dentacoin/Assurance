@@ -1200,6 +1200,17 @@ if($('body').hasClass('logged-in')) {
         $('.logged-user .hidden-box').hide();
     });
 
+    if($('.contract-decrypt').length) {
+        $('.contract-decrypt').click(async function() {
+            var this_btn = $(this);
+            var encrypted_pdf_content = await getEncryptedContractPdfContent(this_btn.attr('data-hash'), this_btn.attr('data-type'));
+            var decrypted_pdf_content = await getDecryptedPdfContent(encrypted_pdf_content, '16590c4613e7202cf0c19fda8ffc44e0e3d01ee1c28972192420bb4fec2233e7');
+
+            console.log(encrypted_pdf_content, 'encrypted_pdf_content');
+            console.log(decrypted_pdf_content, 'decrypted_pdf_content');
+        });
+    }
+
     if($('section.open-new-assurance-contact-section input[type="text"].combobox').length) {
         $('section.open-new-assurance-contact-section input[type="text"].combobox').attr('placeholder', 'Search for a clinic...');
     }
@@ -2380,4 +2391,34 @@ function dateObjToFormattedDate(object) {
         var month = object.getMonth() + 1;
     }
     return date + '/' + month + '/' + object.getFullYear();
+}
+
+async function getEncryptedContractPdfContent(hash, type) {
+    return await $.ajax({
+        type: 'POST',
+        url: '/decrypt-contract',
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            ipfs_hash: hash,
+            type: type
+        }
+    });
+}
+
+async function getDecryptedPdfContent(encrypted_html, key) {
+    return await $.ajax({
+        type: 'POST',
+        url: '/decrypt-data-plain-key',
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            encrypted_html: encrypted_html,
+            private_key: key
+        }
+    });
 }
