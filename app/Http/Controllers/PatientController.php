@@ -244,14 +244,16 @@ class PatientController extends Controller {
 
         var_dump((new APIRequestsController())->getUserData(session('logged_user')['id'])->dcn_address);
         var_dump((new APIRequestsController())->getUserData($contract->dentist_id)->dcn_address);
-        var_dump($patient_pub_key);
-        var_dump($dentist_pub_key);
 
-        die('asd');
 
         //getting the public key for this address stored in the assurance db (this table is getting updated by wallet.dentacoin.com)
         $patient_pub_key = PublicKey::where(array('address' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->dcn_address))->get()->first();
         $dentist_pub_key = PublicKey::where(array('address' => (new APIRequestsController())->getUserData($contract->dentist_id)->dcn_address))->get()->first();
+
+        var_dump($patient_pub_key);
+        var_dump($dentist_pub_key);
+
+        die('asd');
 
         if(empty($patient_pub_key) || empty($dentist_pub_key)) {
             return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'No such public keys in the database.']);
