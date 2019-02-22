@@ -290,7 +290,7 @@ class APIRequestsController extends Controller {
         }
     }
 
-    //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
+    /*//this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
     public function decryptFile($key, $html) {
         $curl = curl_init();
         $json = '{"private_key":"'.$key.'", "encrypted_html":"'.$html.'"}';
@@ -319,10 +319,10 @@ class APIRequestsController extends Controller {
 
         var_dump($resp);
 
-        /*if(!empty($resp))   {
+        if(!empty($resp))   {
             return $resp;
         }else {
             return false;
-        }*/
-    }
+        }
+    }*/
 }

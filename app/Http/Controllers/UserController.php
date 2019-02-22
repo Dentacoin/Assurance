@@ -243,29 +243,56 @@ class UserController extends Controller {
         die();
     }
 
-    public function readAndDecryptIPFSZip($ipfs_hash, $key, $dentist = null, $patient = null) {
-        $folder_path = ZIP_EXTRACTS . $ipfs_hash . '-' . session('logged_user')['id'];
+    public function readAndDecryptIPFSZip(Request $request) {
+        //ipfs_hash, $key, $dentist = null, $patient = null
+        $this->validate($request, [
+            'ipfs_hash' => 'required',
+            'key' => 'required',
+            'type' => 'required'
+        ], [
+            'ipfs_hash.required' => 'IPFS hash is required.',
+            'key.required' => 'Key is required.',
+            'type.required' => 'Type is required.'
+        ]);
+
+        $data = $this->clearPostData($request);
+        $response = array();
+
+        $folder_path = ZIP_EXTRACTS . $data['ipfs_hash'] . '-' . time();
         if (!file_exists($folder_path)) {
-            mkdir($folder_path, 0777, true);
-            file_put_contents($folder_path . DS . $ipfs_hash . '.zip', fopen('http://ipfs.io/ipfs/' . $ipfs_hash, 'r'));
+            try {
+                mkdir($folder_path, 0777, true);
+                file_put_contents($folder_path . DS . $data['ipfs_hash'] . '.zip', fopen('http://ipfs.io/ipfs/' . $data['ipfs_hash'], 'r'));
 
-            $zipper = new \Chumper\Zipper\Zipper;
-            $zipper->make($folder_path . DS . $ipfs_hash . '.zip')->extractTo($folder_path);
-            $zipper->close();
+                $zipper = new \Chumper\Zipper\Zipper;
+                $zipper->make($folder_path . DS . $data['ipfs_hash'] . '.zip')->extractTo($folder_path);
+                $zipper->close();
 
-            if($dentist) {
-                $file_name = 'dentist-pdf-file.pdf';
-            } else if($patient) {
-                $file_name = 'patient-pdf-file.pdf';
+                if($data['type'] == 'dentist') {
+                    $file_name = 'dentist-pdf-file.pdf';
+                } else if($data['type'] == 'patient') {
+                    $file_name = 'patient-pdf-file.pdf';
+                }
+
+                $parser = new \Smalot\PdfParser\Parser();
+                $response['success'] = $parser->parseFile($folder_path . DS . $file_name)->getText();
+
+                //delete the temp file in zip-contracts
+                array_map('unlink', glob($folder_path . '/*.*'));
+                rmdir($folder_path);
+
+                echo json_encode($response);
+                die();
+            } catch(Exception $e) {
+                $response['error'] = 'Something went wrong, please try again later.';
+                echo json_encode($response);
+                die();
             }
-
-            $parser = new \Smalot\PdfParser\Parser();
-            $encrypted_pdf = $parser->parseFile($folder_path . DS . $file_name)->getText();
-
-            /*$encrypted_html_by_patient = */(new \App\Http\Controllers\APIRequestsController())->decryptFile($key, $encrypted_pdf);
+        } else {
+            $response['error'] = 'Please wait few seconds and try again.';
+            echo json_encode($response);
             die();
         }
-        die('asd');
     }
 
     protected function forgottenPasswordSubmit(Request $request) {
