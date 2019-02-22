@@ -19,13 +19,13 @@ class HomeController extends Controller
         ];
         session(['logged_user' => $session_arr]);*/
 
-        $session_arr = [
+        /*$session_arr = [
             'token' => 'enYh2KchyDUJdfslM9Xfd67qhjPQnIOKzx4ozEnqJECECb04PA1EFOs2KDYg',
             'id' => '68244',
             'type' => 'patient',
             'have_contracts' => true
         ];
-        session(['logged_user' => $session_arr]);
+        session(['logged_user' => $session_arr]);*/
 
         if((new UserController())->checkDentistSession()) {
             return (new DentistController())->getView();
