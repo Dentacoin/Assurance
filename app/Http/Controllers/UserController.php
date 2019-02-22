@@ -272,7 +272,7 @@ class UserController extends Controller {
                 }
 
                 $parser = new \Smalot\PdfParser\Parser();
-                $response['success'] = $parser->parseFile($folder_path . DS . $file_name)->getText();
+                $response['success'] = str_replace(PHP_EOL, '', $parser->parseFile($folder_path . DS . $file_name)->getText());
 
                 //delete the temp file in zip-contracts
                 array_map('unlink', glob($folder_path . '/*.*'));
