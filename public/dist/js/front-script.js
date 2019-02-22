@@ -2077,17 +2077,43 @@ if ($('body').hasClass('logged-in')) {
 
                         case 3:
                             encrypted_pdf_content = _context9.sent;
-                            _context9.next = 6;
+
+                            if (!encrypted_pdf_content.success) {
+                                _context9.next = 11;
+                                break;
+                            }
+
+                            _context9.next = 7;
                             return getDecryptedPdfContent(encrypted_pdf_content.success, '16590c4613e7202cf0c19fda8ffc44e0e3d01ee1c28972192420bb4fec2233e7');
 
-                        case 6:
+                        case 7:
                             decrypted_pdf_content = _context9.sent;
 
+                            if (decrypted_pdf_content.success) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/render-pdf',
+                                    dataType: 'json',
+                                    data: {
+                                        decrypted_data: decrypted_pdf_content.success
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function success(response) {}
+                                });
+                            } else if (decrypted_pdf_content.error) {
+                                basic.showAlert(decrypted_pdf_content.error, '', true);
+                            }
+                            _context9.next = 12;
+                            break;
 
-                            console.log(encrypted_pdf_content, 'encrypted_pdf_content');
-                            console.log(decrypted_pdf_content, 'decrypted_pdf_content');
+                        case 11:
+                            if (encrypted_pdf_content.error) {
+                                basic.showAlert(encrypted_pdf_content.error, '', true);
+                            }
 
-                        case 9:
+                        case 12:
                         case "end":
                             return _context9.stop();
                     }

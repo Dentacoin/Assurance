@@ -1204,10 +1204,30 @@ if($('body').hasClass('logged-in')) {
         $('.contract-decrypt').click(async function() {
             var this_btn = $(this);
             var encrypted_pdf_content = await getEncryptedContractPdfContent(this_btn.attr('data-hash'), this_btn.attr('data-type'));
-            var decrypted_pdf_content = await getDecryptedPdfContent(encrypted_pdf_content.success, '16590c4613e7202cf0c19fda8ffc44e0e3d01ee1c28972192420bb4fec2233e7');
-
-            console.log(encrypted_pdf_content, 'encrypted_pdf_content');
-            console.log(decrypted_pdf_content, 'decrypted_pdf_content');
+            if(encrypted_pdf_content.success) {
+                //DYNAMIZE THIS PRIVATE KEY TO READ FROM LOCAL STORAGE OR MAKE THEM TO UPLOAD IT
+                var decrypted_pdf_content = await getDecryptedPdfContent(encrypted_pdf_content.success, '16590c4613e7202cf0c19fda8ffc44e0e3d01ee1c28972192420bb4fec2233e7');
+                if(decrypted_pdf_content.success) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/render-pdf',
+                        dataType: 'json',
+                        data: {
+                            decrypted_data: decrypted_pdf_content.success
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (response) {
+                            
+                        }
+                    });
+                } else if(decrypted_pdf_content.error) {
+                    basic.showAlert(decrypted_pdf_content.error, '', true);
+                }
+            } else if(encrypted_pdf_content.error) {
+                basic.showAlert(encrypted_pdf_content.error, '', true);
+            }
         });
     }
 

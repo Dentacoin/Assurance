@@ -292,6 +292,11 @@ class UserController extends Controller {
         }
     }
 
+    protected function renderPdf(Request $request) {
+        var_dump($request->input());
+        die();
+    }
+
     protected function forgottenPasswordSubmit(Request $request) {
         var_dump($request->input());
         die();
