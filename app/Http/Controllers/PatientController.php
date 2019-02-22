@@ -50,8 +50,6 @@ class PatientController extends Controller {
     public function getPatientAccess()    {
         if((new UserController())->checkSession()) {
             if(filter_var(session('logged_user')['have_contracts'], FILTER_VALIDATE_BOOLEAN)) {
-                var_dump(session('logged_user'));
-                die();
                 return view('pages/logged-user/patient/have-contracts', ['contracts' => TemporallyContract::where(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->sortByDesc('created_at'), 'clinics' => (new APIRequestsController())->getAllClinicsByName()]);
             } else {
                 //IF PATIENT HAVE NO EXISTING CONTRACTS
