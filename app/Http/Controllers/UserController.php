@@ -243,10 +243,30 @@ class UserController extends Controller {
         die();
     }
 
-    public function readAndDecryptIPFSZip() {
-        $zipper = new \Chumper\Zipper\Zipper;
-        $zipper->make('http://ipfs.io/ipfs/QmemrNgSok8nPcbWBKq9e41pr3zwxuS7Nxeqth9SUrtiUY')->extractTo(ZIP_EXTRACTS);
-        $zipper->close();
+    public function readAndDecryptIPFSZip($ipfs_hash, $key, $dentist = null, $patient = null) {
+        $folder_path = ZIP_EXTRACTS . $ipfs_hash . '-' . session('logged_user')['id'];
+        if (!file_exists($folder_path)) {
+            mkdir($folder_path, 0777, true);
+            file_put_contents($folder_path . DS . $ipfs_hash . '.zip', fopen('http://ipfs.io/ipfs/' . $ipfs_hash, 'r'));
+
+            $zipper = new \Chumper\Zipper\Zipper;
+            $zipper->make($folder_path . DS . $ipfs_hash . '.zip')->extractTo($folder_path);
+            $zipper->close();
+
+            if($dentist) {
+                $file_name = 'dentist-pdf-file.pdf';
+            } else if($patient) {
+                $file_name = 'patient-pdf-file.pdf';
+            }
+
+            $parser = new \Smalot\PdfParser\Parser();
+            $encrypted_pdf = $parser->parseFile($folder_path . DS . $file_name)->getText();
+
+            $encrypted_html_by_patient = (new \App\Http\Controllers\APIRequestsController())->decryptFile($key, $encrypted_pdf);
+            var_dump($encrypted_html_by_patient);
+            die();
+        }
+        die('asd');
     }
 
     protected function forgottenPasswordSubmit(Request $request) {

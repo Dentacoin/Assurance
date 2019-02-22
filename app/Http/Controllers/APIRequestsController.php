@@ -291,13 +291,13 @@ class APIRequestsController extends Controller {
     }
 
     //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
-    public function dencryptFile($key, $html) {
+    public function decryptFile($key, $html) {
         $curl = curl_init();
-        $json = '{"private_key":"'.$key.'", "html":"'.$html.'"}';
+        $json = '{"private_key":"'.$key.'", "encrypted_html":"'.$html.'"}';
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://dev-test.dentacoin.com/dencrypt',
+            CURLOPT_URL => 'https://dev-test.dentacoin.com/decrypt',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => $json
         ));

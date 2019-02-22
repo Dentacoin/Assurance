@@ -14,7 +14,8 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
         "mews/captcha": "~2.0",
-        "roumen/sitemap": "^2.6"
+        "roumen/sitemap": "^2.6",
+        "smalot/pdfparser": "^0.14.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
