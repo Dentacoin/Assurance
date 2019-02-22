@@ -243,6 +243,12 @@ class UserController extends Controller {
         die();
     }
 
+    public function readAndDecryptIPFSZip() {
+        $zipper = new \Chumper\Zipper\Zipper;
+        $zipper->make('http://ipfs.io/ipfs/QmemrNgSok8nPcbWBKq9e41pr3zwxuS7Nxeqth9SUrtiUY')->extractTo(ZIP_EXTRACTS);
+        $zipper->close();
+    }
+
     protected function forgottenPasswordSubmit(Request $request) {
         var_dump($request->input());
         die();
