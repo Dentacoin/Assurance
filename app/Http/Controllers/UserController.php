@@ -243,7 +243,7 @@ class UserController extends Controller {
         die();
     }
 
-    public function readAndDecryptIPFSZip(Request $request) {
+    protected function readAndDecryptIPFSZip(Request $request) {
         //ipfs_hash, $key, $dentist = null, $patient = null
         $this->validate($request, [
             'ipfs_hash' => 'required',

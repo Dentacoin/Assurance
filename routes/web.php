@@ -90,6 +90,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/update-account', 'UserController@updateAccount')->middleware('HandleUserSession')->name('update-account');
 
+    Route::post('/decrypt-contract', 'UserController@readAndDecryptIPFSZip')->middleware('HandleUserSession')->name('decrypt-contract');
+
     Route::post('/update-contract-status', 'UserController@updateContractStatus')->middleware('HandleUserSession')->name('update-contract-status');
 
     Route::post('/update-public-keys', 'UserController@updatePublicKeys')->middleware('HandleUserSession')->name('update-public-keys');
