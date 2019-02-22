@@ -215,8 +215,15 @@ class PatientController extends Controller {
         //getting the public key for this address stored in the assurance db (this table is getting updated by wallet.dentacoin.com)
         $patient_pub_key = PublicKey::where(array('address' => $logged_patient->dcn_address))->get()->first();
         $dentist_pub_key = PublicKey::where(array('address' => (new APIRequestsController())->getUserData($contract->dentist_id)->dcn_address))->get()->first();
+
+        var_dump($logged_patient->dcn_address);
+        var_dump((new APIRequestsController())->getUserData($contract->dentist_id)->dcn_address);
+
+        var_dump($patient_pub_key);
+        var_dump($dentist_pub_key);
+        die();
         if(empty($patient_pub_key) || empty($dentist_pub_key)) {
-            return redirect()->route('patient-access', ['slug' => $data['contract']])->with(['error' => 'No such public keys in the database.']);
+            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'No such public keys in the database.']);
         }
 
         if(empty($contract) || (!empty($contract) && $contract->patient_email != $logged_patient->email)) {
@@ -231,21 +238,21 @@ class PatientController extends Controller {
                 if(!empty($data['country'])) {
                     $curl_arr['country_code'] = $data['country'];
                 }else {
-                    return redirect()->route('patient-access', ['slug' => $data['contract']])->with(['error' => 'Country is required']);
+                    return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'Country is required']);
                 }
             }
             if(isset($data['dcn_address'])) {
                 if(!empty($data['dcn_address'])) {
                     $curl_arr['dcn_address'] = $data['dcn_address'];
                 }else {
-                    return redirect()->route('patient-access', ['slug' => $data['contract']])->with(['error' => 'Wallet Address is required']);
+                    return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'Wallet Address is required']);
                 }
             }
 
             //handle the API response
             $api_response = (new APIRequestsController())->updateUserData($curl_arr);
             if(!$api_response) {
-                return redirect()->route('patient-access', ['slug' => $data['contract']])->with(['errors_response' => $api_response['errors']]);
+                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['errors_response' => $api_response['errors']]);
             }
         }
 
@@ -297,10 +304,10 @@ class PatientController extends Controller {
                 $contract->status = 'awaiting-payment';
                 $contract->save();
             } else {
-                return redirect()->route('patient-access', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again.']);
+                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again.']);
             }
         } else {
-            return redirect()->route('patient-access', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again.']);
+            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again.']);
         }
         return redirect()->route('congratulations', ['slug' => $data['contract']]);
     }
