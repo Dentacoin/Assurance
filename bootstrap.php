@@ -1,5 +1,9 @@
 <?php
+var_dump($_SESSION);
 
+unset($_SESSION);
+var_dump($_SESSION);
+die();
 // define short code for DIRECTORY_SEPARATOR
 define('DS', '/');
 // define base directory for project
