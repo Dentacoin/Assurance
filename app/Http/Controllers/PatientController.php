@@ -212,20 +212,6 @@ class PatientController extends Controller {
         $data = $this->clearPostData($request->input());
         $contract = TemporallyContract::where(array('slug' => $data['contract']))->get()->first();
 
-        //getting the public key for this address stored in the assurance db (this table is getting updated by wallet.dentacoin.com)
-        $patient_pub_key = PublicKey::where(array('address' => $logged_patient->dcn_address))->get()->first();
-        $dentist_pub_key = PublicKey::where(array('address' => (new APIRequestsController())->getUserData($contract->dentist_id)->dcn_address))->get()->first();
-
-        var_dump($logged_patient->dcn_address);
-        var_dump((new APIRequestsController())->getUserData($contract->dentist_id)->dcn_address);
-
-        var_dump($patient_pub_key);
-        var_dump($dentist_pub_key);
-        die();
-        if(empty($patient_pub_key) || empty($dentist_pub_key)) {
-            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'No such public keys in the database.']);
-        }
-
         if(empty($contract) || (!empty($contract) && $contract->patient_email != $logged_patient->email)) {
             //if user trying to fake the contract slug
             return abort(404);
@@ -254,6 +240,14 @@ class PatientController extends Controller {
             if(!$api_response) {
                 return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['errors_response' => $api_response['errors']]);
             }
+        }
+
+        //getting the public key for this address stored in the assurance db (this table is getting updated by wallet.dentacoin.com)
+        $patient_pub_key = PublicKey::where(array('address' => $logged_patient->dcn_address))->get()->first();
+        $dentist_pub_key = PublicKey::where(array('address' => (new APIRequestsController())->getUserData($contract->dentist_id)->dcn_address))->get()->first();
+
+        if(empty($patient_pub_key) || empty($dentist_pub_key)) {
+            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'No such public keys in the database.']);
         }
 
         //create image from the base64 signature
