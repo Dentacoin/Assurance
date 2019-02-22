@@ -308,7 +308,8 @@ class APIRequestsController extends Controller {
 
         $resp = json_decode(curl_exec($curl));
 
-        curl_error();
+        curl_error($curl);
+        curl_errno($curl);
 
         curl_close($curl);
 
