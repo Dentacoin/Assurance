@@ -238,7 +238,7 @@ class PatientController extends Controller {
 
             //handle the API response
             $api_response = (new APIRequestsController())->updateUserData($curl_arr);
-            var_dump($api_response);
+            var_dump($api_response['errors']);
             die('asdsad');
             if(!$api_response) {
                 return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['errors_response' => $api_response['errors']]);
