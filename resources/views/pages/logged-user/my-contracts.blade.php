@@ -11,20 +11,20 @@
                                 <img alt="Contracts list" src="/assets/uploads/contracts-list.svg"/>
                             </figure>
                             <h2 class="fs-24 lato-bold inline-block">My contracts</h2>
-                            @if(count($contracts) > 0)
-                                <div class="table-container fs-16">
-                                    <table class="table table-without-reorder table-striped text-left my-contracts">
-                                        <thead>
-                                        <tr>
-                                            <th>Status</th>
-                                            <th>{{$other_side_label}}</th>
-                                            <th>Date Signed/Initiated</th>
-                                            <th>Monthly Premium</th>
-                                            <th>Next Payment/Due date</th>
-                                            <th>Contract Details</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
+                            <div class="table-container fs-16">
+                                <table class="table table-without-reorder table-striped text-left my-contracts">
+                                    <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>{{$other_side_label}}</th>
+                                        <th>Date Signed/Initiated</th>
+                                        <th>Monthly Premium</th>
+                                        <th>Next Payment/Due date</th>
+                                        <th>Contract Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if(count($contracts) > 0)
                                         @foreach($contracts as $contract)
                                             @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
                                             @if($contract->status == 'pending')
@@ -65,11 +65,14 @@
                                                 <td>FIX THIS</td>
                                             </tr>
                                         @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @endif
-
+                                    @else
+                                        <tr>
+                                            <td colspan="6" class="text-center padding-top-20 padding-bottom-20">You don't have any contracts at the moment.</td>
+                                        </tr>
+                                    @endif
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
