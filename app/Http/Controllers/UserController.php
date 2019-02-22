@@ -262,8 +262,7 @@ class UserController extends Controller {
             $parser = new \Smalot\PdfParser\Parser();
             $encrypted_pdf = $parser->parseFile($folder_path . DS . $file_name)->getText();
 
-            $encrypted_html_by_patient = (new \App\Http\Controllers\APIRequestsController())->decryptFile($key, $encrypted_pdf);
-            var_dump($encrypted_html_by_patient);
+            /*$encrypted_html_by_patient = */(new \App\Http\Controllers\APIRequestsController())->decryptFile($key, $encrypted_pdf);
             die();
         }
         die('asd');
