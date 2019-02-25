@@ -1068,25 +1068,24 @@ var App = {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            /*if(localStorage.getItem('current-account') != null && typeof(web3) === 'undefined')    {
-                                //CUSTOM
-                                global_state.account = JSON.parse(localStorage.getItem('current-account')).address;
-                                App.web3_1_0 = getWeb3(new Web3.providers.HttpProvider('https://mainnet.infura.io/c6ab28412b494716bc5315550c0d4071'));
-                            }else */if (typeof web3 !== 'undefined') {
+                            if (typeof web3 !== 'undefined' && web3.currentProvider.isMetaMask === true) {
                                 //METAMASK
                                 App.web3_0_2 = web3;
                                 global_state.account = App.web3_0_2.eth.defaultAccount;
                                 //overwrite web3 0.2 with web 1.0
                                 web3 = getWeb3(App.web3_0_2.currentProvider);
-                                //web3 = getWeb3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/c6ab28412b494716bc5315550c0d4071'));
                                 App.web3_1_0 = web3;
+                            } else if (typeof web3 === 'undefined') {
+                                //CUSTOM
+                                if (localStorage.getItem('current-account') != null) {
+                                    global_state.account = JSON.parse(localStorage.getItem('current-account')).address;
+                                }
+                                App.web3_1_0 = getWeb3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/c3a8017424324e47be615fb4028275bb'));
                             } else {
                                 //NO CUSTOM, NO METAMASK. Doing this final third check so we can use web3_1_0 functions and utils even if there is no metamask or custom imported/created account
                                 App.web3_1_0 = getWeb3();
                             }
 
-                            //if user is not logged in with metamask or custom stop here
-                            //if(typeof(global_state.account) != 'undefined') {
                             return _context.abrupt("return", App.initContract());
 
                         case 2:
