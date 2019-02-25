@@ -1274,7 +1274,7 @@ if($('body').hasClass('logged-in')) {
                                             dataType: 'json',
                                             success: async function (inner_response) {
                                                 if(inner_response.success)    {
-                                                    console.log(inner_response.success.toString('hex'), 'inner_response.success.toString(\'hex\')');
+                                                    console.log(inner_response.success, 'inner_response.success.toString(\'hex\')');
                                                     return false;
                                                     var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.success.toString('hex'));
                                                     if(decrypted_pdf_response.success) {

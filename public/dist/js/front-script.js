@@ -2240,7 +2240,7 @@ if ($('body').hasClass('logged-in')) {
                                                                                 break;
                                                                             }
 
-                                                                            console.log(inner_response.success.toString('hex'), 'inner_response.success.toString(\'hex\')');
+                                                                            console.log(inner_response.success, 'inner_response.success.toString(\'hex\')');
                                                                             return _context9.abrupt("return", false);
 
                                                                         case 5:
