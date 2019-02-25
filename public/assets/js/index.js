@@ -1232,11 +1232,13 @@ if($('body').hasClass('logged-in')) {
         $('.contract-decrypt').click(async function() {
             var this_btn = $(this);
             var encrypted_pdf_content = await getEncryptedContractPdfContent(this_btn.attr('data-hash'), this_btn.attr('data-type'));
+            var render_form = $('form#render-pdf');
             if(encrypted_pdf_content.success) {
                 if(localStorage.getItem('current-account') != null) {
                     var cached_key = JSON.parse(localStorage.getItem('current-account'));
                     if(cached_key.type == 'key') {
-                        renderPdfFromDecryptedPdfContent(await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key));
+                        render_form.find('input[name="pdf_data"]').val(await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key));
+                        render_form.submit();
                     } else if(cached_key.type == 'keystore') {
                         $.ajax({
                             type: 'POST',
@@ -1262,8 +1264,8 @@ if($('body').hasClass('logged-in')) {
                                             dataType: 'json',
                                             success: async function (inner_response) {
                                                 if(inner_response.success)    {
-                                                    console.log(inner_response.success.toString('hex'), 'inner_response.success.toString(\'hex\')');
-                                                    renderPdfFromDecryptedPdfContent(await getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.success.toString('hex')));
+                                                    render_form.find('input[name="pdf_data"]').val(await getDecryptedPdfContent(encrypted_pdf_content.success, await getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.success.toString('hex'))));
+                                                    render_form.submit();
                                                 }else if(inner_response.error)    {
                                                     basic.showAlert(inner_response.error, '', true);
                                                 }
@@ -1274,8 +1276,6 @@ if($('body').hasClass('logged-in')) {
                             }
                         });
                     }
-
-
                 } else {
                     //show caching popup
                 }
@@ -2667,6 +2667,7 @@ async function getDecryptedPdfContent(encrypted_html, key) {
     });
 }
 
+/*
 async function renderPdfFromDecryptedPdfContent(response_param) {
     if(response_param.success) {
         $.ajax({
@@ -2686,4 +2687,4 @@ async function renderPdfFromDecryptedPdfContent(response_param) {
     } else if(response_param.error) {
         basic.showAlert(response_param.error, '', true);
     }
-}
+}*/

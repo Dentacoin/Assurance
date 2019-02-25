@@ -593,43 +593,28 @@ var getDecryptedPdfContent = function () {
     };
 }();
 
-var renderPdfFromDecryptedPdfContent = function () {
-    var _ref22 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22(response_param) {
-        return _regeneratorRuntime.wrap(function _callee22$(_context22) {
-            while (1) {
-                switch (_context22.prev = _context22.next) {
-                    case 0:
-                        if (response_param.success) {
-                            $.ajax({
-                                type: 'POST',
-                                url: '/render-pdf',
-                                dataType: 'json',
-                                data: {
-                                    decrypted_data: response_param.success
-                                },
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success: function success(response) {
-                                    console.log(response);
-                                }
-                            });
-                        } else if (response_param.error) {
-                            basic.showAlert(response_param.error, '', true);
-                        }
-
-                    case 1:
-                    case "end":
-                        return _context22.stop();
-                }
+/*
+async function renderPdfFromDecryptedPdfContent(response_param) {
+    if(response_param.success) {
+        $.ajax({
+            type: 'POST',
+            url: '/render-pdf',
+            dataType: 'json',
+            data: {
+                decrypted_data: response_param.success
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                console.log(response);
             }
-        }, _callee22, this);
-    }));
+        });
+    } else if(response_param.error) {
+        basic.showAlert(response_param.error, '', true);
+    }
+}*/
 
-    return function renderPdfFromDecryptedPdfContent(_x17) {
-        return _ref22.apply(this, arguments);
-    };
-}();
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
@@ -2169,7 +2154,7 @@ if ($('body').hasClass('logged-in')) {
 
     if ($('.contract-decrypt').length) {
         $('.contract-decrypt').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee10() {
-            var this_btn, encrypted_pdf_content, cached_key;
+            var this_btn, encrypted_pdf_content, render_form, cached_key;
             return _regeneratorRuntime.wrap(function _callee10$(_context10) {
                 while (1) {
                     switch (_context10.prev = _context10.next) {
@@ -2180,35 +2165,39 @@ if ($('body').hasClass('logged-in')) {
 
                         case 3:
                             encrypted_pdf_content = _context10.sent;
+                            render_form = $('form#render-pdf');
 
                             if (!encrypted_pdf_content.success) {
-                                _context10.next = 20;
+                                _context10.next = 22;
                                 break;
                             }
 
                             if (!(localStorage.getItem('current-account') != null)) {
-                                _context10.next = 18;
+                                _context10.next = 20;
                                 break;
                             }
 
                             cached_key = JSON.parse(localStorage.getItem('current-account'));
 
                             if (!(cached_key.type == 'key')) {
-                                _context10.next = 15;
+                                _context10.next = 17;
                                 break;
                             }
 
-                            _context10.t0 = renderPdfFromDecryptedPdfContent;
-                            _context10.next = 11;
+                            _context10.t0 = render_form.find('input[name="pdf_data"]');
+                            _context10.next = 12;
                             return getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
 
-                        case 11:
+                        case 12:
                             _context10.t1 = _context10.sent;
-                            (0, _context10.t0)(_context10.t1);
-                            _context10.next = 16;
+
+                            _context10.t0.val.call(_context10.t0, _context10.t1);
+
+                            render_form.submit();
+                            _context10.next = 18;
                             break;
 
-                        case 15:
+                        case 17:
                             if (cached_key.type == 'keystore') {
                                 $.ajax({
                                     type: 'POST',
@@ -2239,27 +2228,36 @@ if ($('body').hasClass('logged-in')) {
                                                                     switch (_context9.prev = _context9.next) {
                                                                         case 0:
                                                                             if (!inner_response.success) {
-                                                                                _context9.next = 9;
+                                                                                _context9.next = 14;
                                                                                 break;
                                                                             }
 
-                                                                            console.log(inner_response.success.toString('hex'), 'inner_response.success.toString(\'hex\')');
-                                                                            _context9.t0 = renderPdfFromDecryptedPdfContent;
-                                                                            _context9.next = 5;
+                                                                            _context9.t0 = render_form.find('input[name="pdf_data"]');
+                                                                            _context9.t1 = getDecryptedPdfContent;
+                                                                            _context9.t2 = encrypted_pdf_content.success;
+                                                                            _context9.next = 6;
                                                                             return getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.success.toString('hex'));
 
-                                                                        case 5:
-                                                                            _context9.t1 = _context9.sent;
-                                                                            (0, _context9.t0)(_context9.t1);
-                                                                            _context9.next = 10;
-                                                                            break;
+                                                                        case 6:
+                                                                            _context9.t3 = _context9.sent;
+                                                                            _context9.next = 9;
+                                                                            return (0, _context9.t1)(_context9.t2, _context9.t3);
 
                                                                         case 9:
+                                                                            _context9.t4 = _context9.sent;
+
+                                                                            _context9.t0.val.call(_context9.t0, _context9.t4);
+
+                                                                            render_form.submit();
+                                                                            _context9.next = 15;
+                                                                            break;
+
+                                                                        case 14:
                                                                             if (inner_response.error) {
                                                                                 basic.showAlert(inner_response.error, '', true);
                                                                             }
 
-                                                                        case 10:
+                                                                        case 15:
                                                                         case "end":
                                                                             return _context9.stop();
                                                                     }
@@ -2280,20 +2278,20 @@ if ($('body').hasClass('logged-in')) {
                                 });
                             }
 
-                        case 16:
-                            _context10.next = 18;
-                            break;
-
                         case 18:
-                            _context10.next = 21;
+                            _context10.next = 20;
                             break;
 
                         case 20:
+                            _context10.next = 23;
+                            break;
+
+                        case 22:
                             if (encrypted_pdf_content.error) {
                                 basic.showAlert(encrypted_pdf_content.error, '', true);
                             }
 
-                        case 21:
+                        case 23:
                         case "end":
                             return _context10.stop();
                     }

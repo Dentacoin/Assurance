@@ -14,6 +14,9 @@
                             <a href="javascript:void(0);" class="contract-decrypt" data-hash="{{$contract->document_hash}}" data-type="patient" itemprop="url" target="_blank">
                                 <span itemprop="name">Contract sample (pdf)</span>
                             </a>
+                            <form target="_blank" method="POST" action="{{route('render-pdf')}}" id="render-pdf">
+                                <input type="hidden" name="pdf_data"/>
+                            </form>
                         </li>
                         @if($contract->status != 'cancelled')
                             <li class="inline-block">|</li>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\PublicKey;
 use App\TemporallyContract;
 use Illuminate\Http\Request;
+use Dompdf\Dompdf;
 
 class UserController extends Controller {
     public static function instance() {
@@ -327,7 +328,17 @@ class UserController extends Controller {
     }
 
     protected function renderPdf(Request $request) {
-        var_dump($request->input());
+        $this->validate($request, [
+            'pdf_data' => 'required'
+        ], [
+            'pdf_data.required' => 'PDF data is required.'
+        ]);
+
+        $dompdf = new Dompdf();
+        $dompdf->load_html($request->input('pdf_data'));
+
+        $dompdf->render();
+        $dompdf->stream('contract.pdf', array('Attachment' => false));
         die();
     }
 
