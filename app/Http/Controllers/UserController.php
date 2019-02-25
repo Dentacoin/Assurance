@@ -32,10 +32,10 @@ class UserController extends Controller {
         return view('pages/forgotten-password');
     }
 
-    protected function getAddressValidationOrRememberMe() {
+    protected function getAddressValidationOrRememberMe(Request $request) {
         $current_logged_user_dcn_address = (new APIRequestsController())->getUserData(session('logged_user')['id'])->dcn_address;
         if(!empty($current_logged_user_dcn_address)) {
-            $view = view('partials/address-validation-or-remember-me', ['current_logged_user_dcn_address' => $current_logged_user_dcn_address]);
+            $view = view('partials/address-validation-or-remember-me', ['current_logged_user_dcn_address' => $current_logged_user_dcn_address, 'cache' => $request->input('cache')]);
             $view = $view->render();
             return response()->json(['success' => $view]);
         } else {

@@ -758,6 +758,9 @@ if($('body').hasClass('logged-in')) {
                 type: 'POST',
                 url: '/get-address-validation-or-remember-me',
                 dataType: 'json',
+                data: {
+                    cache: true
+                },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -1249,11 +1252,15 @@ if($('body').hasClass('logged-in')) {
                             type: 'POST',
                             url: '/get-address-validation-or-remember-me',
                             dataType: 'json',
+                            data: {
+                                cache: false
+                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function (response) {
-                                basic.showDialog(response.success, 'address-validation-or-remember-me', true);
+                                basic.showDialog(response.success, 'address-validation-or-remember-me', null, true);
+
 
                                 $('.address-validation-or-remember-me .btn-container a').click(function() {
                                     if($('.address-validation-or-remember-me .keystore-password').val().trim() == '') {
@@ -2504,6 +2511,9 @@ function openCacheKeyPopup() {
         type: 'POST',
         url: '/get-address-validation-or-remember-me',
         dataType: 'json',
+        data: {
+            cache: false
+        },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },

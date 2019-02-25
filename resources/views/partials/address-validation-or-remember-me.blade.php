@@ -1,3 +1,4 @@
+{{var_dump($cache)}}
 <div class="camping-for-validation module">
     <div class="single-row proof-of-address no-background" data-address="{{$current_logged_user_dcn_address}}">
         <div class="container-fluid">
