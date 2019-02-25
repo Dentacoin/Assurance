@@ -2235,18 +2235,15 @@ if ($('body').hasClass('logged-in')) {
                                                                 while (1) {
                                                                     switch (_context9.prev = _context9.next) {
                                                                         case 0:
-                                                                            if (!inner_response.success) {
-                                                                                _context9.next = 12;
+                                                                            if (!(inner_response.success && inner_response.to_string)) {
+                                                                                _context9.next = 7;
                                                                                 break;
                                                                             }
 
-                                                                            console.log(inner_response.success, '1');
-                                                                            console.log(new Buffer(inner_response.success, 'hex'), '2');
-                                                                            console.log(inner_response.success.toString('hex'), '3');
-                                                                            console.log(new Buffer(inner_response.success, 'string'), '4');
-                                                                            return _context9.abrupt("return", false);
+                                                                            _context9.next = 3;
+                                                                            return getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.to_string);
 
-                                                                        case 8:
+                                                                        case 3:
                                                                             decrypted_pdf_response = _context9.sent;
 
                                                                             if (decrypted_pdf_response.success) {
@@ -2255,15 +2252,15 @@ if ($('body').hasClass('logged-in')) {
                                                                             } else if (decrypted_pdf_response.error) {
                                                                                 basic.showAlert(decrypted_pdf_response.error, '', true);
                                                                             }
-                                                                            _context9.next = 13;
+                                                                            _context9.next = 8;
                                                                             break;
 
-                                                                        case 12:
+                                                                        case 7:
                                                                             if (inner_response.error) {
                                                                                 basic.showAlert(inner_response.error, '', true);
                                                                             }
 
-                                                                        case 13:
+                                                                        case 8:
                                                                         case "end":
                                                                             return _context9.stop();
                                                                     }

@@ -1273,13 +1273,8 @@ if($('body').hasClass('logged-in')) {
                                             },
                                             dataType: 'json',
                                             success: async function (inner_response) {
-                                                if(inner_response.success)    {
-                                                    console.log(inner_response.success, '1');
-                                                    console.log(new Buffer(inner_response.success, 'hex'), '2');
-                                                    console.log(inner_response.success.toString('hex'), '3');
-                                                    console.log(new Buffer(inner_response.success, 'string'), '4');
-                                                    return false;
-                                                    var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.success.toString('hex'));
+                                                if(inner_response.success && inner_response.to_string)    {
+                                                    var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.to_string);
                                                     if(decrypted_pdf_response.success) {
                                                         render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
                                                         render_form.submit();
