@@ -242,8 +242,8 @@ class UserController extends Controller {
             'public_key.required' => 'Public key is required.'
         ]);
         $data = $this->clearPostData($request->input());
-        $response = array();
 
+        //if this address is missing in our local db just add it
         $existing_public_key = PublicKey::where(array('address' => $data['address']))->get()->first();
         if(!$existing_public_key) {
             $public_key = new PublicKey();
@@ -251,11 +251,9 @@ class UserController extends Controller {
             $public_key->public_key = $data['public_key'];
             $public_key->save();
 
-            $response['success'] = true;
-        } else {
-            $response['error'] = 'Verifying failed, please try again later.';
         }
-        echo json_encode($response);
+
+        echo json_encode(array('success' => true));
         die();
     }
 
