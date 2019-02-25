@@ -594,18 +594,18 @@ var getDecryptedPdfContent = function () {
 }();
 
 var renderPdfFromDecryptedPdfContent = function () {
-    var _ref22 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22(response) {
+    var _ref22 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22(response_param) {
         return _regeneratorRuntime.wrap(function _callee22$(_context22) {
             while (1) {
                 switch (_context22.prev = _context22.next) {
                     case 0:
-                        if (decrypted_pdf_content.success) {
+                        if (response_param.success) {
                             $.ajax({
                                 type: 'POST',
                                 url: '/render-pdf',
                                 dataType: 'json',
                                 data: {
-                                    decrypted_data: decrypted_pdf_content.success
+                                    decrypted_data: response_param.success
                                 },
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -614,8 +614,8 @@ var renderPdfFromDecryptedPdfContent = function () {
                                     console.log(response);
                                 }
                             });
-                        } else if (decrypted_pdf_content.error) {
-                            basic.showAlert(decrypted_pdf_content.error, '', true);
+                        } else if (response_param.error) {
+                            basic.showAlert(response_param.error, '', true);
                         }
 
                     case 1:
@@ -1076,7 +1076,6 @@ var App = {
                                 web3 = getWeb3(App.web3_0_2.currentProvider);
                                 App.web3_1_0 = web3;
                             } else if (typeof web3 === 'undefined') {
-                                console.log('asdsaddsasad');
                                 //CUSTOM
                                 if (localStorage.getItem('current-account') != null) {
                                     global_state.account = JSON.parse(localStorage.getItem('current-account')).address;
@@ -1154,8 +1153,7 @@ var App = {
     },
     assurance_state_methods: {
         getPeriodToWithdraw: function getPeriodToWithdraw() {
-            console.log(App.assurance_state_instance.methods, 'App.assurance_state_instance.methods');
-            return App.assurance_state_instance.methods.getPeriodToWithdraw().call({ from: JSON.parse(localStorage.getItem('current-account')).address }, function (error, result) {
+            return App.assurance_state_instance.methods.getPeriodToWithdraw().call({}, function (error, result) {
                 if (!error) {
                     return result;
                 } else {
