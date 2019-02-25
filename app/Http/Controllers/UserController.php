@@ -237,20 +237,19 @@ class UserController extends Controller {
         $data = $this->clearPostData($request->input());
         $response = array();
 
-        try {
+        $existing_public_key = PublicKey::where(array('address' => $data['address']))->get()->first();
+        if(!$existing_public_key) {
             $public_key = new PublicKey();
             $public_key->address = $data['address'];
             $public_key->public_key = $data['public_key'];
             $public_key->save();
 
             $response['success'] = true;
-            echo json_encode($response);
-            die();
-        } catch(Exception $e) {
+        } else {
             $response['error'] = 'Verifying failed, please try again later.';
-            echo json_encode($response);
-            die();
         }
+        echo json_encode($response);
+        die();
     }
 
     protected function checkPublicKey(Request $request) {
