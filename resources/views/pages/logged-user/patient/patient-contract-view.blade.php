@@ -16,6 +16,7 @@
                             </a>
                             <form target="_blank" method="POST" action="{{route('render-pdf')}}" id="render-pdf">
                                 <input type="hidden" name="pdf_data"/>
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
                             </form>
                         </li>
                         @if($contract->status != 'cancelled')
