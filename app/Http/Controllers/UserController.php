@@ -335,7 +335,8 @@ class UserController extends Controller {
         ]);
 
         $dompdf = new Dompdf();
-        var_dump('<!DOCTYPE html><html><head><style></style></head><body>' . $request->input('pdf_data') . '</body></html>');
+        $data = '<!DOCTYPE html><html><head><style></style></head><body>' . $request->input('pdf_data') . '</body></html>';
+        var_dump($data);
         die();
         $dompdf->load_html('<!DOCTYPE html><html><head><style></style></head><body>' . $request->input('pdf_data') . '</body></html>');
 
