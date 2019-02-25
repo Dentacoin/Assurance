@@ -5,4 +5,4 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('truffle-contract');
+require('../../../../node_modules/truffle-contract');
