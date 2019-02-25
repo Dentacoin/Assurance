@@ -766,7 +766,19 @@ if($('body').hasClass('logged-in')) {
                 success: function (response) {
                     if (response.success) {
                         $('.remember-my-wallet-camp').html('<h3 class="line-crossed-title margin-bottom-50 fs-20 lato-bold black-color"><span>Remember my wallet</span></h3>' + response.success + '<div class="padding-bottom-50"></div>');
+
                         styleUploadFileButton();
+
+                        $('.enter-private-key').unbind().click(function() {
+                            $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 padding-left-30 padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
+                            $('.proof-of-address #upload-keystore-file').val('');
+                            bindGoogleAlikeButtonsEvents();
+                            bindCacheKeyEvent();
+                        });
+
+                        $('.upload-file-container button').unbind().click(function() {
+                            $('.proof-of-address .on-change-result').html('');
+                        });
                     }
                 }
             });
@@ -2385,7 +2397,7 @@ function bindCacheKeyEvent(keystore_file) {
                                     success: function (inner_response) {
                                         $('.response-layer').hide();
                                         $('.remember-my-wallet-camp').remove();
-                                        basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.')
+                                        basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', '', true);
                                     }
                                 });
                             } else if(response.error) {
@@ -2436,7 +2448,7 @@ function bindCacheKeyEvent(keystore_file) {
                                     success: function (inner_response) {
                                         $('.response-layer').hide();
                                         $('.remember-my-wallet-camp').remove();
-                                        basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.')
+                                        basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', '', true);
                                     }
                                 });
                             } else if(response.error) {
