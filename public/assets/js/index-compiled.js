@@ -27235,6 +27235,7 @@ if ($('body').hasClass('logged-in')) {
                                     success: function success(response) {
                                         basic.showDialog(response.success, 'keystore-file-password-validation', null, true);
                                         fixButtonsFocus();
+                                        $('.keystore-file-password-validation .keystore-password').focus();
 
                                         $('.keystore-file-password-validation .btn-container a').click(function () {
                                             if ($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
@@ -27256,14 +27257,14 @@ if ($('body').hasClass('logged-in')) {
                                                                     switch (_context9.prev = _context9.next) {
                                                                         case 0:
                                                                             if (!inner_response.success) {
-                                                                                _context9.next = 7;
+                                                                                _context9.next = 9;
                                                                                 break;
                                                                             }
 
-                                                                            _context9.next = 3;
-                                                                            return getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.success.toString('hex'));
+                                                                            console.log(inner_response.success.toString('hex'), 'inner_response.success.toString(\'hex\')');
+                                                                            return _context9.abrupt('return', false);
 
-                                                                        case 3:
+                                                                        case 5:
                                                                             decrypted_pdf_response = _context9.sent;
 
                                                                             if (decrypted_pdf_response.success) {
@@ -27272,15 +27273,15 @@ if ($('body').hasClass('logged-in')) {
                                                                             } else if (decrypted_pdf_response.error) {
                                                                                 basic.showAlert(decrypted_pdf_response.error, '', true);
                                                                             }
-                                                                            _context9.next = 8;
+                                                                            _context9.next = 10;
                                                                             break;
 
-                                                                        case 7:
+                                                                        case 9:
                                                                             if (inner_response.error) {
                                                                                 basic.showAlert(inner_response.error, '', true);
                                                                             }
 
-                                                                        case 8:
+                                                                        case 10:
                                                                         case 'end':
                                                                             return _context9.stop();
                                                                     }

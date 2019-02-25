@@ -1258,6 +1258,7 @@ if($('body').hasClass('logged-in')) {
                             success: function (response) {
                                 basic.showDialog(response.success, 'keystore-file-password-validation', null, true);
                                 fixButtonsFocus();
+                                $('.keystore-file-password-validation .keystore-password').focus();
 
                                 $('.keystore-file-password-validation .btn-container a').click(function() {
                                     if($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
@@ -1273,6 +1274,8 @@ if($('body').hasClass('logged-in')) {
                                             dataType: 'json',
                                             success: async function (inner_response) {
                                                 if(inner_response.success)    {
+                                                    console.log(inner_response.success.toString('hex'), 'inner_response.success.toString(\'hex\')');
+                                                    return false;
                                                     var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.success.toString('hex'));
                                                     if(decrypted_pdf_response.success) {
                                                         render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
