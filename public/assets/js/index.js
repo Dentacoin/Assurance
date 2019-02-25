@@ -2290,7 +2290,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
     console.log(keystore_file, 'keystore_file');
     console.log(render_pdf, 'render_pdf');
     console.log(encrypted_pdf_content, 'encrypted_pdf_content');
-    
+
     if(keystore_file === undefined) {
         keystore_file = null;
     }
@@ -2360,7 +2360,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         url: '/decrypt-pk',
                                         data: {
                                             password: $('.proof-of-address #your-secret-key-password').val().trim(),
-                                            keystore: JSON.stringify(JSON.parse(localStorage.getItem('current-account')).keystore)
+                                            keystore: response.success
                                         },
                                         dataType: 'json',
                                         success: async function (inner_response) {
