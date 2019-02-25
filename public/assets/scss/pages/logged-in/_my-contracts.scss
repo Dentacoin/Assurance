@@ -92,5 +92,12 @@
                 }
             }
         }
+        .contract-details {
+            a {
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
     }
 }

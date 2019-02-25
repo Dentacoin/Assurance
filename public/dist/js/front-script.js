@@ -459,7 +459,7 @@ var validateUserAddress = function () {
                             error = false;
                         } else if (check_public_key_ajax_result.error) {
                             if (value_element.is('input')) {
-                                $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="' + user_address + '"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-5 inline-block padding-left-30"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18">Enter your Private Key<div class="fs-16">(not recommended)</div></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-5 inline-block padding-right-30"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><button type="button" class="display-block"></button></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
+                                $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="' + user_address + '"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-5 inline-block padding-left-30"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18"><span>Enter your Private Key<div class="fs-16">(not recommended)</div></span></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-5 inline-block padding-right-30"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><button type="button" class="display-block"></button></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
                                 $('.proof-of-address').addClass('proof-failed');
 
                                 fixButtonsFocus();
@@ -1518,6 +1518,24 @@ if ($('body').hasClass('logged-in')) {
                 } else if (!innerAddressCheck(this_form.find('.address').val().trim())) {
                     customErrorHandle(this_form.find('.address').parent(), 'Please enter valid wallet address.');
                     event.preventDefault();
+                }
+            });
+        }
+
+        //if no key or keystore file is cached show the option for it
+        if (localStorage.getItem('current-account') == null) {
+            $.ajax({
+                type: 'GET',
+                url: '/get-address-validation-or-remember-me',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function success(response) {
+                    if (response.success) {
+                        $('.remember-my-wallet-camp').html('<h3 class="line-crossed-title margin-bottom-50 fs-20 lato-bold black-color"><span>Remember my wallet</span></h3>' + response.success + '<div class="padding-bottom-50"></div>');
+                        styleUploadFileButton();
+                    }
                 }
             });
         }
@@ -3028,8 +3046,13 @@ function cancelContractEventInit() {
 function styleUploadFileButton() {
     $('.custom-upload-file').each(function (key, form) {
         var this_btn = $(this);
+        var caching = false;
+        if (this_btn.hasClass('caching')) {
+            caching = true;
+        }
+
         var this_btn_parent = this_btn.closest('.upload-file-container');
-        this_btn_parent.find('button').append("<label for='" + this_btn_parent.attr('data-id') + "' class='display-block'><span class='white-blue-green-btn display-block-important fs-18'>" + this_btn_parent.attr('data-label') + "</span></label>");
+        this_btn_parent.find('button').append("<label for='" + this_btn_parent.attr('data-id') + "' class='white-blue-green-btn display-block-important'><span class='display-block-important fs-18'>" + this_btn_parent.attr('data-label') + "</span></label>");
 
         var inputs = document.querySelectorAll('.custom-upload-file');
         Array.prototype.forEach.call(inputs, function (input) {
@@ -3046,12 +3069,19 @@ function styleUploadFileButton() {
                     var uploaded_file = this.files[0];
                     var reader = new FileReader();
                     reader.addEventListener('load', function (e) {
-                        if (isJsonString(e.target.result) && has(JSON.parse(e.target.result), 'address')) {
-                            var keystore_string = e.target.result;
-                            $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 col-sm-offset-7 padding-right-30 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">' + fileName + '</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Enter your secret key password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-keystore-file"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-keystore-file">Remember my keystore file <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Remembering your keystore file allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">VERIFY</a></div></div>');
-                            initTooltips();
-                            bindGoogleAlikeButtonsEvents();
-                            bindVerifyAddressEvent(keystore_string);
+                        if (isJsonString(e.target.result) && has(JSON.parse(e.target.result), 'address') && '0x' + JSON.parse(e.target.result).address == $('.proof-of-address').attr('data-address')) {
+                            if (caching) {
+                                var keystore_string = e.target.result;
+                                $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 col-sm-offset-7 padding-right-30 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">' + fileName + '</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Enter your secret key password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
+                                bindGoogleAlikeButtonsEvents();
+                                bindCacheKeyEvent(keystore_string);
+                            } else {
+                                var keystore_string = e.target.result;
+                                $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 col-sm-offset-7 padding-right-30 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">' + fileName + '</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Enter your secret key password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-keystore-file"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-keystore-file">Remember my keystore file <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Remembering your keystore file allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">VERIFY</a></div></div>');
+                                initTooltips();
+                                bindGoogleAlikeButtonsEvents();
+                                bindVerifyAddressEvent(keystore_string);
+                            }
                         } else {
                             $('#upload-keystore-file').val('');
                             basic.showAlert('Please upload valid keystore file.', '', true);
@@ -3243,6 +3273,120 @@ function bindVerifyAddressEvent(keystore_file) {
                                         } else {
                                             basic.showAlert(inner_response.error, '', true);
                                         }
+                                    }
+                                });
+                            } else if (response.error) {
+                                $('.response-layer').hide();
+                                basic.showAlert(response.error, '', true);
+                            }
+                        }
+                    });
+                }, 1000);
+            }
+        }
+    });
+}
+
+function bindCacheKeyEvent(keystore_file) {
+    if (keystore_file === undefined) {
+        keystore_file = null;
+    }
+    $('.proof-of-address .cache-key-btn').click(function () {
+        if (keystore_file != null) {
+            //import with keystore
+            if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
+                basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
+            } else {
+                $('.response-layer').show();
+                setTimeout(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/app-import',
+                        dataType: 'json',
+                        data: {
+                            address: $('.proof-of-address').attr('data-address'),
+                            keystore: keystore_file,
+                            password: $('.proof-of-address #your-secret-key-password').val().trim()
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function success(response) {
+                            //now with the address and the public key received from the nodejs api update the db
+                            if (response.success) {
+                                //if remember me option is checked
+                                localStorage.setItem('current-account', JSON.stringify({
+                                    address: $('.proof-of-address').attr('data-address'),
+                                    type: 'keystore',
+                                    keystore: response.success
+                                }));
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/update-public-keys',
+                                    dataType: 'json',
+                                    data: {
+                                        address: $('.proof-of-address').attr('data-address'),
+                                        public_key: response.public_key
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function success(inner_response) {
+                                        $('.response-layer').hide();
+                                        $('.remember-my-wallet-camp').remove();
+                                        basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.');
+                                    }
+                                });
+                            } else if (response.error) {
+                                $('.response-layer').hide();
+                                basic.showAlert(response.error, '', true);
+                            }
+                        }
+                    });
+                }, 1000);
+            }
+        } else {
+            //import with private key
+            if ($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
+                basic.showAlert('Please enter valid private key.', '', true);
+            } else {
+                $('.response-layer').show();
+                setTimeout(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/assurance-import-private-key',
+                        dataType: 'json',
+                        data: {
+                            private_key: $('.proof-of-address #your-private-key').val().trim()
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function success(response) {
+                            //now with the address and the public key received from the nodejs api update the db
+                            if (response.success) {
+                                localStorage.setItem('current-account', JSON.stringify({
+                                    address: '0x' + response.address,
+                                    type: 'key',
+                                    key: response.private_key
+                                }));
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/update-public-keys',
+                                    dataType: 'json',
+                                    data: {
+                                        address: response.address,
+                                        public_key: response.public_key
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function success(inner_response) {
+                                        $('.response-layer').hide();
+                                        $('.remember-my-wallet-camp').remove();
+                                        basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.');
                                     }
                                 });
                             } else if (response.error) {

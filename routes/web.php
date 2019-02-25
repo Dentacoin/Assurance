@@ -87,6 +87,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::get('/my-contracts', 'UserController@getMyContractsView')->middleware('HandleUserSession')->name('my-contracts');
 
+    Route::get('/get-address-validation-or-remember-me', 'UserController@getAddressValidationOrRememberMe')->middleware('HandleUserSession')->name('get-address-validation-or-remember-me');
+
     Route::post('/update-account', 'UserController@updateAccount')->middleware('HandleUserSession')->name('update-account');
 
     Route::post('/decrypt-contract', 'UserController@readAndDecryptIPFSZip')->middleware('HandleUserSession')->name('decrypt-contract');

@@ -14,6 +14,14 @@
         <nav>
             <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
                 <li>
+                    <a href="{{ route('home') }}" itemprop="url">
+                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                            <img alt="Home icon" src="/assets/uploads/home.svg"/>
+                        </figure>
+                        <span itemprop="name">Home</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('my-profile') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'my-profile') class="active" @endif itemprop="url">
                         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                             <img alt="Wallet icon" src="/assets/uploads/wallet-icon.svg"/>

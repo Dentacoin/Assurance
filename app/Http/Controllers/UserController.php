@@ -21,14 +21,25 @@ class UserController extends Controller {
 
     protected function getMyContractsView()     {
         if($this->checkPatientSession()) {
-            return view('pages/logged-user/my-contracts', ['other_side_label' => 'Dentist', 'contracts' => TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->sortByDesc('created_at')]);
+            return view('pages/logged-user/my-contracts', ['patient_or_not' => false, 'contracts' => TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->sortByDesc('created_at')]);
         } else if($this->checkDentistSession()) {
-            return view('pages/logged-user/my-contracts', ['other_side_label' => 'Patient', 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->sortByDesc('created_at')]);
+            return view('pages/logged-user/my-contracts', ['patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->sortByDesc('created_at')]);
         }
     }
 
     protected function getForgottenPasswordView() {
         return view('pages/forgotten-password');
+    }
+
+    protected function getAddressValidationOrRememberMe() {
+        $current_logged_user_dcn_address = (new APIRequestsController())->getUserData(session('logged_user')['id'])->dcn_address;
+        if(!empty($current_logged_user_dcn_address)) {
+            $view = view('partials/address-validation-or-remember-me', ['current_logged_user_dcn_address' => $current_logged_user_dcn_address]);
+            $view = $view->render();
+            return response()->json(['success' => $view]);
+        } else {
+            return response()->json(['error' => true]);
+        }
     }
 
     protected function getMyProfileView()   {
@@ -142,6 +153,24 @@ class UserController extends Controller {
             'country_code' => $data['country'],
             'dcn_address' => $data['dcn_address'],
         );
+
+        //if the logged user is dentist he must provide website and phone
+        if(isset($data['website']) || isset($data['phone'])) {
+            if(isset($data['website'])) {
+                if(!empty($data['website'])) {
+                    $post_fields_arr['website'] = $data['website'];
+                }else {
+                    return redirect()->route('edit-account')->with(['error' => 'Website is required']);
+                }
+            }
+            if(isset($data['phone'])) {
+                if(!empty($data['phone'])) {
+                    $post_fields_arr['phone'] = $data['phone'];
+                }else {
+                    return redirect()->route('edit-account')->with(['error' => 'Phone is required']);
+                }
+            }
+        }
 
         //if user selected new avatar submit it to the api
         if(!empty($files['image'])) {

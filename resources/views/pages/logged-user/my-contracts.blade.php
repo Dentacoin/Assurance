@@ -16,7 +16,13 @@
                                     <thead>
                                     <tr>
                                         <th>Status</th>
-                                        <th>{{$other_side_label}}</th>
+                                        <th>
+                                            @if($patient_or_not)
+                                                Patient
+                                            @else
+                                                Dentist
+                                            @endif
+                                        </th>
                                         <th>Date Signed/Initiated</th>
                                         <th>Monthly Premium</th>
                                         <th>Next Payment/Due date</th>
@@ -26,7 +32,6 @@
                                     <tbody>
                                     @if(count($contracts) > 0)
                                         @foreach($contracts as $contract)
-                                            @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
                                             @if($contract->status == 'pending')
                                                 @php($url = route('contract-proposal', ['slug' => $contract->slug]))
                                             @else
@@ -54,15 +59,27 @@
                                                     <div class="{{$contract->status}} alike-btn">{{$status}}</div>
                                                 </td>
                                                 <td class="avatar-and-name">
-                                                    <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
-                                                        <img alt="{{$other_side_label}} avatar" src="{{$dentist->avatar_url}}"/>
-                                                    </figure>
-                                                    <span>{{$dentist->name}}</span>
+                                                    @if($patient_or_not)
+                                                        @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+                                                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                                                            <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
+                                                        </figure>
+                                                        <span>{{$patient->name}}</span>
+                                                    @else
+                                                        @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
+                                                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                                                            <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
+                                                        </figure>
+                                                        <span>{{$dentist->name}}</span>
+                                                    @endif
                                                 </td>
                                                 <td>{{date('d/m/Y', strtotime($contract->contract_active_at))}}</td>
                                                 <td>{{$contract->monthly_premium}} USD</td>
                                                 <td class="next-payment"></td>
-                                                <td>FIX THIS</td>
+                                                <td class="contract-details">
+                                                    <div><a href="">Fill Contract (pdf)</a></div>
+                                                    <div><a href="">Public Proof</a></div>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @else

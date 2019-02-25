@@ -466,11 +466,7 @@
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     -ms-box-shadow: none;
-    box-shadow: none;
-    -webkit-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-    -moz-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-    -ms-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-    box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3; }
+    box-shadow: none; }
   .module.step-fields .single-row .with-error {
     background-color: #ff8d8d;
     background-image: none;
@@ -504,10 +500,6 @@
   -moz-box-shadow: 0px 3px 90px -10px rgba(0, 0, 0, 0.4);
   -ms-box-shadow: 0px 3px 90px -10px rgba(0, 0, 0, 0.4);
   box-shadow: 0px 3px 90px -10px rgba(0, 0, 0, 0.4);
-  -webkit-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-  -moz-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-  -ms-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-  box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -ms-border-radius: 6px;
@@ -548,10 +540,6 @@
       -moz-box-shadow: 0px 3px 70px 50px rgba(255, 255, 255, 0.8);
       -ms-box-shadow: 0px 3px 70px 50px rgba(255, 255, 255, 0.8);
       box-shadow: 0px 3px 70px 50px rgba(255, 255, 255, 0.8);
-      -webkit-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-      -moz-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-      -ms-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-      box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -588,11 +576,7 @@
     -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px;
     -moz-box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px;
     -ms-box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px;
-    -webkit-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-    -moz-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-    -ms-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-    box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3; }
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px; }
   .module.contract-proposal .wrapper .checkbox-container {
     width: 100%;
     max-width: 360px;
@@ -616,11 +600,7 @@
     -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
     -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
     -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-    -moz-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-    -ms-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-    box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3; }
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
     .module.contract-tile .tile-wrapper figure {
       width: 120px;
       overflow: hidden;
@@ -659,11 +639,7 @@
     -webkit-box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.5);
     -ms-box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-    -moz-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-    -ms-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-    box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3; }
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.5); }
 .module.contract-single-page-nav {
   font-size: 16px;
   padding-top: 10px;
@@ -684,11 +660,7 @@
   -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
   -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-  -webkit-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-  -moz-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-  -ms-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-  box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3; }
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
   .module.single-contract-tile .contract-participant figure {
     height: 100px;
     position: relative; }
@@ -753,11 +725,7 @@
   -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
   -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-  -webkit-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-  -moz-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-  -ms-box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3;
-  box-shadow: inset 0px 19px 8px -10px #f3f3f3, inset 0px -19px 8px -10px #f3f3f3; }
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
 .module.single-contract-tile.pending .contract-header.pending {
   background-color: #29adde; }
 .module.single-contract-tile.pending .contract-header.active {
@@ -846,6 +814,8 @@
   color: #239234; }
 .module.camping-for-validation .proof-of-address {
   background-color: #eaeaea; }
+  .module.camping-for-validation .proof-of-address.no-background {
+    background-color: transparent; }
   .module.camping-for-validation .proof-of-address.proof-failed {
     background-color: #ff8d8d; }
   .module.camping-for-validation .proof-of-address .upload-file-container button {
@@ -858,7 +828,28 @@
       width: 100%;
       display: block;
       padding: 0;
-      margin: 0; }
+      margin: 0;
+      min-height: 65px;
+      position: relative; }
+      .module.camping-for-validation .proof-of-address .upload-file-container button label span {
+        width: 95%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%); }
+  .module.camping-for-validation .proof-of-address .enter-private-key {
+    min-height: 65px;
+    position: relative; }
+    .module.camping-for-validation .proof-of-address .enter-private-key span {
+      width: 95%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%); }
   .module.camping-for-validation .proof-of-address .file-name {
     word-break: break-word; }
   .module.camping-for-validation .proof-of-address .checkbox-container {
