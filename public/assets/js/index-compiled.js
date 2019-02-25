@@ -27213,7 +27213,7 @@ if ($('body').hasClass('logged-in')) {
 
                             if (decryped_pdf_response.success) {
                                 render_form.find('input[name="pdf_data"]').val(encodeEntities(decryped_pdf_response.success.decrypted));
-                                //render_form.submit();
+                                render_form.submit();
                             } else if (decryped_pdf_response.error) {
                                 basic.showAlert(decryped_pdf_response.error, '', true);
                             }
