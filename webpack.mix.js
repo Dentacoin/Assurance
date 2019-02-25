@@ -12,6 +12,7 @@ let mix = require('laravel-mix');
 mix.disableSuccessNotifications();
 
 mix.js('public/assets/js/index.js', 'public/assets/js/index-compiled.js');
+//mix.js('public/assets/libs/truffle-contract/truffle-contract.js', 'public/assets/js/truffle-contract-compiled.js');
 
 /* ===== PUBLIC =====*/
 mix.styles([
@@ -44,6 +45,7 @@ mix.scripts([
     'public/assets/libs/jquery-animate-number/jquery.animateNumber.min.js',
     'public/assets/libs/FlipClock-master/compiled/flipclock.min.js',
     'node_modules/datatables.net/js/jquery.dataTables.min.js',
+    'public/assets/libs/truffle-contract-compiled.js'
 ], 'public/dist/js/front-libs-script.js');
 
 mix.babel([
