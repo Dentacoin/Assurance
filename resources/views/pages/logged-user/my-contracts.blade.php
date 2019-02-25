@@ -37,7 +37,7 @@
                                             @else
                                                 @php($url = route('patient-contract-view', ['slug' => $contract->slug]))
                                             @endif
-                                            <tr @if($contract->status != 'active' && $contract->status != 'pending') data-timestamp-signed="{{strtotime($contract->contract_active_at)}}" @endif onclick="window.location='{{$url}}'">
+                                            <tr @if($contract->status != 'active' && $contract->status != 'pending') data-timestamp-signed="{{strtotime($contract->contract_active_at)}}" @endif>
                                                 <td class="status">
                                                     @switch($contract->status)
                                                         @case('active')
@@ -77,7 +77,7 @@
                                                 <td>{{$contract->monthly_premium}} USD</td>
                                                 <td class="next-payment"></td>
                                                 <td class="contract-details">
-                                                    <div><a href="javascript:void(0)" data-hash="{{$contract->document_hash}}" @if(!$patient_or_not) data-type="patient" @else data-type="dentist" @endif>Full Contract (pdf)</a></div>
+                                                    <div><a href="javascript:void(0)" class="contract-decrypt" data-hash="{{$contract->document_hash}}" @if(!$patient_or_not) data-type="patient" @else data-type="dentist" @endif>Full Contract (pdf)</a></div>
                                                     <div><a href="">Public Proof</a></div>
                                                 </td>
                                             </tr>
