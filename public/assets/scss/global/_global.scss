@@ -905,10 +905,17 @@ fieldset {
         }
         .modal-dialog {
             width: 95%;
-            max-width: 800px;
+            max-width: 850px;
             .modal-body {
                 padding: 50px 30px;
             }
+        }  
+        .checkbox-container .pretty.on-white-background.p-svg .state .svg {
+            border-color: #126585 !important;
+            top: 0;
+        }
+        .checkbox-container .pretty.on-white-background .state label:after,.checkbox-container .pretty.on-white-background .state label:before {
+            top: 0;
         }
     }
 }
