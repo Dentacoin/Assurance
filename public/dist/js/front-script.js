@@ -1081,7 +1081,7 @@ var App = {
                                 if (localStorage.getItem('current-account') != null) {
                                     global_state.account = JSON.parse(localStorage.getItem('current-account')).address;
                                 }
-                                App.web3_1_0 = getWeb3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/c3a8017424324e47be615fb4028275bb'));
+                                App.web3_1_0 = getWeb3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/c3a8017424324e47be615fb4028275bb'));
                             } else {
                                 //NO CUSTOM, NO METAMASK. Doing this final third check so we can use web3_1_0 functions and utils even if there is no metamask or custom imported/created account
                                 App.web3_1_0 = getWeb3();
@@ -3412,7 +3412,7 @@ function bindVerifyAddressEvent(keystore_file) {
                                 //if remember me option is checked
                                 if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
                                     localStorage.setItem('current-account', JSON.stringify({
-                                        address: '0x' + response.address,
+                                        address: response.address,
                                         type: 'key',
                                         key: response.private_key
                                     }));
@@ -3531,7 +3531,7 @@ function bindCacheKeyEvent(keystore_file) {
                             //now with the address and the public key received from the nodejs api update the db
                             if (response.success) {
                                 localStorage.setItem('current-account', JSON.stringify({
-                                    address: '0x' + response.address,
+                                    address: response.address,
                                     type: 'key',
                                     key: response.private_key
                                 }));
