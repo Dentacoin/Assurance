@@ -342,6 +342,10 @@ class UserController extends Controller {
         $html_end = $view_end->render();
 
         $dompdf = new Dompdf();
+        var_dump($html_start );
+        var_dump($request->input('pdf_data'));
+        var_dump($html_end);
+        die();
         $dompdf->load_html($html_start . $request->input('pdf_data') . $html_end);
 
         $dompdf->render();
