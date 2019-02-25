@@ -27192,7 +27192,7 @@ if ($('body').hasClass('logged-in')) {
                             render_form = $('form#render-pdf');
 
                             if (!encrypted_pdf_content.success) {
-                                _context10.next = 21;
+                                _context10.next = 22;
                                 break;
                             }
 
@@ -27233,6 +27233,7 @@ if ($('body').hasClass('logged-in')) {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     success: function success(response) {
+                                        basic.closeDialog();
                                         basic.showDialog(response.success, 'keystore-file-password-validation', null, true);
                                         fixButtonsFocus();
                                         $('.keystore-file-password-validation .keystore-password').focus();
@@ -27268,6 +27269,7 @@ if ($('body').hasClass('logged-in')) {
                                                                             decrypted_pdf_response = _context9.sent;
 
                                                                             if (decrypted_pdf_response.success) {
+                                                                                basic.closeDialog();
                                                                                 render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
                                                                                 render_form.submit();
                                                                             } else if (decrypted_pdf_response.error) {
@@ -27303,22 +27305,23 @@ if ($('body').hasClass('logged-in')) {
                             }
 
                         case 16:
-                            _context10.next = 19;
+                            _context10.next = 20;
                             break;
 
                         case 18:
+                            basic.closeDialog();
                             openCacheKeyPopup();
 
-                        case 19:
-                            _context10.next = 22;
+                        case 20:
+                            _context10.next = 23;
                             break;
 
-                        case 21:
+                        case 22:
                             if (encrypted_pdf_content.error) {
                                 basic.showAlert(encrypted_pdf_content.error, '', true);
                             }
 
-                        case 22:
+                        case 23:
                         case 'end':
                             return _context10.stop();
                     }
@@ -28609,15 +28612,15 @@ function openCacheKeyPopup() {
         },
         success: function success(response) {
             if (response.success) {
-                basic.showDialog(response.success, 'address-validation-or-remember-me', null, true);
+                basic.showDialog('<div class="lato-regular fs-30 text-center padding-bottom-40 padding-top-15">Unlock the PDF file with your private key or your keystore file</div>' + response.success, 'address-validation-or-remember-me', null, true);
 
                 styleUploadFileButton();
 
                 $('.enter-private-key').unbind().click(function () {
-                    $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 padding-left-30 padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
+                    $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 padding-left-30 padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-private-key"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-private-key">Remember my private key <i class="fa fa-info-circle" aria-hidden="true"  data-toggle="tooltip" data-placement="top" title="Remembering your key allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">VERIFY</a></div></div>');
                     $('.proof-of-address #upload-keystore-file').val('');
                     bindGoogleAlikeButtonsEvents();
-                    bindCacheKeyEvent();
+                    bindVerifyAddressEvent();
                 });
 
                 $('.upload-file-container button').unbind().click(function () {

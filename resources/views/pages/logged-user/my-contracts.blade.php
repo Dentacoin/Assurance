@@ -78,7 +78,7 @@
                                                 <td class="next-payment"></td>
                                                 <td class="contract-details">
                                                     <div><a href="javascript:void(0)" class="contract-decrypt" data-hash="{{$contract->document_hash}}" @if(!$patient_or_not) data-type="patient" @else data-type="dentist" @endif>Full Contract (pdf)</a></div>
-                                                    <div><a href="">Public Proof</a></div>
+                                                    <div><a href="https://ipfs.io/ipfs/{{$contract->document_hash}}" target="_blank">Public Proof</a></div>
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -4688,6 +4688,19 @@ fieldset {
       text-align: center; }
     .bootbox.reconsider-monthly-premium .modal-dialog .modal-body .border-bottom {
       border-bottom: 1px solid #888888; }
+.bootbox.address-validation-or-remember-me .bootbox-close-button {
+  font-size: 35px;
+  opacity: 1;
+  color: #424242;
+  right: 15px;
+  position: absolute;
+  float: none;
+  top: 10px; }
+.bootbox.address-validation-or-remember-me .modal-dialog {
+  width: 95%;
+  max-width: 800px; }
+  .bootbox.address-validation-or-remember-me .modal-dialog .modal-body {
+    padding: 50px 30px; }
 
 .custom-input {
   width: 100%;

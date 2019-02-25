@@ -893,6 +893,24 @@ fieldset {
             }
         }
     }
+    &.address-validation-or-remember-me {
+        .bootbox-close-button {
+            font-size: 35px;
+            opacity: 1;
+            color: #424242;
+            right: 15px;
+            position: absolute;
+            float: none;
+            top: 10px;
+        }
+        .modal-dialog {
+            width: 95%;
+            max-width: 800px;
+            .modal-body {
+                padding: 50px 30px;
+            }
+        }
+    }
 }
 
 .custom-input {
