@@ -28447,7 +28447,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         url: '/decrypt-pk',
                                         data: {
                                             password: $('.proof-of-address #your-secret-key-password').val().trim(),
-                                            keystore: response.success
+                                            keystore: JSON.stringify(response.success)
                                         },
                                         dataType: 'json',
                                         success: function () {
