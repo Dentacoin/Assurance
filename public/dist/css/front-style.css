@@ -4698,9 +4698,14 @@ fieldset {
   top: 10px; }
 .bootbox.address-validation-or-remember-me .modal-dialog {
   width: 95%;
-  max-width: 800px; }
+  max-width: 900px; }
   .bootbox.address-validation-or-remember-me .modal-dialog .modal-body {
     padding: 50px 30px; }
+.bootbox.address-validation-or-remember-me .checkbox-container .pretty.on-white-background.p-svg .state .svg {
+  border-color: #126585 !important;
+  top: 0; }
+.bootbox.address-validation-or-remember-me .checkbox-container .pretty.on-white-background .state label:after, .bootbox.address-validation-or-remember-me .checkbox-container .pretty.on-white-background .state label:before {
+  top: 0; }
 
 .custom-input {
   width: 100%;
