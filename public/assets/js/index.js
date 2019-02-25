@@ -2332,27 +2332,6 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                     }));
                                 }
 
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/update-public-keys',
-                                    dataType: 'json',
-                                    data: {
-                                        address: $('.proof-of-address').attr('data-address'),
-                                        public_key: response.public_key
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function (inner_response) {
-                                        $('.response-layer').hide();
-                                        if(inner_response.success) {
-                                            $('.proof-of-address').remove();
-                                            $('.proof-success').fadeIn(1500);
-                                        } else {
-                                            basic.showAlert(inner_response.error, '', true);
-                                        }
-                                    }
-                                });
                                 if(render_pdf != null) {
                                     var render_form = $('form#render-pdf');
                                     $.ajax({
@@ -2374,6 +2353,28 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                     basic.showAlert(decrypted_pdf_response.error, '', true);
                                                 }
                                             }else if(inner_response.error)    {
+                                                basic.showAlert(inner_response.error, '', true);
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/update-public-keys',
+                                        dataType: 'json',
+                                        data: {
+                                            address: $('.proof-of-address').attr('data-address'),
+                                            public_key: response.public_key
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function (inner_response) {
+                                            $('.response-layer').hide();
+                                            if(inner_response.success) {
+                                                $('.proof-of-address').remove();
+                                                $('.proof-success').fadeIn(1500);
+                                            } else {
                                                 basic.showAlert(inner_response.error, '', true);
                                             }
                                         }
@@ -2416,28 +2417,6 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                     }));
                                 }
 
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/update-public-keys',
-                                    dataType: 'json',
-                                    data: {
-                                        address: response.address,
-                                        public_key: response.public_key
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function (inner_response) {
-                                        $('.response-layer').hide();
-                                        if(inner_response.success) {
-                                            $('.proof-of-address').remove();
-                                            $('.proof-success').fadeIn(1500);
-                                        } else {
-                                            basic.showAlert(inner_response.error, '', true);
-                                        }
-                                    }
-                                });
-
                                 if(render_pdf != null) {
                                     var render_form = $('form#render-pdf');
                                     var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, response.private_key);
@@ -2447,6 +2426,28 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                     } else if(decrypted_pdf_response.error) {
                                         basic.showAlert(decrypted_pdf_response.error, '', true);
                                     }
+                                } else {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/update-public-keys',
+                                        dataType: 'json',
+                                        data: {
+                                            address: response.address,
+                                            public_key: response.public_key
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function (inner_response) {
+                                            $('.response-layer').hide();
+                                            if(inner_response.success) {
+                                                $('.proof-of-address').remove();
+                                                $('.proof-success').fadeIn(1500);
+                                            } else {
+                                                basic.showAlert(inner_response.error, '', true);
+                                            }
+                                        }
+                                    });
                                 }
                             } else if(response.error) {
                                 $('.response-layer').hide();

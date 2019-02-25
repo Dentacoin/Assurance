@@ -28419,27 +28419,6 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                     }));
                                 }
 
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/update-public-keys',
-                                    dataType: 'json',
-                                    data: {
-                                        address: $('.proof-of-address').attr('data-address'),
-                                        public_key: response.public_key
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function success(inner_response) {
-                                        $('.response-layer').hide();
-                                        if (inner_response.success) {
-                                            $('.proof-of-address').remove();
-                                            $('.proof-success').fadeIn(1500);
-                                        } else {
-                                            basic.showAlert(inner_response.error, '', true);
-                                        }
-                                    }
-                                });
                                 if (render_pdf != null) {
                                     var render_form = $('form#render-pdf');
                                     $.ajax({
@@ -28498,6 +28477,28 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                             return success;
                                         }()
                                     });
+                                } else {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/update-public-keys',
+                                        dataType: 'json',
+                                        data: {
+                                            address: $('.proof-of-address').attr('data-address'),
+                                            public_key: response.public_key
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function success(inner_response) {
+                                            $('.response-layer').hide();
+                                            if (inner_response.success) {
+                                                $('.proof-of-address').remove();
+                                                $('.proof-success').fadeIn(1500);
+                                            } else {
+                                                basic.showAlert(inner_response.error, '', true);
+                                            }
+                                        }
+                                    });
                                 }
                             } else if (response.error) {
                                 $('.response-layer').hide();
@@ -28532,7 +28533,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         switch (_context19.prev = _context19.next) {
                                             case 0:
                                                 if (!response.success) {
-                                                    _context19.next = 11;
+                                                    _context19.next = 13;
                                                     break;
                                                 }
 
@@ -28545,6 +28546,28 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                     }));
                                                 }
 
+                                                if (!(render_pdf != null)) {
+                                                    _context19.next = 10;
+                                                    break;
+                                                }
+
+                                                render_form = $('form#render-pdf');
+                                                _context19.next = 6;
+                                                return getDecryptedPdfContent(encrypted_pdf_content.success, response.private_key);
+
+                                            case 6:
+                                                decrypted_pdf_response = _context19.sent;
+
+                                                if (decrypted_pdf_response.success) {
+                                                    render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
+                                                    render_form.submit();
+                                                } else if (decrypted_pdf_response.error) {
+                                                    basic.showAlert(decrypted_pdf_response.error, '', true);
+                                                }
+                                                _context19.next = 11;
+                                                break;
+
+                                            case 10:
                                                 $.ajax({
                                                     type: 'POST',
                                                     url: '/update-public-keys',
@@ -28567,36 +28590,17 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                     }
                                                 });
 
-                                                if (!(render_pdf != null)) {
-                                                    _context19.next = 9;
-                                                    break;
-                                                }
-
-                                                render_form = $('form#render-pdf');
-                                                _context19.next = 7;
-                                                return getDecryptedPdfContent(encrypted_pdf_content.success, response.private_key);
-
-                                            case 7:
-                                                decrypted_pdf_response = _context19.sent;
-
-                                                if (decrypted_pdf_response.success) {
-                                                    render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
-                                                    render_form.submit();
-                                                } else if (decrypted_pdf_response.error) {
-                                                    basic.showAlert(decrypted_pdf_response.error, '', true);
-                                                }
-
-                                            case 9:
-                                                _context19.next = 12;
+                                            case 11:
+                                                _context19.next = 14;
                                                 break;
 
-                                            case 11:
+                                            case 13:
                                                 if (response.error) {
                                                     $('.response-layer').hide();
                                                     basic.showAlert(response.error, '', true);
                                                 }
 
-                                            case 12:
+                                            case 14:
                                             case 'end':
                                                 return _context19.stop();
                                         }
