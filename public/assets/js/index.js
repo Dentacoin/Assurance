@@ -1250,27 +1250,23 @@ if($('body').hasClass('logged-in')) {
                     } else if(cached_key.type == 'keystore') {
                         $.ajax({
                             type: 'POST',
-                            url: '/get-address-validation-or-remember-me',
+                            url: '/get-keystore-file-password-validation',
                             dataType: 'json',
-                            data: {
-                                cache: false
-                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function (response) {
-                                basic.showDialog(response.success, 'address-validation-or-remember-me', null, true);
+                                basic.showDialog(response.success, 'keystore-file-password-validation', null, true);
 
-
-                                $('.address-validation-or-remember-me .btn-container a').click(function() {
-                                    if($('.address-validation-or-remember-me .keystore-password').val().trim() == '') {
+                                $('.keystore-file-password-validation .btn-container a').click(function() {
+                                    if($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
                                         basic.showAlert('Please enter your password.', '', true);
                                     }else {
                                         $.ajax({
                                             type: 'POST',
                                             url: '/decrypt-pk',
                                             data: {
-                                                password: $('.address-validation-or-remember-me .keystore-password').val().trim(),
+                                                password: $('.keystore-file-password-validation .keystore-password').val().trim(),
                                                 keystore: JSON.stringify(JSON.parse(localStorage.getItem('current-account')).keystore)
                                             },
                                             dataType: 'json',
@@ -1289,7 +1285,7 @@ if($('body').hasClass('logged-in')) {
                         });
                     }
                 } else {
-                    //show caching popup
+                    openCacheKeyPopup();
                 }
             } else if(encrypted_pdf_content.error) {
                 basic.showAlert(encrypted_pdf_content.error, '', true);
@@ -2519,7 +2515,7 @@ function openCacheKeyPopup() {
         },
         success: function (response) {
             if (response.success) {
-                basic.showDialog(response.success, '', true);
+                basic.showDialog(response.success, 'address-validation-or-remember-me', null, true);
 
                 styleUploadFileButton();
 

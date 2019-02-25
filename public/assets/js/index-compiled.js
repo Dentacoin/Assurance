@@ -27192,7 +27192,7 @@ if ($('body').hasClass('logged-in')) {
                             render_form = $('form#render-pdf');
 
                             if (!encrypted_pdf_content.success) {
-                                _context10.next = 20;
+                                _context10.next = 21;
                                 break;
                             }
 
@@ -27227,26 +27227,23 @@ if ($('body').hasClass('logged-in')) {
                             if (cached_key.type == 'keystore') {
                                 $.ajax({
                                     type: 'POST',
-                                    url: '/get-address-validation-or-remember-me',
+                                    url: '/get-keystore-file-password-validation',
                                     dataType: 'json',
-                                    data: {
-                                        cache: false
-                                    },
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     success: function success(response) {
-                                        basic.showDialog(response.success, 'address-validation-or-remember-me', null, true);
+                                        basic.showDialog(response.success, 'keystore-file-password-validation', null, true);
 
-                                        $('.address-validation-or-remember-me .btn-container a').click(function () {
-                                            if ($('.address-validation-or-remember-me .keystore-password').val().trim() == '') {
+                                        $('.keystore-file-password-validation .btn-container a').click(function () {
+                                            if ($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
                                                 basic.showAlert('Please enter your password.', '', true);
                                             } else {
                                                 $.ajax({
                                                     type: 'POST',
                                                     url: '/decrypt-pk',
                                                     data: {
-                                                        password: $('.address-validation-or-remember-me .keystore-password').val().trim(),
+                                                        password: $('.keystore-file-password-validation .keystore-password').val().trim(),
                                                         keystore: JSON.stringify(JSON.parse(localStorage.getItem('current-account')).keystore)
                                                     },
                                                     dataType: 'json',
@@ -27308,19 +27305,22 @@ if ($('body').hasClass('logged-in')) {
                             }
 
                         case 16:
-                            _context10.next = 18;
+                            _context10.next = 19;
                             break;
 
                         case 18:
-                            _context10.next = 21;
+                            openCacheKeyPopup();
+
+                        case 19:
+                            _context10.next = 22;
                             break;
 
-                        case 20:
+                        case 21:
                             if (encrypted_pdf_content.error) {
                                 basic.showAlert(encrypted_pdf_content.error, '', true);
                             }
 
-                        case 21:
+                        case 22:
                         case 'end':
                             return _context10.stop();
                     }
@@ -28611,7 +28611,7 @@ function openCacheKeyPopup() {
         },
         success: function success(response) {
             if (response.success) {
-                basic.showDialog(response.success, '', true);
+                basic.showDialog(response.success, 'address-validation-or-remember-me', null, true);
 
                 styleUploadFileButton();
 
