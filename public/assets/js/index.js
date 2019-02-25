@@ -123,6 +123,7 @@ var App = {
             web3 = getWeb3(App.web3_0_2.currentProvider);
             App.web3_1_0 = web3;
         }else if(typeof(web3) === 'undefined')    {
+            console.log('asdsaddsasad');
             //CUSTOM
             if(localStorage.getItem('current-account') != null) {
                 global_state.account = JSON.parse(localStorage.getItem('current-account')).address;
