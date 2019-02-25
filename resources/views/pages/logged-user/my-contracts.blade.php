@@ -77,7 +77,7 @@
                                                 <td>{{$contract->monthly_premium}} USD</td>
                                                 <td class="next-payment"></td>
                                                 <td class="contract-details">
-                                                    <div><a href="javascript:void(0)" data-hash="{{$contract->document_hash}}" @if($patient_or_not) data-type="patient" @else data-type="dentist" @endif>Full Contract (pdf)</a></div>
+                                                    <div><a href="javascript:void(0)" data-hash="{{$contract->document_hash}}" @if(!$patient_or_not) data-type="patient" @else data-type="dentist" @endif>Full Contract (pdf)</a></div>
                                                     <div><a href="">Public Proof</a></div>
                                                 </td>
                                             </tr>
