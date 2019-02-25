@@ -27178,7 +27178,7 @@ if ($('body').hasClass('logged-in')) {
 
     if ($('.contract-decrypt').length) {
         $('.contract-decrypt').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee10() {
-            var this_btn, encrypted_pdf_content, render_form, cached_key, decryped_pdf_response;
+            var this_btn, encrypted_pdf_content, render_form, cached_key, decrypted_pdf_response;
             return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee10$(_context10) {
                 while (1) {
                     switch (_context10.prev = _context10.next) {
@@ -27212,13 +27212,13 @@ if ($('body').hasClass('logged-in')) {
                             return getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
 
                         case 11:
-                            decryped_pdf_response = _context10.sent;
+                            decrypted_pdf_response = _context10.sent;
 
-                            if (decryped_pdf_response.success) {
-                                render_form.find('input[name="pdf_data"]').val(encodeEntities(decryped_pdf_response.success.decrypted));
+                            if (decrypted_pdf_response.success) {
+                                render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
                                 render_form.submit();
-                            } else if (decryped_pdf_response.error) {
-                                basic.showAlert(decryped_pdf_response.error, '', true);
+                            } else if (decrypted_pdf_response.error) {
+                                basic.showAlert(decrypted_pdf_response.error, '', true);
                             }
                             _context10.next = 16;
                             break;
@@ -27234,6 +27234,7 @@ if ($('body').hasClass('logged-in')) {
                                     },
                                     success: function success(response) {
                                         basic.showDialog(response.success, 'keystore-file-password-validation', null, true);
+                                        fixButtonsFocus();
 
                                         $('.keystore-file-password-validation .btn-container a').click(function () {
                                             if ($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
@@ -27249,41 +27250,37 @@ if ($('body').hasClass('logged-in')) {
                                                     dataType: 'json',
                                                     success: function () {
                                                         var _ref10 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee9(inner_response) {
+                                                            var decrypted_pdf_response;
                                                             return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee9$(_context9) {
                                                                 while (1) {
                                                                     switch (_context9.prev = _context9.next) {
                                                                         case 0:
                                                                             if (!inner_response.success) {
-                                                                                _context9.next = 14;
+                                                                                _context9.next = 7;
                                                                                 break;
                                                                             }
 
-                                                                            _context9.t0 = render_form.find('input[name="pdf_data"]');
-                                                                            _context9.t1 = getDecryptedPdfContent;
-                                                                            _context9.t2 = encrypted_pdf_content.success;
-                                                                            _context9.next = 6;
+                                                                            _context9.next = 3;
                                                                             return getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.success.toString('hex'));
 
-                                                                        case 6:
-                                                                            _context9.t3 = _context9.sent;
-                                                                            _context9.next = 9;
-                                                                            return (0, _context9.t1)(_context9.t2, _context9.t3);
+                                                                        case 3:
+                                                                            decrypted_pdf_response = _context9.sent;
 
-                                                                        case 9:
-                                                                            _context9.t4 = _context9.sent;
-
-                                                                            _context9.t0.val.call(_context9.t0, _context9.t4);
-
-                                                                            render_form.submit();
-                                                                            _context9.next = 15;
+                                                                            if (decrypted_pdf_response.success) {
+                                                                                render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
+                                                                                render_form.submit();
+                                                                            } else if (decrypted_pdf_response.error) {
+                                                                                basic.showAlert(decrypted_pdf_response.error, '', true);
+                                                                            }
+                                                                            _context9.next = 8;
                                                                             break;
 
-                                                                        case 14:
+                                                                        case 7:
                                                                             if (inner_response.error) {
                                                                                 basic.showAlert(inner_response.error, '', true);
                                                                             }
 
-                                                                        case 15:
+                                                                        case 8:
                                                                         case 'end':
                                                                             return _context9.stop();
                                                                     }

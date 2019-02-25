@@ -1240,12 +1240,12 @@ if($('body').hasClass('logged-in')) {
                 if(localStorage.getItem('current-account') != null) {
                     var cached_key = JSON.parse(localStorage.getItem('current-account'));
                     if(cached_key.type == 'key') {
-                        var decryped_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
-                        if(decryped_pdf_response.success) {
-                            render_form.find('input[name="pdf_data"]').val(encodeEntities(decryped_pdf_response.success.decrypted));
+                        var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
+                        if(decrypted_pdf_response.success) {
+                            render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
                             render_form.submit();
-                        } else if(decryped_pdf_response.error) {
-                            basic.showAlert(decryped_pdf_response.error, '', true);
+                        } else if(decrypted_pdf_response.error) {
+                            basic.showAlert(decrypted_pdf_response.error, '', true);
                         }
                     } else if(cached_key.type == 'keystore') {
                         $.ajax({
@@ -1257,6 +1257,7 @@ if($('body').hasClass('logged-in')) {
                             },
                             success: function (response) {
                                 basic.showDialog(response.success, 'keystore-file-password-validation', null, true);
+                                fixButtonsFocus();
 
                                 $('.keystore-file-password-validation .btn-container a').click(function() {
                                     if($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
@@ -1272,8 +1273,13 @@ if($('body').hasClass('logged-in')) {
                                             dataType: 'json',
                                             success: async function (inner_response) {
                                                 if(inner_response.success)    {
-                                                    render_form.find('input[name="pdf_data"]').val(await getDecryptedPdfContent(encrypted_pdf_content.success, await getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.success.toString('hex'))));
-                                                    render_form.submit();
+                                                    var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.success.toString('hex'));
+                                                    if(decrypted_pdf_response.success) {
+                                                        render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
+                                                        render_form.submit();
+                                                    } else if(decrypted_pdf_response.error) {
+                                                        basic.showAlert(decrypted_pdf_response.error, '', true);
+                                                    }
                                                 }else if(inner_response.error)    {
                                                     basic.showAlert(inner_response.error, '', true);
                                                 }
