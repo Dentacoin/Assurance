@@ -2343,6 +2343,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         },
                                         dataType: 'json',
                                         success: async function (inner_response) {
+                                            $('.response-layer').hide();
                                             if(inner_response.success && inner_response.to_string)    {
                                                 var decrypted_pdf_response = await getDecryptedPdfContentByPlainKey(encrypted_pdf_content.success, inner_response.to_string);
                                                 if(decrypted_pdf_response.success) {
@@ -2420,6 +2421,8 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                 if(render_pdf != null) {
                                     var render_form = $('form#render-pdf');
                                     var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, response.private_key);
+
+                                    $('.response-layer').hide();
                                     if(decrypted_pdf_response.success) {
                                         render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
                                         render_form.submit();

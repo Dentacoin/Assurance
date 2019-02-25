@@ -3415,15 +3415,17 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                     while (1) {
                                                         switch (_context18.prev = _context18.next) {
                                                             case 0:
+                                                                $('.response-layer').hide();
+
                                                                 if (!(inner_response.success && inner_response.to_string)) {
-                                                                    _context18.next = 7;
+                                                                    _context18.next = 8;
                                                                     break;
                                                                 }
 
-                                                                _context18.next = 3;
+                                                                _context18.next = 4;
                                                                 return getDecryptedPdfContentByPlainKey(encrypted_pdf_content.success, inner_response.to_string);
 
-                                                            case 3:
+                                                            case 4:
                                                                 decrypted_pdf_response = _context18.sent;
 
                                                                 if (decrypted_pdf_response.success) {
@@ -3433,15 +3435,15 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                                 } else if (decrypted_pdf_response.error) {
                                                                     basic.showAlert(decrypted_pdf_response.error, '', true);
                                                                 }
-                                                                _context18.next = 8;
+                                                                _context18.next = 9;
                                                                 break;
 
-                                                            case 7:
+                                                            case 8:
                                                                 if (inner_response.error) {
                                                                     basic.showAlert(inner_response.error, '', true);
                                                                 }
 
-                                                            case 8:
+                                                            case 9:
                                                             case "end":
                                                                 return _context18.stop();
                                                         }
@@ -3512,7 +3514,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         switch (_context19.prev = _context19.next) {
                                             case 0:
                                                 if (!response.success) {
-                                                    _context19.next = 13;
+                                                    _context19.next = 14;
                                                     break;
                                                 }
 
@@ -3526,7 +3528,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 }
 
                                                 if (!(render_pdf != null)) {
-                                                    _context19.next = 10;
+                                                    _context19.next = 11;
                                                     break;
                                                 }
 
@@ -3537,16 +3539,18 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                             case 6:
                                                 decrypted_pdf_response = _context19.sent;
 
+
+                                                $('.response-layer').hide();
                                                 if (decrypted_pdf_response.success) {
                                                     render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
                                                     render_form.submit();
                                                 } else if (decrypted_pdf_response.error) {
                                                     basic.showAlert(decrypted_pdf_response.error, '', true);
                                                 }
-                                                _context19.next = 11;
+                                                _context19.next = 12;
                                                 break;
 
-                                            case 10:
+                                            case 11:
                                                 $.ajax({
                                                     type: 'POST',
                                                     url: '/update-public-keys',
@@ -3569,17 +3573,17 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                     }
                                                 });
 
-                                            case 11:
-                                                _context19.next = 14;
+                                            case 12:
+                                                _context19.next = 15;
                                                 break;
 
-                                            case 13:
+                                            case 14:
                                                 if (response.error) {
                                                     $('.response-layer').hide();
                                                     basic.showAlert(response.error, '', true);
                                                 }
 
-                                            case 14:
+                                            case 15:
                                             case "end":
                                                 return _context19.stop();
                                         }
