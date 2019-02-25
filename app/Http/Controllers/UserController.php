@@ -334,12 +334,12 @@ class UserController extends Controller {
             'pdf_data.required' => 'PDF data is required.'
         ]);
 
-        $dompdf = new Dompdf();
+        $dompdf = new DOMPDF();
         $data = '<!DOCTYPE html><html><head><style></style></head><body>' . $request->input('pdf_data') . '</body></html>';
         $dompdf->load_html('<!DOCTYPE html><html><head><style></style></head><body>' . $request->input('pdf_data') . '</body></html>');
 
         $dompdf->render();
-        $dompdf->stream('contract.pdf');
+        $dompdf->stream('contract.pdf', array('Attachment' => false));
         die();
     }
 

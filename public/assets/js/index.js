@@ -1240,7 +1240,7 @@ if($('body').hasClass('logged-in')) {
                         var decryped_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
                         if(decryped_pdf_response.success) {
                             render_form.find('input[name="pdf_data"]').val(encodeEntities(decryped_pdf_response.success.decrypted));
-                            render_form.submit();
+                            //render_form.submit();
                         } else if(decryped_pdf_response.error) {
                             basic.showAlert(decryped_pdf_response.error, '', true);
                         }
