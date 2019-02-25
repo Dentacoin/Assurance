@@ -1237,8 +1237,13 @@ if($('body').hasClass('logged-in')) {
                 if(localStorage.getItem('current-account') != null) {
                     var cached_key = JSON.parse(localStorage.getItem('current-account'));
                     if(cached_key.type == 'key') {
-                        render_form.find('input[name="pdf_data"]').val(await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key));
-                        render_form.submit();
+                        var decryped_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
+                        if(decryped_pdf_response.success) {
+                            render_form.find('input[name="pdf_data"]').val(encodeEntities(decryped_pdf_response.success.decrypted));
+                            render_form.submit();
+                        } else if(decryped_pdf_response.error) {
+                            basic.showAlert(decryped_pdf_response.error, '', true);
+                        }
                     } else if(cached_key.type == 'keystore') {
                         $.ajax({
                             type: 'POST',
@@ -1497,6 +1502,14 @@ function customJavascriptForm(path, params, method) {
 
     document.body.appendChild(form);
     form.submit();
+}
+
+function encodeEntities(string) {
+    var p = document.createElement('p');
+    p.textContent = string;
+    var inner_html = p.innerHTML;
+    p.remove();
+    return inner_html;
 }
 
 //call the popup for login/sign for patient and dentist

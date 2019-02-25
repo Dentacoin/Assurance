@@ -2154,7 +2154,7 @@ if ($('body').hasClass('logged-in')) {
 
     if ($('.contract-decrypt').length) {
         $('.contract-decrypt').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee10() {
-            var this_btn, encrypted_pdf_content, render_form, cached_key;
+            var this_btn, encrypted_pdf_content, render_form, cached_key, decryped_pdf_response;
             return _regeneratorRuntime.wrap(function _callee10$(_context10) {
                 while (1) {
                     switch (_context10.prev = _context10.next) {
@@ -2168,36 +2168,38 @@ if ($('body').hasClass('logged-in')) {
                             render_form = $('form#render-pdf');
 
                             if (!encrypted_pdf_content.success) {
-                                _context10.next = 22;
+                                _context10.next = 20;
                                 break;
                             }
 
                             if (!(localStorage.getItem('current-account') != null)) {
-                                _context10.next = 20;
+                                _context10.next = 18;
                                 break;
                             }
 
                             cached_key = JSON.parse(localStorage.getItem('current-account'));
 
                             if (!(cached_key.type == 'key')) {
-                                _context10.next = 17;
+                                _context10.next = 15;
                                 break;
                             }
 
-                            _context10.t0 = render_form.find('input[name="pdf_data"]');
-                            _context10.next = 12;
+                            _context10.next = 11;
                             return getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
 
-                        case 12:
-                            _context10.t1 = _context10.sent;
+                        case 11:
+                            decryped_pdf_response = _context10.sent;
 
-                            _context10.t0.val.call(_context10.t0, _context10.t1);
-
-                            render_form.submit();
-                            _context10.next = 18;
+                            if (decryped_pdf_response.success) {
+                                render_form.find('input[name="pdf_data"]').val(encodeEntities(decryped_pdf_response.success.decrypted));
+                                render_form.submit();
+                            } else if (decryped_pdf_response.error) {
+                                basic.showAlert(decryped_pdf_response.error, '', true);
+                            }
+                            _context10.next = 16;
                             break;
 
-                        case 17:
+                        case 15:
                             if (cached_key.type == 'keystore') {
                                 $.ajax({
                                     type: 'POST',
@@ -2278,20 +2280,20 @@ if ($('body').hasClass('logged-in')) {
                                 });
                             }
 
+                        case 16:
+                            _context10.next = 18;
+                            break;
+
                         case 18:
-                            _context10.next = 20;
+                            _context10.next = 21;
                             break;
 
                         case 20:
-                            _context10.next = 23;
-                            break;
-
-                        case 22:
                             if (encrypted_pdf_content.error) {
                                 basic.showAlert(encrypted_pdf_content.error, '', true);
                             }
 
-                        case 23:
+                        case 21:
                         case "end":
                             return _context10.stop();
                     }
@@ -2512,6 +2514,14 @@ function customJavascriptForm(path, params, method) {
 
     document.body.appendChild(form);
     form.submit();
+}
+
+function encodeEntities(string) {
+    var p = document.createElement('p');
+    p.textContent = string;
+    var inner_html = p.innerHTML;
+    p.remove();
+    return inner_html;
 }
 
 //call the popup for login/sign for patient and dentist
