@@ -757,7 +757,7 @@ if($('body').hasClass('logged-in')) {
         //if no key or keystore file is cached show the option for it
         if(localStorage.getItem('current-account') == null) {
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: '/get-address-validation-or-remember-me',
                 dataType: 'json',
                 headers: {
@@ -782,7 +782,6 @@ if($('body').hasClass('logged-in')) {
                     }
                 }
             });
-
         }
     } else if($('body').hasClass('create-contract')) {
         var signature_pad_inited = false;
@@ -1236,25 +1235,51 @@ if($('body').hasClass('logged-in')) {
             var this_btn = $(this);
             var encrypted_pdf_content = await getEncryptedContractPdfContent(this_btn.attr('data-hash'), this_btn.attr('data-type'));
             if(encrypted_pdf_content.success) {
-                //DYNAMIZE THIS PRIVATE KEY TO READ FROM LOCAL STORAGE OR MAKE THEM TO UPLOAD IT
-                var decrypted_pdf_content = await getDecryptedPdfContent(encrypted_pdf_content.success, '16590c4613e7202cf0c19fda8ffc44e0e3d01ee1c28972192420bb4fec2233e7');
-                if(decrypted_pdf_content.success) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/render-pdf',
-                        dataType: 'json',
-                        data: {
-                            decrypted_data: decrypted_pdf_content.success
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function (response) {
+                if(localStorage.getItem('current-account') != null) {
+                    var cached_key = JSON.parse(localStorage.getItem('current-account'));
+                    if(cached_key.type == 'key') {
+                        renderPdfFromDecryptedPdfContent(await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key));
+                    } else if(cached_key.type == 'keystore') {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/get-address-validation-or-remember-me',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (response) {
+                                basic.showDialog(response.success, 'address-validation-or-remember-me', true);
 
-                        }
-                    });
-                } else if(decrypted_pdf_content.error) {
-                    basic.showAlert(decrypted_pdf_content.error, '', true);
+                                $('.address-validation-or-remember-me .btn-container a').click(function() {
+                                    if($('.address-validation-or-remember-me .keystore-password').val().trim() == '') {
+                                        basic.showAlert('Please enter your password.', '', true);
+                                    }else {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/decrypt-pk',
+                                            data: {
+                                                password: $('.address-validation-or-remember-me .keystore-password').val().trim(),
+                                                keystore: JSON.stringify(JSON.parse(localStorage.getItem('current-account')).keystore)
+                                            },
+                                            dataType: 'json',
+                                            success: async function (inner_response) {
+                                                if(inner_response.success)    {
+                                                    console.log(inner_response.success.toString('hex'), 'inner_response.success.toString(\'hex\')');
+                                                    renderPdfFromDecryptedPdfContent(await getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.success.toString('hex')));
+                                                }else if(inner_response.error)    {
+                                                    basic.showAlert(inner_response.error, '', true);
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+
+
+                } else {
+                    //show caching popup
                 }
             } else if(encrypted_pdf_content.error) {
                 basic.showAlert(encrypted_pdf_content.error, '', true);
@@ -2463,6 +2488,35 @@ function bindCacheKeyEvent(keystore_file) {
     });
 }
 
+function openCacheKeyPopup() {
+    $.ajax({
+        type: 'POST',
+        url: '/get-address-validation-or-remember-me',
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
+            if (response.success) {
+                basic.showDialog(response.success, '', true);
+
+                styleUploadFileButton();
+
+                $('.enter-private-key').unbind().click(function() {
+                    $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 padding-left-30 padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
+                    $('.proof-of-address #upload-keystore-file').val('');
+                    bindGoogleAlikeButtonsEvents();
+                    bindCacheKeyEvent();
+                });
+
+                $('.upload-file-container button').unbind().click(function() {
+                    $('.proof-of-address .on-change-result').html('');
+                });
+            }
+        }
+    });
+}
+
 async function validateUserAddress(user_address, value_element) {
     var error;
     var check_public_key_ajax_result = await $.ajax({
@@ -2585,7 +2639,7 @@ async function getEncryptedContractPdfContent(hash, type) {
     });
 }
 
-async function getDecryptedPdfContent(encrypted_html, key) {
+async function getDecryptedPdfContentByPlainKey(encrypted_html, key) {
     return await $.ajax({
         type: 'POST',
         url: '/decrypt-data-plain-key',
@@ -2598,4 +2652,40 @@ async function getDecryptedPdfContent(encrypted_html, key) {
             private_key: key
         }
     });
+}
+
+async function getDecryptedPdfContent(encrypted_html, key) {
+    return await $.ajax({
+        type: 'POST',
+        url: '/decrypt-data',
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            encrypted_html: encrypted_html,
+            private_key: key
+        }
+    });
+}
+
+async function renderPdfFromDecryptedPdfContent(response) {
+    if(decrypted_pdf_content.success) {
+        $.ajax({
+            type: 'POST',
+            url: '/render-pdf',
+            dataType: 'json',
+            data: {
+                decrypted_data: decrypted_pdf_content.success
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                console.log(response);
+            }
+        });
+    } else if(decrypted_pdf_content.error) {
+        basic.showAlert(decrypted_pdf_content.error, '', true);
+    }
 }

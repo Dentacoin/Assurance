@@ -25621,31 +25621,31 @@ var buildCurrentPatientContractHistory = function () {
 
 
 var onDocumentReadyPageData = function () {
-    var _ref16 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee16() {
+    var _ref17 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee17() {
         var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_creation, remainder, next_payment_timestamp_date_obj, max_height;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee16$(_context16) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee17$(_context17) {
             while (1) {
-                switch (_context16.prev = _context16.next) {
+                switch (_context17.prev = _context17.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context16.next = 55;
+                            _context17.next = 55;
                             break;
                         }
 
                         if (!$('body').hasClass('congratulations')) {
-                            _context16.next = 13;
+                            _context17.next = 13;
                             break;
                         }
 
-                        _context16.t0 = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
-                        _context16.t1 = parseInt;
-                        _context16.next = 6;
+                        _context17.t0 = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
+                        _context17.t1 = parseInt;
+                        _context17.next = 6;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 6:
-                        _context16.t2 = _context16.sent;
-                        _context16.t3 = (0, _context16.t1)(_context16.t2);
-                        next_transfer_timestamp = _context16.t0 + _context16.t3;
+                        _context17.t2 = _context17.sent;
+                        _context17.t3 = (0, _context17.t1)(_context17.t2);
+                        next_transfer_timestamp = _context17.t0 + _context17.t3;
 
                         if ($('.converted-date').length > 0) {
                             date_obj = new Date(next_transfer_timestamp * 1000);
@@ -25653,25 +25653,25 @@ var onDocumentReadyPageData = function () {
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context16.next = 55;
+                        _context17.next = 55;
                         break;
 
                     case 13:
                         if (!$('body').hasClass('my-contracts')) {
-                            _context16.next = 25;
+                            _context17.next = 25;
                             break;
                         }
 
                         initDataTable();
 
                         table_trs_with_timestamp = $('.table-container table tr[data-timestamp-signed]');
-                        _context16.t4 = parseInt;
-                        _context16.next = 19;
+                        _context17.t4 = parseInt;
+                        _context17.next = 19;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 19:
-                        _context16.t5 = _context16.sent;
-                        smart_contract_withdraw_period = (0, _context16.t4)(_context16.t5);
+                        _context17.t5 = _context17.sent;
+                        smart_contract_withdraw_period = (0, _context17.t4)(_context17.t5);
                         now_timestamp = Math.round(new Date().getTime() / 1000);
 
 
@@ -25687,12 +25687,12 @@ var onDocumentReadyPageData = function () {
 
                             table_trs_with_timestamp.eq(i).find('.next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
-                        _context16.next = 55;
+                        _context17.next = 55;
                         break;
 
                     case 25:
                         if (!$('body').hasClass('patient-access')) {
-                            _context16.next = 29;
+                            _context17.next = 29;
                             break;
                         }
 
@@ -25707,24 +25707,24 @@ var onDocumentReadyPageData = function () {
                             }
                             $('.contract-tile .tile-wrapper').outerHeight(max_height);
                         }
-                        _context16.next = 55;
+                        _context17.next = 55;
                         break;
 
                     case 29:
                         if (!$('body').hasClass('patient-contract-view')) {
-                            _context16.next = 42;
+                            _context17.next = 42;
                             break;
                         }
 
-                        _context16.t6 = parseInt($('.contract-body').attr('data-time-left-next-transfer'));
-                        _context16.t7 = parseInt;
-                        _context16.next = 34;
+                        _context17.t6 = parseInt($('.contract-body').attr('data-time-left-next-transfer'));
+                        _context17.t7 = parseInt;
+                        _context17.next = 34;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 34:
-                        _context16.t8 = _context16.sent;
-                        _context16.t9 = (0, _context16.t7)(_context16.t8);
-                        next_transfer_timestamp = _context16.t6 + _context16.t9;
+                        _context17.t8 = _context17.sent;
+                        _context17.t9 = (0, _context17.t7)(_context17.t8);
+                        next_transfer_timestamp = _context17.t6 + _context17.t9;
 
                         if ($('.converted-date').length > 0) {
                             date_obj = new Date(next_transfer_timestamp * 1000);
@@ -25734,56 +25734,56 @@ var onDocumentReadyPageData = function () {
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
 
                         cancelContractEventInit();
-                        _context16.next = 55;
+                        _context17.next = 55;
                         break;
 
                     case 42:
                         if (!$('body').hasClass('contract-proposal')) {
-                            _context16.next = 55;
+                            _context17.next = 55;
                             break;
                         }
 
                         if (!($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined)) {
-                            _context16.next = 55;
+                            _context17.next = 55;
                             break;
                         }
 
-                        _context16.t10 = Date;
-                        _context16.t11 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
-                        _context16.t12 = parseInt;
-                        _context16.next = 49;
+                        _context17.t10 = Date;
+                        _context17.t11 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
+                        _context17.t12 = parseInt;
+                        _context17.next = 49;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 49:
-                        _context16.t13 = _context16.sent;
-                        _context16.t14 = (0, _context16.t12)(_context16.t13);
-                        _context16.t15 = _context16.t11 + _context16.t14;
-                        _context16.t16 = _context16.t15 * 1000;
-                        date_obj = new _context16.t10(_context16.t16);
+                        _context17.t13 = _context17.sent;
+                        _context17.t14 = (0, _context17.t12)(_context17.t13);
+                        _context17.t15 = _context17.t11 + _context17.t14;
+                        _context17.t16 = _context17.t15 * 1000;
+                        date_obj = new _context17.t10(_context17.t16);
 
                         $('.active-until').html(dateObjToFormattedDate(date_obj));
 
                     case 55:
                     case 'end':
-                        return _context16.stop();
+                        return _context17.stop();
                 }
             }
-        }, _callee16, this);
+        }, _callee17, this);
     }));
 
     return function onDocumentReadyPageData() {
-        return _ref16.apply(this, arguments);
+        return _ref17.apply(this, arguments);
     };
 }();
 
 var validateUserAddress = function () {
-    var _ref17 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee17(user_address, value_element) {
+    var _ref18 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee18(user_address, value_element) {
         var error, check_public_key_ajax_result;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee17$(_context17) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee18$(_context18) {
             while (1) {
-                switch (_context17.prev = _context17.next) {
+                switch (_context18.prev = _context18.next) {
                     case 0:
-                        _context17.next = 2;
+                        _context18.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/check-public-key',
@@ -25797,7 +25797,7 @@ var validateUserAddress = function () {
                         });
 
                     case 2:
-                        check_public_key_ajax_result = _context17.sent;
+                        check_public_key_ajax_result = _context18.sent;
 
 
                         if (check_public_key_ajax_result.success) {
@@ -25816,28 +25816,28 @@ var validateUserAddress = function () {
                                 error = true;
                             }
                         }
-                        return _context17.abrupt('return', error);
+                        return _context18.abrupt('return', error);
 
                     case 5:
                     case 'end':
-                        return _context17.stop();
+                        return _context18.stop();
                 }
             }
-        }, _callee17, this);
+        }, _callee18, this);
     }));
 
-    return function validateUserAddress(_x8, _x9) {
-        return _ref17.apply(this, arguments);
+    return function validateUserAddress(_x9, _x10) {
+        return _ref18.apply(this, arguments);
     };
 }();
 
 var getEncryptedContractPdfContent = function () {
-    var _ref18 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee18(hash, type) {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee18$(_context18) {
+    var _ref19 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee19(hash, type) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee19$(_context19) {
             while (1) {
-                switch (_context18.prev = _context18.next) {
+                switch (_context19.prev = _context19.next) {
                     case 0:
-                        _context18.next = 2;
+                        _context19.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-contract',
@@ -25852,28 +25852,28 @@ var getEncryptedContractPdfContent = function () {
                         });
 
                     case 2:
-                        return _context18.abrupt('return', _context18.sent);
+                        return _context19.abrupt('return', _context19.sent);
 
                     case 3:
                     case 'end':
-                        return _context18.stop();
+                        return _context19.stop();
                 }
             }
-        }, _callee18, this);
+        }, _callee19, this);
     }));
 
-    return function getEncryptedContractPdfContent(_x10, _x11) {
-        return _ref18.apply(this, arguments);
+    return function getEncryptedContractPdfContent(_x11, _x12) {
+        return _ref19.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContent = function () {
-    var _ref19 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee19(encrypted_html, key) {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee19$(_context19) {
+var getDecryptedPdfContentByPlainKey = function () {
+    var _ref20 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee20(encrypted_html, key) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee20$(_context20) {
             while (1) {
-                switch (_context19.prev = _context19.next) {
+                switch (_context20.prev = _context20.next) {
                     case 0:
-                        _context19.next = 2;
+                        _context20.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-data-plain-key',
@@ -25888,18 +25888,92 @@ var getDecryptedPdfContent = function () {
                         });
 
                     case 2:
-                        return _context19.abrupt('return', _context19.sent);
+                        return _context20.abrupt('return', _context20.sent);
 
                     case 3:
                     case 'end':
-                        return _context19.stop();
+                        return _context20.stop();
                 }
             }
-        }, _callee19, this);
+        }, _callee20, this);
     }));
 
-    return function getDecryptedPdfContent(_x12, _x13) {
-        return _ref19.apply(this, arguments);
+    return function getDecryptedPdfContentByPlainKey(_x13, _x14) {
+        return _ref20.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContent = function () {
+    var _ref21 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee21(encrypted_html, key) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee21$(_context21) {
+            while (1) {
+                switch (_context21.prev = _context21.next) {
+                    case 0:
+                        _context21.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context21.abrupt('return', _context21.sent);
+
+                    case 3:
+                    case 'end':
+                        return _context21.stop();
+                }
+            }
+        }, _callee21, this);
+    }));
+
+    return function getDecryptedPdfContent(_x15, _x16) {
+        return _ref21.apply(this, arguments);
+    };
+}();
+
+var renderPdfFromDecryptedPdfContent = function () {
+    var _ref22 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee22(response) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee22$(_context22) {
+            while (1) {
+                switch (_context22.prev = _context22.next) {
+                    case 0:
+                        if (decrypted_pdf_content.success) {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/render-pdf',
+                                dataType: 'json',
+                                data: {
+                                    decrypted_data: decrypted_pdf_content.success
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function success(response) {
+                                    console.log(response);
+                                }
+                            });
+                        } else if (decrypted_pdf_content.error) {
+                            basic.showAlert(decrypted_pdf_content.error, '', true);
+                        }
+
+                    case 1:
+                    case 'end':
+                        return _context22.stop();
+                }
+            }
+        }, _callee22, this);
+    }));
+
+    return function renderPdfFromDecryptedPdfContent(_x17) {
+        return _ref22.apply(this, arguments);
     };
 }();
 
@@ -26546,7 +26620,7 @@ if ($('body').hasClass('logged-in')) {
         //if no key or keystore file is cached show the option for it
         if (localStorage.getItem('current-account') == null) {
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: '/get-address-validation-or-remember-me',
                 dataType: 'json',
                 headers: {
@@ -27116,60 +27190,137 @@ if ($('body').hasClass('logged-in')) {
     });
 
     if ($('.contract-decrypt').length) {
-        $('.contract-decrypt').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee9() {
-            var this_btn, encrypted_pdf_content, decrypted_pdf_content;
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee9$(_context9) {
+        $('.contract-decrypt').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee10() {
+            var this_btn, encrypted_pdf_content, cached_key;
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee10$(_context10) {
                 while (1) {
-                    switch (_context9.prev = _context9.next) {
+                    switch (_context10.prev = _context10.next) {
                         case 0:
                             this_btn = $(this);
-                            _context9.next = 3;
+                            _context10.next = 3;
                             return getEncryptedContractPdfContent(this_btn.attr('data-hash'), this_btn.attr('data-type'));
 
                         case 3:
-                            encrypted_pdf_content = _context9.sent;
+                            encrypted_pdf_content = _context10.sent;
 
                             if (!encrypted_pdf_content.success) {
-                                _context9.next = 11;
+                                _context10.next = 20;
                                 break;
                             }
 
-                            _context9.next = 7;
-                            return getDecryptedPdfContent(encrypted_pdf_content.success, '16590c4613e7202cf0c19fda8ffc44e0e3d01ee1c28972192420bb4fec2233e7');
+                            if (!(localStorage.getItem('current-account') != null)) {
+                                _context10.next = 18;
+                                break;
+                            }
 
-                        case 7:
-                            decrypted_pdf_content = _context9.sent;
+                            cached_key = JSON.parse(localStorage.getItem('current-account'));
 
-                            if (decrypted_pdf_content.success) {
+                            if (!(cached_key.type == 'key')) {
+                                _context10.next = 15;
+                                break;
+                            }
+
+                            _context10.t0 = renderPdfFromDecryptedPdfContent;
+                            _context10.next = 11;
+                            return getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
+
+                        case 11:
+                            _context10.t1 = _context10.sent;
+                            (0, _context10.t0)(_context10.t1);
+                            _context10.next = 16;
+                            break;
+
+                        case 15:
+                            if (cached_key.type == 'keystore') {
                                 $.ajax({
                                     type: 'POST',
-                                    url: '/render-pdf',
+                                    url: '/get-address-validation-or-remember-me',
                                     dataType: 'json',
-                                    data: {
-                                        decrypted_data: decrypted_pdf_content.success
-                                    },
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
-                                    success: function success(response) {}
+                                    success: function success(response) {
+                                        basic.showDialog(response.success, 'address-validation-or-remember-me', true);
+
+                                        $('.address-validation-or-remember-me .btn-container a').click(function () {
+                                            if ($('.address-validation-or-remember-me .keystore-password').val().trim() == '') {
+                                                basic.showAlert('Please enter your password.', '', true);
+                                            } else {
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: '/decrypt-pk',
+                                                    data: {
+                                                        password: $('.address-validation-or-remember-me .keystore-password').val().trim(),
+                                                        keystore: JSON.stringify(JSON.parse(localStorage.getItem('current-account')).keystore)
+                                                    },
+                                                    dataType: 'json',
+                                                    success: function () {
+                                                        var _ref10 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee9(inner_response) {
+                                                            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee9$(_context9) {
+                                                                while (1) {
+                                                                    switch (_context9.prev = _context9.next) {
+                                                                        case 0:
+                                                                            if (!inner_response.success) {
+                                                                                _context9.next = 9;
+                                                                                break;
+                                                                            }
+
+                                                                            console.log(inner_response.success.toString('hex'), 'inner_response.success.toString(\'hex\')');
+                                                                            _context9.t0 = renderPdfFromDecryptedPdfContent;
+                                                                            _context9.next = 5;
+                                                                            return getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.success.toString('hex'));
+
+                                                                        case 5:
+                                                                            _context9.t1 = _context9.sent;
+                                                                            (0, _context9.t0)(_context9.t1);
+                                                                            _context9.next = 10;
+                                                                            break;
+
+                                                                        case 9:
+                                                                            if (inner_response.error) {
+                                                                                basic.showAlert(inner_response.error, '', true);
+                                                                            }
+
+                                                                        case 10:
+                                                                        case 'end':
+                                                                            return _context9.stop();
+                                                                    }
+                                                                }
+                                                            }, _callee9, this);
+                                                        }));
+
+                                                        function success(_x2) {
+                                                            return _ref10.apply(this, arguments);
+                                                        }
+
+                                                        return success;
+                                                    }()
+                                                });
+                                            }
+                                        });
+                                    }
                                 });
-                            } else if (decrypted_pdf_content.error) {
-                                basic.showAlert(decrypted_pdf_content.error, '', true);
                             }
-                            _context9.next = 12;
+
+                        case 16:
+                            _context10.next = 18;
                             break;
 
-                        case 11:
+                        case 18:
+                            _context10.next = 21;
+                            break;
+
+                        case 20:
                             if (encrypted_pdf_content.error) {
                                 basic.showAlert(encrypted_pdf_content.error, '', true);
                             }
 
-                        case 12:
+                        case 21:
                         case 'end':
-                            return _context9.stop();
+                            return _context10.stop();
                     }
                 }
-            }, _callee9, this);
+            }, _callee10, this);
         })));
     }
 
@@ -27400,13 +27551,13 @@ function bindLoginSigninPopupShow() {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function () {
-                    var _ref10 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee14(response) {
-                        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee14$(_context14) {
+                    var _ref11 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee15(response) {
+                        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee15$(_context15) {
                             while (1) {
-                                switch (_context14.prev = _context14.next) {
+                                switch (_context15.prev = _context15.next) {
                                     case 0:
                                         if (!response.success) {
-                                            _context14.next = 20;
+                                            _context15.next = 20;
                                             break;
                                         }
 
@@ -27444,33 +27595,12 @@ function bindLoginSigninPopupShow() {
                                         });
 
                                         $(document).on('civicCustomBtnClicked', function () {
-                                            var _ref11 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee10(event) {
-                                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee10$(_context10) {
-                                                    while (1) {
-                                                        switch (_context10.prev = _context10.next) {
-                                                            case 0:
-                                                                $('.patient .form-register .step-errors-holder').html('');
-
-                                                            case 1:
-                                                            case 'end':
-                                                                return _context10.stop();
-                                                        }
-                                                    }
-                                                }, _callee10, this);
-                                            }));
-
-                                            return function (_x3) {
-                                                return _ref11.apply(this, arguments);
-                                            };
-                                        }());
-
-                                        $(document).on('civicRead', function () {
                                             var _ref12 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee11(event) {
                                                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee11$(_context11) {
                                                     while (1) {
                                                         switch (_context11.prev = _context11.next) {
                                                             case 0:
-                                                                $('.response-layer').show();
+                                                                $('.patient .form-register .step-errors-holder').html('');
 
                                                             case 1:
                                                             case 'end':
@@ -27485,13 +27615,13 @@ function bindLoginSigninPopupShow() {
                                             };
                                         }());
 
-                                        $(document).on('facebookCustomBtnClicked', function () {
+                                        $(document).on('civicRead', function () {
                                             var _ref13 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee12(event) {
                                                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee12$(_context12) {
                                                     while (1) {
                                                         switch (_context12.prev = _context12.next) {
                                                             case 0:
-                                                                $('.patient .form-register .step-errors-holder').html('');
+                                                                $('.response-layer').show();
 
                                                             case 1:
                                                             case 'end':
@@ -27506,13 +27636,13 @@ function bindLoginSigninPopupShow() {
                                             };
                                         }());
 
-                                        $(document).on('customCivicFbStopperTriggered', function () {
+                                        $(document).on('facebookCustomBtnClicked', function () {
                                             var _ref14 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee13(event) {
                                                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee13$(_context13) {
                                                     while (1) {
                                                         switch (_context13.prev = _context13.next) {
                                                             case 0:
-                                                                customErrorHandle($('.patient .form-register .step-errors-holder'), 'Please agree with our privacy policy.');
+                                                                $('.patient .form-register .step-errors-holder').html('');
 
                                                             case 1:
                                                             case 'end':
@@ -27524,6 +27654,27 @@ function bindLoginSigninPopupShow() {
 
                                             return function (_x6) {
                                                 return _ref14.apply(this, arguments);
+                                            };
+                                        }());
+
+                                        $(document).on('customCivicFbStopperTriggered', function () {
+                                            var _ref15 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee14(event) {
+                                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee14$(_context14) {
+                                                    while (1) {
+                                                        switch (_context14.prev = _context14.next) {
+                                                            case 0:
+                                                                customErrorHandle($('.patient .form-register .step-errors-holder'), 'Please agree with our privacy policy.');
+
+                                                            case 1:
+                                                            case 'end':
+                                                                return _context14.stop();
+                                                        }
+                                                    }
+                                                }, _callee14, this);
+                                            }));
+
+                                            return function (_x7) {
+                                                return _ref15.apply(this, arguments);
                                             };
                                         }());
                                         // ====================== /PATIENT LOGIN/SIGNUP LOGIC ======================
@@ -27575,7 +27726,7 @@ function bindLoginSigninPopupShow() {
 
                                         //SECOND STEP INIT LOGIC
                                         //load address script
-                                        _context14.next = 16;
+                                        _context15.next = 16;
                                         return $.getScript('/assets/js/address.js', function () {});
 
                                     case 16:
@@ -27750,14 +27901,14 @@ function bindLoginSigninPopupShow() {
 
                                     case 20:
                                     case 'end':
-                                        return _context14.stop();
+                                        return _context15.stop();
                                 }
                             }
-                        }, _callee14, this);
+                        }, _callee15, this);
                     }));
 
-                    function success(_x2) {
-                        return _ref10.apply(this, arguments);
+                    function success(_x3) {
+                        return _ref11.apply(this, arguments);
                     }
 
                     return success;
@@ -27847,11 +27998,11 @@ function initComboboxes() {
 function apiEventsListeners() {
     //login
     $(document).on('successResponseCoreDBApi', function () {
-        var _ref15 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee15(event) {
+        var _ref16 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee16(event) {
             var custom_form_obj;
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee15$(_context15) {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee16$(_context16) {
                 while (1) {
-                    switch (_context15.prev = _context15.next) {
+                    switch (_context16.prev = _context16.next) {
                         case 0:
                             if (event.response_data.token) {
                                 custom_form_obj = {
@@ -27876,14 +28027,14 @@ function apiEventsListeners() {
 
                         case 1:
                         case 'end':
-                            return _context15.stop();
+                            return _context16.stop();
                     }
                 }
-            }, _callee15, this);
+            }, _callee16, this);
         }));
 
-        return function (_x7) {
-            return _ref15.apply(this, arguments);
+        return function (_x8) {
+            return _ref16.apply(this, arguments);
         };
     }());
 
@@ -28429,6 +28580,35 @@ function bindCacheKeyEvent(keystore_file) {
                         }
                     });
                 }, 1000);
+            }
+        }
+    });
+}
+
+function openCacheKeyPopup() {
+    $.ajax({
+        type: 'POST',
+        url: '/get-address-validation-or-remember-me',
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function success(response) {
+            if (response.success) {
+                basic.showDialog(response.success, '', true);
+
+                styleUploadFileButton();
+
+                $('.enter-private-key').unbind().click(function () {
+                    $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 padding-left-30 padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
+                    $('.proof-of-address #upload-keystore-file').val('');
+                    bindGoogleAlikeButtonsEvents();
+                    bindCacheKeyEvent();
+                });
+
+                $('.upload-file-container button').unbind().click(function () {
+                    $('.proof-of-address .on-change-result').html('');
+                });
             }
         }
     });

@@ -42,6 +42,12 @@ class UserController extends Controller {
         }
     }
 
+    protected function getKeystoreFilePasswordValidation() {
+        $view = view('partials/keystore-file-password-validation');
+        $view = $view->render();
+        return response()->json(['success' => $view]);
+    }
+
     protected function getMyProfileView()   {
         $currency_arr = array();
         foreach(Controller::currencies as $currency) {
