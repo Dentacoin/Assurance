@@ -1274,7 +1274,7 @@ if($('body').hasClass('logged-in')) {
                                             dataType: 'json',
                                             success: async function (inner_response) {
                                                 if(inner_response.success && inner_response.to_string)    {
-                                                    var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.to_string);
+                                                    var decrypted_pdf_response = await getDecryptedPdfContentByPlainKey(encrypted_pdf_content.success, inner_response.to_string);
                                                     if(decrypted_pdf_response.success) {
                                                         render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
                                                         render_form.submit();

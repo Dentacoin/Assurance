@@ -2241,7 +2241,7 @@ if ($('body').hasClass('logged-in')) {
                                                                             }
 
                                                                             _context9.next = 3;
-                                                                            return getDecryptedPdfContent(encrypted_pdf_content.success, inner_response.to_string);
+                                                                            return getDecryptedPdfContentByPlainKey(encrypted_pdf_content.success, inner_response.to_string);
 
                                                                         case 3:
                                                                             decrypted_pdf_response = _context9.sent;
