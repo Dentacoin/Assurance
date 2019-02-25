@@ -168,7 +168,8 @@ var App = {
     },
     assurance_state_methods: {
         getPeriodToWithdraw: function()  {
-            return App.assurance_state_instance.methods.getPeriodToWithdraw().call({}, function(error, result)   {
+            console.log(App.assurance_state_instance.methods, 'App.assurance_state_instance.methods');
+            return App.assurance_state_instance.methods.getPeriodToWithdraw().call({from: JSON.parse(localStorage.getItem('current-account')).address}, function(error, result)   {
                 if(!error)  {
                     return result;
                 }else {
