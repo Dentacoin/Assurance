@@ -336,13 +336,11 @@ class UserController extends Controller {
 
         $view_start = view('partials/pdf-contract-layout-start');
         $html_start = $view_start->render();
-
         $view_end = view('partials/pdf-contract-layout-end');
         $html_end = $view_end->render();
-
         $dompdf = new DOMPDF();
-        $data = $html_start . $request->input('pdf_data') . $html_end;
-        
+        $data = $html_start . html_entity_decode($request->input('pdf_data')) . $html_end;
+
         $dompdf->load_html($data);
 
         $dompdf->render();
