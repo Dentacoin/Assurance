@@ -33,7 +33,6 @@ class UserController extends Controller {
     }
 
     protected function getAddressValidationOrRememberMe(Request $request) {
-        var_dump($request->input('cache'));die();
         $current_logged_user_dcn_address = (new APIRequestsController())->getUserData(session('logged_user')['id'])->dcn_address;
         if(!empty($current_logged_user_dcn_address)) {
             $view = view('partials/address-validation-or-remember-me', ['current_logged_user_dcn_address' => $current_logged_user_dcn_address, 'cache' => $request->input('cache')]);
