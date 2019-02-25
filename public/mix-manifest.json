@@ -1,6 +1,6 @@
 {
     "/assets/js/index-compiled.js": "/assets/js/index-compiled.js",
-    "/assets/js/truffle-contract-compiled.js": "/assets/js/truffle-contract-compiled.js",
+    "/assets/libs/truffle-contract/truffle-contract-compiled.js": "/assets/libs/truffle-contract/truffle-contract-compiled.js",
     "/dist/css/front-libs-style.css": "/dist/css/front-libs-style.css",
     "/dist/css/front-style.css": "/dist/css/front-style.css",
     "/dist/js/front-libs-script.js": "/dist/js/front-libs-script.js",
