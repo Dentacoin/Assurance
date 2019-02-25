@@ -431,13 +431,13 @@ var onDocumentReadyPageData = function () {
 }();
 
 var validateUserAddress = function () {
-    var _ref18 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee18(user_address, value_element) {
+    var _ref20 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee20(user_address, value_element) {
         var error, check_public_key_ajax_result;
-        return _regeneratorRuntime.wrap(function _callee18$(_context18) {
+        return _regeneratorRuntime.wrap(function _callee20$(_context20) {
             while (1) {
-                switch (_context18.prev = _context18.next) {
+                switch (_context20.prev = _context20.next) {
                     case 0:
-                        _context18.next = 2;
+                        _context20.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/check-public-key',
@@ -451,7 +451,7 @@ var validateUserAddress = function () {
                         });
 
                     case 2:
-                        check_public_key_ajax_result = _context18.sent;
+                        check_public_key_ajax_result = _context20.sent;
 
 
                         if (check_public_key_ajax_result.success) {
@@ -470,28 +470,28 @@ var validateUserAddress = function () {
                                 error = true;
                             }
                         }
-                        return _context18.abrupt("return", error);
+                        return _context20.abrupt("return", error);
 
                     case 5:
                     case "end":
-                        return _context18.stop();
+                        return _context20.stop();
                 }
             }
-        }, _callee18, this);
+        }, _callee20, this);
     }));
 
-    return function validateUserAddress(_x9, _x10) {
-        return _ref18.apply(this, arguments);
+    return function validateUserAddress(_x11, _x12) {
+        return _ref20.apply(this, arguments);
     };
 }();
 
 var getEncryptedContractPdfContent = function () {
-    var _ref19 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee19(hash, type) {
-        return _regeneratorRuntime.wrap(function _callee19$(_context19) {
+    var _ref21 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee21(hash, type) {
+        return _regeneratorRuntime.wrap(function _callee21$(_context21) {
             while (1) {
-                switch (_context19.prev = _context19.next) {
+                switch (_context21.prev = _context21.next) {
                     case 0:
-                        _context19.next = 2;
+                        _context21.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-contract',
@@ -506,28 +506,28 @@ var getEncryptedContractPdfContent = function () {
                         });
 
                     case 2:
-                        return _context19.abrupt("return", _context19.sent);
+                        return _context21.abrupt("return", _context21.sent);
 
                     case 3:
                     case "end":
-                        return _context19.stop();
+                        return _context21.stop();
                 }
             }
-        }, _callee19, this);
+        }, _callee21, this);
     }));
 
-    return function getEncryptedContractPdfContent(_x11, _x12) {
-        return _ref19.apply(this, arguments);
+    return function getEncryptedContractPdfContent(_x13, _x14) {
+        return _ref21.apply(this, arguments);
     };
 }();
 
 var getDecryptedPdfContentByPlainKey = function () {
-    var _ref20 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee20(encrypted_html, key) {
-        return _regeneratorRuntime.wrap(function _callee20$(_context20) {
+    var _ref22 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22(encrypted_html, key) {
+        return _regeneratorRuntime.wrap(function _callee22$(_context22) {
             while (1) {
-                switch (_context20.prev = _context20.next) {
+                switch (_context22.prev = _context22.next) {
                     case 0:
-                        _context20.next = 2;
+                        _context22.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-data-plain-key',
@@ -542,28 +542,28 @@ var getDecryptedPdfContentByPlainKey = function () {
                         });
 
                     case 2:
-                        return _context20.abrupt("return", _context20.sent);
+                        return _context22.abrupt("return", _context22.sent);
 
                     case 3:
                     case "end":
-                        return _context20.stop();
+                        return _context22.stop();
                 }
             }
-        }, _callee20, this);
+        }, _callee22, this);
     }));
 
-    return function getDecryptedPdfContentByPlainKey(_x13, _x14) {
-        return _ref20.apply(this, arguments);
+    return function getDecryptedPdfContentByPlainKey(_x15, _x16) {
+        return _ref22.apply(this, arguments);
     };
 }();
 
 var getDecryptedPdfContent = function () {
-    var _ref21 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee21(encrypted_html, key) {
-        return _regeneratorRuntime.wrap(function _callee21$(_context21) {
+    var _ref23 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee23(encrypted_html, key) {
+        return _regeneratorRuntime.wrap(function _callee23$(_context23) {
             while (1) {
-                switch (_context21.prev = _context21.next) {
+                switch (_context23.prev = _context23.next) {
                     case 0:
-                        _context21.next = 2;
+                        _context23.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-data',
@@ -578,18 +578,18 @@ var getDecryptedPdfContent = function () {
                         });
 
                     case 2:
-                        return _context21.abrupt("return", _context21.sent);
+                        return _context23.abrupt("return", _context23.sent);
 
                     case 3:
                     case "end":
-                        return _context21.stop();
+                        return _context23.stop();
                 }
             }
-        }, _callee21, this);
+        }, _callee23, this);
     }));
 
-    return function getDecryptedPdfContent(_x15, _x16) {
-        return _ref21.apply(this, arguments);
+    return function getDecryptedPdfContent(_x17, _x18) {
+        return _ref23.apply(this, arguments);
     };
 }();
 
@@ -2289,7 +2289,7 @@ if ($('body').hasClass('logged-in')) {
 
                         case 18:
                             basic.closeDialog();
-                            openCacheKeyPopup();
+                            openCacheKeyPopup(encrypted_pdf_content);
 
                         case 20:
                             _context10.next = 23;
@@ -3345,9 +3345,15 @@ function bindVerifyAddressLogic() {
     });
 }
 
-function bindVerifyAddressEvent(keystore_file) {
+function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content) {
     if (keystore_file === undefined) {
         keystore_file = null;
+    }
+    if (render_pdf === undefined) {
+        render_pdf = null;
+    }
+    if (encrypted_pdf_content === undefined) {
+        encrypted_pdf_content = null;
     }
     $('.proof-of-address .verify-address-btn').click(function () {
         if (keystore_file != null) {
@@ -3402,6 +3408,66 @@ function bindVerifyAddressEvent(keystore_file) {
                                         }
                                     }
                                 });
+
+                                if (render_pdf != null) {
+                                    var render_form = $('form#render-pdf');
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/decrypt-pk',
+                                        data: {
+                                            password: $('.proof-of-address #your-secret-key-password').val().trim(),
+                                            keystore: JSON.stringify(JSON.parse(localStorage.getItem('current-account')).keystore)
+                                        },
+                                        dataType: 'json',
+                                        success: function () {
+                                            var _ref18 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee18(inner_response) {
+                                                var decrypted_pdf_response;
+                                                return _regeneratorRuntime.wrap(function _callee18$(_context18) {
+                                                    while (1) {
+                                                        switch (_context18.prev = _context18.next) {
+                                                            case 0:
+                                                                if (!(inner_response.success && inner_response.to_string)) {
+                                                                    _context18.next = 7;
+                                                                    break;
+                                                                }
+
+                                                                _context18.next = 3;
+                                                                return getDecryptedPdfContentByPlainKey(encrypted_pdf_content.success, inner_response.to_string);
+
+                                                            case 3:
+                                                                decrypted_pdf_response = _context18.sent;
+
+                                                                if (decrypted_pdf_response.success) {
+                                                                    basic.closeDialog();
+                                                                    render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
+                                                                    render_form.submit();
+                                                                } else if (decrypted_pdf_response.error) {
+                                                                    basic.showAlert(decrypted_pdf_response.error, '', true);
+                                                                }
+                                                                _context18.next = 8;
+                                                                break;
+
+                                                            case 7:
+                                                                if (inner_response.error) {
+                                                                    basic.showAlert(inner_response.error, '', true);
+                                                                }
+
+                                                            case 8:
+                                                            case "end":
+                                                                return _context18.stop();
+                                                        }
+                                                    }
+                                                }, _callee18, this);
+                                            }));
+
+                                            function success(_x9) {
+                                                return _ref18.apply(this, arguments);
+                                            }
+
+                                            return success;
+                                        }()
+                                    });
+                                }
                             } else if (response.error) {
                                 $('.response-layer').hide();
                                 basic.showAlert(response.error, '', true);
@@ -3427,44 +3493,92 @@ function bindVerifyAddressEvent(keystore_file) {
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        success: function success(response) {
-                            //now with the address and the public key received from the nodejs api update the db
-                            if (response.success) {
-                                //if remember me option is checked
-                                if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
-                                    localStorage.setItem('current-account', JSON.stringify({
-                                        address: response.address,
-                                        type: 'key',
-                                        key: response.private_key
-                                    }));
-                                }
+                        success: function () {
+                            var _ref19 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee19(response) {
+                                var render_form, decrypted_pdf_response;
+                                return _regeneratorRuntime.wrap(function _callee19$(_context19) {
+                                    while (1) {
+                                        switch (_context19.prev = _context19.next) {
+                                            case 0:
+                                                if (!response.success) {
+                                                    _context19.next = 11;
+                                                    break;
+                                                }
 
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/update-public-keys',
-                                    dataType: 'json',
-                                    data: {
-                                        address: response.address,
-                                        public_key: response.public_key
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function success(inner_response) {
-                                        $('.response-layer').hide();
-                                        if (inner_response.success) {
-                                            $('.proof-of-address').remove();
-                                            $('.proof-success').fadeIn(1500);
-                                        } else {
-                                            basic.showAlert(inner_response.error, '', true);
+                                                //if remember me option is checked
+                                                if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                                                    localStorage.setItem('current-account', JSON.stringify({
+                                                        address: response.address,
+                                                        type: 'key',
+                                                        key: response.private_key
+                                                    }));
+                                                }
+
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: '/update-public-keys',
+                                                    dataType: 'json',
+                                                    data: {
+                                                        address: response.address,
+                                                        public_key: response.public_key
+                                                    },
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                    },
+                                                    success: function success(inner_response) {
+                                                        $('.response-layer').hide();
+                                                        if (inner_response.success) {
+                                                            $('.proof-of-address').remove();
+                                                            $('.proof-success').fadeIn(1500);
+                                                        } else {
+                                                            basic.showAlert(inner_response.error, '', true);
+                                                        }
+                                                    }
+                                                });
+
+                                                if (!(render_pdf != null)) {
+                                                    _context19.next = 9;
+                                                    break;
+                                                }
+
+                                                render_form = $('form#render-pdf');
+                                                _context19.next = 7;
+                                                return getDecryptedPdfContent(encrypted_pdf_content.success, response.private_key);
+
+                                            case 7:
+                                                decrypted_pdf_response = _context19.sent;
+
+                                                if (decrypted_pdf_response.success) {
+                                                    render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
+                                                    render_form.submit();
+                                                } else if (decrypted_pdf_response.error) {
+                                                    basic.showAlert(decrypted_pdf_response.error, '', true);
+                                                }
+
+                                            case 9:
+                                                _context19.next = 12;
+                                                break;
+
+                                            case 11:
+                                                if (response.error) {
+                                                    $('.response-layer').hide();
+                                                    basic.showAlert(response.error, '', true);
+                                                }
+
+                                            case 12:
+                                            case "end":
+                                                return _context19.stop();
                                         }
                                     }
-                                });
-                            } else if (response.error) {
-                                $('.response-layer').hide();
-                                basic.showAlert(response.error, '', true);
+                                }, _callee19, this);
+                            }));
+
+                            function success(_x10) {
+                                return _ref19.apply(this, arguments);
                             }
-                        }
+
+                            return success;
+                        }()
                     });
                 }, 1000);
             }
@@ -3586,7 +3700,7 @@ function bindCacheKeyEvent(keystore_file) {
     });
 }
 
-function openCacheKeyPopup() {
+function openCacheKeyPopup(encrypted_pdf_content) {
     $.ajax({
         type: 'POST',
         url: '/get-address-validation-or-remember-me',
@@ -3608,7 +3722,7 @@ function openCacheKeyPopup() {
                     initTooltips();
                     $('.proof-of-address #upload-keystore-file').val('');
                     bindGoogleAlikeButtonsEvents();
-                    bindVerifyAddressEvent();
+                    bindVerifyAddressEvent(null, true, encrypted_pdf_content);
                 });
 
                 $('.upload-file-container button').unbind().click(function () {

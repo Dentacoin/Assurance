@@ -1295,7 +1295,7 @@ if($('body').hasClass('logged-in')) {
                     }
                 } else {
                     basic.closeDialog();
-                    openCacheKeyPopup();
+                    openCacheKeyPopup(encrypted_pdf_content);
                 }
             } else if(encrypted_pdf_content.error) {
                 basic.showAlert(encrypted_pdf_content.error, '', true);
@@ -2279,9 +2279,15 @@ function bindVerifyAddressLogic() {
     });
 }
 
-function bindVerifyAddressEvent(keystore_file) {
+function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content) {
     if(keystore_file === undefined) {
         keystore_file = null;
+    }
+    if(render_pdf === undefined) {
+        render_pdf = null;
+    }
+    if(encrypted_pdf_content === undefined) {
+        encrypted_pdf_content = null;
     }
     $('.proof-of-address .verify-address-btn').click(function() {
         if(keystore_file != null) {
@@ -2336,6 +2342,33 @@ function bindVerifyAddressEvent(keystore_file) {
                                         }
                                     }
                                 });
+
+                                if(render_pdf != null) {
+                                    var render_form = $('form#render-pdf');
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/decrypt-pk',
+                                        data: {
+                                            password: $('.proof-of-address #your-secret-key-password').val().trim(),
+                                            keystore: JSON.stringify(JSON.parse(localStorage.getItem('current-account')).keystore)
+                                        },
+                                        dataType: 'json',
+                                        success: async function (inner_response) {
+                                            if(inner_response.success && inner_response.to_string)    {
+                                                var decrypted_pdf_response = await getDecryptedPdfContentByPlainKey(encrypted_pdf_content.success, inner_response.to_string);
+                                                if(decrypted_pdf_response.success) {
+                                                    basic.closeDialog();
+                                                    render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
+                                                    render_form.submit();
+                                                } else if(decrypted_pdf_response.error) {
+                                                    basic.showAlert(decrypted_pdf_response.error, '', true);
+                                                }
+                                            }else if(inner_response.error)    {
+                                                basic.showAlert(inner_response.error, '', true);
+                                            }
+                                        }
+                                    });
+                                }
                             } else if(response.error) {
                                 $('.response-layer').hide();
                                 basic.showAlert(response.error, '', true);
@@ -2361,7 +2394,7 @@ function bindVerifyAddressEvent(keystore_file) {
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        success: function (response) {
+                        success: async function (response) {
                             //now with the address and the public key received from the nodejs api update the db
                             if(response.success) {
                                 //if remember me option is checked
@@ -2394,6 +2427,17 @@ function bindVerifyAddressEvent(keystore_file) {
                                         }
                                     }
                                 });
+
+                                if(render_pdf != null) {
+                                    var render_form = $('form#render-pdf');
+                                    var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, response.private_key);
+                                    if(decrypted_pdf_response.success) {
+                                        render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
+                                        render_form.submit();
+                                    } else if(decrypted_pdf_response.error) {
+                                        basic.showAlert(decrypted_pdf_response.error, '', true);
+                                    }
+                                }
                             } else if(response.error) {
                                 $('.response-layer').hide();
                                 basic.showAlert(response.error, '', true);
@@ -2520,7 +2564,7 @@ function bindCacheKeyEvent(keystore_file) {
     });
 }
 
-function openCacheKeyPopup() {
+function openCacheKeyPopup(encrypted_pdf_content) {
     $.ajax({
         type: 'POST',
         url: '/get-address-validation-or-remember-me',
@@ -2542,7 +2586,7 @@ function openCacheKeyPopup() {
                     initTooltips();
                     $('.proof-of-address #upload-keystore-file').val('');
                     bindGoogleAlikeButtonsEvents();
-                    bindVerifyAddressEvent();
+                    bindVerifyAddressEvent(null, true, encrypted_pdf_content);
                 });
 
                 $('.upload-file-container button').unbind().click(function() {
