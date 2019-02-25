@@ -334,9 +334,16 @@ class UserController extends Controller {
             'pdf_data.required' => 'PDF data is required.'
         ]);
 
+        $view_start = view('partials/pdf-contract-layout-start');
+        $html_start = $view_start->render();
+
+        $view_end = view('partials/pdf-contract-layout-end');
+        $html_end = $view_end->render();
+
         $dompdf = new DOMPDF();
-        $data = '<!DOCTYPE html><html><head><style></style></head><body>' . $request->input('pdf_data') . '</body></html>';
-        $dompdf->load_html('<!DOCTYPE html><html><head><style></style></head><body>' . html_entity_decode($request->input('pdf_data')) . '</body></html>');
+        $data = $html_start . $request->input('pdf_data') . $html_end;
+        
+        $dompdf->load_html($data);
 
         $dompdf->render();
         $dompdf->stream('contract.pdf', array('Attachment' => false));
