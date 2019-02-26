@@ -15,6 +15,13 @@
             font-weight: bold;
             padding-top: 20px;
         }
+        .sub-title {
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+            color: #126585;
+            padding-top: 20px;
+        }
         .section-title {
             border-bottom: 1px dashed black;
             padding-bottom: 10px;
@@ -34,7 +41,7 @@
             vertical-align: middle;
         }
         label {
-            width: 40%;
+            width: 30%;
             font-size: 16px;
             color: #888888;
             padding-right: 15px;
@@ -42,6 +49,7 @@
         .right-field {
             color: #212121;
             font-size: 18px;
+            width: 70%;
         }
         .right-field.bolded {
             font-weight: bold;
@@ -51,7 +59,8 @@
             color: #337ab7;
         }
         .svg-row {
-            padding-bottom: 15px;
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
         svg {
             width: 20px;

@@ -4,6 +4,7 @@
 <div>
     <div class="wrapper">
         <div class="main-title">ASSURANCE CONTRACT</div>
+        <div class="sub-title">Signed on {{$contract->created_at->format('d/m/Y')}}</div>
         <div class="section-title">DENTIST DETAILS</div>
         <div class="row">
             <label class="inline-block">Name:</label>
@@ -92,11 +93,11 @@
 padding-bottom:60px;">@include('partials.contract-terms-and-conditions')</div>
         <div class="signs-container clearfix">
             <div class="doctor">
-                <img src="/assets/contracts/{{$contract->slug}}/dentist-signature.png"/>
+                <img src="{{URL::asset('assets/contracts/'.$contract->slug.'/dentist-signature.png')}}"/>
                 <div class="name">/ Dr. {{$dentist->name}} /</div>
             </div>
             <div class="patient">
-                <img src="/assets/contracts/{{$contract->slug}}/patient-signature.png"/>
+                <img src="{{URL::asset('assets/contracts/'.$contract->slug.'/patient-signature.png')}}"/>
                 <div class="name">/ {{$patient->name}} /</div>
             </div>
         </div>
