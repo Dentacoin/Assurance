@@ -361,8 +361,18 @@ class UserController extends Controller {
         }
 
         $api_response = (new APIRequestsController())->generatePasswordRecoveryToken($data['email']);
+        if($api_response->success) {
+            echo '<br><br>====================== generatePasswordRecoveryToken response ============= ';
+            var_dump($api_response);
+            $post_fields_arr = [
+                'token' => $api_response->data,
+                'password' => 'eazYpass123'
+            ];
+            $recover_method_response = (new APIRequestsController())->recoverPassword($post_fields_arr);
+            echo '<br><br>====================== recoverPassword response ============= ';
+            var_dump($recover_method_response);
+        }
 
-        var_dump($api_response);
         die();
     }
 }

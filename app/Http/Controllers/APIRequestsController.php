@@ -212,9 +212,6 @@ class APIRequestsController extends Controller {
     }
 
     public function generatePasswordRecoveryToken($email) {
-        var_dump($email);
-        var_dump($this->encrypt($email));
-        die('asd');
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -229,7 +226,40 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        var_dump($resp);
+        if(!empty($resp))   {
+            return $resp;
+        }else {
+            return false;
+        }
+    }
+
+    public function recoverPassword($data) {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_POST => 1,
+            CURLOPT_URL => 'https://dev-api.dentacoin.com/api/recoverToken/',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_POSTFIELDS => array(
+                'recoverToken' => $data['token'],
+                'password' => $this->encrypt($data['password']),
+            )
+        ));
+
+
+        echo '<br><br>====================== Raw curl params ============= ';
+        var_dump(array(
+            'recoverToken' => $data['token'],
+            'password' => $data['password'],
+        ));
+        echo '<br><br>====================== Encrypted curl params ============= ';
+        var_dump(array(
+            'recoverToken' => $data['token'],
+            'password' => $this->encrypt($data['password']),
+        ));
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
 
         if(!empty($resp))   {
             return $resp;
