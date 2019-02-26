@@ -74,8 +74,11 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    {{var_dump(strtotime($contract->contract_active_at))}}
-                                                    {{date('d/m/Y', strtotime($contract->contract_active_at))}}
+                                                    @if(!empty($contract->contract_active_at))
+                                                        Not signed yet
+                                                    @else
+                                                        {{date('d/m/Y', strtotime())}}
+                                                    @endif
                                                 </td>
                                                 <td>{{$contract->monthly_premium}} USD</td>
                                                 <td class="next-payment"></td>
