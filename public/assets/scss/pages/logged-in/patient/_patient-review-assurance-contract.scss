@@ -4,15 +4,15 @@ section.contract-proposal {
             .singatures-row {
                 padding: 0 10px 40px;
                 .dentist-sign {
-                    width: 250px;
-                    margin-right: calc(100% - 500px);
-                    figcaption {
+                    width: 300px;
+                    margin-right: calc(100% - 600px);
+                    figcaption {    
                         text-align: right;
                         font-style: italic;
                     }
                 }
                 .signature-wrapper {
-                    width: 250px;
+                    width: 300px;
                     text-align: right;
                     canvas {
                         height: 150px;
