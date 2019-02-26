@@ -10,3 +10,6 @@ define('ZIP_EXTRACTS', ROOT . 'public' . DS . 'assets' . DS . 'zip-extracts' . D
 define('UPLOADS_FRONT_END', DS . 'assets' . DS . 'uploads' . DS);
 define('MAX_UPL_SIZE', 2097152);
 define('EMAIL_SENDER', 'assurance@dentacoin.com');
+
+var_dump(ROOT);
+die();
