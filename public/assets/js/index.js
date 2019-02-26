@@ -1295,7 +1295,7 @@ if($('body').hasClass('logged-in')) {
                     }
                 } else {
                     basic.closeDialog();
-                    openCacheKeyPopup(encrypted_pdf_content);
+                    openCacheKeyPopup(encrypted_pdf_content.success);
                 }
             } else if(encrypted_pdf_content.error) {
                 basic.showAlert(encrypted_pdf_content.error, '', true);
@@ -2227,6 +2227,11 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content) 
                                             },
                                             success: function (decrypt_response) {
                                                 console.log(decrypt_response, 'decrypt_response');
+                                                if(decrypt_response.success) {
+                                                    console.log(decrypt_response.success);
+                                                } else if(decrypt_response.error) {
+                                                    basic.showAlert(decrypt_response.success, '', true);
+                                                }
                                             }
                                         });
                                     });

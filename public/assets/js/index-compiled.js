@@ -27310,7 +27310,7 @@ if ($('body').hasClass('logged-in')) {
 
                         case 18:
                             basic.closeDialog();
-                            openCacheKeyPopup(encrypted_pdf_content);
+                            openCacheKeyPopup(encrypted_pdf_content.success);
 
                         case 20:
                             _context10.next = 23;
@@ -28310,6 +28310,11 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content) 
                                             },
                                             success: function success(decrypt_response) {
                                                 console.log(decrypt_response, 'decrypt_response');
+                                                if (decrypt_response.success) {
+                                                    console.log(decrypt_response.success);
+                                                } else if (decrypt_response.error) {
+                                                    basic.showAlert(decrypt_response.success, '', true);
+                                                }
                                             }
                                         });
                                     });
