@@ -278,10 +278,7 @@ class PatientController extends Controller {
         $encrypted_html_by_patient = (new \App\Http\Controllers\APIRequestsController())->encryptFile($patient_pub_key->public_key, htmlentities($html_body));
         $encrypted_html_by_dentist = (new \App\Http\Controllers\APIRequestsController())->encryptFile($dentist_pub_key->public_key, htmlentities($html_body));
 
-
-
         echo '<br><br>==================KEYS DUMP===============================';
-
 
         var_dump($patient_pub_key->public_key);
         var_dump($dentist_pub_key->public_key);
