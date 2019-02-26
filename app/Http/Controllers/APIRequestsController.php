@@ -213,6 +213,7 @@ class APIRequestsController extends Controller {
 
     public function generatePasswordRecoveryToken($email) {
         var_dump($email);
+        var_dump($this->encrypt($email));
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
