@@ -25939,29 +25939,6 @@ var getDecryptedPdfContent = function () {
     };
 }();
 
-/*
-async function renderPdfFromDecryptedPdfContent(response_param) {
-    if(response_param.success) {
-        $.ajax({
-            type: 'POST',
-            url: '/render-pdf',
-            dataType: 'json',
-            data: {
-                decrypted_data: response_param.success
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-                console.log(response);
-            }
-        });
-    } else if(response_param.error) {
-        basic.showAlert(response_param.error, '', true);
-    }
-}*/
-
-
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var _require = __webpack_require__(115),
@@ -28267,6 +28244,16 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content) 
                                 if (render_pdf != null && encrypted_pdf_content != null) {
                                     //if we have to render pdf
                                     $('.proof-of-address .verify-address-btn').click(function () {
+
+                                        //if remember me option is checked
+                                        if ($('#remember-my-keystore-file').is(':checked')) {
+                                            localStorage.setItem('current-account', JSON.stringify({
+                                                address: '0x' + JSON.parse(e.target.result).address,
+                                                type: 'keystore',
+                                                keystore: keystore_string
+                                            }));
+                                        }
+
                                         $.ajax({
                                             type: 'POST',
                                             url: '/decrypt-data-keystore',
@@ -28280,7 +28267,6 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content) 
                                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                             },
                                             success: function success(decrypt_response) {
-                                                console.log(decrypt_response, 'decrypt_response');
                                                 if (decrypt_response.success) {
                                                     var render_form = $('form#render-pdf');
                                                     basic.closeDialog();
@@ -28491,7 +28477,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
 
                                                 render_form = $('form#render-pdf');
                                                 _context17.next = 6;
-                                                return getDecryptedPdfContent(encrypted_pdf_content.success, response.private_key);
+                                                return getDecryptedPdfContent(encrypted_pdf_content, response.private_key);
 
                                             case 6:
                                                 decrypted_pdf_response = _context17.sent;
