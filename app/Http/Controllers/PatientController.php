@@ -277,21 +277,10 @@ class PatientController extends Controller {
 
         $view_end = view('partials/pdf-contract-layout-end');
         $html_end = $view_end->render();
-        
+
         //sending the pdf html to encryption nodejs api
         $encrypted_html_by_patient = (new \App\Http\Controllers\APIRequestsController())->encryptFile($patient_pub_key->public_key, htmlentities($this->minifyHtmlParts($html_body)));
         $encrypted_html_by_dentist = (new \App\Http\Controllers\APIRequestsController())->encryptFile($dentist_pub_key->public_key, htmlentities($this->minifyHtmlParts($html_body)));
-
-        echo '<br><br>==================KEYS DUMP===============================';
-
-        var_dump($patient_pub_key->public_key);
-        var_dump($dentist_pub_key->public_key);
-
-        echo '<br><br>==================ENCTYPTION RESPONSE===============================';
-
-        var_dump($encrypted_html_by_patient);
-        var_dump($encrypted_html_by_dentist);
-        die();
 
         //if no errors from the api
         if($encrypted_html_by_patient && !isset($encrypted_html_by_patient->error) && $encrypted_html_by_dentist && !isset($encrypted_html_by_dentist->error)) {
