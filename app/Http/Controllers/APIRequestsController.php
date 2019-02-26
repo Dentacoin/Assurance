@@ -216,7 +216,7 @@ class APIRequestsController extends Controller {
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://dev-api.dentacoin.com/api/recoverToken/',
+            CURLOPT_URL => 'https://api.dentacoin.com/api/recoverToken/',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => array(
                 'email' => $this->encrypt($email)
@@ -238,7 +238,7 @@ class APIRequestsController extends Controller {
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://dev-api.dentacoin.com/api/recoverPassword/',
+            CURLOPT_URL => 'https://api.dentacoin.com/api/recoverPassword/',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => array(
                 'recoverToken' => $data['token'],
@@ -340,13 +340,11 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        return $resp;
-
-        /*if(!empty($resp))   {
+        if(!empty($resp))   {
             return $resp;
         }else {
             return false;
-        }*/
+        }
     }
 
     /*//this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
