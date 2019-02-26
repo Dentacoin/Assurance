@@ -1477,6 +1477,14 @@ if ($('body').hasClass('home')) {
             event.preventDefault();
         }
     });
+} else if ($('body').hasClass('password-recover')) {
+    $('form#recover-password').on('submit', function (event) {
+        var this_form = $(this);
+        if (this_form.find('input[type="password"]').val().trim() == '' || this_form.find('input[type="password"]').val().trim().length < 8 || this_form.find('input[type="email"]').val().trim().length > 100) {
+            basic.showAlert('Please try again with valid password between 8 and 30 symbols.', '', true);
+            event.preventDefault();
+        }
+    });
 }
 
 //LOGGED USER LOGIC

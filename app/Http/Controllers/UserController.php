@@ -27,7 +27,6 @@ class UserController extends Controller {
         ], [
             'slug.required' => 'Slug is required.'
         ]);
-
         return view('pages/recover-password', ['slug' => $request->input('slug')]);
     }
 
