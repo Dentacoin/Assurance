@@ -6230,7 +6230,7 @@ body.logged-in .my-profile-page-content {
       .steps-body .wrapper .step.three .show-category-list ul li {
         list-style: disc inside none; }
     .steps-body .wrapper .step.four .signature-and-checkboxes {
-      width: 350px;
+      width: 300px;
       margin: 0 auto;
       display: block; }
       .steps-body .wrapper .step.four .signature-and-checkboxes .checkbox-container {
@@ -6241,6 +6241,8 @@ body.logged-in .my-profile-page-content {
           top: 0; }
         .steps-body .wrapper .step.four .signature-and-checkboxes .checkbox-container label a {
           color: #126585; }
+      .steps-body .wrapper .step.four .signature-and-checkboxes .signature-wrapper canvas {
+        height: 150px; }
     .steps-body .wrapper .step.four .terms-and-conditions-long-list {
       height: 350px; }
     .steps-body .wrapper .step.four .right-extra-field label {
@@ -6302,12 +6304,12 @@ body.logged-in .my-profile-page-content {
     .steps-body .wrapper .step .pretty.on-white-background.p-svg .state .svg {
       border-color: #126585 !important; }
 
-.forgotten-password-section {
+.forgotten-and-recover-password-section {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top 0 center;
   background-image: url(/assets/uploads/logged-patient-no-contracts-background.jpg); }
-  .forgotten-password-section form {
+  .forgotten-and-recover-password-section form {
     background-color: white;
     text-align: center;
     padding-left: 10%;
@@ -6377,13 +6379,13 @@ section.invite-dentists-section {
 section.contract-proposal .wrapper .step-fields .singatures-row {
   padding: 0 10px 40px; }
   section.contract-proposal .wrapper .step-fields .singatures-row .dentist-sign {
-    width: 250px;
-    margin-right: calc(100% - 500px); }
+    width: 300px;
+    margin-right: calc(100% - 600px); }
     section.contract-proposal .wrapper .step-fields .singatures-row .dentist-sign figcaption {
       text-align: right;
       font-style: italic; }
   section.contract-proposal .wrapper .step-fields .singatures-row .signature-wrapper {
-    width: 250px;
+    width: 300px;
     text-align: right; }
     section.contract-proposal .wrapper .step-fields .singatures-row .signature-wrapper canvas {
       height: 150px; }

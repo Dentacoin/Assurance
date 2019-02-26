@@ -246,18 +246,6 @@ class APIRequestsController extends Controller {
             )
         ));
 
-
-        echo '<br><br>====================== Raw curl params ============= ';
-        var_dump(array(
-            'recoverToken' => $data['token'],
-            'password' => $data['password'],
-        ));
-        echo '<br><br>====================== Encrypted curl params ============= ';
-        var_dump(array(
-            'recoverToken' => $data['token'],
-            'password' => $this->encrypt($data['password']),
-        ));
-
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 

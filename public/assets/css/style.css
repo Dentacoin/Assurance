@@ -6304,12 +6304,12 @@ body.logged-in .my-profile-page-content {
     .steps-body .wrapper .step .pretty.on-white-background.p-svg .state .svg {
       border-color: #126585 !important; }
 
-.forgotten-password-section {
+.forgotten-and-recover-password-section {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top 0 center;
   background-image: url(/assets/uploads/logged-patient-no-contracts-background.jpg); }
-  .forgotten-password-section form {
+  .forgotten-and-recover-password-section form {
     background-color: white;
     text-align: center;
     padding-left: 10%;
