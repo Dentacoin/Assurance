@@ -28,7 +28,11 @@ class HomeController extends Controller
         session(['logged_user' => $session_arr]);*/
 
         if((new UserController())->checkDentistSession()) {
-            return (new DentistController())->getView();
+            if(session('logged_user')['have_contracts']) {
+                return (new DentistController())->getContractsView();
+            } else {
+                return (new DentistController())->getNoContractsView();
+            }
         } else if((new UserController())->checkPatientSession()) {
             return redirect()->route('patient-access');
         } else {

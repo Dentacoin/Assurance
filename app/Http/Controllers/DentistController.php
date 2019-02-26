@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\Mail;
 
 class DentistController extends Controller
 {
-    public function getView() {
-        return view('pages/logged-user/dentist/homepage');
+    public function getNoContractsView() {
+        return view('pages/logged-user/dentist/homepage-no-contracts');
+    }
+
+    public function getContractsView() {
+        return view('pages/logged-user/dentist/homepage-contracts');
     }
 
     protected function getCreateContractView()   {
@@ -124,6 +128,10 @@ class DentistController extends Controller
                 'type' => 'dentist',
                 'have_contracts' => false
             ];
+
+            if(filter_var($request->input('have_contracts'), FILTER_VALIDATE_BOOLEAN) || TemporallyContract::where(array('dentist_id' => $api_response['data']['id']))->get()->all()) {
+                $session_arr['have_contracts'] = true;
+            }
 
             session(['logged_user' => $session_arr]);
             return redirect()->route('home');
