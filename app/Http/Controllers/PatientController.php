@@ -280,8 +280,14 @@ class PatientController extends Controller {
 
         var_dump($html_body);
 
+
+        echo '<br><br>==================KEYS DUMP===============================';
+
+
         var_dump($patient_pub_key);
         var_dump($dentist_pub_key);
+
+        echo '<br><br>==================ENCTYPTION RESPONSE===============================';
 
         var_dump($encrypted_html_by_patient);
         var_dump($encrypted_html_by_dentist);
