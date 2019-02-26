@@ -1240,6 +1240,8 @@ if($('body').hasClass('logged-in')) {
                 if(localStorage.getItem('current-account') != null) {
                     var cached_key = JSON.parse(localStorage.getItem('current-account'));
                     if(cached_key.type == 'key') {
+                        // === CACHED KEY ===
+                        console.log('=====cached key=======');
                         var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
                         if(decrypted_pdf_response.success) {
                             render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
@@ -1248,6 +1250,9 @@ if($('body').hasClass('logged-in')) {
                             basic.showAlert(decrypted_pdf_response.error, '', true);
                         }
                     } else if(cached_key.type == 'keystore') {
+                        // === CACHED KEYSTORE FILE ===
+
+                        console.log('=====cached keystore file=======');
                         $.ajax({
                             type: 'POST',
                             url: '/get-keystore-file-password-validation',
@@ -1267,24 +1272,23 @@ if($('body').hasClass('logged-in')) {
                                     }else {
                                         $.ajax({
                                             type: 'POST',
-                                            url: '/decrypt-pk',
-                                            data: {
-                                                password: $('.keystore-file-password-validation .keystore-password').val().trim(),
-                                                keystore: JSON.stringify(JSON.parse(localStorage.getItem('current-account')).keystore)
-                                            },
+                                            url: '/decrypt-data-keystore',
                                             dataType: 'json',
-                                            success: async function (inner_response) {
-                                                if(inner_response.success && inner_response.to_string)    {
-                                                    var decrypted_pdf_response = await getDecryptedPdfContentByPlainKey(encrypted_pdf_content.success, inner_response.to_string);
-                                                    if(decrypted_pdf_response.success) {
-                                                        basic.closeDialog();
-                                                        render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
-                                                        render_form.submit();
-                                                    } else if(decrypted_pdf_response.error) {
-                                                        basic.showAlert(decrypted_pdf_response.error, '', true);
-                                                    }
-                                                }else if(inner_response.error)    {
-                                                    basic.showAlert(inner_response.error, '', true);
+                                            data: {
+                                                keystore: JSON.stringify(JSON.parse(localStorage.getItem('current-account')).keystore),
+                                                password: $('.keystore-file-password-validation .keystore-password').val().trim(),
+                                                encrypted_html: encrypted_pdf_content.success
+                                            },
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success: function (decrypt_response) {
+                                                if(decrypt_response.success) {
+                                                    basic.closeDialog();
+                                                    render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypt_response.success.decrypted));
+                                                    render_form.submit();
+                                                } else if(decrypt_response.error) {
+                                                    basic.showAlert(decrypt_response.error, '', true);
                                                 }
                                             }
                                         });
@@ -2228,9 +2232,12 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content) 
                                             success: function (decrypt_response) {
                                                 console.log(decrypt_response, 'decrypt_response');
                                                 if(decrypt_response.success) {
-                                                    console.log(decrypt_response.success);
+                                                    var render_form = $('form#render-pdf');
+                                                    basic.closeDialog();
+                                                    render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypt_response.success.decrypted));
+                                                    render_form.submit();
                                                 } else if(decrypt_response.error) {
-                                                    basic.showAlert(decrypt_response.success, '', true);
+                                                    basic.showAlert(decrypt_response.error, '', true);
                                                 }
                                             }
                                         });
@@ -2356,55 +2363,27 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                     }));
                                 }
 
-                                if(render_pdf != null) {
-                                    var render_form = $('form#render-pdf');
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '/decrypt-pk',
-                                        data: {
-                                            password: $('.proof-of-address #your-secret-key-password').val().trim(),
-                                            keystore: JSON.stringify(response.success)
-                                        },
-                                        dataType: 'json',
-                                        success: async function (inner_response) {
-                                            $('.response-layer').hide();
-                                            if(inner_response.success && inner_response.to_string)    {
-                                                var decrypted_pdf_response = await getDecryptedPdfContentByPlainKey(encrypted_pdf_content.success, inner_response.to_string);
-                                                if(decrypted_pdf_response.success) {
-                                                    basic.closeDialog();
-                                                    render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
-                                                    render_form.submit();
-                                                } else if(decrypted_pdf_response.error) {
-                                                    basic.showAlert(decrypted_pdf_response.error, '', true);
-                                                }
-                                            }else if(inner_response.error)    {
-                                                basic.showAlert(inner_response.error, '', true);
-                                            }
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/update-public-keys',
+                                    dataType: 'json',
+                                    data: {
+                                        address: $('.proof-of-address').attr('data-address'),
+                                        public_key: response.public_key
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function (inner_response) {
+                                        $('.response-layer').hide();
+                                        if(inner_response.success) {
+                                            $('.proof-of-address').remove();
+                                            $('.proof-success').fadeIn(1500);
+                                        } else {
+                                            basic.showAlert(inner_response.error, '', true);
                                         }
-                                    });
-                                } else {
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '/update-public-keys',
-                                        dataType: 'json',
-                                        data: {
-                                            address: $('.proof-of-address').attr('data-address'),
-                                            public_key: response.public_key
-                                        },
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        },
-                                        success: function (inner_response) {
-                                            $('.response-layer').hide();
-                                            if(inner_response.success) {
-                                                $('.proof-of-address').remove();
-                                                $('.proof-success').fadeIn(1500);
-                                            } else {
-                                                basic.showAlert(inner_response.error, '', true);
-                                            }
-                                        }
-                                    });
-                                }
+                                    }
+                                });
                             } else if(response.error) {
                                 $('.response-layer').hide();
                                 basic.showAlert(response.error, '', true);
