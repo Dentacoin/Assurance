@@ -41,7 +41,7 @@
             vertical-align: middle;
         }
         label {
-            width: 30%;
+            width: 35%;
             font-size: 16px;
             color: #888888;
             padding-right: 15px;
@@ -49,7 +49,6 @@
         .right-field {
             color: #212121;
             font-size: 18px;
-            width: 70%;
         }
         .right-field.bolded {
             font-weight: bold;
@@ -69,11 +68,11 @@
             margin-right: 5px;
         }
         .signs-container .doctor {
-            width: 300px;
+            width: 200px;
             float: left;
         }
         .signs-container .patient {
-            width: 300px;
+            width: 200px;
             float: right;
         }
         img {
