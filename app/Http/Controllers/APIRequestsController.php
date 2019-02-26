@@ -238,7 +238,7 @@ class APIRequestsController extends Controller {
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://dev-api.dentacoin.com/api/recoverToken/',
+            CURLOPT_URL => 'https://dev-api.dentacoin.com/api/recoverPassword/',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => array(
                 'recoverToken' => $data['token'],
