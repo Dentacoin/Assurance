@@ -2436,6 +2436,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
 
                                     $('.response-layer').hide();
                                     if(decrypted_pdf_response.success) {
+                                        basic.closeDialog();
                                         render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
                                         render_form.submit();
                                     } else if(decrypted_pdf_response.error) {
