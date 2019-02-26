@@ -21,8 +21,10 @@ class UserController extends Controller {
         return view('pages/logged-user/manage-privacy');
     }
 
-    protected function getRecoverPassword($slug)   {
-        return view('pages/recover-password', ['slug' => $slug]);
+    protected function getRecoverPassword(Request $request) {
+        var_dump($request->input());
+        die();
+        return view('pages/recover-password');
     }
 
     protected function getMyContractsView()     {
@@ -367,7 +369,7 @@ class UserController extends Controller {
 
         $api_response = (new APIRequestsController())->generatePasswordRecoveryToken($data['email']);
         if($api_response->success) {
-            $body = '<!DOCTYPE html><html><head></head><body><div style="font-size: 16px;">Seems like you forgot your password for Assurance Dentacoin. If this is true, click below to reset your password.<br><br><br><a href="'.BASE_URL.'password-recover/'.$api_response->data.'" style="font-size: 20px;color: #126585;background-color: white;padding: 10px 20px;text-decoration: none;font-weight: bold;border-radius: 4px;border: 2px solid #126585;" target="_blank">RESET PASSWORD</a></div></body></html>';
+            $body = '<!DOCTYPE html><html><head></head><body><div style="font-size: 16px;">Seems like you forgot your password for Assurance Dentacoin. If this is true, click below to reset your password.<br><br><br><form target="_blank" method="POST" action="'.BASE_URL.'password-recover"><input type="hidden" name="slug" value="'.$api_response->data.'"/><input type="submit" style="font-size: 20px;color: #126585;background-color: white;padding: 10px 20px;text-decoration: none;font-weight: bold;border-radius: 4px;border: 2px solid #126585;"/></form></div></body></html>';
 
             Mail::send(array(), array(), function($message) use ($body, $data) {
                 $message->to($data['email'])->subject('Dentacoin - Request for password change');
