@@ -2104,6 +2104,7 @@ if ($('body').hasClass('logged-in')) {
                                         } else if (!this_form.find('input#privacy-policy').is(':checked')) {
                                             basic.showAlert('Please accept the Privacy Policy', '', true);
                                         } else {
+
                                             this_form_plain.submit();
                                         }
                                     }
@@ -2148,19 +2149,19 @@ if ($('body').hasClass('logged-in')) {
                             render_form = $('form#render-pdf');
 
                             if (!encrypted_pdf_content.success) {
-                                _context9.next = 23;
+                                _context9.next = 25;
                                 break;
                             }
 
                             if (!(localStorage.getItem('current-account') != null)) {
-                                _context9.next = 19;
+                                _context9.next = 21;
                                 break;
                             }
 
                             cached_key = JSON.parse(localStorage.getItem('current-account'));
 
                             if (!(cached_key.type == 'key')) {
-                                _context9.next = 16;
+                                _context9.next = 18;
                                 break;
                             }
 
@@ -2172,16 +2173,18 @@ if ($('body').hasClass('logged-in')) {
                         case 12:
                             decrypted_pdf_response = _context9.sent;
 
+                            console.log(decrypted_pdf_response.success.decrypted, 'hahahaha');
+                            console.log(decodeEntities(decrypted_pdf_response.success.decrypted), 'hahahaha2');
                             if (decrypted_pdf_response.success) {
                                 render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
                                 render_form.submit();
                             } else if (decrypted_pdf_response.error) {
                                 basic.showAlert(decrypted_pdf_response.error, '', true);
                             }
-                            _context9.next = 17;
+                            _context9.next = 19;
                             break;
 
-                        case 16:
+                        case 18:
                             if (cached_key.type == 'keystore') {
                                 // === CACHED KEYSTORE FILE ===
 
@@ -2231,24 +2234,24 @@ if ($('body').hasClass('logged-in')) {
                                 });
                             }
 
-                        case 17:
-                            _context9.next = 21;
+                        case 19:
+                            _context9.next = 23;
                             break;
 
-                        case 19:
+                        case 21:
                             basic.closeDialog();
                             openCacheKeyPopup(encrypted_pdf_content.success);
 
-                        case 21:
-                            _context9.next = 24;
+                        case 23:
+                            _context9.next = 26;
                             break;
 
-                        case 23:
+                        case 25:
                             if (encrypted_pdf_content.error) {
                                 basic.showAlert(encrypted_pdf_content.error, '', true);
                             }
 
-                        case 24:
+                        case 26:
                         case "end":
                             return _context9.stop();
                     }
@@ -2476,6 +2479,14 @@ function encodeEntities(string) {
     p.textContent = string;
     var inner_html = p.innerHTML;
     p.remove();
+    return inner_html;
+}
+
+function decodeEntities(string) {
+    var txt = document.createElement('textarea');
+    txt.innerHTML = string;
+    var inner_html = txt.value;
+    txt.remove();
     return inner_html;
 }
 

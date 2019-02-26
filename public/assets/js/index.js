@@ -1246,6 +1246,8 @@ if($('body').hasClass('logged-in')) {
                         // === CACHED KEY ===
                         console.log('=====cached key=======');
                         var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
+                        console.log(decrypted_pdf_response.success.decrypted, 'hahahaha');
+                        console.log(decodeEntities(decrypted_pdf_response.success.decrypted), 'hahahaha2');
                         if(decrypted_pdf_response.success) {
                             render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
                             render_form.submit();
@@ -1530,6 +1532,15 @@ function encodeEntities(string) {
     var inner_html = p.innerHTML;
     p.remove();
     return inner_html;
+}
+
+function decodeEntities(string) {
+    var txt = document.createElement('textarea');
+    txt.innerHTML = string;
+    var inner_html = txt.value;
+    txt.remove();
+    return inner_html;
+
 }
 
 //call the popup for login/sign for patient and dentist
