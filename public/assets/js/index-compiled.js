@@ -27170,19 +27170,19 @@ if ($('body').hasClass('logged-in')) {
                             render_form = $('form#render-pdf');
 
                             if (!encrypted_pdf_content.success) {
-                                _context9.next = 25;
+                                _context9.next = 23;
                                 break;
                             }
 
                             if (!(localStorage.getItem('current-account') != null)) {
-                                _context9.next = 21;
+                                _context9.next = 19;
                                 break;
                             }
 
                             cached_key = JSON.parse(localStorage.getItem('current-account'));
 
                             if (!(cached_key.type == 'key')) {
-                                _context9.next = 18;
+                                _context9.next = 16;
                                 break;
                             }
 
@@ -27194,18 +27194,16 @@ if ($('body').hasClass('logged-in')) {
                         case 12:
                             decrypted_pdf_response = _context9.sent;
 
-                            console.log(decrypted_pdf_response.success.decrypted, 'hahahaha');
-                            console.log(decodeEntities(decrypted_pdf_response.success.decrypted), 'hahahaha2');
                             if (decrypted_pdf_response.success) {
-                                render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
-                                render_form.submit();
+                                render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
+                                /*render_form.submit();*/
                             } else if (decrypted_pdf_response.error) {
                                 basic.showAlert(decrypted_pdf_response.error, '', true);
                             }
-                            _context9.next = 19;
+                            _context9.next = 17;
                             break;
 
-                        case 18:
+                        case 16:
                             if (cached_key.type == 'keystore') {
                                 // === CACHED KEYSTORE FILE ===
 
@@ -27255,24 +27253,24 @@ if ($('body').hasClass('logged-in')) {
                                 });
                             }
 
-                        case 19:
-                            _context9.next = 23;
+                        case 17:
+                            _context9.next = 21;
                             break;
 
-                        case 21:
+                        case 19:
                             basic.closeDialog();
                             openCacheKeyPopup(encrypted_pdf_content.success);
 
-                        case 23:
-                            _context9.next = 26;
+                        case 21:
+                            _context9.next = 24;
                             break;
 
-                        case 25:
+                        case 23:
                             if (encrypted_pdf_content.error) {
                                 basic.showAlert(encrypted_pdf_content.error, '', true);
                             }
 
-                        case 26:
+                        case 24:
                         case 'end':
                             return _context9.stop();
                     }

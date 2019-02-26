@@ -1246,11 +1246,9 @@ if($('body').hasClass('logged-in')) {
                         // === CACHED KEY ===
                         console.log('=====cached key=======');
                         var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
-                        console.log(decrypted_pdf_response.success.decrypted, 'hahahaha');
-                        console.log(decodeEntities(decrypted_pdf_response.success.decrypted), 'hahahaha2');
                         if(decrypted_pdf_response.success) {
-                            render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
-                            render_form.submit();
+                            render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
+                            /*render_form.submit();*/
                         } else if(decrypted_pdf_response.error) {
                             basic.showAlert(decrypted_pdf_response.error, '', true);
                         }
