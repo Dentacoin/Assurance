@@ -1215,9 +1215,7 @@ if($('body').hasClass('logged-in')) {
                     }else if(!this_form.find('input#privacy-policy').is(':checked')) {
                         basic.showAlert('Please accept the Privacy Policy', '', true);
                     }else {
-
-
-
+                        $('.response-layer').show();
                         this_form_plain.submit();
                     }
                 }
@@ -1248,7 +1246,7 @@ if($('body').hasClass('logged-in')) {
                         var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
                         if(decrypted_pdf_response.success) {
                             render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
-                            /*render_form.submit();*/
+                            render_form.submit();
                         } else if(decrypted_pdf_response.error) {
                             basic.showAlert(decrypted_pdf_response.error, '', true);
                         }
