@@ -27248,7 +27248,7 @@ if ($('body').hasClass('logged-in')) {
                                                     success: function success(decrypt_response) {
                                                         if (decrypt_response.success) {
                                                             basic.closeDialog();
-                                                            render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypt_response.success.decrypted));
+                                                            render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
                                                             render_form.submit();
                                                         } else if (decrypt_response.error) {
                                                             basic.showAlert(decrypt_response.error, '', true);
@@ -28287,7 +28287,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content) 
                                                 if (decrypt_response.success) {
                                                     var render_form = $('form#render-pdf');
                                                     basic.closeDialog();
-                                                    render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypt_response.success.decrypted));
+                                                    render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
                                                     render_form.submit();
                                                 } else if (decrypt_response.error) {
                                                     basic.showAlert(decrypt_response.error, '', true);
@@ -28503,7 +28503,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 $('.response-layer').hide();
                                                 if (decrypted_pdf_response.success) {
                                                     basic.closeDialog();
-                                                    render_form.find('input[name="pdf_data"]').val(encodeEntities(decrypted_pdf_response.success.decrypted));
+                                                    render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
                                                     render_form.submit();
                                                 } else if (decrypted_pdf_response.error) {
                                                     basic.showAlert(decrypted_pdf_response.error, '', true);
