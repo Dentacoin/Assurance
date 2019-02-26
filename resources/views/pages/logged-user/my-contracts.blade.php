@@ -75,9 +75,9 @@
                                                 </td>
                                                 <td>
                                                     @if(!empty($contract->contract_active_at))
-                                                        Not signed yet
-                                                    @else
                                                         {{date('d/m/Y', strtotime($contract->contract_active_at))}}
+                                                    @else
+                                                        Not signed yet
                                                     @endif
                                                 </td>
                                                 <td>{{$contract->monthly_premium}} USD</td>
