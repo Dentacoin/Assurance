@@ -194,11 +194,13 @@ class PatientController extends Controller {
         $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         $required_fields_arr = array(
             'patient_signature' => 'required',
+            'postal-address' => 'required',
             'patient-id-number' => 'required|max:20',
             'contract' => 'required',
         );
         $required_fields_msgs_arr = array(
             'patient_signature.required' => 'Patient signature is required.',
+            'postal-address.required' => 'Postal address is required.',
             'patient-id-number.required' => 'Patient ID number signature is required.',
             'contract.required' => 'Contract slug is required.',
         );
@@ -212,6 +214,8 @@ class PatientController extends Controller {
             $required_fields_arr['country'] = 'required';
             $required_fields_msgs_arr['country.required'] = 'Country is required';
         }
+
+        $this->validate($request, $required_fields_arr, $required_fields_msgs_arr);
 
         $data = $this->clearPostData($request->input());
         $contract = TemporallyContract::where(array('slug' => $data['contract']))->get()->first();
@@ -274,9 +278,11 @@ class PatientController extends Controller {
         $view_end = view('partials/pdf-contract-layout-end');
         $html_end = $view_end->render();
 
+        return response()->json(['patient_pub_key' => $patient_pub_key->public_key, 'dentist_pub_key' => $dentist_pub_key->public_key, 'raw_html' => $this->minifyHtml($html_body)]);
+
         //sending the pdf html to encryption nodejs api
-        $encrypted_html_by_patient = (new \App\Http\Controllers\APIRequestsController())->encryptFile($patient_pub_key->public_key, htmlentities($html_body));
-        $encrypted_html_by_dentist = (new \App\Http\Controllers\APIRequestsController())->encryptFile($dentist_pub_key->public_key, htmlentities($html_body));
+        $encrypted_html_by_patient = (new \App\Http\Controllers\APIRequestsController())->encryptFile($patient_pub_key->public_key, $this->minifyHtml($html_body));
+        $encrypted_html_by_dentist = (new \App\Http\Controllers\APIRequestsController())->encryptFile($dentist_pub_key->public_key, $this->minifyHtml($html_body));
 
         echo '<br><br>==================KEYS DUMP===============================';
 

@@ -1215,6 +1215,9 @@ if($('body').hasClass('logged-in')) {
                     }else if(!this_form.find('input#privacy-policy').is(':checked')) {
                         basic.showAlert('Please accept the Privacy Policy', '', true);
                     }else {
+
+
+
                         this_form_plain.submit();
                     }
                 }
