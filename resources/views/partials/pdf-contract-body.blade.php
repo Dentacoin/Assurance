@@ -93,11 +93,11 @@
 padding-bottom:60px;">@include('partials.contract-terms-and-conditions')</div>
         <div class="signs-container clearfix">
             <div class="doctor">
-                <img src="{{URL::asset('assets/contracts/'.$contract->slug.'/dentist-signature.png')}}"/>
+                <img src="{{CONTRACTS.$contract->slug.'/dentist-signature.png'}}"/>
                 <div class="name">/ Dr. {{$dentist->name}} /</div>
             </div>
             <div class="patient">
-                <img src="{{URL::asset('assets/contracts/'.$contract->slug.'/patient-signature.png')}}"/>
+                <img src="{{CONTRACTS.$contract->slug.'/patient-signature.png'}}"/>
                 <div class="name">/ {{$patient->name}} /</div>
             </div>
         </div>
