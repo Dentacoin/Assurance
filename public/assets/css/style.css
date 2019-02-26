@@ -6241,6 +6241,8 @@ body.logged-in .my-profile-page-content {
           top: 0; }
         .steps-body .wrapper .step.four .signature-and-checkboxes .checkbox-container label a {
           color: #126585; }
+      .steps-body .wrapper .step.four .signature-and-checkboxes .signature-wrapper canvas {
+        height: 150px; }
     .steps-body .wrapper .step.four .terms-and-conditions-long-list {
       height: 350px; }
     .steps-body .wrapper .step.four .right-extra-field label {
