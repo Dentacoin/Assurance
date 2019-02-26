@@ -28278,8 +28278,8 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content) 
                     var reader = new FileReader();
                     reader.addEventListener('load', function (e) {
                         if (isJsonString(e.target.result) && has(JSON.parse(e.target.result), 'address') && '0x' + JSON.parse(e.target.result).address == $('.proof-of-address').attr('data-address')) {
+                            var keystore_string = e.target.result;
                             if (caching) {
-                                var keystore_string = e.target.result;
                                 $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 col-sm-offset-7 padding-right-30 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">' + fileName + '</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Enter your secret key password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
                                 bindGoogleAlikeButtonsEvents();
                                 bindCacheKeyEvent(keystore_string);
@@ -28301,7 +28301,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content) 
                                             url: '/decrypt-data-keystore',
                                             dataType: 'json',
                                             data: {
-                                                keystore: keystore_file,
+                                                keystore: keystore_string,
                                                 password: $('.proof-of-address #your-secret-key-password').val().trim(),
                                                 encrypted_html: encrypted_pdf_content
                                             },
