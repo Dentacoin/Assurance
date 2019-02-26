@@ -347,7 +347,22 @@ class UserController extends Controller {
     }
 
     protected function forgottenPasswordSubmit(Request $request) {
-        var_dump($request->input());
+        $this->validate($request, [
+            'email' => 'required'
+        ], [
+            'email.required' => 'Email is required.',
+        ]);
+
+        $data = $this->clearPostData($request->input());
+
+        //check email validation
+        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            return redirect()->route('forgotten-password')->with(['error' => 'Your form was not sent. Please try again with valid email.']);
+        }
+
+        $api_response = (new APIRequestsController())->generatePasswordRecoveryToken($data['email']);
+
+        var_dump($api_response);
         die();
     }
 }

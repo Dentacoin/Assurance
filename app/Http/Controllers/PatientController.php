@@ -18,6 +18,10 @@ class PatientController extends Controller {
         return view('pages/logged-user/patient/invite-dentists', ['invited_dentists_list' => InviteDentistsReward::where(array('patient_id' => session('logged_user')['id']))->get()->sortByDesc('created_at')->all()]);
     }
 
+    public function renderTestContract() {
+        return view('pages/test-view-contract', ['contract' => TemporallyContract::where(array('id' => 8))->get()->first()]);
+    }
+
     protected function getCongratulationsView($slug) {
         $contract = TemporallyContract::where(array('slug' => $slug, 'status' => 'awaiting-payment'))->get()->first();
         if(!empty($contract)) {
@@ -264,7 +268,7 @@ class PatientController extends Controller {
         $view_start = view('partials/pdf-contract-layout-start');
         $html_start = $view_start->render();
 
-        $view_body = view('partials/pdf-contract-body');
+        $view_body = view('partials/pdf-contract-body', ['contract' => $contract]);
         $html_body = $view_body->render();
 
         $view_end = view('partials/pdf-contract-layout-end');
