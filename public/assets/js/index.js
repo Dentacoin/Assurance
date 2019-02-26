@@ -1260,8 +1260,6 @@ if($('body').hasClass('logged-in')) {
                         }
                     } else if(cached_key.type == 'keystore') {
                         // === CACHED KEYSTORE FILE ===
-
-                        console.log('=====cached keystore file=======');
                         $.ajax({
                             type: 'POST',
                             url: '/get-keystore-file-password-validation',
@@ -1284,7 +1282,7 @@ if($('body').hasClass('logged-in')) {
                                             url: '/decrypt-data-keystore',
                                             dataType: 'json',
                                             data: {
-                                                keystore: JSON.stringify(JSON.parse(localStorage.getItem('current-account')).keystore),
+                                                keystore: JSON.parse(localStorage.getItem('current-account')).keystore,
                                                 password: $('.keystore-file-password-validation .keystore-password').val().trim(),
                                                 encrypted_html: encrypted_pdf_content.success
                                             },
@@ -2762,7 +2760,7 @@ async function getEncryptedContractPdfContent(hash, type) {
             type: type
         }
     });
-}
+}/*
 
 async function getDecryptedPdfContentByPlainKey(encrypted_html, key) {
     return await $.ajax({
@@ -2778,7 +2776,7 @@ async function getDecryptedPdfContentByPlainKey(encrypted_html, key) {
         }
     });
 }
-
+*/
 async function getDecryptedPdfContent(encrypted_html, key) {
     return await $.ajax({
         type: 'POST',

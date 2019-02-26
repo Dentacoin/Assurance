@@ -25865,9 +25865,26 @@ var getEncryptedContractPdfContent = function () {
     return function getEncryptedContractPdfContent(_x11, _x12) {
         return _ref19.apply(this, arguments);
     };
-}();
+}(); /*
+     
+     async function getDecryptedPdfContentByPlainKey(encrypted_html, key) {
+        return await $.ajax({
+            type: 'POST',
+            url: '/decrypt-data-plain-key',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                encrypted_html: encrypted_html,
+                private_key: key
+            }
+        });
+     }
+     */
 
-var getDecryptedPdfContentByPlainKey = function () {
+
+var getDecryptedPdfContent = function () {
     var _ref20 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee20(encrypted_html, key) {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee20$(_context20) {
             while (1) {
@@ -25876,7 +25893,7 @@ var getDecryptedPdfContentByPlainKey = function () {
                         _context20.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data-plain-key',
+                            url: '/decrypt-data',
                             dataType: 'json',
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -25898,44 +25915,8 @@ var getDecryptedPdfContentByPlainKey = function () {
         }, _callee20, this);
     }));
 
-    return function getDecryptedPdfContentByPlainKey(_x13, _x14) {
+    return function getDecryptedPdfContent(_x13, _x14) {
         return _ref20.apply(this, arguments);
-    };
-}();
-
-var getDecryptedPdfContent = function () {
-    var _ref21 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee21(encrypted_html, key) {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee21$(_context21) {
-            while (1) {
-                switch (_context21.prev = _context21.next) {
-                    case 0:
-                        _context21.next = 2;
-                        return $.ajax({
-                            type: 'POST',
-                            url: '/decrypt-data',
-                            dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
-                            }
-                        });
-
-                    case 2:
-                        return _context21.abrupt('return', _context21.sent);
-
-                    case 3:
-                    case 'end':
-                        return _context21.stop();
-                }
-            }
-        }, _callee21, this);
-    }));
-
-    return function getDecryptedPdfContent(_x15, _x16) {
-        return _ref21.apply(this, arguments);
     };
 }();
 
@@ -27214,8 +27195,6 @@ if ($('body').hasClass('logged-in')) {
                         case 16:
                             if (cached_key.type == 'keystore') {
                                 // === CACHED KEYSTORE FILE ===
-
-                                console.log('=====cached keystore file=======');
                                 $.ajax({
                                     type: 'POST',
                                     url: '/get-keystore-file-password-validation',
@@ -27238,7 +27217,7 @@ if ($('body').hasClass('logged-in')) {
                                                     url: '/decrypt-data-keystore',
                                                     dataType: 'json',
                                                     data: {
-                                                        keystore: JSON.stringify(JSON.parse(localStorage.getItem('current-account')).keystore),
+                                                        keystore: JSON.parse(localStorage.getItem('current-account')).keystore,
                                                         password: $('.keystore-file-password-validation .keystore-password').val().trim(),
                                                         encrypted_html: encrypted_pdf_content.success
                                                     },
