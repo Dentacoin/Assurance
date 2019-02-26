@@ -192,7 +192,7 @@
                                     </div>
                                     <div class="signature-wrapper inline-block module">
                                         <div class="calibri-bold fs-26 text-center">Sign below</div>
-                                        <div class="calibri-light fs-16 text-center light-gray-color padding-bottom-15">Use your mouse or touch screen to sign.</div>
+                                        <div class="calibri-light fs-14 text-center light-gray-color padding-bottom-5">Use your mouse or touch screen to sign.</div>
                                         <canvas id="signature-pad" class="signature-pad"></canvas>
                                         <a href="javascript:void(0)" class="blue-green-color calibri-bold fs-18 clear-signature">Clear</a>
                                     </div>
