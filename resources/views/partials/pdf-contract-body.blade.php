@@ -16,7 +16,7 @@
         </div>
         <div class="row">
             <label class="inline-block">Country:</label>
-            <div class="right-field inline-block">{{$contract->professional_company_number}}</div>
+            <div class="right-field inline-block">{{$countries[$dentist->country_id - 1]->name}}</div>
         </div>
         <div class="row">
             <label class="inline-block">Phone:</label>
@@ -53,7 +53,7 @@
         </div>
         <div class="row">
             <label class="inline-block">Country:</label>
-            <div class="right-field inline-block">{{$patient->address}}</div>
+            <div class="right-field inline-block">{{$countries[$patient->country_id - 1]->name}}</div>
         </div>
         <div class="row">
             <label class="inline-block">Wallet Address:</label>
