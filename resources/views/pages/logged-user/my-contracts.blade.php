@@ -73,7 +73,10 @@
                                                         <span>{{$dentist->name}}</span>
                                                     @endif
                                                 </td>
-                                                <td>{{date('d/m/Y', strtotime($contract->contract_active_at))}}</td>
+                                                <td>
+                                                    {{var_dump(strtotime($contract->contract_active_at))}}
+                                                    {{date('d/m/Y', strtotime($contract->contract_active_at))}}
+                                                </td>
                                                 <td>{{$contract->monthly_premium}} USD</td>
                                                 <td class="next-payment"></td>
                                                 <td class="contract-details">
