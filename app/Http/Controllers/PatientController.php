@@ -80,6 +80,11 @@ class PatientController extends Controller {
             'type' => 'patient'
         ];
 
+        $current_logging_patient = (new APIRequestsController())->getUserData($request->input('id'));
+        var_dump($current_logging_patient);
+        var_dump($current_logging_patient['status']);
+        die();
+
         session(['logged_user' => $session_arr]);
         return redirect()->route('patient-access');
     }

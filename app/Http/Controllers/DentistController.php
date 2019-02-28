@@ -121,18 +121,23 @@ class DentistController extends Controller
 
         //handle the API response
         $api_response = (new APIRequestsController())->dentistLogin($data);
-        var_dump($api_response['data']['self_deleted']);
-        var_dump($api_response['data']['status']);
-        die();
-        if($api_response['success']) {
-            $session_arr = [
-                'token' => $api_response['token'],
-                'id' => $api_response['data']['id'],
-                'type' => 'dentist'
-            ];
 
-            session(['logged_user' => $session_arr]);
-            return redirect()->route('home');
+        if($api_response['success']) {
+            $approved_statuses = array('approved', 'pending');
+            if($api_response['data']['self_deleted']) {
+                return redirect()->route('home')->with(['error' => 'This account is deleted, you cannot log in with this account anymore.']);
+            } else if(!in_array($api_response['data']['status'], $approved_statuses)) {
+                return redirect()->route('home')->with(['error' => 'This account is not approved by Dentacoin team yet, please try again later.']);
+            } else {
+                $session_arr = [
+                    'token' => $api_response['token'],
+                    'id' => $api_response['data']['id'],
+                    'type' => 'dentist'
+                ];
+
+                session(['logged_user' => $session_arr]);
+                return redirect()->route('home');
+            }
         } else {
             return redirect()->route('home')->with(['errors_response' => $api_response['errors']]);
         }
