@@ -21,7 +21,6 @@ class CreateTemporallyContractsTable extends Migration
             $table->string('patient_lname', 100);
             $table->string('patient_email', 100);
             $table->string('patient_id_number', 100);
-            $table->tinyInteger('patient_sign')->default(0);
             $table->string('professional_company_number', 100)->nullable();
             $table->string('general_dentistry');
             $table->float('monthly_premium');
@@ -29,6 +28,7 @@ class CreateTemporallyContractsTable extends Migration
             $table->tinyInteger('teeth_cleaning_per_year');
             $table->timestamp('contract_active_at')->nullable();
             $table->timestamp('cancelled_at')->nullable();
+            $table->text('cancellation_reason')->nullable();
             $table->string('document_hash')->nullable();
             $table->string('slug')->unique();
             $table->enum('status', ['pending', 'awaiting-payment', 'awaiting-approval', 'active', 'cancelled'])->default('pending');

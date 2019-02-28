@@ -251,6 +251,20 @@
   .white-transparent-btn:focus {
     color: white; }
 
+.black-light-gray-btn {
+  background-color: #ffffff;
+  color: #212121;
+  font-size: 20px;
+  padding: 5px 25px;
+  font-family: 'Calibri-Regular';
+  border: 2px solid white;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px; }
+
 .social-login-btn {
   background-color: white;
   width: 100%;
@@ -601,14 +615,29 @@
     -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
     -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
-    .module.contract-tile .tile-wrapper figure {
-      width: 120px;
-      overflow: hidden;
-      -webkit-border-radius: 6px;
-      -moz-border-radius: 6px;
-      -ms-border-radius: 6px;
-      border-radius: 6px; }
-      .module.contract-tile .tile-wrapper figure figcaption {
+    .module.contract-tile .tile-wrapper .figure-container {
+      width: 120px; }
+      .module.contract-tile .tile-wrapper .figure-container figure {
+        width: 100%;
+        height: 100px;
+        overflow: hidden;
+        position: relative;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        -ms-border-radius: 6px;
+        border-radius: 6px; }
+        .module.contract-tile .tile-wrapper .figure-container figure img {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          -webkit-border-radius: 6px;
+          -moz-border-radius: 6px;
+          -ms-border-radius: 6px;
+          border-radius: 6px; }
+      .module.contract-tile .tile-wrapper .figure-container .status {
         display: block;
         color: white; }
     .module.contract-tile .tile-wrapper .contract-info {
@@ -619,13 +648,13 @@
         .module.contract-tile .tile-wrapper .contract-info .btn-container .white-blue-green-btn {
           font-size: 16px;
           padding: 0 6px; }
-  .module.contract-tile.pending .tile-wrapper figure figcaption {
+  .module.contract-tile.pending .tile-wrapper .status {
     background-color: #29adde; }
-  .module.contract-tile.active .tile-wrapper figure figcaption {
+  .module.contract-tile.active .tile-wrapper .status {
     background-color: #239234; }
-  .module.contract-tile.awaiting-payment .tile-wrapper figure figcaption, .module.contract-tile.awaiting-approval .tile-wrapper figure figcaption {
+  .module.contract-tile.awaiting-payment .tile-wrapper .status, .module.contract-tile.awaiting-approval .tile-wrapper .status {
     background-color: #239289; }
-  .module.contract-tile.cancelled .tile-wrapper figure figcaption {
+  .module.contract-tile.cancelled .tile-wrapper .status {
     background-color: #e92f30; }
 .module.signature-wrapper {
   -moz-user-select: none;

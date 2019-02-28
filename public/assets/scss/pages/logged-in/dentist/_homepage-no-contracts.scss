@@ -1,0 +1,35 @@
+.dentist-no-contracts-section {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top 0 center;
+    background-image: url(/assets/uploads/logged-patient-no-contracts-background.jpg);
+    position: relative;
+    .absolute-white-background-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 30px;
+        background-color: white;
+    }
+    .wrapper {
+        background-color: white;
+        text-align: center;
+        padding: 50px 90px;
+        @include rounded(20px);
+        @include box-shadow(0 2px 6px 0 rgba(0,0,0,.4));
+        .single-container {
+            margin-bottom: 30px;
+            background-color: #ebebeb;
+            @include rounded(10px);
+            a {
+                padding: 20px;
+                figure {
+                    figcaption {
+                        color: $dark_color;
+                    }
+                }
+            }
+        }
+    }
+}

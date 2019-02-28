@@ -276,7 +276,7 @@ var buildCurrentPatientContractHistory = function () {
 
 var onDocumentReadyPageData = function () {
     var _ref16 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee16() {
-        var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_creation, remainder, next_payment_timestamp_date_obj, max_height;
+        var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_creation, remainder, next_payment_timestamp, next_payment_timestamp_date_obj, max_height;
         return _regeneratorRuntime.wrap(function _callee16$(_context16) {
             while (1) {
                 switch (_context16.prev = _context16.next) {
@@ -334,12 +334,14 @@ var onDocumentReadyPageData = function () {
 
                             if (time_passed_since_creation > smart_contract_withdraw_period) {
                                 remainder = time_passed_since_creation % smart_contract_withdraw_period;
-                                next_payment_timestamp_date_obj = new Date((now_timestamp + smart_contract_withdraw_period - remainder) * 1000);
+                                next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - remainder) * 1000;
+                                next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                             } else {
-                                next_payment_timestamp_date_obj = new Date((now_timestamp + smart_contract_withdraw_period - time_passed_since_creation) * 1000);
+                                next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - time_passed_since_creation) * 1000;
+                                next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                             }
 
-                            table_trs_with_timestamp.eq(i).find('.next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
+                            table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">' + next_payment_timestamp + '</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
                         _context16.next = 55;
                         break;
@@ -1422,14 +1424,6 @@ if ($('body').hasClass('home')) {
             console.log($(this).val());
         });
     }
-
-    if ($('.contracts-list.slider').length) {
-        $('.contracts-list.slider').slick({
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            autoplaySpeed: 8000
-        });
-    }
 } else if ($('body').hasClass('support-guide')) {
     if ($('.support-guide-slider').length) {
         $('.support-guide-slider').slick({
@@ -1524,6 +1518,23 @@ if ($('body').hasClass('logged-in')) {
                 $('.delete-local-storage').html('');
                 basic.showAlert(alert_response, '', true);
             });
+
+            if ($('.delete-my-profile').length) {
+                $('.delete-my-profile').click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/delete-my-profile',
+                        dataType: 'json',
+                        data: {
+                            cache: true
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function success(response) {}
+                    });
+                });
+            }
         }
     } else if ($('body').hasClass('my-profile')) {
         $('.my-profile-page-content .dropdown-hidden-menu button').click(function () {
@@ -2114,13 +2125,27 @@ if ($('body').hasClass('logged-in')) {
     }
 }
 
-//THIS IS FUNCTIONALITY ONLY FOR LOGGED IN USERS
+//THIS IS FUNCTIONALITY ONLY FOR LOGGED IN USERS (MODULES)
 if ($('body').hasClass('logged-in')) {
     $('.logged-user > a, .logged-user .hidden-box').hover(function () {
         $('.logged-user .hidden-box').show();
     }, function () {
         $('.logged-user .hidden-box').hide();
     });
+
+    if ($('.contracts-list.slider').length) {
+        var slides_to_show = 3;
+        for (var i = 0, len = $('.contracts-list.slider').length; i < len; i += 1) {
+            if ($('.contracts-list.slider').eq(i).attr('data-slides-number') != undefined) {
+                slides_to_show = parseInt($('.contracts-list.slider').eq(i).attr('data-slides-number'));
+            }
+            $('.contracts-list.slider').eq(i).slick({
+                slidesToShow: slides_to_show,
+                slidesToScroll: 3,
+                autoplaySpeed: 8000
+            });
+        }
+    }
 
     if ($('.contract-decrypt').length) {
         $('.contract-decrypt').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee9() {
@@ -2946,7 +2971,6 @@ function apiEventsListeners() {
                                     token: event.response_data.token,
                                     id: event.response_data.data.id,
                                     email: event.response_data.data.email,
-                                    have_contracts: false,
                                     _token: $('meta[name="csrf-token"]').attr('content')
                                 };
 
@@ -3676,56 +3700,92 @@ function initTooltips() {
     }
 }
 
-function initDataTable() {
-    if ($('table.table.table-without-reorder').length > 0) {
-        if ($('table.table.table-without-reorder').hasClass('media-table')) {
-            $('table.table.table-without-reorder.media-table').DataTable().on('draw.dt', function () {
-                var pagination_id = null;
-                if ($(this).attr('data-id-in-action') != undefined) {
-                    pagination_id = $(this).attr('data-id-in-action');
-                }
-                var close_button;
-                if ($(this).attr('data-close-btn') == 'false') {
-                    close_button = false;
-                } else if ($(this).attr('data-close-btn') == 'true') {
-                    close_button = true;
-                }
-                useMediaEvent(pagination_id, close_button);
-            });
-        } else {
-            $('table.table.table-without-reorder').DataTable({
-                sort: false
-            });
+function initDataTable(filter_param) {
+    if (filter_param == undefined) {
+        filter_param = null;
+    }
 
-            if ($('table.table.table-without-reorder').hasClass('my-contracts')) {
-                $('.dataTables_filter input').addClass('custom-input green-arrow-background').attr('placeholder', 'Search for contract');
+    if ($('table.table.table-without-reorder').length > 0) {
+        $('table.table.table-without-reorder').DataTable({
+            ordering: true,
+            order: [],
+            columnDefs: [{
+                orderable: false,
+                targets: 'no-sort'
+            }],
+            aaSorting: []
+        });
+
+        var pending_check = 'checked';
+        var active_check = 'checked';
+        var awaiting_approval_check = 'checked';
+        var awaiting_payment_check = 'checked';
+        var cancelled_check = 'checked';
+
+        if (filter_param != null) {
+            if ($.inArray('pending', filter_param) != -1) {
+                pending_check = 'checked';
+            } else {
+                pending_check = '';
+            }
+
+            if ($.inArray('active', filter_param) != -1) {
+                active_check = 'checked';
+            } else {
+                active_check = '';
+            }
+            if ($.inArray('awaiting-approval', filter_param) != -1) {
+                awaiting_approval_check = 'checked';
+            } else {
+                awaiting_approval_check = '';
+            }
+            if ($.inArray('awaiting-payment', filter_param) != -1) {
+                awaiting_payment_check = 'checked';
+            } else {
+                awaiting_payment_check = '';
+            }
+            if ($.inArray('cancelled', filter_param) != -1) {
+                cancelled_check = 'checked';
+            } else {
+                cancelled_check = '';
             }
         }
-    }
-    if ($('table.table.table-with-reorder').length > 0) {
-        var table = $('table.table.table-with-reorder').DataTable({
-            rowReorder: true
-        });
-        $('table.table.table-with-reorder').addClass('sortable');
-        table.on('row-reorder', function (e, diff, edit) {
-            var order_object = {};
-            for (var i = 0, len = diff.length; i < len; i += 1) {
-                order_object[$(diff[i].node).data('id')] = diff[i].newPosition;
-            }
-            $.ajax({
-                type: 'POST',
-                url: SITE_URL + '/' + $('table.table.table-with-reorder').attr('data-action') + '/update-order',
-                data: {
-                    'order_object': order_object
-                },
-                dataType: 'json',
-                success: function success(response) {
-                    if (response.success) {
-                        basic.showAlert(response.success, '', true);
+
+        if ($('table.table.table-without-reorder').hasClass('my-contracts')) {
+            $('.dataTables_filter').append('<div class="custom-filter"><a href="javascript:void(0)" class="custom-btn"><img alt="Filter icon" class="filter-icon" src="/assets/images/filter-icon.svg"/> Filter <img alt="Caret icon" class="caret-down" src="/assets/images/caret-down.svg"/><div class="custom-filter-body"><div class="custom-title">Filter by Status</div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="pending" ' + pending_check + '/> <label for="pending">Pending</label></div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="active" ' + active_check + '/> <label for="active">Active</label></div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="awaiting-payment" ' + awaiting_payment_check + '/> <label for="awaiting-payment">Active - awaiting payment</label></div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="awaiting-approval" ' + awaiting_approval_check + '/> <label for="awaiting-approval">Active - awaiting approval</label></div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="cancelled" ' + cancelled_check + '/> <label for="cancelled">Cancelled</label></div></div></a></div>');
+            $('.dataTables_filter > label > input').addClass('custom-input green-arrow-background').attr('placeholder', 'Search for contract');
+
+            $('input[type="checkbox"].filter-contracts').on('change', function () {
+                var filter_arr = [];
+                for (var i = 0, len = $('input[type="checkbox"].filter-contracts').length; i < len; i += 1) {
+                    if ($('input[type="checkbox"].filter-contracts').eq(i).is(':checked')) {
+                        filter_arr.push($('input[type="checkbox"].filter-contracts').eq(i).attr('id'));
                     }
                 }
+
+                $('.response-layer').show();
+                setTimeout(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/filter-my-contracts',
+                        dataType: 'json',
+                        data: {
+                            filter_arr: filter_arr
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function success(response) {
+                            if (response.success) {
+                                $('.table-container').html(response.success);
+                                initDataTable(filter_arr);
+                                $('.response-layer').hide();
+                            }
+                        }
+                    });
+                }, 500);
             });
-        });
+        }
     }
 }
 

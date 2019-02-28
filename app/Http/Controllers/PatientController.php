@@ -52,9 +52,10 @@ class PatientController extends Controller {
     }
 
     public function getPatientAccess()    {
-        if((new UserController())->checkSession()) {
-            if(filter_var(session('logged_user')['have_contracts'], FILTER_VALIDATE_BOOLEAN)) {
-                return view('pages/logged-user/patient/have-contracts', ['contracts' => TemporallyContract::where(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->sortByDesc('created_at'), 'clinics' => (new APIRequestsController())->getAllClinicsByName()]);
+        if((new UserController())->checkPatientSession()) {
+            $logged_patient_email = (new APIRequestsController())->getUserData(session('logged_user')['id'])->email;
+            if(TemporallyContract::where(array('patient_email' => $logged_patient_email))->get()->all()) {
+                return view('pages/logged-user/patient/have-contracts', ['contracts' => TemporallyContract::where(array('patient_email' => $logged_patient_email))->get()->sortByDesc('created_at'), 'clinics' => (new APIRequestsController())->getAllClinicsByName()]);
             } else {
                 //IF PATIENT HAVE NO EXISTING CONTRACTS
                 return view('pages/logged-user/patient/start-first-contract', ['clinics' => (new APIRequestsController())->getAllClinicsByName()]);
@@ -76,14 +77,8 @@ class PatientController extends Controller {
         $session_arr = [
             'token' => $request->input('token'),
             'id' => $request->input('id'),
-            'type' => 'patient',
-            'have_contracts' => false
+            'type' => 'patient'
         ];
-
-        //check if there is temporallycontract for this patient by email or by user_id (we fill user_id for this temporally contract once patient register - this is in case patient change his email while he still have the proposal running)
-        if(filter_var($request->input('have_contracts'), FILTER_VALIDATE_BOOLEAN) || TemporallyContract::where(array('patient_email' => $request->input('email')))->get()->all()) {
-            $session_arr['have_contracts'] = true;
-        }
 
         session(['logged_user' => $session_arr]);
         return redirect()->route('patient-access');
@@ -265,7 +260,6 @@ class PatientController extends Controller {
 
         $contract->patient_id = $logged_patient->id;
         $contract->patient_id_number = $data['patient-id-number'];
-        $contract->patient_sign = true;
         $contract->contract_active_at = new \DateTime();
 
         //GENERATE PDF

@@ -17,6 +17,7 @@ mix.js('public/assets/js/index.js', 'public/assets/js/index-compiled.js');
 /* ===== PUBLIC =====*/
 mix.styles([
     'node_modules/bootstrap/dist/css/bootstrap.min.css',
+    'node_modules/admin-lte/plugins/datatables/dataTables.bootstrap.css',
     'public/assets/libs/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css',
     'public/assets/libs/font-awesome/css/font-awesome.min.css',
     'node_modules/slick-carousel/slick/slick.css',

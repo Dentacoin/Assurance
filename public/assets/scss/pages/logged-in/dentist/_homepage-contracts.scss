@@ -1,0 +1,88 @@
+.dentist-contracts-section {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top 0 center;
+    background-image: url(/assets/uploads/logged-patient-no-contracts-background.jpg);
+    .module.contract-tile {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+}
+
+.pending-and-cancelled-contacts-section {
+    background-color: white;
+    margin-top: -20px;
+    @include rounded(20px 20px 0 0);
+    .see-all {
+        padding: 5px 25px;
+        font-family: 'Calibri-Regular';
+        &.gray {
+            background-color: #8e8e8e;
+            border-color: #8e8e8e;
+            &:hover {
+                color: white;
+            }
+        }
+    }
+    .border-delimeter {
+        &:before {
+            content: '';
+            width: 1px;
+            height: 100%;
+            background-color: $light_gray;
+            left: 0;
+            position: absolute;
+        }
+    }
+    .contract-tile {
+        &.pending {
+            .tile-wrapper {
+                background-color: #e4f0f5;
+            }
+        }
+        &.cancelled {
+            .tile-wrapper {
+                background-color: #ebebeb;
+                .white-blue-green-btn {
+                    background-color: #8e8e8e;
+                    border-color: #8e8e8e;
+                    &:hover {
+                        color: #8e8e8e;
+                        background-color: white;
+                    }
+                }
+            }
+        }
+    }
+    .title {
+        .inner-wrapper {
+            position: relative;
+            .text {
+                color: $dark_color;
+                font-family: 'Lato-Bold';
+                font-size: 20px;
+                background-color: white;
+                padding: 0 10px;
+                display: inline-block;
+                z-index: 5;
+                position: relative;
+            }
+            .border {
+                height: 1px;
+                width: 100%;
+                background-color: $light_gray;
+                z-index: 1;
+                @include vertical-align(absolute);
+                &.first {
+                    right: -15px;
+                }
+                &.second {
+                    left: -15px;
+                }
+            }
+        }
+    }
+    .hide-this {
+        visibility: hidden;
+    }
+}

@@ -32,9 +32,9 @@ class UserController extends Controller {
 
     protected function getMyContractsView()     {
         if($this->checkPatientSession()) {
-            return view('pages/logged-user/my-contracts', ['patient_or_not' => false, 'contracts' => TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->sortByDesc('created_at')]);
+            return view('pages/logged-user/my-contracts', ['patient_or_not' => false, 'contracts' => TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->sortByDesc('contract_active_at')]);
         } else if($this->checkDentistSession()) {
-            return view('pages/logged-user/my-contracts', ['patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->sortByDesc('created_at')]);
+            return view('pages/logged-user/my-contracts', ['patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->sortByDesc('contract_active_at')]);
         }
     }
 
@@ -412,5 +412,37 @@ class UserController extends Controller {
         } else {
             return redirect()->route('home')->with(['error' => 'Your password change failed, please try again later.']);
         }
+    }
+
+    protected function filterMyContracts(Request $request) {
+        $view_params = array();
+        if(!empty($request->input('filter_arr'))) {
+            //FILTERING
+            $view_params['patient_or_not'] = true;
+            if($this->checkPatientSession()) {
+                $view_params['contracts'] = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->whereIn('status', $request->input('filter_arr'))->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->orderBy('contract_active_at', 'desc')->get()->all();
+            } else if($this->checkDentistSession()) {
+                $view_params['contracts'] = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->whereIn('status', $request->input('filter_arr'))->orderBy('contract_active_at', 'desc')->get()->all();
+            }
+        } else {
+            //SELECTING ALL
+            $view_params['patient_or_not'] = false;
+            if($this->checkPatientSession()) {
+                $view_params['contracts'] = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->sortByDesc('contract_active_at');
+            } else if($this->checkDentistSession()) {
+                $view_params['contracts'] = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->sortByDesc('contract_active_at');
+            }
+        }
+
+        $view = view('partials/table-my-contracts', $view_params);
+        $view = $view->render();
+
+        return response()->json(['success' => $view]);
+    }
+
+    protected function deleteMyProfile(Request $request) {
+        $api_response = (new APIRequestsController())->deleteProfile();
+        var_dump($api_response);
+        die();
     }
 }

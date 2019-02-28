@@ -13,8 +13,16 @@ class DentistController extends Controller
         return view('pages/logged-user/dentist/homepage-no-contracts');
     }
 
+    public function getDentistContractView() {
+        var_dump('koz');
+        die();
+    }
+
     public function getContractsView() {
-        return view('pages/logged-user/dentist/homepage-contracts');
+        $active_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->whereIn('status', array('active', 'awaiting-payment', 'awaiting-approval'))->orderBy('contract_active_at', 'desc')->limit(7)->get()->all();
+        $pending_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id'], 'status' => 'pending'))->orderBy('created_at', 'desc')->limit(4)->get()->all();
+        $cancelled_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id'], 'status' => 'cancelled'))->orderBy('cancelled_at', 'desc')->limit(4)->get()->all();
+        return view('pages/logged-user/dentist/homepage-contracts', ['active_contracts' => $active_contracts, 'pending_contracts' => $pending_contracts, 'cancelled_contracts' => $cancelled_contracts]);
     }
 
     protected function getCreateContractView()   {
@@ -91,8 +99,7 @@ class DentistController extends Controller
             $session_arr = [
                 'token' => $api_response['token'],
                 'id' => $api_response['data']['id'],
-                'type' => 'dentist',
-                'have_contracts' => false
+                'type' => 'dentist'
             ];
 
             session(['logged_user' => $session_arr]);
@@ -125,13 +132,8 @@ class DentistController extends Controller
             $session_arr = [
                 'token' => $api_response['token'],
                 'id' => $api_response['data']['id'],
-                'type' => 'dentist',
-                'have_contracts' => false
+                'type' => 'dentist'
             ];
-
-            if(filter_var($request->input('have_contracts'), FILTER_VALIDATE_BOOLEAN) || TemporallyContract::where(array('dentist_id' => $api_response['data']['id']))->get()->all()) {
-                $session_arr['have_contracts'] = true;
-            }
 
             session(['logged_user' => $session_arr]);
             return redirect()->route('home');

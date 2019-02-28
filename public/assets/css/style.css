@@ -4964,6 +4964,20 @@ input[type='file'].hide-input {
   .white-transparent-btn:focus {
     color: white; }
 
+.black-light-gray-btn {
+  background-color: #ffffff;
+  color: #212121;
+  font-size: 20px;
+  padding: 5px 25px;
+  font-family: 'Calibri-Regular';
+  border: 2px solid white;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px; }
+
 .social-login-btn {
   background-color: white;
   width: 100%;
@@ -5314,14 +5328,29 @@ input[type='file'].hide-input {
     -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
     -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
-    .module.contract-tile .tile-wrapper figure {
-      width: 120px;
-      overflow: hidden;
-      -webkit-border-radius: 6px;
-      -moz-border-radius: 6px;
-      -ms-border-radius: 6px;
-      border-radius: 6px; }
-      .module.contract-tile .tile-wrapper figure figcaption {
+    .module.contract-tile .tile-wrapper .figure-container {
+      width: 120px; }
+      .module.contract-tile .tile-wrapper .figure-container figure {
+        width: 100%;
+        height: 100px;
+        overflow: hidden;
+        position: relative;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        -ms-border-radius: 6px;
+        border-radius: 6px; }
+        .module.contract-tile .tile-wrapper .figure-container figure img {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          -webkit-border-radius: 6px;
+          -moz-border-radius: 6px;
+          -ms-border-radius: 6px;
+          border-radius: 6px; }
+      .module.contract-tile .tile-wrapper .figure-container .status {
         display: block;
         color: white; }
     .module.contract-tile .tile-wrapper .contract-info {
@@ -5332,13 +5361,13 @@ input[type='file'].hide-input {
         .module.contract-tile .tile-wrapper .contract-info .btn-container .white-blue-green-btn {
           font-size: 16px;
           padding: 0 6px; }
-  .module.contract-tile.pending .tile-wrapper figure figcaption {
+  .module.contract-tile.pending .tile-wrapper .status {
     background-color: #29adde; }
-  .module.contract-tile.active .tile-wrapper figure figcaption {
+  .module.contract-tile.active .tile-wrapper .status {
     background-color: #239234; }
-  .module.contract-tile.awaiting-payment .tile-wrapper figure figcaption, .module.contract-tile.awaiting-approval .tile-wrapper figure figcaption {
+  .module.contract-tile.awaiting-payment .tile-wrapper .status, .module.contract-tile.awaiting-approval .tile-wrapper .status {
     background-color: #239289; }
-  .module.contract-tile.cancelled .tile-wrapper figure figcaption {
+  .module.contract-tile.cancelled .tile-wrapper .status {
     background-color: #e92f30; }
 .module.signature-wrapper {
   -moz-user-select: none;
@@ -6436,6 +6465,8 @@ section.congratulation-and-time-section {
 
 .my-contracts .table-container {
   padding-top: 30px; }
+  .my-contracts .table-container .hide-this {
+    display: none; }
   .my-contracts .table-container .dataTables_empty {
     text-align: center; }
   .my-contracts .table-container table {
@@ -6463,23 +6494,99 @@ section.congratulation-and-time-section {
     display: none; }
   .my-contracts .table-container .dataTables_filter {
     text-align: center;
-    padding-bottom: 15px; }
+    padding-bottom: 15px;
+    font-size: 0; }
     .my-contracts .table-container .dataTables_filter label {
       font-size: 0;
-      display: block; }
+      width: 300px;
+      margin-left: calc(50% - 150px);
+      display: inline-block; }
       .my-contracts .table-container .dataTables_filter label input {
         font-size: 16px;
         width: 100%;
         display: block;
-        max-width: 350px;
         margin: 0 auto;
-        font-weight: normal; }
+        font-weight: normal;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -o-transition: none;
+        -ms-transition: none;
+        transition: none; }
+    .my-contracts .table-container .dataTables_filter .custom-filter {
+      width: calc(50% - 150px);
+      display: inline-block; }
+      .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn {
+        font-size: 20px;
+        text-align: right;
+        display: block;
+        position: relative;
+        color: #212121; }
+        .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn .filter-icon {
+          width: 20px; }
+        .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn .caret-down {
+          width: 10px;
+          margin-left: 5px; }
+        .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn .custom-filter-body {
+          position: absolute;
+          right: 0;
+          top: 100%;
+          display: none;
+          text-align: left;
+          width: 250px;
+          background: white;
+          padding: 15px 25px;
+          z-index: 10;
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
+          -ms-border-radius: 4px;
+          border-radius: 4px;
+          -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+          -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+          -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+          box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
+          .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn .custom-filter-body .filter-row label {
+            font-size: 16px;
+            width: auto;
+            margin: 0;
+            vertical-align: middle;
+            cursor: pointer;
+            -webkit-transition: 0.3s;
+            -moz-transition: 0.3s;
+            -o-transition: 0.3s;
+            -ms-transition: 0.3s;
+            transition: 0.3s; }
+          .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn .custom-filter-body .filter-row input[type='checkbox'] {
+            margin: 0;
+            vertical-align: middle; }
+          .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn .custom-filter-body .filter-row:hover label {
+            color: #126585; }
+        .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn:hover .custom-filter-body {
+          display: block; }
   .my-contracts .table-container .dataTables_paginate {
-    text-align: center; }
+    text-align: center;
+    padding-top: 25px; }
     .my-contracts .table-container .dataTables_paginate a {
-      display: inline-block;
-      padding: 0 10px;
+      color: #000;
+      padding: 0 5px;
       cursor: pointer; }
+    .my-contracts .table-container .dataTables_paginate span {
+      display: inline-block; }
+      .my-contracts .table-container .dataTables_paginate span a {
+        padding: 0 10px;
+        margin: 0 4px;
+        cursor: pointer;
+        width: 30px;
+        line-height: 30px;
+        height: 30px;
+        display: inline-block;
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #000;
+        font-family: 'Calibri-Regular';
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        border-radius: 50%; }
     .my-contracts .table-container .dataTables_paginate .disabled {
       display: none; }
   .my-contracts .table-container .avatar-and-name {
@@ -6508,7 +6615,115 @@ section.congratulation-and-time-section {
         background-color: #239289; }
       .my-contracts .table-container .status .alike-btn.awaiting-approval {
         background-color: #239289; }
+      .my-contracts .table-container .status .alike-btn.cancelled {
+        background-color: #e92f30; }
   .my-contracts .table-container .contract-details a:hover {
     text-decoration: underline; }
+
+.dentist-no-contracts-section {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top 0 center;
+  background-image: url(/assets/uploads/logged-patient-no-contracts-background.jpg);
+  position: relative; }
+  .dentist-no-contracts-section .absolute-white-background-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background-color: white; }
+  .dentist-no-contracts-section .wrapper {
+    background-color: white;
+    text-align: center;
+    padding: 50px 90px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    border-radius: 20px;
+    -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
+    .dentist-no-contracts-section .wrapper .single-container {
+      margin-bottom: 30px;
+      background-color: #ebebeb;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      -ms-border-radius: 10px;
+      border-radius: 10px; }
+      .dentist-no-contracts-section .wrapper .single-container a {
+        padding: 20px; }
+        .dentist-no-contracts-section .wrapper .single-container a figure figcaption {
+          color: #212121; }
+
+.dentist-contracts-section {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top 0 center;
+  background-image: url(/assets/uploads/logged-patient-no-contracts-background.jpg); }
+  .dentist-contracts-section .module.contract-tile {
+    padding-left: 25px;
+    padding-right: 25px; }
+
+.pending-and-cancelled-contacts-section {
+  background-color: white;
+  margin-top: -20px;
+  -webkit-border-radius: 20px 20px 0 0;
+  -moz-border-radius: 20px 20px 0 0;
+  -ms-border-radius: 20px 20px 0 0;
+  border-radius: 20px 20px 0 0; }
+  .pending-and-cancelled-contacts-section .see-all {
+    padding: 5px 25px;
+    font-family: 'Calibri-Regular'; }
+    .pending-and-cancelled-contacts-section .see-all.gray {
+      background-color: #8e8e8e;
+      border-color: #8e8e8e; }
+      .pending-and-cancelled-contacts-section .see-all.gray:hover {
+        color: white; }
+  .pending-and-cancelled-contacts-section .border-delimeter:before {
+    content: '';
+    width: 1px;
+    height: 100%;
+    background-color: #888888;
+    left: 0;
+    position: absolute; }
+  .pending-and-cancelled-contacts-section .contract-tile.pending .tile-wrapper {
+    background-color: #e4f0f5; }
+  .pending-and-cancelled-contacts-section .contract-tile.cancelled .tile-wrapper {
+    background-color: #ebebeb; }
+    .pending-and-cancelled-contacts-section .contract-tile.cancelled .tile-wrapper .white-blue-green-btn {
+      background-color: #8e8e8e;
+      border-color: #8e8e8e; }
+      .pending-and-cancelled-contacts-section .contract-tile.cancelled .tile-wrapper .white-blue-green-btn:hover {
+        color: #8e8e8e;
+        background-color: white; }
+  .pending-and-cancelled-contacts-section .title .inner-wrapper {
+    position: relative; }
+    .pending-and-cancelled-contacts-section .title .inner-wrapper .text {
+      color: #212121;
+      font-family: 'Lato-Bold';
+      font-size: 20px;
+      background-color: white;
+      padding: 0 10px;
+      display: inline-block;
+      z-index: 5;
+      position: relative; }
+    .pending-and-cancelled-contacts-section .title .inner-wrapper .border {
+      height: 1px;
+      width: 100%;
+      background-color: #888888;
+      z-index: 1;
+      position: absolute;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%); }
+      .pending-and-cancelled-contacts-section .title .inner-wrapper .border.first {
+        right: -15px; }
+      .pending-and-cancelled-contacts-section .title .inner-wrapper .border.second {
+        left: -15px; }
+  .pending-and-cancelled-contacts-section .hide-this {
+    visibility: hidden; }
 
 /*# sourceMappingURL=style.css.map */
