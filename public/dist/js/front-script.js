@@ -2953,7 +2953,6 @@ function apiEventsListeners() {
                                 custom_form_obj = {
                                     token: event.response_data.token,
                                     id: event.response_data.data.id,
-                                    email: event.response_data.data.email,
                                     _token: $('meta[name="csrf-token"]').attr('content')
                                 };
 

@@ -124,7 +124,7 @@ class DentistController extends Controller
 
         if($api_response['success']) {
             $approved_statuses = array('approved', 'pending');
-            if($api_response['data']['self_deleted']) {
+            if($api_response['data']['self_deleted'] != NULL) {
                 return redirect()->route('home')->with(['error' => 'This account is deleted, you cannot log in with this account anymore.']);
             } else if(!in_array($api_response['data']['status'], $approved_statuses)) {
                 return redirect()->route('home')->with(['error' => 'This account is not approved by Dentacoin team yet, please try again later.']);

@@ -81,14 +81,12 @@ class PatientController extends Controller {
         ];
 
         $current_logging_patient = (new APIRequestsController())->getUserData($request->input('id'));
-        var_dump($current_logging_patient->self_deleted != NULL);
-        if($current_logging_patient->self_deleted) {
-
+        if($current_logging_patient->self_deleted != NULL) {
+            return redirect()->route('home')->with(['error' => 'This account is deleted, you cannot log in with this account anymore.']);
+        } else {
+            session(['logged_user' => $session_arr]);
+            return redirect()->route('patient-access');
         }
-        die();
-
-        session(['logged_user' => $session_arr]);
-        return redirect()->route('patient-access');
     }
 
     protected function getInviteDentistsPopup(Request $request) {
