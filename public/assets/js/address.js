@@ -1,6 +1,17 @@
 var initAddressSuggesters;
 var checkAddress;
 var setupMap;
+var mapsLoaded = true;
+var mapsWaiting = [];
+
+var prepareMapFunction = function( callback ) {
+    if(mapsLoaded) {
+        callback();
+    } else {
+        mapsWaiting.push(callback);
+    }
+};
+
 
 jQuery(document).ready(function($){
     setupMap = function(suggester_container, coords) {
@@ -45,7 +56,7 @@ jQuery(document).ready(function($){
     };
 
     initAddressSuggesters = function() {
-        prepareMapFucntion( function() {
+        prepareMapFunction(function() {
             $('.address-suggester').each( function() {
                 var suggester_container = $(this).closest('.address-suggester-wrapper');
                 suggester_container.find('.country-select').change( function() {
