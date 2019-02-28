@@ -2690,7 +2690,7 @@ function initDataTable(filter_param)    {
     }
 
     var params = getSearchParameters();
-    if(has(params, 'status')) {
+    if(has(params, 'status') && filter_param == null) {
         filter_param = [params.status];
     }
 
@@ -2712,6 +2712,9 @@ function initDataTable(filter_param)    {
         var cancelled_check = 'checked';
 
         if(filter_param != null) {
+            if(has(params, 'status')) {
+                filter_param.push(params.status);
+            }
             if($.inArray('pending', filter_param) != -1) {
                 pending_check = 'checked';
             } else {
