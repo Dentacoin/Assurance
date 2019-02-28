@@ -23,6 +23,7 @@
                             </div>
                             <div class="btn-container text-right padding-top-30">
                                 <form method="POST" action="{{route('delete-my-profile')}}" onsubmit="return confirm('Are you sure you want to continue?')">
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <input type="submit" value="DELETE MY PROFILE & PERSONAL DATA" class="white-blue-green-btn"/>
                                 </form>
                             </div>
