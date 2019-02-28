@@ -121,7 +121,8 @@ class DentistController extends Controller
 
         //handle the API response
         $api_response = (new APIRequestsController())->dentistLogin($data);
-        var_dump($api_response['data']);
+        var_dump($api_response['data']['self_deleted']);
+        var_dump($api_response['data']['status']);
         die();
         if($api_response['success']) {
             $session_arr = [
