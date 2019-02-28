@@ -1518,23 +1518,23 @@ if ($('body').hasClass('logged-in')) {
                 $('.delete-local-storage').html('');
                 basic.showAlert(alert_response, '', true);
             });
+        }
 
-            if ($('.delete-my-profile').length) {
-                $('.delete-my-profile').click(function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/delete-my-profile',
-                        dataType: 'json',
-                        data: {
-                            cache: true
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function success(response) {}
-                    });
+        if ($('.delete-my-profile').length) {
+            $('.delete-my-profile').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/delete-my-profile',
+                    dataType: 'json',
+                    data: {
+                        cache: true
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function success(response) {}
                 });
-            }
+            });
         }
     } else if ($('body').hasClass('my-profile')) {
         $('.my-profile-page-content .dropdown-hidden-menu button').click(function () {
