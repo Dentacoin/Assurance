@@ -96,14 +96,7 @@ class DentistController extends Controller
         //handle the API response
         $api_response = (new APIRequestsController())->dentistRegister($data, $files);
         if($api_response['success']) {
-            $session_arr = [
-                'token' => $api_response['token'],
-                'id' => $api_response['data']['id'],
-                'type' => 'dentist'
-            ];
-
-            session(['logged_user' => $session_arr]);
-            return redirect()->route('home');
+            return redirect()->route('home')->with(['success' => 'Your account has been registered successfully. Once our team approve your registration request you will be able to log in and use Dentacoin tools.']);
         } else {
             return redirect()->route('home')->with(['errors_response' => $api_response['errors']]);
         }
@@ -128,6 +121,8 @@ class DentistController extends Controller
 
         //handle the API response
         $api_response = (new APIRequestsController())->dentistLogin($data);
+        var_dump($api_response['data']);
+        die();
         if($api_response['success']) {
             $session_arr = [
                 'token' => $api_response['token'],
