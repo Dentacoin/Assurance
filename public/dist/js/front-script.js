@@ -3688,6 +3688,13 @@ function initDataTable(filter_param) {
         filter_param = null;
     }
 
+    var params = getSearchParameters();
+    if (has(params, 'status')) {
+        filter_param = [params.status];
+    }
+
+    console.log(filter_param, 'filter_param');
+
     if ($('table.table.table-without-reorder').length > 0) {
         $('table.table.table-without-reorder').DataTable({
             ordering: true,
@@ -3785,4 +3792,19 @@ function dateObjToFormattedDate(object) {
         var month = object.getMonth() + 1;
     }
     return date + '/' + month + '/' + object.getFullYear();
+}
+
+function getSearchParameters() {
+    var prmstr = window.location.search.substr(1);
+    return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
+}
+
+function transformToAssocArray(prmstr) {
+    var params = {};
+    var prmarr = prmstr.split("&");
+    for (var i = 0; i < prmarr.length; i++) {
+        var tmparr = prmarr[i].split("=");
+        params[tmparr[0]] = tmparr[1];
+    }
+    return params;
 }
