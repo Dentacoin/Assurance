@@ -78,7 +78,7 @@
                         <input class="custom-input repeat-password" name="repeat-password" minlength="6" maxlength="50" type="password" placeholder="Repeat password"/>
                     </div>
                 </div>
-                <div class="step second" data-step="second">
+                <div class="step second address-suggester-wrapper" data-step="second">
                     <div class="padding-bottom-20 fs-16 radio-buttons-holder">
                         <div class="pretty p-icon p-round">
                             <input type="radio" name="work-type" value="independent-dental-practitioner"/>
@@ -121,11 +121,9 @@
                     </div>
                     <div class="padding-bottom-10 suggester-parent">
                         <input type="text" name="address" class="custom-input address-suggester" autocomplete="off" placeholder="City, Street">
-                        <div class="suggester-map-div margin-top-10 margin-bottom-10">
-                        </div>
-                        <div class="alert alert-warning geoip-hint mobile margin-top-10 margin-bottom-10">
-                            Please enter a valid address for your practice (including street name and number)
-                        </div>
+                        <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
+                        <div class="alert alert-info geoip-confirmation mobile margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
+                        <div class="alert alert-warning geoip-hint mobile margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
                     </div>
                     <div class="padding-bottom-10 phone">
                         <div class="country-code" name="phone-code">{{$current_phone_code}}</div>
