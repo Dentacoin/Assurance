@@ -2700,11 +2700,11 @@ function initDataTable(filter_param)    {
             aaSorting: []
         });
 
-        var pending_check='checked';
-        var active_check='checked';
-        var awaiting_approval_check='checked';
-        var awaiting_payment_check='checked';
-        var cancelled_check='checked';
+        var pending_check = 'checked';
+        var active_check = 'checked';
+        var awaiting_approval_check = 'checked';
+        var awaiting_payment_check = 'checked';
+        var cancelled_check = 'checked';
 
         if(filter_param != null) {
             if($.inArray('pending', filter_param) != -1) {

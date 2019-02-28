@@ -6,6 +6,7 @@ use App\PublicKey;
 use App\TemporallyContract;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller {
@@ -31,6 +32,10 @@ class UserController extends Controller {
     }
 
     protected function getMyContractsView()     {
+        if(!empty(Input::get('status'))) {
+            var_dump(Input::get('status'));
+            die();
+        }
         if($this->checkPatientSession()) {
             return view('pages/logged-user/my-contracts', ['patient_or_not' => false, 'contracts' => TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->sortByDesc('contract_active_at')]);
         } else if($this->checkDentistSession()) {
@@ -444,7 +449,7 @@ class UserController extends Controller {
         $api_response = (new APIRequestsController())->deleteProfile();
         if($api_response->success) {
             $this->userLogout($request);
-            return redirect()->route('home')->with(['success' => 'Your profile has been deleted successfully successfully.']);
+            return redirect()->route('home')->with(['success' => 'Your profile has been deleted successfullym.']);
         } else {
             return redirect()->route('manage-privacy')->with(['error' => 'Your profile deletion failed. Please try again later.']);
         }
