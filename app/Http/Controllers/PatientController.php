@@ -81,8 +81,10 @@ class PatientController extends Controller {
         ];
 
         $current_logging_patient = (new APIRequestsController())->getUserData($request->input('id'));
-        var_dump($current_logging_patient);
-        var_dump($current_logging_patient->status);
+        var_dump($current_logging_patient->self_deleted != NULL);
+        if($current_logging_patient->self_deleted) {
+
+        }
         die();
 
         session(['logged_user' => $session_arr]);
