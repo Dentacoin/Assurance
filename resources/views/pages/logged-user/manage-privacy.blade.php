@@ -22,7 +22,7 @@
                                 <div class="fs-16 dark-color">We can delete your Profile along with all your personal data from our servers. Just keep in mind that this will terminate your account irreversibly. If you are sure about that, just click the button below.</div>
                             </div>
                             <div class="btn-container text-right padding-top-30">
-                                <form method="POST" action="{{route('delete-my-profile')}}">
+                                <form method="POST" action="{{route('delete-my-profile')}}" onsubmit="return confirm('Are you sure you want to continue?')">
                                     <input type="submit" value="DELETE MY PROFILE & PERSONAL DATA" class="white-blue-green-btn"/>
                                 </form>
                             </div>
