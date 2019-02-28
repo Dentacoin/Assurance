@@ -2694,8 +2694,6 @@ function initDataTable(filter_param)    {
         filter_param = [params.status];
     }
 
-    console.log(filter_param, 'filter_param');
-
     if($('table.table.table-without-reorder').length > 0) {
         $('table.table.table-without-reorder').DataTable({
             ordering: true,
@@ -2754,27 +2752,25 @@ function initDataTable(filter_param)    {
                     }
                 }
 
-                $('.response-layer').show();
-                setTimeout(function() {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/filter-my-contracts',
-                        dataType: 'json',
-                        data: {
-                            filter_arr: filter_arr
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(response) {
-                            if(response.success) {
-                                $('.table-container').html(response.success);
-                                initDataTable(filter_arr);
-                                $('.response-layer').hide();
-                            }
+                $('.table-container').html('<div class="table-response-layer padding-top-80 text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/loader.gif" class="max-width-160" alt="Loader"></figure>');
+                $.ajax({
+                    type: 'POST',
+                    url: '/filter-my-contracts',
+                    dataType: 'json',
+                    data: {
+                        filter_arr: filter_arr
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if(response.success) {
+                            $('.table-container').html(response.success);
+                            initDataTable(filter_arr);
+                            $('.response-layer').hide();
                         }
-                    });
-                }, 500);
+                    }
+                });
             });
         }
     }

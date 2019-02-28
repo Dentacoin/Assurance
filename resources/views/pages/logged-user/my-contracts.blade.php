@@ -13,6 +13,7 @@
                             <h2 class="fs-24 lato-bold inline-block">My contracts</h2>
                             <div class="table-container fs-16">
                                 @include('partials.table-my-contracts')
+                                </div>
                             </div>
                         </div>
                     </div>
