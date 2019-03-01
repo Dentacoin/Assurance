@@ -57,7 +57,7 @@
                             </div>
                             <div class="padding-bottom-15 fs-16">2. Click the button below and scan the QR code. Please be patient, the validation procedure may take up to 3 minutes.</div>
                             <div>
-                                <button class="civic-custom-btn social-login-btn">Login with Civic</button>
+                                <button class="civic-custom-kyc-btn social-login-btn">Login with Civic</button>
                             </div>
                         @endif
                     </div>

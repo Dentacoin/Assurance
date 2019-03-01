@@ -2135,6 +2135,20 @@ async function onDocumentReadyPageData() {
         }else if($('body').hasClass('edit-account')) {
             //loading address logic
             await $.getScript('/assets/js/address.js', function() {});
+        }else if($('body').hasClass('my-profile ')) {
+            //loading address logic
+            await $.getScript('//dentacoin.com/assets/libs/civic-login/civic-kyc.js', function() {});
+
+            $(document).on('civicRead', async function (event) {
+                $('.response-layer').show();
+            });
+
+            $(document).on('receivedKYCCivicToken', async function (event) {
+                console.log(event, 'receivedKYCCivicToken');
+                if(event.response_data) {
+                    console.log(event.response_data, 'event.response_data');
+                }
+            });
         }
     } else {
         //adding civic and facebook logging scripts

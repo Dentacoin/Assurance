@@ -275,31 +275,31 @@ var buildCurrentPatientContractHistory = function () {
 
 
 var onDocumentReadyPageData = function () {
-    var _ref16 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee16() {
+    var _ref16 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee18() {
         var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_creation, remainder, next_payment_timestamp, next_payment_timestamp_date_obj, max_height;
-        return _regeneratorRuntime.wrap(function _callee16$(_context16) {
+        return _regeneratorRuntime.wrap(function _callee18$(_context18) {
             while (1) {
-                switch (_context16.prev = _context16.next) {
+                switch (_context18.prev = _context18.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context16.next = 64;
+                            _context18.next = 71;
                             break;
                         }
 
                         if (!$('body').hasClass('congratulations')) {
-                            _context16.next = 13;
+                            _context18.next = 13;
                             break;
                         }
 
-                        _context16.t0 = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
-                        _context16.t1 = parseInt;
-                        _context16.next = 6;
+                        _context18.t0 = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
+                        _context18.t1 = parseInt;
+                        _context18.next = 6;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 6:
-                        _context16.t2 = _context16.sent;
-                        _context16.t3 = (0, _context16.t1)(_context16.t2);
-                        next_transfer_timestamp = _context16.t0 + _context16.t3;
+                        _context18.t2 = _context18.sent;
+                        _context18.t3 = (0, _context18.t1)(_context18.t2);
+                        next_transfer_timestamp = _context18.t0 + _context18.t3;
 
                         if ($('.converted-date').length > 0) {
                             date_obj = new Date(next_transfer_timestamp * 1000);
@@ -307,25 +307,25 @@ var onDocumentReadyPageData = function () {
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context16.next = 62;
+                        _context18.next = 69;
                         break;
 
                     case 13:
                         if (!$('body').hasClass('my-contracts')) {
-                            _context16.next = 25;
+                            _context18.next = 25;
                             break;
                         }
 
                         initDataTable();
 
                         table_trs_with_timestamp = $('.table-container table tr[data-timestamp-signed]');
-                        _context16.t4 = parseInt;
-                        _context16.next = 19;
+                        _context18.t4 = parseInt;
+                        _context18.next = 19;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 19:
-                        _context16.t5 = _context16.sent;
-                        smart_contract_withdraw_period = (0, _context16.t4)(_context16.t5);
+                        _context18.t5 = _context18.sent;
+                        smart_contract_withdraw_period = (0, _context18.t4)(_context18.t5);
                         now_timestamp = Math.round(new Date().getTime() / 1000);
 
 
@@ -343,12 +343,12 @@ var onDocumentReadyPageData = function () {
 
                             table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">' + next_payment_timestamp + '</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
-                        _context16.next = 62;
+                        _context18.next = 69;
                         break;
 
                     case 25:
                         if (!$('body').hasClass('patient-access')) {
-                            _context16.next = 29;
+                            _context18.next = 29;
                             break;
                         }
 
@@ -363,24 +363,24 @@ var onDocumentReadyPageData = function () {
                             }
                             $('.contract-tile .tile-wrapper').outerHeight(max_height);
                         }
-                        _context16.next = 62;
+                        _context18.next = 69;
                         break;
 
                     case 29:
                         if (!$('body').hasClass('patient-contract-view')) {
-                            _context16.next = 42;
+                            _context18.next = 42;
                             break;
                         }
 
-                        _context16.t6 = parseInt($('.contract-body').attr('data-time-left-next-transfer'));
-                        _context16.t7 = parseInt;
-                        _context16.next = 34;
+                        _context18.t6 = parseInt($('.contract-body').attr('data-time-left-next-transfer'));
+                        _context18.t7 = parseInt;
+                        _context18.next = 34;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 34:
-                        _context16.t8 = _context16.sent;
-                        _context16.t9 = (0, _context16.t7)(_context16.t8);
-                        next_transfer_timestamp = _context16.t6 + _context16.t9;
+                        _context18.t8 = _context18.sent;
+                        _context18.t9 = (0, _context18.t7)(_context18.t8);
+                        next_transfer_timestamp = _context18.t6 + _context18.t9;
 
                         if ($('.converted-date').length > 0) {
                             date_obj = new Date(next_transfer_timestamp * 1000);
@@ -390,70 +390,130 @@ var onDocumentReadyPageData = function () {
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
 
                         cancelContractEventInit();
-                        _context16.next = 62;
+                        _context18.next = 69;
                         break;
 
                     case 42:
                         if (!$('body').hasClass('contract-proposal')) {
-                            _context16.next = 59;
+                            _context18.next = 59;
                             break;
                         }
 
-                        _context16.next = 45;
+                        _context18.next = 45;
                         return $.getScript('/assets/js/address.js', function () {});
 
                     case 45:
                         if (!($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined)) {
-                            _context16.next = 57;
+                            _context18.next = 57;
                             break;
                         }
 
-                        _context16.t10 = Date;
-                        _context16.t11 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
-                        _context16.t12 = parseInt;
-                        _context16.next = 51;
+                        _context18.t10 = Date;
+                        _context18.t11 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
+                        _context18.t12 = parseInt;
+                        _context18.next = 51;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 51:
-                        _context16.t13 = _context16.sent;
-                        _context16.t14 = (0, _context16.t12)(_context16.t13);
-                        _context16.t15 = _context16.t11 + _context16.t14;
-                        _context16.t16 = _context16.t15 * 1000;
-                        date_obj = new _context16.t10(_context16.t16);
+                        _context18.t13 = _context18.sent;
+                        _context18.t14 = (0, _context18.t12)(_context18.t13);
+                        _context18.t15 = _context18.t11 + _context18.t14;
+                        _context18.t16 = _context18.t15 * 1000;
+                        date_obj = new _context18.t10(_context18.t16);
 
                         $('.active-until').html(dateObjToFormattedDate(date_obj));
 
                     case 57:
-                        _context16.next = 62;
+                        _context18.next = 69;
                         break;
 
                     case 59:
                         if (!$('body').hasClass('edit-account')) {
-                            _context16.next = 62;
+                            _context18.next = 64;
                             break;
                         }
 
-                        _context16.next = 62;
+                        _context18.next = 62;
                         return $.getScript('/assets/js/address.js', function () {});
 
                     case 62:
-                        _context16.next = 68;
+                        _context18.next = 69;
                         break;
 
                     case 64:
-                        _context16.next = 66;
+                        if (!$('body').hasClass('my-profile ')) {
+                            _context18.next = 69;
+                            break;
+                        }
+
+                        _context18.next = 67;
+                        return $.getScript('//dentacoin.com/assets/libs/civic-login/civic-kyc.js', function () {});
+
+                    case 67:
+
+                        $(document).on('civicRead', function () {
+                            var _ref17 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee16(event) {
+                                return _regeneratorRuntime.wrap(function _callee16$(_context16) {
+                                    while (1) {
+                                        switch (_context16.prev = _context16.next) {
+                                            case 0:
+                                                $('.response-layer').show();
+
+                                            case 1:
+                                            case "end":
+                                                return _context16.stop();
+                                        }
+                                    }
+                                }, _callee16, this);
+                            }));
+
+                            return function (_x8) {
+                                return _ref17.apply(this, arguments);
+                            };
+                        }());
+
+                        $(document).on('receivedKYCCivicToken', function () {
+                            var _ref18 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee17(event) {
+                                return _regeneratorRuntime.wrap(function _callee17$(_context17) {
+                                    while (1) {
+                                        switch (_context17.prev = _context17.next) {
+                                            case 0:
+                                                console.log(event, 'receivedKYCCivicToken');
+                                                if (event.response_data) {
+                                                    console.log(event.response_data, 'event.response_data');
+                                                }
+
+                                            case 2:
+                                            case "end":
+                                                return _context17.stop();
+                                        }
+                                    }
+                                }, _callee17, this);
+                            }));
+
+                            return function (_x9) {
+                                return _ref18.apply(this, arguments);
+                            };
+                        }());
+
+                    case 69:
+                        _context18.next = 75;
+                        break;
+
+                    case 71:
+                        _context18.next = 73;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic.js', function () {});
 
-                    case 66:
-                        _context16.next = 68;
+                    case 73:
+                        _context18.next = 75;
                         return $.getScript('//dentacoin.com/assets/libs/facebook-login/facebook.js', function () {});
 
-                    case 68:
+                    case 75:
                     case "end":
-                        return _context16.stop();
+                        return _context18.stop();
                 }
             }
-        }, _callee16, this);
+        }, _callee18, this);
     }));
 
     return function onDocumentReadyPageData() {
@@ -462,13 +522,13 @@ var onDocumentReadyPageData = function () {
 }();
 
 var validateUserAddress = function () {
-    var _ref18 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee18(user_address, value_element) {
+    var _ref20 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee20(user_address, value_element) {
         var error, check_public_key_ajax_result;
-        return _regeneratorRuntime.wrap(function _callee18$(_context18) {
+        return _regeneratorRuntime.wrap(function _callee20$(_context20) {
             while (1) {
-                switch (_context18.prev = _context18.next) {
+                switch (_context20.prev = _context20.next) {
                     case 0:
-                        _context18.next = 2;
+                        _context20.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/check-public-key',
@@ -482,7 +542,7 @@ var validateUserAddress = function () {
                         });
 
                     case 2:
-                        check_public_key_ajax_result = _context18.sent;
+                        check_public_key_ajax_result = _context20.sent;
 
 
                         if (check_public_key_ajax_result.success) {
@@ -501,28 +561,28 @@ var validateUserAddress = function () {
                                 error = true;
                             }
                         }
-                        return _context18.abrupt("return", error);
+                        return _context20.abrupt("return", error);
 
                     case 5:
                     case "end":
-                        return _context18.stop();
+                        return _context20.stop();
                 }
             }
-        }, _callee18, this);
+        }, _callee20, this);
     }));
 
-    return function validateUserAddress(_x9, _x10) {
-        return _ref18.apply(this, arguments);
+    return function validateUserAddress(_x11, _x12) {
+        return _ref20.apply(this, arguments);
     };
 }();
 
 var getEncryptedContractPdfContent = function () {
-    var _ref19 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee19(hash, type) {
-        return _regeneratorRuntime.wrap(function _callee19$(_context19) {
+    var _ref21 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee21(hash, type) {
+        return _regeneratorRuntime.wrap(function _callee21$(_context21) {
             while (1) {
-                switch (_context19.prev = _context19.next) {
+                switch (_context21.prev = _context21.next) {
                     case 0:
-                        _context19.next = 2;
+                        _context21.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-contract',
@@ -537,18 +597,18 @@ var getEncryptedContractPdfContent = function () {
                         });
 
                     case 2:
-                        return _context19.abrupt("return", _context19.sent);
+                        return _context21.abrupt("return", _context21.sent);
 
                     case 3:
                     case "end":
-                        return _context19.stop();
+                        return _context21.stop();
                 }
             }
-        }, _callee19, this);
+        }, _callee21, this);
     }));
 
-    return function getEncryptedContractPdfContent(_x11, _x12) {
-        return _ref19.apply(this, arguments);
+    return function getEncryptedContractPdfContent(_x13, _x14) {
+        return _ref21.apply(this, arguments);
     };
 }(); /*
      
@@ -570,12 +630,12 @@ var getEncryptedContractPdfContent = function () {
 
 
 var getDecryptedPdfContent = function () {
-    var _ref20 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee20(encrypted_html, key) {
-        return _regeneratorRuntime.wrap(function _callee20$(_context20) {
+    var _ref22 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22(encrypted_html, key) {
+        return _regeneratorRuntime.wrap(function _callee22$(_context22) {
             while (1) {
-                switch (_context20.prev = _context20.next) {
+                switch (_context22.prev = _context22.next) {
                     case 0:
-                        _context20.next = 2;
+                        _context22.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-data',
@@ -590,18 +650,18 @@ var getDecryptedPdfContent = function () {
                         });
 
                     case 2:
-                        return _context20.abrupt("return", _context20.sent);
+                        return _context22.abrupt("return", _context22.sent);
 
                     case 3:
                     case "end":
-                        return _context20.stop();
+                        return _context22.stop();
                 }
             }
-        }, _callee20, this);
+        }, _callee22, this);
     }));
 
-    return function getDecryptedPdfContent(_x13, _x14) {
-        return _ref20.apply(this, arguments);
+    return function getDecryptedPdfContent(_x15, _x16) {
+        return _ref22.apply(this, arguments);
     };
 }();
 
@@ -3460,14 +3520,14 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function () {
-                            var _ref17 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee17(response) {
+                            var _ref19 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee19(response) {
                                 var render_form, decrypted_pdf_response;
-                                return _regeneratorRuntime.wrap(function _callee17$(_context17) {
+                                return _regeneratorRuntime.wrap(function _callee19$(_context19) {
                                     while (1) {
-                                        switch (_context17.prev = _context17.next) {
+                                        switch (_context19.prev = _context19.next) {
                                             case 0:
                                                 if (!response.success) {
-                                                    _context17.next = 14;
+                                                    _context19.next = 14;
                                                     break;
                                                 }
 
@@ -3481,16 +3541,16 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 }
 
                                                 if (!(render_pdf != null)) {
-                                                    _context17.next = 11;
+                                                    _context19.next = 11;
                                                     break;
                                                 }
 
                                                 render_form = $('form#render-pdf');
-                                                _context17.next = 6;
+                                                _context19.next = 6;
                                                 return getDecryptedPdfContent(encrypted_pdf_content, response.private_key);
 
                                             case 6:
-                                                decrypted_pdf_response = _context17.sent;
+                                                decrypted_pdf_response = _context19.sent;
 
 
                                                 $('.response-layer').hide();
@@ -3501,7 +3561,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 } else if (decrypted_pdf_response.error) {
                                                     basic.showAlert(decrypted_pdf_response.error, '', true);
                                                 }
-                                                _context17.next = 12;
+                                                _context19.next = 12;
                                                 break;
 
                                             case 11:
@@ -3528,7 +3588,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 });
 
                                             case 12:
-                                                _context17.next = 15;
+                                                _context19.next = 15;
                                                 break;
 
                                             case 14:
@@ -3539,14 +3599,14 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
 
                                             case 15:
                                             case "end":
-                                                return _context17.stop();
+                                                return _context19.stop();
                                         }
                                     }
-                                }, _callee17, this);
+                                }, _callee19, this);
                             }));
 
-                            function success(_x8) {
-                                return _ref17.apply(this, arguments);
+                            function success(_x10) {
+                                return _ref19.apply(this, arguments);
                             }
 
                             return success;
