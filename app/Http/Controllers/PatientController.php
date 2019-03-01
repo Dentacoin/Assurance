@@ -220,6 +220,10 @@ class PatientController extends Controller {
             $required_fields_msgs_arr['address.required'] = 'Postal Address is required';
         }
 
+        var_dump($request->input());
+        die();
+
+
         $this->validate($request, $required_fields_arr, $required_fields_msgs_arr);
 
         $data = $this->clearPostData($request->input());
