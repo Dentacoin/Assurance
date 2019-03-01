@@ -132,12 +132,14 @@ class UserController extends Controller {
             'country' => 'required',
             'dcn_address' => 'required',
             'address' => 'required',
+            'specializations' => 'required',
         ], [
             'full-name.required' => 'Name is required.',
             'email.required' => 'Email address is required.',
             'country.required' => 'Country is required.',
             'dcn_address.required' => 'Wallet Address is required.',
             'address.required' => 'Postal Address is required.',
+            'specializations.required' => 'Specialisations are required.',
         ]);
 
         $data = $this->clearPostData($request->input());
@@ -177,6 +179,7 @@ class UserController extends Controller {
             'country_code' => $data['country'],
             'dcn_address' => $data['dcn_address'],
             'address' => $data['address'],
+            'specializations' => $data['specializations'],
         );
 
         //if the logged user is dentist he must provide website and phone
