@@ -25,9 +25,8 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    const POSTS_PER_PAGE = 8;
-
     const currencies = ['USD', 'EUR', 'GBP', 'RUB', 'INR', 'CNY', 'JPY'];
+    const DCN_REWARD = 20000;
 
     public function __construct() {
         if(!empty(Route::getCurrentRoute()) && !Request::isMethod('post'))    {

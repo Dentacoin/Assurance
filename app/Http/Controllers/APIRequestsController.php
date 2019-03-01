@@ -367,39 +367,30 @@ class APIRequestsController extends Controller {
         }
     }
 
-    /*//this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
-    public function decryptFile($key, $html) {
+    //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
+    public function registerDCNReward($data) {
+        $header = array();
+        $header[] = 'Accept: */*';
+        $header[] = 'Authorization: Bearer ' . session('logged_user')['token'];
+        $header[] = 'Cache-Control: no-cache';
+
         $curl = curl_init();
-        $json = '{"private_key":"'.$key.'", "encrypted_html":"'.$html.'"}';
-        die($html);
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://dev-test.dentacoin.com/decrypt',
+            CURLOPT_URL => 'https://api.dentacoin.com/api/rewards',
             CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POSTFIELDS => $json,
-            CURLOPT_BUFFERSIZE => 840000
+            CURLOPT_POSTFIELDS => $data,
+            CURLOPT_HTTPHEADER => $header
         ));
 
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($json))
-        );
-
         $resp = json_decode(curl_exec($curl));
-
-        var_dump(curl_error($curl));
-        var_dump(curl_errno($curl));
-
         curl_close($curl);
-
-        var_dump($resp);
 
         if(!empty($resp))   {
             return $resp;
         }else {
             return false;
         }
-    }*/
+    }
 }

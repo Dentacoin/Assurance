@@ -84,6 +84,21 @@ class PatientController extends Controller {
         if($current_logging_patient->self_deleted != NULL) {
             return redirect()->route('home')->with(['error' => 'This account is deleted, you cannot log in with this account anymore.']);
         } else {
+            $rewards = InviteDentistsReward::where(array('patient_id' => $request->input('id'), 'dentist_registered_and_approved' => 1, 'sent_to_api' => 0, 'payed_on' => NULL))->get()->all();
+            if(!empty($rewards)) {
+                foreach($rewards as $reward) {
+                    $data = array(
+                        'amount' => self::DCN_REWARD,
+                        'type' => 'assurance',
+                        'reference_id' => $reward->id
+                    );
+                    $reward_api_method_response = (new APIRequestsController())->registerDCNReward($data);
+                    var_dump($reward_api_method_response);
+                    die();
+                }
+            }
+            //send request to API to add this reward to the patient account
+
             session(['logged_user' => $session_arr]);
             return redirect()->route('patient-access');
         }
