@@ -5727,6 +5727,11 @@ body.home .fixed-calculate-button {
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   transform: translateX(-50%); }
+  body.home .fixed-calculate-button img {
+    width: 300px; }
+  @media screen and (max-width: 767px) {
+    body.home .fixed-calculate-button {
+      width: 220px; } }
 
 .testimonials-section picture:after {
   content: url(/assets/uploads/quote-bg.svg);

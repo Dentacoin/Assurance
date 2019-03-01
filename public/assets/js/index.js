@@ -1472,6 +1472,8 @@ function calculateLogic() {
                     basic.showDialog(response.success, 'calculator-result-popup', null, true);
                     $('.response-layer').hide();
 
+                    bindLoginSigninPopupShow();
+
                     var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',');
                     $('.calculator-result-popup .price-container .result .amount').animateNumber({
                         number: parseFloat($('.calculator-result-popup .price-container .result .amount').attr('data-result')),

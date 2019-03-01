@@ -15,6 +15,12 @@ body.home {
     .fixed-calculate-button {
         bottom: 0;
         @include horizontal-align(fixed);
+        img {
+            width: 300px;
+        }
+        @include breakpoint($xs) {
+            width: 220px; 
+        }
     }
 }
 
