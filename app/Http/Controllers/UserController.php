@@ -132,14 +132,14 @@ class UserController extends Controller {
             'country' => 'required',
             'dcn_address' => 'required',
             'address' => 'required',
-            'specializations' => 'required',
+            'specialisations' => 'required',
         ], [
             'full-name.required' => 'Name is required.',
             'email.required' => 'Email address is required.',
             'country.required' => 'Country is required.',
             'dcn_address.required' => 'Wallet Address is required.',
             'address.required' => 'Postal Address is required.',
-            'specializations.required' => 'Specialisations are required.',
+            'specialisations.required' => 'Specialisations are required.',
         ]);
 
         $data = $this->clearPostData($request->input());
