@@ -1148,7 +1148,7 @@ if($('body').hasClass('logged-in')) {
                 event.preventDefault();
                 var this_form_plain = this;
                 var this_form = $(this);
-                var fields = this_form.find('.right-field.required-field');
+                var fields = this_form.find('.required-field');
                 var form_errors = false;
 
                 //clear previous submits errors
@@ -1197,7 +1197,7 @@ if($('body').hasClass('logged-in')) {
                 }
 
                 if(form_errors) {
-                    $('html, body').animate({scrollTop: $('.right-field.required-field.with-error').offset().top - 50}, 500);
+                    $('html, body').animate({scrollTop: $('.required-field.with-error').offset().top - 50}, 500);
                 } else if($('.proof-of-address').length) {
                     $('html, body').animate({scrollTop: $('.proof-of-address').offset().top - 50}, 500);
                 } else {

@@ -215,6 +215,11 @@ class PatientController extends Controller {
             $required_fields_msgs_arr['country.required'] = 'Country is required';
         }
 
+        if(empty($logged_patient->address)) {
+            $required_fields_arr['address'] = 'required';
+            $required_fields_msgs_arr['address.required'] = 'Postal Address is required';
+        }
+
         $this->validate($request, $required_fields_arr, $required_fields_msgs_arr);
 
         $data = $this->clearPostData($request->input());
@@ -226,13 +231,20 @@ class PatientController extends Controller {
         }
 
         //update CoreDB api data for this patient
-        if(isset($data['country']) || isset($data['dcn_address'])) {
+        if(isset($data['country']) || isset($data['dcn_address']) || isset($data['address'])) {
             $curl_arr = array();
             if(isset($data['country'])) {
                 if(!empty($data['country'])) {
                     $curl_arr['country_code'] = $data['country'];
                 }else {
                     return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'Country is required']);
+                }
+            }
+            if(isset($data['address'])) {
+                if(!empty($data['address'])) {
+                    $curl_arr['address'] = $data['address'];
+                }else {
+                    return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'Postal Address is required']);
                 }
             }
             if(isset($data['dcn_address'])) {

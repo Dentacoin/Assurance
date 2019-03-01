@@ -90,9 +90,8 @@
                                 @if(!empty($patient->address))
                                         <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$patient->address}}</div>
                                     @else
-                                        {{--<input type="text" name="postal-address" class="right-field required-field calibri-regular fs-18 dark-color inline-block pencil-background"/>--}}
                                         <div class="suggester-parent module inline-block">
-                                            <input type="text" name="address" maxlength="250" class="address-suggester calibri-regular fs-18 dark-color pencil-background" autocomplete="off">
+                                            <input type="text" name="address" maxlength="250" class="address-suggester calibri-regular fs-18 dark-color pencil-background required-field" autocomplete="off">
                                             <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
                                             <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
                                             <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
