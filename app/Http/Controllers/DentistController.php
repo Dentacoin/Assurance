@@ -135,6 +135,7 @@ class DentistController extends Controller
 
                 if(!empty($reward)) {
                     $reward->dentist_registered_and_approved = true;
+                    $reward->save();
                     var_dump('registered');
                     die();
 
