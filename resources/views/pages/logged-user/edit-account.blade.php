@@ -12,7 +12,7 @@
                             </figure>
                             <h2 class="fs-24 lato-semibold inline-block">Edit account</h2>
                         </div>
-                        <form method="POST" enctype="multipart/form-data" id="patient-update-profile" action="{{route('update-account')}}">
+                        <form method="POST" enctype="multipart/form-data" class="address-suggester-wrapper" id="patient-update-profile" action="{{route('update-account')}}">
                             <div class="form-row padding-bottom-15 fs-0">
                                 <label class="inline-block fs-16" for="full-name">Your Name</label>
                                 <input class="inline-block fs-16 custom-input" minlength="6" maxlength="100" type="text" name="full-name" id="full-name" @if(!empty($user_data) && !empty($user_data->name)) value="{{$user_data->name}}" @endif/>
@@ -23,11 +23,18 @@
                             </div>
                             <div class="form-row padding-bottom-15 fs-0">
                                 <label class="inline-block fs-16" for="country">Your Country</label>
-                                <select class="inline-block fs-16 custom-input" id="country" name="country">
+                                <select class="inline-block fs-16 custom-input country-select" id="country" name="country">
                                     @foreach($countries as $country)
                                         <option value="{{$country->code}}" data-code="{{$country->phone_code}}" @if(!empty($user_data) && !empty($user_data->country_id) && $user_data->country_id == $country->id) selected @endif>{{$country->name}}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="form-row padding-bottom-15 fs-0 suggester-parent module">
+                                <label class="inline-block fs-16" for="country">Your Address</label>
+                                <input type="text" name="address" class="custom-input fs-16 address-suggester" autocomplete="off" placeholder="City, Street">
+                                <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
+                                <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
+                                <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
                             </div>
                             @if((new \App\Http\Controllers\UserController())->checkDentistSession())
                                 {{var_dump($user_data)}}

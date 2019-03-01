@@ -4581,10 +4581,6 @@ fieldset {
                   .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-body .dentist .form-register .step.second .pretty .state label:before, .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-body .dentist .form-register .step.second .pretty .state label:after {
                     left: 1px;
                     top: 1px; }
-            .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-body .dentist .form-register .step.second .suggester-map-div {
-              height: 200px;
-              display: none;
-              background: transparent; }
             .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-body .dentist .form-register .step.third .avatar {
               padding-right: 20px;
               width: 50%; }
@@ -4758,6 +4754,9 @@ fieldset {
   margin-bottom: 0;
   font-size: 14px;
   padding: 5px;
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
   display: none;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -5618,6 +5617,10 @@ input[type='file'].hide-input {
       .module.camping-for-validation .proof-of-address .checkbox-container .pretty label i {
         display: inline;
         padding-left: 5px; }
+.module.suggester-parent .suggester-map-div {
+  height: 200px;
+  display: none;
+  background: transparent; }
 
 header {
   width: 100%;

@@ -734,11 +734,6 @@ fieldset {
                                                 }
                                             }
                                         }
-                                        .suggester-map-div {
-                                            height: 200px;
-                                            display: none;
-                                            background: transparent;
-                                        }
                                     }
                                     &.third {
                                         .avatar {
@@ -960,6 +955,9 @@ fieldset {
     margin-bottom: 0;
     font-size: 14px;
     padding: 5px;
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
     display: none;
     @include rounded(4px);
 }

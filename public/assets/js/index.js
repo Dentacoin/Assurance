@@ -1810,7 +1810,7 @@ function bindLoginSigninPopupShow() {
                                     }
 
                                     //check captcha length
-                                    if($('.dentist .form-register .step.third #register-captcha').val().trim() == '' || $('.dentist .form-register .step.third #register-captcha').val().trim().length < 5) {
+                                    if($('.dentist .form-register .step.third #register-captcha').val().trim() == '') {
                                         customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
                                         errors = true;
                                     }
@@ -2130,6 +2130,9 @@ async function onDocumentReadyPageData() {
                 var date_obj = new Date((parseInt($('.contract-proposal.section').attr('data-created-at-timestamp')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw())) * 1000);
                 $('.active-until').html(dateObjToFormattedDate(date_obj));
             }
+        }else if($('body').hasClass('edit-account')) {
+            //loading address logic
+            await $.getScript('/assets/js/address.js', function() {});
         }
     }
 }

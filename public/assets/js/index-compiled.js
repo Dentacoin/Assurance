@@ -25628,7 +25628,7 @@ var onDocumentReadyPageData = function () {
                 switch (_context16.prev = _context16.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context16.next = 55;
+                            _context16.next = 60;
                             break;
                         }
 
@@ -25653,7 +25653,7 @@ var onDocumentReadyPageData = function () {
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context16.next = 55;
+                        _context16.next = 60;
                         break;
 
                     case 13:
@@ -25689,7 +25689,7 @@ var onDocumentReadyPageData = function () {
 
                             table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">' + next_payment_timestamp + '</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
-                        _context16.next = 55;
+                        _context16.next = 60;
                         break;
 
                     case 25:
@@ -25709,7 +25709,7 @@ var onDocumentReadyPageData = function () {
                             }
                             $('.contract-tile .tile-wrapper').outerHeight(max_height);
                         }
-                        _context16.next = 55;
+                        _context16.next = 60;
                         break;
 
                     case 29:
@@ -25736,12 +25736,12 @@ var onDocumentReadyPageData = function () {
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
 
                         cancelContractEventInit();
-                        _context16.next = 55;
+                        _context16.next = 60;
                         break;
 
                     case 42:
                         if (!$('body').hasClass('contract-proposal')) {
-                            _context16.next = 55;
+                            _context16.next = 57;
                             break;
                         }
 
@@ -25766,6 +25766,19 @@ var onDocumentReadyPageData = function () {
                         $('.active-until').html(dateObjToFormattedDate(date_obj));
 
                     case 55:
+                        _context16.next = 60;
+                        break;
+
+                    case 57:
+                        if (!$('body').hasClass('edit-account')) {
+                            _context16.next = 60;
+                            break;
+                        }
+
+                        _context16.next = 60;
+                        return $.getScript('/assets/js/address.js', function () {});
+
+                    case 60:
                     case 'end':
                         return _context16.stop();
                 }
@@ -27845,7 +27858,7 @@ function bindLoginSigninPopupShow() {
                                                     }
 
                                                     //check captcha length
-                                                    if ($('.dentist .form-register .step.third #register-captcha').val().trim() == '' || $('.dentist .form-register .step.third #register-captcha').val().trim().length < 5) {
+                                                    if ($('.dentist .form-register .step.third #register-captcha').val().trim() == '') {
                                                         customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
                                                         errors = true;
                                                     }

@@ -772,4 +772,11 @@
             }
         }
     }
+    &.suggester-parent {
+        .suggester-map-div {
+            height: 200px;
+            display: none;
+            background: transparent;
+        }
+    }
 }
