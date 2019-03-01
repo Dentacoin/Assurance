@@ -258,7 +258,7 @@ class APIRequestsController extends Controller {
 
     public function updateUserData($data) {
         if(isset($data['specialisations'])) {
-            $data['specialisations'] = json_encode($data['specializations']);
+            $data['specialisations'] = json_encode($data['specialisations']);
         }
 
         $header = array();
