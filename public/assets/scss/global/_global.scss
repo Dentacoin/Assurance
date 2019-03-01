@@ -955,6 +955,15 @@ fieldset {
     }
 }
 
+.alert.alert-notice {
+    margin-top: 5px;
+    margin-bottom: 0;
+    font-size: 14px;
+    padding: 5px;
+    display: none;
+    @include rounded(4px);
+}
+
 .pac-container {
     z-index: 10000;
 }

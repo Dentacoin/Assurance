@@ -4753,6 +4753,17 @@ fieldset {
   .error-handle.alert.alert-warning, .alert.alert-warning.alert.alert-warning {
     display: none; }
 
+.alert.alert-notice {
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-size: 14px;
+  padding: 5px;
+  display: none;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px; }
+
 .pac-container {
   z-index: 10000; }
 

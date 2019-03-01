@@ -122,8 +122,8 @@
                     <div class="padding-bottom-10 suggester-parent">
                         <input type="text" name="address" class="custom-input address-suggester" autocomplete="off" placeholder="City, Street">
                         <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
-                        <div class="alert alert-info geoip-confirmation mobile margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
-                        <div class="alert alert-warning geoip-hint mobile margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
+                        <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
+                        <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
                     </div>
                     <div class="padding-bottom-10 phone">
                         <div class="country-code" name="phone-code">{{$current_phone_code}}</div>
