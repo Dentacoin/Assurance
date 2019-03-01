@@ -27854,7 +27854,7 @@ function bindLoginSigninPopupShow() {
                                                     }
 
                                                     //checking if no specialization checkbox selected
-                                                    if ($('.dentist .form-register .step.third [name="specialization[]"]:checked').val() == undefined) {
+                                                    if ($('.dentist .form-register .step.third [name="specializations[]"]:checked').val() == undefined) {
                                                         customErrorHandle($('.step.third .step-errors-holder'), 'Please select specialization/s.');
                                                         errors = true;
                                                     }

@@ -6056,11 +6056,33 @@ body.logged-in .my-profile-page-content {
       width: calc(100% - 30px);
       padding-left: 15px; }
   body.logged-in .my-profile-page-content form#patient-update-profile .form-row > label {
-    width: 160px;
+    width: 180px;
     text-align: left;
     padding-right: 15px; }
+  body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container {
+    width: calc(100% - 180px); }
+    body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty {
+      white-space: normal;
+      padding-bottom: 10px;
+      margin-bottom: 0; }
+      body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state {
+        position: relative; }
+        body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state .svg {
+          left: 1px;
+          top: 1px;
+          border-color: #126585 !important; }
+        body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state i {
+          left: 1px;
+          top: 1px;
+          position: absolute; }
+        body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state label {
+          line-height: 20px;
+          padding-left: 5px; }
+          body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state label:before, body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state label:after {
+            left: 1px;
+            top: 1px; }
   body.logged-in .my-profile-page-content form#patient-update-profile .form-row .custom-input {
-    width: calc(100% - 160px); }
+    width: calc(100% - 180px); }
   body.logged-in .my-profile-page-content form#patient-update-profile .form-row .avatar {
     width: 150px; }
 
