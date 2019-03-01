@@ -61,7 +61,7 @@
                                                 <label class="fs-14">{{$specialisation}}</label>
                                             </div>
                                         </div>
-                                    @endif
+                                    @endforeach
                                 </div>
                             @endif
                             <div class="form-row padding-bottom-40 fs-0">
