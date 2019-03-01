@@ -19,7 +19,7 @@ body.home {
             width: 300px;
         }
         @include breakpoint($xs) {
-            width: 220px; 
+            width: 220px;
         }
     }
 }
