@@ -37,7 +37,6 @@
                                 <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
                             </div>
                             @if((new \App\Http\Controllers\UserController())->checkDentistSession())
-                                {{var_dump($user_data)}}
                                 <div class="form-row padding-bottom-15 fs-0">
                                     <label class="inline-block fs-16" for="email">Your Phone:</label>
                                     <input class="inline-block fs-16 custom-input" maxlength="20" type="text" name="phone" id="phone" @if(!empty($user_data) && !empty($user_data->phone)) value="{{$user_data->phone}}" @endif/>
