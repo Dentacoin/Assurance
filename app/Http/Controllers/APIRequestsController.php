@@ -42,7 +42,7 @@ class APIRequestsController extends Controller {
             'avatar' => curl_file_create($files['image']->getPathName(), 'image/'.pathinfo($files['image']->getClientOriginalName(), PATHINFO_EXTENSION), $files['image']->getClientOriginalName()),
             'phone' => $data['phone'],
             'website' => $data['website'],
-            'specialisations' => json_encode($data['specialization'])
+            'specialisations' => json_encode($data['specialisations'])
         );
 
         switch($data['work-type']) {
