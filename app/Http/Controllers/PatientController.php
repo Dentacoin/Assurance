@@ -194,13 +194,11 @@ class PatientController extends Controller {
         $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         $required_fields_arr = array(
             'patient_signature' => 'required',
-            'postal-address' => 'required',
             'patient-id-number' => 'required|max:20',
             'contract' => 'required',
         );
         $required_fields_msgs_arr = array(
             'patient_signature.required' => 'Patient signature is required.',
-            'postal-address.required' => 'Postal address is required.',
             'patient-id-number.required' => 'Patient ID number signature is required.',
             'contract.required' => 'Contract slug is required.',
         );
@@ -219,10 +217,6 @@ class PatientController extends Controller {
             $required_fields_arr['address'] = 'required';
             $required_fields_msgs_arr['address.required'] = 'Postal Address is required';
         }
-
-        var_dump($request->input());
-        die();
-
 
         $this->validate($request, $required_fields_arr, $required_fields_msgs_arr);
 
