@@ -178,7 +178,9 @@ class Controller extends BaseController
 
     protected function clearPostData($data) {
         foreach($data as &$value) {
-            $value = trim(strip_tags($value));
+            if(is_string($value)) {
+                $value = trim(strip_tags($value));
+            }
         }
         return $data;
     }
