@@ -681,9 +681,15 @@ fieldset {
                         .dentist {
                             background: white;
                             color: $dark_color;
+                            .call-sign-up {
+                                font-family: 'Calibri-Bold';
+                                color: $dark_color;
+                                font-size: 16px;
+                                text-decoration: underline;  
+                            }
                             .popup-half-footer {
                                 padding: 30px 0;
-                                margin-top: 80px;
+                                margin-top: 50px;
                                 margin-left: -15%;
                                 margin-right: -15%;
                                 text-align: center;
@@ -693,7 +699,7 @@ fieldset {
                                 a {
                                     font-family: 'Calibri-Bold';
                                     color: $dark_color;
-                                    font-size: 20px;
+                                    font-size: 16px;
                                     text-decoration: underline;
                                 }
                             }
