@@ -6069,7 +6069,8 @@ body.logged-in .my-profile-page-content {
         position: relative; }
         body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state .svg {
           left: 1px;
-          top: 1px; }
+          top: 1px;
+          border-color: #126585 !important; }
         body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state i {
           left: 1px;
           top: 1px;
