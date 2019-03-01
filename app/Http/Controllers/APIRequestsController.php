@@ -260,8 +260,7 @@ class APIRequestsController extends Controller {
         if(isset($data['specializations'])) {
             $data['specializations'] = json_encode($data['specializations']);
         }
-        var_dump($data);
-        die();
+        
         $header = array();
         $header[] = 'Accept: */*';
         $header[] = 'Authorization: Bearer ' . session('logged_user')['token'];
