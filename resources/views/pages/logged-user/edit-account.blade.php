@@ -45,14 +45,13 @@
                                     <label class="inline-block fs-16" for="website">Your Website:</label>
                                     <input class="inline-block fs-16 custom-input" maxlength="255" type="text" name="website" id="website" @if(!empty($user_data) && !empty($user_data->website)) value="{{$user_data->website}}" @endif/>
                                 </div>
-                            {{var_dump($user_data)}}
+                            {{var_dump($user_data->specialisations)}}
                                 <div class="form-row padding-bottom-15 fs-0">
                                     <label class="inline-block fs-16">Your specializations:</label>
                                     <div class="checkboxes-container inline-block">
                                         @foreach((new \App\Http\Controllers\APIRequestsController())->getAllEnums()->specialisations as $key => $specialisation)
                                             <div class="pretty p-svg p-curve on-white-background">
-                                                <input type="checkbox" name="specializations[]" value="{{$key}}"
-                                                @if(!empty($user_data) && !empty($user_data->specialisations) && in_array($specialisation, $user_data->specialisations)) checked @endif/>
+                                                <input type="checkbox" name="specializations[]" value="{{$key}}" @if(!empty($user_data) && !empty($user_data->specialisations) && in_array($specialisation, $user_data->specialisations)) checked @endif />
                                                 <div class="state p-success">
                                                     <!-- svg path -->
                                                     <svg class="svg svg-icon" viewBox="0 0 20 20">
