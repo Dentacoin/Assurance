@@ -30,7 +30,7 @@
                                 </select>
                             </div>
                             <div class="form-row padding-bottom-15 fs-0 suggester-parent module">
-                                <label class="inline-block fs-16" for="country">Your Address</label>
+                                <label class="inline-block fs-16" for="country">Postal Address</label>
                                 <input type="text" name="address" class="custom-input fs-16 address-suggester" autocomplete="off" placeholder="City, Street">
                                 <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
                                 <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>

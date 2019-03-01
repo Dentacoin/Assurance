@@ -12,7 +12,6 @@ var prepareMapFunction = function( callback ) {
     }
 };
 
-
 jQuery(document).ready(function($){
     setupMap = function(suggester_container, coords) {
         suggester_container.find('.suggester-map-div').show();
