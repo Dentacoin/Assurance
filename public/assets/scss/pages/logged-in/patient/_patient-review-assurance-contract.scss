@@ -1,6 +1,20 @@
 section.contract-proposal {
     .wrapper {
         .step-fields {
+            .suggester-parent {
+                width: 60%;
+                .address-suggester {
+                    border: 0;
+                    width: 100%;
+                    padding: 20px 10px;
+                    &:focus {
+                        cursor: text;
+                        background-color: #eaeaea;
+                        background-image: none;
+                        @include rounded(0);
+                    }
+                }
+            }
             .singatures-row {
                 padding: 0 10px 40px;
                 .dentist-sign {

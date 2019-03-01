@@ -6451,6 +6451,20 @@ section.invite-dentists-section {
     section.invite-dentists-section .form-container input[type="submit"].white-blue-green-btn {
       min-width: 220px; }
 
+section.contract-proposal .wrapper .step-fields .suggester-parent {
+  width: 60%; }
+  section.contract-proposal .wrapper .step-fields .suggester-parent .address-suggester {
+    border: 0;
+    width: 100%;
+    padding: 20px 10px; }
+    section.contract-proposal .wrapper .step-fields .suggester-parent .address-suggester:focus {
+      cursor: text;
+      background-color: #eaeaea;
+      background-image: none;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      -ms-border-radius: 0;
+      border-radius: 0; }
 section.contract-proposal .wrapper .step-fields .singatures-row {
   padding: 0 10px 40px; }
   section.contract-proposal .wrapper .step-fields .singatures-row .dentist-sign {

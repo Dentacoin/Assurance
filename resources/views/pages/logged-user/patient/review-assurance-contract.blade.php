@@ -20,7 +20,7 @@
                         <h2 class="text-center blue-green-color fs-30 lato-bold padding-bottom-20">ASSURANCE CONTRACT SAMPLE</h2>
                         <div class="calibri-bold fs-14 padding-bottom-50 text-center blue-green-color">( This contract proposal will be active until <span class="active-until"></span>. )</div>
                         <div class="step-fields module padding-top-20">
-                            <form method="POST" enctype="multipart/form-data" action="{{route('update-and-sign-contract')}}" id="dentist-update-and-sign-contract">
+                            <form method="POST" enctype="multipart/form-data" action="{{route('update-and-sign-contract')}}" id="dentist-update-and-sign-contract" class="address-suggester-wrapper">
                                 <h3 class="calibri-bold fs-30 dark-color">DENTIST DETAILS</h3>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Name:</label>
@@ -73,10 +73,6 @@
                                     <input type="text" maxlength="20" name="patient-id-number" class="right-field required-field calibri-regular fs-18 dark-color inline-block pencil-background"/>
                                 </div>
                                 <div class="single-row fs-0">
-                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0">Postal Address:</label>
-                                    <input type="text" maxlength="100" name="postal-address" class="right-field required-field calibri-regular fs-18 dark-color inline-block pencil-background"/>
-                                </div>
-                                <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 @if(empty($patient->country_id)) padding-top-0 padding-bottom-0 @endif">Country:</label>
                                     @if(!empty($patient->country_id))
                                         <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$countries[$patient->country_id - 1]->name}}</div>
@@ -87,6 +83,20 @@
                                                 <option value="{{$country->code}}" data-code="{{$country->phone_code}}">{{$country->name}}</option>
                                             @endforeach
                                         </select>
+                                    @endif
+                                </div>
+                                <div class="single-row fs-0">
+                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0">Postal Address:</label>
+                                @if(!empty($patient->address))
+                                        <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$patient->address}}</div>
+                                    @else
+                                        {{--<input type="text" name="postal-address" class="right-field required-field calibri-regular fs-18 dark-color inline-block pencil-background"/>--}}
+                                        <div class="suggester-parent module inline-block">
+                                            <input type="text" name="address" maxlength="250" class="address-suggester calibri-regular fs-18 dark-color pencil-background" autocomplete="off">
+                                            <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
+                                            <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
+                                            <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
+                                        </div>
                                     @endif
                                 </div>
                                 <div class="single-row fs-0 dcn-address-row">

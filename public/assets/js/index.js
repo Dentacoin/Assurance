@@ -1197,11 +1197,9 @@ if($('body').hasClass('logged-in')) {
                 }
 
                 if(form_errors) {
-                    if($('.proof-of-address').length) {
-                        $('html, body').animate({scrollTop: $('.proof-of-address').offset().top - 50}, 500);
-                    } else {
-                        $('html, body').animate({scrollTop: $('.right-field.required-field.with-error').offset().top - 50}, 500);
-                    }
+                    $('html, body').animate({scrollTop: $('.right-field.required-field.with-error').offset().top - 50}, 500);
+                } else if($('.proof-of-address').length) {
+                    $('html, body').animate({scrollTop: $('.proof-of-address').offset().top - 50}, 500);
                 } else {
                     //check if patient signed if privacy policy and terms checkboxes are checked
                     //save the base64 signature image in hidden value
@@ -2128,6 +2126,8 @@ async function onDocumentReadyPageData() {
 
             cancelContractEventInit();
         }else if($('body').hasClass('contract-proposal')) {
+            await $.getScript('/assets/js/address.js', function() {});
+
             if ($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined) {
                 var date_obj = new Date((parseInt($('.contract-proposal.section').attr('data-created-at-timestamp')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw())) * 1000);
                 $('.active-until').html(dateObjToFormattedDate(date_obj));

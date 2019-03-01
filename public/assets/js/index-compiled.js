@@ -25628,7 +25628,7 @@ var onDocumentReadyPageData = function () {
                 switch (_context16.prev = _context16.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context16.next = 60;
+                            _context16.next = 62;
                             break;
                         }
 
@@ -25653,7 +25653,7 @@ var onDocumentReadyPageData = function () {
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context16.next = 60;
+                        _context16.next = 62;
                         break;
 
                     case 13:
@@ -25689,7 +25689,7 @@ var onDocumentReadyPageData = function () {
 
                             table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">' + next_payment_timestamp + '</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
-                        _context16.next = 60;
+                        _context16.next = 62;
                         break;
 
                     case 25:
@@ -25709,7 +25709,7 @@ var onDocumentReadyPageData = function () {
                             }
                             $('.contract-tile .tile-wrapper').outerHeight(max_height);
                         }
-                        _context16.next = 60;
+                        _context16.next = 62;
                         break;
 
                     case 29:
@@ -25736,27 +25736,31 @@ var onDocumentReadyPageData = function () {
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
 
                         cancelContractEventInit();
-                        _context16.next = 60;
+                        _context16.next = 62;
                         break;
 
                     case 42:
                         if (!$('body').hasClass('contract-proposal')) {
-                            _context16.next = 57;
+                            _context16.next = 59;
                             break;
                         }
 
+                        _context16.next = 45;
+                        return $.getScript('/assets/js/address.js', function () {});
+
+                    case 45:
                         if (!($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined)) {
-                            _context16.next = 55;
+                            _context16.next = 57;
                             break;
                         }
 
                         _context16.t10 = Date;
                         _context16.t11 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
                         _context16.t12 = parseInt;
-                        _context16.next = 49;
+                        _context16.next = 51;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
-                    case 49:
+                    case 51:
                         _context16.t13 = _context16.sent;
                         _context16.t14 = (0, _context16.t12)(_context16.t13);
                         _context16.t15 = _context16.t11 + _context16.t14;
@@ -25765,20 +25769,20 @@ var onDocumentReadyPageData = function () {
 
                         $('.active-until').html(dateObjToFormattedDate(date_obj));
 
-                    case 55:
-                        _context16.next = 60;
+                    case 57:
+                        _context16.next = 62;
                         break;
 
-                    case 57:
+                    case 59:
                         if (!$('body').hasClass('edit-account')) {
-                            _context16.next = 60;
+                            _context16.next = 62;
                             break;
                         }
 
-                        _context16.next = 60;
+                        _context16.next = 62;
                         return $.getScript('/assets/js/address.js', function () {});
 
-                    case 60:
+                    case 62:
                     case 'end':
                         return _context16.stop();
                 }
@@ -27105,11 +27109,9 @@ if ($('body').hasClass('logged-in')) {
                                 case 17:
 
                                     if (form_errors) {
-                                        if ($('.proof-of-address').length) {
-                                            $('html, body').animate({ scrollTop: $('.proof-of-address').offset().top - 50 }, 500);
-                                        } else {
-                                            $('html, body').animate({ scrollTop: $('.right-field.required-field.with-error').offset().top - 50 }, 500);
-                                        }
+                                        $('html, body').animate({ scrollTop: $('.right-field.required-field.with-error').offset().top - 50 }, 500);
+                                    } else if ($('.proof-of-address').length) {
+                                        $('html, body').animate({ scrollTop: $('.proof-of-address').offset().top - 50 }, 500);
                                     } else {
                                         //check if patient signed if privacy policy and terms checkboxes are checked
                                         //save the base64 signature image in hidden value
