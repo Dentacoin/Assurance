@@ -4,8 +4,6 @@ var setupMap;
 var mapsLoaded = true;
 var mapsWaiting = [];
 
-console.log('asdsadsdasadsaddas123');
-
 var prepareMapFunction = function( callback ) {
     if(mapsLoaded) {
         callback();
@@ -16,7 +14,6 @@ var prepareMapFunction = function( callback ) {
 
 
 jQuery(document).ready(function($){
-    console.log('dcu ready');
     setupMap = function(suggester_container, coords) {
         suggester_container.find('.suggester-map-div').show();
         if( !suggester_container.find('.suggester-map-div').attr('inited') ) {
@@ -37,11 +34,9 @@ jQuery(document).ready(function($){
                 var geocoder = new google.maps.Geocoder();
                 geocoder.geocode({'location': this.getPosition()}, (function(results, status) {
                     if (status == 'OK') {
-
                         var gstring = results[0].formatted_address;
                         var country_name = this.find('.country-select option:selected').text();
                         gstring = gstring.replace(', '+country_name, '');
-                        console.log( gstring );
 
                         this.find('.address-suggester').val(gstring).blur();
                     } else {
@@ -61,9 +56,7 @@ jQuery(document).ready(function($){
     initAddressSuggesters = function() {
         prepareMapFunction(function() {
             $('.address-suggester').each( function() {
-                console.log('wasaa');
                 var suggester_container = $(this).closest('.address-suggester-wrapper');
-                console.log(suggester_container, 'suggester_container');
                 suggester_container.find('.country-select').change( function() {
                     var cc = $(this).find('option:selected').attr('code');
                     GMautocomplete.setComponentRestrictions({
@@ -133,8 +126,6 @@ jQuery(document).ready(function($){
 
         if( place && place.geometry ) {
             //address_components
-            console.log('Geocoding result: ', place);
-
             var gstring = suggester_container.find('.address-suggester').val();
             var country_name = suggester_container.find('.country-select option:selected').text();
             gstring = gstring.replace(', '+country_name, '');
@@ -153,7 +144,6 @@ jQuery(document).ready(function($){
         }
     };
 
-    console.log('TEST"');
     if($('.address-suggester').length) {
         initAddressSuggesters();
     }
