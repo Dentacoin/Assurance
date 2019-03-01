@@ -6672,9 +6672,11 @@ section.congratulation-and-time-section {
       .my-contracts .table-container .status .alike-btn.pending {
         background-color: #29adde; }
       .my-contracts .table-container .status .alike-btn.awaiting-payment {
-        background-color: #239289; }
+        background-color: #239289;
+        line-height: 16px; }
       .my-contracts .table-container .status .alike-btn.awaiting-approval {
-        background-color: #239289; }
+        background-color: #239289;
+        line-height: 16px; }
       .my-contracts .table-container .status .alike-btn.cancelled {
         background-color: #e92f30; }
   .my-contracts .table-container .contract-details a:hover {

@@ -25628,7 +25628,7 @@ var onDocumentReadyPageData = function () {
                 switch (_context16.prev = _context16.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context16.next = 62;
+                            _context16.next = 64;
                             break;
                         }
 
@@ -25783,6 +25783,18 @@ var onDocumentReadyPageData = function () {
                         return $.getScript('/assets/js/address.js', function () {});
 
                     case 62:
+                        _context16.next = 68;
+                        break;
+
+                    case 64:
+                        _context16.next = 66;
+                        return $.getScript('//dentacoin.com/assets/libs/civic-login/civic.js', function () {});
+
+                    case 66:
+                        _context16.next = 68;
+                        return $.getScript('//dentacoin.com/assets/libs/facebook-login/facebook.js', function () {});
+
+                    case 68:
                     case 'end':
                         return _context16.stop();
                 }

@@ -156,8 +156,6 @@
 <script src="/dist/js/front-libs-script.js?v=1.0.14"></script>
 {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
 <script src="/assets/js/index-compiled.js"></script>
-<script src="//dentacoin.com/assets/libs/civic-login/civic.js"></script>
-<script src="//dentacoin.com/assets/libs/facebook-login/facebook.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 @yield('script_block')
 
