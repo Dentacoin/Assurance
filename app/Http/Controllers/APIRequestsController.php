@@ -257,6 +257,8 @@ class APIRequestsController extends Controller {
     }
 
     public function updateUserData($data) {
+        var_dump($data);
+        die();
         $header = array();
         $header[] = 'Accept: */*';
         $header[] = 'Authorization: Bearer ' . session('logged_user')['token'];
