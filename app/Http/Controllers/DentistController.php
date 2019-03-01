@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CalculatorParameter;
+use App\InviteDentistsReward;
 use App\TemporallyContract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -129,6 +130,12 @@ class DentistController extends Controller
             } else if(!in_array($api_response['data']['status'], $approved_statuses)) {
                 return redirect()->route('home')->with(['error' => 'This account is not approved by Dentacoin team yet, please try again later.']);
             } else {
+                //check if waiting invite dentist rewards
+                $reward = InviteDentistsReward::where(array('dentist_email' => $data['email'], 'dentist_registered_and_approved' => 0, 'payed_on' => NULL))->get()->first();
+                var_dump($reward);
+                die();
+
+
                 $session_arr = [
                     'token' => $api_response['token'],
                     'id' => $api_response['data']['id'],

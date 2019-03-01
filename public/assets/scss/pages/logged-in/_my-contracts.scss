@@ -165,9 +165,11 @@
                 }
                 &.awaiting-payment {
                     background-color: $awaiting_payment_awaiting_approval;
+                    line-height: 16px;
                 }
                 &.awaiting-approval {
                     background-color: $awaiting_payment_awaiting_approval;
+                    line-height: 16px;
                 }
                 &.cancelled {
                     background-color: $cancelled;
