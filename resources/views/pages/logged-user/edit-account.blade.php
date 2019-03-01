@@ -51,7 +51,7 @@
                                     <div class="checkboxes-container inline-block">
                                         @foreach((new \App\Http\Controllers\APIRequestsController())->getAllEnums()->specialisations as $key => $specialisation)
                                             <div class="pretty p-svg p-curve on-white-background">
-                                                <input type="checkbox" name="specializations[]" value="{{$key}}" @if(!empty($user_data) && !empty($user_data->specialisations) && in_array($specialisation, $user_data->specialisations)) checked @endif />
+                                                <input type="checkbox" name="specializations[]" value="{{$key}}" @if(!empty($user_data) && !empty($user_data->specialisations) && in_array($key, $user_data->specialisations)) checked @endif />
                                                 <div class="state p-success">
                                                     <!-- svg path -->
                                                     <svg class="svg svg-icon" viewBox="0 0 20 20">
