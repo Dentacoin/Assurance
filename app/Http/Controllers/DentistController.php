@@ -132,9 +132,14 @@ class DentistController extends Controller
             } else {
                 //check if waiting invite dentist rewards
                 $reward = InviteDentistsReward::where(array('dentist_email' => $data['email'], 'dentist_registered_and_approved' => 0, 'payed_on' => NULL))->get()->first();
-                var_dump($reward);
-                die();
 
+                if(!empty($reward)) {
+                    $reward->dentist_registered_and_approved = true;
+                    var_dump('registered');
+                    die();
+
+                    //send request to API to add this reward to the patient account
+                }
 
                 $session_arr = [
                     'token' => $api_response['token'],
