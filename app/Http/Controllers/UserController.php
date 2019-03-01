@@ -179,7 +179,7 @@ class UserController extends Controller {
             'country_code' => $data['country'],
             'dcn_address' => $data['dcn_address'],
             'address' => $data['address'],
-            'specializations' => $data['specializations'],
+            'specialisations' => $data['specialisations'],
         );
 
         //if the logged user is dentist he must provide website and phone
