@@ -42,7 +42,7 @@ class DentistController extends Controller
             'address.required' => 'City, Street is required.',
             'phone.required' => 'Phone number is required.',
             'website.required' => 'Website is required.',
-            'specialization.required' => 'Specialization is required.',
+            'specializations.required' => 'Specialization is required.',
             'captcha.required' => 'Captcha is required.',
             'captcha.captcha' => 'Please type the code from the captcha image.'
         ];
@@ -56,7 +56,7 @@ class DentistController extends Controller
             'address' => 'required|max:300',
             'phone' => 'required|max:50',
             'website' => 'required|max:250',
-            'specialization' => 'required',
+            'specializations' => 'required',
             'captcha' => 'required|captcha|max:5'
         ], $customMessages);
 

@@ -56,7 +56,7 @@
                     <input type="submit" value="Log in" class="white-blue-green-btn"/>
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                 </div>
-                <div class="text-center padding-top-20 fs-16">Don't have an account? <a href="javascript:void(0)" class="call-sign-up fs-20">Sign up</a></div>
+                <div class="text-center padding-top-40 fs-16">Don't have an account? <a href="javascript:void(0)" class="call-sign-up fs-20">Sign up</a></div>
             </form>
             <div class="popup-half-footer">
                 <a href="{{route('forgotten-password')}}">Forgotten password?</a>
@@ -146,7 +146,7 @@
                             <h4>Please select your specializations:</h4>
                             @foreach((new \App\Http\Controllers\APIRequestsController())->getAllEnums()->specialisations as $key => $specialisation)
                                 <div class="pretty p-svg p-curve on-white-background">
-                                    <input type="checkbox" name="specialization[]" value="{{$key}}"/>
+                                    <input type="checkbox" name="specializations[]" value="{{$key}}"/>
                                     <div class="state p-success">
                                         <!-- svg path -->
                                         <svg class="svg svg-icon" viewBox="0 0 20 20">

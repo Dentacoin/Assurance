@@ -58,7 +58,7 @@ jQuery(document).ready(function($){
             $('.address-suggester').each( function() {
                 var suggester_container = $(this).closest('.address-suggester-wrapper');
                 suggester_container.find('.country-select').change( function() {
-                    var cc = $(this).find('option:selected').attr('code');
+                    var cc = $(this).find('option:selected').attr('data-code');
                     GMautocomplete.setComponentRestrictions({
                         'country': cc
                     });
@@ -73,7 +73,7 @@ jQuery(document).ready(function($){
                 }
 
                 var input = $(this)[0];
-                var cc = suggester_container.find('.country-select option:selected').attr('code');
+                var cc = suggester_container.find('.country-select option:selected').attr('data-code');
                 var options = {
                     componentRestrictions: {
                         country: cc
@@ -91,7 +91,7 @@ jQuery(document).ready(function($){
                 $(this).blur( function(e) {
                     var suggester_container = $(this).closest('.address-suggester-wrapper');
                     var country_name = suggester_container.find('.country-select option:selected').text();
-                    var country_code = suggester_container.find('.country-select option:selected').attr('code');
+                    var country_code = suggester_container.find('.country-select option:selected').attr('data-code');
 
                     var geocoder = new google.maps.Geocoder();
                     var address = $(this).val();

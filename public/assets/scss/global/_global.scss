@@ -684,7 +684,9 @@ fieldset {
                             .call-sign-up {
                                 font-family: 'Calibri-Bold';
                                 color: $dark_color;
-                                text-decoration: underline;
+                                &:hover {
+                                    color: $blue_green_color;
+                                }
                             }
                             .popup-half-footer {
                                 padding: 30px 0;

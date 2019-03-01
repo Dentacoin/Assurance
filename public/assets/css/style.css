@@ -4543,8 +4543,9 @@ fieldset {
           color: #212121; }
           .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-body .dentist .call-sign-up {
             font-family: 'Calibri-Bold';
-            color: #212121;
-            text-decoration: underline; }
+            color: #212121; }
+            .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-body .dentist .call-sign-up:hover {
+              color: #126585; }
           .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-body .dentist .popup-half-footer {
             padding: 30px 0;
             margin-top: 50px;
