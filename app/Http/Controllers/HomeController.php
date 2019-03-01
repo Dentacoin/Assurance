@@ -12,12 +12,12 @@ use App\Http\Controllers\UserController;
 class HomeController extends Controller
 {
     public function getView()   {
-        $session_arr = [
+        /*$session_arr = [
             'token' => 'enYh2KchyDUJdfslM9Xfd67qhjPQnIOKzx4ozEnqJECECb04PA1EFOs2KDYg',
             'id' => '68856',
             'type' => 'dentist'
         ];
-        session(['logged_user' => $session_arr]);
+        session(['logged_user' => $session_arr]);*/
 
         /*$session_arr = [
             'token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjdiY2ZiOGMzODk5Y2ZmMmQ4ODE2NjNkMjE2YjIzMmRjMzE5ZTA0MWIxYzJhZTA4MzFkZGNkYzg3MzE5MDY4ZTRhMjJkOWViZDk4NGJhYmI4In0.eyJhdWQiOiIxIiwianRpIjoiN2JjZmI4YzM4OTljZmYyZDg4MTY2M2QyMTZiMjMyZGMzMTllMDQxYjFjMmFlMDgzMWRkY2RjODczMTkwNjhlNGEyMmQ5ZWJkOTg0YmFiYjgiLCJpYXQiOjE1NTA4MzQ5MzMsIm5iZiI6MTU1MDgzNDkzMywiZXhwIjoxNTgyMzcwOTMzLCJzdWIiOiI2ODg1OCIsInNjb3BlcyI6W119.fS2rcrIRGlrV8z47SUas6IE2XepMmSTnT6hCB2YFUxSRAUPoi3bZRuu4dKkCTTfLS8PKE4CaHWCruasjbxAL_1NxK94dC-dKdgiT_BvEjqkkNKBnkrCDZDFzc9XluQu4GcqGyzXlyLVN8EpYbvbQDgMJ9hVgGTYVJDK6Zombwev8mMMBGS-DDteria34rsJPV8OpEXW5k1Ur3v6Ip-63OxNZ7Ae1kuOMjSMCrjDeMcziJEPTibIhrlB4TGvRblW6RWuTxF-KJPgDLXjrFhYpCjdLsXNN-scdsOuqGaTnqWMeGN0Iu0PXuDN1vQY60v18lf7XePQ-yNJ7lHf7axWpQycAybcKQwg3GXp7mutL0qEhMm3wr_4UW3aY75JPYguIeZ_uJm-SdUpxJ86PntCh8YnIASS-bHBVs89ClmGKhKt1UhlnG6cDTnqxgfOY7bcSf-DpwnvY9cABlQYqHidCzuS245MjTBb-UMHKtXcbXE9xaC-vF5IHcex0BOXpn5iIWbTTvC11-0mkMruKgBus2DC6ibbVanOitL7krUPx6jOlj6JwgHHiXrLNLvMUEEWp-1tYl31jZKqu0bWKGSDjKTZw4YGGimhEPBCVF4N2cJ2ttHBFuk-Ofk82PmCpOhWSN5rk8AyfoQ-hEF83W-vQgkjRrpe6L1CUYDai4xeR8YQ',
