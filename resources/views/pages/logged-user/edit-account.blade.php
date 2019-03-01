@@ -38,29 +38,32 @@
                             </div>
                             @if((new \App\Http\Controllers\UserController())->checkDentistSession())
                                 <div class="form-row padding-bottom-15 fs-0">
-                                    <label class="inline-block fs-16" for="email">Your Phone:</label>
+                                    <label class="inline-block fs-16" for="phone">Your Phone:</label>
                                     <input class="inline-block fs-16 custom-input" maxlength="20" type="text" name="phone" id="phone" @if(!empty($user_data) && !empty($user_data->phone)) value="{{$user_data->phone}}" @endif/>
                                 </div>
                                 <div class="form-row padding-bottom-15 fs-0">
-                                    <label class="inline-block fs-16" for="email">Your Website:</label>
+                                    <label class="inline-block fs-16" for="website">Your Website:</label>
                                     <input class="inline-block fs-16 custom-input" maxlength="255" type="text" name="website" id="website" @if(!empty($user_data) && !empty($user_data->website)) value="{{$user_data->website}}" @endif/>
                                 </div>
                                 <div class="form-row padding-bottom-15 fs-0">
-                                    @if(!empty($user_data) && !empty($user_data->specializations))
-                                        {{var_dump($user_data->specializations)}}
-                                    @endif
-                                    @foreach((new \App\Http\Controllers\APIRequestsController())->getAllEnums()->specialisations as $key => $specialisation)
-                                        <div class="pretty p-svg p-curve on-white-background">
-                                            <input type="checkbox" name="specializations[]" value="{{$key}}"/>
-                                            <div class="state p-success">
-                                                <!-- svg path -->
-                                                <svg class="svg svg-icon" viewBox="0 0 20 20">
-                                                    <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
-                                                </svg>
-                                                <label class="fs-14">{{$specialisation}}</label>
+                                    <label class="inline-block fs-16">Your specializations:</label>
+                                    <div class="checkboxes-container inline-block">
+                                        @if(!empty($user_data) && !empty($user_data->specializations))
+                                            {{var_dump($user_data->specializations)}}
+                                        @endif
+                                        @foreach((new \App\Http\Controllers\APIRequestsController())->getAllEnums()->specialisations as $key => $specialisation)
+                                            <div class="pretty p-svg p-curve on-white-background">
+                                                <input type="checkbox" name="specializations[]" value="{{$key}}"/>
+                                                <div class="state p-success">
+                                                    <!-- svg path -->
+                                                    <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                                        <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                                    </svg>
+                                                    <label class="fs-16">{{$specialisation}}</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    </div>
                                 </div>
                             @endif
                             <div class="form-row padding-bottom-40 fs-0">
