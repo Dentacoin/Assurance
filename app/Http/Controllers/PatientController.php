@@ -94,6 +94,8 @@ class PatientController extends Controller {
                     );
                     $reward_api_method_response = (new APIRequestsController())->registerDCNReward($data);
                     var_dump($reward_api_method_response);
+                    $dcn_balance_api_method_response = (new APIRequestsController())->getDCNBalance();
+                    var_dump($dcn_balance_api_method_response);
                     die();
                 }
             }
