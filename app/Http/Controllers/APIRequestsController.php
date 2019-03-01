@@ -257,10 +257,10 @@ class APIRequestsController extends Controller {
     }
 
     public function updateUserData($data) {
-        if(isset($data['specializations'])) {
-            $data['specializations'] = json_encode($data['specializations']);
+        if(isset($data['specialisations'])) {
+            $data['specialisations'] = json_encode($data['specializations']);
         }
-        
+
         $header = array();
         $header[] = 'Accept: */*';
         $header[] = 'Authorization: Bearer ' . session('logged_user')['token'];
