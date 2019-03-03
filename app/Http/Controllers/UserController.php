@@ -471,17 +471,16 @@ class UserController extends Controller {
         $curl = curl_init();
         $json = '{"jwtToken":"'.$request->input('token').'"}';
         var_dump($json);
-        var_dump(mb_strlen($json));
         curl_setopt_array($curl, array(
             CURLOPT_POST => 1,
             CURLOPT_URL => 'https://dentacoin.net/civic',
-            CURLOPT_POSTFIELDS => array(
-                'jwtToken' => $request->input('token')
-            )
+            CURLOPT_POSTFIELDS => $json
         ));
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
-            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8'
-        ));
+            'X-Requested-With: XMLHttpRequest',
+            'Content-Type: application/json; charset=utf-8',
+            'Content-Length: ' . mb_strlen($json))
+        );
 
         $resp = curl_exec($curl);
         curl_close($curl);
