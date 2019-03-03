@@ -142,6 +142,9 @@
 .white-color-background {
   background-color: white; }
 
+.cancelled-color {
+  color: #e92f30; }
+
 .white-blue-green-btn {
   font-size: 20px;
   color: white;
@@ -189,6 +192,30 @@
     background-color: #e92f30; }
   .white-red-btn:focus {
     color: #e92f30; }
+
+.white-green-btn {
+  font-size: 20px;
+  color: white;
+  background-color: #239234;
+  padding: 10px 20px;
+  font-family: 'Calibri-Bold';
+  border: 2px solid #239234;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s; }
+  .white-green-btn:hover {
+    color: #239234;
+    background-color: white; }
+  .white-green-btn:focus {
+    color: white; }
 
 .blue-green-white-btn {
   font-size: 20px;
@@ -681,6 +708,8 @@
         color: red; }
       .module.contract-single-page-nav li a:hover {
         text-decoration: underline; }
+      .module.contract-single-page-nav li a.renew-contract-btn i {
+        color: #239234; }
 .module.single-contract-tile .contract-participant {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
@@ -706,9 +735,27 @@
       -webkit-transform: translateX(-50%);
       -ms-transform: translateX(-50%);
       transform: translateX(-50%); }
+  .module.single-contract-tile .contract-participant a:hover {
+    text-decoration: underline; }
+.module.single-contract-tile .row-with-bottom-squares .border-right-light-gray {
+  border-right: 2px solid #ededed; }
 .module.single-contract-tile .contract-body {
   padding-left: 0;
   padding-right: 0; }
+  .module.single-contract-tile .contract-body .absolute-hands {
+    width: 120%;
+    top: 130%;
+    z-index: 5;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%); }
+  .module.single-contract-tile .contract-body .rotate-animation {
+    width: 8%;
+    top: 150%;
+    position: absolute;
+    left: 46%; }
   .module.single-contract-tile .contract-body .clock {
     display: inline-block;
     text-align: center;

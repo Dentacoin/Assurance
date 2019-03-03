@@ -18,10 +18,14 @@
     <tbody>
     @if(count($contracts) > 0)
         @foreach($contracts as $contract)
-            @if($contract->status == 'pending')
-                @php($url = route('contract-proposal', ['slug' => $contract->slug]))
-            @else
-                @php($url = route('patient-contract-view', ['slug' => $contract->slug]))
+            @if((new \App\Http\Controllers\UserController())->checkDentistSession())
+                @php($url = route('dentist-contract-view', ['slug' => $contract->slug]))
+            @elseif((new \App\Http\Controllers\UserController())->checkPatientSession())
+                @if($contract->status == 'pending')
+                    @php($url = route('contract-proposal', ['slug' => $contract->slug]))
+                @else
+                    @php($url = route('patient-contract-view', ['slug' => $contract->slug]))
+                @endif
             @endif
             <tr @if($contract->status != 'active' && $contract->status != 'pending') data-timestamp-signed="{{strtotime($contract->contract_active_at)}}" @endif>
                 <td class="status">

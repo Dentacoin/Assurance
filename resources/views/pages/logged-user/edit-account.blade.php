@@ -23,7 +23,7 @@
                             </div>
                             <div class="form-row padding-bottom-15 fs-0">
                                 <label class="inline-block fs-16" for="country">Your Country:</label>
-                                <select class="inline-block fs-16 custom-input country-select" id="country" name="country">
+                                <select class="inline-block fs-16 custom-input country-select selectpicker" data-live-search="true" id="country" name="country">
                                     @foreach($countries as $country)
                                         <option value="{{$country->code}}" data-code="{{$country->phone_code}}" @if(!empty($user_data) && !empty($user_data->country_id) && $user_data->country_id == $country->id) selected @endif>{{$country->name}}</option>
                                     @endforeach

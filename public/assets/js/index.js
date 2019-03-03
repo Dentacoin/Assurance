@@ -994,6 +994,7 @@ if($('body').hasClass('logged-in')) {
 
         //method for final step validation
         function fourthStepValidation(button) {
+            //update fourth step html based on previous steps
             for(var i = 0, len = form_props_arr.length; i < len; i+=1) {
                 if(create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('input')) {
                     $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('input[name="'+form_props_arr[i]+'"]').val().trim());
@@ -1004,8 +1005,11 @@ if($('body').hasClass('logged-in')) {
                 }
             }
 
-            $('.step.four .checkboxes-right-container input[type="checkbox"]').prop('checked', false);
+            //update the proposed monthly premium, based on the checked services
+            $('.step.four #suggested-price').html($('.step.three .suggested-price').html());
+
             //update the disabled checkboxes on the sample contract
+            $('.step.four .checkboxes-right-container input[type="checkbox"]').prop('checked', false);
             for(var i = 0, len = $('.step.three [name="general-dentistry[]"]:checked').length; i < len; i+=1) {
                 $('.step.four input[type="checkbox"]#'+$('[name="general-dentistry[]"]:checked').eq(i).val()).prop('checked', true);
             }
@@ -2093,13 +2097,13 @@ async function onDocumentReadyPageData() {
             var now_timestamp = Math.round((new Date()).getTime() / 1000);
 
             for(var i = 0, len = table_trs_with_timestamp.length; i < len; i+=1) {
-                var time_passed_since_creation = now_timestamp - parseInt(table_trs_with_timestamp.eq(i).attr('data-timestamp-signed'));
-                if(time_passed_since_creation > smart_contract_withdraw_period) {
-                    var remainder = time_passed_since_creation % smart_contract_withdraw_period;
+                var time_passed_since_signed = now_timestamp - parseInt(table_trs_with_timestamp.eq(i).attr('data-timestamp-signed'));
+                if(time_passed_since_signed > smart_contract_withdraw_period) {
+                    var remainder = time_passed_since_signed % smart_contract_withdraw_period;
                     var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - remainder) * 1000;
                     var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                 } else {
-                    var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - time_passed_since_creation) * 1000;
+                    var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - time_passed_since_signed) * 1000;
                     var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                 }
 
@@ -2149,6 +2153,25 @@ async function onDocumentReadyPageData() {
                     console.log(event.response_data, 'event.response_data');
                 }
             });
+        } else if($('body').hasClass('dentist-contract-view')) {
+            if($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval')) {
+                $('.first-payment').html(dateObjToFormattedDate(new Date((parseInt($('.single-contract-view-section').attr('data-created-at')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw())) * 1000)));
+            } else if($('.single-contract-view-section').hasClass('active')) {
+                var now_timestamp = Math.round((new Date()).getTime() / 1000);
+                var smart_contract_withdraw_period = parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
+                var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-timestamp-signed'));
+
+                if(time_passed_since_signed > smart_contract_withdraw_period) {
+                    var remainder = time_passed_since_signed % smart_contract_withdraw_period;
+                    var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - remainder) * 1000;
+                    var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
+                } else {
+                    var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - time_passed_since_signed) * 1000;
+                    var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
+                }
+
+                $('.single-contract-view-section .row-with-bottom-squares .next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
+            }
         }
     } else {
         //adding civic and facebook logging scripts

@@ -13,11 +13,13 @@
 @import "pages/homepage";
 @import "pages/patients";
 @import "pages/support-guide";
+@import "pages/404";
 @import "pages/wallet-instructions";
 @import "pages/logged-in/global";
 @import "pages/logged-in/manage-privacy";
 @import "pages/logged-in/patient/invite-dentists";
 @import "pages/logged-in/my-profile";
+@import "pages/logged-in/edit-account";
 @import "pages/logged-in/dentist/dentist-create-contract";
 @import "pages/forgotten-and-recover-password";
 @import "pages/logged-in/patient/patient-have-contracts";
@@ -27,6 +29,7 @@
 @import "pages/logged-in/my-contracts";
 @import "pages/logged-in/dentist/homepage-no-contracts";
 @import "pages/logged-in/dentist/homepage-contracts";
+@import "pages/logged-in/dentist/single-contract-view";
 
 
 

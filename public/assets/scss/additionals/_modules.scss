@@ -38,6 +38,26 @@
     }
 }
 
+.white-green-btn {
+    font-size: 20px;
+    color: white;
+    background-color: $active;
+    padding: 10px 20px;
+    font-family: 'Calibri-Bold';
+    border: 2px solid $active;
+    display: inline-block;
+    cursor: pointer;
+    @include rounded(4px);
+    @include simple_transition(.3s);
+    &:hover {
+        color: $active;
+        background-color: white;
+    }
+    &:focus {
+        color: white;
+    }
+}
+
 .blue-green-white-btn {
     font-size: 20px;
     color: $blue_green_color;
@@ -535,6 +555,11 @@
                 &:hover {
                     text-decoration: underline;
                 }
+                &.renew-contract-btn {
+                    i {
+                        color: $active;
+                    }
+                }
             }
         }
     }
@@ -553,10 +578,32 @@
                     @include horizontal-align(absolute);
                 }
             }
+            a {
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+        .row-with-bottom-squares {
+            .border-right-light-gray {
+                border-right: 2px solid #ededed;
+            }
         }
         .contract-body {
             padding-left: 0;
             padding-right: 0;
+            .absolute-hands {
+                width: 120%;
+                top: 130%;
+                z-index: 5;
+                @include horizontal-align(absolute);
+            }
+            .rotate-animation {
+                width: 8%;
+                top: 150%;
+                position: absolute;
+                left: 46%;
+            }
             .clock {
                 display: inline-block;
                 text-align: center;

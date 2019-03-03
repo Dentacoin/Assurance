@@ -1,0 +1,13 @@
+section.edit-account {
+    .custom-input.bootstrap-select {
+        padding: 0;
+        > button {
+            border: 0;
+            background-color: white !important;
+            padding: 12px 15px;
+        }
+        .dropdown-menu {
+            width: 100%;
+        }
+    }
+}

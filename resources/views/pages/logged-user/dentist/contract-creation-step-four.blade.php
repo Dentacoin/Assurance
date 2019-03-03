@@ -87,7 +87,7 @@
             <div class="right-extra-field calibri-bold fs-25 dark-color inline-block"><span id="monthly-premium"></span> USD</div>
         </div>
         <div class="single-row fs-0">
-            <div class="fs-14 calibri-light light-gray-color padding-top-5">Based on the services covered, the average monthly rate in your country is <span class="calibri-bold blue-green-color">50 USD</span> in Dentacoin (DCN).</div>
+            <div class="fs-14 calibri-light light-gray-color padding-top-5">Based on the services covered, the average monthly rate in your country is <span class="calibri-bold blue-green-color"><span id="suggested-price"></span> USD</span> in Dentacoin (DCN).</div>
             <div class="fs-14 calibri-light light-gray-color padding-bottom-25">You are free to propose a different rate to your patient.</div>
         </div>
         <div class="single-row fs-0">

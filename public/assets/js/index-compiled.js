@@ -25622,13 +25622,13 @@ var buildCurrentPatientContractHistory = function () {
 
 var onDocumentReadyPageData = function () {
     var _ref16 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee18() {
-        var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_creation, remainder, next_payment_timestamp, next_payment_timestamp_date_obj, max_height;
+        var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_signed, remainder, next_payment_timestamp, next_payment_timestamp_date_obj, max_height;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee18$(_context18) {
             while (1) {
                 switch (_context18.prev = _context18.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context18.next = 71;
+                            _context18.next = 101;
                             break;
                         }
 
@@ -25653,7 +25653,7 @@ var onDocumentReadyPageData = function () {
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context18.next = 69;
+                        _context18.next = 99;
                         break;
 
                     case 13:
@@ -25676,20 +25676,20 @@ var onDocumentReadyPageData = function () {
 
 
                         for (i = 0, len = table_trs_with_timestamp.length; i < len; i += 1) {
-                            time_passed_since_creation = now_timestamp - parseInt(table_trs_with_timestamp.eq(i).attr('data-timestamp-signed'));
+                            time_passed_since_signed = now_timestamp - parseInt(table_trs_with_timestamp.eq(i).attr('data-timestamp-signed'));
 
-                            if (time_passed_since_creation > smart_contract_withdraw_period) {
-                                remainder = time_passed_since_creation % smart_contract_withdraw_period;
+                            if (time_passed_since_signed > smart_contract_withdraw_period) {
+                                remainder = time_passed_since_signed % smart_contract_withdraw_period;
                                 next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - remainder) * 1000;
                                 next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                             } else {
-                                next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - time_passed_since_creation) * 1000;
+                                next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - time_passed_since_signed) * 1000;
                                 next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                             }
 
                             table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">' + next_payment_timestamp + '</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
-                        _context18.next = 69;
+                        _context18.next = 99;
                         break;
 
                     case 25:
@@ -25709,7 +25709,7 @@ var onDocumentReadyPageData = function () {
                             }
                             $('.contract-tile .tile-wrapper').outerHeight(max_height);
                         }
-                        _context18.next = 69;
+                        _context18.next = 99;
                         break;
 
                     case 29:
@@ -25736,7 +25736,7 @@ var onDocumentReadyPageData = function () {
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
 
                         cancelContractEventInit();
-                        _context18.next = 69;
+                        _context18.next = 99;
                         break;
 
                     case 42:
@@ -25770,7 +25770,7 @@ var onDocumentReadyPageData = function () {
                         $('.active-until').html(dateObjToFormattedDate(date_obj));
 
                     case 57:
-                        _context18.next = 69;
+                        _context18.next = 99;
                         break;
 
                     case 59:
@@ -25783,12 +25783,12 @@ var onDocumentReadyPageData = function () {
                         return $.getScript('/assets/js/address.js', function () {});
 
                     case 62:
-                        _context18.next = 69;
+                        _context18.next = 99;
                         break;
 
                     case 64:
                         if (!$('body').hasClass('my-profile ')) {
-                            _context18.next = 69;
+                            _context18.next = 71;
                             break;
                         }
 
@@ -25841,20 +25841,82 @@ var onDocumentReadyPageData = function () {
                                 return _ref18.apply(this, arguments);
                             };
                         }());
-
-                    case 69:
-                        _context18.next = 75;
+                        _context18.next = 99;
                         break;
 
                     case 71:
-                        _context18.next = 73;
+                        if (!$('body').hasClass('dentist-contract-view')) {
+                            _context18.next = 99;
+                            break;
+                        }
+
+                        if (!($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval'))) {
+                            _context18.next = 89;
+                            break;
+                        }
+
+                        _context18.t17 = $('.first-payment');
+                        _context18.t18 = dateObjToFormattedDate;
+                        _context18.t19 = Date;
+                        _context18.t20 = parseInt($('.single-contract-view-section').attr('data-created-at'));
+                        _context18.t21 = parseInt;
+                        _context18.next = 80;
+                        return App.assurance_state_methods.getPeriodToWithdraw();
+
+                    case 80:
+                        _context18.t22 = _context18.sent;
+                        _context18.t23 = (0, _context18.t21)(_context18.t22);
+                        _context18.t24 = _context18.t20 + _context18.t23;
+                        _context18.t25 = _context18.t24 * 1000;
+                        _context18.t26 = new _context18.t19(_context18.t25);
+                        _context18.t27 = (0, _context18.t18)(_context18.t26);
+
+                        _context18.t17.html.call(_context18.t17, _context18.t27);
+
+                        _context18.next = 99;
+                        break;
+
+                    case 89:
+                        if (!$('.single-contract-view-section').hasClass('active')) {
+                            _context18.next = 99;
+                            break;
+                        }
+
+                        now_timestamp = Math.round(new Date().getTime() / 1000);
+                        _context18.t28 = parseInt;
+                        _context18.next = 94;
+                        return App.assurance_state_methods.getPeriodToWithdraw();
+
+                    case 94:
+                        _context18.t29 = _context18.sent;
+                        smart_contract_withdraw_period = (0, _context18.t28)(_context18.t29);
+                        time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-timestamp-signed'));
+
+
+                        if (time_passed_since_signed > smart_contract_withdraw_period) {
+                            remainder = time_passed_since_signed % smart_contract_withdraw_period;
+                            next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - remainder) * 1000;
+                            next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
+                        } else {
+                            next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - time_passed_since_signed) * 1000;
+                            next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
+                        }
+
+                        $('.single-contract-view-section .row-with-bottom-squares .next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
+
+                    case 99:
+                        _context18.next = 105;
+                        break;
+
+                    case 101:
+                        _context18.next = 103;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic.js', function () {});
 
-                    case 73:
-                        _context18.next = 75;
+                    case 103:
+                        _context18.next = 105;
                         return $.getScript('//dentacoin.com/assets/libs/facebook-login/facebook.js', function () {});
 
-                    case 75:
+                    case 105:
                     case 'end':
                         return _context18.stop();
                 }
@@ -26787,6 +26849,7 @@ if ($('body').hasClass('logged-in')) {
 
 
         var fourthStepValidation = function fourthStepValidation(button) {
+            //update fourth step html based on previous steps
             for (var i = 0, len = form_props_arr.length; i < len; i += 1) {
                 if (create_contract_form.find('[name="' + form_props_arr[i] + '"]').is('input')) {
                     $('.step.four #' + form_props_arr[i]).html(create_contract_form.find('input[name="' + form_props_arr[i] + '"]').val().trim());
@@ -26797,8 +26860,11 @@ if ($('body').hasClass('logged-in')) {
                 }
             }
 
-            $('.step.four .checkboxes-right-container input[type="checkbox"]').prop('checked', false);
+            //update the proposed monthly premium, based on the checked services
+            $('.step.four #suggested-price').html($('.step.three .suggested-price').html());
+
             //update the disabled checkboxes on the sample contract
+            $('.step.four .checkboxes-right-container input[type="checkbox"]').prop('checked', false);
             for (var i = 0, len = $('.step.three [name="general-dentistry[]"]:checked').length; i < len; i += 1) {
                 $('.step.four input[type="checkbox"]#' + $('[name="general-dentistry[]"]:checked').eq(i).val()).prop('checked', true);
             }

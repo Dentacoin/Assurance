@@ -19,6 +19,12 @@
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                             </form>
                         </li>
+                        <li class="inline-block">|</li>
+                        <li class="inline-block">
+                            <a href="https://ipfs.io/ipfs/{{$contract->document_hash}}" target="_blank" itemprop="url">
+                                <span itemprop="name"><i class="fa fa-times" aria-hidden="true"></i> Public Proof</span>
+                            </a>
+                        </li>
                         @if($contract->status != 'cancelled')
                             <li class="inline-block">|</li>
                             <li class="inline-block">
@@ -29,7 +35,7 @@
                         @endif
                         <li class="inline-block">|</li>
                         <li class="inline-block">
-                            <a href="javascript:void(0)" itemprop="url">
+                            <a href="{{route('my-contracts')}}" itemprop="url">
                                 <span itemprop="name"><i class="fa fa-bars" aria-hidden="true"></i> List view all contracts</span>
                             </a>
                         </li>

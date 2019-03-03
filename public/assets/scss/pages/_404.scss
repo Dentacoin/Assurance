@@ -1,0 +1,30 @@
+.container-404 {
+    padding-bottom: 100px;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+    figure {
+        padding-top: 70px;
+        padding-bottom: 50px;
+    }
+    .ops {
+        font-size: 20px;
+    }
+    .homepage-link {
+        padding-top: 20px;
+    }
+    @include breakpoint($xs)    {
+        padding-bottom: 50px;
+        figure {
+            padding-top: 30px;
+        }
+        .ops {
+            font-size: 18px;
+        }
+        .homepage-link {
+            a {
+                font-size: 14px;
+            }
+        }
+    }
+}

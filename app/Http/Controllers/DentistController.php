@@ -6,6 +6,7 @@ use App\CalculatorParameter;
 use App\InviteDentistsReward;
 use App\TemporallyContract;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 
 class DentistController extends Controller
@@ -14,9 +15,13 @@ class DentistController extends Controller
         return view('pages/logged-user/dentist/homepage-no-contracts');
     }
 
-    public function getDentistContractView() {
-        var_dump('koz');
-        die();
+    public function getDentistContractView($slug) {
+        $contract = TemporallyContract::where(array('slug' => $slug))->get()->first();
+        if(!empty($contract)) {
+            return view('pages/logged-user/dentist/single-contract-view-'.$contract->status, ['contract' => $contract]);
+        } else {
+            return abort(404);
+        }
     }
 
     public function getContractsView() {
@@ -29,7 +34,16 @@ class DentistController extends Controller
     protected function getCreateContractView()   {
         $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
         $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
-        return view('pages/logged-user/dentist/create-contract', ['countries' => (new APIRequestsController())->getAllCountries(), 'current_logged_dentist' => $current_logged_dentist, 'calculator_proposals' => $calculator_proposals]);
+        $params = ['countries' => (new APIRequestsController())->getAllCountries(), 'current_logged_dentist' => $current_logged_dentist, 'calculator_proposals' => $calculator_proposals];
+        if(!empty(Input::get('renew-contract'))) {
+            $contract = TemporallyContract::where(array('slug' => Input::get('renew-contract'), 'status' => 'cancelled'))->get()->first();
+            if(!empty($contract)) {
+                $params['renew_contract'] = $contract;
+            } else {
+                return abort(404);
+            }
+        }
+        return view('pages/logged-user/dentist/create-contract', $params);
     }
 
     protected function register(Request $request) {

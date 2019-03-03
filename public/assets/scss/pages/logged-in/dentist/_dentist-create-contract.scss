@@ -17,6 +17,9 @@
             &.three {
                 .show-on-services-pick {
                     display: none;
+                    &.renew-contract {
+                        display: block;
+                    }
                 }
                 .show-category-list {
                     ul {
