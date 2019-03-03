@@ -489,6 +489,7 @@ class UserController extends Controller {
             "Connection" => "keep-alive",
             "Transfer-Encoding" => "chunked",
             "Content-Type" => "application/json",
+            "Content-Length" => mb_strlen($json),
             "Server" => "nginx/1.10.3 (Ubuntu)"
         ));
 
