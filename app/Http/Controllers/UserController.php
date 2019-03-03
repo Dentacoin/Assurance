@@ -462,28 +462,11 @@ class UserController extends Controller {
     }
 
     protected function validateCivicKyc(Request $request) {
-        $url = 'https://dentacoin.net/civic';
-        $post_data = 'jwtToken='.$request->input('token');
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch);
-
-        var_dump($result);
-        die();
-
-
-        /*$this->validate($request, [
+        $this->validate($request, [
             'token' => 'required'
         ], [
             'token.required' => 'Token is required.'
         ]);
-
-        var_dump($request->input('token'));
 
         $curl = curl_init();
         $json = '{"jwtToken":"'.$request->input('token').'"}';
@@ -496,9 +479,15 @@ class UserController extends Controller {
                 'jwtToken' => $request->input('token')
             )
         ));
-        /*curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
-                'Content-Type: application/json',
-                'Content-Length: ' . mb_strlen($json))
-        );*/
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
+            'Content-Type: application/json',
+            'Content-Length: ' . mb_strlen($json))
+        );
+
+        $resp = curl_exec($curl);
+        curl_close($curl);
+
+        var_dump($resp);
+        die();
     }
 }
