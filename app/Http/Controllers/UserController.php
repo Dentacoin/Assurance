@@ -477,7 +477,9 @@ class UserController extends Controller {
             CURLOPT_POST => 1,
             CURLOPT_URL => 'https://dentacoin.net/civic',
             CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POSTFIELDS => $json
+            CURLOPT_POSTFIELDS => array(
+                'jwtToken' => $request->input('token')
+            )
         ));
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
             'Content-Type: application/x-www-form-urlencoded; charset=UTF-8'
