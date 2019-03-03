@@ -480,10 +480,8 @@ class UserController extends Controller {
             CURLOPT_POSTFIELDS => $json
         ));
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
-            'X-Requested-With: XMLHttpRequest',
-            'Content-Type: application/json; charset=utf-8',
-            'Content-Length: ' . mb_strlen($json))
-        );
+            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8'
+        ));
 
         $resp = curl_exec($curl);
         curl_close($curl);
