@@ -2139,7 +2139,7 @@ async function onDocumentReadyPageData() {
         }else if($('body').hasClass('edit-account')) {
             //loading address logic
             await $.getScript('/assets/js/address.js', function() {});
-        }else if($('body').hasClass('my-profile ')) {
+        }else if($('body').hasClass('my-profile')) {
             //loading address logic
             await $.getScript('//dentacoin.com/assets/libs/civic-login/civic-kyc.js', function() {});
 

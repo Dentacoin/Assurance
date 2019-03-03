@@ -25787,7 +25787,7 @@ var onDocumentReadyPageData = function () {
                         break;
 
                     case 64:
-                        if (!$('body').hasClass('my-profile ')) {
+                        if (!$('body').hasClass('my-profile')) {
                             _context18.next = 71;
                             break;
                         }

@@ -180,6 +180,9 @@
 .white-color-background {
   background-color: white; }
 
+.cancelled-color {
+  color: #e92f30; }
+
 body {
   margin: 0;
   font-family: "Calibri-Regular";
@@ -5475,6 +5478,8 @@ input[type='file'].hide-input {
       -webkit-transform: translateX(-50%);
       -ms-transform: translateX(-50%);
       transform: translateX(-50%); }
+  .module.single-contract-tile .contract-participant a:hover {
+    text-decoration: underline; }
 .module.single-contract-tile .row-with-bottom-squares .border-right-light-gray {
   border-right: 2px solid #ededed; }
 .module.single-contract-tile .contract-body {
