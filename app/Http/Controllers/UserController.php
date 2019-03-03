@@ -471,6 +471,7 @@ class UserController extends Controller {
         $curl = curl_init();
         $json = '{"jwtToken":"'.$request->input('token').'"}';
         var_dump($json);
+        var_dump(mb_strlen($json));
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
