@@ -473,10 +473,8 @@ class UserController extends Controller {
         var_dump($json);
         var_dump(mb_strlen($json));
         curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
             CURLOPT_URL => 'https://dentacoin.net/civic',
-            CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => array(
                 'jwtToken' => $request->input('token')
             )
