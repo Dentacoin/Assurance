@@ -481,6 +481,8 @@ class UserController extends Controller {
             ))
         ));
 
+        curl_setopt($json, CURLOPT_HTTPHEADER, array("X-Requested-With: XMLHttpRequest", "Content-Type: application/json; charset=utf-8"));
+
         $resp = curl_exec($curl);
         curl_close($curl);
 
