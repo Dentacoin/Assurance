@@ -2148,9 +2148,24 @@ async function onDocumentReadyPageData() {
             });
 
             $(document).on('receivedKYCCivicToken', async function (event) {
-                console.log(event, 'receivedKYCCivicToken');
                 if(event.response_data) {
-                    console.log(event.response_data, 'event.response_data');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/validate-civic-kyc',
+                        dataType: 'json',
+                        data: {
+                            token: event.response_data
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (response) {
+                            console.log(response);
+                        }
+                    });
+                } else {
+                    $('.response-layer').hide();
+                    basic.showAlert('Something went wrong with Civic authentication. Please try again later.', '', true);
                 }
             });
         } else if($('body').hasClass('dentist-contract-view')) {

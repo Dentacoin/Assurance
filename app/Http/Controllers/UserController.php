@@ -460,4 +460,32 @@ class UserController extends Controller {
             return redirect()->route('manage-privacy')->with(['error' => 'Your profile deletion failed. Please try again later.']);
         }
     }
+
+    protected function validateCivicKyc(Request $request) {
+        $this->validate($request, [
+            'token' => 'required'
+        ], [
+            'token.required' => 'Token is required.'
+        ]);
+
+        $curl = curl_init();
+        $json = '{"jwtToken":"'.$request->input('token').'"}';
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_POST => 1,
+            CURLOPT_URL => 'https://dentacoin.net/civic',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_POSTFIELDS => $json
+        ));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
+                'Content-Type: application/json',
+                'Content-Length: ' . mb_strlen($json))
+        );
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        var_dump($resp);
+        die();
+    }
 }

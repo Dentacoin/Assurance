@@ -478,12 +478,27 @@ var onDocumentReadyPageData = function () {
                                     while (1) {
                                         switch (_context17.prev = _context17.next) {
                                             case 0:
-                                                console.log(event, 'receivedKYCCivicToken');
                                                 if (event.response_data) {
-                                                    console.log(event.response_data, 'event.response_data');
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: '/validate-civic-kyc',
+                                                        dataType: 'json',
+                                                        data: {
+                                                            token: event.response_data
+                                                        },
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                        },
+                                                        success: function success(response) {
+                                                            console.log(response);
+                                                        }
+                                                    });
+                                                } else {
+                                                    $('.response-layer').hide();
+                                                    basic.showAlert('Something went wrong with Civic authentication. Please try again later.', '', true);
                                                 }
 
-                                            case 2:
+                                            case 1:
                                             case "end":
                                                 return _context17.stop();
                                         }

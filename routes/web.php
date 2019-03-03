@@ -97,6 +97,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/filter-my-contracts', 'UserController@filterMyContracts')->middleware('HandleUserSession')->name('filter-my-contracts');
 
+    Route::post('/validate-civic-kyc', 'UserController@validateCivicKyc')->middleware('HandleUserSession')->name('validate-civic-kyc');
+
     Route::post('/delete-my-profile', 'UserController@deleteMyProfile')->middleware('HandleUserSession')->name('delete-my-profile');
 
     Route::post('/get-address-validation-or-remember-me', 'UserController@getAddressValidationOrRememberMe')->middleware('HandleUserSession')->name('get-address-validation-or-remember-me');
