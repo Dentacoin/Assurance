@@ -481,7 +481,17 @@ class UserController extends Controller {
             ))
         ));
 
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array("X-Requested-With: XMLHttpRequest", "Content-Type: application/json; charset=utf-8"));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            "User-Agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36",
+            "Accept" => "application/json, text/javascript, */*; q=0.01",
+            "Referer" => "https://dev-test.dentacoin.com/my-profile",
+            "Origin" => "https://dev-test.dentacoin.com",
+            "Access-Control-Allow-Origin" => "*m",
+            "Connection" => "keep-alive",
+            "Transfer-Encoding" => "chunked",
+            "Content-Type" => "application/json",
+            "Server" => "nginx/1.10.3 (Ubuntu)"
+        ));
 
         $resp = curl_exec($curl);
         curl_close($curl);
