@@ -18,7 +18,11 @@
                     <div class="wrapper padding-top-50 padding-bottom-60">
                         <div class="top-right-page-alike"></div>
                         <h2 class="text-center blue-green-color fs-30 lato-bold padding-bottom-20">ASSURANCE CONTRACT SAMPLE</h2>
-                        <div class="calibri-bold fs-14 padding-bottom-50 text-center blue-green-color">( This contract proposal will be active until <span class="active-until">{{date('d/m/Y',strtotime('+'.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days', strtotime($created_at))) . PHP_EOL}}</span>. )</div>
+                        @if((time() - strtotime($created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL)
+                            <div class="calibri-bold fs-14 padding-bottom-50 text-center cancelled-color">This contract proposal has expired.</div>
+                        @else
+                            <div class="calibri-bold fs-14 padding-bottom-50 text-center blue-green-color">( This contract proposal will be active until <span class="active-until">{{date('d/m/Y', strtotime('+'.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days', strtotime($created_at))) . PHP_EOL}}</span>. )</div>
+                        @endif
                         <div class="step-fields module padding-top-20">
                             <form method="POST" enctype="multipart/form-data" action="{{route('update-and-sign-contract')}}" id="dentist-update-and-sign-contract" class="address-suggester-wrapper">
                                 <h3 class="calibri-bold fs-30 dark-color">DENTIST DETAILS</h3>
