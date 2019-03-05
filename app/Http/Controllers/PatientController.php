@@ -240,9 +240,15 @@ class PatientController extends Controller {
         $data = $this->clearPostData($request->input());
         $contract = TemporallyContract::where(array('slug' => $data['contract']))->get()->first();
 
+        //if user trying to fake the contract slug
         if(empty($contract) || (!empty($contract) && $contract->patient_email != $logged_patient->email)) {
-            //if user trying to fake the contract slug
             return abort(404);
+        }
+
+
+        //check if contract expired
+        if((time() - strtotime($contract->created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) {
+            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'This contract proposal has expired.']);
         }
 
         //update CoreDB api data for this patient
