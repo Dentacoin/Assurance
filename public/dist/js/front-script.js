@@ -687,24 +687,7 @@ var getEncryptedContractPdfContent = function () {
     return function getEncryptedContractPdfContent(_x13, _x14) {
         return _ref21.apply(this, arguments);
     };
-}(); /*
-     
-     async function getDecryptedPdfContentByPlainKey(encrypted_html, key) {
-        return await $.ajax({
-            type: 'POST',
-            url: '/decrypt-data-plain-key',
-            dataType: 'json',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                encrypted_html: encrypted_html,
-                private_key: key
-            }
-        });
-     }
-     */
-
+}();
 
 var getDecryptedPdfContent = function () {
     var _ref22 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22(encrypted_html, key) {
@@ -2181,8 +2164,17 @@ if ($('body').hasClass('logged-in')) {
                                     fields = this_form.find('.required-field');
                                     form_errors = false;
 
-                                    //clear previous submits errors
+                                    if (!($('.contract-proposal.section.module').attr('data-expired') != undefined)) {
+                                        _context8.next = 8;
+                                        break;
+                                    }
 
+                                    basic.showAlert('This contract proposal has expired.', '', true);
+                                    return _context8.abrupt("return", false);
+
+                                case 8:
+
+                                    //clear previous submits errors
                                     this_form.find('.error-in-label').remove();
                                     this_form.find('.single-row').removeClass('row-with-error');
                                     fields.removeClass('with-error');
@@ -2209,7 +2201,7 @@ if ($('body').hasClass('logged-in')) {
                                     }
 
                                     if (form_errors) {
-                                        _context8.next = 17;
+                                        _context8.next = 20;
                                         break;
                                     }
 
@@ -2222,23 +2214,23 @@ if ($('body').hasClass('logged-in')) {
                                     }
 
                                     if (!innerAddressCheck(patient_address)) {
-                                        _context8.next = 16;
+                                        _context8.next = 19;
                                         break;
                                     }
 
-                                    _context8.next = 15;
+                                    _context8.next = 18;
                                     return validateUserAddress(patient_address, $('.dcn-address-row #dcn_address'));
 
-                                case 15:
+                                case 18:
                                     validate_patient_address = _context8.sent;
 
-                                case 16:
+                                case 19:
 
                                     if (validate_patient_address) {
                                         form_errors = true;
                                     }
 
-                                case 17:
+                                case 20:
 
                                     if (form_errors) {
                                         $('html, body').animate({ scrollTop: $('.required-field.with-error').offset().top - 50 }, 500);
@@ -2260,7 +2252,7 @@ if ($('body').hasClass('logged-in')) {
                                         }
                                     }
 
-                                case 18:
+                                case 21:
                                 case "end":
                                     return _context8.stop();
                             }

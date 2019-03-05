@@ -1155,6 +1155,11 @@ if($('body').hasClass('logged-in')) {
                 var fields = this_form.find('.required-field');
                 var form_errors = false;
 
+                if($('.contract-proposal.section.module').attr('data-expired') != undefined) {
+                    basic.showAlert('This contract proposal has expired.', '', true);
+                    return false;
+                }
+
                 //clear previous submits errors
                 this_form.find('.error-in-label').remove();
                 this_form.find('.single-row').removeClass('row-with-error');
@@ -2867,23 +2872,8 @@ async function getEncryptedContractPdfContent(hash, type) {
             type: type
         }
     });
-}/*
-
-async function getDecryptedPdfContentByPlainKey(encrypted_html, key) {
-    return await $.ajax({
-        type: 'POST',
-        url: '/decrypt-data-plain-key',
-        dataType: 'json',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-            encrypted_html: encrypted_html,
-            private_key: key
-        }
-    });
 }
-*/
+
 async function getDecryptedPdfContent(encrypted_html, key) {
     return await $.ajax({
         type: 'POST',

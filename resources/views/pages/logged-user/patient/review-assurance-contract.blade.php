@@ -4,7 +4,7 @@
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
     @php($general_dentistry = unserialize($contract->general_dentistry))
     @php($created_at = $contract->created_at->format('d-m-Y'))
-    <section class="padding-top-100 padding-bottom-50 contract-proposal section module" data-created-at-timestamp="{{strtotime($created_at)}}">
+    <section class="padding-top-100 padding-bottom-50 contract-proposal section module" data-created-at-timestamp="{{strtotime($created_at)}}" @if((time() - strtotime($created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) data-expired="true" @endif>
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
