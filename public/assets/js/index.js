@@ -601,6 +601,8 @@ async function pagesDataOnContractInit() {
                                         console.log(gas_cost_for_approval, 'gas_cost_for_approval');
                                     }
 
+                                    console.log(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash);
+
                                     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                                     var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({from: App.dummy_address, gas: 500000});
                                     console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
@@ -697,7 +699,7 @@ async function pagesDataOnContractInit() {
 
                                             async function fireAssuranceContractCreationTransaction() {
                                                 console.log('fireAssuranceContractCreationTransaction');
-                                                var contract_creation_function_abi = await App.assurance_proxy_methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
+                                                var contract_creation_function_abi = await App.assurance_proxy_methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
                                                 App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
                                                     var contract_creation_transaction_obj = {
                                                         gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5/100))),

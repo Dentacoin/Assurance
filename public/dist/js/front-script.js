@@ -184,7 +184,7 @@ var pagesDataOnContractInit = function () {
                                                         switch (_context6.prev = _context6.next) {
                                                             case 0:
                                                                 if (!response.success) {
-                                                                    _context6.next = 59;
+                                                                    _context6.next = 60;
                                                                     break;
                                                                 }
 
@@ -247,10 +247,14 @@ var pagesDataOnContractInit = function () {
                                                                 console.log(gas_cost_for_approval, 'gas_cost_for_approval');
 
                                                             case 29:
-                                                                _context6.next = 31;
+
+                                                                console.log(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash);
+
+                                                                //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+                                                                _context6.next = 32;
                                                                 return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({ from: App.dummy_address, gas: 500000 });
 
-                                                            case 31:
+                                                            case 32:
                                                                 gas_cost_for_contract_creation = _context6.sent;
 
                                                                 console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
@@ -271,7 +275,7 @@ var pagesDataOnContractInit = function () {
                                                                 });
 
                                                                 if (!cached_key) {
-                                                                    _context6.next = 42;
+                                                                    _context6.next = 43;
                                                                     break;
                                                                 }
 
@@ -285,49 +289,49 @@ var pagesDataOnContractInit = function () {
                                                                         $('.proof-success').fadeIn(1500);
                                                                     }, 500);
                                                                 });
-                                                                _context6.next = 56;
+                                                                _context6.next = 57;
                                                                 break;
 
-                                                            case 42:
+                                                            case 43:
                                                                 if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
-                                                                    _context6.next = 55;
+                                                                    _context6.next = 56;
                                                                     break;
                                                                 }
 
-                                                                _context6.next = 45;
+                                                                _context6.next = 46;
                                                                 return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
 
-                                                            case 45:
+                                                            case 46:
                                                                 decrypted_private_key_response = _context6.sent;
 
                                                                 if (!decrypted_private_key_response.success) {
-                                                                    _context6.next = 50;
+                                                                    _context6.next = 51;
                                                                     break;
                                                                 }
 
                                                                 transaction_key = decrypted_private_key_response.success;
-                                                                _context6.next = 53;
+                                                                _context6.next = 54;
                                                                 break;
 
-                                                            case 50:
+                                                            case 51:
                                                                 if (!decrypted_private_key_response.error) {
-                                                                    _context6.next = 53;
+                                                                    _context6.next = 54;
                                                                     break;
                                                                 }
 
                                                                 basic.showAlert(decrypted_private_key_response.error, '', true);
                                                                 return _context6.abrupt("return", false);
 
-                                                            case 53:
-                                                                _context6.next = 56;
+                                                            case 54:
+                                                                _context6.next = 57;
                                                                 break;
 
-                                                            case 55:
+                                                            case 56:
                                                                 if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                                                     $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>');
                                                                 }
 
-                                                            case 56:
+                                                            case 57:
 
                                                                 $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee5() {
                                                                     var _fireAssuranceContractCreationTransaction, decrypted_keystore_file_response, EthereumTx, approval_function_abi;
@@ -372,7 +376,7 @@ var pagesDataOnContractInit = function () {
                                                                                                         case 0:
                                                                                                             console.log('fireAssuranceContractCreationTransaction');
                                                                                                             _context4.next = 3;
-                                                                                                            return App.assurance_proxy_methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
+                                                                                                            return App.assurance_proxy_methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
                                                                                                         case 3:
                                                                                                             contract_creation_function_abi = _context4.sent;
@@ -487,13 +491,13 @@ var pagesDataOnContractInit = function () {
                                                                         }
                                                                     }, _callee5, this);
                                                                 })));
-                                                                _context6.next = 60;
+                                                                _context6.next = 61;
                                                                 break;
 
-                                                            case 59:
+                                                            case 60:
                                                                 basic.showAlert(response.error, '', true);
 
-                                                            case 60:
+                                                            case 61:
                                                             case "end":
                                                                 return _context6.stop();
                                                         }
