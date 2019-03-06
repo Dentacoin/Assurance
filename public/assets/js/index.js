@@ -643,6 +643,7 @@ async function pagesDataOnContractInit() {
                                                     transaction_key = decrypted_keystore_file_response.success;
                                                 } else if(decrypted_keystore_file_response.error) {
                                                     basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                    return false;
                                                 }
                                             }
 
@@ -659,6 +660,7 @@ async function pagesDataOnContractInit() {
                                                     data: approval_function_abi,
                                                     to: App.dentacoin_token_address
                                                 };
+                                                console.log(transaction_key, 'transaction_key');
                                                 console.log(approval_transaction_obj, 'approval_transaction_obj');
                                                 return false;
 

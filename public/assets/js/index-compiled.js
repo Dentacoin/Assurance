@@ -25706,7 +25706,7 @@ var pagesDataOnContractInit = function () {
 
                                                                                 case 15:
                                                                                     if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
-                                                                                        _context4.next = 20;
+                                                                                        _context4.next = 26;
                                                                                         break;
                                                                                     }
 
@@ -25716,17 +25716,29 @@ var pagesDataOnContractInit = function () {
                                                                                 case 18:
                                                                                     decrypted_keystore_file_response = _context4.sent;
 
-                                                                                    if (decrypted_keystore_file_response.success) {
-                                                                                        transaction_key = decrypted_keystore_file_response.success;
-                                                                                    } else if (decrypted_keystore_file_response.error) {
-                                                                                        basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                                                    if (!decrypted_keystore_file_response.success) {
+                                                                                        _context4.next = 23;
+                                                                                        break;
                                                                                     }
 
-                                                                                case 20:
-                                                                                    _context4.next = 22;
+                                                                                    transaction_key = decrypted_keystore_file_response.success;
+                                                                                    _context4.next = 26;
+                                                                                    break;
+
+                                                                                case 23:
+                                                                                    if (!decrypted_keystore_file_response.error) {
+                                                                                        _context4.next = 26;
+                                                                                        break;
+                                                                                    }
+
+                                                                                    basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                                                    return _context4.abrupt('return', false);
+
+                                                                                case 26:
+                                                                                    _context4.next = 28;
                                                                                     return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
 
-                                                                                case 22:
+                                                                                case 28:
                                                                                     approval_function_abi = _context4.sent;
 
                                                                                     App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
@@ -25741,6 +25753,7 @@ var pagesDataOnContractInit = function () {
                                                                                             data: approval_function_abi,
                                                                                             to: App.dentacoin_token_address
                                                                                         };
+                                                                                        console.log(transaction_key, 'transaction_key');
                                                                                         console.log(approval_transaction_obj, 'approval_transaction_obj');
                                                                                         return false;
 
@@ -25753,7 +25766,7 @@ var pagesDataOnContractInit = function () {
                                                                                         });
                                                                                     });
 
-                                                                                case 24:
+                                                                                case 30:
                                                                                 case 'end':
                                                                                     return _context4.stop();
                                                                             }
