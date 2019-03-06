@@ -916,6 +916,10 @@ if($('body').hasClass('logged-in')) {
 
             var form_fields = this_form.find('.custom-input');
             for(var i = 0, len = form_fields.length; i < len; i+=1) {
+                if(form_fields.eq(i).hasClass('bootstrap-select')) {
+                    continue;
+                }
+                
                 if(form_fields.eq(i).attr('type') == 'email' && !basic.validateEmail(form_fields.eq(i).val().trim())) {
                     customErrorHandle(form_fields.eq(i).parent(), 'Please use valid email address.');
                     errors = true;
