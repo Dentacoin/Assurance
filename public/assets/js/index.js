@@ -139,6 +139,19 @@ var App = {
             App.web3_1_0 = getWeb3();
         }
 
+        if($('body').hasClass('logged-in')) {
+            var user_data = await getCurrentUserData();
+            global_state.account = App.web3_1_0.utils.toChecksumAddress(user_data.success.dcn_address);
+
+            //if some fake or false current-account localstorage variable is set -> delete it
+            if(localStorage.getItem('current-account') != null) {
+                var current_account_obj = JSON.parse(localStorage.getItem('current-account'));
+                if(!has(current_account_obj, 'address') || !innerAddressCheck(current_account_obj.address) || global_state.account.toLowerCase() != current_account_obj.address.toLowerCase() || !has(current_account_obj, 'type') || (has(current_account_obj, 'type') && (current_account_obj.type != 'key' && current_account_obj.type != 'keystore'))) {
+                    localStorage.removeItem('current-account');
+                }
+            }
+        }
+
         return App.initContract();
     },
     initContract: async function() {
@@ -678,7 +691,7 @@ function innerAddressCheck(address)    {
     return App.web3_1_0.utils.isAddress(address);
 }
 
-async function buildCurrentDentistContractHistory() {
+/*async function buildCurrentDentistContractHistory() {
     var current_patients_for_dentist = await App.assurance_methods.getPatientsArrForDentist(global_state.account);
     if(current_patients_for_dentist.length > 0) {
         var pending_approval_from_this_dentist_bool = false;
@@ -746,7 +759,7 @@ async function buildCurrentPatientContractHistory() {
             }
         }
     }
-}
+}*/
 
 // ================== PAGES ==================
 async function initPagesLogic() {
@@ -2291,18 +2304,6 @@ function onWindowLoadPageData() {
 
 async function onDocumentReadyPageData() {
     if($('body').hasClass('logged-in')) {
-        var user_data = await getCurrentUserData();
-        global_state.account = user_data.success.dcn_address;
-
-        //if some fake or false current-account localstorage variable is set -> delete it
-        if(localStorage.getItem('current-account') != null) {
-            console.log('localStorage check going on');
-            var current_account_obj = JSON.parse(localStorage.getItem('current-account'));
-            if(!has(current_account_obj, 'address') || !innerAddressCheck(current_account_obj.address) || global_state.account.toLowerCase() != current_account_obj.address.toLowerCase() || !has(current_account_obj, 'type') || (has(current_account_obj, 'type') && (current_account_obj.type != 'key' && current_account_obj.type != 'keystore'))) {
-                localStorage.removeItem('current-account');
-            }
-        }
-
         if($('body').hasClass('congratulations')) {
             var next_transfer_timestamp = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
             if($('.converted-date').length > 0) {
