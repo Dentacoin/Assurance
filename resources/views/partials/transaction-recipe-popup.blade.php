@@ -59,11 +59,11 @@
     </div>
 @endif
 <div class="camp-for-keystore-password"></div>
-<div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address and key verification.</div>
+<div class="proof-success no-transition fs-20 calibri-bold text-center">Successful address and key verification.</div>
 <div class="padding-top-30 fs-18 padding-bottom-20 text-center additional-text">By clicking on the button below you also agree that from now on your monthly premium amount will be automatically deducted from your wallet balance on the payment due date.</div>
 <div class="checkbox-container text-center">
     <div class="pretty p-svg p-curve on-white-background inline-block-important">
-        <input type="checkbox" id="privacy-policy"/>
+        <input type="checkbox" id="understand-and-agree"/>
         <div class="state p-success">
             <svg class="svg svg-icon" viewBox="0 0 20 20">
                 <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>

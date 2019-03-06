@@ -601,7 +601,6 @@ async function pagesDataOnContractInit() {
                                     });
 
                                     var transaction_key;
-                                    console.log(cached_key, 'cached_key');
                                     if(cached_key) {
                                         bindVerifyAddressLogic(true);
                                         $(document).on('on-transaction-recipe-agree', function(event) {
@@ -628,16 +627,23 @@ async function pagesDataOnContractInit() {
                                     }
 
                                     $('.recipe-popup .execute-transaction').click(async function() {
-                                        if(global_state.account == '' || (localStorage.getItem('current-account') != null && global_state.account != JSON.parse(localStorage.getItem('current-account')).address)) {
+                                        if(global_state.account == '' || (!cached_key && global_state.account != JSON.parse(localStorage.getItem('current-account')).address) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
                                             basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                             return false;
                                         } else if(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
                                             basic.showAlert('Please enter the secret password for your keystore file.', '', true);
                                             return false;
+                                        } else if(!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                            basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                            return false;
                                         } else {
                                             if(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                console.log('request to nodejs api for decrypt keystore file');
-                                                return false;
+                                                var decrypted_keystore_file_response = await getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                if(decrypted_keystore_file_response.success) {
+                                                    transaction_key = decrypted_keystore_file_response.success;
+                                                } else if(decrypted_keystore_file_response.error) {
+                                                    basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                }
                                             }
 
                                             var approval_function_abi = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
@@ -3196,6 +3202,21 @@ async function getDecryptedPrivateKey(key) {
         dataType: 'json',
         data: {
             private_key: key
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+}
+
+async function getDecryptedKeystoreFile(keystore, password) {
+    return await $.ajax({
+        type: 'POST',
+        url: '/decrypt-pk',
+        dataType: 'json',
+        data: {
+            keystore: keystore,
+            password: password
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

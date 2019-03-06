@@ -184,7 +184,7 @@ var pagesDataOnContractInit = function () {
                                                         switch (_context5.prev = _context5.next) {
                                                             case 0:
                                                                 if (!response.success) {
-                                                                    _context5.next = 40;
+                                                                    _context5.next = 39;
                                                                     break;
                                                                 }
 
@@ -222,10 +222,8 @@ var pagesDataOnContractInit = function () {
                                                                     html: true
                                                                 });
 
-                                                                console.log(cached_key, 'cached_key');
-
                                                                 if (!cached_key) {
-                                                                    _context5.next = 23;
+                                                                    _context5.next = 22;
                                                                     break;
                                                                 }
 
@@ -239,57 +237,57 @@ var pagesDataOnContractInit = function () {
                                                                         $('.proof-success').fadeIn(1500);
                                                                     }, 500);
                                                                 });
-                                                                _context5.next = 37;
+                                                                _context5.next = 36;
                                                                 break;
 
-                                                            case 23:
+                                                            case 22:
                                                                 if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
-                                                                    _context5.next = 36;
+                                                                    _context5.next = 35;
                                                                     break;
                                                                 }
 
-                                                                _context5.next = 26;
+                                                                _context5.next = 25;
                                                                 return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
 
-                                                            case 26:
+                                                            case 25:
                                                                 decrypted_private_key_response = _context5.sent;
 
                                                                 if (!decrypted_private_key_response.success) {
-                                                                    _context5.next = 31;
+                                                                    _context5.next = 30;
                                                                     break;
                                                                 }
 
                                                                 transaction_key = decrypted_private_key_response.success;
-                                                                _context5.next = 34;
+                                                                _context5.next = 33;
                                                                 break;
 
-                                                            case 31:
+                                                            case 30:
                                                                 if (!decrypted_private_key_response.error) {
-                                                                    _context5.next = 34;
+                                                                    _context5.next = 33;
                                                                     break;
                                                                 }
 
                                                                 basic.showAlert(decrypted_private_key_response.error, '', true);
                                                                 return _context5.abrupt("return", false);
 
-                                                            case 34:
-                                                                _context5.next = 37;
+                                                            case 33:
+                                                                _context5.next = 36;
                                                                 break;
 
-                                                            case 36:
+                                                            case 35:
                                                                 if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                                                     $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>');
                                                                 }
 
-                                                            case 37:
+                                                            case 36:
 
                                                                 $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4() {
-                                                                    var approval_function_abi;
+                                                                    var decrypted_keystore_file_response, approval_function_abi;
                                                                     return _regeneratorRuntime.wrap(function _callee4$(_context4) {
                                                                         while (1) {
                                                                             switch (_context4.prev = _context4.next) {
                                                                                 case 0:
-                                                                                    if (!(global_state.account == '' || localStorage.getItem('current-account') != null && global_state.account != JSON.parse(localStorage.getItem('current-account')).address)) {
+                                                                                    if (!(global_state.account == '' || !cached_key && global_state.account != JSON.parse(localStorage.getItem('current-account')).address || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
                                                                                         _context4.next = 5;
                                                                                         break;
                                                                                     }
@@ -307,19 +305,37 @@ var pagesDataOnContractInit = function () {
                                                                                     return _context4.abrupt("return", false);
 
                                                                                 case 10:
-                                                                                    if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
-                                                                                        _context4.next = 13;
+                                                                                    if ($('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                                                        _context4.next = 15;
                                                                                         break;
                                                                                     }
 
-                                                                                    console.log('request to nodejs api for decrypt keystore file');
+                                                                                    basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
                                                                                     return _context4.abrupt("return", false);
 
-                                                                                case 13:
-                                                                                    _context4.next = 15;
+                                                                                case 15:
+                                                                                    if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
+                                                                                        _context4.next = 20;
+                                                                                        break;
+                                                                                    }
+
+                                                                                    _context4.next = 18;
+                                                                                    return getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+
+                                                                                case 18:
+                                                                                    decrypted_keystore_file_response = _context4.sent;
+
+                                                                                    if (decrypted_keystore_file_response.success) {
+                                                                                        transaction_key = decrypted_keystore_file_response.success;
+                                                                                    } else if (decrypted_keystore_file_response.error) {
+                                                                                        basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                                                    }
+
+                                                                                case 20:
+                                                                                    _context4.next = 22;
                                                                                     return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
 
-                                                                                case 15:
+                                                                                case 22:
                                                                                     approval_function_abi = _context4.sent;
 
                                                                                     App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
@@ -346,7 +362,7 @@ var pagesDataOnContractInit = function () {
                                                                                         });
                                                                                     });
 
-                                                                                case 17:
+                                                                                case 24:
                                                                                 case "end":
                                                                                     return _context4.stop();
                                                                             }
@@ -355,13 +371,13 @@ var pagesDataOnContractInit = function () {
                                                                 }))
                                                                 //App.assurance_proxy_methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash);
                                                                 );
-                                                                _context5.next = 41;
+                                                                _context5.next = 40;
                                                                 break;
 
-                                                            case 40:
+                                                            case 39:
                                                                 basic.showAlert(response.error, '', true);
 
-                                                            case 41:
+                                                            case 40:
                                                             case "end":
                                                                 return _context5.stop();
                                                         }
@@ -1050,8 +1066,8 @@ var getDecryptedPrivateKey = function () {
     };
 }();
 
-var getDecryptedPdfContent = function () {
-    var _ref27 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee27(encrypted_html, key) {
+var getDecryptedKeystoreFile = function () {
+    var _ref27 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee27(keystore, password) {
         return _regeneratorRuntime.wrap(function _callee27$(_context27) {
             while (1) {
                 switch (_context27.prev = _context27.next) {
@@ -1059,14 +1075,14 @@ var getDecryptedPdfContent = function () {
                         _context27.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data',
+                            url: '/decrypt-pk',
                             dataType: 'json',
+                            data: {
+                                keystore: keystore,
+                                password: password
+                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
                             }
                         });
 
@@ -1081,8 +1097,44 @@ var getDecryptedPdfContent = function () {
         }, _callee27, this);
     }));
 
-    return function getDecryptedPdfContent(_x24, _x25) {
+    return function getDecryptedKeystoreFile(_x24, _x25) {
         return _ref27.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContent = function () {
+    var _ref28 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee28(encrypted_html, key) {
+        return _regeneratorRuntime.wrap(function _callee28$(_context28) {
+            while (1) {
+                switch (_context28.prev = _context28.next) {
+                    case 0:
+                        _context28.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context28.abrupt("return", _context28.sent);
+
+                    case 3:
+                    case "end":
+                        return _context28.stop();
+                }
+            }
+        }, _callee28, this);
+    }));
+
+    return function getDecryptedPdfContent(_x26, _x27) {
+        return _ref28.apply(this, arguments);
     };
 }();
 
