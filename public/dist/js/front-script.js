@@ -392,6 +392,9 @@ var pagesDataOnContractInit = function () {
                                                                                                                                         if (contract_creation_status != null && has(contract_creation_status, 'status')) {
                                                                                                                                             $('.response-layer').hide();
                                                                                                                                             clearInterval(contract_creation_interval_check);
+
+                                                                                                                                            // UPDATE CONTRACT STATUS
+
                                                                                                                                             basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.', '', true);
                                                                                                                                         }
 
@@ -944,8 +947,6 @@ var onDocumentReadyPageData = function () {
                                                             jwtToken: event.response_data
                                                         },
                                                         success: function success(response) {
-                                                            console.log(response, 'response');
-
                                                             if (response.data && has(response, 'userId') && response.userId != '') {
                                                                 $.ajax({
                                                                     type: 'POST',
@@ -958,7 +959,14 @@ var onDocumentReadyPageData = function () {
                                                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                                     },
                                                                     success: function success(inner_response) {
-                                                                        console.log(inner_response);
+                                                                        if (inner_response.success) {
+                                                                            basic.showAlert('Civic KYC authentication passed successfully.', '', true);
+                                                                            setTimeout(function () {
+                                                                                window.location.reload();
+                                                                            }, 2000);
+                                                                        } else if (inner_response.error) {
+                                                                            basic.showAlert(inner_response.error, '', true);
+                                                                        }
                                                                     }
                                                                 });
                                                             }

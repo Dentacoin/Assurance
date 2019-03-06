@@ -514,16 +514,17 @@ class UserController extends Controller {
             )
         ));
 
-        $resp = curl_exec($curl);
+        $civic_validation_response = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        var_dump($resp);
-        die();
-
-        if(!empty($resp))   {
-            return $resp;
-        }else {
-            return false;
+        if($civic_validation_response->success) {
+            $update_user_data_response = (new APIRequestsController())->updateUserData(array('civic_kyc' => 1));
+            if(!$update_user_data_response) {
+                return response()->json(['error' => 'Civic authentication failed.']);
+            }
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => 'Civic authentication failed.']);
         }
     }
 }

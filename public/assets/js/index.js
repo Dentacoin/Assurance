@@ -2439,8 +2439,6 @@ async function onDocumentReadyPageData() {
                             jwtToken: event.response_data
                         },
                         success: function (response) {
-                            console.log(response, 'response');
-
                             if(response.data && has(response, 'userId') && response.userId != '') {
                                 $.ajax({
                                     type: 'POST',
@@ -2453,7 +2451,14 @@ async function onDocumentReadyPageData() {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     success: function (inner_response) {
-                                        console.log(inner_response);
+                                        if(inner_response.success) {
+                                            basic.showAlert('Civic KYC authentication passed successfully.', '', true);
+                                            setTimeout(function() {
+                                                window.location.reload();
+                                            }, 2000);
+                                        } else if(inner_response.error) {
+                                            basic.showAlert(inner_response.error, '', true);
+                                        }
                                     }
                                 });
                             }
