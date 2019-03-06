@@ -313,6 +313,8 @@ class PatientController extends Controller {
 
         $view_end = view('partials/pdf-contract-layout-end');
         $html_end = $view_end->render();
+        var_dump($html_body);
+        die();
 
         $html_body = 'Test <div>KozBira</div><p class="asdasdasdas">KEPASA ASWWAWAWAW</p>';
         var_dump(htmlentities($this->minifyHtmlParts($html_body)));
