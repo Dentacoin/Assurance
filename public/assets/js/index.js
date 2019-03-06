@@ -607,6 +607,7 @@ async function pagesDataOnContractInit() {
                                         methods_gas_cost = gas_cost_for_contract_creation;
                                     }
 
+
                                     var eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
                                     $('.recipe-popup .ether-fee .field').html(eth_fee);
 
@@ -668,11 +669,12 @@ async function pagesDataOnContractInit() {
                                                 var approval_function_abi = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
                                                 App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
                                                     console.log(gas_cost_for_approval, 'gas_cost_for_approval');
+                                                    console.log(gas_cost_for_approval * on_page_load_gas_price, 'gas_cost_for_approval * on_page_load_gas_price');
                                                     console.log(nonce, 'nonce');
 
                                                     var approval_transaction_obj = {
                                                         gasLimit: App.web3_1_0.utils.toHex(65000),
-                                                        gasPrice: App.web3_1_0.utils.toHex(gas_cost_for_approval),
+                                                        gasPrice: App.web3_1_0.utils.toHex(gas_cost_for_approval * on_page_load_gas_price),
                                                         from: global_state.account,
                                                         nonce: App.web3_1_0.utils.toHex(nonce),
                                                         chainId: App.chain_id,
