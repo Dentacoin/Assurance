@@ -4141,10 +4141,13 @@ function bindTransactionAddressVerify(keystore_file) {
                                     switch (_context22.prev = _context22.next) {
                                         case 0:
                                             //checking if the private key is related to the public key saved in the coredb
+                                            console.log(global_state.account, 'global_state.account');
+                                            console.log(global_state.account, 'response.address');
                                             if (global_state.account != response.address) {
                                                 basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
                                                 $('.response-layer').hide();
                                             } else {
+                                                console.log('trigger event');
                                                 //if remember me option is checked
                                                 if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
                                                     localStorage.setItem('current-account', JSON.stringify({
@@ -4161,7 +4164,7 @@ function bindTransactionAddressVerify(keystore_file) {
                                                 });
                                             }
 
-                                        case 1:
+                                        case 3:
                                         case "end":
                                             return _context22.stop();
                                     }
