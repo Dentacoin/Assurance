@@ -58,6 +58,7 @@
         @include('partials.address-validation-or-remember-me', ['current_logged_user_dcn_address' => $current_logged_user->dcn_address, 'cache' => true])
     </div>
 @endif
+<div class="camp-for-keystore-password"></div>
 <div class="padding-top-30 fs-18 padding-bottom-20 text-center additional-text">By clicking on the button below you also agree that from now on your monthly premium amount will be automatically deducted from your wallet balance on the payment due date.</div>
 <div class="checkbox-container text-center">
     <div class="pretty p-svg p-curve on-white-background inline-block-important">

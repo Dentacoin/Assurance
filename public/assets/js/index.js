@@ -3,11 +3,11 @@ var {getWeb3, getContractInstance} = require('./helper');
 basic.init();
 
 $(document).ready(function() {
+    onDocumentReadyPageData();
+
     App.init();
 
     fixButtonsFocus();
-
-    onDocumentReadyPageData();
 });
 
 $(window).on('load', function() {
@@ -98,6 +98,7 @@ var temporally_timestamp = 0;
 var metamask = typeof(web3) !== 'undefined' && web3.currentProvider.isMetaMask === true;
 var App = {
     dummy_address: '0x1627d0c2a441b3a192e1aeac032ae48c6b25490c',
+    chain_id: 4,
     infura_node: 'https://rinkeby.infura.io/v3/c3a8017424324e47be615fb4028275bb',
     assurance_state_address: '0x1038c1940df7d5c258a3093591dfd74fcd3d1a6a',
     assurance_state_abi: [{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_next_transfer","type":"uint256"}],"name":"updateNextTransferTime","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getPeriodToWithdraw","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractUsdValue","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"circuitBreaker","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_period_to_withdraw","type":"uint256"}],"name":"changePeriodToWithdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_api_decimals","type":"uint256"}],"name":"changeApiDecimals","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_api_result_dcn_usd_price","type":"uint256"}],"name":"changeApiResultDcnUsdPrice","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"dentistApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"breakContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"}],"name":"getWaitingContractsForPatient","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractNextTransfer","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getApiResultDcnUsdPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_dentacoin_token_address","type":"address"}],"name":"changeDentacoinTokenAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getApiDecimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"api_result_dcn_usd_price","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractApprovedByDentist","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"dentacoin_token_address","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_new_admin","type":"address"}],"name":"transferAdmin","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractDcnValue","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_amount","type":"uint256"}],"name":"dcnTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"AssuranceContract","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"usd_over_dcn","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getUsdOverDcn","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"updateValidationCheck","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_min_allowed_amount","type":"uint256"}],"name":"changeMinimumAllowedAmount","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_date_start_contract","type":"uint256"},{"name":"_approved_by_dentist","type":"bool"},{"name":"_approved_by_patient","type":"bool"},{"name":"_validation_checked","type":"bool"},{"name":"_value_usd","type":"uint256"},{"name":"_value_dcn","type":"uint256"},{"name":"_contract_ipfs_hash","type":"string"}],"name":"registerContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"insertPatientContractHistory","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractApprovedByPatient","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"api_decimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"min_allowed_amount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_proxy_contract","type":"address"}],"name":"changeProxyAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getDentistsArr","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"contract_paused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"patientApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getPatient","outputs":[{"name":"","type":"uint256"},{"name":"","type":"bool"},{"name":"","type":"bool"},{"name":"","type":"bool"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"period_to_withdraw","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"proxy_contract","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_dentist_addr","type":"address"}],"name":"getDentist","outputs":[{"name":"","type":"bool"},{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getContractPaused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_usd_over_dcn","type":"bool"}],"name":"changeUsdOverDcn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractValidationChecked","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getMinAllowedAmount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_new_owner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"admin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}],
@@ -108,6 +109,7 @@ var App = {
     dentacoin_token_address: "0x19f49a24c7cb0ca1cbf38436a86656c2f30ab362",
     dentacoin_token_abi: [{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"buyDentacoinsAgainstEther","outputs":[{"name":"amount","type":"uint256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"haltDirectTrade","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amountOfEth","type":"uint256"},{"name":"dcn","type":"uint256"}],"name":"refundToOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"sellDentacoinsAgainstEther","outputs":[{"name":"revenue","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newDCNAmount","type":"uint256"}],"name":"setDCNForGas","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newBuyPriceEth","type":"uint256"},{"name":"newSellPriceEth","type":"uint256"}],"name":"setEtherPrices","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newGasAmountInWei","type":"uint256"}],"name":"setGasForDCN","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newGasReserveInWei","type":"uint256"}],"name":"setGasReserve","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"minimumBalanceInWei","type":"uint256"}],"name":"setMinBalance","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"unhaltDirectTrade","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"buyPriceEth","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"DCNForGas","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"DentacoinAddress","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"directTradeAllowed","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"gasForDCN","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"gasReserve","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"minBalanceForAccounts","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"sellPriceEth","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}],
     dentacoin_instance: null,
+    dentacoins_to_approve: 10000000000000,
     web3Provider: null,
     web3_0_2: null,
     web3_1_0: null,
@@ -121,16 +123,16 @@ var App = {
         if(metamask) {
             //METAMASK
             App.web3_0_2 = web3;
-            global_state.account = App.web3_0_2.eth.defaultAccount;
+            //global_state.account = App.web3_0_2.eth.defaultAccount;
             //overwrite web3 0.2 with web 1.0
             web3 = getWeb3(App.web3_0_2.currentProvider);
             //App.web3_1_0 = web3;
             App.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(App.infura_node));
         }else if(typeof(web3) === 'undefined')    {
             //CUSTOM
-            if(localStorage.getItem('current-account') != null) {
+            /*if(localStorage.getItem('current-account') != null) {
                 global_state.account = JSON.parse(localStorage.getItem('current-account')).address;
-            }
+            }*/
             App.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(App.infura_node));
         }else {
             //NO CUSTOM, NO METAMASK. Doing this final third check so we can use web3_1_0 functions and utils even if there is no metamask or custom imported/created account
@@ -161,7 +163,7 @@ var App = {
             });
         },
         approve: function()  {
-            return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, 9000000000000).send({
+            return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).send({
                 from: global_state.account,
                 gas: 65000
             }).on('transactionHash', function(hash){
@@ -531,9 +533,8 @@ async function pagesDataOnContractInit() {
 
             cancelContractEventInit();
 
-            var current_user_data = await getCurrentUserData();
-            var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(current_user_data.success.dcn_address)));
-            var current_user_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(current_user_data.success.dcn_address));
+            var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(global_state.account)));
+            var current_user_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(global_state.account));
             var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
 
             if(current_user_dcn_balance > monthly_premium_in_dcn && current_user_eth_balance > 0.005) {
@@ -545,13 +546,14 @@ async function pagesDataOnContractInit() {
                         //metamask way
                     } else {
                         //custom
+                        var cached_key = localStorage.getItem('current-account') == null;
                         $.ajax({
                             type: 'POST',
                             url: '/get-recipe-popup',
                             dataType: 'json',
                             data: {
                                 to: App.assurance_proxy_address,
-                                cached_key: localStorage.getItem('current-account') == null,
+                                cached_key: cached_key,
                                 contract: $('.init-contract-section').attr('data-contract')
                             },
                             headers: {
@@ -562,17 +564,7 @@ async function pagesDataOnContractInit() {
                                     basic.closeDialog();
                                     basic.showDialog(response.success, 'recipe-popup', null, true);
 
-                                    bindVerifyAddressLogic(true);
                                     fixButtonsFocus();
-
-                                    var transaction_key;
-                                    $(document).on('on-transaction-recipe-agree', function(event) {
-                                        transaction_key = event.response_data;
-                                        console.log(transaction_key, 'transaction_key');
-
-                                        $('.response-layer').hide();
-                                    });
-                                    console.log(transaction_key, 'transaction_key');
 
                                     const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
                                     //adding 10% just in case the transaction dont fail
@@ -582,7 +574,7 @@ async function pagesDataOnContractInit() {
                                     $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
 
                                     //gas estimation for DentacoinToken approval method
-                                    var gas_cost_for_approval = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, 9000000000000).estimateGas({});
+                                    var gas_cost_for_approval = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({});
 
                                     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                                     var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({from: App.dummy_address, gas: 500000});
@@ -595,13 +587,66 @@ async function pagesDataOnContractInit() {
                                         html: true
                                     });
 
-                                    $('.recipe-popup .execute-transaction').click(function() {
-                                        if(global_state.address == '' || localStorage.getItem('current-account') == null || (localStorage.getItem('current-account') != null && global_state.account != JSON.parse(localStorage.getItem('current-account')).address)) {
+                                    var transaction_key;
+                                    if(cached_key) {
+                                        bindVerifyAddressLogic(true);
+                                        $(document).on('on-transaction-recipe-agree', function(event) {
+                                            transaction_key = event.response_data;
+                                            $('.response-layer').hide();
+                                        });
+                                    } else {
+                                        if(JSON.parse(localStorage.getItem('current-account')).type == 'key') {
+                                            var decrypted_private_key_response = await getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
+                                            if(decrypted_private_key_response.success) {
+                                                transaction_key = decrypted_private_key_response.success;
+                                            } else if(decrypted_private_key_response.error) {
+                                                basic.showAlert(decrypted_private_key_response.error, '', true);
+                                                return false;
+                                            }
+                                        } else if(JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
+                                            $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>')
+                                        }
+                                    }
+
+                                    $('.recipe-popup .execute-transaction').click(async function() {
+                                        if(global_state.account == '' || (localStorage.getItem('current-account') != null && global_state.account != JSON.parse(localStorage.getItem('current-account')).address)) {
                                             basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                             return false;
-                                        }
+                                        } else if(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                            basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                            return false;
+                                        } else {
+                                            if(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                console.log('request to nodejs api for decrypt keystore file');
+                                                return false;
+                                            }
 
-                                        App.assurance_proxy_methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash);
+                                            var approval_function_abi = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
+                                            App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
+
+                                                const EthereumTx = require('ethereumjs-tx');
+                                                var approval_transaction_obj = {
+                                                    gasLimit: App.web3_1_0.utils.toHex(50000),
+                                                    gasPrice: App.web3_1_0.utils.toHex(gas_cost_for_approval),
+                                                    from: global_state.account,
+                                                    nonce: App.web3_1_0.utils.toHex(nonce),
+                                                    chainId: App.chain_id,
+                                                    data: approval_function_abi,
+                                                    to: App.dentacoin_token_address
+                                                };
+                                                console.log(approval_transaction_obj, 'approval_transaction_obj');
+                                                return false;
+
+                                                const approval_transaction = new EthereumTx(approval_transaction_obj);
+                                                //signing the transaction
+                                                approval_transaction.sign(new Buffer(transaction_key, 'hex'));
+                                                //sending the transaction
+                                                App.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                    console.log(transactionHash, 'transactionHash');
+                                                });
+                                            });
+                                        }
+                                        //App.assurance_proxy_methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash);
                                     });
                                 } else {
                                     basic.showAlert(response.error, '', true);
@@ -2246,6 +2291,18 @@ function onWindowLoadPageData() {
 
 async function onDocumentReadyPageData() {
     if($('body').hasClass('logged-in')) {
+        var user_data = getCurrentUserData();
+        global_state.account = user_data.success.dcn_address;
+
+        //if some fake or false current-account localstorage variable is set -> delete it
+        if(localStorage.getItem('current-account') != null) {
+            console.log('localStorage check going on');
+            var current_account_obj = JSON.parse(localStorage.getItem('current-account'));
+            if(!has(current_account_obj, 'address') || !innerAddressCheck(current_account_obj.address) || global_state.account.toLowerCase() != current_account_obj.address.toLowerCase() || !has(current_account_obj, 'type') || (has(current_account_obj, 'type') && (current_account_obj.type != 'key' && current_account_obj.type != 'keystore'))) {
+                localStorage.removeItem('current-account');
+            }
+        }
+
         if($('body').hasClass('congratulations')) {
             var next_transfer_timestamp = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
             if($('.converted-date').length > 0) {
@@ -2453,7 +2510,6 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                                 type: 'keystore',
                                                 keystore: keystore_string
                                             }));
-                                            global_state.account = '0x' + JSON.parse(e.target.result).address;
                                         }
 
                                         $.ajax({
@@ -2614,7 +2670,6 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         type: 'keystore',
                                         keystore: response.success
                                     }));
-                                    global_state.account = $('.proof-of-address').attr('data-address');
                                 }
 
                                 $.ajax({
@@ -2673,7 +2728,6 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         type: 'key',
                                         key: response.private_key
                                     }));
-                                    global_state.account = response.address;
                                 }
 
                                 if(render_pdf != null) {
@@ -2753,7 +2807,6 @@ function bindTransactionAddressVerify(keystore_file) {
                                 type: 'keystore',
                                 keystore: response.success
                             }));
-                            global_state.account = $('.proof-of-address').attr('data-address');
                         }
 
                         $.event.trigger({
@@ -2780,10 +2833,10 @@ function bindTransactionAddressVerify(keystore_file) {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: async function(response) {
-                        var current_user_data = await getCurrentUserData();
                         //checking if the private key is related to the public key saved in the coredb
-                        if(current_user_data.success.dcn_address != response.address) {
+                        if(global_state.account != response.address) {
                             basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
+                            $('.response-layer').hide();
                         } else {
                             //if remember me option is checked
                             if($('.proof-of-address #remember-my-private-key').is(':checked')) {
@@ -2792,7 +2845,6 @@ function bindTransactionAddressVerify(keystore_file) {
                                     type: 'key',
                                     key: response.private_key
                                 }));
-                                global_state.account = response.address;
                             }
 
                             $.event.trigger({
@@ -2841,7 +2893,6 @@ function bindCacheKeyEvent(keystore_file) {
                                     type: 'keystore',
                                     keystore: response.success
                                 }));
-                                global_state.account = $('.proof-of-address').attr('data-address');
 
                                 $.ajax({
                                     type: 'POST',
@@ -2893,7 +2944,6 @@ function bindCacheKeyEvent(keystore_file) {
                                     type: 'key',
                                     key: response.private_key
                                 }));
-                                global_state.account = response.address;
 
                                 $.ajax({
                                     type: 'POST',
@@ -3126,6 +3176,20 @@ async function getCurrentUserData() {
         type: 'GET',
         url: '/get-current-user-data',
         dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+}
+
+async function getDecryptedPrivateKey(key) {
+    return await $.ajax({
+        type: 'POST',
+        url: '/assurance-decrypt-private-key',
+        dataType: 'json',
+        data: {
+            private_key: key
+        },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
