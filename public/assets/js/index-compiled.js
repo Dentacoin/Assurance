@@ -25721,7 +25721,7 @@ var pagesDataOnContractInit = function () {
                                                                                         break;
                                                                                     }
 
-                                                                                    transaction_key = decrypted_keystore_file_response.success;
+                                                                                    transaction_key = decrypted_keystore_file_response.to_string;
                                                                                     _context4.next = 26;
                                                                                     break;
 
@@ -29262,7 +29262,7 @@ function bindTransactionAddressVerify(keystore_file) {
                             $.event.trigger({
                                 type: 'on-transaction-recipe-agree',
                                 time: new Date(),
-                                response_data: response.success
+                                response_data: response.to_string
                             });
                         } else if (response.error) {
                             basic.showAlert(response.error, '', true);

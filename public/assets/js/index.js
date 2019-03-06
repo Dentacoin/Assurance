@@ -640,7 +640,7 @@ async function pagesDataOnContractInit() {
                                             if(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
                                                 var decrypted_keystore_file_response = await getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
                                                 if(decrypted_keystore_file_response.success) {
-                                                    transaction_key = decrypted_keystore_file_response.success;
+                                                    transaction_key = decrypted_keystore_file_response.to_string;
                                                 } else if(decrypted_keystore_file_response.error) {
                                                     basic.showAlert(decrypted_keystore_file_response.error, '', true);
                                                     return false;
@@ -2837,7 +2837,7 @@ function bindTransactionAddressVerify(keystore_file) {
                             $.event.trigger({
                                 type: 'on-transaction-recipe-agree',
                                 time: new Date(),
-                                response_data: response.success
+                                response_data: response.to_string
                             });
                         } else if(response.error) {
                             basic.showAlert(response.error, '', true);
