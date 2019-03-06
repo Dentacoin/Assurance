@@ -2777,22 +2777,28 @@ function bindTransactionAddressVerify(keystore_file) {
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function(response) {
-                        //if remember me option is checked
-                        if($('.proof-of-address #remember-my-private-key').is(':checked')) {
-                            localStorage.setItem('current-account', JSON.stringify({
-                                address: response.address,
-                                type: 'key',
-                                key: response.private_key
-                            }));
-                            global_state.account = response.address;
-                        }
+                    success: async function(response) {
+                        var current_user_data = await getCurrentUserData();
+                        //checking if the private key is related to the public key saved in the coredb
+                        if(current_user_data.success.dcn_address != response.address) {
+                            basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
+                        } else {
+                            //if remember me option is checked
+                            if($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                                localStorage.setItem('current-account', JSON.stringify({
+                                    address: response.address,
+                                    type: 'key',
+                                    key: response.private_key
+                                }));
+                                global_state.account = response.address;
+                            }
 
-                        $.event.trigger({
-                            type: 'on-transaction-recipe-agree',
-                            time: new Date(),
-                            response_data: response.plain_private_key
-                        });
+                            $.event.trigger({
+                                type: 'on-transaction-recipe-agree',
+                                time: new Date(),
+                                response_data: response.plain_private_key
+                            });
+                        }
                     }
                 });
             }

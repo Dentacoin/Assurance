@@ -26211,13 +26211,13 @@ var onDocumentReadyPageData = function () {
 }();
 
 var validateUserAddress = function () {
-    var _ref23 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee23(user_address, value_element) {
+    var _ref24 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee24(user_address, value_element) {
         var error, check_public_key_ajax_result;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee23$(_context23) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee24$(_context24) {
             while (1) {
-                switch (_context23.prev = _context23.next) {
+                switch (_context24.prev = _context24.next) {
                     case 0:
-                        _context23.next = 2;
+                        _context24.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/check-public-key',
@@ -26231,7 +26231,7 @@ var validateUserAddress = function () {
                         });
 
                     case 2:
-                        check_public_key_ajax_result = _context23.sent;
+                        check_public_key_ajax_result = _context24.sent;
 
 
                         if (check_public_key_ajax_result.success) {
@@ -26250,28 +26250,28 @@ var validateUserAddress = function () {
                                 error = true;
                             }
                         }
-                        return _context23.abrupt('return', error);
+                        return _context24.abrupt('return', error);
 
                     case 5:
                     case 'end':
-                        return _context23.stop();
+                        return _context24.stop();
                 }
             }
-        }, _callee23, this);
+        }, _callee24, this);
     }));
 
-    return function validateUserAddress(_x18, _x19) {
-        return _ref23.apply(this, arguments);
+    return function validateUserAddress(_x19, _x20) {
+        return _ref24.apply(this, arguments);
     };
 }();
 
 var getEncryptedContractPdfContent = function () {
-    var _ref24 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee24(hash, type) {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee24$(_context24) {
+    var _ref25 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee25(hash, type) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee25$(_context25) {
             while (1) {
-                switch (_context24.prev = _context24.next) {
+                switch (_context25.prev = _context25.next) {
                     case 0:
-                        _context24.next = 2;
+                        _context25.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-contract',
@@ -26286,38 +26286,6 @@ var getEncryptedContractPdfContent = function () {
                         });
 
                     case 2:
-                        return _context24.abrupt('return', _context24.sent);
-
-                    case 3:
-                    case 'end':
-                        return _context24.stop();
-                }
-            }
-        }, _callee24, this);
-    }));
-
-    return function getEncryptedContractPdfContent(_x20, _x21) {
-        return _ref24.apply(this, arguments);
-    };
-}();
-
-var getCurrentUserData = function () {
-    var _ref25 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee25() {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee25$(_context25) {
-            while (1) {
-                switch (_context25.prev = _context25.next) {
-                    case 0:
-                        _context25.next = 2;
-                        return $.ajax({
-                            type: 'GET',
-                            url: '/get-current-user-data',
-                            dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
                         return _context25.abrupt('return', _context25.sent);
 
                     case 3:
@@ -26328,28 +26296,24 @@ var getCurrentUserData = function () {
         }, _callee25, this);
     }));
 
-    return function getCurrentUserData() {
+    return function getEncryptedContractPdfContent(_x21, _x22) {
         return _ref25.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContent = function () {
-    var _ref26 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee26(encrypted_html, key) {
+var getCurrentUserData = function () {
+    var _ref26 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee26() {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee26$(_context26) {
             while (1) {
                 switch (_context26.prev = _context26.next) {
                     case 0:
                         _context26.next = 2;
                         return $.ajax({
-                            type: 'POST',
-                            url: '/decrypt-data',
+                            type: 'GET',
+                            url: '/get-current-user-data',
                             dataType: 'json',
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
                             }
                         });
 
@@ -26364,8 +26328,44 @@ var getDecryptedPdfContent = function () {
         }, _callee26, this);
     }));
 
-    return function getDecryptedPdfContent(_x22, _x23) {
+    return function getCurrentUserData() {
         return _ref26.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContent = function () {
+    var _ref27 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee27(encrypted_html, key) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee27$(_context27) {
+            while (1) {
+                switch (_context27.prev = _context27.next) {
+                    case 0:
+                        _context27.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context27.abrupt('return', _context27.sent);
+
+                    case 3:
+                    case 'end':
+                        return _context27.stop();
+                }
+            }
+        }, _callee27, this);
+    }));
+
+    return function getDecryptedPdfContent(_x23, _x24) {
+        return _ref27.apply(this, arguments);
     };
 }();
 
@@ -29078,23 +29078,54 @@ function bindTransactionAddressVerify(keystore_file) {
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function success(response) {
-                        //if remember me option is checked
-                        if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
-                            localStorage.setItem('current-account', JSON.stringify({
-                                address: response.address,
-                                type: 'key',
-                                key: response.private_key
-                            }));
-                            global_state.account = response.address;
+                    success: function () {
+                        var _ref23 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee23(response) {
+                            var current_user_data;
+                            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee23$(_context23) {
+                                while (1) {
+                                    switch (_context23.prev = _context23.next) {
+                                        case 0:
+                                            _context23.next = 2;
+                                            return getCurrentUserData();
+
+                                        case 2:
+                                            current_user_data = _context23.sent;
+
+                                            //checking if the private key is related to the public key saved in the coredb
+                                            if (current_user_data.success.dcn_address != response.address) {
+                                                basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
+                                            } else {
+                                                //if remember me option is checked
+                                                if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                                                    localStorage.setItem('current-account', JSON.stringify({
+                                                        address: response.address,
+                                                        type: 'key',
+                                                        key: response.private_key
+                                                    }));
+                                                    global_state.account = response.address;
+                                                }
+
+                                                $.event.trigger({
+                                                    type: 'on-transaction-recipe-agree',
+                                                    time: new Date(),
+                                                    response_data: response.plain_private_key
+                                                });
+                                            }
+
+                                        case 4:
+                                        case 'end':
+                                            return _context23.stop();
+                                    }
+                                }
+                            }, _callee23, this);
+                        }));
+
+                        function success(_x18) {
+                            return _ref23.apply(this, arguments);
                         }
 
-                        $.event.trigger({
-                            type: 'on-transaction-recipe-agree',
-                            time: new Date(),
-                            response_data: response.plain_private_key
-                        });
-                    }
+                        return success;
+                    }()
                 });
             }
         }
