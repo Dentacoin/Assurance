@@ -387,15 +387,14 @@ class APIRequestsController extends Controller {
         $resp = curl_exec($curl);
         curl_close($curl);
 
-        var_dump($resp);
-        die();
-        return $resp;
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
 
-        /*if(!empty($resp))   {
+        if(!empty($resp))   {
             return $resp;
         }else {
             return false;
-        }*/
+        }
     }
 
     public function getDCNBalance() {
@@ -416,12 +415,10 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        return $resp;
-
-        /*if(!empty($resp))   {
+        if(!empty($resp))   {
             return $resp;
         }else {
             return false;
-        }*/
+        }
     }
 }
