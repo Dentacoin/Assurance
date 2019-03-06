@@ -55,7 +55,7 @@
 </div>
 @if(filter_var($cached_key, FILTER_VALIDATE_BOOLEAN))
     <div class="margin-top-30">
-        @include('partials.address-validation-or-remember-me', ['current_logged_user_dcn_address' => $current_logged_user->dcn_address, 'cache' => true])
+        @include('partials.address-validation-or-remember-me', ['current_logged_user_dcn_address' => $current_logged_user->dcn_address, 'cache' => false])
     </div>
 @endif
 <div class="camp-for-keystore-password"></div>
