@@ -668,7 +668,7 @@ async function pagesDataOnContractInit() {
                                                 var approval_function_abi = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
                                                 App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
                                                     var approval_transaction_obj = {
-                                                        gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10/100))),
+                                                        gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 5/100))),
                                                         gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                         from: global_state.account,
                                                         nonce: App.web3_1_0.utils.toHex(nonce),
@@ -686,9 +686,36 @@ async function pagesDataOnContractInit() {
                                                         console.log(transactionHash, 'transactionHash');
                                                     });
                                                 });
+                                            } else {
+                                                fireAssuranceContractCreationTransaction();
+                                            }
+
+                                            async function fireAssuranceContractCreationTransaction() {
+                                                console.log('fireAssuranceContractCreationTransaction');
+                                                var contract_creation_function_abi = await App.assurance_proxy_methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
+                                                App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
+                                                    var contract_creation_transaction_obj = {
+                                                        gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5/100))),
+                                                        gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                        from: global_state.account,
+                                                        nonce: App.web3_1_0.utils.toHex(nonce),
+                                                        chainId: App.chain_id,
+                                                        data: contract_creation_function_abi,
+                                                        to: App.dentacoin_token_address
+                                                    };
+
+                                                    const contract_creation_transaction = new EthereumTx(contract_creation_transaction_obj);
+                                                    //signing the transaction
+                                                    contract_creation_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                                    //sending the transaction
+                                                    App.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                        console.log(transactionHash, 'transactionHash');
+                                                    });
+                                                });
                                             }
                                         }
-                                        //App.assurance_proxy_methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash);
+                                        //;
                                     });
                                 } else {
                                     basic.showAlert(response.error, '', true);
