@@ -206,9 +206,12 @@ class UserController extends Controller {
             'email' => $data['email'],
             'country_code' => $data['country'],
             'dcn_address' => $data['dcn_address'],
-            'address' => $data['address'],
-            'specialisations' => $data['specialisations'],
+            'address' => $data['address']
         );
+
+        if($this->checkDentistSession()) {
+            $post_fields_arr['specialisations'] = $data['specialisations'];
+        }
 
         //if the logged user is dentist he must provide website and phone
         if(isset($data['website']) || isset($data['phone'])) {
