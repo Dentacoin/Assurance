@@ -25575,7 +25575,7 @@ var pagesDataOnContractInit = function () {
                                                         switch (_context8.prev = _context8.next) {
                                                             case 0:
                                                                 if (!response.success) {
-                                                                    _context8.next = 50;
+                                                                    _context8.next = 49;
                                                                     break;
                                                                 }
 
@@ -25632,13 +25632,9 @@ var pagesDataOnContractInit = function () {
 
                                                                 if (!approval_given) {
                                                                     methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
-                                                                    console.log(gas_cost_for_approval, 'gas_cost_for_approval');
-                                                                    console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
                                                                 } else {
                                                                     methods_gas_cost = gas_cost_for_contract_creation;
-                                                                    console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
                                                                 }
-                                                                console.log(methods_gas_cost, 'methods_gas_cost');
 
                                                                 eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
 
@@ -25650,7 +25646,7 @@ var pagesDataOnContractInit = function () {
                                                                 });
 
                                                                 if (!cached_key) {
-                                                                    _context8.next = 33;
+                                                                    _context8.next = 32;
                                                                     break;
                                                                 }
 
@@ -25664,49 +25660,49 @@ var pagesDataOnContractInit = function () {
                                                                         $('.proof-success').fadeIn(1500);
                                                                     }, 500);
                                                                 });
-                                                                _context8.next = 47;
+                                                                _context8.next = 46;
                                                                 break;
 
-                                                            case 33:
+                                                            case 32:
                                                                 if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
-                                                                    _context8.next = 46;
+                                                                    _context8.next = 45;
                                                                     break;
                                                                 }
 
-                                                                _context8.next = 36;
+                                                                _context8.next = 35;
                                                                 return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
 
-                                                            case 36:
+                                                            case 35:
                                                                 decrypted_private_key_response = _context8.sent;
 
                                                                 if (!decrypted_private_key_response.success) {
-                                                                    _context8.next = 41;
+                                                                    _context8.next = 40;
                                                                     break;
                                                                 }
 
                                                                 transaction_key = decrypted_private_key_response.success;
-                                                                _context8.next = 44;
+                                                                _context8.next = 43;
                                                                 break;
 
-                                                            case 41:
+                                                            case 40:
                                                                 if (!decrypted_private_key_response.error) {
-                                                                    _context8.next = 44;
+                                                                    _context8.next = 43;
                                                                     break;
                                                                 }
 
                                                                 basic.showAlert(decrypted_private_key_response.error, '', true);
                                                                 return _context8.abrupt('return', false);
 
-                                                            case 44:
-                                                                _context8.next = 47;
+                                                            case 43:
+                                                                _context8.next = 46;
                                                                 break;
 
-                                                            case 46:
+                                                            case 45:
                                                                 if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                                                     $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>');
                                                                 }
 
-                                                            case 47:
+                                                            case 46:
 
                                                                 $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7() {
                                                                     var _fireAssuranceContractCreationTransaction, decrypted_keystore_file_response, EthereumTx, approval_function_abi;
@@ -25785,7 +25781,7 @@ var pagesDataOnContractInit = function () {
                                                                                                                                         contract_creation_status = _context5.sent;
 
                                                                                                                                         if (contract_creation_status != null && has(contract_creation_status, 'status')) {
-                                                                                                                                            console.log(contract_creation_status, 'contract_creation_status');
+                                                                                                                                            $('.response-layer').hide();
                                                                                                                                             clearInterval(contract_creation_interval_check);
                                                                                                                                             basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.', '', true);
                                                                                                                                         }
@@ -25873,6 +25869,7 @@ var pagesDataOnContractInit = function () {
 
                                                                                         //sending the transaction
                                                                                         App.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                                                            $('.response-layer').show();
                                                                                             var approval_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
                                                                                                 var approval_status;
                                                                                                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
@@ -25885,13 +25882,12 @@ var pagesDataOnContractInit = function () {
                                                                                                             case 2:
                                                                                                                 approval_status = _context4.sent;
 
-                                                                                                                console.log(approval_status, 'approval_status');
                                                                                                                 if (approval_status != null && has(approval_status, 'status')) {
                                                                                                                     clearInterval(approval_interval_check);
                                                                                                                     _fireAssuranceContractCreationTransaction();
                                                                                                                 }
 
-                                                                                                            case 5:
+                                                                                                            case 4:
                                                                                                             case 'end':
                                                                                                                 return _context4.stop();
                                                                                                         }
@@ -25913,13 +25909,13 @@ var pagesDataOnContractInit = function () {
                                                                         }
                                                                     }, _callee7, this);
                                                                 })));
-                                                                _context8.next = 51;
+                                                                _context8.next = 50;
                                                                 break;
 
-                                                            case 50:
+                                                            case 49:
                                                                 basic.showAlert(response.error, '', true);
 
-                                                            case 51:
+                                                            case 50:
                                                             case 'end':
                                                                 return _context8.stop();
                                                         }

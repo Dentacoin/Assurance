@@ -603,13 +603,9 @@ async function pagesDataOnContractInit() {
                                     var methods_gas_cost;
                                     if(!approval_given) {
                                         methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
-                                        console.log(gas_cost_for_approval, 'gas_cost_for_approval');
-                                        console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
                                     } else {
                                         methods_gas_cost = gas_cost_for_contract_creation;
-                                        console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
                                     }
-                                    console.log(methods_gas_cost, 'methods_gas_cost');
 
                                     var eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
                                     $('.recipe-popup .ether-fee .field').html(eth_fee);
@@ -687,9 +683,9 @@ async function pagesDataOnContractInit() {
 
                                                     //sending the transaction
                                                     App.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                        $('.response-layer').show();
                                                         var approval_interval_check = setInterval(async function() {
                                                             var approval_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                            console.log(approval_status, 'approval_status');
                                                             if(approval_status != null && has(approval_status, 'status')) {
                                                                 clearInterval(approval_interval_check);
                                                                 fireAssuranceContractCreationTransaction();
@@ -723,8 +719,11 @@ async function pagesDataOnContractInit() {
                                                         var contract_creation_interval_check = setInterval(async function() {
                                                             var contract_creation_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
                                                             if(contract_creation_status != null && has(contract_creation_status, 'status')) {
-                                                                console.log(contract_creation_status, 'contract_creation_status');
+                                                                $('.response-layer').hide();
                                                                 clearInterval(contract_creation_interval_check);
+
+                                                                // UPDATE CONTRACT STATUS
+
                                                                 basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.', '', true);
                                                             }
                                                         }, 1000);
