@@ -1882,7 +1882,6 @@ function decodeEntities(string) {
     var inner_html = txt.value;
     txt.remove();
     return inner_html;
-
 }
 
 //call the popup for login/sign for patient and dentist
