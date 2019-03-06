@@ -25594,6 +25594,8 @@ var pagesDataOnContractInit = function () {
                                                                 $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
 
                                                                 approval_given = false;
+                                                                //if approval is given already SOMEHOW ...
+
                                                                 _context5.t0 = parseInt;
                                                                 _context5.next = 12;
                                                                 return App.dentacoin_token_methods.allowance(checksumAddress(response.contract_data.dentist), App.assurance_state_address);
@@ -25792,6 +25794,9 @@ var pagesDataOnContractInit = function () {
                                                                                         var approval_transaction = new EthereumTx(approval_transaction_obj);
                                                                                         //signing the transaction
                                                                                         approval_transaction.sign(new Buffer(transaction_key, 'hex'));
+                                                                                        console.log(transaction_key, 'transaction_key');
+                                                                                        console.log(new Buffer(transaction_key, 'hex'), 'new Buffer(transaction_key, \'hex\')');
+                                                                                        return false;
                                                                                         //sending the transaction
                                                                                         App.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
                                                                                             console.log(transactionHash, 'transactionHash');
