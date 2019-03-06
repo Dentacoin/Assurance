@@ -685,8 +685,7 @@ async function pagesDataOnContractInit() {
                                                     App.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
                                                         var approval_interval_check = setInterval(async function() {
                                                             var approval_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                            console.log(approval_status, 'approval_status');
-                                                            if(approval_status.status) {
+                                                            if(approval_status != null && has(approval_status, 'status')) {
                                                                 clearInterval(approval_interval_check);
                                                                 fireAssuranceContractCreationTransaction();
                                                             }
@@ -718,10 +717,9 @@ async function pagesDataOnContractInit() {
                                                     App.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
                                                         var contract_creation_interval_check = setInterval(async function() {
                                                             var contract_creation_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                            console.log(contract_creation_status, 'contract_creation_status');
-                                                            if(contract_creation_status.status) {
+                                                            if(contract_creation_status != null && has(contract_creation_status, 'status')) {
                                                                 clearInterval(contract_creation_interval_check);
-                                                                basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.');
+                                                                basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.', '', true);
                                                             }
                                                         }, 1000);
                                                     });
