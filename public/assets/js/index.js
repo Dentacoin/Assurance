@@ -562,13 +562,15 @@ async function pagesDataOnContractInit() {
                                     basic.closeDialog();
                                     basic.showDialog(response.success, 'recipe-popup', null, true);
 
-                                    bindVerifyAddressLogic();
+                                    bindVerifyAddressLogic(true);
                                     fixButtonsFocus();
 
                                     var transaction_key;
                                     $(document).on('on-transaction-recipe-agree', function(event) {
                                         transaction_key = event.response_data;
                                         console.log(transaction_key, 'transaction_key');
+
+                                        $('.response-layer').hide();
                                     });
                                     console.log(transaction_key, 'transaction_key');
 
@@ -2490,7 +2492,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                             }
                         } else {
                             $('#upload-keystore-file').val('');
-                            basic.showAlert('Please upload valid keystore file.', '', true);
+                            basic.showAlert('Please upload valid keystore file which is related to the Wallet Address saved in your profile.', '', true);
                         }
                     });
                     reader.readAsBinaryString(uploaded_file);
