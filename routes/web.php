@@ -121,6 +121,10 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::get('/user-logout', 'UserController@userLogout')->name('user-logout');
 
+    Route::get('/get-current-user-data', 'UserController@getCurrentUserData')->middleware('HandleUserSession')->name('get-current-user-data');
+
+    Route::post('/get-recipe-popup', 'UserController@getRecipePopup')->middleware('HandleUserSession')->name('get-recipe-popup');
+
     Route::get('/forgotten-password', 'UserController@getForgottenPasswordView')->name('forgotten-password');
 
     Route::post('/forgotten-password-submit', 'UserController@forgottenPasswordSubmit')->name('forgotten-password-submit');

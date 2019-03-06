@@ -64,6 +64,26 @@ class UserController extends Controller {
         return response()->json(['success' => $view]);
     }
 
+    protected function getRecipePopup(Request $request) {
+        $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'status' => 'awaiting-payment'))->get()->first();
+        if($contract) {
+            $current_logged_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+            $view = view('partials/transaction-recipe-popup', ['to' => $request->input('to'), 'current_logged_user' => $current_logged_user_data, 'cached_key' => $request->input('cached_key')]);
+            $view = $view->render();
+            $contract_data = array(
+                'patient' => $current_logged_user_data->dcn_address,
+                'dentist' => (new APIRequestsController())->getUserData($contract->dentist_id)->dcn_address,
+                'value_usd' => $contract->monthly_premium,
+                'date_start_contract' => strtotime($contract->contract_active_at),
+                'contract_ipfs_hash' => $contract->document_hash
+            );
+
+            return response()->json(['success' => $view, 'contract_data' => $contract_data]);
+        } else {
+            return response()->json(['error' => 'Transaction failed, please try again later.']);
+        }
+    }
+
     protected function getMyProfileView()   {
         $currency_arr = array();
         foreach(Controller::currencies as $currency) {
@@ -459,6 +479,10 @@ class UserController extends Controller {
         } else {
             return redirect()->route('manage-privacy')->with(['error' => 'Your profile deletion failed. Please try again later.']);
         }
+    }
+
+    protected function getCurrentUserData() {
+        return response()->json(['success' => (new APIRequestsController())->getUserData(session('logged_user')['id'])]);
     }
 
     protected function validateCivicKyc(Request $request) {

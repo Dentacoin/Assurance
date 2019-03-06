@@ -95,12 +95,15 @@ function initCaptchaRefreshEvent()  {
 
 var global_state = {};
 var temporally_timestamp = 0;
+var metamask = typeof(web3) !== 'undefined' && web3.currentProvider.isMetaMask === true;
 var App = {
-    assurance_state_address: '0xb5f910da40782a5261b9809eefb3a8e183abd025',
-    assurance_state_abi: [{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_next_transfer","type":"uint256"}],"name":"updateNextTransferTime","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getPeriodToWithdraw","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractUsdValue","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"circuitBreaker","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_period_to_withdraw","type":"uint256"}],"name":"changePeriodToWithdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_api_decimals","type":"uint256"}],"name":"changeApiDecimals","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_dentist_addr","type":"address"}],"name":"registerDentist","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_api_result_dcn_usd_price","type":"uint256"}],"name":"changeApiResultDcnUsdPrice","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"dentistApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"breakContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"}],"name":"getWaitingContractsForPatient","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractNextTransfer","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getApiResultDcnUsdPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_dentacoin_token_address","type":"address"}],"name":"changeDentacoinTokenAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getApiDecimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"api_result_dcn_usd_price","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractApprovedByDentist","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"dentacoin_token_address","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_new_admin","type":"address"}],"name":"transferAdmin","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractDcnValue","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_amount","type":"uint256"}],"name":"dcnTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"AssuranceContract","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"usd_over_dcn","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getUsdOverDcn","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"updateValidationCheck","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_min_allowed_amount","type":"uint256"}],"name":"changeMinimumAllowedAmount","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_date_start_contract","type":"uint256"},{"name":"_approved_by_dentist","type":"bool"},{"name":"_approved_by_patient","type":"bool"},{"name":"_validation_checked","type":"bool"},{"name":"_value_usd","type":"uint256"},{"name":"_value_dcn","type":"uint256"},{"name":"_contract_ipfs_hash","type":"string"}],"name":"registerContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"insertPatientContractHistory","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractApprovedByPatient","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"api_decimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"min_allowed_amount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_proxy_contract","type":"address"}],"name":"changeProxyAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getDentistsArr","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"contract_paused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"patientApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getPatient","outputs":[{"name":"","type":"uint256"},{"name":"","type":"bool"},{"name":"","type":"bool"},{"name":"","type":"bool"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"period_to_withdraw","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"proxy_contract","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_dentist_addr","type":"address"}],"name":"getDentist","outputs":[{"name":"","type":"bool"},{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getContractPaused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_usd_over_dcn","type":"bool"}],"name":"changeUsdOverDcn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractValidationChecked","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getMinAllowedAmount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_new_owner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"admin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}],
+    dummy_address: '0x1627d0c2a441b3a192e1aeac032ae48c6b25490c',
+    infura_node: 'https://rinkeby.infura.io/v3/c3a8017424324e47be615fb4028275bb',
+    assurance_state_address: '0x1038c1940df7d5c258a3093591dfd74fcd3d1a6a',
+    assurance_state_abi: [{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_next_transfer","type":"uint256"}],"name":"updateNextTransferTime","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getPeriodToWithdraw","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractUsdValue","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"circuitBreaker","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_period_to_withdraw","type":"uint256"}],"name":"changePeriodToWithdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_api_decimals","type":"uint256"}],"name":"changeApiDecimals","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_api_result_dcn_usd_price","type":"uint256"}],"name":"changeApiResultDcnUsdPrice","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"dentistApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"breakContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"}],"name":"getWaitingContractsForPatient","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractNextTransfer","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getApiResultDcnUsdPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_dentacoin_token_address","type":"address"}],"name":"changeDentacoinTokenAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getApiDecimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"api_result_dcn_usd_price","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractApprovedByDentist","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"dentacoin_token_address","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_new_admin","type":"address"}],"name":"transferAdmin","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractDcnValue","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_amount","type":"uint256"}],"name":"dcnTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"AssuranceContract","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"usd_over_dcn","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getUsdOverDcn","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"updateValidationCheck","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_min_allowed_amount","type":"uint256"}],"name":"changeMinimumAllowedAmount","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_date_start_contract","type":"uint256"},{"name":"_approved_by_dentist","type":"bool"},{"name":"_approved_by_patient","type":"bool"},{"name":"_validation_checked","type":"bool"},{"name":"_value_usd","type":"uint256"},{"name":"_value_dcn","type":"uint256"},{"name":"_contract_ipfs_hash","type":"string"}],"name":"registerContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"insertPatientContractHistory","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractApprovedByPatient","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"api_decimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"min_allowed_amount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_proxy_contract","type":"address"}],"name":"changeProxyAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getDentistsArr","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"contract_paused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"patientApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getPatient","outputs":[{"name":"","type":"uint256"},{"name":"","type":"bool"},{"name":"","type":"bool"},{"name":"","type":"bool"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"period_to_withdraw","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"proxy_contract","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_dentist_addr","type":"address"}],"name":"getDentist","outputs":[{"name":"","type":"bool"},{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getContractPaused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_usd_over_dcn","type":"bool"}],"name":"changeUsdOverDcn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractValidationChecked","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getMinAllowedAmount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_new_owner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"admin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}],
     assurance_state_instance: null,
-    assurance_proxy_address: '0x0379f43679c3b0520a1165dccc9e5cd9649d8893',
-    assurance_proxy_abi: [{"constant":false,"inputs":[],"name":"registerDentist","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"breakContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_dentist_addr","type":"address"}],"name":"patientApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"dentacoin_token_address","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"}],"name":"dentistApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"assurance_address","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_value_usd","type":"uint256"},{"name":"_value_dcn","type":"uint256"},{"name":"_date_start_contract","type":"uint256"},{"name":"_contract_ipfs_hash","type":"string"}],"name":"registerContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_array","type":"address[]"}],"name":"multipleWithdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"}],"name":"singleWithdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_assurance_address","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_dentist_addr","type":"address"},{"indexed":true,"name":"_patient_addr","type":"address"},{"indexed":false,"name":"_value","type":"uint256"},{"indexed":false,"name":"_date","type":"uint256"}],"name":"logSuccessfulWithdraw","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_dentist_addr","type":"address"},{"indexed":false,"name":"_date","type":"uint256"}],"name":"logSuccessfulDentistRegistration","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_dentist_addr","type":"address"},{"indexed":true,"name":"_patient_addr","type":"address"},{"indexed":false,"name":"_date","type":"uint256"},{"indexed":false,"name":"_value_usd","type":"uint256"},{"indexed":false,"name":"_value_dcn","type":"uint256"}],"name":"logSuccessfulContractRegistration","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_dentist_addr","type":"address"},{"indexed":true,"name":"_patient_addr","type":"address"},{"indexed":false,"name":"_date","type":"uint256"}],"name":"logSuccessfulContractBreak","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_patient_addr","type":"address"},{"indexed":true,"name":"_dentist_addr","type":"address"}],"name":"logSuccessfulContractApproval","type":"event"}],
+    assurance_proxy_address: '0x2c4a82de982b5bc172988f469e66ffda40e004d2',
+    assurance_proxy_abi: [{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"breakContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_dentist_addr","type":"address"}],"name":"patientApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"dentacoin_token_address","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"}],"name":"dentistApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"assurance_address","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_value_usd","type":"uint256"},{"name":"_value_dcn","type":"uint256"},{"name":"_date_start_contract","type":"uint256"},{"name":"_contract_ipfs_hash","type":"string"}],"name":"registerContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_array","type":"address[]"}],"name":"multipleWithdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"}],"name":"singleWithdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_assurance_address","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_dentist_addr","type":"address"},{"indexed":true,"name":"_patient_addr","type":"address"},{"indexed":false,"name":"_value","type":"uint256"},{"indexed":false,"name":"_date","type":"uint256"}],"name":"logSuccessfulWithdraw","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_dentist_addr","type":"address"},{"indexed":false,"name":"_date","type":"uint256"}],"name":"logSuccessfulDentistRegistration","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_dentist_addr","type":"address"},{"indexed":true,"name":"_patient_addr","type":"address"},{"indexed":false,"name":"_date","type":"uint256"},{"indexed":false,"name":"_value_usd","type":"uint256"},{"indexed":false,"name":"_value_dcn","type":"uint256"}],"name":"logSuccessfulContractRegistration","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_dentist_addr","type":"address"},{"indexed":true,"name":"_patient_addr","type":"address"},{"indexed":false,"name":"_date","type":"uint256"}],"name":"logSuccessfulContractBreak","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_patient_addr","type":"address"},{"indexed":true,"name":"_dentist_addr","type":"address"}],"name":"logSuccessfulContractApproval","type":"event"}],
     assurance_proxy_instance: null,
     dentacoin_token_address: "0x19f49a24c7cb0ca1cbf38436a86656c2f30ab362",
     dentacoin_token_abi: [{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"buyDentacoinsAgainstEther","outputs":[{"name":"amount","type":"uint256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"haltDirectTrade","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amountOfEth","type":"uint256"},{"name":"dcn","type":"uint256"}],"name":"refundToOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"sellDentacoinsAgainstEther","outputs":[{"name":"revenue","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newDCNAmount","type":"uint256"}],"name":"setDCNForGas","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newBuyPriceEth","type":"uint256"},{"name":"newSellPriceEth","type":"uint256"}],"name":"setEtherPrices","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newGasAmountInWei","type":"uint256"}],"name":"setGasForDCN","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newGasReserveInWei","type":"uint256"}],"name":"setGasReserve","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"minimumBalanceInWei","type":"uint256"}],"name":"setMinBalance","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"unhaltDirectTrade","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"buyPriceEth","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"DCNForGas","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"DentacoinAddress","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"directTradeAllowed","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"gasForDCN","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"gasReserve","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"minBalanceForAccounts","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"sellPriceEth","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}],
@@ -115,19 +118,20 @@ var App = {
         return App.initWeb3();
     },
     initWeb3: async function()    {
-        if(typeof(web3) !== 'undefined' && web3.currentProvider.isMetaMask === true) {
+        if(metamask) {
             //METAMASK
             App.web3_0_2 = web3;
             global_state.account = App.web3_0_2.eth.defaultAccount;
             //overwrite web3 0.2 with web 1.0
             web3 = getWeb3(App.web3_0_2.currentProvider);
-            App.web3_1_0 = web3;
+            //App.web3_1_0 = web3;
+            App.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(App.infura_node));
         }else if(typeof(web3) === 'undefined')    {
             //CUSTOM
             if(localStorage.getItem('current-account') != null) {
                 global_state.account = JSON.parse(localStorage.getItem('current-account')).address;
             }
-            App.web3_1_0 = getWeb3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/c3a8017424324e47be615fb4028275bb'));
+            App.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(App.infura_node));
         }else {
             //NO CUSTOM, NO METAMASK. Doing this final third check so we can use web3_1_0 functions and utils even if there is no metamask or custom imported/created account
             App.web3_1_0 = getWeb3();
@@ -136,8 +140,10 @@ var App = {
         return App.initContract();
     },
     initContract: async function() {
-        //Assurance
+        //Assurance STATE
         App.assurance_state_instance = new App.web3_1_0.eth.Contract(App.assurance_state_abi, App.assurance_state_address);
+        //Assurance PROXY
+        App.assurance_proxy_instance = new App.web3_1_0.eth.Contract(App.assurance_proxy_abi, App.assurance_proxy_address);
         //DentacoinToken
         App.dentacoin_token_instance = new App.web3_1_0.eth.Contract(App.dentacoin_token_abi, App.dentacoin_token_address);
 
@@ -158,6 +164,46 @@ var App = {
             return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, 9000000000000).send({
                 from: global_state.account,
                 gas: 65000
+            }).on('transactionHash', function(hash){
+                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', '', true);
+            }).catch(function(err) {
+                console.error(err);
+            });
+        },
+        balanceOf: function(address)  {
+            return App.dentacoin_token_instance.methods.balanceOf(address).call({}, function(error, result)   {
+                if(!error)  {
+                    return result;
+                }else {
+                    console.error(error);
+                }
+            });
+        }
+    },
+    assurance_proxy_methods: {
+        registerContract: async function(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash)  {
+            if(!innerAddressCheck(patient_addr) || !innerAddressCheck(dentist_addr)) {
+                //check if patient and dentist addresses are valid
+                basic.showAlert('Patient and dentist addresses must be valid.');
+                return false;
+            } else if(parseInt(await App.dentacoin_token_methods.allowance(patient_addr, App.assurance_state_address)) <= 0) {
+                basic.showAlert('This patient didn\'t give allowance to Assurance contract to manage his Dentacoins.');
+                return false;
+            } else if(parseInt(value_usd) <= 0 || parseInt(value_dcn) <= 0) {
+                //check if USD and DCN values are valid
+                basic.showAlert('Both USD and DCN values must be greater than 0.');
+                return false;
+            } else if(date_start_contract < 0) {
+                //check if valid timestamp
+                basic.showAlert('Please enter valid date.');
+                return false;
+            } else if(contract_ipfs_hash == '') {
+                //check if ipfs hash is passed
+                basic.showAlert('Please enter valid date.');
+                return false;
+            }
+            return App.assurance_proxy_instance.methods.registerContract(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash).send({
+                from: global_state.account
             }).on('transactionHash', function(hash){
                 basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', '', true);
             }).catch(function(err) {
@@ -473,6 +519,103 @@ async function pagesDataOnContractInit() {
         $('.break-contract').click(function() {
             App.assurance_methods.breakContract(global_state.account, $('.breakContract .dentist-address').val().trim());
         });
+    } else if($('body').hasClass('logged-in')) {
+        if($('body').hasClass('patient-contract-view')) {
+            var period_to_withdraw = parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
+            var next_transfer_timestamp = parseInt($('.contract-body').attr('data-time-left-next-transfer')) + period_to_withdraw;
+            if($('.converted-date').length > 0) {
+                var date_obj = new Date(next_transfer_timestamp * 1000);
+                $('.converted-date').html(dateObjToFormattedDate(date_obj));
+            }
+            initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
+
+            cancelContractEventInit();
+
+            var current_user_data = await getCurrentUserData();
+            var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(current_user_data.success.dcn_address)));
+            var current_user_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(current_user_data.success.dcn_address));
+            var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
+
+            if(current_user_dcn_balance > monthly_premium_in_dcn && current_user_eth_balance > 0.005) {
+                //show CONTINUE TO BLOCKCHAIN BTN
+                $('.init-contract-section .camp').html('<h2 class="lato-bold fs-45 padding-top-60 padding-bottom-15 text-center">You are all set for your first payment.</h2><div class="padding-bottom-30 fs-20 text-center">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should pay your monthly premium before on <span>'+dateObjToFormattedDate(new Date(next_transfer_timestamp * 1000))+'</span>.</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">PAY NOW</a></div>');
+
+                $('.call-recipe').click(function() {
+                    if(metamask) {
+                        //metamask way
+                    } else {
+                        //custom
+                        $.ajax({
+                            type: 'POST',
+                            url: '/get-recipe-popup',
+                            dataType: 'json',
+                            data: {
+                                to: App.assurance_proxy_address,
+                                cached_key: localStorage.getItem('current-account') == null,
+                                contract: $('.init-contract-section').attr('data-contract')
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: async function (response) {
+                                if(response.success) {
+                                    basic.closeDialog();
+                                    basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                    bindVerifyAddressLogic();
+                                    fixButtonsFocus();
+
+                                    var transaction_key;
+                                    $(document).on('on-transaction-recipe-agree', function(event) {
+                                        transaction_key = event.response_data;
+                                        console.log(transaction_key, 'transaction_key');
+                                    });
+                                    console.log(transaction_key, 'transaction_key');
+
+                                    const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                                    //adding 10% just in case the transaction dont fail
+                                    const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
+
+                                    $('.recipe-popup .usd_val span').html($('.patient-contract-single-page-section').attr('data-monthly-premium'));
+                                    $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
+
+                                    //gas estimation for DentacoinToken approval method
+                                    var gas_cost_for_approval = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, 9000000000000).estimateGas({});
+
+                                    //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+                                    var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({from: App.dummy_address, gas: 500000});
+
+                                    var eth_fee = App.web3_1_0.utils.fromWei(((gas_cost_for_approval + gas_cost_for_contract_creation) * on_page_load_gas_price).toString(), 'ether');
+                                    $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                    $('.recipe-popup .ether-fee i').popover({
+                                        trigger: 'click',
+                                        html: true
+                                    });
+
+                                    $('.recipe-popup .execute-transaction').click(function() {
+                                        if(global_state.address == '' || localStorage.getItem('current-account') == null || (localStorage.getItem('current-account') != null && global_state.account != JSON.parse(localStorage.getItem('current-account')).address)) {
+                                            basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                            return false;
+                                        }
+
+                                        App.assurance_proxy_methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash);
+                                    });
+                                } else {
+                                    basic.showAlert(response.error, '', true);
+                                }
+                            }
+                        });
+                    }
+                });
+            } else if(current_user_eth_balance < 0.005) {
+                //not enough ETH balance
+                console.log('not enough ETH balance');
+            } else if(current_user_dcn_balance < monthly_premium_in_dcn) {
+                //not enough DCN balance
+                console.log('not enough DCN balance');
+            }
+        }
     }
 }
 
@@ -559,118 +702,132 @@ async function buildCurrentPatientContractHistory() {
 }
 
 // ================== PAGES ==================
-if($('body').hasClass('home')) {
-    if($('.testimonials-slider').length > 0) {
-        $('.testimonials-slider').slick({
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 8000,
-            adaptiveHeight: true
-        });
-    }
+async function initPagesLogic() {
+    if($('body').hasClass('home')) {
+        if($('.testimonials-slider').length > 0) {
+            $('.testimonials-slider').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 8000,
+                adaptiveHeight: true
+            });
+        }
 
-    if($('.open-calculator').length > 0) {
-        $('.open-calculator').click(function() {
-            $.ajax({
-                type: 'POST',
-                url: '/get-calculator-html',
-                dataType: 'json',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (response) {
-                    if(response.success) {
-                        basic.closeDialog();
-                        basic.showDialog(response.success, 'calculator-popup', null, true);
-                        $('#number-of-patients').focus();
+        if($('.open-calculator').length > 0) {
+            $('.open-calculator').click(function() {
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-calculator-html',
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (response) {
+                        if(response.success) {
+                            basic.closeDialog();
+                            basic.showDialog(response.success, 'calculator-popup', null, true);
+                            $('#number-of-patients').focus();
 
-                        $('.selectpicker').selectpicker('refresh');
-                        fixButtonsFocus();
+                            $('.selectpicker').selectpicker('refresh');
+                            fixButtonsFocus();
 
-                        calculateLogic();
+                            calculateLogic();
+                        }
                     }
+                });
+            });
+        }
+    }else if($('body').hasClass('patient-access')) {
+        if($('.ask-your-dentist-for-assurance').length) {
+            $('.ask-your-dentist-for-assurance').click(function() {
+                $('html, body').animate({scrollTop: $('#find-your-dentist').offset().top}, 500);
+                $('#find-your-dentist .search-dentist-input').focus();
+                return false;
+            });
+        }
+
+        //init select combobox with clinics
+        initComboboxes();
+
+        if($('section#find-your-dentist select.combobox').length) {
+            $('section#find-your-dentist select.combobox').on('keydown', function (e) {
+                if(e.which == 13) {
+                    basic.showAlert('Please login to continue. If you don\'t have registration please click <a href="javascript:void(0)" class="show-login-signin">here</a>.', '', true);
+                    bindLoginSigninPopupShow();
                 }
             });
-        });
-    }
-}else if($('body').hasClass('patient-access')) {
-    if($('.ask-your-dentist-for-assurance').length) {
-        $('.ask-your-dentist-for-assurance').click(function() {
-            $('html, body').animate({scrollTop: $('#find-your-dentist').offset().top}, 500);
-            $('#find-your-dentist .search-dentist-input').focus();
-            return false;
-        });
-    }
 
-    //init select combobox with clinics
-    initComboboxes();
+            //on change show login popup
+            $('section#find-your-dentist input[type="text"].combobox').attr('placeholder', 'Search for a clinic...');
 
-    if($('section#find-your-dentist select.combobox').length) {
-        $('section#find-your-dentist select.combobox').on('keydown', function (e) {
-            if(e.which == 13) {
+            //on enter press show login popup
+            $('section#find-your-dentist select.combobox').on('change', function() {
+                basic.closeDialog();
                 basic.showAlert('Please login to continue. If you don\'t have registration please click <a href="javascript:void(0)" class="show-login-signin">here</a>.', '', true);
                 bindLoginSigninPopupShow();
+            });
+        }
+
+        if($('section.section-logged-patient-form select.combobox').length) {
+            //on change show login popup
+            $('section.section-logged-patient-form input[type="text"].combobox').attr('placeholder', 'Find your preferred dentist/s in a snap...');
+
+            //on enter press show login popup
+            $('section.section-logged-patient-form select.combobox').on('change', function() {
+                console.log($(this).val());
+            });
+        }
+    }else if($('body').hasClass('support-guide')) {
+        if($('.support-guide-slider').length) {
+            $('.support-guide-slider').slick({
+                slidesToShow: 3,
+                slidesToScroll: 3
+            });
+        }
+
+        if($('.section-support-guide-list .question').length > 0) {
+            $('.section-support-guide-list .question').click(function()   {
+                $(this).closest('li').find('.question-content').toggle(300);
+            });
+        }
+    }else if($('body').hasClass('wallet-instructions')) {
+        if($('.section-wallet-instructions-questions .question').length > 0) {
+            $('.section-wallet-instructions-questions .question').click(function()   {
+                $(this).toggleClass('active');
+                $(this).closest('li').find('.question-content').toggle(300);
+            });
+        }
+    }else if($('body').hasClass('forgotten-password')) {
+        $('form#forgotten-password').on('submit', function(event) {
+            var this_form = $(this);
+            if(this_form.find('input[type="email"]').val().trim() == '' || !basic.validateEmail(this_form.find('input[type="email"]').val().trim())) {
+                basic.showAlert('Please try again with valid email.', '', true);
+                event.preventDefault();
             }
         });
-
-        //on change show login popup
-        $('section#find-your-dentist input[type="text"].combobox').attr('placeholder', 'Search for a clinic...');
-
-        //on enter press show login popup
-        $('section#find-your-dentist select.combobox').on('change', function() {
-            basic.closeDialog();
-            basic.showAlert('Please login to continue. If you don\'t have registration please click <a href="javascript:void(0)" class="show-login-signin">here</a>.', '', true);
-            bindLoginSigninPopupShow();
+    }else if($('body').hasClass('password-recover')) {
+        $('form#recover-password').on('submit', function(event) {
+            var this_form = $(this);
+            if(this_form.find('input[type="password"]').val().trim() == '' || this_form.find('input[type="password"]').val().trim().length < 8 || this_form.find('input[type="email"]').val().trim().length > 100) {
+                basic.showAlert('Please try again with valid password between 8 and 30 symbols.', '', true);
+                event.preventDefault();
+            }
         });
-    }
-
-    if($('section.section-logged-patient-form select.combobox').length) {
-        //on change show login popup
-        $('section.section-logged-patient-form input[type="text"].combobox').attr('placeholder', 'Find your preferred dentist/s in a snap...');
-
-        //on enter press show login popup
-        $('section.section-logged-patient-form select.combobox').on('change', function() {
-            console.log($(this).val());
-        });
-    }
-}else if($('body').hasClass('support-guide')) {
-    if($('.support-guide-slider').length) {
-        $('.support-guide-slider').slick({
-            slidesToShow: 3,
-            slidesToScroll: 3
-        });
-    }
-
-    if($('.section-support-guide-list .question').length > 0) {
-        $('.section-support-guide-list .question').click(function()   {
-            $(this).closest('li').find('.question-content').toggle(300);
-        });
-    }
-}else if($('body').hasClass('wallet-instructions')) {
-    if($('.section-wallet-instructions-questions .question').length > 0) {
-        $('.section-wallet-instructions-questions .question').click(function()   {
-            $(this).toggleClass('active');
-            $(this).closest('li').find('.question-content').toggle(300);
-        });
-    }
-}else if($('body').hasClass('forgotten-password')) {
-    $('form#forgotten-password').on('submit', function(event) {
-        var this_form = $(this);
-        if(this_form.find('input[type="email"]').val().trim() == '' || !basic.validateEmail(this_form.find('input[type="email"]').val().trim())) {
-            basic.showAlert('Please try again with valid email.', '', true);
-            event.preventDefault();
+    } else if ($('body').hasClass('patient-access')) {
+        //make all contracts in the slider with same height
+        if ($('.contract-tile').length) {
+            var max_height = 0;
+            for (var i = 0, len = $('.contract-tile .tile-wrapper').length; i < len; i += 1) {
+                if ($('.contract-tile .tile-wrapper').eq(i).outerHeight() > max_height) {
+                    max_height = $('.contract-tile .tile-wrapper').eq(i).outerHeight();
+                }
+            }
+            $('.contract-tile .tile-wrapper').outerHeight(max_height);
         }
-    });
-}else if($('body').hasClass('password-recover')) {
-    $('form#recover-password').on('submit', function(event) {
-        var this_form = $(this);
-        if(this_form.find('input[type="password"]').val().trim() == '' || this_form.find('input[type="password"]').val().trim().length < 8 || this_form.find('input[type="email"]').val().trim().length > 100) {
-            basic.showAlert('Please try again with valid password between 8 and 30 symbols.', '', true);
-            event.preventDefault();
-        }
-    });
+    }
 }
+initPagesLogic();
 
 //LOGGED USER LOGIC
 if($('body').hasClass('logged-in')) {
@@ -2114,27 +2271,7 @@ async function onDocumentReadyPageData() {
 
                 table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">'+next_payment_timestamp+'</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
             }
-        } else if ($('body').hasClass('patient-access')) {
-            //make all contracts in the slider with same height
-            if ($('.contract-tile').length) {
-                var max_height = 0;
-                for (var i = 0, len = $('.contract-tile .tile-wrapper').length; i < len; i += 1) {
-                    if ($('.contract-tile .tile-wrapper').eq(i).outerHeight() > max_height) {
-                        max_height = $('.contract-tile .tile-wrapper').eq(i).outerHeight();
-                    }
-                }
-                $('.contract-tile .tile-wrapper').outerHeight(max_height);
-            }
-        }else if($('body').hasClass('patient-contract-view')) {
-            var next_transfer_timestamp = parseInt($('.contract-body').attr('data-time-left-next-transfer')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
-            if($('.converted-date').length > 0) {
-                var date_obj = new Date(next_transfer_timestamp * 1000);
-                $('.converted-date').html(dateObjToFormattedDate(date_obj));
-            }
-            initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-
-            cancelContractEventInit();
-        }else if($('body').hasClass('contract-proposal')) {
+        } else if($('body').hasClass('contract-proposal')) {
             await $.getScript('/assets/js/address.js', function() {});
 
             if ($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined) {
@@ -2248,7 +2385,7 @@ function cancelContractEventInit() {
     }
 }
 
-function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content)    {
+function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, for_transactions)    {
     if(button_label == undefined) {
         button_label = null;
     }
@@ -2257,6 +2394,9 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content) 
     }
     if(encrypted_pdf_content == undefined) {
         encrypted_pdf_content = null;
+    }
+    if(for_transactions == undefined) {
+        for_transactions = null;
     }
 
     $('.custom-upload-file').each(function(key, form){
@@ -2311,6 +2451,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content) 
                                                 type: 'keystore',
                                                 keystore: keystore_string
                                             }));
+                                            global_state.account = '0x' + JSON.parse(e.target.result).address;
                                         }
 
                                         $.ajax({
@@ -2338,8 +2479,13 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content) 
                                         });
                                     });
                                 } else {
-                                    //if we have to validate this address (store it in our local db)
-                                    bindVerifyAddressEvent(keystore_string);
+                                    if(for_transactions != null) {
+                                        //if we have to validate this address (store it in our local db)
+                                        bindTransactionAddressVerify(keystore_string);
+                                    } else {
+                                        //if we have to validate this address (store it in our local db)
+                                        bindVerifyAddressEvent(keystore_string);
+                                    }
                                 }
                             }
                         } else {
@@ -2400,15 +2546,25 @@ function isJsonString(str) {
 }
 
 //bind the logic when address is not verified
-function bindVerifyAddressLogic() {
-    styleUploadFileButton();
+function bindVerifyAddressLogic(for_transactions) {
+    if(for_transactions === undefined) {
+        for_transactions = null;
+        styleUploadFileButton();
+    } else {
+        styleUploadFileButton(null, null, null, true);
+    }
 
     $('.enter-private-key').unbind().click(function() {
         $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 padding-left-30 padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-private-key"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-private-key">Remember my private key <i class="fa fa-info-circle" aria-hidden="true"  data-toggle="tooltip" data-placement="top" title="Remembering your key allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">VERIFY</a></div></div>');
         initTooltips();
         $('.proof-of-address #upload-keystore-file').val('');
         bindGoogleAlikeButtonsEvents();
-        bindVerifyAddressEvent();
+
+        if(for_transactions != null) {
+            bindTransactionAddressVerify();
+        } else {
+            bindVerifyAddressEvent();
+        }
     });
 
     $('.upload-file-container button').unbind().click(function() {
@@ -2456,6 +2612,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         type: 'keystore',
                                         keystore: response.success
                                     }));
+                                    global_state.account = $('.proof-of-address').attr('data-address');
                                 }
 
                                 $.ajax({
@@ -2514,6 +2671,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         type: 'key',
                                         key: response.private_key
                                     }));
+                                    global_state.account = response.address;
                                 }
 
                                 if(render_pdf != null) {
@@ -2563,6 +2721,85 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
     });
 }
 
+function bindTransactionAddressVerify(keystore_file) {
+    if(keystore_file === undefined) {
+        keystore_file = null;
+    }
+    $('.proof-of-address .verify-address-btn').click(function() {
+        $('.response-layer').show();
+        if(keystore_file != null) {
+            //import with keystore
+            if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
+                basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/decrypt-pk',
+                    dataType: 'json',
+                    data: {
+                        keystore: keystore_file,
+                        password: $('.proof-of-address #your-secret-key-password').val().trim()
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        //if remember me option is checked
+                        if($('#remember-my-keystore-file').is(':checked')) {
+                            localStorage.setItem('current-account', JSON.stringify({
+                                address: $('.proof-of-address').attr('data-address'),
+                                type: 'keystore',
+                                keystore: response.success
+                            }));
+                            global_state.account = $('.proof-of-address').attr('data-address');
+                        }
+
+                        $.event.trigger({
+                            type: 'on-transaction-recipe-agree',
+                            time: new Date(),
+                            response_data: response.success
+                        });
+                    }
+                });
+            }
+        } else {
+            //import with private key
+            if($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
+                basic.showAlert('Please enter valid private key.', '', true);
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/assurance-import-private-key',
+                    dataType: 'json',
+                    data: {
+                        private_key: $('.proof-of-address #your-private-key').val().trim()
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        //if remember me option is checked
+                        if($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                            localStorage.setItem('current-account', JSON.stringify({
+                                address: response.address,
+                                type: 'key',
+                                key: response.private_key
+                            }));
+                            global_state.account = response.address;
+                        }
+
+                        $.event.trigger({
+                            type: 'on-transaction-recipe-agree',
+                            time: new Date(),
+                            response_data: response.plain_private_key
+                        });
+                    }
+                });
+            }
+        }
+    });
+}
+
 function bindCacheKeyEvent(keystore_file) {
     if(keystore_file === undefined) {
         keystore_file = null;
@@ -2596,6 +2833,7 @@ function bindCacheKeyEvent(keystore_file) {
                                     type: 'keystore',
                                     keystore: response.success
                                 }));
+                                global_state.account = $('.proof-of-address').attr('data-address');
 
                                 $.ajax({
                                     type: 'POST',
@@ -2647,6 +2885,7 @@ function bindCacheKeyEvent(keystore_file) {
                                     type: 'key',
                                     key: response.private_key
                                 }));
+                                global_state.account = response.address;
 
                                 $.ajax({
                                     type: 'POST',
@@ -2874,6 +3113,17 @@ async function getEncryptedContractPdfContent(hash, type) {
     });
 }
 
+async function getCurrentUserData() {
+    return await $.ajax({
+        type: 'GET',
+        url: '/get-current-user-data',
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+}
+
 async function getDecryptedPdfContent(encrypted_html, key) {
     return await $.ajax({
         type: 'POST',
@@ -2902,4 +3152,12 @@ function transformToAssocArray( prmstr ) {
         params[tmparr[0]] = tmparr[1];
     }
     return params;
+}
+
+function convertUsdToDcn(usd_val) {
+    if($("[data-dcn-for-one-usd]").length) {
+        return parseInt($("[data-dcn-for-one-usd]").attr('data-dcn-for-one-usd')) * usd_val;
+    } else {
+        return false;
+    }
 }

@@ -88,7 +88,7 @@
             <div class="row text-center">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                     <h2 class="fs-35 lato-bold padding-top-50 padding-bottom-20">You Have Received Your First Payment.</h2>
-                    <div class="fs-20 calibri-regular">Now you can check all details and give your approval in order to active your contract on the blockchain as well.</div>
+                    <div class="fs-20 calibri-regular">Now you can check all details and give your approval in order to activate your contract on the blockchain as well.</div>
                     <div class="padding-top-20">
                         <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color">See details</a>
                     </div>

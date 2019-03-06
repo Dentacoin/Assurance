@@ -4720,11 +4720,70 @@ fieldset {
   max-width: 900px; }
   .bootbox.address-validation-or-remember-me .modal-dialog .modal-body {
     padding: 50px 30px; }
-.bootbox.address-validation-or-remember-me .checkbox-container .pretty.on-white-background.p-svg .state .svg {
-  border-color: #126585 !important;
-  top: 0; }
-.bootbox.address-validation-or-remember-me .checkbox-container .pretty.on-white-background .state label:after, .bootbox.address-validation-or-remember-me .checkbox-container .pretty.on-white-background .state label:before {
-  top: 0; }
+    .bootbox.address-validation-or-remember-me .modal-dialog .modal-body .checkbox-container .pretty.on-white-background.p-svg .state .svg {
+      border-color: #126585 !important;
+      top: 0; }
+    .bootbox.address-validation-or-remember-me .modal-dialog .modal-body .checkbox-container .pretty.on-white-background .state label:after, .bootbox.address-validation-or-remember-me .modal-dialog .modal-body .checkbox-container .pretty.on-white-background .state label:before {
+      top: 0; }
+.bootbox.recipe-popup .bootbox-close-button {
+  font-size: 35px;
+  opacity: 1;
+  color: #424242;
+  right: 15px;
+  position: absolute;
+  float: none;
+  top: 10px; }
+.bootbox.recipe-popup .modal-dialog {
+  width: 95%;
+  max-width: 800px; }
+  .bootbox.recipe-popup .modal-dialog .modal-body {
+    padding: 30px; }
+    .bootbox.recipe-popup .modal-dialog .modal-body .checkbox-container .pretty.on-white-background.p-svg .state .svg {
+      border-color: #126585 !important;
+      top: 0; }
+    .bootbox.recipe-popup .modal-dialog .modal-body .checkbox-container .pretty.on-white-background .state label:after, .bootbox.recipe-popup .modal-dialog .modal-body .checkbox-container .pretty.on-white-background .state label:before {
+      top: 0; }
+    .bootbox.recipe-popup .modal-dialog .modal-body .popup-title svg {
+      width: 35px; }
+    .bootbox.recipe-popup .modal-dialog .modal-body .section-blue-green-background {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin: 0 -45px;
+      background-color: #0a3647;
+      color: white;
+      background: #126585;
+      background: linear-gradient(180deg, #126585 0%, #2a98c2 50%, #126585 100%), #0a3647;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      border-radius: 4px; }
+      .bootbox.recipe-popup .modal-dialog .modal-body .section-blue-green-background .usd_val {
+        font-size: 50px;
+        font-family: 'Lato-Bold'; }
+      .bootbox.recipe-popup .modal-dialog .modal-body .section-blue-green-background .dcn_val {
+        font-size: 20px;
+        font-family: 'Lato-Regular'; }
+    .bootbox.recipe-popup .modal-dialog .modal-body .input-row {
+      border-bottom: 1px solid #888888;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      margin: 0 60px; }
+      .bootbox.recipe-popup .modal-dialog .modal-body .input-row label {
+        width: 120px;
+        color: #888888;
+        font-size: 18px;
+        margin: 0;
+        font-family: 'Calibri Light'; }
+      .bootbox.recipe-popup .modal-dialog .modal-body .input-row .field {
+        width: calc(100% - 120px);
+        text-align: right;
+        font-size: 18px;
+        color: #212121; }
+    .bootbox.recipe-popup .modal-dialog .modal-body .ether-fee i {
+      cursor: pointer; }
+    .bootbox.recipe-popup .modal-dialog .modal-body .additional-text {
+      width: 75%;
+      margin: 0 auto; }
 
 .custom-input {
   width: 100%;

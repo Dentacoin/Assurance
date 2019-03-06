@@ -33,6 +33,7 @@ class Controller extends BaseController
             View::share('mobile', $this->isMobile());
             View::share('meta_data', $this->getMetaData());
             View::share('sections', $this->getDbSections());
+            View::share('gas_estimation', $this->getGasEstimationFromEthgasstation());
         }
     }
 
@@ -182,6 +183,24 @@ class Controller extends BaseController
             }
         }
         return $data;
+    }
+
+    protected function getGasEstimationFromEthgasstation()  {
+        //API connection
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'https://ethgasstation.info/json/ethgasAPI.json',
+            CURLOPT_SSL_VERIFYPEER => 0
+        ));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+        if(!empty($resp))   {
+            return $resp->safeLow;
+        } else {
+            return false;
+        }
     }
 
     /*public function fillCountriesFromCsv() {

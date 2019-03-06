@@ -2,7 +2,7 @@
 @section("content")
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
-    <section class="padding-top-100 patient-contract-single-page-section">
+    <section class="padding-top-100 patient-contract-single-page-section" data-monthly-premium="{{$contract->monthly_premium}}">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45">Dentacoin Assurance Contract</h1></div>
@@ -22,7 +22,7 @@
                         <li class="inline-block">|</li>
                         <li class="inline-block">
                             <a href="https://ipfs.io/ipfs/{{$contract->document_hash}}" target="_blank" itemprop="url">
-                                <span itemprop="name"><i class="fa fa-times" aria-hidden="true"></i> Public Proof</span>
+                                <span itemprop="name">Public Proof</span>
                             </a>
                         </li>
                         @if($contract->status != 'cancelled')
@@ -87,7 +87,14 @@
                 </div>
             </div>
             <div class="row contract-footer">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 padding-bottom-40 padding-left-50 padding-right-50 text-center white-color blue-green-color-background fs-20 wrapper">You should charge your wallet with <span class="calibri-bold">{{$contract->monthly_premium}} USD in DCN</span> (the monthly premium amount) <span class="calibri-bold">until <span class="converted-date"></span></span>. (one day before the due date)</div>
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 padding-bottom-40 padding-left-50 padding-right-50 text-center white-color blue-green-color-background fs-20 wrapper">You should charge your wallet with <span class="calibri-bold">{{$contract->monthly_premium}} USD in DCN</span> <span class="calibri-bold">until <span class="converted-date"></span></span>.</div>
+            </div>
+        </div>
+    </section>
+    <section class="init-contract-section" data-contract="{{$contract->slug}}">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 camp"></div>
             </div>
         </div>
     </section>
