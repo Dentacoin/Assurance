@@ -209,7 +209,7 @@ var pagesDataOnContractInit = function () {
                                                             case 10:
                                                                 gas_cost_for_approval = _context5.sent;
                                                                 _context5.next = 13;
-                                                                return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({ from: App.dummy_address, gas: 500000 });
+                                                                return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({ from: App.dummy_address, gas: 500000 });
 
                                                             case 13:
                                                                 gas_cost_for_contract_creation = _context5.sent;
@@ -287,7 +287,7 @@ var pagesDataOnContractInit = function () {
                                                                         while (1) {
                                                                             switch (_context4.prev = _context4.next) {
                                                                                 case 0:
-                                                                                    if (!(global_state.account == '' || !cached_key && global_state.account != JSON.parse(localStorage.getItem('current-account')).address || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                                                    if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress('0x' + JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
                                                                                         _context4.next = 5;
                                                                                         break;
                                                                                     }
@@ -1611,7 +1611,7 @@ var App = {
                         case 4:
                             user_data = _context.sent;
 
-                            global_state.account = App.web3_1_0.utils.toChecksumAddress(user_data.success.dcn_address);
+                            global_state.account = checksumAddress(user_data.success.dcn_address);
 
                             //if some fake or false current-account localstorage variable is set -> delete it
                             if (localStorage.getItem('current-account') != null) {
@@ -2037,6 +2037,11 @@ initDateTimePicker();
 //checking if passed address is valid
 function innerAddressCheck(address) {
     return App.web3_1_0.utils.isAddress(address);
+}
+
+//converting address to checksum
+function checksumAddress(address) {
+    return App.web3_1_0.utils.toChecksumAddress(address);
 }
 initPagesLogic();
 
@@ -4171,7 +4176,7 @@ function bindTransactionAddressVerify(keystore_file) {
                                 localStorage.setItem('current-account', JSON.stringify({
                                     address: $('.proof-of-address').attr('data-address'),
                                     type: 'keystore',
-                                    keystore: response.success
+                                    keystore: keystore_file
                                 }));
                             }
 
@@ -4210,7 +4215,7 @@ function bindTransactionAddressVerify(keystore_file) {
                                         case 0:
                                             if (response.success) {
                                                 //checking if the private key is related to the public key saved in the coredb
-                                                if (global_state.account != App.web3_1_0.utils.toChecksumAddress(response.address)) {
+                                                if (global_state.account != checksumAddress(response.address)) {
                                                     basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
                                                     $('.response-layer').hide();
                                                 } else {
