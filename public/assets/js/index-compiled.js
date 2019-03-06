@@ -25575,7 +25575,7 @@ var pagesDataOnContractInit = function () {
                                                         switch (_context8.prev = _context8.next) {
                                                             case 0:
                                                                 if (!response.success) {
-                                                                    _context8.next = 49;
+                                                                    _context8.next = 50;
                                                                     break;
                                                                 }
 
@@ -25632,9 +25632,13 @@ var pagesDataOnContractInit = function () {
 
                                                                 if (!approval_given) {
                                                                     methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
+                                                                    console.log(gas_cost_for_approval, 'gas_cost_for_approval');
+                                                                    console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
                                                                 } else {
                                                                     methods_gas_cost = gas_cost_for_contract_creation;
+                                                                    console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
                                                                 }
+                                                                console.log(methods_gas_cost, 'methods_gas_cost');
 
                                                                 eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
 
@@ -25646,7 +25650,7 @@ var pagesDataOnContractInit = function () {
                                                                 });
 
                                                                 if (!cached_key) {
-                                                                    _context8.next = 32;
+                                                                    _context8.next = 33;
                                                                     break;
                                                                 }
 
@@ -25660,49 +25664,49 @@ var pagesDataOnContractInit = function () {
                                                                         $('.proof-success').fadeIn(1500);
                                                                     }, 500);
                                                                 });
-                                                                _context8.next = 46;
+                                                                _context8.next = 47;
                                                                 break;
 
-                                                            case 32:
+                                                            case 33:
                                                                 if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
-                                                                    _context8.next = 45;
+                                                                    _context8.next = 46;
                                                                     break;
                                                                 }
 
-                                                                _context8.next = 35;
+                                                                _context8.next = 36;
                                                                 return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
 
-                                                            case 35:
+                                                            case 36:
                                                                 decrypted_private_key_response = _context8.sent;
 
                                                                 if (!decrypted_private_key_response.success) {
-                                                                    _context8.next = 40;
+                                                                    _context8.next = 41;
                                                                     break;
                                                                 }
 
                                                                 transaction_key = decrypted_private_key_response.success;
-                                                                _context8.next = 43;
+                                                                _context8.next = 44;
                                                                 break;
 
-                                                            case 40:
+                                                            case 41:
                                                                 if (!decrypted_private_key_response.error) {
-                                                                    _context8.next = 43;
+                                                                    _context8.next = 44;
                                                                     break;
                                                                 }
 
                                                                 basic.showAlert(decrypted_private_key_response.error, '', true);
                                                                 return _context8.abrupt('return', false);
 
-                                                            case 43:
-                                                                _context8.next = 46;
+                                                            case 44:
+                                                                _context8.next = 47;
                                                                 break;
 
-                                                            case 45:
+                                                            case 46:
                                                                 if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                                                     $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>');
                                                                 }
 
-                                                            case 46:
+                                                            case 47:
 
                                                                 $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7() {
                                                                     var _fireAssuranceContractCreationTransaction, decrypted_keystore_file_response, EthereumTx, approval_function_abi;
@@ -25909,13 +25913,13 @@ var pagesDataOnContractInit = function () {
                                                                         }
                                                                     }, _callee7, this);
                                                                 })));
-                                                                _context8.next = 50;
+                                                                _context8.next = 51;
                                                                 break;
 
-                                                            case 49:
+                                                            case 50:
                                                                 basic.showAlert(response.error, '', true);
 
-                                                            case 50:
+                                                            case 51:
                                                             case 'end':
                                                                 return _context8.stop();
                                                         }

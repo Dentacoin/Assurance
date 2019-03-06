@@ -603,9 +603,13 @@ async function pagesDataOnContractInit() {
                                     var methods_gas_cost;
                                     if(!approval_given) {
                                         methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
+                                        console.log(gas_cost_for_approval, 'gas_cost_for_approval');
+                                        console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
                                     } else {
                                         methods_gas_cost = gas_cost_for_contract_creation;
+                                        console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
                                     }
+                                    console.log(methods_gas_cost, 'methods_gas_cost');
 
                                     var eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
                                     $('.recipe-popup .ether-fee .field').html(eth_fee);
