@@ -346,7 +346,6 @@ class APIRequestsController extends Controller {
         $curl = curl_init();
         //$json = '{"public_key":"'.$key.'", "html":"'.htmlspecialchars('<label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label>', ENT_QUOTES).'"}';
 
-        die('asd');
         var_dump(htmlspecialchars('<label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label>', ENT_QUOTES));
         die();
         curl_setopt_array($curl, array(
