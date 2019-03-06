@@ -346,6 +346,9 @@ class APIRequestsController extends Controller {
         $curl = curl_init();
         $json = '{"public_key":"'.$key.'", "html":"'.htmlspecialchars($html, ENT_QUOTES).'"}';
 
+        var_dump(json_decode($json)->html);
+        die();
+
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
