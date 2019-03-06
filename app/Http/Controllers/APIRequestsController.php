@@ -418,4 +418,37 @@ class APIRequestsController extends Controller {
             return false;
         }
     }
+
+    public function withdraw($amount) {
+        $header = array();
+        $header[] = 'Accept: */*';
+        $header[] = 'Authorization: Bearer ' . session('logged_user')['token'];
+        $header[] = 'Cache-Control: no-cache';
+
+        var_dump($amount);
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_POST => 1,
+            CURLOPT_URL => 'https://api.dentacoin.com/api/transcations/',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_POSTFIELDS => array(
+                'amount' => $amount
+            ),
+            CURLOPT_HTTPHEADER => $header
+        ));
+
+        $resp = curl_exec($curl);
+        curl_close($curl);
+
+        var_dump($resp);
+        die();
+
+        if(!empty($resp))   {
+            return $resp;
+        }else {
+            return false;
+        }
+    }
 }

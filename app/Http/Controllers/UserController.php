@@ -99,7 +99,14 @@ class UserController extends Controller {
             $currency_arr[strtolower($currency)] = (array)$resp[0];
         }
 
-        return view('pages/logged-user/my-profile', ['currency_arr' => $currency_arr, 'dcn_amount' => 123456]);
+        $view_params = array('currency_arr' => $currency_arr);
+
+        $dcn_balance_api_method_response = (new APIRequestsController())->getDCNBalance();
+        if($dcn_balance_api_method_response->success) {
+            $view_params['dcn_amount'] = $dcn_balance_api_method_response->data;
+        }
+
+        return view('pages/logged-user/my-profile', $view_params);
     }
 
     public function checkSession()   {
@@ -525,6 +532,44 @@ class UserController extends Controller {
             return response()->json(['success' => true]);
         } else {
             return response()->json(['error' => 'Civic authentication failed.']);
+        }
+    }
+
+    protected function withdraw(Request $request) {
+        $this->validate($request, [
+            'amount' => 'required',
+            'address' => 'required'
+        ], [
+            'amount.required' => 'Amount is required.',
+            'address.required' => 'Wallet Address is required.'
+        ]);
+
+        $data = $this->clearPostData($request->input());
+
+        $dcn_balance_api_method_response = (new APIRequestsController())->getDCNBalance();
+        $failed_withdraw_error_msg = 'Withdraw failed, please try again later.';
+        if($dcn_balance_api_method_response->success) {
+            if((int)$data['amount'] > $dcn_balance_api_method_response->data) {
+                return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
+            } else {
+                $current_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+                if($current_user_data->dcn_address != $data['address']) {
+                    $api_response = (new APIRequestsController())->updateUserData(array('dcn_address' => $data['address']));
+                    if(!$api_response) {
+                        return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
+                    } else {
+                        $widthdraw_response = (new APIRequestsController())->withdraw($data['amount']);
+                        var_dump($widthdraw_response);
+                        die();
+                    }
+                } else {
+                    $widthdraw_response = (new APIRequestsController())->withdraw($data['amount']);
+                    var_dump($widthdraw_response);
+                    die();
+                }
+            }
+        } else {
+            return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
         }
     }
 }

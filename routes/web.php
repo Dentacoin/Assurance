@@ -75,6 +75,9 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
         Route::get('/congratulations/{slug}', 'PatientController@getCongratulationsView')->name('congratulations');
 
         Route::get('/contract/{slug}', 'PatientController@getPatientContractView')->name('patient-contract-view');
+
+        Route::post('/on-blockchain-contract-creation', 'PatientController@onBlockchainContractCreation')->name('on-blockchain-contract-creation');
+
     });
 
     Route::group(['prefix' => 'dentist', 'middleware' => 'HandleDentistSession'], function () {
@@ -124,6 +127,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::get('/get-current-user-data', 'UserController@getCurrentUserData')->middleware('HandleUserSession')->name('get-current-user-data');
 
     Route::post('/get-recipe-popup', 'UserController@getRecipePopup')->middleware('HandleUserSession')->name('get-recipe-popup');
+
+    Route::post('/withdraw', 'UserController@withdraw')->middleware('HandleUserSession')->name('withdraw');
 
     Route::get('/forgotten-password', 'UserController@getForgottenPasswordView')->name('forgotten-password');
 

@@ -719,12 +719,25 @@ async function pagesDataOnContractInit() {
                                                         var contract_creation_interval_check = setInterval(async function() {
                                                             var contract_creation_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
                                                             if(contract_creation_status != null && has(contract_creation_status, 'status')) {
-                                                                $('.response-layer').hide();
                                                                 clearInterval(contract_creation_interval_check);
 
-                                                                // UPDATE CONTRACT STATUS
-
-                                                                basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.', '', true);
+                                                                $.ajax({
+                                                                    type: 'POST',
+                                                                    url: '/on-blockchain-contract-creation',
+                                                                    dataType: 'json',
+                                                                    data: {
+                                                                        ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                    },
+                                                                    headers: {
+                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                    },
+                                                                    success: function (inner_response) {
+                                                                        if(inner_response.success) {
+                                                                            $('.response-layer').hide();
+                                                                            basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.', '', true);
+                                                                        }
+                                                                    }
+                                                                });
                                                             }
                                                         }, 1000);
                                                     });
@@ -1029,9 +1042,26 @@ if($('body').hasClass('logged-in')) {
     } else if($('body').hasClass('my-profile')) {
         $('.my-profile-page-content .dropdown-hidden-menu button').click(function() {
             var this_btn = $(this);
-            $('.my-profile-page-content .current-converted-price .amount').html((parseFloat($('.current-dcn-amount').html()) * parseFloat(this_btn.attr('data-multiple-with'))).toFixed(6));
+            $('.my-profile-page-content .current-converted-price .amount').html((parseFloat($('.current-dcn-amount').html()) * parseFloat(this_btn.attr('data-multiple-with'))).toFixed(2));
             $('.my-profile-page-content .current-converted-price .symbol span').html(this_btn.html());
         });
+
+        if($('form#withdraw').length) {
+            $('form#withdraw').on('submit', function(event) {
+                var this_form = $(this);
+                this_form.find('.error-handle').remove();
+
+                for(var i = 0, len = this_form.find('.required').length; i < len; i+=1) {
+                    if(this_form.find('.required').eq(i).val().trim() == '') {
+                        customErrorHandle(this_form.find('.required').eq(i).parent(), 'This field is required.');
+                        event.preventDefault();
+                    }else if(this_form.find('.required').eq(i).hasClass('address') && !innerAddressCheck(this_form.find('.required').eq(i).val().trim())) {
+                        customErrorHandle(this_form.find('.required').eq(i).parent(), 'Please enter valid wallet address.');
+                        event.preventDefault();
+                    }
+                }
+            });
+        }
 
         if($('form#add-dcn-address').length) {
             $('form#add-dcn-address').on('submit', function(event) {

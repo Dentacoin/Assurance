@@ -27344,9 +27344,26 @@ if ($('body').hasClass('logged-in')) {
     } else if ($('body').hasClass('my-profile')) {
         $('.my-profile-page-content .dropdown-hidden-menu button').click(function () {
             var this_btn = $(this);
-            $('.my-profile-page-content .current-converted-price .amount').html((parseFloat($('.current-dcn-amount').html()) * parseFloat(this_btn.attr('data-multiple-with'))).toFixed(6));
+            $('.my-profile-page-content .current-converted-price .amount').html((parseFloat($('.current-dcn-amount').html()) * parseFloat(this_btn.attr('data-multiple-with'))).toFixed(2));
             $('.my-profile-page-content .current-converted-price .symbol span').html(this_btn.html());
         });
+
+        if ($('form#withdraw').length) {
+            $('form#withdraw').on('submit', function (event) {
+                var this_form = $(this);
+                this_form.find('.error-handle').remove();
+
+                for (var i = 0, len = this_form.find('.required').length; i < len; i += 1) {
+                    if (this_form.find('.required').eq(i).val().trim() == '') {
+                        customErrorHandle(this_form.find('.required').eq(i).parent(), 'This field is required.');
+                        event.preventDefault();
+                    } else if (this_form.find('.required').eq(i).hasClass('address') && !innerAddressCheck(this_form.find('.required').eq(i).val().trim())) {
+                        customErrorHandle(this_form.find('.required').eq(i).parent(), 'Please enter valid wallet address.');
+                        event.preventDefault();
+                    }
+                }
+            });
+        }
 
         if ($('form#add-dcn-address').length) {
             $('form#add-dcn-address').on('submit', function (event) {

@@ -89,7 +89,6 @@ class PatientController extends Controller {
             $rewards = InviteDentistsReward::where(array('patient_id' => $request->input('id'), 'dentist_registered_and_approved' => 1, 'sent_to_api' => 0, 'payed_on' => NULL))->get()->all();
             //if rewards forward them to coredb
             if(!empty($rewards)) {
-                var_dump($rewards);
                 foreach($rewards as $reward) {
                     $data = array(
                         'amount' => self::DCN_REWARD,
@@ -104,9 +103,6 @@ class PatientController extends Controller {
 
 
                 }
-                $dcn_balance_api_method_response = (new APIRequestsController())->getDCNBalance();
-                var_dump($dcn_balance_api_method_response);
-                die();
             }
             //send request to API to add this reward to the patient account
 
@@ -408,5 +404,19 @@ class PatientController extends Controller {
         } else {
             return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['success' => 'Your monthly premium proposal has been sent successfully to your dentist.']);
         }
+    }
+
+    protected function PatientController(Request $request) {
+        $this->validate($request, [
+            'ipfs_hash' => 'required'
+        ], [
+            'ipfs_hash.required' => 'IPFS hash is required.'
+        ]);
+
+        $contract = TemporallyContract::where(array('document_hash' => $request->input('ipfs_hash')))->get()->first();
+        $contract->status = 'awaiting-approval';
+        $contract->save();
+
+        return response()->json(['success' => true]);
     }
 }
