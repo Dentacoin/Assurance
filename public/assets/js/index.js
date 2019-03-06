@@ -919,7 +919,7 @@ if($('body').hasClass('logged-in')) {
                 if(form_fields.eq(i).hasClass('bootstrap-select')) {
                     continue;
                 }
-                
+
                 if(form_fields.eq(i).attr('type') == 'email' && !basic.validateEmail(form_fields.eq(i).val().trim())) {
                     customErrorHandle(form_fields.eq(i).parent(), 'Please use valid email address.');
                     errors = true;

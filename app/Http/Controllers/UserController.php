@@ -146,21 +146,29 @@ class UserController extends Controller {
     }
 
     protected function updateAccount(Request $request) {
-        $this->validate($request, [
+        $arr_with_required_data = array(
             'full-name' => 'required|max:250',
             'email' => 'required|max:100',
             'country' => 'required',
             'dcn_address' => 'required',
-            'address' => 'required',
-            'specialisations' => 'required',
-        ], [
+            'address' => 'required'
+        );
+
+        $arr_with_required_data_responces = array(
             'full-name.required' => 'Name is required.',
             'email.required' => 'Email address is required.',
             'country.required' => 'Country is required.',
             'dcn_address.required' => 'Wallet Address is required.',
-            'address.required' => 'Postal Address is required.',
-            'specialisations.required' => 'Specialisations are required.',
-        ]);
+            'address.required' => 'Postal Address is required.'
+        );
+
+        //if logged user is dentist require the specialisations data
+        if($this->checkDentistSession()) {
+            $arr_with_required_data['specialisations'] = 'required';
+            $arr_with_required_data_responces['specialisations.required'] = 'Specialisations are required.';
+        }
+
+        $this->validate($request, $arr_with_required_data, $arr_with_required_data_responces);
 
         $data = $this->clearPostData($request->input());
         $files = $request->file();
