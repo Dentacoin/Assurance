@@ -586,13 +586,28 @@ async function pagesDataOnContractInit() {
                                     $('.recipe-popup .usd_val span').html($('.patient-contract-single-page-section').attr('data-monthly-premium'));
                                     $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
 
-                                    //gas estimation for DentacoinToken approval method
-                                    var gas_cost_for_approval = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({});
+                                    var approval_given = false;
+                                    //if approval is given already SOMEHOW ...
+                                    if(parseInt(await App.dentacoin_token_methods.allowance(checksumAddress(response.contract_data.dentist), App.assurance_state_address)) > 0) {
+                                        approval_given = true;
+                                    }
+
+                                    if(!approval_given) {
+                                        //gas estimation for DentacoinToken approval method
+                                        var gas_cost_for_approval = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({});
+                                    }
 
                                     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                                     var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({from: App.dummy_address, gas: 500000});
 
-                                    var eth_fee = App.web3_1_0.utils.fromWei(((gas_cost_for_approval + gas_cost_for_contract_creation) * on_page_load_gas_price).toString(), 'ether');
+                                    var methods_gas_cost;
+                                    if(!approval_given) {
+                                        methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
+                                    } else {
+                                        methods_gas_cost = gas_cost_for_contract_creation;
+                                    }
+
+                                    var eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
                                     $('.recipe-popup .ether-fee .field').html(eth_fee);
 
                                     $('.recipe-popup .ether-fee i').popover({
@@ -647,31 +662,30 @@ async function pagesDataOnContractInit() {
                                                 }
                                             }
 
-                                            var approval_function_abi = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
-                                            App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
+                                            const EthereumTx = require('ethereumjs-tx');
 
-                                                const EthereumTx = require('ethereumjs-tx');
-                                                var approval_transaction_obj = {
-                                                    gasLimit: App.web3_1_0.utils.toHex(50000),
-                                                    gasPrice: App.web3_1_0.utils.toHex(gas_cost_for_approval),
-                                                    from: global_state.account,
-                                                    nonce: App.web3_1_0.utils.toHex(nonce),
-                                                    chainId: App.chain_id,
-                                                    data: approval_function_abi,
-                                                    to: App.dentacoin_token_address
-                                                };
-                                                console.log(transaction_key, 'transaction_key');
-                                                console.log(approval_transaction_obj, 'approval_transaction_obj');
-                                                return false;
+                                            if(!approval_given) {
+                                                var approval_function_abi = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
+                                                App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
+                                                    var approval_transaction_obj = {
+                                                        gasLimit: App.web3_1_0.utils.toHex(50000),
+                                                        gasPrice: App.web3_1_0.utils.toHex(gas_cost_for_approval),
+                                                        from: global_state.account,
+                                                        nonce: App.web3_1_0.utils.toHex(nonce),
+                                                        chainId: App.chain_id,
+                                                        data: approval_function_abi,
+                                                        to: App.dentacoin_token_address
+                                                    };
 
-                                                const approval_transaction = new EthereumTx(approval_transaction_obj);
-                                                //signing the transaction
-                                                approval_transaction.sign(new Buffer(transaction_key, 'hex'));
-                                                //sending the transaction
-                                                App.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                    console.log(transactionHash, 'transactionHash');
+                                                    const approval_transaction = new EthereumTx(approval_transaction_obj);
+                                                    //signing the transaction
+                                                    approval_transaction.sign(new Buffer(transaction_key, 'hex'));
+                                                    //sending the transaction
+                                                    App.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                        console.log(transactionHash, 'transactionHash');
+                                                    });
                                                 });
-                                            });
+                                            }
                                         }
                                         //App.assurance_proxy_methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash);
                                     });

@@ -178,13 +178,13 @@ var pagesDataOnContractInit = function () {
                                         },
                                         success: function () {
                                             var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee5(response) {
-                                                var on_page_load_gwei, on_page_load_gas_price, gas_cost_for_approval, gas_cost_for_contract_creation, eth_fee, transaction_key, decrypted_private_key_response;
+                                                var on_page_load_gwei, on_page_load_gas_price, approval_given, gas_cost_for_approval, gas_cost_for_contract_creation, methods_gas_cost, eth_fee, transaction_key, decrypted_private_key_response;
                                                 return _regeneratorRuntime.wrap(function _callee5$(_context5) {
                                                     while (1) {
                                                         switch (_context5.prev = _context5.next) {
                                                             case 0:
                                                                 if (!response.success) {
-                                                                    _context5.next = 39;
+                                                                    _context5.next = 49;
                                                                     break;
                                                                 }
 
@@ -202,18 +202,48 @@ var pagesDataOnContractInit = function () {
                                                                 $('.recipe-popup .usd_val span').html($('.patient-contract-single-page-section').attr('data-monthly-premium'));
                                                                 $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
 
-                                                                //gas estimation for DentacoinToken approval method
-                                                                _context5.next = 10;
+                                                                approval_given = false;
+                                                                _context5.t0 = parseInt;
+                                                                _context5.next = 12;
+                                                                return App.dentacoin_token_methods.allowance(checksumAddress(response.contract_data.dentist), App.assurance_state_address);
+
+                                                            case 12:
+                                                                _context5.t1 = _context5.sent;
+                                                                _context5.t2 = (0, _context5.t0)(_context5.t1);
+
+                                                                if (!(_context5.t2 > 0)) {
+                                                                    _context5.next = 16;
+                                                                    break;
+                                                                }
+
+                                                                approval_given = true;
+
+                                                            case 16:
+                                                                if (approval_given) {
+                                                                    _context5.next = 20;
+                                                                    break;
+                                                                }
+
+                                                                _context5.next = 19;
                                                                 return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({});
 
-                                                            case 10:
+                                                            case 19:
                                                                 gas_cost_for_approval = _context5.sent;
-                                                                _context5.next = 13;
+
+                                                            case 20:
+                                                                _context5.next = 22;
                                                                 return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({ from: App.dummy_address, gas: 500000 });
 
-                                                            case 13:
+                                                            case 22:
                                                                 gas_cost_for_contract_creation = _context5.sent;
-                                                                eth_fee = App.web3_1_0.utils.fromWei(((gas_cost_for_approval + gas_cost_for_contract_creation) * on_page_load_gas_price).toString(), 'ether');
+
+                                                                if (!approval_given) {
+                                                                    methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
+                                                                } else {
+                                                                    methods_gas_cost = gas_cost_for_contract_creation;
+                                                                }
+
+                                                                eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
 
                                                                 $('.recipe-popup .ether-fee .field').html(eth_fee);
 
@@ -223,7 +253,7 @@ var pagesDataOnContractInit = function () {
                                                                 });
 
                                                                 if (!cached_key) {
-                                                                    _context5.next = 22;
+                                                                    _context5.next = 32;
                                                                     break;
                                                                 }
 
@@ -237,52 +267,52 @@ var pagesDataOnContractInit = function () {
                                                                         $('.proof-success').fadeIn(1500);
                                                                     }, 500);
                                                                 });
-                                                                _context5.next = 36;
+                                                                _context5.next = 46;
                                                                 break;
 
-                                                            case 22:
+                                                            case 32:
                                                                 if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
-                                                                    _context5.next = 35;
+                                                                    _context5.next = 45;
                                                                     break;
                                                                 }
 
-                                                                _context5.next = 25;
+                                                                _context5.next = 35;
                                                                 return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
 
-                                                            case 25:
+                                                            case 35:
                                                                 decrypted_private_key_response = _context5.sent;
 
                                                                 if (!decrypted_private_key_response.success) {
-                                                                    _context5.next = 30;
+                                                                    _context5.next = 40;
                                                                     break;
                                                                 }
 
                                                                 transaction_key = decrypted_private_key_response.success;
-                                                                _context5.next = 33;
+                                                                _context5.next = 43;
                                                                 break;
 
-                                                            case 30:
+                                                            case 40:
                                                                 if (!decrypted_private_key_response.error) {
-                                                                    _context5.next = 33;
+                                                                    _context5.next = 43;
                                                                     break;
                                                                 }
 
                                                                 basic.showAlert(decrypted_private_key_response.error, '', true);
                                                                 return _context5.abrupt("return", false);
 
-                                                            case 33:
-                                                                _context5.next = 36;
+                                                            case 43:
+                                                                _context5.next = 46;
                                                                 break;
 
-                                                            case 35:
+                                                            case 45:
                                                                 if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                                                     $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>');
                                                                 }
 
-                                                            case 36:
+                                                            case 46:
 
                                                                 $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4() {
-                                                                    var decrypted_keystore_file_response, approval_function_abi;
+                                                                    var decrypted_keystore_file_response, EthereumTx, approval_function_abi;
                                                                     return _regeneratorRuntime.wrap(function _callee4$(_context4) {
                                                                         while (1) {
                                                                             switch (_context4.prev = _context4.next) {
@@ -344,15 +374,20 @@ var pagesDataOnContractInit = function () {
                                                                                     return _context4.abrupt("return", false);
 
                                                                                 case 26:
-                                                                                    _context4.next = 28;
+                                                                                    EthereumTx = require('ethereumjs-tx');
+
+                                                                                    if (approval_given) {
+                                                                                        _context4.next = 32;
+                                                                                        break;
+                                                                                    }
+
+                                                                                    _context4.next = 30;
                                                                                     return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
 
-                                                                                case 28:
+                                                                                case 30:
                                                                                     approval_function_abi = _context4.sent;
 
                                                                                     App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
-
-                                                                                        var EthereumTx = require('ethereumjs-tx');
                                                                                         var approval_transaction_obj = {
                                                                                             gasLimit: App.web3_1_0.utils.toHex(50000),
                                                                                             gasPrice: App.web3_1_0.utils.toHex(gas_cost_for_approval),
@@ -362,9 +397,6 @@ var pagesDataOnContractInit = function () {
                                                                                             data: approval_function_abi,
                                                                                             to: App.dentacoin_token_address
                                                                                         };
-                                                                                        console.log(transaction_key, 'transaction_key');
-                                                                                        console.log(approval_transaction_obj, 'approval_transaction_obj');
-                                                                                        return false;
 
                                                                                         var approval_transaction = new EthereumTx(approval_transaction_obj);
                                                                                         //signing the transaction
@@ -375,7 +407,7 @@ var pagesDataOnContractInit = function () {
                                                                                         });
                                                                                     });
 
-                                                                                case 30:
+                                                                                case 32:
                                                                                 case "end":
                                                                                     return _context4.stop();
                                                                             }
@@ -384,13 +416,13 @@ var pagesDataOnContractInit = function () {
                                                                 }))
                                                                 //App.assurance_proxy_methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash);
                                                                 );
-                                                                _context5.next = 40;
+                                                                _context5.next = 50;
                                                                 break;
 
-                                                            case 39:
+                                                            case 49:
                                                                 basic.showAlert(response.error, '', true);
 
-                                                            case 40:
+                                                            case 50:
                                                             case "end":
                                                                 return _context5.stop();
                                                         }
