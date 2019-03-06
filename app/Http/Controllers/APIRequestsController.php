@@ -384,9 +384,6 @@ class APIRequestsController extends Controller {
             CURLOPT_HTTPHEADER => $header
         ));
 
-        $resp = curl_exec($curl);
-        curl_close($curl);
-
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
