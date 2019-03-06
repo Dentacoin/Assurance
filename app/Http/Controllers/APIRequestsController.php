@@ -348,6 +348,7 @@ class APIRequestsController extends Controller {
         var_dump($json);
 
         var_dump(json_decode($json));
+        var_dump(json_decode('{"success":false,"errors":{"generic":"Invalid bearer token. Please login again"},"error_code":"invalid_token"}'));
         die();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
