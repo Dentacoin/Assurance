@@ -29231,20 +29231,25 @@ function bindTransactionAddressVerify(keystore_file) {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function success(response) {
-                        //if remember me option is checked
-                        if ($('#remember-my-keystore-file').is(':checked')) {
-                            localStorage.setItem('current-account', JSON.stringify({
-                                address: $('.proof-of-address').attr('data-address'),
-                                type: 'keystore',
-                                keystore: response.success
-                            }));
-                        }
+                        if (response.success) {
+                            //if remember me option is checked
+                            if ($('#remember-my-keystore-file').is(':checked')) {
+                                localStorage.setItem('current-account', JSON.stringify({
+                                    address: $('.proof-of-address').attr('data-address'),
+                                    type: 'keystore',
+                                    keystore: response.success
+                                }));
+                            }
 
-                        $.event.trigger({
-                            type: 'on-transaction-recipe-agree',
-                            time: new Date(),
-                            response_data: response.success
-                        });
+                            $.event.trigger({
+                                type: 'on-transaction-recipe-agree',
+                                time: new Date(),
+                                response_data: response.success
+                            });
+                        } else if (response.error) {
+                            basic.showAlert(response.error, '', true);
+                            $('.response-layer').hide();
+                        }
                     }
                 });
             }
@@ -29269,25 +29274,30 @@ function bindTransactionAddressVerify(keystore_file) {
                                 while (1) {
                                     switch (_context22.prev = _context22.next) {
                                         case 0:
-                                            //checking if the private key is related to the public key saved in the coredb
-                                            if (global_state.account != App.web3_1_0.utils.toChecksumAddress(response.address)) {
-                                                basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
-                                                $('.response-layer').hide();
-                                            } else {
-                                                //if remember me option is checked
-                                                if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
-                                                    localStorage.setItem('current-account', JSON.stringify({
-                                                        address: response.address,
-                                                        type: 'key',
-                                                        key: response.private_key
-                                                    }));
-                                                }
+                                            if (response.success) {
+                                                //checking if the private key is related to the public key saved in the coredb
+                                                if (global_state.account != App.web3_1_0.utils.toChecksumAddress(response.address)) {
+                                                    basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
+                                                    $('.response-layer').hide();
+                                                } else {
+                                                    //if remember me option is checked
+                                                    if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                                                        localStorage.setItem('current-account', JSON.stringify({
+                                                            address: response.address,
+                                                            type: 'key',
+                                                            key: response.private_key
+                                                        }));
+                                                    }
 
-                                                $.event.trigger({
-                                                    type: 'on-transaction-recipe-agree',
-                                                    time: new Date(),
-                                                    response_data: response.plain_private_key
-                                                });
+                                                    $.event.trigger({
+                                                        type: 'on-transaction-recipe-agree',
+                                                        time: new Date(),
+                                                        response_data: response.plain_private_key
+                                                    });
+                                                }
+                                            } else if (response.error) {
+                                                basic.showAlert(response.error, '', true);
+                                                $('.response-layer').hide();
                                             }
 
                                         case 1:
