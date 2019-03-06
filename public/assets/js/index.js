@@ -2291,7 +2291,7 @@ function onWindowLoadPageData() {
 
 async function onDocumentReadyPageData() {
     if($('body').hasClass('logged-in')) {
-        var user_data = getCurrentUserData();
+        var user_data = await getCurrentUserData();
         console.log(user_data, 'user_data');
         console.log(user_data.success, 'user_data');
         return false;
