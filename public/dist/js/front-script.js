@@ -221,23 +221,24 @@ var pagesDataOnContractInit = function () {
                                                                 approval_given = true;
 
                                                             case 16:
-
-                                                                console.log(approval_given, 'approval_given');
-
                                                                 if (approval_given) {
-                                                                    _context6.next = 22;
+                                                                    _context6.next = 21;
                                                                     break;
                                                                 }
 
-                                                                _context6.next = 20;
+                                                                _context6.next = 19;
                                                                 return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({});
 
-                                                            case 20:
+                                                            case 19:
                                                                 gas_cost_for_approval = _context6.sent;
 
                                                                 console.log(gas_cost_for_approval, 'gas_cost_for_approval');
 
-                                                            case 22:
+                                                            case 21:
+
+                                                                console.log(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash);
+
+                                                                //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                                                                 _context6.next = 24;
                                                                 return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({ from: App.dummy_address, gas: 500000 });
 
