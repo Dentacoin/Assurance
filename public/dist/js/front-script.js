@@ -403,8 +403,8 @@ var pagesDataOnContractInit = function () {
                                                                                         var approval_transaction = new EthereumTx(approval_transaction_obj);
                                                                                         //signing the transaction
                                                                                         approval_transaction.sign(new Buffer(transaction_key, 'hex'));
-                                                                                        console.log(transaction_key, 'transaction_key');
-                                                                                        console.log(new Buffer(transaction_key, 'hex'), 'new Buffer(transaction_key, \'hex\')');
+
+                                                                                        console.log(approval_transaction_obj, 'approval_transaction_obj');
                                                                                         return false;
                                                                                         //sending the transaction
                                                                                         App.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
