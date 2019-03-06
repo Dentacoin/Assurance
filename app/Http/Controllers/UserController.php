@@ -504,28 +504,14 @@ class UserController extends Controller {
         ]);
 
         $curl = curl_init();
-        $json = '{"jwtToken":"'.$request->input('token').'"}';
-        var_dump('asd');
-        var_dump($request->input('token'));
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://dentacoin.net/civic',
+            CURLOPT_URL => 'https://api.dentacoin.com/api/validateCivicToken/',
             CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POSTFIELDS => $json
-        ));
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            "User-Agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36",
-            "Accept" => "application/json, text/javascript, */*; q=0.01",
-            "Referer" => "https://dev-test.dentacoin.com/my-profile",
-            "Origin" => "https://dev-test.dentacoin.com",
-            "Access-Control-Allow-Origin" => "*m",
-            "Connection" => "keep-alive",
-            "Transfer-Encoding" => "chunked",
-            "Content-Type" => "application/json",
-            "Content-Length" => mb_strlen($json),
-            "Server" => "nginx/1.10.3 (Ubuntu)"
+            CURLOPT_POSTFIELDS => array(
+                'token' => $request->input('token')
+            )
         ));
 
         $resp = curl_exec($curl);
@@ -533,5 +519,11 @@ class UserController extends Controller {
 
         var_dump($resp);
         die();
+
+        if(!empty($resp))   {
+            return $resp;
+        }else {
+            return false;
+        }
     }
 }
