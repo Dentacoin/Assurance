@@ -25781,6 +25781,7 @@ var pagesDataOnContractInit = function () {
                                                                                                                                         contract_creation_status = _context5.sent;
 
                                                                                                                                         if (contract_creation_status != null && has(contract_creation_status, 'status')) {
+                                                                                                                                            console.log(contract_creation_status, 'contract_creation_status');
                                                                                                                                             clearInterval(contract_creation_interval_check);
                                                                                                                                             basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.', '', true);
                                                                                                                                         }
@@ -25880,12 +25881,13 @@ var pagesDataOnContractInit = function () {
                                                                                                             case 2:
                                                                                                                 approval_status = _context4.sent;
 
+                                                                                                                console.log(approval_status, 'approval_status');
                                                                                                                 if (approval_status != null && has(approval_status, 'status')) {
                                                                                                                     clearInterval(approval_interval_check);
                                                                                                                     _fireAssuranceContractCreationTransaction();
                                                                                                                 }
 
-                                                                                                            case 4:
+                                                                                                            case 5:
                                                                                                             case 'end':
                                                                                                                 return _context4.stop();
                                                                                                         }

@@ -503,7 +503,6 @@ class UserController extends Controller {
             'token.required' => 'Token is required.'
         ]);
 
-        die();
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
