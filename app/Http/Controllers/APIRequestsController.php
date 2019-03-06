@@ -344,9 +344,9 @@ class APIRequestsController extends Controller {
     //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
     public function encryptFile($key, $html) {
         $curl = curl_init();
-        $json = '{"public_key":"'.$key.'", "html":"'.htmlspecialchars('<label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label>', ENT_QUOTES).'"}';
+        //$json = '{"public_key":"'.$key.'", "html":"'.htmlspecialchars('<label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label>', ENT_QUOTES).'"}';
 
-        var_dump(json_decode($json));
+        var_dump(htmlspecialchars('<label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label><label class="inline-block">Professional / Company Registration Number:</label>', ENT_QUOTES));
         die();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
