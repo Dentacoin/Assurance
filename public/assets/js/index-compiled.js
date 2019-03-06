@@ -25575,7 +25575,7 @@ var pagesDataOnContractInit = function () {
                                                         switch (_context5.prev = _context5.next) {
                                                             case 0:
                                                                 if (!response.success) {
-                                                                    _context5.next = 39;
+                                                                    _context5.next = 40;
                                                                     break;
                                                                 }
 
@@ -25613,59 +25613,66 @@ var pagesDataOnContractInit = function () {
                                                                     html: true
                                                                 });
 
+                                                                console.log(cached_key, 'cached_key');
+
                                                                 if (!cached_key) {
-                                                                    _context5.next = 22;
+                                                                    _context5.next = 23;
                                                                     break;
                                                                 }
 
                                                                 bindVerifyAddressLogic(true);
                                                                 $(document).on('on-transaction-recipe-agree', function (event) {
                                                                     transaction_key = event.response_data;
-                                                                    $('.response-layer').hide();
+                                                                    setTimeout(function () {
+                                                                        $('.response-layer').hide();
+
+                                                                        $('.proof-of-address').remove();
+                                                                        $('.proof-success').fadeIn(1500);
+                                                                    }, 500);
                                                                 });
-                                                                _context5.next = 36;
+                                                                _context5.next = 37;
                                                                 break;
 
-                                                            case 22:
+                                                            case 23:
                                                                 if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
-                                                                    _context5.next = 35;
+                                                                    _context5.next = 36;
                                                                     break;
                                                                 }
 
-                                                                _context5.next = 25;
+                                                                _context5.next = 26;
                                                                 return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
 
-                                                            case 25:
+                                                            case 26:
                                                                 decrypted_private_key_response = _context5.sent;
 
                                                                 if (!decrypted_private_key_response.success) {
-                                                                    _context5.next = 30;
+                                                                    _context5.next = 31;
                                                                     break;
                                                                 }
 
                                                                 transaction_key = decrypted_private_key_response.success;
-                                                                _context5.next = 33;
+                                                                _context5.next = 34;
                                                                 break;
 
-                                                            case 30:
+                                                            case 31:
                                                                 if (!decrypted_private_key_response.error) {
-                                                                    _context5.next = 33;
+                                                                    _context5.next = 34;
                                                                     break;
                                                                 }
 
                                                                 basic.showAlert(decrypted_private_key_response.error, '', true);
                                                                 return _context5.abrupt('return', false);
 
-                                                            case 33:
-                                                                _context5.next = 36;
+                                                            case 34:
+                                                                _context5.next = 37;
                                                                 break;
 
-                                                            case 35:
+                                                            case 36:
                                                                 if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                                                     $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>');
                                                                 }
 
-                                                            case 36:
+                                                            case 37:
 
                                                                 $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
                                                                     var approval_function_abi;
@@ -25739,13 +25746,13 @@ var pagesDataOnContractInit = function () {
                                                                 }))
                                                                 //App.assurance_proxy_methods.registerContract(App.dummy_address, App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash);
                                                                 );
-                                                                _context5.next = 40;
+                                                                _context5.next = 41;
                                                                 break;
 
-                                                            case 39:
+                                                            case 40:
                                                                 basic.showAlert(response.error, '', true);
 
-                                                            case 40:
+                                                            case 41:
                                                             case 'end':
                                                                 return _context5.stop();
                                                         }
@@ -29207,13 +29214,10 @@ function bindTransactionAddressVerify(keystore_file) {
                                     switch (_context22.prev = _context22.next) {
                                         case 0:
                                             //checking if the private key is related to the public key saved in the coredb
-                                            console.log(global_state.account, 'global_state.account');
-                                            console.log(global_state.account, 'response.address');
-                                            if (global_state.account != response.address) {
+                                            if (global_state.account != App.web3_1_0.utils.toChecksumAddress(response.address)) {
                                                 basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
                                                 $('.response-layer').hide();
                                             } else {
-                                                console.log('trigger event');
                                                 //if remember me option is checked
                                                 if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
                                                     localStorage.setItem('current-account', JSON.stringify({
@@ -29230,7 +29234,7 @@ function bindTransactionAddressVerify(keystore_file) {
                                                 });
                                             }
 
-                                        case 3:
+                                        case 1:
                                         case 'end':
                                             return _context22.stop();
                                     }

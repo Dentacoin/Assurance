@@ -4781,6 +4781,11 @@ fieldset {
         color: #212121; }
     .bootbox.recipe-popup .modal-dialog .modal-body .ether-fee i {
       cursor: pointer; }
+    .bootbox.recipe-popup .modal-dialog .modal-body .proof-success {
+      display: none;
+      padding-left: 15px;
+      padding-right: 15px;
+      color: #239234; }
     .bootbox.recipe-popup .modal-dialog .modal-body .additional-text {
       width: 75%;
       margin: 0 auto; }

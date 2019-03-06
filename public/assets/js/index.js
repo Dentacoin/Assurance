@@ -601,11 +601,17 @@ async function pagesDataOnContractInit() {
                                     });
 
                                     var transaction_key;
+                                    console.log(cached_key, 'cached_key');
                                     if(cached_key) {
                                         bindVerifyAddressLogic(true);
                                         $(document).on('on-transaction-recipe-agree', function(event) {
                                             transaction_key = event.response_data;
-                                            $('.response-layer').hide();
+                                            setTimeout(function() {
+                                                $('.response-layer').hide();
+
+                                                $('.proof-of-address').remove();
+                                                $('.proof-success').fadeIn(1500);
+                                            }, 500);
                                         });
                                     } else {
                                         if(JSON.parse(localStorage.getItem('current-account')).type == 'key') {
@@ -2835,13 +2841,10 @@ function bindTransactionAddressVerify(keystore_file) {
                     },
                     success: async function(response) {
                         //checking if the private key is related to the public key saved in the coredb
-                        console.log(global_state.account, 'global_state.account');
-                        console.log(global_state.account, 'response.address');
-                        if(global_state.account != response.address) {
+                        if(global_state.account != App.web3_1_0.utils.toChecksumAddress(response.address)) {
                             basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
                             $('.response-layer').hide();
                         } else {
-                            console.log('trigger event');
                             //if remember me option is checked
                             if($('.proof-of-address #remember-my-private-key').is(':checked')) {
                                 localStorage.setItem('current-account', JSON.stringify({

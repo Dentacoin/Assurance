@@ -133,9 +133,7 @@
                                                 <div class="row on-change-result"></div>
                                             </div>
                                         </div>
-                                        <div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">
-                                            Successful address verification.
-                                        </div>
+                                        <div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>
                                     @endif
                                 </div>
                                 <div class="light-gray-color fs-14 padding-top-5">This is the wallet where you will send your monthly premiums from and collect your rewards from all Dentacoin tools. Please double-check if everything is correct. You don’t have a wallet? <a href="//wallet.dentacoin.com" class="blue-green-color calibri-bold" target="_blank">Create one here.</a></div>

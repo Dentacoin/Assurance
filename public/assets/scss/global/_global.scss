@@ -987,6 +987,12 @@ fieldset {
                 .ether-fee i {
                     cursor: pointer;
                 }
+                .proof-success {
+                    display: none;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    color: $active;
+                }
                 .additional-text {
                     width: 75%;
                     margin: 0 auto;
