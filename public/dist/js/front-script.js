@@ -390,8 +390,11 @@ var pagesDataOnContractInit = function () {
                                                                                     approval_function_abi = _context4.sent;
 
                                                                                     App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
+                                                                                        console.log(gas_cost_for_approval, 'gas_cost_for_approval');
+                                                                                        console.log(nonce, 'nonce');
+
                                                                                         var approval_transaction_obj = {
-                                                                                            gasLimit: App.web3_1_0.utils.toHex(50000),
+                                                                                            gasLimit: App.web3_1_0.utils.toHex(65000),
                                                                                             gasPrice: App.web3_1_0.utils.toHex(gas_cost_for_approval),
                                                                                             from: global_state.account,
                                                                                             nonce: App.web3_1_0.utils.toHex(nonce),
@@ -405,6 +408,7 @@ var pagesDataOnContractInit = function () {
                                                                                         approval_transaction.sign(new Buffer(transaction_key, 'hex'));
 
                                                                                         console.log(approval_transaction_obj, 'approval_transaction_obj');
+                                                                                        console.log(approval_transaction, 'approval_transaction');
                                                                                         return false;
                                                                                         //sending the transaction
                                                                                         App.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
