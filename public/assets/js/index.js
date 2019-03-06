@@ -691,7 +691,6 @@ async function pagesDataOnContractInit() {
                                             }
 
                                             async function fireAssuranceContractCreationTransaction() {
-                                                console.log('fireAssuranceContractCreationTransaction');
                                                 var contract_creation_function_abi = await App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
                                                 App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
                                                     var contract_creation_transaction_obj = {
@@ -701,7 +700,7 @@ async function pagesDataOnContractInit() {
                                                         nonce: App.web3_1_0.utils.toHex(nonce),
                                                         chainId: App.chain_id,
                                                         data: contract_creation_function_abi,
-                                                        to: App.dentacoin_token_address
+                                                        to: App.assurance_proxy_address
                                                     };
 
                                                     const contract_creation_transaction = new EthereumTx(contract_creation_transaction_obj);

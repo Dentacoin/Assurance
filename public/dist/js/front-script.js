@@ -354,11 +354,10 @@ var pagesDataOnContractInit = function () {
                                                                                                 while (1) {
                                                                                                     switch (_context4.prev = _context4.next) {
                                                                                                         case 0:
-                                                                                                            console.log('fireAssuranceContractCreationTransaction');
-                                                                                                            _context4.next = 3;
+                                                                                                            _context4.next = 2;
                                                                                                             return App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
-                                                                                                        case 3:
+                                                                                                        case 2:
                                                                                                             contract_creation_function_abi = _context4.sent;
 
                                                                                                             App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
@@ -369,7 +368,7 @@ var pagesDataOnContractInit = function () {
                                                                                                                     nonce: App.web3_1_0.utils.toHex(nonce),
                                                                                                                     chainId: App.chain_id,
                                                                                                                     data: contract_creation_function_abi,
-                                                                                                                    to: App.dentacoin_token_address
+                                                                                                                    to: App.assurance_proxy_address
                                                                                                                 };
 
                                                                                                                 var contract_creation_transaction = new EthereumTx(contract_creation_transaction_obj);
@@ -382,7 +381,7 @@ var pagesDataOnContractInit = function () {
                                                                                                                 });
                                                                                                             });
 
-                                                                                                        case 5:
+                                                                                                        case 4:
                                                                                                         case "end":
                                                                                                             return _context4.stop();
                                                                                                     }
