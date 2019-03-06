@@ -345,10 +345,9 @@ class APIRequestsController extends Controller {
     public function encryptFile($key, $html) {
         $curl = curl_init();
         $json = "{'public_key':'".$key."', 'html':'".$html."'}";
-        var_dump($json);
 
-        var_dump(json_decode($json));
-        var_dump(json_decode('{"success":false,"errors":{"generic":"Invalid bearer token. Please login again"},"error_code":"invalid_token"}'));
+        var_dump(json_decode('{"success":false}'));
+        var_dump(json_decode("{'success':false}"));
         die();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
