@@ -97,7 +97,7 @@ var global_state = {};
 var temporally_timestamp = 0;
 var metamask = typeof(web3) !== 'undefined' && web3.currentProvider.isMetaMask === true;
 var App = {
-    dummy_address: '0x1627d0c2a441b3a192e1aeac032ae48c6b25490c',
+    dummy_address: '0x32e4c8584f4357de80812b048734a0c2fe6e31ab',
     chain_id: 4,
     infura_node: 'https://rinkeby.infura.io/v3/c3a8017424324e47be615fb4028275bb',
     assurance_state_address: '0x1038c1940df7d5c258a3093591dfd74fcd3d1a6a',
