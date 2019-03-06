@@ -2292,6 +2292,9 @@ function onWindowLoadPageData() {
 async function onDocumentReadyPageData() {
     if($('body').hasClass('logged-in')) {
         var user_data = getCurrentUserData();
+        console.log(user_data, 'user_data');
+        console.log(user_data.success, 'user_data');
+        return false;
         global_state.account = user_data.success.dcn_address;
 
         //if some fake or false current-account localstorage variable is set -> delete it
