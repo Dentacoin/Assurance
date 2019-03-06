@@ -2428,16 +2428,30 @@ async function onDocumentReadyPageData() {
                 if(event.response_data) {
                     $.ajax({
                         type: 'POST',
-                        url: '/validate-civic-kyc',
+                        url: 'https://dentacoin.net/civic',
                         dataType: 'json',
                         data: {
-                            token: event.response_data
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            jwtToken: event.response_data
                         },
                         success: function (response) {
-                            console.log(response);
+                            console.log(response, 'response');
+                            
+                            if(response.data && has(response, 'userId') && response.userId != '') {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/validate-civic-kyc',
+                                    dataType: 'json',
+                                    data: {
+                                        token: event.response_data
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function (inner_response) {
+                                        console.log(inner_response);
+                                    }
+                                });
+                            }
                         }
                     });
                 } else {

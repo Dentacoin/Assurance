@@ -389,13 +389,12 @@ var pagesDataOnContractInit = function () {
                                                                                                                                     case 2:
                                                                                                                                         contract_creation_status = _context5.sent;
 
-                                                                                                                                        console.log(contract_creation_status, 'contract_creation_status');
-                                                                                                                                        if (contract_creation_status.status) {
+                                                                                                                                        if (contract_creation_status != null && has(contract_creation_status, 'status')) {
                                                                                                                                             clearInterval(contract_creation_interval_check);
-                                                                                                                                            basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.');
+                                                                                                                                            basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.', '', true);
                                                                                                                                         }
 
-                                                                                                                                    case 5:
+                                                                                                                                    case 4:
                                                                                                                                     case "end":
                                                                                                                                         return _context5.stop();
                                                                                                                                 }
@@ -490,13 +489,12 @@ var pagesDataOnContractInit = function () {
                                                                                                             case 2:
                                                                                                                 approval_status = _context4.sent;
 
-                                                                                                                console.log(approval_status, 'approval_status');
-                                                                                                                if (approval_status.status) {
+                                                                                                                if (approval_status != null && has(approval_status, 'status')) {
                                                                                                                     clearInterval(approval_interval_check);
                                                                                                                     _fireAssuranceContractCreationTransaction();
                                                                                                                 }
 
-                                                                                                            case 5:
+                                                                                                            case 4:
                                                                                                             case "end":
                                                                                                                 return _context4.stop();
                                                                                                         }
@@ -938,16 +936,30 @@ var onDocumentReadyPageData = function () {
                                                 if (event.response_data) {
                                                     $.ajax({
                                                         type: 'POST',
-                                                        url: '/validate-civic-kyc',
+                                                        url: 'https://dentacoin.net/civic',
                                                         dataType: 'json',
                                                         data: {
-                                                            token: event.response_data
-                                                        },
-                                                        headers: {
-                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                            jwtToken: event.response_data
                                                         },
                                                         success: function success(response) {
-                                                            console.log(response);
+                                                            console.log(response, 'response');
+
+                                                            if (response.data && has(response, 'userId') && response.userId != '') {
+                                                                $.ajax({
+                                                                    type: 'POST',
+                                                                    url: '/validate-civic-kyc',
+                                                                    dataType: 'json',
+                                                                    data: {
+                                                                        token: event.response_data
+                                                                    },
+                                                                    headers: {
+                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                    },
+                                                                    success: function success(inner_response) {
+                                                                        console.log(inner_response);
+                                                                    }
+                                                                });
+                                                            }
                                                         }
                                                     });
                                                 } else {
