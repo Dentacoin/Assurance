@@ -25678,7 +25678,7 @@ var pagesDataOnContractInit = function () {
                                                                         while (1) {
                                                                             switch (_context4.prev = _context4.next) {
                                                                                 case 0:
-                                                                                    if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress('0x' + JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                                                    if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
                                                                                         _context4.next = 5;
                                                                                         break;
                                                                                     }
