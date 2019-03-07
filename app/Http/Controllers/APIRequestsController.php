@@ -352,8 +352,7 @@ class APIRequestsController extends Controller {
             'public_key' => $key,
             'html' => $html
         );
-        var_dump(json_encode($array));
-        die();
+        $json = json_encode($array);
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
