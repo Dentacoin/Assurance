@@ -27301,7 +27301,7 @@ initPagesLogic();
 //LOGGED USER LOGIC
 if ($('body').hasClass('logged-in')) {
     if ($('body').hasClass('edit-account')) {
-        styleAvatarUploadButton('form#patient-update-profile .avatar button label');
+        styleAvatarUploadButton('form#patient-update-profile .avatar .btn-wrapper label');
 
         $('form#patient-update-profile').on('submit', function (event) {
             var this_form = $(this);
@@ -27589,7 +27589,7 @@ if ($('body').hasClass('logged-in')) {
 
 
         var signature_pad_inited = false;
-        styleAvatarUploadButton('.steps-body .avatar button label');
+        styleAvatarUploadButton('.steps-body .avatar .btn-wrapper label');
 
         if ($('.single-row.proof-of-address').length) {
             bindVerifyAddressLogic();
@@ -28558,7 +28558,7 @@ function bindLoginSigninPopupShow() {
                                         });
 
                                         //THIRD STEP INIT LOGIC
-                                        styleAvatarUploadButton('.bootbox.login-signin-popup .dentist .form-register .step.third .avatar button label');
+                                        styleAvatarUploadButton('.bootbox.login-signin-popup .dentist .form-register .step.third .avatar .btn-wrapper label');
                                         initCaptchaRefreshEvent();
 
                                         $('.dentist .form-register .next-step').click(function () {
