@@ -1890,8 +1890,10 @@ function bindLoginSigninPopupShow() {
         $('.show-login-signin').unbind();
         $('.show-login-signin').on('click', function() {
             var data = {};
-            if($(this).hasClass('reload-here')) {
-                data.reload_on = ''
+            var this_btn = $(this);
+            if(this_btn.hasClass('reload-here')) {
+                data.route = this_btn.attr('data-route');
+                data.slug = this_btn.attr('data-slug');
             }
             $.ajax({
                 type: 'POST',
