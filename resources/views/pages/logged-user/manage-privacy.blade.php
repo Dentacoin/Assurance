@@ -37,7 +37,7 @@
                                 <div class="fs-16 dark-color">You can request to receive all your personal data stored on our servers. Just click on the button below to download it.</div>
                             </div>
                             <div class="btn-container text-right padding-top-30">
-                                <a href="" class="white-blue-green-btn">DOWNLOAD PERSONAL DATA</a>
+                                <a href="" class="white-blue-green-btn" onclick="alert('COMING SOON!')">DOWNLOAD PERSONAL DATA</a>
                             </div>
                         </div>
                     </div>
