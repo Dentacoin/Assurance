@@ -79,7 +79,8 @@
                                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-40 padding-bottom-40">
                                     <img alt="Blurred contract terms" itemprop="contentUrl" src="/assets/uploads/blurred-contract-terms.png"/>
                                 </figure>
-                                <button class="show-login-signin white-blue-green-btn">SIGN UP TO SEE DETAILS</button>
+                                {{var_dump(Route::current()->getName())}}
+                                <button class="show-login-signin reload-here white-blue-green-btn">SIGN UP TO SEE DETAILS</button>
                             </div>
                         </div>
                     </div>

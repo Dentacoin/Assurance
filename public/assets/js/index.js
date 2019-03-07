@@ -1889,10 +1889,15 @@ function bindLoginSigninPopupShow() {
     if($('.show-login-signin').length) {
         $('.show-login-signin').unbind();
         $('.show-login-signin').on('click', function() {
+            var data = {};
+            if($(this).hasClass('reload-here')) {
+                data.reload_on = ''
+            }
             $.ajax({
                 type: 'POST',
                 url: '/get-login-signin',
                 dataType: 'json',
+                data: data,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
