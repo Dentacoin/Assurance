@@ -93,7 +93,7 @@
                         <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color">See details</a>
                     </div>
                     <div class="padding-top-30">
-                        <a href="javascript:void(0)" class="white-green-btn min-width-300">APPROVE & ACTIVATE</a>
+                        <a href="javascript:void(0)" class="white-green-btn min-width-300" onclick="alert('COMING SOON!')">APPROVE & ACTIVATE</a>
                     </div>
                 </div>
             </div>
