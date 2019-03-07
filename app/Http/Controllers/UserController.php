@@ -14,6 +14,17 @@ class UserController extends Controller {
         return new UserController();
     }
 
+    protected function getLoginSigninHtml(Request $request) {
+        var_dump($request->input());
+        die();
+        //passing the countries
+        $countries = (new APIRequestsController())->getAllCountries();
+        $clinics = (new APIRequestsController())->getAllClinicsByName();
+        $view = view('partials/login-signin', ['countries' => $countries, 'clinics' => $clinics, 'current_user_country_code' => mb_strtolower(trim(file_get_contents("http://ipinfo.io/" . $_SERVER['REMOTE_ADDR'] .  "/country")))]);
+        $view = $view->render();
+        return response()->json(['success' => $view]);
+    }
+
     protected function getEditAccountView()   {
         return view('pages/logged-user/edit-account', ['countries' => (new APIRequestsController())->getAllCountries(), 'user_data' => (new APIRequestsController())->getUserData(session('logged_user')['id'])]);
     }

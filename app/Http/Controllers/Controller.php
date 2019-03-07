@@ -6,7 +6,7 @@ use App\Page;
 use App\PagesHtmlSection;
 use App\TemporallyContract;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
+use Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -156,17 +156,6 @@ class Controller extends BaseController
 
     protected function refreshCaptcha() {
         return response()->json(['captcha' => captcha_img()]);
-    }
-
-    protected function getLoginSigninHtml(Request $request) {
-        var_dump($request->input());
-        die();
-        //passing the countries
-        $countries = (new APIRequestsController())->getAllCountries();
-        $clinics = (new APIRequestsController())->getAllClinicsByName();
-        $view = view('partials/login-signin', ['countries' => $countries, 'clinics' => $clinics, 'current_user_country_code' => mb_strtolower(trim(file_get_contents("http://ipinfo.io/" . $_SERVER['REMOTE_ADDR'] .  "/country")))]);
-        $view = $view->render();
-        return response()->json(['success' => $view]);
     }
 
     protected function getAllClinicsResponse() {
