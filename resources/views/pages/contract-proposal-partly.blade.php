@@ -80,6 +80,7 @@
                                     <img alt="Blurred contract terms" itemprop="contentUrl" src="/assets/uploads/blurred-contract-terms.png"/>
                                 </figure>
                                 {{var_dump(Route::current()->getName())}}
+                                {{var_dump(Route::current()->parameters())}}
                                 <button class="show-login-signin reload-here white-blue-green-btn">SIGN UP TO SEE DETAILS</button>
                             </div>
                         </div>
