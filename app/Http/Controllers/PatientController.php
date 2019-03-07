@@ -189,7 +189,7 @@ class PatientController extends Controller {
 
             //saving to DB
             $invite_dentist_reward->save();
-            return redirect()->route($data['redirect'])->with(['success' => 'Email has been sent to your dentist successfully.']);
+            return redirect()->route($data['redirect'])->with(['success' => 'Invitation has been sent to your dentist successfully. Once he register you will receive 20000 Dentacoins reward.']);
         }
     }
 
