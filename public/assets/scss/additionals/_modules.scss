@@ -775,7 +775,7 @@
                 background-color: #ff8d8d;
             }
             .upload-file-container {
-                .btn-wrapper {   
+                .btn-wrapper {
                     label {
                         width: 100%;
                         display: block;
@@ -783,6 +783,7 @@
                         margin: 0;
                         min-height: 65px;
                         position: relative;
+                        text-align: center; 
                         span {
                             width: 95%;
                             @include vertical-horizontal-align(absolute);

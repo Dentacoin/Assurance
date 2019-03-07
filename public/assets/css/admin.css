@@ -907,7 +907,8 @@
     padding: 0;
     margin: 0;
     min-height: 65px;
-    position: relative; }
+    position: relative;
+    text-align: center; }
     .module.camping-for-validation .proof-of-address .upload-file-container .btn-wrapper label span {
       width: 95%;
       position: absolute;
