@@ -24,26 +24,26 @@
                                         <div class="inline-block-top figure-container">
                                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                 <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
+                                                <figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">
+                                                    @switch($contract->status)
+                                                        @case('active')
+                                                        Active
+                                                        @break
+                                                        @case('pending')
+                                                        Pending
+                                                        @break
+                                                        @case('awaiting-payment')
+                                                        Awaiting Payment
+                                                        @break
+                                                        @case('awaiting-approval')
+                                                        Awaiting Approval
+                                                        @break
+                                                        @case('cancelled')
+                                                        Cancelled
+                                                        @break
+                                                    @endswitch
+                                                </figcaption>
                                             </figure>
-                                            <figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">
-                                                @switch($contract->status)
-                                                    @case('active')
-                                                    Active
-                                                    @break
-                                                    @case('pending')
-                                                    Pending
-                                                    @break
-                                                    @case('awaiting-payment')
-                                                    Awaiting Payment
-                                                    @break
-                                                    @case('awaiting-approval')
-                                                    Awaiting Approval
-                                                    @break
-                                                    @case('cancelled')
-                                                    Cancelled
-                                                    @break
-                                                @endswitch
-                                            </figcaption>
                                         </div>
                                         <div class="contract-info inline-block-top">
                                             <div class="calibri-bold fs-18">{{$patient->name}}</div>
