@@ -285,7 +285,7 @@ class DentistController extends Controller
             if(count(Mail::failures()) > 0) {
                 return redirect()->route('create-contract')->with(['error' => 'Something went wrong with sending contract via email. Please try again later.']);
             } else {
-                return redirect()->route('create-contract')->with(['success' => 'Your contract proposal has been sent successfully to your patient. Once the patient agree with your contract terms and accepts it you will be able to see the contract in your pending contracts section.']);
+                return redirect()->route('dentist-contract-view', ['slug' => $temporally_contract->slug])->with(['success' => 'Your contract proposal has been sent successfully to your patient. Once the patient agree with your contract terms and accepts it you will be able to see the contract in your pending contracts section.']);
             }
         } else {
             return redirect()->route('create-contract')->with(['error' => 'Something went wrong with sending contract via email. Please try again later.']);
