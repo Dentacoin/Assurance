@@ -397,7 +397,7 @@ var pagesDataOnContractInit = function () {
                                                                                                                                         if (contract_creation_status != null && has(contract_creation_status, 'status')) {
                                                                                                                                             clearInterval(contract_creation_interval_check);
 
-                                                                                                                                            $.ajax({
+                                                                                                                                            /*$.ajax({
                                                                                                                                                 type: 'POST',
                                                                                                                                                 url: '/on-blockchain-contract-creation',
                                                                                                                                                 dataType: 'json',
@@ -407,13 +407,13 @@ var pagesDataOnContractInit = function () {
                                                                                                                                                 headers: {
                                                                                                                                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                                                                                                                 },
-                                                                                                                                                success: function success(inner_response) {
-                                                                                                                                                    if (inner_response.success) {
-                                                                                                                                                        $('.response-layer').hide();
-                                                                                                                                                        basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.', '', true);
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            });
+                                                                                                                                                success: function (inner_response) {
+                                                                                                                                                    if(inner_response.success) {*/
+                                                                                                                                            $('.response-layer').hide();
+                                                                                                                                            basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.', '', true);
+                                                                                                                                            /*}
+                                                                                                                                            }
+                                                                                                                                            });*/
                                                                                                                                         }
 
                                                                                                                                     case 4:

@@ -88,7 +88,7 @@
                                                 <time class="display-block fs-14 calibri-light">Received on: {{$contract->created_at->format('d/m/Y')}}</time>
                                                 <div class="lato-semibold fs-24 padding-top-5 padding-bottom-5">{{$contract->monthly_premium}}$</div>
                                                 <div class="btn-container">
-                                                    <a href="{{route('contract-proposal', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details and Sign</a>
+                                                    <a href="{{route('dentist-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details and Sign</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -183,7 +183,7 @@
                                                 <div class="display-block fs-14 calibri-light hide-this">&nbsp;</div>
                                                 <div class="lato-semibold fs-24 padding-top-5 padding-bottom-5">{{$contract->monthly_premium}}$</div>
                                                 <div class="btn-container">
-                                                    <a href="{{route('contract-proposal', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details and Sign</a>
+                                                    <a href="{{route('dentist-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details and Sign</a>
                                                 </div>
                                             </div>
                                         </div>
