@@ -19,21 +19,23 @@
             <div class="row">
                 <nav class="col-xs-12 text-center contract-single-page-nav module">
                     <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
-                        <li class="inline-block">
-                            <a href="javascript:void(0);" class="contract-decrypt" data-hash="{{$contract->document_hash}}" data-type="patient" itemprop="url" target="_blank">
-                                <span itemprop="name">Contract sample (pdf)</span>
-                            </a>
-                            <form target="_blank" method="POST" action="{{route('render-pdf')}}" id="render-pdf">
-                                <input type="hidden" name="pdf_data"/>
-                                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            </form>
-                        </li>
-                        <li class="inline-block">|</li>
-                        <li class="inline-block">
-                            <a href="https://ipfs.io/ipfs/{{$contract->document_hash}}" target="_blank" itemprop="url">
-                                <span itemprop="name">Public Proof</span>
-                            </a>
-                        </li>
+                        @if(!empty($contract->document_hash))
+                            <li class="inline-block">
+                                <a href="javascript:void(0);" class="contract-decrypt" data-hash="{{$contract->document_hash}}" data-type="patient" itemprop="url" target="_blank">
+                                    <span itemprop="name">Contract sample (pdf)</span>
+                                </a>
+                                <form target="_blank" method="POST" action="{{route('render-pdf')}}" id="render-pdf">
+                                    <input type="hidden" name="pdf_data"/>
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                </form>
+                            </li>
+                            <li class="inline-block">|</li>
+                            <li class="inline-block">
+                                <a href="https://ipfs.io/ipfs/{{$contract->document_hash}}" target="_blank" itemprop="url">
+                                    <span itemprop="name">Public Proof</span>
+                                </a>
+                            </li>
+                        @endif
                         <li class="inline-block">|</li>
                         <li class="inline-block">
                             <a href="{{route('create-contract')}}?renew-contract={{$contract->slug}}" itemprop="url" class="renew-contract-btn">
