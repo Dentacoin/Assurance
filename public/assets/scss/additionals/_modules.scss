@@ -775,12 +775,7 @@
                 background-color: #ff8d8d;
             }
             .upload-file-container {
-                button {
-                    margin: 0;
-                    padding: 0;
-                    border: 0;
-                    width: 100%;
-                    background: transparent;
+                .btn-wrapper {   
                     label {
                         width: 100%;
                         display: block;
