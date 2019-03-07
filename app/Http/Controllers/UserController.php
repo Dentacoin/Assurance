@@ -15,12 +15,15 @@ class UserController extends Controller {
     }
 
     protected function getLoginSigninHtml(Request $request) {
-        var_dump($request->input());
-        die();
         //passing the countries
         $countries = (new APIRequestsController())->getAllCountries();
         $clinics = (new APIRequestsController())->getAllClinicsByName();
-        $view = view('partials/login-signin', ['countries' => $countries, 'clinics' => $clinics, 'current_user_country_code' => mb_strtolower(trim(file_get_contents("http://ipinfo.io/" . $_SERVER['REMOTE_ADDR'] .  "/country")))]);
+        $params = ['countries' => $countries, 'clinics' => $clinics, 'current_user_country_code' => mb_strtolower(trim(file_get_contents("http://ipinfo.io/" . $_SERVER['REMOTE_ADDR'] .  "/country")))];
+        if(!empty($request->input('route')) && !empty($request->input('slug'))) {
+            $params['route'] = $request->input('route');
+            $params['slug'] = $request->input('slug');
+        }
+        $view = view('partials/login-signin', $params);
         $view = $view->render();
         return response()->json(['success' => $view]);
     }

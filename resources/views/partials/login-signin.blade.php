@@ -12,6 +12,10 @@
             <div>
                 <a href="javascript:void(0)"  class="civic-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" data-type="patient">with Civic</a>
             </div>
+            @if(isset($route) && isset($slug))
+                <input type="hidden" name="route" value="{{$route}}"/>
+                <input type="hidden" name="slug" value="{{$slug}}"/>
+            @endif
             <div class="popup-half-footer">
                 Don't have an account? <a href="javascript:void(0)" class="call-sign-up">Sign up</a>
             </div>
