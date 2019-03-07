@@ -313,15 +313,19 @@ class PatientController extends Controller {
         $html_start = $view_start->render();
 
         $view_body = view('partials/pdf-contract-body', ['contract' => $contract, 'countries' => (new APIRequestsController())->getAllCountries()]);
-        $view_body = view('partials/test-pdf-contract-body', ['contract' => $contract, 'countries' => (new APIRequestsController())->getAllCountries()]);
+        //$view_body = view('partials/test-pdf-contract-body', ['contract' => $contract, 'countries' => (new APIRequestsController())->getAllCountries()]);
         $html_body = $view_body->render();
 
         $view_end = view('partials/pdf-contract-layout-end');
         $html_end = $view_end->render();
 
         //sending the pdf html to encryption nodejs api
-        $encrypted_html_by_patient = (new \App\Http\Controllers\APIRequestsController())->encryptFile($patient_pub_key->public_key, htmlentities((string)$view_body));
-        $encrypted_html_by_dentist = (new \App\Http\Controllers\APIRequestsController())->encryptFile($dentist_pub_key->public_key, $this->minifyHtmlParts($html_body));
+        $encrypted_html_by_patient = (new \App\Http\Controllers\APIRequestsController())->encryptFile($patient_pub_key->public_key, htmlentities($html_body));
+        $encrypted_html_by_dentist = (new \App\Http\Controllers\APIRequestsController())->encryptFile($dentist_pub_key->public_key, htmlentities($html_body));
+
+        var_dump($encrypted_html_by_patient);
+        var_dump($encrypted_html_by_dentist);
+        die();
 
         //if no errors from the api
         if($encrypted_html_by_patient && !isset($encrypted_html_by_patient->error) && $encrypted_html_by_dentist && !isset($encrypted_html_by_dentist->error)) {
