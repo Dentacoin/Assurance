@@ -1,7 +1,16 @@
 @extends('layout')
 @section('content')
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
-    @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+    @if(!empty($contract->patient_id))
+        @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+        @php($patient_name = $patient->name)
+        @php($patient_email = $patient->email)
+        @php($avatar_url = $patient->avatar_url)
+    @else
+        @php($patient_name = $contract->patient_fname . ' ' . $contract->patient_lname)
+        @php($patient_email = $contract->patient_email)
+        @php($avatar_url = '/assets/images/no-avatar.png')
+    @endif
     <section class="padding-top-100 single-contract-view-section cancelled" data-created-at="{{strtotime($contract->contract_active_at)}}">
         <div class="container">
             <div class="row">
@@ -61,11 +70,11 @@
                 </div>
                 <div class="col-xs-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                        <img alt="Patient avatar" src="{{$patient->avatar_url}}" class="max-width-120"/>
+                        <img alt="Patient avatar" src="{{$avatar_url}}" class="max-width-120"/>
                     </figure>
-                    <div class="fs-22 calibri-bold padding-top-15 padding-bottom-5">{{$patient->name}}</div>
+                    <div class="fs-22 calibri-bold padding-top-15 padding-bottom-5">{{$patient_name}}</div>
                     <div class="calibri-light fs-18">
-                        <a href="mailto:{{$patient->email}}" class="light-gray-color">{{$patient->email}}</a>
+                        <a href="mailto:{{$patient_email}}" class="light-gray-color">{{$patient_email}}</a>
                     </div>
                 </div>
             </div>
