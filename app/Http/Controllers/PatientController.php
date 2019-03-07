@@ -104,7 +104,7 @@ class PatientController extends Controller {
 
                 }
             }
-            
+
             //send request to API to add this reward to the patient account
             if(!empty($request->input('route')) && !empty($request->input('slug'))) {
                 return redirect()->route($request->input('route'), ['slug' => $request->input('slug')]);
@@ -312,7 +312,8 @@ class PatientController extends Controller {
         $view_start = view('partials/pdf-contract-layout-start');
         $html_start = $view_start->render();
 
-        $view_body = view('partials/pdf-contract-body', ['contract' => $contract, 'countries' => (new APIRequestsController())->getAllCountries()]);
+        //$view_body = view('partials/pdf-contract-body', ['contract' => $contract, 'countries' => (new APIRequestsController())->getAllCountries()]);
+        $view_body = view('partials/test-pdf-contract-body', ['contract' => $contract, 'countries' => (new APIRequestsController())->getAllCountries()]);
         $html_body = $view_body->render();
 
         $view_end = view('partials/pdf-contract-layout-end');
