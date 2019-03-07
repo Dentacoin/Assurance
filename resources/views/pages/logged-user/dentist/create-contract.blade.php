@@ -13,7 +13,12 @@
             <div class="row">
                 <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                     @if(!empty($renew_contract))
-                        @php($renew_patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($renew_contract->patient_id))
+                        @if(!empty($renew_contract->patient_id))
+                            @php($renew_patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($renew_contract->patient_id))
+                            @php($patient_email = $renew_patient->email)
+                        @else
+                            @php($patient_email = $renew_contract->patient_email)
+                        @endif
                     @endif
                     <form method="POST" enctype="multipart/form-data" action="{{route('store-and-submit-temporally-contract')}}" id="dentist-create-contract" class="wrapper padding-top-40 padding-bottom-60" data-param-gd-cd-id="{{$calculator_proposals['param_gd_cd_id']}}" data-param-gd-cd="{{$calculator_proposals['param_gd_cd']}}" data-param-gd-id="{{$calculator_proposals['param_gd_id']}}" data-param-cd-id="{{$calculator_proposals['param_cd_id']}}" data-param-gd="{{$calculator_proposals['param_gd']}}" data-param-cd="{{$calculator_proposals['param_cd']}}" data-param-id="{{$calculator_proposals['param_id']}}">
                         @include('pages.logged-user.dentist.contract-creation-step-one')
