@@ -82,8 +82,12 @@
             </div>
             <div class="row fa-0 padding-top-40 row-with-bottom-squares text-center">
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15 border-right-light-gray">
-                    <h3 class="fs-20 calibri-bold">Date Signed: {{var_dump($contract->contract_active_at)}}</h3>
-                    <time class="display-block padding-top-10 calibri-light fs-20">{{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
+                    <h3 class="fs-20 calibri-bold">Date Signed:</h3>
+                    @if(!empty($contract->contract_active_at))
+                        <time class="display-block padding-top-10 calibri-light fs-20">{{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
+                    @else
+                        <div class="cancelled-color fs-20 calibri-light padding-top-10">Patient cancelled the contract before signing it.</div>
+                    @endif
                 </div>
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15">
                     <h3 class="fs-20 calibri-bold">Monthly Premium:</h3>
