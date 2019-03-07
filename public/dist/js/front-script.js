@@ -3287,10 +3287,17 @@ function bindLoginSigninPopupShow() {
     if ($('.show-login-signin').length) {
         $('.show-login-signin').unbind();
         $('.show-login-signin').on('click', function () {
+            var data = {};
+            var this_btn = $(this);
+            if (this_btn.hasClass('reload-here')) {
+                data.route = this_btn.attr('data-route');
+                data.slug = this_btn.attr('data-slug');
+            }
             $.ajax({
                 type: 'POST',
                 url: '/get-login-signin',
                 dataType: 'json',
+                data: data,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },

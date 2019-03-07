@@ -6,7 +6,7 @@ use App\Page;
 use App\PagesHtmlSection;
 use App\TemporallyContract;
 use Illuminate\Support\Facades\DB;
-use Request;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -158,7 +158,9 @@ class Controller extends BaseController
         return response()->json(['captcha' => captcha_img()]);
     }
 
-    protected function getLoginSigninHtml() {
+    protected function getLoginSigninHtml(Request $request) {
+        var_dump($request->input());
+        die();
         //passing the countries
         $countries = (new APIRequestsController())->getAllCountries();
         $clinics = (new APIRequestsController())->getAllClinicsByName();

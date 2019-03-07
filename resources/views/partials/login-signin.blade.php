@@ -1,5 +1,3 @@
-{{var_dump(Route::current()->getName())}}
-{{var_dump(Route::current()->parameters())}}
 <div class="fs-0 popup-header-action">
     <a href="javascript:void(0)" class="inline-block" data-type="patient">I'm a Patient</a>
     <a href="javascript:void(0)" class="inline-block" data-type="dentist">I'm a Dentist</a>
