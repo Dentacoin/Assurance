@@ -24,20 +24,26 @@
                                         <div class="inline-block-top figure-container">
                                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                 <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
-                                            </figure>{{--
-                                            <div class="status fs-14 blue-green-color calibri-light text-center padding-left-5 padding-right-5">
+                                            </figure>
+                                            <figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">
                                                 @switch($contract->status)
                                                     @case('active')
                                                     Active
                                                     @break
+                                                    @case('pending')
+                                                    Pending
+                                                    @break
                                                     @case('awaiting-payment')
-                                                    Active - Awaiting Payment
+                                                    Awaiting Payment
                                                     @break
                                                     @case('awaiting-approval')
-                                                    Active - Awaiting Approval
+                                                    Awaiting Approval
+                                                    @break
+                                                    @case('cancelled')
+                                                    Cancelled
                                                     @break
                                                 @endswitch
-                                            </div>--}}
+                                            </figcaption>
                                         </div>
                                         <div class="contract-info inline-block-top">
                                             <div class="calibri-bold fs-18">{{$patient->name}}</div>
@@ -80,8 +86,26 @@
                                             <div class="inline-block-top figure-container">
                                                 <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                     <img alt="Patient avatar" src="/assets/images/no-avatar.png"/>
+                                                    <figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">
+                                                        @switch($contract->status)
+                                                            @case('active')
+                                                            Active
+                                                            @break
+                                                            @case('pending')
+                                                            Pending
+                                                            @break
+                                                            @case('awaiting-payment')
+                                                            Awaiting Payment
+                                                            @break
+                                                            @case('awaiting-approval')
+                                                            Awaiting Approval
+                                                            @break
+                                                            @case('cancelled')
+                                                            Cancelled
+                                                            @break
+                                                        @endswitch
+                                                    </figcaption>
                                                 </figure>
-                                                {{--<div class="status fs-14 blue-green-color calibri-light text-center padding-left-5 padding-right-5">Pending</div>--}}
                                             </div>
                                             <div class="contract-info inline-block-top">
                                                 <div class="calibri-bold fs-18">{{$contract->patient_fname}} {{$contract->patient_lname}}</div>
@@ -125,8 +149,26 @@
                                             <div class="inline-block-top figure-container">
                                                 <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                     <img alt="Patient avatar" src="{{$avatar_url}}"/>
+                                                    <figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">
+                                                        @switch($contract->status)
+                                                            @case('active')
+                                                            Active
+                                                            @break
+                                                            @case('pending')
+                                                            Pending
+                                                            @break
+                                                            @case('awaiting-payment')
+                                                            Awaiting Payment
+                                                            @break
+                                                            @case('awaiting-approval')
+                                                            Awaiting Approval
+                                                            @break
+                                                            @case('cancelled')
+                                                            Cancelled
+                                                            @break
+                                                        @endswitch
+                                                    </figcaption>
                                                 </figure>
-                                                {{--<div class="status fs-14 blue-green-color calibri-light text-center padding-left-5 padding-right-5">Cancelled</div>--}}
                                             </div>
                                             <div class="contract-info inline-block-top">
                                                 <div class="calibri-bold fs-18">{{$patient_name}}</div>
@@ -174,8 +216,26 @@
                                             <div class="inline-block-top figure-container">
                                                 <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                     <img alt="Patient avatar" src="/assets/images/no-avatar.png"/>
+                                                    <figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">
+                                                        @switch($contract->status)
+                                                            @case('active')
+                                                            Active
+                                                            @break
+                                                            @case('pending')
+                                                            Pending
+                                                            @break
+                                                            @case('awaiting-payment')
+                                                            Awaiting Payment
+                                                            @break
+                                                            @case('awaiting-approval')
+                                                            Awaiting Approval
+                                                            @break
+                                                            @case('cancelled')
+                                                            Cancelled
+                                                            @break
+                                                        @endswitch
+                                                    </figcaption>
                                                 </figure>
-                                                {{--<div class="status fs-14 blue-green-color calibri-light text-center padding-left-5 padding-right-5">Pending</div>--}}
                                             </div>
                                             <div class="contract-info inline-block-top">
                                                 <div class="calibri-bold fs-18">{{$contract->patient_fname}} {{$contract->patient_lname}}</div>
@@ -218,8 +278,26 @@
                                             <div class="inline-block-top figure-container">
                                                 <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                     <img alt="Patient avatar" src="{{$avatar_url}}"/>
+                                                    <figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">
+                                                        @switch($contract->status)
+                                                            @case('active')
+                                                            Active
+                                                            @break
+                                                            @case('pending')
+                                                            Pending
+                                                            @break
+                                                            @case('awaiting-payment')
+                                                            Awaiting Payment
+                                                            @break
+                                                            @case('awaiting-approval')
+                                                            Awaiting Approval
+                                                            @break
+                                                            @case('cancelled')
+                                                            Cancelled
+                                                            @break
+                                                        @endswitch
+                                                    </figcaption>
                                                 </figure>
-                                                {{--<div class="status fs-14 blue-green-color calibri-light text-center padding-left-5 padding-right-5">Cancelled</div>--}}
                                             </div>
                                             <div class="contract-info inline-block-top">
                                                 <div class="calibri-bold fs-18">{{$patient_name}}</div>

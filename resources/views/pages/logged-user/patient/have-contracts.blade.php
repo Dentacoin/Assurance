@@ -15,10 +15,10 @@
                                 <div class="module contract-tile padding-bottom-10 {{$contract->status}}">
                                     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
                                     <div class="tile-wrapper fs-0">
-                                        <div class="inline-block-top figure-container show-status">
+                                        <div class="inline-block-top figure-container">
                                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                 <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
-                                                <figcaption class="fs-14 blue-green-color calibri-light text-center padding-left-5 padding-right-5">
+                                                <figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">
                                                     @switch($contract->status)
                                                         @case('active')
                                                             Active
@@ -27,10 +27,10 @@
                                                             Pending
                                                             @break
                                                         @case('awaiting-payment')
-                                                            Active - Awaiting Payment
+                                                            Awaiting Payment
                                                             @break
                                                         @case('awaiting-approval')
-                                                            Active - Awaiting Approval
+                                                            Awaiting Approval
                                                             @break
                                                         @case('cancelled')
                                                             Cancelled
