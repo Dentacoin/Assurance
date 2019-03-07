@@ -995,7 +995,7 @@ if($('body').hasClass('logged-in')) {
                 this_form.find('.error-handle').remove();
             }
 
-            var form_fields = this_form.find('.custom-input');
+            var form_fields = this_form.find('.custom-input.required');
             for(var i = 0, len = form_fields.length; i < len; i+=1) {
                 if(form_fields.eq(i).hasClass('bootstrap-select')) {
                     continue;
@@ -1010,6 +1010,11 @@ if($('body').hasClass('logged-in')) {
                     customErrorHandle(form_fields.eq(i).parent(), 'This field is required.');
                     errors = true;
                 }
+            }
+
+            if(this_form.find('[name="dcn_address"]').val().trim().length > 0 && !innerAddressCheck(this_form.find('[name="dcn_address"]').val().trim())) {
+                customErrorHandle(this_form.find('[name="dcn_address"]').parent(), 'Please enter valid Wallet Address.');
+                errors = true;
             }
 
             if(errors) {

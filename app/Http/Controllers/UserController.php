@@ -169,24 +169,22 @@ class UserController extends Controller {
     protected function updateAccount(Request $request) {
         $arr_with_required_data = array(
             'full-name' => 'required|max:250',
-            'email' => 'required|max:100',
-            'country' => 'required',
-            'dcn_address' => 'required',
-            'address' => 'required'
+            'email' => 'required|max:100'
         );
 
         $arr_with_required_data_responces = array(
             'full-name.required' => 'Name is required.',
-            'email.required' => 'Email address is required.',
-            'country.required' => 'Country is required.',
-            'dcn_address.required' => 'Wallet Address is required.',
-            'address.required' => 'Postal Address is required.'
+            'email.required' => 'Email address is required.'
         );
 
         //if logged user is dentist require the specialisations data
         if($this->checkDentistSession()) {
             $arr_with_required_data['specialisations'] = 'required';
+            $arr_with_required_data['country'] = 'required';
+            $arr_with_required_data['address'] = 'required';
             $arr_with_required_data_responces['specialisations.required'] = 'Specialisations are required.';
+            $arr_with_required_data_responces['country.required'] = 'Country is required.';
+            $arr_with_required_data_responces['address.required'] = 'Postal Address is required.';
         }
 
         $this->validate($request, $arr_with_required_data, $arr_with_required_data_responces);
@@ -224,11 +222,20 @@ class UserController extends Controller {
 
         $post_fields_arr = array(
             'name' => $data['full-name'],
-            'email' => $data['email'],
-            'country_code' => $data['country'],
-            'dcn_address' => $data['dcn_address'],
-            'address' => $data['address']
+            'email' => $data['email']
         );
+
+        if(isset($data['country_code']) && !empty($data['country_code'])) {
+            $post_fields_arr['country_code'] = $data['country_code'];
+        }
+
+        if(isset($data['address']) && !empty($data['address'])) {
+            $post_fields_arr['address'] = $data['address'];
+        }
+
+        if(isset($data['dcn_address']) && !empty($data['dcn_address'])) {
+            $post_fields_arr['dcn_address'] = $data['dcn_address'];
+        }
 
         if($this->checkDentistSession()) {
             $post_fields_arr['specialisations'] = $data['specialisations'];
