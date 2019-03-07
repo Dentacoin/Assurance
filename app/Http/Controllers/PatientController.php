@@ -335,7 +335,7 @@ class PatientController extends Controller {
             $zipper->make($contract_folder_relative_path . $zip_name)->add([$contract_folder_relative_path . 'dentist-pdf-file.pdf', $contract_folder_relative_path . 'patient-pdf-file.pdf']);
             $zipper->close();
 
-            $ipfs_hash = (new \App\Http\Controllers\APIRequestsController())->uploadFileToIPFS(CONTRACTS . DS . $contract->slug . DS . $zip_name);
+            $ipfs_hash = (new \App\Http\Controllers\APIRequestsController())->uploadFileToIPFS(CONTRACTS . $contract->slug . DS . $zip_name);
             var_dump($ipfs_hash);
             die();
 
@@ -343,8 +343,8 @@ class PatientController extends Controller {
                 $contract->document_hash = $ipfs_hash->response_obj->success->hash;
 
                 //deleting the contract folder
-                /*array_map('unlink', glob(CONTRACTS . DS . $contract->slug . '/*.*'));
-                rmdir(CONTRACTS . DS . $contract->slug);*/
+                /*array_map('unlink', glob(CONTRACTS . $contract->slug . '/*.*'));
+                rmdir(CONTRACTS . $contract->slug);*/
 
                 //updating the status to awaiting-payment
                 $contract->status = 'awaiting-payment';

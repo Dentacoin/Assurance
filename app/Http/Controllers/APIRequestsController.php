@@ -320,7 +320,7 @@ class APIRequestsController extends Controller {
         //$json = '{"filename":"/../assurance.dentacoin.com/public/assets/lorem-ipsum.pdf"}';
         $json = '{"filename":"'.$file_path.'"}';
         var_dump($json);
-        
+
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
@@ -330,7 +330,7 @@ class APIRequestsController extends Controller {
         ));
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
             'Content-Type: application/json',
-            'Content-Length: ' . strlen($json))
+            'Content-Length: ' . mb_strlen($json))
         );
 
         $resp = json_decode(curl_exec($curl));
