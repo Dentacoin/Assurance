@@ -537,11 +537,15 @@ async function pagesDataOnContractInit() {
     } else if($('body').hasClass('logged-in')) {
         if($('body').hasClass('patient-contract-view')) {
             var period_to_withdraw = parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
+            console.log(period_to_withdraw, 'period_to_withdraw');
             var next_transfer_timestamp = parseInt($('.contract-body').attr('data-time-left-next-transfer')) + period_to_withdraw;
+            console.log(parseInt($('.contract-body').attr('data-time-left-next-transfer')), 'parseInt($(\'.contract-body\').attr(\'data-time-left-next-transfer\'))');
+            console.log(next_transfer_timestamp, 'next_transfer_timestamp');
             if($('.converted-date').length > 0) {
                 var date_obj = new Date(next_transfer_timestamp * 1000);
                 $('.converted-date').html(dateObjToFormattedDate(date_obj));
             }
+            console.log(next_transfer_timestamp - new Date().getTime() / 1000, 'next_transfer_timestamp - new Date().getTime() / 1000');
             initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
 
             cancelContractEventInit();

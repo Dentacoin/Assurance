@@ -333,7 +333,7 @@ class APIRequestsController extends Controller {
             'Content-Length: ' . mb_strlen($json))
         );
 
-        $resp = json_decode(curl_exec($curl));
+        $resp = curl_exec($curl);
         curl_close($curl);
 
         var_dump($resp);

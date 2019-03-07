@@ -49,7 +49,7 @@ var pagesDataOnContractInit = function () {
                         $('.break-contract').click(function () {
                             App.assurance_methods.breakContract($('.breakContract .patient-address').val().trim(), global_state.account);
                         });
-                        _context9.next = 62;
+                        _context9.next = 66;
                         break;
 
                     case 16:
@@ -103,17 +103,17 @@ var pagesDataOnContractInit = function () {
                         $('.break-contract').click(function () {
                             App.assurance_methods.breakContract(global_state.account, $('.breakContract .dentist-address').val().trim());
                         });
-                        _context9.next = 62;
+                        _context9.next = 66;
                         break;
 
                     case 37:
                         if (!$('body').hasClass('logged-in')) {
-                            _context9.next = 62;
+                            _context9.next = 66;
                             break;
                         }
 
                         if (!$('body').hasClass('patient-contract-view')) {
-                            _context9.next = 62;
+                            _context9.next = 66;
                             break;
                         }
 
@@ -124,31 +124,36 @@ var pagesDataOnContractInit = function () {
                     case 42:
                         _context9.t4 = _context9.sent;
                         period_to_withdraw = (0, _context9.t3)(_context9.t4);
+
+                        console.log(period_to_withdraw, 'period_to_withdraw');
                         next_transfer_timestamp = parseInt($('.contract-body').attr('data-time-left-next-transfer')) + period_to_withdraw;
 
+                        console.log(parseInt($('.contract-body').attr('data-time-left-next-transfer')), 'parseInt($(\'.contract-body\').attr(\'data-time-left-next-transfer\'))');
+                        console.log(next_transfer_timestamp, 'next_transfer_timestamp');
                         if ($('.converted-date').length > 0) {
                             date_obj = new Date(next_transfer_timestamp * 1000);
 
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
+                        console.log(next_transfer_timestamp - new Date().getTime() / 1000, 'next_transfer_timestamp - new Date().getTime() / 1000');
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
 
                         cancelContractEventInit();
 
                         _context9.t5 = parseFloat;
                         _context9.t6 = App.web3_1_0.utils;
-                        _context9.next = 52;
+                        _context9.next = 56;
                         return App.helper.getAddressETHBalance(global_state.account);
 
-                    case 52:
+                    case 56:
                         _context9.t7 = _context9.sent;
                         _context9.t8 = _context9.t6.fromWei.call(_context9.t6, _context9.t7);
                         current_user_eth_balance = (0, _context9.t5)(_context9.t8);
                         _context9.t9 = parseFloat;
-                        _context9.next = 58;
+                        _context9.next = 62;
                         return App.dentacoin_token_methods.balanceOf(global_state.account);
 
-                    case 58:
+                    case 62:
                         _context9.t10 = _context9.sent;
                         current_user_dcn_balance = (0, _context9.t9)(_context9.t10);
                         monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
@@ -565,7 +570,7 @@ var pagesDataOnContractInit = function () {
                             console.log('not enough DCN balance');
                         }
 
-                    case 62:
+                    case 66:
                     case "end":
                         return _context9.stop();
                 }
