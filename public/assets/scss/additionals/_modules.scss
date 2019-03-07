@@ -485,6 +485,16 @@
                     display: block;
                     color: white;
                 }
+                &.show-status {
+                    width: 120px;
+                    overflow: hidden;
+                    position: relative;
+                    figure {
+
+                        @include vertical-horizontal-align(absolute);
+                        @include rounded(6px);
+                    }
+                }
             }
             .contract-info {
                 width: calc(100% - 120px);

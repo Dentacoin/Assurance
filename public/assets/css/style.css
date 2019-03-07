@@ -5474,6 +5474,21 @@ input[type='file'].hide-input {
       .module.contract-tile .tile-wrapper .figure-container .status {
         display: block;
         color: white; }
+      .module.contract-tile .tile-wrapper .figure-container.show-status {
+        width: 120px;
+        overflow: hidden;
+        position: relative; }
+        .module.contract-tile .tile-wrapper .figure-container.show-status figure {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          -webkit-border-radius: 6px;
+          -moz-border-radius: 6px;
+          -ms-border-radius: 6px;
+          border-radius: 6px; }
     .module.contract-tile .tile-wrapper .contract-info {
       width: calc(100% - 120px);
       padding-left: 15px; }

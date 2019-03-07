@@ -28799,7 +28799,7 @@ function styleAvatarUploadButton(label_el) {
 
 //hide bootbox popup when its clicked around him (outside of him)
 function hidePopupOnBackdropClick() {
-    $(document).on('click', '.bootbox', function () {
+    $(document).on('click', '.bootbox', function (event) {
         var classname = event.target.className;
         classname = classname.replace(/ /g, '.');
 
