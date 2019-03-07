@@ -28834,8 +28834,6 @@ function apiEventsListeners() {
                                     custom_form_obj.slug = $('input[type="hidden"][name="slug"]').val();
                                 }
 
-                                console.log(custom_form_obj, 'custom_form_obj');
-
                                 //check if CoreDB returned address for this user and if its valid one
                                 if (basic.objHasKey(custom_form_obj, 'address') != null && innerAddressCheck(custom_form_obj.address)) {
                                     //var current_dentists_for_logging_user = await App.assurance_methods.getWaitingContractsForPatient(custom_form_obj.address);
@@ -29025,6 +29023,8 @@ function initFlipClockTimer(time_left) {
 function cancelContractEventInit() {
     if ($('.cancel-contract-btn').length) {
         $('.cancel-contract-btn').click(function () {
+            //CHECK FOR CONTRACT ON THE BLOCKCHAIN
+
             var this_btn = $(this);
             $.ajax({
                 type: 'POST',
@@ -29039,7 +29039,7 @@ function cancelContractEventInit() {
                 },
                 success: function success(response) {
                     if (response.success) {
-                        window.location = '/contract/' + this_btn.attr('data-contract');
+                        window.location = '/' + response.path + '/contract/' + this_btn.attr('data-contract');
                     } else if (response.error) {
                         basic.showAlert(response.error, '', true);
                     }

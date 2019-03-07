@@ -2561,6 +2561,8 @@ function initFlipClockTimer(time_left) {
 function cancelContractEventInit() {
     if($('.cancel-contract-btn').length) {
         $('.cancel-contract-btn').click(function() {
+            //CHECK FOR CONTRACT ON THE BLOCKCHAIN
+
             var this_btn = $(this);
             $.ajax({
                 type: 'POST',
@@ -2575,7 +2577,7 @@ function cancelContractEventInit() {
                 },
                 success: function (response) {
                     if (response.success) {
-                        window.location = '/contract/' + this_btn.attr('data-contract');
+                        window.location = '/' + response.path + '/contract/' + this_btn.attr('data-contract');
                     } else if (response.error) {
                         basic.showAlert(response.error, '', true);
                     }

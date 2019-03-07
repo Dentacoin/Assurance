@@ -290,6 +290,11 @@ class UserController extends Controller {
             $contract->cancelled_at = new \DateTime();
             $contract->save();
             $response['success'] = true;
+            if($this->checkDentistSession()) {
+                $response['path'] = 'dentist';
+            } else if($this->checkPatientSession()) {
+                $response['path'] = 'patient';
+            }
         } else {
             $response['error'] = 'Cancellation failed, wrong contract.';
         }

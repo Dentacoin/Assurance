@@ -237,7 +237,7 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-xs-6">
-                                                <a href="javascript:void(0)" class="white-red-btn min-width-220 cancel-contract-btn" data-contract="{{$contract->slug}}">REJECT</a>
+                                                <a href="javascript:void(0)" class="white-red-btn min-width-220 cancel-contract-btn" data-contract="{{$contract->slug}}" onclick="return confirm('Are you sure you want to reject this contract?')">REJECT</a>
                                             </div>
                                             <div class="col-xs-6">
                                                 <input type="submit" value="SIGN CONTRACT" class="white-blue-green-btn min-width-220"/>
