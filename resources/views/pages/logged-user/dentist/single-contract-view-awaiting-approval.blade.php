@@ -90,7 +90,7 @@
                     <h2 class="fs-35 lato-bold padding-top-50 padding-bottom-20">You Have Received Your First Payment.</h2>
                     <div class="fs-20 calibri-regular">Now you can check all details and give your approval in order to activate your contract on the blockchain as well.</div>
                     <div class="padding-top-20">
-                        <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color">See details</a>
+                        <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color" onclick="alert('COMING SOON!')">See details</a>
                     </div>
                     <div class="padding-top-30">
                         <a href="javascript:void(0)" class="white-green-btn min-width-300" onclick="alert('COMING SOON!')">APPROVE & ACTIVATE</a>
