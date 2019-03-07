@@ -48,7 +48,7 @@
                     </figure>
                     <div class="fs-22 calibri-bold padding-top-15 padding-bottom-5">{{$contract->patient_fname}} {{$contract->patient_lname}}</div>
                     <div class="calibri-light fs-18">
-                        <a href="mailto:{{$patient->email}}" class="light-gray-color">{{$patient->email}}</a>
+                        <a href="mailto:{{$contract->patient_email}}" class="light-gray-color">{{$contract->patient_email}}</a>
                     </div>
                 </div>
             </div>
