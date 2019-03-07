@@ -320,7 +320,7 @@ class PatientController extends Controller {
         $html_end = $view_end->render();
 
         //sending the pdf html to encryption nodejs api
-        $encrypted_html_by_patient = (new \App\Http\Controllers\APIRequestsController())->encryptFile($patient_pub_key->public_key, str_replace('&quot;', "\\&apos;", htmlentities((string)$view_body)));
+        $encrypted_html_by_patient = (new \App\Http\Controllers\APIRequestsController())->encryptFile($patient_pub_key->public_key, htmlentities((string)$view_body));
         //$encrypted_html_by_dentist = (new \App\Http\Controllers\APIRequestsController())->encryptFile($dentist_pub_key->public_key, $this->minifyHtmlParts($html_body));
 
         var_dump($encrypted_html_by_patient);
