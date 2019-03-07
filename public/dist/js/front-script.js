@@ -3293,6 +3293,7 @@ function bindLoginSigninPopupShow() {
                 data.route = this_btn.attr('data-route');
                 data.slug = this_btn.attr('data-slug');
             }
+            console.log(data);
             $.ajax({
                 type: 'POST',
                 url: '/get-login-signin',
