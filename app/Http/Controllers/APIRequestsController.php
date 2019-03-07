@@ -345,7 +345,7 @@ class APIRequestsController extends Controller {
     public function encryptFile($key, $html) {
         $curl = curl_init();
         $json = '{"public_key":"'.$key.'", "html":"'.str_replace('"', "'", $html).'"}';
-        var_dump(json_decode($json));
+        var_dump(json_decode($json)->html);
         die();
 
         curl_setopt_array($curl, array(
