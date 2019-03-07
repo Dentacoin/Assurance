@@ -35,8 +35,8 @@
                                     <span itemprop="name">Public Proof</span>
                                 </a>
                             </li>
+                            <li class="inline-block">|</li>
                         @endif
-                        <li class="inline-block">|</li>
                         <li class="inline-block">
                             <a href="{{route('create-contract')}}?renew-contract={{$contract->slug}}" itemprop="url" class="renew-contract-btn">
                                 <span itemprop="name"><i class="fa fa-undo" aria-hidden="true"></i> Renew Contract</span>
@@ -82,7 +82,7 @@
             </div>
             <div class="row fa-0 padding-top-40 row-with-bottom-squares text-center">
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15 border-right-light-gray">
-                    <h3 class="fs-20 calibri-bold">Date Signed:</h3>
+                    <h3 class="fs-20 calibri-bold">Date Signed: {{var_dump($contract->contract_active_at)}}</h3>
                     <time class="display-block padding-top-10 calibri-light fs-20">{{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
                 </div>
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15">
