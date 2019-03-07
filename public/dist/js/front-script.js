@@ -3755,31 +3755,27 @@ function apiEventsListeners() {
                 while (1) {
                     switch (_context20.prev = _context20.next) {
                         case 0:
-                            if (event.response_data.token) {
-                                custom_form_obj = {
-                                    token: event.response_data.token,
-                                    id: event.response_data.data.id,
-                                    _token: $('meta[name="csrf-token"]').attr('content')
-                                };
-
-
-                                if ($('input[type="hidden"][name="route"]').length && $('input[type="hidden"][name="slug"]').length) {
-                                    custom_form_obj.route = $('input[type="hidden"][name="route"]').val();
-                                    custom_form_obj.slug = $('input[type="hidden"][name="slug"]').val();
-                                }
-
-                                //check if CoreDB returned address for this user and if its valid one
-                                if (basic.objHasKey(custom_form_obj, 'address') != null && innerAddressCheck(custom_form_obj.address)) {
-                                    //var current_dentists_for_logging_user = await App.assurance_methods.getWaitingContractsForPatient(custom_form_obj.address);
-                                    //if(current_dentists_for_logging_user.length > 0) {
-                                    //custom_form_obj.have_contracts = true;
-                                    //}
-                                }
-
-                                customJavascriptForm('/patient/authenticate', custom_form_obj, 'post');
+                            if (!event.response_data.token) {
+                                _context20.next = 7;
+                                break;
                             }
 
-                        case 1:
+                            custom_form_obj = {
+                                token: event.response_data.token,
+                                id: event.response_data.data.id,
+                                _token: $('meta[name="csrf-token"]').attr('content')
+                            };
+
+
+                            if ($('input[type="hidden"][name="route"]').length && $('input[type="hidden"][name="slug"]').length) {
+                                custom_form_obj.route = $('input[type="hidden"][name="route"]').val();
+                                custom_form_obj.slug = $('input[type="hidden"][name="slug"]').val();
+                            }
+
+                            console.log(custom_form_obj, 'custom_form_obj');
+                            return _context20.abrupt("return", false);
+
+                        case 7:
                         case "end":
                             return _context20.stop();
                     }
