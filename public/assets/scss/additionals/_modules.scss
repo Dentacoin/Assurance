@@ -494,6 +494,9 @@
             .contract-info {
                 width: calc(100% - 140px);
                 padding-left: 15px;
+                .title {
+                    word-wrap: break-word;
+                }
                 .btn-container {
                     text-align: right;
                     .white-blue-green-btn {

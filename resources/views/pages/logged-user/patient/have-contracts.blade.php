@@ -40,7 +40,7 @@
                                             </figure>
                                         </div>
                                         <div class="contract-info inline-block-top">
-                                            <div class="calibri-bold fs-18">Dr. {{$dentist->name}}</div>
+                                            <div class="calibri-bold fs-18 title">Dr. {{$dentist->name}}</div>
                                             <time class="display-block fs-14 calibri-light">Sent on: {{$contract->created_at->format('d/m/Y')}}</time>
                                             <div class="lato-semibold fs-24 padding-top-5 padding-bottom-5">{{$contract->monthly_premium}}$</div>
                                             <div class="btn-container">

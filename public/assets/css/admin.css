@@ -675,6 +675,8 @@
     .module.contract-tile .tile-wrapper .contract-info {
       width: calc(100% - 140px);
       padding-left: 15px; }
+      .module.contract-tile .tile-wrapper .contract-info .title {
+        word-wrap: break-word; }
       .module.contract-tile .tile-wrapper .contract-info .btn-container {
         text-align: right; }
         .module.contract-tile .tile-wrapper .contract-info .btn-container .white-blue-green-btn {
