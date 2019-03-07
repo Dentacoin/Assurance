@@ -4,7 +4,7 @@
         @if(!$current_logged_dentist->hasimage)
             <div class="avatar module text-center upload-file">
                 <input type="file" class="visualise-image inputfile" id="custom-upload-avatar" name="image" accept=".jpg,.png,.jpeg,.svg,.bmp"/>
-                <button type="button"></button>
+                <div class="btn-wrapper"></div>
             </div>
         @else
             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="text-center">

@@ -3693,9 +3693,9 @@ function styleAvatarUploadButton(label_el) {
         jQuery(".upload-file.avatar").each(function (key, form) {
             var this_file_btn_parent = jQuery(this);
             if (this_file_btn_parent.attr('data-current-user-avatar')) {
-                this_file_btn_parent.find('button').append('<label for="custom-upload-avatar" style="background-image:url(' + this_file_btn_parent.attr('data-current-user-avatar') + ');"><div class="inner"><i class="fa fa-plus fs-0" aria-hidden="true"></i><div class="inner-label fs-0">Add profile photo</div></div></label>');
+                this_file_btn_parent.find('.btn-wrapper').append('<label for="custom-upload-avatar" style="background-image:url(' + this_file_btn_parent.attr('data-current-user-avatar') + ');"><div class="inner"><i class="fa fa-plus fs-0" aria-hidden="true"></i><div class="inner-label fs-0">Add profile photo</div></div></label>');
             } else {
-                this_file_btn_parent.find('button').append('<label for="custom-upload-avatar"><div class="inner"><i class="fa fa-plus" aria-hidden="true"></i><div class="inner-label">Add profile photo</div></div></label>');
+                this_file_btn_parent.find('.btn-wrapper').append('<label for="custom-upload-avatar"><div class="inner"><i class="fa fa-plus" aria-hidden="true"></i><div class="inner-label">Add profile photo</div></div></label>');
             }
 
             var inputs = document.querySelectorAll('.inputfile');
@@ -4010,7 +4010,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
         }
 
         var this_btn_parent = this_btn.closest('.upload-file-container');
-        this_btn_parent.find('button').append("<label for='" + this_btn_parent.attr('data-id') + "' class='white-blue-green-btn display-block-important'><span class='display-block-important fs-18'>" + this_btn_parent.attr('data-label') + "</span></label>");
+        this_btn_parent.find('.btn-wrapper').append("<label for='" + this_btn_parent.attr('data-id') + "'  role='button' class='white-blue-green-btn display-block-important'><span class='display-block-important fs-18'>" + this_btn_parent.attr('data-label') + "</span></label>");
 
         var inputs = document.querySelectorAll('.custom-upload-file');
         Array.prototype.forEach.call(inputs, function (input) {

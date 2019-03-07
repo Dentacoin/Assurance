@@ -67,7 +67,7 @@
                                 <label class="inline-block-top fs-16">Photo:</label>
                                 <div class="inline-block-top avatar module text-center upload-file" @if(!empty($user_data) && !empty($user_data->avatar_url)) data-current-user-avatar="{{$user_data->avatar_url}}" @endif>
                                     <input type="file" class="visualise-image inputfile" id="custom-upload-avatar" name="image" accept=".jpg,.png,.jpeg,.svg,.bmp"/>
-                                    <button type="button"></button>
+                                    <div class="btn-wrapper"></div>
                                 </div>
                             </div>
                             <div class="form-row padding-bottom-15 fs-0">

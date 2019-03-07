@@ -5247,13 +5247,13 @@ input[type='file'].hide-input {
     transform: translate(-50%, -50%); }
 .module.avatar input[type="file"] {
   display: none; }
-.module.avatar button {
+.module.avatar .btn-wrapper {
   display: block;
   width: 100%;
   padding: 0;
   border: 0;
   margin: 0; }
-  .module.avatar button label {
+  .module.avatar .btn-wrapper label {
     background-color: #e3e3e3;
     border: 2px dashed #777777;
     color: #777777;
@@ -5267,7 +5267,7 @@ input[type='file'].hide-input {
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat; }
-    .module.avatar button label .inner {
+    .module.avatar .btn-wrapper label .inner {
       left: 0;
       width: 100%;
       position: absolute;
@@ -5275,9 +5275,9 @@ input[type='file'].hide-input {
       -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
       transform: translateY(-50%); }
-      .module.avatar button label .inner i {
+      .module.avatar .btn-wrapper label .inner i {
         font-size: 30px; }
-      .module.avatar button label .inner .inner-label {
+      .module.avatar .btn-wrapper label .inner .inner-label {
         font-size: 18px;
         padding: 0 10px; }
 .module.step-fields .single-row {
