@@ -9,7 +9,7 @@
                 <div class="col-xs-12 col-sm-5 inline-block padding-right-30">
                     <div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file">
                         <input type="file" id="upload-keystore-file" class="custom-upload-file @if(filter_var($cache, FILTER_VALIDATE_BOOLEAN)) caching @endif hide-input"/>
-                        <button type="button" class="display-block"></button>
+                        <div class="btn-wrapper"></div>
                     </div>
                 </div>
             </div>
