@@ -105,8 +105,11 @@ class PatientController extends Controller {
                 }
             }
             //send request to API to add this reward to the patient account
-
-            return redirect()->route('patient-access');
+            if(!empty($request->input('route')) && !empty($request->input('slug'))) {
+                return redirect()->route($request->input('route'), ['slug' => $request->input('slug')]);
+            } else {
+                return redirect()->route('patient-access');
+            }
         }
     }
 
