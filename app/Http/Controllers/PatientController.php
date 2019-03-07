@@ -313,6 +313,8 @@ class PatientController extends Controller {
         $html_start = $view_start->render();
 
         $view_body = view('partials/pdf-contract-body', ['contract' => $contract, 'countries' => (new APIRequestsController())->getAllCountries()]);
+        var_dump($view_body);
+        die();
         //$view_body = view('partials/test-pdf-contract-body', ['contract' => $contract, 'countries' => (new APIRequestsController())->getAllCountries()]);
         $html_body = $view_body->render();
 
