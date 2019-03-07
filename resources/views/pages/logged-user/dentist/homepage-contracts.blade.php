@@ -107,7 +107,15 @@
                             <div class="contracts-list cancelleds slider">
                                 @php($counter = 0)
                                 @foreach($cancelled_contracts as $contract)
-                                    @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+                                    @if(!empty($contract->patient_id))
+                                        @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+                                        @php($patient_name = $patient->name)
+                                        @php($avatar_url = $patient->avatar_url)
+                                    @else
+                                        @php($patient_name = $contract->patient_fname . ' ' . $contract->patient_lname)
+                                        @php($avatar_url = '/assets/images/no-avatar.png')
+                                    @endif
+
                                     @php($counter+=1)
                                     @if ($counter == 4)
                                         @break
@@ -116,12 +124,12 @@
                                         <div class="tile-wrapper fs-0">
                                             <div class="inline-block-top figure-container">
                                                 <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                                                    <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
+                                                    <img alt="Patient avatar" src="{{$avatar_url}}"/>
                                                 </figure>
                                                 {{--<div class="status fs-14 blue-green-color calibri-light text-center padding-left-5 padding-right-5">Cancelled</div>--}}
                                             </div>
                                             <div class="contract-info inline-block-top">
-                                                <div class="calibri-bold fs-18">{{$patient->name}}</div>
+                                                <div class="calibri-bold fs-18">{{$patient_name}}</div>
                                                 <time class="display-block fs-14 calibri-light">Signed on: {{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
                                                 <time class="display-block fs-14 calibri-light">Cancelled on: {{date('d/m/Y', strtotime($contract->cancelled_at))}}</time>
                                                 <div class="lato-semibold fs-24 padding-top-5 padding-bottom-5">{{$contract->monthly_premium}}$</div>
@@ -192,7 +200,15 @@
                             <div class="contracts-list cancelleds slider" data-slides-number="2">
                                 @php($counter = 0)
                                 @foreach($cancelled_contracts as $contract)
-                                    @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+                                    @if(!empty($contract->patient_id))
+                                        @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+                                        @php($patient_name = $patient->name)
+                                        @php($avatar_url = $patient->avatar_url)
+                                    @else
+                                        @php($patient_name = $contract->patient_fname . ' ' . $contract->patient_lname)
+                                        @php($avatar_url = '/assets/images/no-avatar.png')
+                                    @endif
+
                                     @php($counter+=1)
                                     @if ($counter == 3)
                                         @break
@@ -201,12 +217,12 @@
                                         <div class="tile-wrapper fs-0">
                                             <div class="inline-block-top figure-container">
                                                 <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                                                    <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
+                                                    <img alt="Patient avatar" src="{{$avatar_url}}"/>
                                                 </figure>
                                                 {{--<div class="status fs-14 blue-green-color calibri-light text-center padding-left-5 padding-right-5">Cancelled</div>--}}
                                             </div>
                                             <div class="contract-info inline-block-top">
-                                                <div class="calibri-bold fs-18">{{$patient->name}}</div>
+                                                <div class="calibri-bold fs-18">{{$patient_name}}</div>
                                                 <time class="display-block fs-14 calibri-light">Signed on: {{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
                                                 <time class="display-block fs-14 calibri-light">Cancelled on: {{date('d/m/Y', strtotime($contract->cancelled_at))}}</time>
                                                 <div class="lato-semibold fs-24 padding-top-5 padding-bottom-5">{{$contract->monthly_premium}}$</div>
