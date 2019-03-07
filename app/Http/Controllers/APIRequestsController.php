@@ -319,7 +319,6 @@ class APIRequestsController extends Controller {
         $curl = curl_init();
         //$json = '{"filename":"/../assurance.dentacoin.com/public/assets/lorem-ipsum.pdf"}';
         $json = '{"filename":"'.$file_path.'"}';
-        var_dump($json);
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -335,9 +334,6 @@ class APIRequestsController extends Controller {
 
         $resp = curl_exec($curl);
         curl_close($curl);
-
-        var_dump($resp);
-        die();
 
         if(!empty($resp))   {
             return $resp;
