@@ -2200,9 +2200,6 @@ function bindLoginSigninPopupShow() {
                                     }
 
                                     if(!errors) {
-                                        console.log('REGISTER DENTIST!!!!');
-                                        return false;
-                                        
                                         //submit the form
                                         $('form#dentist-register').submit();
                                     }
