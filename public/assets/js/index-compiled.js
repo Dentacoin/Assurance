@@ -28680,7 +28680,7 @@ function bindLoginSigninPopupShow() {
                                                         case 0:
                                                             this_btn = $(this);
                                                             _context20.t0 = this_btn.attr('data-current-step');
-                                                            _context20.next = _context20.t0 === 'first' ? 4 : _context20.t0 === 'second' ? 27 : _context20.t0 === 'third' ? 35 : 48;
+                                                            _context20.next = _context20.t0 === 'first' ? 4 : _context20.t0 === 'second' ? 27 : _context20.t0 === 'third' ? 35 : 50;
                                                             break;
 
                                                         case 4:
@@ -28755,7 +28755,7 @@ function bindLoginSigninPopupShow() {
                                                                 this_btn.attr('data-current-step', 'second');
                                                                 this_btn.val('Next');
                                                             }
-                                                            return _context20.abrupt('break', 48);
+                                                            return _context20.abrupt('break', 50);
 
                                                         case 27:
                                                             second_step_inputs = $('.dentist .form-register .step.second .custom-input');
@@ -28843,7 +28843,7 @@ function bindLoginSigninPopupShow() {
                                                                 this_btn.attr('data-current-step', 'third');
                                                                 this_btn.val('Create profile');
                                                             }
-                                                            return _context20.abrupt('break', 48);
+                                                            return _context20.abrupt('break', 50);
 
                                                         case 35:
                                                             $('.dentist .form-register .step.third').find('.error-handle').remove();
@@ -28879,10 +28879,23 @@ function bindLoginSigninPopupShow() {
                                                         case 43:
                                                             check_captcha_response = _context20.sent;
 
-                                                            console.log(check_captcha_response, 'check_captcha_response');
+                                                            if (check_captcha_response.error) {
+                                                                customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
+                                                                errors = true;
+                                                            }
+
+                                                            if (errors) {
+                                                                _context20.next = 49;
+                                                                break;
+                                                            }
+
+                                                            console.log('REGISTER DENTIST!!!!');
                                                             return _context20.abrupt('return', false);
 
-                                                        case 48:
+                                                        case 49:
+                                                            return _context20.abrupt('break', 50);
+
+                                                        case 50:
                                                         case 'end':
                                                             return _context20.stop();
                                                     }

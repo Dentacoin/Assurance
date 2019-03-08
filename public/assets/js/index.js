@@ -2194,10 +2194,15 @@ function bindLoginSigninPopupShow() {
                                     }
 
                                     var check_captcha_response = await checkCaptcha($('.dentist .form-register .step.third #register-captcha').val().trim());
-                                    console.log(check_captcha_response, 'check_captcha_response');
-                                    return false;
+                                    if(check_captcha_response.error) {
+                                        customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
+                                        errors = true;
+                                    }
 
                                     if(!errors) {
+                                        console.log('REGISTER DENTIST!!!!');
+                                        return false;
+                                        
                                         //submit the form
                                         $('form#dentist-register').submit();
                                     }

@@ -139,8 +139,11 @@ class UserController extends Controller {
 
     function checkCaptcha(Request $request) {
         $data = $this->clearPostData($request->input());
-        var_dump(captcha_check($data['captcha']));
-        die();
+        if(captcha_check($data['captcha'])) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => true]);
+        }
     }
 
     public function checkSession()   {
