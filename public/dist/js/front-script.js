@@ -3037,9 +3037,21 @@ if ($('body').hasClass('logged-in')) {
         }
     }
 
-    if ($('.dropdown-with-clinics').length) {
-        $('.dropdown-with-clinics').on('change', function () {
-            console.log($(this).val());
+    if ($('select.dropdown-with-clinics').length) {
+        $('select.dropdown-with-clinics').on('change', function () {
+            var this_select = $(this);
+            $.ajax({
+                type: 'POST',
+                url: '/get-contact-clinic-popup',
+                dataType: 'json',
+                data: {
+                    clinic_id: this_select.val().trim()
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function success(response) {}
+            });
         });
     }
 
