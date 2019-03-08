@@ -329,6 +329,9 @@
                     padding-bottom: 5px;
                     display: block;
                 }
+                &.cursor-pointer {
+                    cursor: pointer;
+                }
             }
             .right-field {
                 width: 60%;
