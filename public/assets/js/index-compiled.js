@@ -26725,9 +26725,9 @@ var _require = __webpack_require__(178),
 basic.init();
 
 $(document).ready(function () {
-    onDocumentReadyPageData();
-
     App.init();
+
+    onDocumentReadyPageData();
 
     fixButtonsFocus();
 });

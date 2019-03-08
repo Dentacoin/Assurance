@@ -1659,9 +1659,9 @@ var _require = require('./helper'),
 basic.init();
 
 $(document).ready(function () {
-    onDocumentReadyPageData();
-
     App.init();
+
+    onDocumentReadyPageData();
 
     fixButtonsFocus();
 });
