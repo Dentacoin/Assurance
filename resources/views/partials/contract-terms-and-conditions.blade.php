@@ -1,5 +1,7 @@
 <h2 class="text-center fs-32 padding-bottom-30 calibri-bold">DENTACOIN ASSURANCE CONTRACT</h2>
-<div class="padding-bottom-20">This present Dentacoin Assurance Contract Agreement was reached on ------ <span class="calibri-bold">BETWEEN</span> <span class="calibri-bold">and</span></div>
+@if(!empty($contract->contract_active_at))
+    <div class="padding-bottom-20">This present Dentacoin Assurance Contract Agreement was reached on ------ <span class="calibri-bold">BETWEEN</span> <span class="calibri-bold">and</span></div>
+@endif
 <h3 class="fs-22 calibri-bold padding-top-30 padding-bottom-15">1. DENTIST RIGHTS AND OBLIGATIONS</h3>
 <div class="padding-bottom-10">This present Dentacoin Assurance Contract obliges the Dentist to provide free of charge to the Patient [number of check-ups] check-ups per year and [number of tooth cleanings] professional tooth cleanings per year for the duration of the contract.</div>
 <div class="padding-bottom-10">The Dentist is also obliged to cover the costs for their work for the predefined set of possibly occurring treatments described in 3. Service Coverage.</div>
@@ -35,7 +37,10 @@
 <div class="padding-bottom-10">In case the Patient has not paid the agreed monthly premium, the contract is automatically cancelled.</div>
 <h3 class="fs-22 calibri-bold padding-top-30 padding-bottom-15">7. COMPLAINTS AND THIRD-PARTY REGULATIONS</h3>
 <div class="padding-bottom-10">This present Agreement is concluded directly between the Patient and the Dentist.</div>
-<div class="padding-bottom-10">Dentacoin B.V. only provides the infrastructure to help both parties communicate and exchange value easier. If any technical difficulties are faced when using the website, Dentacoin B.V. can be contacted at <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a> .</div>
+<div class="padding-bottom-10">Dentacoin B.V. only provides the infrastructure to help both parties communicate and exchange value easier. If any technical difficulties are faced when using the website, Dentacoin B.V. can be contacted at <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a>.</div>
 <div class="padding-bottom-10">It is not Dentacoin B.V.’s responsibility to handle any complaints in regards to the violation of this contract.</div>
 <h3 class="fs-22 calibri-bold padding-top-30 padding-bottom-15">8. DATA PRIVACY</h3>
-<div class="padding-bottom-10">Dentacoin B.V. takes the protection of personal data very seriously. Personal data are treated as confidential and in accordance with the statutory data protection regulations and this Privacy Policy: <a href="//dentacoin.com/privacy-policy" target="_blank">https://dentacoin.com/privacy-policy</a> .</div>
+<div class="padding-bottom-10">Dentacoin B.V. takes the protection of personal data very seriously. Personal data are treated as confidential and in accordance with the statutory data protection regulations and this Privacy Policy: <a href="//dentacoin.com/privacy-policy" target="_blank">https://dentacoin.com/privacy-policy</a>.</div>
+@if(!empty($contract->contract_active_at))
+    {{var_dump('SHOW PATIENT AND DENTIST SIGNATURES')}}
+@endif

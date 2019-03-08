@@ -102,9 +102,9 @@
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful Dentacare Journeys:</label>
             <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">1 (90 days)</div>
         </div>
-        <h3 class="calibri-bold fs-30 dark-color padding-top-50">TERMS AND CONDITIONS</h3>
+        <h3 class="calibri-bold fs-30 dark-color padding-top-50">CONTRACT DETAILS</h3>
         <div class="terms-and-conditions-long-list margin-top-30 margin-bottom-60">
-            @include('partials.contract-terms-and-conditions')
+            @include('partials.contract-terms-and-conditions', ['contract' => $contract])
         </div>
         <div class="signature-and-checkboxes">
             <div class="calibri-bold fs-26 text-center">Sign below</div>

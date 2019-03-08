@@ -5406,6 +5406,12 @@ input[type='file'].hide-input {
       transform: translate(-50%, -50%); }
   .module.contract-proposal .wrapper .terms-and-conditions-long-list {
     height: 350px; }
+    .module.contract-proposal .wrapper .terms-and-conditions-long-list h2, .module.contract-proposal .wrapper .terms-and-conditions-long-list h3 {
+      border: 0; }
+    .module.contract-proposal .wrapper .terms-and-conditions-long-list ul {
+      padding-left: 20px; }
+      .module.contract-proposal .wrapper .terms-and-conditions-long-list ul li {
+        list-style: disc inside none; }
   .module.contract-proposal .wrapper .mCSB_inside > .mCSB_container {
     margin-right: 35px !important; }
   .module.contract-proposal .wrapper .mCSB_scrollTools {

@@ -419,6 +419,15 @@
             }
             .terms-and-conditions-long-list {
                 height: 350px;
+                h2, h3 {
+                    border: 0;
+                }
+                ul {
+                    padding-left: 20px;
+                    li {
+                        list-style: disc inside none;
+                    }
+                }
             }
             .mCSB_inside > .mCSB_container {
                 margin-right: 35px !important;
