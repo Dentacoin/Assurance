@@ -469,6 +469,8 @@ class PatientController extends Controller {
 
         $data = $this->clearPostData($request->input());
         $clinic = (new APIRequestsController())->getUserData($request->input('clinic_id'));
+        var_dump($clinic);
+        die();
         $sender = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         if($clinic->is_clinic) {
             $title = '';
