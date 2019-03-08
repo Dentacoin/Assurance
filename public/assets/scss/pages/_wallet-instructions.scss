@@ -22,5 +22,13 @@
     }
     .question-content {
         display: none;
+        ul {
+            li {
+                list-style: disc inside none;
+            }
+        }
+        a {
+            text-decoration: underline;
+        }
     }
 }

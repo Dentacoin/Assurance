@@ -154,6 +154,7 @@
   border: 2px solid #126585;
   display: inline-block;
   cursor: pointer;
+  text-decoration: none !important;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -178,6 +179,7 @@
   border: 2px solid #e92f30;
   display: inline-block;
   cursor: pointer;
+  text-decoration: none !important;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -202,6 +204,7 @@
   border: 2px solid #239234;
   display: inline-block;
   cursor: pointer;
+  text-decoration: none !important;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -226,6 +229,7 @@
   border: 2px solid #126585;
   display: inline-block;
   cursor: pointer;
+  text-decoration: none;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;

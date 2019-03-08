@@ -7,6 +7,7 @@
     border: 2px solid $blue_green_color;
     display: inline-block;
     cursor: pointer;
+    text-decoration: none !important;
     @include rounded(4px);
     @include simple_transition(.3s);
     &:hover {
@@ -27,6 +28,7 @@
     border: 2px solid $cancelled;
     display: inline-block;
     cursor: pointer;
+    text-decoration: none !important;
     @include rounded(4px);
     @include simple_transition(.3s);
     &:hover {
@@ -47,6 +49,7 @@
     border: 2px solid $active;
     display: inline-block;
     cursor: pointer;
+    text-decoration: none !important;
     @include rounded(4px);
     @include simple_transition(.3s);
     &:hover {
@@ -67,6 +70,7 @@
     border: 2px solid $blue_green_color;
     display: inline-block;
     cursor: pointer;
+    text-decoration: none !important;
     @include rounded(4px);
     @include simple_transition(.3s);
     &:hover {

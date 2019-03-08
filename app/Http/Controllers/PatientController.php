@@ -148,6 +148,17 @@ class PatientController extends Controller {
         if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             return redirect()->route($data['redirect'])->with(['error' => 'Your form was not sent. Please try again with valid email.']);
         }
+        
+        //check if someone inviting already invited dentist
+        if(InviteDentistsReward::where(array('dentist_email' => $data['email']))->get()->first()) {
+            return redirect()->route($data['redirect'])->with(['error' => 'This dentist is already invited in Assurance platform.']);
+        }
+
+        //check if the invited dentist is already registered in the CoreDB
+        $api_response = (new APIRequestsController())->checkIfFreeEmail($data['email']);
+        if(!$api_response->success) {
+            return redirect()->route($data['redirect'])->with(['error' => 'This dentist is already registered in Dentacoin tools.']);
+        }
 
         //if user entered dcn_address for first time save it in coredb
         if(!empty($data['dcn_address'])) {
