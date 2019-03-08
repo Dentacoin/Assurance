@@ -56,7 +56,10 @@ class PatientController extends Controller {
             $logged_patient_email = (new APIRequestsController())->getUserData(session('logged_user')['id'])->email;
             $clinics = (new APIRequestsController())->getAllClinicsByName();
             foreach($clinics as $clinic) {
-                var_dump($clinic->email);
+                if(empty($clinic->email)) {
+                    var_dump($clinic->email);
+                    echo "<br><br>=============================<br><br>";
+                }
             }
             die();
             if(TemporallyContract::where(array('patient_email' => $logged_patient_email))->get()->all()) {
