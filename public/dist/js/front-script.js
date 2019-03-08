@@ -1660,7 +1660,6 @@ var _require = require('./helper'),
 basic.init();
 
 $(document).ready(function () {
-    console.log('App.init()');
     App.init();
 
     onDocumentReadyPageData();
@@ -1834,17 +1833,27 @@ var App = {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            //Assurance STATE
-                            App.assurance_state_instance = new App.web3_1_0.eth.Contract(App.assurance_state_abi, App.assurance_state_address);
-                            //Assurance PROXY
-                            App.assurance_proxy_instance = new App.web3_1_0.eth.Contract(App.assurance_proxy_abi, App.assurance_proxy_address);
-                            //DentacoinToken
-                            App.dentacoin_token_instance = new App.web3_1_0.eth.Contract(App.dentacoin_token_abi, App.dentacoin_token_address);
+                            _context2.next = 2;
+                            return new App.web3_1_0.eth.Contract(App.assurance_state_abi, App.assurance_state_address);
+
+                        case 2:
+                            App.assurance_state_instance = _context2.sent;
+                            _context2.next = 5;
+                            return new App.web3_1_0.eth.Contract(App.assurance_proxy_abi, App.assurance_proxy_address);
+
+                        case 5:
+                            App.assurance_proxy_instance = _context2.sent;
+                            _context2.next = 8;
+                            return new App.web3_1_0.eth.Contract(App.dentacoin_token_abi, App.dentacoin_token_address);
+
+                        case 8:
+                            App.dentacoin_token_instance = _context2.sent;
+
 
                             //init pages logic
                             pagesDataOnContractInit();
 
-                        case 4:
+                        case 10:
                         case "end":
                             return _context2.stop();
                     }

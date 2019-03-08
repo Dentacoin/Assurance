@@ -3,7 +3,6 @@ var {getWeb3, getContractInstance} = require('./helper');
 basic.init();
 
 $(document).ready(function() {
-    console.log('App.init()');
     App.init();
 
     onDocumentReadyPageData();
@@ -157,11 +156,11 @@ var App = {
     },
     initContract: async function() {
         //Assurance STATE
-        App.assurance_state_instance = new App.web3_1_0.eth.Contract(App.assurance_state_abi, App.assurance_state_address);
+        App.assurance_state_instance = await new App.web3_1_0.eth.Contract(App.assurance_state_abi, App.assurance_state_address);
         //Assurance PROXY
-        App.assurance_proxy_instance = new App.web3_1_0.eth.Contract(App.assurance_proxy_abi, App.assurance_proxy_address);
+        App.assurance_proxy_instance = await new App.web3_1_0.eth.Contract(App.assurance_proxy_abi, App.assurance_proxy_address);
         //DentacoinToken
-        App.dentacoin_token_instance = new App.web3_1_0.eth.Contract(App.dentacoin_token_abi, App.dentacoin_token_address);
+        App.dentacoin_token_instance = await new App.web3_1_0.eth.Contract(App.dentacoin_token_abi, App.dentacoin_token_address);
 
         //init pages logic
         pagesDataOnContractInit();
