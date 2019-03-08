@@ -25392,25 +25392,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var pagesDataOnContractInit = function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee9() {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee10() {
         var check_dentist_account, period_to_withdraw, next_transfer_timestamp, date_obj, current_user_eth_balance, current_user_dcn_balance, monthly_premium_in_dcn;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee9$(_context9) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee10$(_context10) {
             while (1) {
-                switch (_context9.prev = _context9.next) {
+                switch (_context10.prev = _context10.next) {
                     case 0:
                         if (!$('body').hasClass('dentist')) {
-                            _context9.next = 16;
+                            _context10.next = 16;
                             break;
                         }
 
                         $('.additional-info .current-account a').html(global_state.account).attr('href', 'https://rinkeby.etherscan.io/address/' + global_state.account);
                         $('.additional-info .assurance-account a').html(App.assurance_address).attr('href', 'https://rinkeby.etherscan.io/address/' + App.assurance_address);
                         $('.additional-info .dentacointoken-account a').html(App.dentacoin_token_address).attr('href', 'https://rinkeby.etherscan.io/address/' + App.dentacoin_token_address);
-                        _context9.next = 6;
+                        _context10.next = 6;
                         return App.assurance_methods.getDentist(global_state.account);
 
                     case 6:
-                        check_dentist_account = _context9.sent;
+                        check_dentist_account = _context10.sent;
 
                         if (check_dentist_account.toLowerCase() == global_state.account.toLowerCase()) {
                             $('.additional-info .is-dentist span').addClass('yes').html('YES');
@@ -25440,12 +25440,12 @@ var pagesDataOnContractInit = function () {
                         $('.break-contract').click(function () {
                             App.assurance_methods.breakContract($('.breakContract .patient-address').val().trim(), global_state.account);
                         });
-                        _context9.next = 66;
+                        _context10.next = 66;
                         break;
 
                     case 16:
                         if (!$('body').hasClass('patient')) {
-                            _context9.next = 37;
+                            _context10.next = 37;
                             break;
                         }
 
@@ -25454,21 +25454,21 @@ var pagesDataOnContractInit = function () {
                         $('.additional-info .dentacointoken-account a').html(App.dentacoin_token_address).attr('href', 'https://rinkeby.etherscan.io/address/' + App.dentacoin_token_address);
 
                         //we check greater than 0 or more?????? ASK JEREMIAS
-                        _context9.t0 = parseInt;
-                        _context9.next = 23;
+                        _context10.t0 = parseInt;
+                        _context10.next = 23;
                         return App.dentacoin_token_methods.allowance(global_state.account, App.assurance_address);
 
                     case 23:
-                        _context9.t1 = _context9.sent;
-                        _context9.t2 = (0, _context9.t0)(_context9.t1);
+                        _context10.t1 = _context10.sent;
+                        _context10.t2 = (0, _context10.t0)(_context10.t1);
 
-                        if (!(_context9.t2 > 0)) {
-                            _context9.next = 29;
+                        if (!(_context10.t2 > 0)) {
+                            _context10.next = 29;
                             break;
                         }
 
                         $('.is-allowance-given span').addClass('yes').html('YES');
-                        _context9.next = 30;
+                        _context10.next = 30;
                         break;
 
                     case 29:
@@ -25494,27 +25494,27 @@ var pagesDataOnContractInit = function () {
                         $('.break-contract').click(function () {
                             App.assurance_methods.breakContract(global_state.account, $('.breakContract .dentist-address').val().trim());
                         });
-                        _context9.next = 66;
+                        _context10.next = 66;
                         break;
 
                     case 37:
                         if (!$('body').hasClass('logged-in')) {
-                            _context9.next = 66;
+                            _context10.next = 66;
                             break;
                         }
 
                         if (!$('body').hasClass('patient-contract-view')) {
-                            _context9.next = 66;
+                            _context10.next = 66;
                             break;
                         }
 
-                        _context9.t3 = parseInt;
-                        _context9.next = 42;
+                        _context10.t3 = parseInt;
+                        _context10.next = 42;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 42:
-                        _context9.t4 = _context9.sent;
-                        period_to_withdraw = (0, _context9.t3)(_context9.t4);
+                        _context10.t4 = _context10.sent;
+                        period_to_withdraw = (0, _context10.t3)(_context10.t4);
 
                         console.log(period_to_withdraw, 'period_to_withdraw');
                         next_transfer_timestamp = parseInt($('.contract-body').attr('data-time-left-next-transfer')) + period_to_withdraw;
@@ -25531,22 +25531,22 @@ var pagesDataOnContractInit = function () {
 
                         cancelContractEventInit();
 
-                        _context9.t5 = parseFloat;
-                        _context9.t6 = App.web3_1_0.utils;
-                        _context9.next = 56;
+                        _context10.t5 = parseFloat;
+                        _context10.t6 = App.web3_1_0.utils;
+                        _context10.next = 56;
                         return App.helper.getAddressETHBalance(global_state.account);
 
                     case 56:
-                        _context9.t7 = _context9.sent;
-                        _context9.t8 = _context9.t6.fromWei.call(_context9.t6, _context9.t7);
-                        current_user_eth_balance = (0, _context9.t5)(_context9.t8);
-                        _context9.t9 = parseFloat;
-                        _context9.next = 62;
+                        _context10.t7 = _context10.sent;
+                        _context10.t8 = _context10.t6.fromWei.call(_context10.t6, _context10.t7);
+                        current_user_eth_balance = (0, _context10.t5)(_context10.t8);
+                        _context10.t9 = parseFloat;
+                        _context10.next = 62;
                         return App.dentacoin_token_methods.balanceOf(global_state.account);
 
                     case 62:
-                        _context9.t10 = _context9.sent;
-                        current_user_dcn_balance = (0, _context9.t9)(_context9.t10);
+                        _context10.t10 = _context10.sent;
+                        current_user_dcn_balance = (0, _context10.t9)(_context10.t10);
                         monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
 
 
@@ -25573,14 +25573,14 @@ var pagesDataOnContractInit = function () {
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                         },
                                         success: function () {
-                                            var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee8(response) {
+                                            var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee9(response) {
                                                 var on_page_load_gwei, on_page_load_gas_price, approval_given, gas_cost_for_approval, gas_cost_for_contract_creation, methods_gas_cost, eth_fee, transaction_key, decrypted_private_key_response;
-                                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee8$(_context8) {
+                                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee9$(_context9) {
                                                     while (1) {
-                                                        switch (_context8.prev = _context8.next) {
+                                                        switch (_context9.prev = _context9.next) {
                                                             case 0:
                                                                 if (!response.success) {
-                                                                    _context8.next = 49;
+                                                                    _context9.next = 49;
                                                                     break;
                                                                 }
 
@@ -25601,16 +25601,16 @@ var pagesDataOnContractInit = function () {
                                                                 approval_given = false;
                                                                 //if approval is given already SOMEHOW ...
 
-                                                                _context8.t0 = parseInt;
-                                                                _context8.next = 12;
+                                                                _context9.t0 = parseInt;
+                                                                _context9.next = 12;
                                                                 return App.dentacoin_token_methods.allowance(checksumAddress(response.contract_data.patient), App.assurance_state_address);
 
                                                             case 12:
-                                                                _context8.t1 = _context8.sent;
-                                                                _context8.t2 = (0, _context8.t0)(_context8.t1);
+                                                                _context9.t1 = _context9.sent;
+                                                                _context9.t2 = (0, _context9.t0)(_context9.t1);
 
-                                                                if (!(_context8.t2 > 0)) {
-                                                                    _context8.next = 16;
+                                                                if (!(_context9.t2 > 0)) {
+                                                                    _context9.next = 16;
                                                                     break;
                                                                 }
 
@@ -25618,22 +25618,22 @@ var pagesDataOnContractInit = function () {
 
                                                             case 16:
                                                                 if (approval_given) {
-                                                                    _context8.next = 20;
+                                                                    _context9.next = 20;
                                                                     break;
                                                                 }
 
-                                                                _context8.next = 19;
+                                                                _context9.next = 19;
                                                                 return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({});
 
                                                             case 19:
-                                                                gas_cost_for_approval = _context8.sent;
+                                                                gas_cost_for_approval = _context9.sent;
 
                                                             case 20:
-                                                                _context8.next = 22;
+                                                                _context9.next = 22;
                                                                 return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({ from: App.dummy_address, gas: 500000 });
 
                                                             case 22:
-                                                                gas_cost_for_contract_creation = _context8.sent;
+                                                                gas_cost_for_contract_creation = _context9.sent;
 
                                                                 if (!approval_given) {
                                                                     methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
@@ -25651,7 +25651,7 @@ var pagesDataOnContractInit = function () {
                                                                 });
 
                                                                 if (!cached_key) {
-                                                                    _context8.next = 32;
+                                                                    _context9.next = 32;
                                                                     break;
                                                                 }
 
@@ -25665,41 +25665,41 @@ var pagesDataOnContractInit = function () {
                                                                         $('.proof-success').fadeIn(1500);
                                                                     }, 500);
                                                                 });
-                                                                _context8.next = 46;
+                                                                _context9.next = 46;
                                                                 break;
 
                                                             case 32:
                                                                 if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
-                                                                    _context8.next = 45;
+                                                                    _context9.next = 45;
                                                                     break;
                                                                 }
 
-                                                                _context8.next = 35;
+                                                                _context9.next = 35;
                                                                 return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
 
                                                             case 35:
-                                                                decrypted_private_key_response = _context8.sent;
+                                                                decrypted_private_key_response = _context9.sent;
 
                                                                 if (!decrypted_private_key_response.success) {
-                                                                    _context8.next = 40;
+                                                                    _context9.next = 40;
                                                                     break;
                                                                 }
 
                                                                 transaction_key = decrypted_private_key_response.success;
-                                                                _context8.next = 43;
+                                                                _context9.next = 43;
                                                                 break;
 
                                                             case 40:
                                                                 if (!decrypted_private_key_response.error) {
-                                                                    _context8.next = 43;
+                                                                    _context9.next = 43;
                                                                     break;
                                                                 }
 
                                                                 basic.showAlert(decrypted_private_key_response.error, '', true);
-                                                                return _context8.abrupt('return', false);
+                                                                return _context9.abrupt('return', false);
 
                                                             case 43:
-                                                                _context8.next = 46;
+                                                                _context9.next = 46;
                                                                 break;
 
                                                             case 45:
@@ -25709,52 +25709,52 @@ var pagesDataOnContractInit = function () {
 
                                                             case 46:
 
-                                                                $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7() {
+                                                                $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee8() {
                                                                     var _fireAssuranceContractCreationTransaction, decrypted_keystore_file_response, EthereumTx, approval_function_abi;
 
-                                                                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee7$(_context7) {
+                                                                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee8$(_context8) {
                                                                         while (1) {
-                                                                            switch (_context7.prev = _context7.next) {
+                                                                            switch (_context8.prev = _context8.next) {
                                                                                 case 0:
                                                                                     if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
-                                                                                        _context7.next = 5;
+                                                                                        _context8.next = 5;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
-                                                                                    return _context7.abrupt('return', false);
+                                                                                    return _context8.abrupt('return', false);
 
                                                                                 case 5:
                                                                                     if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '')) {
-                                                                                        _context7.next = 10;
+                                                                                        _context8.next = 10;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('Please enter the secret password for your keystore file.', '', true);
-                                                                                    return _context7.abrupt('return', false);
+                                                                                    return _context8.abrupt('return', false);
 
                                                                                 case 10:
                                                                                     if ($('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                                                        _context7.next = 15;
+                                                                                        _context8.next = 15;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
-                                                                                    return _context7.abrupt('return', false);
+                                                                                    return _context8.abrupt('return', false);
 
                                                                                 case 15:
                                                                                     _fireAssuranceContractCreationTransaction = function () {
-                                                                                        var _ref8 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6() {
+                                                                                        var _ref9 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7() {
                                                                                             var contract_creation_function_abi;
-                                                                                            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
+                                                                                            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee7$(_context7) {
                                                                                                 while (1) {
-                                                                                                    switch (_context6.prev = _context6.next) {
+                                                                                                    switch (_context7.prev = _context7.next) {
                                                                                                         case 0:
-                                                                                                            _context6.next = 2;
+                                                                                                            _context7.next = 2;
                                                                                                             return App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
                                                                                                         case 2:
-                                                                                                            contract_creation_function_abi = _context6.sent;
+                                                                                                            contract_creation_function_abi = _context7.sent;
 
                                                                                                             App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
                                                                                                                 var contract_creation_transaction_obj = {
@@ -25773,17 +25773,17 @@ var pagesDataOnContractInit = function () {
 
                                                                                                                 //sending the transaction
                                                                                                                 App.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                                                                                    var contract_creation_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
+                                                                                                                    var contract_creation_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6() {
                                                                                                                         var contract_creation_status;
-                                                                                                                        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
+                                                                                                                        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
                                                                                                                             while (1) {
-                                                                                                                                switch (_context5.prev = _context5.next) {
+                                                                                                                                switch (_context6.prev = _context6.next) {
                                                                                                                                     case 0:
-                                                                                                                                        _context5.next = 2;
+                                                                                                                                        _context6.next = 2;
                                                                                                                                         return App.web3_1_0.eth.getTransactionReceipt(transactionHash);
 
                                                                                                                                     case 2:
-                                                                                                                                        contract_creation_status = _context5.sent;
+                                                                                                                                        contract_creation_status = _context6.sent;
 
                                                                                                                                         if (contract_creation_status != null && has(contract_creation_status, 'status')) {
                                                                                                                                             clearInterval(contract_creation_interval_check);
@@ -25809,69 +25809,69 @@ var pagesDataOnContractInit = function () {
 
                                                                                                                                     case 4:
                                                                                                                                     case 'end':
-                                                                                                                                        return _context5.stop();
+                                                                                                                                        return _context6.stop();
                                                                                                                                 }
                                                                                                                             }
-                                                                                                                        }, _callee5, this);
+                                                                                                                        }, _callee6, this);
                                                                                                                     })), 1000);
                                                                                                                 });
                                                                                                             });
 
                                                                                                         case 4:
                                                                                                         case 'end':
-                                                                                                            return _context6.stop();
+                                                                                                            return _context7.stop();
                                                                                                     }
                                                                                                 }
-                                                                                            }, _callee6, this);
+                                                                                            }, _callee7, this);
                                                                                         }));
 
                                                                                         return function _fireAssuranceContractCreationTransaction() {
-                                                                                            return _ref8.apply(this, arguments);
+                                                                                            return _ref9.apply(this, arguments);
                                                                                         };
                                                                                     }();
 
                                                                                     if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
-                                                                                        _context7.next = 27;
+                                                                                        _context8.next = 27;
                                                                                         break;
                                                                                     }
 
-                                                                                    _context7.next = 19;
+                                                                                    _context8.next = 19;
                                                                                     return getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
 
                                                                                 case 19:
-                                                                                    decrypted_keystore_file_response = _context7.sent;
+                                                                                    decrypted_keystore_file_response = _context8.sent;
 
                                                                                     if (!decrypted_keystore_file_response.success) {
-                                                                                        _context7.next = 24;
+                                                                                        _context8.next = 24;
                                                                                         break;
                                                                                     }
 
                                                                                     transaction_key = decrypted_keystore_file_response.to_string;
-                                                                                    _context7.next = 27;
+                                                                                    _context8.next = 27;
                                                                                     break;
 
                                                                                 case 24:
                                                                                     if (!decrypted_keystore_file_response.error) {
-                                                                                        _context7.next = 27;
+                                                                                        _context8.next = 27;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert(decrypted_keystore_file_response.error, '', true);
-                                                                                    return _context7.abrupt('return', false);
+                                                                                    return _context8.abrupt('return', false);
 
                                                                                 case 27:
                                                                                     EthereumTx = __webpack_require__(120);
 
                                                                                     if (approval_given) {
-                                                                                        _context7.next = 35;
+                                                                                        _context8.next = 35;
                                                                                         break;
                                                                                     }
 
-                                                                                    _context7.next = 31;
+                                                                                    _context8.next = 31;
                                                                                     return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
 
                                                                                 case 31:
-                                                                                    approval_function_abi = _context7.sent;
+                                                                                    approval_function_abi = _context8.sent;
 
                                                                                     App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
                                                                                         var approval_transaction_obj = {
@@ -25891,17 +25891,17 @@ var pagesDataOnContractInit = function () {
                                                                                         //sending the transaction
                                                                                         App.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
                                                                                             $('.response-layer').show();
-                                                                                            var approval_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+                                                                                            var approval_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
                                                                                                 var approval_status;
-                                                                                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+                                                                                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
                                                                                                     while (1) {
-                                                                                                        switch (_context4.prev = _context4.next) {
+                                                                                                        switch (_context5.prev = _context5.next) {
                                                                                                             case 0:
-                                                                                                                _context4.next = 2;
+                                                                                                                _context5.next = 2;
                                                                                                                 return App.web3_1_0.eth.getTransactionReceipt(transactionHash);
 
                                                                                                             case 2:
-                                                                                                                approval_status = _context4.sent;
+                                                                                                                approval_status = _context5.sent;
 
                                                                                                                 if (approval_status != null && has(approval_status, 'status')) {
                                                                                                                     clearInterval(approval_interval_check);
@@ -25910,14 +25910,14 @@ var pagesDataOnContractInit = function () {
 
                                                                                                             case 4:
                                                                                                             case 'end':
-                                                                                                                return _context4.stop();
+                                                                                                                return _context5.stop();
                                                                                                         }
                                                                                                     }
-                                                                                                }, _callee4, this);
+                                                                                                }, _callee5, this);
                                                                                             })), 1000);
                                                                                         });
                                                                                     });
-                                                                                    _context7.next = 36;
+                                                                                    _context8.next = 36;
                                                                                     break;
 
                                                                                 case 35:
@@ -25925,12 +25925,12 @@ var pagesDataOnContractInit = function () {
 
                                                                                 case 36:
                                                                                 case 'end':
-                                                                                    return _context7.stop();
+                                                                                    return _context8.stop();
                                                                             }
                                                                         }
-                                                                    }, _callee7, this);
+                                                                    }, _callee8, this);
                                                                 })));
-                                                                _context8.next = 50;
+                                                                _context9.next = 50;
                                                                 break;
 
                                                             case 49:
@@ -25938,14 +25938,14 @@ var pagesDataOnContractInit = function () {
 
                                                             case 50:
                                                             case 'end':
-                                                                return _context8.stop();
+                                                                return _context9.stop();
                                                         }
                                                     }
-                                                }, _callee8, this);
+                                                }, _callee9, this);
                                             }));
 
                                             function success(_x7) {
-                                                return _ref5.apply(this, arguments);
+                                                return _ref6.apply(this, arguments);
                                             }
 
                                             return success;
@@ -25963,14 +25963,14 @@ var pagesDataOnContractInit = function () {
 
                     case 66:
                     case 'end':
-                        return _context9.stop();
+                        return _context10.stop();
                 }
             }
-        }, _callee9, this);
+        }, _callee10, this);
     }));
 
     return function pagesDataOnContractInit() {
-        return _ref4.apply(this, arguments);
+        return _ref5.apply(this, arguments);
     };
 }();
 
@@ -26046,11 +26046,11 @@ async function buildCurrentPatientContractHistory() {
 
 // ================== PAGES ==================
 var initPagesLogic = function () {
-    var _ref10 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee10() {
+    var _ref11 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee11() {
         var max_height, i, len;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee10$(_context10) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee11$(_context11) {
             while (1) {
-                switch (_context10.prev = _context10.next) {
+                switch (_context11.prev = _context11.next) {
                     case 0:
                         if ($('body').hasClass('home')) {
                             if ($('.testimonials-slider').length > 0) {
@@ -26179,44 +26179,44 @@ var initPagesLogic = function () {
 
                     case 1:
                     case 'end':
-                        return _context10.stop();
+                        return _context11.stop();
                 }
             }
-        }, _callee10, this);
+        }, _callee11, this);
     }));
 
     return function initPagesLogic() {
-        return _ref10.apply(this, arguments);
+        return _ref11.apply(this, arguments);
     };
 }();
 
 var onDocumentReadyPageData = function () {
-    var _ref21 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee23() {
+    var _ref22 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee24() {
         var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_signed, remainder, next_payment_timestamp, next_payment_timestamp_date_obj;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee23$(_context23) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee24$(_context24) {
             while (1) {
-                switch (_context23.prev = _context23.next) {
+                switch (_context24.prev = _context24.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context23.next = 85;
+                            _context24.next = 85;
                             break;
                         }
 
                         if (!$('body').hasClass('congratulations')) {
-                            _context23.next = 14;
+                            _context24.next = 14;
                             break;
                         }
 
                         console.log('congratulations);');
-                        _context23.t0 = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
-                        _context23.t1 = parseInt;
-                        _context23.next = 7;
+                        _context24.t0 = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
+                        _context24.t1 = parseInt;
+                        _context24.next = 7;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 7:
-                        _context23.t2 = _context23.sent;
-                        _context23.t3 = (0, _context23.t1)(_context23.t2);
-                        next_transfer_timestamp = _context23.t0 + _context23.t3;
+                        _context24.t2 = _context24.sent;
+                        _context24.t3 = (0, _context24.t1)(_context24.t2);
+                        next_transfer_timestamp = _context24.t0 + _context24.t3;
 
                         if ($('.converted-date').length > 0) {
                             date_obj = new Date(next_transfer_timestamp * 1000);
@@ -26224,25 +26224,25 @@ var onDocumentReadyPageData = function () {
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context23.next = 83;
+                        _context24.next = 83;
                         break;
 
                     case 14:
                         if (!$('body').hasClass('my-contracts')) {
-                            _context23.next = 26;
+                            _context24.next = 26;
                             break;
                         }
 
                         initDataTable();
 
                         table_trs_with_timestamp = $('.table-container table tr[data-timestamp-signed]');
-                        _context23.t4 = parseInt;
-                        _context23.next = 20;
+                        _context24.t4 = parseInt;
+                        _context24.next = 20;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 20:
-                        _context23.t5 = _context23.sent;
-                        smart_contract_withdraw_period = (0, _context23.t4)(_context23.t5);
+                        _context24.t5 = _context24.sent;
+                        smart_contract_withdraw_period = (0, _context24.t4)(_context24.t5);
                         now_timestamp = Math.round(new Date().getTime() / 1000);
 
 
@@ -26260,93 +26260,93 @@ var onDocumentReadyPageData = function () {
 
                             table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">' + next_payment_timestamp + '</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
-                        _context23.next = 83;
+                        _context24.next = 83;
                         break;
 
                     case 26:
                         if (!$('body').hasClass('contract-proposal')) {
-                            _context23.next = 43;
+                            _context24.next = 43;
                             break;
                         }
 
-                        _context23.next = 29;
+                        _context24.next = 29;
                         return $.getScript('/assets/js/address.js', function () {});
 
                     case 29:
                         if (!($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined)) {
-                            _context23.next = 41;
+                            _context24.next = 41;
                             break;
                         }
 
-                        _context23.t6 = Date;
-                        _context23.t7 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
-                        _context23.t8 = parseInt;
-                        _context23.next = 35;
+                        _context24.t6 = Date;
+                        _context24.t7 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
+                        _context24.t8 = parseInt;
+                        _context24.next = 35;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 35:
-                        _context23.t9 = _context23.sent;
-                        _context23.t10 = (0, _context23.t8)(_context23.t9);
-                        _context23.t11 = _context23.t7 + _context23.t10;
-                        _context23.t12 = _context23.t11 * 1000;
-                        date_obj = new _context23.t6(_context23.t12);
+                        _context24.t9 = _context24.sent;
+                        _context24.t10 = (0, _context24.t8)(_context24.t9);
+                        _context24.t11 = _context24.t7 + _context24.t10;
+                        _context24.t12 = _context24.t11 * 1000;
+                        date_obj = new _context24.t6(_context24.t12);
 
                         $('.active-until').html(dateObjToFormattedDate(date_obj));
 
                     case 41:
-                        _context23.next = 83;
+                        _context24.next = 83;
                         break;
 
                     case 43:
                         if (!$('body').hasClass('edit-account')) {
-                            _context23.next = 48;
+                            _context24.next = 48;
                             break;
                         }
 
-                        _context23.next = 46;
+                        _context24.next = 46;
                         return $.getScript('/assets/js/address.js', function () {});
 
                     case 46:
-                        _context23.next = 83;
+                        _context24.next = 83;
                         break;
 
                     case 48:
                         if (!$('body').hasClass('my-profile')) {
-                            _context23.next = 55;
+                            _context24.next = 55;
                             break;
                         }
 
-                        _context23.next = 51;
+                        _context24.next = 51;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic-kyc.js', function () {});
 
                     case 51:
 
                         $(document).on('civicRead', function () {
-                            var _ref22 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee21(event) {
-                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee21$(_context21) {
+                            var _ref23 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee22(event) {
+                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee22$(_context22) {
                                     while (1) {
-                                        switch (_context21.prev = _context21.next) {
+                                        switch (_context22.prev = _context22.next) {
                                             case 0:
                                                 $('.response-layer').show();
 
                                             case 1:
                                             case 'end':
-                                                return _context21.stop();
+                                                return _context22.stop();
                                         }
                                     }
-                                }, _callee21, this);
+                                }, _callee22, this);
                             }));
 
                             return function (_x15) {
-                                return _ref22.apply(this, arguments);
+                                return _ref23.apply(this, arguments);
                             };
                         }());
 
                         $(document).on('receivedKYCCivicToken', function () {
-                            var _ref23 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee22(event) {
-                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee22$(_context22) {
+                            var _ref24 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee23(event) {
+                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee23$(_context23) {
                                     while (1) {
-                                        switch (_context22.prev = _context22.next) {
+                                        switch (_context23.prev = _context23.next) {
                                             case 0:
                                                 if (event.response_data) {
                                                     $.ajax({
@@ -26389,65 +26389,65 @@ var onDocumentReadyPageData = function () {
 
                                             case 1:
                                             case 'end':
-                                                return _context22.stop();
+                                                return _context23.stop();
                                         }
                                     }
-                                }, _callee22, this);
+                                }, _callee23, this);
                             }));
 
                             return function (_x16) {
-                                return _ref23.apply(this, arguments);
+                                return _ref24.apply(this, arguments);
                             };
                         }());
-                        _context23.next = 83;
+                        _context24.next = 83;
                         break;
 
                     case 55:
                         if (!$('body').hasClass('dentist-contract-view')) {
-                            _context23.next = 83;
+                            _context24.next = 83;
                             break;
                         }
 
                         if (!($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval'))) {
-                            _context23.next = 73;
+                            _context24.next = 73;
                             break;
                         }
 
-                        _context23.t13 = $('.first-payment');
-                        _context23.t14 = dateObjToFormattedDate;
-                        _context23.t15 = Date;
-                        _context23.t16 = parseInt($('.single-contract-view-section').attr('data-created-at'));
-                        _context23.t17 = parseInt;
-                        _context23.next = 64;
+                        _context24.t13 = $('.first-payment');
+                        _context24.t14 = dateObjToFormattedDate;
+                        _context24.t15 = Date;
+                        _context24.t16 = parseInt($('.single-contract-view-section').attr('data-created-at'));
+                        _context24.t17 = parseInt;
+                        _context24.next = 64;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 64:
-                        _context23.t18 = _context23.sent;
-                        _context23.t19 = (0, _context23.t17)(_context23.t18);
-                        _context23.t20 = _context23.t16 + _context23.t19;
-                        _context23.t21 = _context23.t20 * 1000;
-                        _context23.t22 = new _context23.t15(_context23.t21);
-                        _context23.t23 = (0, _context23.t14)(_context23.t22);
+                        _context24.t18 = _context24.sent;
+                        _context24.t19 = (0, _context24.t17)(_context24.t18);
+                        _context24.t20 = _context24.t16 + _context24.t19;
+                        _context24.t21 = _context24.t20 * 1000;
+                        _context24.t22 = new _context24.t15(_context24.t21);
+                        _context24.t23 = (0, _context24.t14)(_context24.t22);
 
-                        _context23.t13.html.call(_context23.t13, _context23.t23);
+                        _context24.t13.html.call(_context24.t13, _context24.t23);
 
-                        _context23.next = 83;
+                        _context24.next = 83;
                         break;
 
                     case 73:
                         if (!$('.single-contract-view-section').hasClass('active')) {
-                            _context23.next = 83;
+                            _context24.next = 83;
                             break;
                         }
 
                         now_timestamp = Math.round(new Date().getTime() / 1000);
-                        _context23.t24 = parseInt;
-                        _context23.next = 78;
+                        _context24.t24 = parseInt;
+                        _context24.next = 78;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 78:
-                        _context23.t25 = _context23.sent;
-                        smart_contract_withdraw_period = (0, _context23.t24)(_context23.t25);
+                        _context24.t25 = _context24.sent;
+                        smart_contract_withdraw_period = (0, _context24.t24)(_context24.t25);
                         time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-timestamp-signed'));
 
 
@@ -26463,38 +26463,38 @@ var onDocumentReadyPageData = function () {
                         $('.single-contract-view-section .row-with-bottom-squares .next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
 
                     case 83:
-                        _context23.next = 89;
+                        _context24.next = 89;
                         break;
 
                     case 85:
-                        _context23.next = 87;
+                        _context24.next = 87;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic.js', function () {});
 
                     case 87:
-                        _context23.next = 89;
+                        _context24.next = 89;
                         return $.getScript('//dentacoin.com/assets/libs/facebook-login/facebook.js', function () {});
 
                     case 89:
                     case 'end':
-                        return _context23.stop();
+                        return _context24.stop();
                 }
             }
-        }, _callee23, this);
+        }, _callee24, this);
     }));
 
     return function onDocumentReadyPageData() {
-        return _ref21.apply(this, arguments);
+        return _ref22.apply(this, arguments);
     };
 }();
 
 var validateUserAddress = function () {
-    var _ref26 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee26(user_address, value_element) {
+    var _ref27 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee27(user_address, value_element) {
         var error, check_public_key_ajax_result;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee26$(_context26) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee27$(_context27) {
             while (1) {
-                switch (_context26.prev = _context26.next) {
+                switch (_context27.prev = _context27.next) {
                     case 0:
-                        _context26.next = 2;
+                        _context27.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/check-public-key',
@@ -26508,7 +26508,7 @@ var validateUserAddress = function () {
                         });
 
                     case 2:
-                        check_public_key_ajax_result = _context26.sent;
+                        check_public_key_ajax_result = _context27.sent;
 
 
                         if (check_public_key_ajax_result.success) {
@@ -26527,28 +26527,28 @@ var validateUserAddress = function () {
                                 error = true;
                             }
                         }
-                        return _context26.abrupt('return', error);
+                        return _context27.abrupt('return', error);
 
                     case 5:
                     case 'end':
-                        return _context26.stop();
+                        return _context27.stop();
                 }
             }
-        }, _callee26, this);
+        }, _callee27, this);
     }));
 
     return function validateUserAddress(_x19, _x20) {
-        return _ref26.apply(this, arguments);
+        return _ref27.apply(this, arguments);
     };
 }();
 
 var getEncryptedContractPdfContent = function () {
-    var _ref27 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee27(hash, type) {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee27$(_context27) {
+    var _ref28 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee28(hash, type) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee28$(_context28) {
             while (1) {
-                switch (_context27.prev = _context27.next) {
+                switch (_context28.prev = _context28.next) {
                     case 0:
-                        _context27.next = 2;
+                        _context28.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-contract',
@@ -26563,38 +26563,6 @@ var getEncryptedContractPdfContent = function () {
                         });
 
                     case 2:
-                        return _context27.abrupt('return', _context27.sent);
-
-                    case 3:
-                    case 'end':
-                        return _context27.stop();
-                }
-            }
-        }, _callee27, this);
-    }));
-
-    return function getEncryptedContractPdfContent(_x21, _x22) {
-        return _ref27.apply(this, arguments);
-    };
-}();
-
-var getCurrentUserData = function () {
-    var _ref28 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee28() {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee28$(_context28) {
-            while (1) {
-                switch (_context28.prev = _context28.next) {
-                    case 0:
-                        _context28.next = 2;
-                        return $.ajax({
-                            type: 'GET',
-                            url: '/get-current-user-data',
-                            dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
                         return _context28.abrupt('return', _context28.sent);
 
                     case 3:
@@ -26605,25 +26573,22 @@ var getCurrentUserData = function () {
         }, _callee28, this);
     }));
 
-    return function getCurrentUserData() {
+    return function getEncryptedContractPdfContent(_x21, _x22) {
         return _ref28.apply(this, arguments);
     };
 }();
 
-var getDecryptedPrivateKey = function () {
-    var _ref29 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee29(key) {
+var getCurrentUserData = function () {
+    var _ref29 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee29() {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee29$(_context29) {
             while (1) {
                 switch (_context29.prev = _context29.next) {
                     case 0:
                         _context29.next = 2;
                         return $.ajax({
-                            type: 'POST',
-                            url: '/assurance-decrypt-private-key',
+                            type: 'GET',
+                            url: '/get-current-user-data',
                             dataType: 'json',
-                            data: {
-                                private_key: key
-                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
@@ -26640,13 +26605,13 @@ var getDecryptedPrivateKey = function () {
         }, _callee29, this);
     }));
 
-    return function getDecryptedPrivateKey(_x23) {
+    return function getCurrentUserData() {
         return _ref29.apply(this, arguments);
     };
 }();
 
-var getDecryptedKeystoreFile = function () {
-    var _ref30 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee30(keystore, password) {
+var getDecryptedPrivateKey = function () {
+    var _ref30 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee30(key) {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee30$(_context30) {
             while (1) {
                 switch (_context30.prev = _context30.next) {
@@ -26654,11 +26619,10 @@ var getDecryptedKeystoreFile = function () {
                         _context30.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-pk',
+                            url: '/assurance-decrypt-private-key',
                             dataType: 'json',
                             data: {
-                                keystore: keystore,
-                                password: password
+                                private_key: key
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -26676,13 +26640,13 @@ var getDecryptedKeystoreFile = function () {
         }, _callee30, this);
     }));
 
-    return function getDecryptedKeystoreFile(_x24, _x25) {
+    return function getDecryptedPrivateKey(_x23) {
         return _ref30.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContent = function () {
-    var _ref31 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee31(encrypted_html, key) {
+var getDecryptedKeystoreFile = function () {
+    var _ref31 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee31(keystore, password) {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee31$(_context31) {
             while (1) {
                 switch (_context31.prev = _context31.next) {
@@ -26690,14 +26654,14 @@ var getDecryptedPdfContent = function () {
                         _context31.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data',
+                            url: '/decrypt-pk',
                             dataType: 'json',
+                            data: {
+                                keystore: keystore,
+                                password: password
+                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
                             }
                         });
 
@@ -26712,8 +26676,44 @@ var getDecryptedPdfContent = function () {
         }, _callee31, this);
     }));
 
-    return function getDecryptedPdfContent(_x26, _x27) {
+    return function getDecryptedKeystoreFile(_x24, _x25) {
         return _ref31.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContent = function () {
+    var _ref32 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee32(encrypted_html, key) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee32$(_context32) {
+            while (1) {
+                switch (_context32.prev = _context32.next) {
+                    case 0:
+                        _context32.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context32.abrupt('return', _context32.sent);
+
+                    case 3:
+                    case 'end':
+                        return _context32.stop();
+                }
+            }
+        }, _callee32, this);
+    }));
+
+    return function getDecryptedPdfContent(_x26, _x27) {
+        return _ref32.apply(this, arguments);
     };
 }();
 
@@ -26725,13 +26725,27 @@ var _require = __webpack_require__(178),
 
 basic.init();
 
-$(document).ready(function () {
-    App.init();
+$(document).ready(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+        while (1) {
+            switch (_context.prev = _context.next) {
+                case 0:
+                    _context.next = 2;
+                    return App.init();
 
-    onDocumentReadyPageData();
+                case 2:
 
-    fixButtonsFocus();
-});
+                    onDocumentReadyPageData();
+
+                    fixButtonsFocus();
+
+                case 4:
+                case 'end':
+                    return _context.stop();
+            }
+        }
+    }, _callee, this);
+})));
 
 $(window).on('load', function () {
     onWindowLoadPageData();
@@ -26829,11 +26843,11 @@ var App = {
         return App.initWeb3();
     },
     initWeb3: function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
             var user_data, current_account_obj;
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
                 while (1) {
-                    switch (_context.prev = _context.next) {
+                    switch (_context2.prev = _context2.next) {
                         case 0:
                             if (metamask) {
                                 //METAMASK
@@ -26855,15 +26869,15 @@ var App = {
                             }
 
                             if (!$('body').hasClass('logged-in')) {
-                                _context.next = 7;
+                                _context2.next = 7;
                                 break;
                             }
 
-                            _context.next = 4;
+                            _context2.next = 4;
                             return getCurrentUserData();
 
                         case 4:
-                            user_data = _context.sent;
+                            user_data = _context2.sent;
 
                             global_state.account = checksumAddress(user_data.success.dcn_address);
 
@@ -26877,49 +26891,9 @@ var App = {
                             }
 
                         case 7:
-                            return _context.abrupt('return', App.initContract());
+                            return _context2.abrupt('return', App.initContract());
 
                         case 8:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, _callee, this);
-        }));
-
-        function initWeb3() {
-            return _ref.apply(this, arguments);
-        }
-
-        return initWeb3;
-    }(),
-    initContract: function () {
-        var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
-                while (1) {
-                    switch (_context2.prev = _context2.next) {
-                        case 0:
-                            _context2.next = 2;
-                            return new App.web3_1_0.eth.Contract(App.assurance_state_abi, App.assurance_state_address);
-
-                        case 2:
-                            App.assurance_state_instance = _context2.sent;
-                            _context2.next = 5;
-                            return new App.web3_1_0.eth.Contract(App.assurance_proxy_abi, App.assurance_proxy_address);
-
-                        case 5:
-                            App.assurance_proxy_instance = _context2.sent;
-                            _context2.next = 8;
-                            return new App.web3_1_0.eth.Contract(App.dentacoin_token_abi, App.dentacoin_token_address);
-
-                        case 8:
-                            App.dentacoin_token_instance = _context2.sent;
-
-
-                            //init pages logic
-                            pagesDataOnContractInit();
-
-                        case 10:
                         case 'end':
                             return _context2.stop();
                     }
@@ -26927,8 +26901,48 @@ var App = {
             }, _callee2, this);
         }));
 
-        function initContract() {
+        function initWeb3() {
             return _ref2.apply(this, arguments);
+        }
+
+        return initWeb3;
+    }(),
+    initContract: function () {
+        var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            _context3.next = 2;
+                            return new App.web3_1_0.eth.Contract(App.assurance_state_abi, App.assurance_state_address);
+
+                        case 2:
+                            App.assurance_state_instance = _context3.sent;
+                            _context3.next = 5;
+                            return new App.web3_1_0.eth.Contract(App.assurance_proxy_abi, App.assurance_proxy_address);
+
+                        case 5:
+                            App.assurance_proxy_instance = _context3.sent;
+                            _context3.next = 8;
+                            return new App.web3_1_0.eth.Contract(App.dentacoin_token_abi, App.dentacoin_token_address);
+
+                        case 8:
+                            App.dentacoin_token_instance = _context3.sent;
+
+
+                            //init pages logic
+                            pagesDataOnContractInit();
+
+                        case 10:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, _callee3, this);
+        }));
+
+        function initContract() {
+            return _ref3.apply(this, arguments);
         }
 
         return initContract;
@@ -26965,69 +26979,69 @@ var App = {
     },
     assurance_proxy_methods: {
         registerContract: function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash) {
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash) {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
                     while (1) {
-                        switch (_context3.prev = _context3.next) {
+                        switch (_context4.prev = _context4.next) {
                             case 0:
                                 if (!(!innerAddressCheck(patient_addr) || !innerAddressCheck(dentist_addr))) {
-                                    _context3.next = 5;
+                                    _context4.next = 5;
                                     break;
                                 }
 
                                 //check if patient and dentist addresses are valid
                                 basic.showAlert('Patient and dentist addresses must be valid.');
-                                return _context3.abrupt('return', false);
+                                return _context4.abrupt('return', false);
 
                             case 5:
-                                _context3.t0 = parseInt;
-                                _context3.next = 8;
+                                _context4.t0 = parseInt;
+                                _context4.next = 8;
                                 return App.dentacoin_token_methods.allowance(patient_addr, App.assurance_state_address);
 
                             case 8:
-                                _context3.t1 = _context3.sent;
-                                _context3.t2 = (0, _context3.t0)(_context3.t1);
+                                _context4.t1 = _context4.sent;
+                                _context4.t2 = (0, _context4.t0)(_context4.t1);
 
-                                if (!(_context3.t2 <= 0)) {
-                                    _context3.next = 15;
+                                if (!(_context4.t2 <= 0)) {
+                                    _context4.next = 15;
                                     break;
                                 }
 
                                 basic.showAlert('This patient didn\'t give allowance to Assurance contract to manage his Dentacoins.');
-                                return _context3.abrupt('return', false);
+                                return _context4.abrupt('return', false);
 
                             case 15:
                                 if (!(parseInt(value_usd) <= 0 || parseInt(value_dcn) <= 0)) {
-                                    _context3.next = 20;
+                                    _context4.next = 20;
                                     break;
                                 }
 
                                 //check if USD and DCN values are valid
                                 basic.showAlert('Both USD and DCN values must be greater than 0.');
-                                return _context3.abrupt('return', false);
+                                return _context4.abrupt('return', false);
 
                             case 20:
                                 if (!(date_start_contract < 0)) {
-                                    _context3.next = 25;
+                                    _context4.next = 25;
                                     break;
                                 }
 
                                 //check if valid timestamp
                                 basic.showAlert('Please enter valid date.');
-                                return _context3.abrupt('return', false);
+                                return _context4.abrupt('return', false);
 
                             case 25:
                                 if (!(contract_ipfs_hash == '')) {
-                                    _context3.next = 28;
+                                    _context4.next = 28;
                                     break;
                                 }
 
                                 //check if ipfs hash is passed
                                 basic.showAlert('Please enter valid date.');
-                                return _context3.abrupt('return', false);
+                                return _context4.abrupt('return', false);
 
                             case 28:
-                                return _context3.abrupt('return', App.assurance_proxy_instance.methods.registerContract(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash).send({
+                                return _context4.abrupt('return', App.assurance_proxy_instance.methods.registerContract(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash).send({
                                     from: global_state.account
                                 }).on('transactionHash', function (hash) {
                                     basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/' + hash + '" target="_blank" class="etherscan-hash">Etherscan</a>.', '', true);
@@ -27037,14 +27051,14 @@ var App = {
 
                             case 29:
                             case 'end':
-                                return _context3.stop();
+                                return _context4.stop();
                         }
                     }
-                }, _callee3, this);
+                }, _callee4, this);
             }));
 
             function registerContract(_x, _x2, _x3, _x4, _x5, _x6) {
-                return _ref3.apply(this, arguments);
+                return _ref4.apply(this, arguments);
             }
 
             return registerContract;
@@ -27619,11 +27633,11 @@ if ($('body').hasClass('logged-in')) {
 
         var form_props_arr = ['professional-company-number', 'postal-address', 'country', 'phone', 'website', 'address', 'fname', 'lname', 'email', 'monthly-premium', 'check-ups-per-year', 'teeth-cleaning-per-year'];
         var create_contract_form = $('form#dentist-create-contract');
-        create_contract_form.find('.terms-and-conditions-long-list').mCustomScrollbar();$('.contract-creation-steps-container button').bind('click.validateStepsNav', _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee11() {
+        create_contract_form.find('.terms-and-conditions-long-list').mCustomScrollbar();$('.contract-creation-steps-container button').bind('click.validateStepsNav', _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee12() {
             var current_step_error, this_btn, this_btn_step, validate_steps_arr, validate_dentist_address, dentist_address, y, len;
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee11$(_context11) {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee12$(_context12) {
                 while (1) {
-                    switch (_context11.prev = _context11.next) {
+                    switch (_context12.prev = _context12.next) {
                         case 0:
                             current_step_error = false;
                             this_btn = $(this);
@@ -27631,12 +27645,12 @@ if ($('body').hasClass('logged-in')) {
                             //if steping into one of the next buttons, NOT PREVIOUS
 
                             if (!(this_btn.index() > $('.contract-creation-steps-container button[data-step="' + create_contract_form.find('.next').attr('data-current-step') + '"]').index())) {
-                                _context11.next = 30;
+                                _context12.next = 30;
                                 break;
                             }
 
                             if (!(this_btn_step == 'two')) {
-                                _context11.next = 15;
+                                _context12.next = 15;
                                 break;
                             }
 
@@ -27649,15 +27663,15 @@ if ($('body').hasClass('logged-in')) {
                             }
 
                             if (!innerAddressCheck(dentist_address)) {
-                                _context11.next = 11;
+                                _context12.next = 11;
                                 break;
                             }
 
-                            _context11.next = 10;
+                            _context12.next = 10;
                             return validateUserAddress(dentist_address, $('.step.one #dcn_address'));
 
                         case 10:
-                            validate_dentist_address = _context11.sent;
+                            validate_dentist_address = _context12.sent;
 
                         case 11:
 
@@ -27666,7 +27680,7 @@ if ($('body').hasClass('logged-in')) {
                             }
 
                             validate_steps_arr = ['one'];
-                            _context11.next = 16;
+                            _context12.next = 16;
                             break;
 
                         case 15:
@@ -27692,7 +27706,7 @@ if ($('body').hasClass('logged-in')) {
                             }
 
                             if (current_step_error) {
-                                _context11.next = 28;
+                                _context12.next = 28;
                                 break;
                             }
 
@@ -27705,24 +27719,24 @@ if ($('body').hasClass('logged-in')) {
                                 create_contract_form.find('.next').html('SIGN CONTRACT');
                             }
 
-                            _context11.t0 = create_contract_form.find('.next').attr('data-current-step');
-                            _context11.next = _context11.t0 === 'one' ? 22 : _context11.t0 === 'two' ? 24 : _context11.t0 === 'three' ? 26 : 28;
+                            _context12.t0 = create_contract_form.find('.next').attr('data-current-step');
+                            _context12.next = _context12.t0 === 'one' ? 22 : _context12.t0 === 'two' ? 24 : _context12.t0 === 'three' ? 26 : 28;
                             break;
 
                         case 22:
                             firstStepPassedSuccessfully(create_contract_form.find('.next'), this_btn_step);
-                            return _context11.abrupt('break', 28);
+                            return _context12.abrupt('break', 28);
 
                         case 24:
                             secondStepPassedSuccessfully(create_contract_form.find('.next'), this_btn_step);
-                            return _context11.abrupt('break', 28);
+                            return _context12.abrupt('break', 28);
 
                         case 26:
                             thirdStepPassedSuccessfully(create_contract_form.find('.next'), this_btn_step);
-                            return _context11.abrupt('break', 28);
+                            return _context12.abrupt('break', 28);
 
                         case 28:
-                            _context11.next = 38;
+                            _context12.next = 38;
                             break;
 
                         case 30:
@@ -27752,10 +27766,10 @@ if ($('body').hasClass('logged-in')) {
 
                         case 38:
                         case 'end':
-                            return _context11.stop();
+                            return _context12.stop();
                     }
                 }
-            }, _callee11, this);
+            }, _callee12, this);
         })));$('.step.three [name="general-dentistry[]"]').on('change', function () {
             var suggested_price;
             var checked_services = $('.step.three [name="general-dentistry[]"]:checked');
@@ -27790,39 +27804,39 @@ if ($('body').hasClass('logged-in')) {
         });
 
         //on button NEXT click which is below the contract, it's playing with the steps navigation above the contract
-        create_contract_form.find('.next').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee12() {
+        create_contract_form.find('.next').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee13() {
             var this_btn;
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee12$(_context12) {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee13$(_context13) {
                 while (1) {
-                    switch (_context12.prev = _context12.next) {
+                    switch (_context13.prev = _context13.next) {
                         case 0:
                             this_btn = $(this);
-                            _context12.t0 = $('.contract-creation-steps-container button.active').attr('data-step');
-                            _context12.next = _context12.t0 === 'one' ? 4 : _context12.t0 === 'two' ? 6 : _context12.t0 === 'three' ? 8 : _context12.t0 === 'four' ? 10 : 12;
+                            _context13.t0 = $('.contract-creation-steps-container button.active').attr('data-step');
+                            _context13.next = _context13.t0 === 'one' ? 4 : _context13.t0 === 'two' ? 6 : _context13.t0 === 'three' ? 8 : _context13.t0 === 'four' ? 10 : 12;
                             break;
 
                         case 4:
                             $('.contract-creation-steps-container button[data-step="two"]').click();
-                            return _context12.abrupt('break', 12);
+                            return _context13.abrupt('break', 12);
 
                         case 6:
                             $('.contract-creation-steps-container button[data-step="three"]').click();
-                            return _context12.abrupt('break', 12);
+                            return _context13.abrupt('break', 12);
 
                         case 8:
                             $('.contract-creation-steps-container button[data-step="four"]').click();
-                            return _context12.abrupt('break', 12);
+                            return _context13.abrupt('break', 12);
 
                         case 10:
                             create_contract_form.submit();
-                            return _context12.abrupt('break', 12);
+                            return _context13.abrupt('break', 12);
 
                         case 12:
                         case 'end':
-                            return _context12.stop();
+                            return _context13.stop();
                     }
                 }
-            }, _callee12, this);
+            }, _callee13, this);
         })));
     } else if ($('body').hasClass('contract-proposal')) {
         if ($('.terms-and-conditions-long-list').length) {
@@ -27876,11 +27890,11 @@ if ($('body').hasClass('logged-in')) {
             cancelContractEventInit();
 
             $('form#dentist-update-and-sign-contract').on('submit', function () {
-                var _ref13 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee13(event) {
+                var _ref14 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee14(event) {
                     var this_form_plain, this_form, fields, form_errors, i, len, validate_patient_address, patient_address;
-                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee13$(_context13) {
+                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee14$(_context14) {
                         while (1) {
-                            switch (_context13.prev = _context13.next) {
+                            switch (_context14.prev = _context14.next) {
                                 case 0:
                                     event.preventDefault();
                                     this_form_plain = this;
@@ -27889,12 +27903,12 @@ if ($('body').hasClass('logged-in')) {
                                     form_errors = false;
 
                                     if (!($('.contract-proposal.section.module').attr('data-expired') != undefined)) {
-                                        _context13.next = 8;
+                                        _context14.next = 8;
                                         break;
                                     }
 
                                     basic.showAlert('This contract proposal has expired.', '', true);
-                                    return _context13.abrupt('return', false);
+                                    return _context14.abrupt('return', false);
 
                                 case 8:
 
@@ -27925,7 +27939,7 @@ if ($('body').hasClass('logged-in')) {
                                     }
 
                                     if (form_errors) {
-                                        _context13.next = 20;
+                                        _context14.next = 20;
                                         break;
                                     }
 
@@ -27938,15 +27952,15 @@ if ($('body').hasClass('logged-in')) {
                                     }
 
                                     if (!innerAddressCheck(patient_address)) {
-                                        _context13.next = 19;
+                                        _context14.next = 19;
                                         break;
                                     }
 
-                                    _context13.next = 18;
+                                    _context14.next = 18;
                                     return validateUserAddress(patient_address, $('.dcn-address-row #dcn_address'));
 
                                 case 18:
-                                    validate_patient_address = _context13.sent;
+                                    validate_patient_address = _context14.sent;
 
                                 case 19:
 
@@ -27980,14 +27994,14 @@ if ($('body').hasClass('logged-in')) {
 
                                 case 21:
                                 case 'end':
-                                    return _context13.stop();
+                                    return _context14.stop();
                             }
                         }
-                    }, _callee13, this);
+                    }, _callee14, this);
                 }));
 
                 return function (_x8) {
-                    return _ref13.apply(this, arguments);
+                    return _ref14.apply(this, arguments);
                 };
             }());
         }
@@ -28017,44 +28031,44 @@ if ($('body').hasClass('logged-in')) {
     }
 
     if ($('.contract-decrypt').length) {
-        $('.contract-decrypt').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee14() {
+        $('.contract-decrypt').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee15() {
             var this_btn, encrypted_pdf_content, render_form, cached_key, decrypted_pdf_response;
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee14$(_context14) {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee15$(_context15) {
                 while (1) {
-                    switch (_context14.prev = _context14.next) {
+                    switch (_context15.prev = _context15.next) {
                         case 0:
                             this_btn = $(this);
-                            _context14.next = 3;
+                            _context15.next = 3;
                             return getEncryptedContractPdfContent(this_btn.attr('data-hash'), this_btn.attr('data-type'));
 
                         case 3:
-                            encrypted_pdf_content = _context14.sent;
+                            encrypted_pdf_content = _context15.sent;
                             render_form = $('form#render-pdf');
 
                             if (!encrypted_pdf_content.success) {
-                                _context14.next = 23;
+                                _context15.next = 23;
                                 break;
                             }
 
                             if (!(localStorage.getItem('current-account') != null)) {
-                                _context14.next = 19;
+                                _context15.next = 19;
                                 break;
                             }
 
                             cached_key = JSON.parse(localStorage.getItem('current-account'));
 
                             if (!(cached_key.type == 'key')) {
-                                _context14.next = 16;
+                                _context15.next = 16;
                                 break;
                             }
 
                             // === CACHED KEY ===
                             console.log('=====cached key=======');
-                            _context14.next = 12;
+                            _context15.next = 12;
                             return getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
 
                         case 12:
-                            decrypted_pdf_response = _context14.sent;
+                            decrypted_pdf_response = _context15.sent;
 
                             if (decrypted_pdf_response.success) {
                                 render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
@@ -28062,7 +28076,7 @@ if ($('body').hasClass('logged-in')) {
                             } else if (decrypted_pdf_response.error) {
                                 basic.showAlert(decrypted_pdf_response.error, '', true);
                             }
-                            _context14.next = 17;
+                            _context15.next = 17;
                             break;
 
                         case 16:
@@ -28114,7 +28128,7 @@ if ($('body').hasClass('logged-in')) {
                             }
 
                         case 17:
-                            _context14.next = 21;
+                            _context15.next = 21;
                             break;
 
                         case 19:
@@ -28122,7 +28136,7 @@ if ($('body').hasClass('logged-in')) {
                             openCacheKeyPopup(encrypted_pdf_content.success);
 
                         case 21:
-                            _context14.next = 24;
+                            _context15.next = 24;
                             break;
 
                         case 23:
@@ -28132,10 +28146,10 @@ if ($('body').hasClass('logged-in')) {
 
                         case 24:
                         case 'end':
-                            return _context14.stop();
+                            return _context15.stop();
                     }
                 }
-            }, _callee14, this);
+            }, _callee15, this);
         })));
     }
 
@@ -28391,13 +28405,13 @@ function bindLoginSigninPopupShow() {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function () {
-                    var _ref15 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee19(response) {
-                        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee19$(_context19) {
+                    var _ref16 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee20(response) {
+                        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee20$(_context20) {
                             while (1) {
-                                switch (_context19.prev = _context19.next) {
+                                switch (_context20.prev = _context20.next) {
                                     case 0:
                                         if (!response.success) {
-                                            _context19.next = 20;
+                                            _context20.next = 20;
                                             break;
                                         }
 
@@ -28435,33 +28449,12 @@ function bindLoginSigninPopupShow() {
                                         });
 
                                         $(document).on('civicCustomBtnClicked', function () {
-                                            var _ref16 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee15(event) {
-                                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee15$(_context15) {
-                                                    while (1) {
-                                                        switch (_context15.prev = _context15.next) {
-                                                            case 0:
-                                                                $('.patient .form-register .step-errors-holder').html('');
-
-                                                            case 1:
-                                                            case 'end':
-                                                                return _context15.stop();
-                                                        }
-                                                    }
-                                                }, _callee15, this);
-                                            }));
-
-                                            return function (_x10) {
-                                                return _ref16.apply(this, arguments);
-                                            };
-                                        }());
-
-                                        $(document).on('civicRead', function () {
                                             var _ref17 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee16(event) {
                                                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee16$(_context16) {
                                                     while (1) {
                                                         switch (_context16.prev = _context16.next) {
                                                             case 0:
-                                                                $('.response-layer').show();
+                                                                $('.patient .form-register .step-errors-holder').html('');
 
                                                             case 1:
                                                             case 'end':
@@ -28471,18 +28464,18 @@ function bindLoginSigninPopupShow() {
                                                 }, _callee16, this);
                                             }));
 
-                                            return function (_x11) {
+                                            return function (_x10) {
                                                 return _ref17.apply(this, arguments);
                                             };
                                         }());
 
-                                        $(document).on('facebookCustomBtnClicked', function () {
+                                        $(document).on('civicRead', function () {
                                             var _ref18 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee17(event) {
                                                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee17$(_context17) {
                                                     while (1) {
                                                         switch (_context17.prev = _context17.next) {
                                                             case 0:
-                                                                $('.patient .form-register .step-errors-holder').html('');
+                                                                $('.response-layer').show();
 
                                                             case 1:
                                                             case 'end':
@@ -28492,18 +28485,18 @@ function bindLoginSigninPopupShow() {
                                                 }, _callee17, this);
                                             }));
 
-                                            return function (_x12) {
+                                            return function (_x11) {
                                                 return _ref18.apply(this, arguments);
                                             };
                                         }());
 
-                                        $(document).on('customCivicFbStopperTriggered', function () {
+                                        $(document).on('facebookCustomBtnClicked', function () {
                                             var _ref19 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee18(event) {
                                                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee18$(_context18) {
                                                     while (1) {
                                                         switch (_context18.prev = _context18.next) {
                                                             case 0:
-                                                                customErrorHandle($('.patient .form-register .step-errors-holder'), 'Please agree with our privacy policy.');
+                                                                $('.patient .form-register .step-errors-holder').html('');
 
                                                             case 1:
                                                             case 'end':
@@ -28513,8 +28506,29 @@ function bindLoginSigninPopupShow() {
                                                 }, _callee18, this);
                                             }));
 
-                                            return function (_x13) {
+                                            return function (_x12) {
                                                 return _ref19.apply(this, arguments);
+                                            };
+                                        }());
+
+                                        $(document).on('customCivicFbStopperTriggered', function () {
+                                            var _ref20 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee19(event) {
+                                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee19$(_context19) {
+                                                    while (1) {
+                                                        switch (_context19.prev = _context19.next) {
+                                                            case 0:
+                                                                customErrorHandle($('.patient .form-register .step-errors-holder'), 'Please agree with our privacy policy.');
+
+                                                            case 1:
+                                                            case 'end':
+                                                                return _context19.stop();
+                                                        }
+                                                    }
+                                                }, _callee19, this);
+                                            }));
+
+                                            return function (_x13) {
+                                                return _ref20.apply(this, arguments);
                                             };
                                         }());
                                         // ====================== /PATIENT LOGIN/SIGNUP LOGIC ======================
@@ -28566,7 +28580,7 @@ function bindLoginSigninPopupShow() {
 
                                         //SECOND STEP INIT LOGIC
                                         //load address script
-                                        _context19.next = 16;
+                                        _context20.next = 16;
                                         return $.getScript('/assets/js/address.js', function () {});
 
                                     case 16:
@@ -28741,14 +28755,14 @@ function bindLoginSigninPopupShow() {
 
                                     case 20:
                                     case 'end':
-                                        return _context19.stop();
+                                        return _context20.stop();
                                 }
                             }
-                        }, _callee19, this);
+                        }, _callee20, this);
                     }));
 
                     function success(_x9) {
-                        return _ref15.apply(this, arguments);
+                        return _ref16.apply(this, arguments);
                     }
 
                     return success;
@@ -28838,11 +28852,11 @@ function initComboboxes() {
 function apiEventsListeners() {
     //login
     $(document).on('successResponseCoreDBApi', function () {
-        var _ref20 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee20(event) {
+        var _ref21 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee21(event) {
             var custom_form_obj;
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee20$(_context20) {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee21$(_context21) {
                 while (1) {
-                    switch (_context20.prev = _context20.next) {
+                    switch (_context21.prev = _context21.next) {
                         case 0:
                             if (event.response_data.token) {
                                 custom_form_obj = {
@@ -28870,14 +28884,14 @@ function apiEventsListeners() {
 
                         case 1:
                         case 'end':
-                            return _context20.stop();
+                            return _context21.stop();
                     }
                 }
-            }, _callee20, this);
+            }, _callee21, this);
         }));
 
         return function (_x14) {
-            return _ref20.apply(this, arguments);
+            return _ref21.apply(this, arguments);
         };
     }());
 
@@ -29351,14 +29365,14 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function () {
-                            var _ref24 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee24(response) {
+                            var _ref25 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee25(response) {
                                 var render_form, decrypted_pdf_response;
-                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee24$(_context24) {
+                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee25$(_context25) {
                                     while (1) {
-                                        switch (_context24.prev = _context24.next) {
+                                        switch (_context25.prev = _context25.next) {
                                             case 0:
                                                 if (!response.success) {
-                                                    _context24.next = 14;
+                                                    _context25.next = 14;
                                                     break;
                                                 }
 
@@ -29372,16 +29386,16 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 }
 
                                                 if (!(render_pdf != null)) {
-                                                    _context24.next = 11;
+                                                    _context25.next = 11;
                                                     break;
                                                 }
 
                                                 render_form = $('form#render-pdf');
-                                                _context24.next = 6;
+                                                _context25.next = 6;
                                                 return getDecryptedPdfContent(encrypted_pdf_content, response.private_key);
 
                                             case 6:
-                                                decrypted_pdf_response = _context24.sent;
+                                                decrypted_pdf_response = _context25.sent;
 
 
                                                 $('.response-layer').hide();
@@ -29392,7 +29406,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 } else if (decrypted_pdf_response.error) {
                                                     basic.showAlert(decrypted_pdf_response.error, '', true);
                                                 }
-                                                _context24.next = 12;
+                                                _context25.next = 12;
                                                 break;
 
                                             case 11:
@@ -29419,7 +29433,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 });
 
                                             case 12:
-                                                _context24.next = 15;
+                                                _context25.next = 15;
                                                 break;
 
                                             case 14:
@@ -29430,14 +29444,14 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
 
                                             case 15:
                                             case 'end':
-                                                return _context24.stop();
+                                                return _context25.stop();
                                         }
                                     }
-                                }, _callee24, this);
+                                }, _callee25, this);
                             }));
 
                             function success(_x17) {
-                                return _ref24.apply(this, arguments);
+                                return _ref25.apply(this, arguments);
                             }
 
                             return success;
@@ -29510,10 +29524,10 @@ function bindTransactionAddressVerify(keystore_file) {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function () {
-                        var _ref25 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee25(response) {
-                            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee25$(_context25) {
+                        var _ref26 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee26(response) {
+                            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee26$(_context26) {
                                 while (1) {
-                                    switch (_context25.prev = _context25.next) {
+                                    switch (_context26.prev = _context26.next) {
                                         case 0:
                                             if (response.success) {
                                                 //checking if the private key is related to the public key saved in the coredb
@@ -29543,14 +29557,14 @@ function bindTransactionAddressVerify(keystore_file) {
 
                                         case 1:
                                         case 'end':
-                                            return _context25.stop();
+                                            return _context26.stop();
                                     }
                                 }
-                            }, _callee25, this);
+                            }, _callee26, this);
                         }));
 
                         function success(_x18) {
-                            return _ref25.apply(this, arguments);
+                            return _ref26.apply(this, arguments);
                         }
 
                         return success;

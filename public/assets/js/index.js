@@ -2,8 +2,8 @@ var {getWeb3, getContractInstance} = require('./helper');
 
 basic.init();
 
-$(document).ready(function() {
-    App.init();
+$(document).ready(async function() {
+    await App.init();
 
     onDocumentReadyPageData();
 
