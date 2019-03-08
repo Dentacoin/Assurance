@@ -1834,15 +1834,18 @@ var App = {
                         case 0:
                             //Assurance STATE
                             App.assurance_state_instance = new App.web3_1_0.eth.Contract(App.assurance_state_abi, App.assurance_state_address);
+                            console.log(App.assurance_state_instance, 'App.assurance_state_instance');
                             //Assurance PROXY
                             App.assurance_proxy_instance = new App.web3_1_0.eth.Contract(App.assurance_proxy_abi, App.assurance_proxy_address);
+                            console.log(App.assurance_proxy_instance, 'App.assurance_proxy_instance');
                             //DentacoinToken
                             App.dentacoin_token_instance = new App.web3_1_0.eth.Contract(App.dentacoin_token_abi, App.dentacoin_token_address);
+                            console.log(App.dentacoin_token_instance, 'App.dentacoin_token_instance');
 
                             //init pages logic
                             pagesDataOnContractInit();
 
-                        case 4:
+                        case 7:
                         case "end":
                             return _context2.stop();
                     }
