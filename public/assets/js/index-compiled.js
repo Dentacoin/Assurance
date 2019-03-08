@@ -27986,9 +27986,7 @@ if ($('body').hasClass('logged-in')) {
                                             basic.showAlert('Please accept the Privacy Policy', '', true);
                                         } else {
                                             $('.contract-response-success-layer').show();
-                                            setTimeout(function () {
-                                                this_form_plain.submit();
-                                            }, 500);
+                                            this_form_plain.submit();
                                         }
                                     }
 
