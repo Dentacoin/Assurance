@@ -4796,7 +4796,7 @@ function convertUsdToDcn(usd_val) {
 function initPopoverTooltips() {
     if ($('.popover-el').length) {
         $('.popover-el').popover({
-            trigger: 'hover',
+            trigger: 'click',
             html: true
         });
     }

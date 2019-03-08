@@ -3415,8 +3415,8 @@ function convertUsdToDcn(usd_val) {
 function initPopoverTooltips() {
     if($('.popover-el').length) {
         $('.popover-el').popover({
-            trigger: 'hover',
-            html: true 
+            trigger: 'click',
+            html: true
         });
     }
 }
