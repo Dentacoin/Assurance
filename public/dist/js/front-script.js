@@ -2894,8 +2894,10 @@ if ($('body').hasClass('logged-in')) {
                                         } else if (!this_form.find('input#privacy-policy').is(':checked')) {
                                             basic.showAlert('Please accept the Privacy Policy', '', true);
                                         } else {
-                                            $('.response-layer').show();
-                                            this_form_plain.submit();
+                                            $('.contract-response-success-layer').show();
+                                            setTimeout(function () {
+                                                this_form_plain.submit();
+                                            }, 500);
                                         }
                                     }
 
