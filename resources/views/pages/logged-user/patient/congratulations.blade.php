@@ -19,7 +19,7 @@
                         <h2 class="fs-30 lato-bold white-color padding-bottom-20">YOUR FIRST PAYMENT IS DUE IN:</h2>
                         <div class="clock"></div>
                         <div class="flip-clock-message"></div>
-                        <div class="fs-20 white-color padding-top-20">You should charge your wallet with <span class="calibri-bold">{{$contract->monthly_premium}} USD in DCN</span> (the monthly premium amount) <span class="calibri-bold">until <span class="converted-date"></span></span>. (one day before the due date)</div>
+                        <div class="fs-20 white-color padding-top-20">You should charge your wallet with <span class="calibri-bold">{{$contract->monthly_premium}} USD in DCN until <span class="converted-date"></span></span>.</div>
                     </div>
                 </div>
             </div>
