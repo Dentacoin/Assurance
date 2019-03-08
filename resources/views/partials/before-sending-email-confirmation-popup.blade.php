@@ -2,7 +2,7 @@
     <div class="text-center fs-40 lato-regular padding-bottom-35"><i class="fa fa-envelope blue-green-color" aria-hidden="true"></i> {{$mail_title}}</div>
     <div class="single-line padding-top-10 padding-bottom-5 calibri-bold"><label>Receiver:</label> {{$receiver}}</div>
     <div class="single-line padding-top-10 padding-bottom-5"><label class="calibri-bold">Subject:</label> {{$mail_subject}}</div>
-    <div class="email-body">{{$mail_body}}</div>
+    <div class="email-body">{!! $mail_body !!}</div>
     <div class="padding-bottom-40">
         Regards,
         <div class="calibri-bold">{{$sender->name}}</div>
