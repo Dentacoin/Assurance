@@ -28122,6 +28122,7 @@ if ($('body').hasClass('logged-in')) {
 
                     var custom_form_obj = {
                         clinic_id: this_select.val().trim(),
+                        redirect: this_select.attr('data-current-route'),
                         _token: $('meta[name="csrf-token"]').attr('content')
                     };
                     $('.before-sending-email-confirmation-popup .send-mail').click(function () {

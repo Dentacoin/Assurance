@@ -69,7 +69,7 @@
             <div class="row">
                 @if(!empty($clinics))
                     <div class="col-xs-12 col-sm-6 col-sm-offset-3 padding-bottom-40">
-                        <select class="combobox custom-input green-arrow-background dropdown-with-clinics">
+                        <select class="combobox custom-input green-arrow-background dropdown-with-clinics" data-current-route="{{Route::current()->getName()}}">
                             <option></option>
                             @foreach($clinics as $clinic)
                                 <option value="{{$clinic->id}}">{{$clinic->name}}</option>
