@@ -1169,6 +1169,7 @@ input[type='file'].hide-input {
     padding-right: 25px !important;
     background-position: center right;
     background-repeat: no-repeat;
+    @include simple_transition(.3s);  
 }
 
 .popover-el {

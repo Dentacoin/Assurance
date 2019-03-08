@@ -73,11 +73,11 @@
                                     <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$contract->patient_email}}</div>
                                 </div>
                                 <div class="single-row fs-0">
-                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0">ID Number:</label>
-                                    <input type="text" maxlength="20" name="patient-id-number" class="right-field required-field calibri-regular fs-18 dark-color inline-block pencil-background"/>
+                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0 cursor-pointer" for="patient-id-number">ID Number:</label>
+                                    <input type="text" maxlength="20" id="patient-id-number" name="patient-id-number" class="right-field required-field calibri-regular fs-18 dark-color inline-block pencil-background"/>
                                 </div>
                                 <div class="single-row fs-0">
-                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 @if(empty($patient->country_id)) padding-top-0 padding-bottom-0 @endif">Country:</label>
+                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 @if(empty($patient->country_id)) padding-top-0 padding-bottom-0 cursor-pointer @endif" @if(empty($patient->country_id)) for="country" @endif >Country:</label>
                                     @if(!empty($patient->country_id))
                                         <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$countries[$patient->country_id - 1]->name}}</div>
                                     @else
@@ -90,12 +90,12 @@
                                     @endif
                                 </div>
                                 <div class="single-row fs-0">
-                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0">Postal Address:</label>
-                                @if(!empty($patient->address))
+                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0 @if(empty($patient->address)) cursor-pointer @endif" @if(empty($patient->address)) for="address" @endif>Postal Address:</label>
+                                    @if(!empty($patient->address))
                                         <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$patient->address}}</div>
                                     @else
                                         <div class="suggester-parent module inline-block">
-                                            <input type="text" name="address" maxlength="250" class="address-suggester calibri-regular fs-18 dark-color pencil-background required-field" autocomplete="off">
+                                            <input type="text" name="address" id="address" maxlength="250" class="address-suggester calibri-regular fs-18 dark-color pencil-background required-field" autocomplete="off">
                                             <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
                                             <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
                                             <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
@@ -103,7 +103,7 @@
                                     @endif
                                 </div>
                                 <div class="single-row fs-0 dcn-address-row">
-                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 @if(empty($patient->dcn_address)) padding-top-0 padding-bottom-0 @endif">Wallet Address:</label>
+                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 @if(empty($patient->dcn_address)) cursor-pointer padding-top-0 padding-bottom-0 @endif" @if(empty($patient->dcn_address)) for="dcn_address" @endif>Wallet Address:</label>
                                     @if(empty($patient->dcn_address))
                                         <input type="text" maxlength="42" id="dcn_address" name="dcn_address" class="right-field required-field calibri-regular fs-18 dark-color inline-block pencil-background"/>
                                     @else

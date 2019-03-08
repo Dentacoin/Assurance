@@ -4950,7 +4950,12 @@ input[type='file'].hide-input {
   background-size: 20px auto;
   padding-right: 25px !important;
   background-position: center right;
-  background-repeat: no-repeat; }
+  background-repeat: no-repeat;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s; }
 
 .popover-el {
   cursor: pointer; }
