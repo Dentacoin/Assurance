@@ -57,8 +57,7 @@ class PatientController extends Controller {
             $clinics = (new APIRequestsController())->getAllClinicsByName();
             foreach($clinics as $clinic) {
                 if(empty($clinic->email)) {
-                    var_dump($clinic->id);
-                    echo "<br><br>=============================<br><br>";
+                    echo $clinic->id . "<br>";
                 }
             }
             die();
