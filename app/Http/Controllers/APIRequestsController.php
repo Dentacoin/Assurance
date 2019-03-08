@@ -256,6 +256,28 @@ class APIRequestsController extends Controller {
         }
     }
 
+    public function checkIfFreeEmail($email) {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_POST => 1,
+            CURLOPT_URL => 'https://api.dentacoin.com/api/check-email',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_POSTFIELDS => array(
+                'email' => $email
+            )
+        ));
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        if(!empty($resp))   {
+            return $resp;
+        }else {
+            return false;
+        }
+    }
+
     public function updateUserData($data) {
         if(isset($data['specialisations'])) {
             $data['specialisations'] = json_encode($data['specialisations']);

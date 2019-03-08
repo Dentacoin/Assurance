@@ -1162,9 +1162,9 @@ if($('body').hasClass('logged-in')) {
                     customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid wallet address.');
                     inner_error = true;
                 } else if(step_fields.eq(i).attr('data-type') == 'website' && !basic.validateUrl(step_fields.eq(i).val().trim())) {
-                    customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid website.');
+                    customCreateContractErrorHandle(step_fields.eq(i), 'Please enter your website URL starting with http:// or https://.');
                     inner_error = true;
-                }else if(step_fields.eq(i).attr('data-type') == 'phone' && !basic.validatePhone(step_fields.eq(i).val().trim())) {
+                } else if(step_fields.eq(i).attr('data-type') == 'phone' && !basic.validatePhone(step_fields.eq(i).val().trim())) {
                     customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid phone.');
                     inner_error = true;
                 }
@@ -1414,10 +1414,7 @@ if($('body').hasClass('logged-in')) {
                 }
 
                 create_contract_form.find('.suggested-price').html(suggested_price);
-                create_contract_form.find('.suggested-price').html(suggested_price);
-                if($('.step.three [name="monthly-premium"]').val().trim() == '') {
-                    $('.step.three [name="monthly-premium"]').val(suggested_price);
-                }
+                create_contract_form.find('.step.three [name="monthly-premium"]').val(suggested_price);
             } else {
                 $('.show-on-services-pick').fadeOut(500);
             }
@@ -1979,7 +1976,7 @@ function bindLoginSigninPopupShow() {
 
                         // ====================== DENTIST LOGIN/SIGNUP LOGIC ======================
 
-                        //login
+                        //DENTIST LOGIN
                         $('form#dentist-login').on('submit', function(event) {
                             //clear prev errors
                             if($('form#dentist-login .error-handle').length) {
@@ -2008,7 +2005,7 @@ function bindLoginSigninPopupShow() {
                             }
                         });
 
-                        //register
+                        //DENTIST REGISTER
                         $('.dentist .form-register .prev-step').click(function() {
                             var current_step = $('.dentist .form-register .step.visible');
                             var current_prev_step = current_step.prev();
@@ -2034,9 +2031,9 @@ function bindLoginSigninPopupShow() {
                         styleAvatarUploadButton('.bootbox.login-signin-popup .dentist .form-register .step.third .avatar .btn-wrapper label');
                         initCaptchaRefreshEvent();
 
-                        $('.dentist .form-register .next-step').click(function() {
+                        //DENTIST REGISTERING FORM
+                        $('.dentist .form-register .next-step').click(async function() {
                             var this_btn = $(this);
-                            var previous_step = this_btn.attr('data-current-step');
 
                             switch(this_btn.attr('data-current-step')) {
                                 case 'first':
@@ -2047,7 +2044,13 @@ function bindLoginSigninPopupShow() {
                                         if(first_step_inputs.eq(i).attr('type') == 'email' && !basic.validateEmail(first_step_inputs.eq(i).val().trim())) {
                                             customErrorHandle(first_step_inputs.eq(i).parent(), 'Please use valid email address.');
                                             errors = true;
-                                        } else if(first_step_inputs.eq(i).attr('type') == 'password' && first_step_inputs.eq(i).val().length < 6) {
+                                        } else if(first_step_inputs.eq(i).attr('type') == 'email' && basic.validateEmail(first_step_inputs.eq(i).val().trim())) {
+                                            //coredb check if email is free
+                                            var check_email_if_free_response = await checkIfFreeEmail(first_step_inputs.eq(i).val().trim());
+                                            console.log(check_email_if_free_response, 'check_email_if_free_response');
+                                        }
+
+                                        if(first_step_inputs.eq(i).attr('type') == 'password' && first_step_inputs.eq(i).val().length < 6) {
                                             customErrorHandle(first_step_inputs.eq(i).parent(), 'Passwords must be min length 6.');
                                             errors = true;
                                         }
@@ -2062,6 +2065,8 @@ function bindLoginSigninPopupShow() {
                                         customErrorHandle($('.step.first .custom-input.repeat-password').parent(), 'Both passwords don\'t match.');
                                         errors = true;
                                     }
+
+
 
                                     if(!errors) {
                                         $('.dentist .form-register .step').removeClass('visible');
@@ -3352,6 +3357,20 @@ async function getCurrentUserData() {
         type: 'GET',
         url: '/get-current-user-data',
         dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+}
+
+async function checkIfFreeEmail(email) {
+    return await $.ajax({
+        type: 'POST',
+        url: '/check-email',
+        dataType: 'json',
+        data: {
+            email: email
+        },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }

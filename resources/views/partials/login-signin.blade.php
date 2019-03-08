@@ -154,6 +154,7 @@
                         <div class="inline-block-top avatar module upload-file">
                             <input type="file" class="visualise-image inputfile" id="custom-upload-avatar" name="image" accept=".jpg,.png,.jpeg,.svg,.bmp"/>
                             <div class="btn-wrapper"></div>
+                            <div class="fs-14 padding-top-5 italic">Max size: 2MB</div>
                         </div>
                         <div class="inline-block-top specializations">
                             <h4>Please select your specializations:</h4>
@@ -173,7 +174,7 @@
                         <div class="search-for-clinic padding-top-15 padding-bottom-15"></div>
                         <div class="fs-0 captcha-parent padding-bottom-15">
                             <div class="inline-block fs-14 width-50 padding-right-10">
-                                <input type="text" name="captcha" id="register-captcha" placeholder="Enter captcha" maxlength="5" class="custom-input"/>
+                                <input type="text" name="captcha" id="register-captcha" placeholder="Calculate captcha" maxlength="5" class="custom-input"/>
                             </div>
                             <div class="inline-block width-50">
                                 <div class="captcha-container flex text-center">

@@ -29,7 +29,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::get('/wallet-instructions', 'WalletInstructionsController@getView')->name('wallet-instructions');
 
     Route::get('/test', function() {
-        return (new \App\Http\Controllers\PatientController())->renderTestContract();
+        var_dump((new \App\Http\Controllers\APIRequestsController())->checkIfFreeEmail('abasdso@abv.bg'));
         //var_dump((new \App\Http\Controllers\PatientController())->renderTestPdf());
         //var_dump((new \App\Http\Controllers\Controller())->fillCountriesFromCsv());
         //var_dump((new \App\Http\Controllers\Controller())->testZipCreation());
@@ -53,6 +53,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::post('/get-login-signin', 'UserController@getLoginSigninHtml')->name('get-login-signin');
 
     Route::post('/get-all-clinics', 'Controller@getAllClinicsResponse')->name('get-all-clinics');
+
+    Route::post('/check-email', 'UserController@checkEmail')->name('check-email');
     //======================================= /AJAX ========================================
 
     Route::group(['prefix' => 'patient', 'middleware' => 'HandlePatientSession'], function () {

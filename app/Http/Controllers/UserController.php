@@ -14,24 +14,6 @@ class UserController extends Controller {
         return new UserController();
     }
 
-    protected function getLoginSigninHtml(Request $request) {
-        //passing the countries
-        $countries = (new APIRequestsController())->getAllCountries();
-        $clinics = (new APIRequestsController())->getAllClinicsByName();
-        $params = ['countries' => $countries, 'clinics' => $clinics, 'current_user_country_code' => mb_strtolower(trim(file_get_contents("http://ipinfo.io/" . $_SERVER['REMOTE_ADDR'] .  "/country")))];
-        if(!empty($request->input('route')) && !empty($request->input('slug'))) {
-            $params['route'] = $request->input('route');
-            $params['slug'] = $request->input('slug');
-        }
-
-        if(!empty($request->input('side'))) {
-            $params['side'] = $request->input('side');
-        }
-        $view = view('partials/login-signin', $params);
-        $view = $view->render();
-        return response()->json(['success' => $view]);
-    }
-
     protected function getEditAccountView()   {
         return view('pages/logged-user/edit-account', ['countries' => (new APIRequestsController())->getAllCountries(), 'user_data' => (new APIRequestsController())->getUserData(session('logged_user')['id'])]);
     }
@@ -125,6 +107,32 @@ class UserController extends Controller {
         }
 
         return view('pages/logged-user/my-profile', $view_params);
+    }
+
+    protected function getLoginSigninHtml(Request $request) {
+        //passing the countries
+        $countries = (new APIRequestsController())->getAllCountries();
+        $clinics = (new APIRequestsController())->getAllClinicsByName();
+        $params = ['countries' => $countries, 'clinics' => $clinics, 'current_user_country_code' => mb_strtolower(trim(file_get_contents("http://ipinfo.io/" . $_SERVER['REMOTE_ADDR'] .  "/country")))];
+        if(!empty($request->input('route')) && !empty($request->input('slug'))) {
+            $params['route'] = $request->input('route');
+            $params['slug'] = $request->input('slug');
+        }
+
+        if(!empty($request->input('side'))) {
+            $params['side'] = $request->input('side');
+        }
+        $view = view('partials/login-signin', $params);
+        $view = $view->render();
+        return response()->json(['success' => $view]);
+    }
+
+    function checkEmail(Request $request) {
+        $data = $this->clearPostData($request->input());
+        $api_response = (new APIRequestsController())->checkIfFreeEmail($data['email']);
+
+        var_dump($api_response);
+        die();
     }
 
     public function checkSession()   {

@@ -800,32 +800,32 @@ var initPagesLogic = function () {
 }();
 
 var onDocumentReadyPageData = function () {
-    var _ref22 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee24() {
+    var _ref23 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee25() {
         var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_signed, remainder, next_payment_timestamp, next_payment_timestamp_date_obj;
-        return _regeneratorRuntime.wrap(function _callee24$(_context24) {
+        return _regeneratorRuntime.wrap(function _callee25$(_context25) {
             while (1) {
-                switch (_context24.prev = _context24.next) {
+                switch (_context25.prev = _context25.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context24.next = 85;
+                            _context25.next = 85;
                             break;
                         }
 
                         if (!$('body').hasClass('congratulations')) {
-                            _context24.next = 14;
+                            _context25.next = 14;
                             break;
                         }
 
                         console.log('congratulations);');
-                        _context24.t0 = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
-                        _context24.t1 = parseInt;
-                        _context24.next = 7;
+                        _context25.t0 = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
+                        _context25.t1 = parseInt;
+                        _context25.next = 7;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 7:
-                        _context24.t2 = _context24.sent;
-                        _context24.t3 = (0, _context24.t1)(_context24.t2);
-                        next_transfer_timestamp = _context24.t0 + _context24.t3;
+                        _context25.t2 = _context25.sent;
+                        _context25.t3 = (0, _context25.t1)(_context25.t2);
+                        next_transfer_timestamp = _context25.t0 + _context25.t3;
 
                         if ($('.converted-date').length > 0) {
                             date_obj = new Date(next_transfer_timestamp * 1000);
@@ -833,25 +833,25 @@ var onDocumentReadyPageData = function () {
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context24.next = 83;
+                        _context25.next = 83;
                         break;
 
                     case 14:
                         if (!$('body').hasClass('my-contracts')) {
-                            _context24.next = 26;
+                            _context25.next = 26;
                             break;
                         }
 
                         initDataTable();
 
                         table_trs_with_timestamp = $('.table-container table tr[data-timestamp-signed]');
-                        _context24.t4 = parseInt;
-                        _context24.next = 20;
+                        _context25.t4 = parseInt;
+                        _context25.next = 20;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 20:
-                        _context24.t5 = _context24.sent;
-                        smart_contract_withdraw_period = (0, _context24.t4)(_context24.t5);
+                        _context25.t5 = _context25.sent;
+                        smart_contract_withdraw_period = (0, _context25.t4)(_context25.t5);
                         now_timestamp = Math.round(new Date().getTime() / 1000);
 
 
@@ -869,93 +869,93 @@ var onDocumentReadyPageData = function () {
 
                             table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">' + next_payment_timestamp + '</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
-                        _context24.next = 83;
+                        _context25.next = 83;
                         break;
 
                     case 26:
                         if (!$('body').hasClass('contract-proposal')) {
-                            _context24.next = 43;
+                            _context25.next = 43;
                             break;
                         }
 
-                        _context24.next = 29;
+                        _context25.next = 29;
                         return $.getScript('/assets/js/address.js', function () {});
 
                     case 29:
                         if (!($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined)) {
-                            _context24.next = 41;
+                            _context25.next = 41;
                             break;
                         }
 
-                        _context24.t6 = Date;
-                        _context24.t7 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
-                        _context24.t8 = parseInt;
-                        _context24.next = 35;
+                        _context25.t6 = Date;
+                        _context25.t7 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
+                        _context25.t8 = parseInt;
+                        _context25.next = 35;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 35:
-                        _context24.t9 = _context24.sent;
-                        _context24.t10 = (0, _context24.t8)(_context24.t9);
-                        _context24.t11 = _context24.t7 + _context24.t10;
-                        _context24.t12 = _context24.t11 * 1000;
-                        date_obj = new _context24.t6(_context24.t12);
+                        _context25.t9 = _context25.sent;
+                        _context25.t10 = (0, _context25.t8)(_context25.t9);
+                        _context25.t11 = _context25.t7 + _context25.t10;
+                        _context25.t12 = _context25.t11 * 1000;
+                        date_obj = new _context25.t6(_context25.t12);
 
                         $('.active-until').html(dateObjToFormattedDate(date_obj));
 
                     case 41:
-                        _context24.next = 83;
+                        _context25.next = 83;
                         break;
 
                     case 43:
                         if (!$('body').hasClass('edit-account')) {
-                            _context24.next = 48;
+                            _context25.next = 48;
                             break;
                         }
 
-                        _context24.next = 46;
+                        _context25.next = 46;
                         return $.getScript('/assets/js/address.js', function () {});
 
                     case 46:
-                        _context24.next = 83;
+                        _context25.next = 83;
                         break;
 
                     case 48:
                         if (!$('body').hasClass('my-profile')) {
-                            _context24.next = 55;
+                            _context25.next = 55;
                             break;
                         }
 
-                        _context24.next = 51;
+                        _context25.next = 51;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic-kyc.js', function () {});
 
                     case 51:
 
                         $(document).on('civicRead', function () {
-                            var _ref23 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22(event) {
-                                return _regeneratorRuntime.wrap(function _callee22$(_context22) {
+                            var _ref24 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee23(event) {
+                                return _regeneratorRuntime.wrap(function _callee23$(_context23) {
                                     while (1) {
-                                        switch (_context22.prev = _context22.next) {
+                                        switch (_context23.prev = _context23.next) {
                                             case 0:
                                                 $('.response-layer').show();
 
                                             case 1:
                                             case "end":
-                                                return _context22.stop();
+                                                return _context23.stop();
                                         }
                                     }
-                                }, _callee22, this);
+                                }, _callee23, this);
                             }));
 
                             return function (_x15) {
-                                return _ref23.apply(this, arguments);
+                                return _ref24.apply(this, arguments);
                             };
                         }());
 
                         $(document).on('receivedKYCCivicToken', function () {
-                            var _ref24 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee23(event) {
-                                return _regeneratorRuntime.wrap(function _callee23$(_context23) {
+                            var _ref25 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee24(event) {
+                                return _regeneratorRuntime.wrap(function _callee24$(_context24) {
                                     while (1) {
-                                        switch (_context23.prev = _context23.next) {
+                                        switch (_context24.prev = _context24.next) {
                                             case 0:
                                                 if (event.response_data) {
                                                     $.ajax({
@@ -998,65 +998,65 @@ var onDocumentReadyPageData = function () {
 
                                             case 1:
                                             case "end":
-                                                return _context23.stop();
+                                                return _context24.stop();
                                         }
                                     }
-                                }, _callee23, this);
+                                }, _callee24, this);
                             }));
 
                             return function (_x16) {
-                                return _ref24.apply(this, arguments);
+                                return _ref25.apply(this, arguments);
                             };
                         }());
-                        _context24.next = 83;
+                        _context25.next = 83;
                         break;
 
                     case 55:
                         if (!$('body').hasClass('dentist-contract-view')) {
-                            _context24.next = 83;
+                            _context25.next = 83;
                             break;
                         }
 
                         if (!($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval'))) {
-                            _context24.next = 73;
+                            _context25.next = 73;
                             break;
                         }
 
-                        _context24.t13 = $('.first-payment');
-                        _context24.t14 = dateObjToFormattedDate;
-                        _context24.t15 = Date;
-                        _context24.t16 = parseInt($('.single-contract-view-section').attr('data-created-at'));
-                        _context24.t17 = parseInt;
-                        _context24.next = 64;
+                        _context25.t13 = $('.first-payment');
+                        _context25.t14 = dateObjToFormattedDate;
+                        _context25.t15 = Date;
+                        _context25.t16 = parseInt($('.single-contract-view-section').attr('data-created-at'));
+                        _context25.t17 = parseInt;
+                        _context25.next = 64;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 64:
-                        _context24.t18 = _context24.sent;
-                        _context24.t19 = (0, _context24.t17)(_context24.t18);
-                        _context24.t20 = _context24.t16 + _context24.t19;
-                        _context24.t21 = _context24.t20 * 1000;
-                        _context24.t22 = new _context24.t15(_context24.t21);
-                        _context24.t23 = (0, _context24.t14)(_context24.t22);
+                        _context25.t18 = _context25.sent;
+                        _context25.t19 = (0, _context25.t17)(_context25.t18);
+                        _context25.t20 = _context25.t16 + _context25.t19;
+                        _context25.t21 = _context25.t20 * 1000;
+                        _context25.t22 = new _context25.t15(_context25.t21);
+                        _context25.t23 = (0, _context25.t14)(_context25.t22);
 
-                        _context24.t13.html.call(_context24.t13, _context24.t23);
+                        _context25.t13.html.call(_context25.t13, _context25.t23);
 
-                        _context24.next = 83;
+                        _context25.next = 83;
                         break;
 
                     case 73:
                         if (!$('.single-contract-view-section').hasClass('active')) {
-                            _context24.next = 83;
+                            _context25.next = 83;
                             break;
                         }
 
                         now_timestamp = Math.round(new Date().getTime() / 1000);
-                        _context24.t24 = parseInt;
-                        _context24.next = 78;
+                        _context25.t24 = parseInt;
+                        _context25.next = 78;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 78:
-                        _context24.t25 = _context24.sent;
-                        smart_contract_withdraw_period = (0, _context24.t24)(_context24.t25);
+                        _context25.t25 = _context25.sent;
+                        smart_contract_withdraw_period = (0, _context25.t24)(_context25.t25);
                         time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-timestamp-signed'));
 
 
@@ -1072,38 +1072,38 @@ var onDocumentReadyPageData = function () {
                         $('.single-contract-view-section .row-with-bottom-squares .next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
 
                     case 83:
-                        _context24.next = 89;
+                        _context25.next = 89;
                         break;
 
                     case 85:
-                        _context24.next = 87;
+                        _context25.next = 87;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic.js', function () {});
 
                     case 87:
-                        _context24.next = 89;
+                        _context25.next = 89;
                         return $.getScript('//dentacoin.com/assets/libs/facebook-login/facebook.js', function () {});
 
                     case 89:
                     case "end":
-                        return _context24.stop();
+                        return _context25.stop();
                 }
             }
-        }, _callee24, this);
+        }, _callee25, this);
     }));
 
     return function onDocumentReadyPageData() {
-        return _ref22.apply(this, arguments);
+        return _ref23.apply(this, arguments);
     };
 }();
 
 var validateUserAddress = function () {
-    var _ref27 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee27(user_address, value_element) {
+    var _ref28 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee28(user_address, value_element) {
         var error, check_public_key_ajax_result;
-        return _regeneratorRuntime.wrap(function _callee27$(_context27) {
+        return _regeneratorRuntime.wrap(function _callee28$(_context28) {
             while (1) {
-                switch (_context27.prev = _context27.next) {
+                switch (_context28.prev = _context28.next) {
                     case 0:
-                        _context27.next = 2;
+                        _context28.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/check-public-key',
@@ -1117,7 +1117,7 @@ var validateUserAddress = function () {
                         });
 
                     case 2:
-                        check_public_key_ajax_result = _context27.sent;
+                        check_public_key_ajax_result = _context28.sent;
 
 
                         if (check_public_key_ajax_result.success) {
@@ -1136,28 +1136,28 @@ var validateUserAddress = function () {
                                 error = true;
                             }
                         }
-                        return _context27.abrupt("return", error);
+                        return _context28.abrupt("return", error);
 
                     case 5:
                     case "end":
-                        return _context27.stop();
+                        return _context28.stop();
                 }
             }
-        }, _callee27, this);
+        }, _callee28, this);
     }));
 
     return function validateUserAddress(_x19, _x20) {
-        return _ref27.apply(this, arguments);
+        return _ref28.apply(this, arguments);
     };
 }();
 
 var getEncryptedContractPdfContent = function () {
-    var _ref28 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee28(hash, type) {
-        return _regeneratorRuntime.wrap(function _callee28$(_context28) {
+    var _ref29 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee29(hash, type) {
+        return _regeneratorRuntime.wrap(function _callee29$(_context29) {
             while (1) {
-                switch (_context28.prev = _context28.next) {
+                switch (_context29.prev = _context29.next) {
                     case 0:
-                        _context28.next = 2;
+                        _context29.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-contract',
@@ -1172,38 +1172,6 @@ var getEncryptedContractPdfContent = function () {
                         });
 
                     case 2:
-                        return _context28.abrupt("return", _context28.sent);
-
-                    case 3:
-                    case "end":
-                        return _context28.stop();
-                }
-            }
-        }, _callee28, this);
-    }));
-
-    return function getEncryptedContractPdfContent(_x21, _x22) {
-        return _ref28.apply(this, arguments);
-    };
-}();
-
-var getCurrentUserData = function () {
-    var _ref29 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee29() {
-        return _regeneratorRuntime.wrap(function _callee29$(_context29) {
-            while (1) {
-                switch (_context29.prev = _context29.next) {
-                    case 0:
-                        _context29.next = 2;
-                        return $.ajax({
-                            type: 'GET',
-                            url: '/get-current-user-data',
-                            dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
                         return _context29.abrupt("return", _context29.sent);
 
                     case 3:
@@ -1214,25 +1182,22 @@ var getCurrentUserData = function () {
         }, _callee29, this);
     }));
 
-    return function getCurrentUserData() {
+    return function getEncryptedContractPdfContent(_x21, _x22) {
         return _ref29.apply(this, arguments);
     };
 }();
 
-var getDecryptedPrivateKey = function () {
-    var _ref30 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee30(key) {
+var getCurrentUserData = function () {
+    var _ref30 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee30() {
         return _regeneratorRuntime.wrap(function _callee30$(_context30) {
             while (1) {
                 switch (_context30.prev = _context30.next) {
                     case 0:
                         _context30.next = 2;
                         return $.ajax({
-                            type: 'POST',
-                            url: '/assurance-decrypt-private-key',
+                            type: 'GET',
+                            url: '/get-current-user-data',
                             dataType: 'json',
-                            data: {
-                                private_key: key
-                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
@@ -1249,13 +1214,13 @@ var getDecryptedPrivateKey = function () {
         }, _callee30, this);
     }));
 
-    return function getDecryptedPrivateKey(_x23) {
+    return function getCurrentUserData() {
         return _ref30.apply(this, arguments);
     };
 }();
 
-var getDecryptedKeystoreFile = function () {
-    var _ref31 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee31(keystore, password) {
+var checkIfFreeEmail = function () {
+    var _ref31 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee31(email) {
         return _regeneratorRuntime.wrap(function _callee31$(_context31) {
             while (1) {
                 switch (_context31.prev = _context31.next) {
@@ -1263,11 +1228,10 @@ var getDecryptedKeystoreFile = function () {
                         _context31.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-pk',
+                            url: '/check-email',
                             dataType: 'json',
                             data: {
-                                keystore: keystore,
-                                password: password
+                                email: email
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1285,13 +1249,13 @@ var getDecryptedKeystoreFile = function () {
         }, _callee31, this);
     }));
 
-    return function getDecryptedKeystoreFile(_x24, _x25) {
+    return function checkIfFreeEmail(_x23) {
         return _ref31.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContent = function () {
-    var _ref32 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee32(encrypted_html, key) {
+var getDecryptedPrivateKey = function () {
+    var _ref32 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee32(key) {
         return _regeneratorRuntime.wrap(function _callee32$(_context32) {
             while (1) {
                 switch (_context32.prev = _context32.next) {
@@ -1299,14 +1263,13 @@ var getDecryptedPdfContent = function () {
                         _context32.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data',
+                            url: '/assurance-decrypt-private-key',
                             dataType: 'json',
+                            data: {
+                                private_key: key
+                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
                             }
                         });
 
@@ -1321,8 +1284,80 @@ var getDecryptedPdfContent = function () {
         }, _callee32, this);
     }));
 
-    return function getDecryptedPdfContent(_x26, _x27) {
+    return function getDecryptedPrivateKey(_x24) {
         return _ref32.apply(this, arguments);
+    };
+}();
+
+var getDecryptedKeystoreFile = function () {
+    var _ref33 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee33(keystore, password) {
+        return _regeneratorRuntime.wrap(function _callee33$(_context33) {
+            while (1) {
+                switch (_context33.prev = _context33.next) {
+                    case 0:
+                        _context33.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-pk',
+                            dataType: 'json',
+                            data: {
+                                keystore: keystore,
+                                password: password
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                    case 2:
+                        return _context33.abrupt("return", _context33.sent);
+
+                    case 3:
+                    case "end":
+                        return _context33.stop();
+                }
+            }
+        }, _callee33, this);
+    }));
+
+    return function getDecryptedKeystoreFile(_x25, _x26) {
+        return _ref33.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContent = function () {
+    var _ref34 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee34(encrypted_html, key) {
+        return _regeneratorRuntime.wrap(function _callee34$(_context34) {
+            while (1) {
+                switch (_context34.prev = _context34.next) {
+                    case 0:
+                        _context34.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context34.abrupt("return", _context34.sent);
+
+                    case 3:
+                    case "end":
+                        return _context34.stop();
+                }
+            }
+        }, _callee34, this);
+    }));
+
+    return function getDecryptedPdfContent(_x27, _x28) {
+        return _ref34.apply(this, arguments);
     };
 }();
 
@@ -2417,7 +2452,7 @@ if ($('body').hasClass('logged-in')) {
                     customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid wallet address.');
                     inner_error = true;
                 } else if (step_fields.eq(i).attr('data-type') == 'website' && !basic.validateUrl(step_fields.eq(i).val().trim())) {
-                    customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid website.');
+                    customCreateContractErrorHandle(step_fields.eq(i), 'Please enter your website URL starting with http:// or https://.');
                     inner_error = true;
                 } else if (step_fields.eq(i).attr('data-type') == 'phone' && !basic.validatePhone(step_fields.eq(i).val().trim())) {
                     customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid phone.');
@@ -2736,10 +2771,7 @@ if ($('body').hasClass('logged-in')) {
                 }
 
                 create_contract_form.find('.suggested-price').html(suggested_price);
-                create_contract_form.find('.suggested-price').html(suggested_price);
-                if ($('.step.three [name="monthly-premium"]').val().trim() == '') {
-                    $('.step.three [name="monthly-premium"]').val(suggested_price);
-                }
+                create_contract_form.find('.step.three [name="monthly-premium"]').val(suggested_price);
             } else {
                 $('.show-on-services-pick').fadeOut(500);
             }
@@ -3350,13 +3382,13 @@ function bindLoginSigninPopupShow() {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function () {
-                    var _ref16 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee20(response) {
-                        return _regeneratorRuntime.wrap(function _callee20$(_context20) {
+                    var _ref16 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee21(response) {
+                        return _regeneratorRuntime.wrap(function _callee21$(_context21) {
                             while (1) {
-                                switch (_context20.prev = _context20.next) {
+                                switch (_context21.prev = _context21.next) {
                                     case 0:
                                         if (!response.success) {
-                                            _context20.next = 20;
+                                            _context21.next = 20;
                                             break;
                                         }
 
@@ -3480,7 +3512,7 @@ function bindLoginSigninPopupShow() {
 
                                         // ====================== DENTIST LOGIN/SIGNUP LOGIC ======================
 
-                                        //login
+                                        //DENTIST LOGIN
                                         $('form#dentist-login').on('submit', function (event) {
                                             //clear prev errors
                                             if ($('form#dentist-login .error-handle').length) {
@@ -3509,7 +3541,7 @@ function bindLoginSigninPopupShow() {
                                             }
                                         });
 
-                                        //register
+                                        //DENTIST REGISTER
                                         $('.dentist .form-register .prev-step').click(function () {
                                             var current_step = $('.dentist .form-register .step.visible');
                                             var current_prev_step = current_step.prev();
@@ -3525,7 +3557,7 @@ function bindLoginSigninPopupShow() {
 
                                         //SECOND STEP INIT LOGIC
                                         //load address script
-                                        _context20.next = 16;
+                                        _context21.next = 16;
                                         return $.getScript('/assets/js/address.js', function () {});
 
                                     case 16:
@@ -3538,172 +3570,226 @@ function bindLoginSigninPopupShow() {
                                         styleAvatarUploadButton('.bootbox.login-signin-popup .dentist .form-register .step.third .avatar .btn-wrapper label');
                                         initCaptchaRefreshEvent();
 
-                                        $('.dentist .form-register .next-step').click(function () {
-                                            var this_btn = $(this);
-                                            var previous_step = this_btn.attr('data-current-step');
+                                        //DENTIST REGISTERING FORM
+                                        $('.dentist .form-register .next-step').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee20() {
+                                            var this_btn, first_step_inputs, errors, i, len, check_email_if_free_response, second_step_inputs;
+                                            return _regeneratorRuntime.wrap(function _callee20$(_context20) {
+                                                while (1) {
+                                                    switch (_context20.prev = _context20.next) {
+                                                        case 0:
+                                                            this_btn = $(this);
+                                                            _context20.t0 = this_btn.attr('data-current-step');
+                                                            _context20.next = _context20.t0 === 'first' ? 4 : _context20.t0 === 'second' ? 27 : _context20.t0 === 'third' ? 35 : 43;
+                                                            break;
 
-                                            switch (this_btn.attr('data-current-step')) {
-                                                case 'first':
-                                                    var first_step_inputs = $('.dentist .form-register .step.first .custom-input');
-                                                    var errors = false;
-                                                    $('.dentist .form-register .step.first').parent().find('.error-handle').remove();
-                                                    for (var i = 0, len = first_step_inputs.length; i < len; i += 1) {
-                                                        if (first_step_inputs.eq(i).attr('type') == 'email' && !basic.validateEmail(first_step_inputs.eq(i).val().trim())) {
+                                                        case 4:
+                                                            first_step_inputs = $('.dentist .form-register .step.first .custom-input');
+                                                            errors = false;
+
+                                                            $('.dentist .form-register .step.first').parent().find('.error-handle').remove();
+                                                            i = 0, len = first_step_inputs.length;
+
+                                                        case 8:
+                                                            if (!(i < len)) {
+                                                                _context20.next = 24;
+                                                                break;
+                                                            }
+
+                                                            if (!(first_step_inputs.eq(i).attr('type') == 'email' && !basic.validateEmail(first_step_inputs.eq(i).val().trim()))) {
+                                                                _context20.next = 14;
+                                                                break;
+                                                            }
+
                                                             customErrorHandle(first_step_inputs.eq(i).parent(), 'Please use valid email address.');
                                                             errors = true;
-                                                        } else if (first_step_inputs.eq(i).attr('type') == 'password' && first_step_inputs.eq(i).val().length < 6) {
-                                                            customErrorHandle(first_step_inputs.eq(i).parent(), 'Passwords must be min length 6.');
-                                                            errors = true;
-                                                        }
+                                                            _context20.next = 19;
+                                                            break;
 
-                                                        if (first_step_inputs.eq(i).val().trim() == '') {
-                                                            customErrorHandle(first_step_inputs.eq(i).parent(), 'This field is required.');
-                                                            errors = true;
-                                                        }
-                                                    }
-
-                                                    if ($('.dentist .form-register .step.first .custom-input.password').val().trim() != $('.step.first .custom-input.repeat-password').val().trim()) {
-                                                        customErrorHandle($('.step.first .custom-input.repeat-password').parent(), 'Both passwords don\'t match.');
-                                                        errors = true;
-                                                    }
-
-                                                    if (!errors) {
-                                                        $('.dentist .form-register .step').removeClass('visible');
-                                                        $('.dentist .form-register .step.second').addClass('visible');
-                                                        $('.prev-step').show();
-
-                                                        this_btn.attr('data-current-step', 'second');
-                                                        this_btn.val('Next');
-                                                    }
-                                                    break;
-                                                case 'second':
-                                                    var second_step_inputs = $('.dentist .form-register .step.second .custom-input');
-                                                    var errors = false;
-                                                    $('.dentist .form-register .step.second').find('.error-handle').remove();
-
-                                                    //check custom-input fields
-                                                    for (var i = 0, len = second_step_inputs.length; i < len; i += 1) {
-                                                        if (second_step_inputs.eq(i).is('select')) {
-                                                            //IF SELECT TAG
-                                                            if (second_step_inputs.eq(i).val().trim() == '') {
-                                                                customErrorHandle(second_step_inputs.eq(i).parent(), 'This field is required.');
-                                                                errors = true;
+                                                        case 14:
+                                                            if (!(first_step_inputs.eq(i).attr('type') == 'email' && basic.validateEmail(first_step_inputs.eq(i).val().trim()))) {
+                                                                _context20.next = 19;
+                                                                break;
                                                             }
-                                                        } else if (second_step_inputs.eq(i).is('input')) {
-                                                            //IF INPUT TAG
-                                                            if (second_step_inputs.eq(i).val().trim() == '') {
-                                                                customErrorHandle(second_step_inputs.eq(i).parent(), 'This field is required.');
+
+                                                            _context20.next = 17;
+                                                            return checkIfFreeEmail(first_step_inputs.eq(i).val().trim());
+
+                                                        case 17:
+                                                            check_email_if_free_response = _context20.sent;
+
+                                                            console.log(check_email_if_free_response, 'check_email_if_free_response');
+
+                                                        case 19:
+
+                                                            if (first_step_inputs.eq(i).attr('type') == 'password' && first_step_inputs.eq(i).val().length < 6) {
+                                                                customErrorHandle(first_step_inputs.eq(i).parent(), 'Passwords must be min length 6.');
                                                                 errors = true;
                                                             }
 
-                                                            if (second_step_inputs.eq(i).attr('type') == 'url' && !basic.validateUrl(second_step_inputs.eq(i).val().trim())) {
-                                                                customErrorHandle(second_step_inputs.eq(i).parent(), 'Please use valid website.');
-                                                                errors = true;
-                                                            } else if (second_step_inputs.eq(i).attr('type') == 'number' && !basic.validatePhone(second_step_inputs.eq(i).val().trim())) {
-                                                                customErrorHandle(second_step_inputs.eq(i).parent(), 'Please use valid numbers.');
+                                                            if (first_step_inputs.eq(i).val().trim() == '') {
+                                                                customErrorHandle(first_step_inputs.eq(i).parent(), 'This field is required.');
                                                                 errors = true;
                                                             }
-                                                        }
-                                                    }
 
-                                                    //check custom radio buttons
-                                                    if ($('.dentist .form-register .step.second [name="work-type"]:checked').val() == undefined) {
-                                                        customErrorHandle($('.dentist .form-register .step.second .radio-buttons-holder'), 'Please select one of the options.');
-                                                        errors = true;
-                                                    } else {
-                                                        if ($('.dentist .form-register .step.second [name="work-type"]:checked').val() == 'an-associate-dentist') {
-                                                            $('.dentist .form-register .step.third .search-for-clinic').html('<div class="padding-bottom-10"><select class="combobox custom-input"></select><input type="hidden" name="clinic-id"/></div>');
+                                                        case 21:
+                                                            i += 1;
+                                                            _context20.next = 8;
+                                                            break;
 
-                                                            $.ajax({
-                                                                type: 'POST',
-                                                                url: '/get-all-clinics/',
-                                                                dataType: 'json',
-                                                                headers: {
-                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                },
-                                                                success: function success(response) {
-                                                                    console.log(response, 'response');
-                                                                    if (response.success && response.success.length > 0) {
-                                                                        var select_html = '<option></option>';
-                                                                        for (var i = 0, len = response.success.length; i < len; i += 1) {
-                                                                            select_html += '<option value="' + response.success[i].id + '">' + response.success[i].name + '</option>';
-                                                                        }
+                                                        case 24:
 
-                                                                        $('.dentist .form-register .step.third .search-for-clinic select.combobox').html(select_html);
+                                                            if ($('.dentist .form-register .step.first .custom-input.password').val().trim() != $('.step.first .custom-input.repeat-password').val().trim()) {
+                                                                customErrorHandle($('.step.first .custom-input.repeat-password').parent(), 'Both passwords don\'t match.');
+                                                                errors = true;
+                                                            }
 
-                                                                        initComboboxes();
-                                                                        $('.dentist .form-register .step.third .search-for-clinic input[type="text"].combobox').attr('placeholder', 'Search for a clinic...');
+                                                            if (!errors) {
+                                                                $('.dentist .form-register .step').removeClass('visible');
+                                                                $('.dentist .form-register .step.second').addClass('visible');
+                                                                $('.prev-step').show();
 
-                                                                        //update the hidden input value on the select change
-                                                                        $('.dentist .form-register .step.third .search-for-clinic select.combobox').on('change', function () {
-                                                                            $('.dentist .form-register .step.third .search-for-clinic input[name="clinic-id"]').val($(this).find('option:selected').val());
-                                                                        });
-                                                                    } else if (response.error) {
-                                                                        basic.showAlert(response.error);
+                                                                this_btn.attr('data-current-step', 'second');
+                                                                this_btn.val('Next');
+                                                            }
+                                                            return _context20.abrupt("break", 43);
+
+                                                        case 27:
+                                                            second_step_inputs = $('.dentist .form-register .step.second .custom-input');
+                                                            errors = false;
+
+                                                            $('.dentist .form-register .step.second').find('.error-handle').remove();
+
+                                                            //check custom-input fields
+                                                            for (i = 0, len = second_step_inputs.length; i < len; i += 1) {
+                                                                if (second_step_inputs.eq(i).is('select')) {
+                                                                    //IF SELECT TAG
+                                                                    if (second_step_inputs.eq(i).val().trim() == '') {
+                                                                        customErrorHandle(second_step_inputs.eq(i).parent(), 'This field is required.');
+                                                                        errors = true;
+                                                                    }
+                                                                } else if (second_step_inputs.eq(i).is('input')) {
+                                                                    //IF INPUT TAG
+                                                                    if (second_step_inputs.eq(i).val().trim() == '') {
+                                                                        customErrorHandle(second_step_inputs.eq(i).parent(), 'This field is required.');
+                                                                        errors = true;
+                                                                    }
+
+                                                                    if (second_step_inputs.eq(i).attr('type') == 'url' && !basic.validateUrl(second_step_inputs.eq(i).val().trim())) {
+                                                                        customErrorHandle(second_step_inputs.eq(i).parent(), 'Please use valid website.');
+                                                                        errors = true;
+                                                                    } else if (second_step_inputs.eq(i).attr('type') == 'number' && !basic.validatePhone(second_step_inputs.eq(i).val().trim())) {
+                                                                        customErrorHandle(second_step_inputs.eq(i).parent(), 'Please use valid numbers.');
+                                                                        errors = true;
                                                                     }
                                                                 }
-                                                            });
-                                                        } else {
-                                                            $('.dentist .form-register .step.third .search-for-clinic').html('');
-                                                        }
-                                                    }
+                                                            }
 
-                                                    //check if error from google place suggester
-                                                    if ($('.dentist .form-register .step.second .suggester-parent .alert.alert-warning').is(':visible')) {
-                                                        customErrorHandle($('.dentist .form-register .step.second .radio-buttons-holder'), 'Please select one of the options.');
-                                                        errors = true;
-                                                    }
+                                                            //check custom radio buttons
+                                                            if ($('.dentist .form-register .step.second [name="work-type"]:checked').val() == undefined) {
+                                                                customErrorHandle($('.dentist .form-register .step.second .radio-buttons-holder'), 'Please select one of the options.');
+                                                                errors = true;
+                                                            } else {
+                                                                if ($('.dentist .form-register .step.second [name="work-type"]:checked').val() == 'an-associate-dentist') {
+                                                                    $('.dentist .form-register .step.third .search-for-clinic').html('<div class="padding-bottom-10"><select class="combobox custom-input"></select><input type="hidden" name="clinic-id"/></div>');
 
-                                                    if (!errors) {
-                                                        $('.dentist .form-register .step').removeClass('visible');
-                                                        $('.dentist .form-register .step.third').addClass('visible');
+                                                                    $.ajax({
+                                                                        type: 'POST',
+                                                                        url: '/get-all-clinics/',
+                                                                        dataType: 'json',
+                                                                        headers: {
+                                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                        },
+                                                                        success: function success(response) {
+                                                                            console.log(response, 'response');
+                                                                            if (response.success && response.success.length > 0) {
+                                                                                var select_html = '<option></option>';
+                                                                                for (var i = 0, len = response.success.length; i < len; i += 1) {
+                                                                                    select_html += '<option value="' + response.success[i].id + '">' + response.success[i].name + '</option>';
+                                                                                }
 
-                                                        this_btn.attr('data-current-step', 'third');
-                                                        this_btn.val('Create profile');
-                                                    }
-                                                    break;
-                                                case 'third':
-                                                    $('.dentist .form-register .step.third').find('.error-handle').remove();
-                                                    var errors = false;
-                                                    //checking if empty avatar
-                                                    if ($('.dentist .form-register .step.third #custom-upload-avatar').val().trim() == '') {
-                                                        customErrorHandle($('.step.third .step-errors-holder'), 'Please select avatar.');
-                                                        errors = true;
-                                                    }
+                                                                                $('.dentist .form-register .step.third .search-for-clinic select.combobox').html(select_html);
 
-                                                    //checking if no specialization checkbox selected
-                                                    if ($('.dentist .form-register .step.third [name="specializations[]"]:checked').val() == undefined) {
-                                                        customErrorHandle($('.step.third .step-errors-holder'), 'Please select specialization/s.');
-                                                        errors = true;
-                                                    }
+                                                                                initComboboxes();
+                                                                                $('.dentist .form-register .step.third .search-for-clinic input[type="text"].combobox').attr('placeholder', 'Search for a clinic...');
 
-                                                    //check captcha length
-                                                    if ($('.dentist .form-register .step.third #register-captcha').val().trim() == '') {
-                                                        customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
-                                                        errors = true;
-                                                    }
+                                                                                //update the hidden input value on the select change
+                                                                                $('.dentist .form-register .step.third .search-for-clinic select.combobox').on('change', function () {
+                                                                                    $('.dentist .form-register .step.third .search-for-clinic input[name="clinic-id"]').val($(this).find('option:selected').val());
+                                                                                });
+                                                                            } else if (response.error) {
+                                                                                basic.showAlert(response.error);
+                                                                            }
+                                                                        }
+                                                                    });
+                                                                } else {
+                                                                    $('.dentist .form-register .step.third .search-for-clinic').html('');
+                                                                }
+                                                            }
 
-                                                    //check if privacy policy checkbox is checked
-                                                    if (!$('.dentist .form-register .step.third #privacy-policy-registration').is(':checked')) {
-                                                        customErrorHandle($('.step.third .step-errors-holder'), 'Please agree with our privacy policy.');
-                                                        errors = true;
-                                                    }
+                                                            //check if error from google place suggester
+                                                            if ($('.dentist .form-register .step.second .suggester-parent .alert.alert-warning').is(':visible')) {
+                                                                customErrorHandle($('.dentist .form-register .step.second .radio-buttons-holder'), 'Please select one of the options.');
+                                                                errors = true;
+                                                            }
 
-                                                    if (!errors) {
-                                                        //submit the form
-                                                        $('form#dentist-register').submit();
+                                                            if (!errors) {
+                                                                $('.dentist .form-register .step').removeClass('visible');
+                                                                $('.dentist .form-register .step.third').addClass('visible');
+
+                                                                this_btn.attr('data-current-step', 'third');
+                                                                this_btn.val('Create profile');
+                                                            }
+                                                            return _context20.abrupt("break", 43);
+
+                                                        case 35:
+                                                            $('.dentist .form-register .step.third').find('.error-handle').remove();
+                                                            errors = false;
+                                                            //checking if empty avatar
+
+                                                            if ($('.dentist .form-register .step.third #custom-upload-avatar').val().trim() == '') {
+                                                                customErrorHandle($('.step.third .step-errors-holder'), 'Please select avatar.');
+                                                                errors = true;
+                                                            }
+
+                                                            //checking if no specialization checkbox selected
+                                                            if ($('.dentist .form-register .step.third [name="specializations[]"]:checked').val() == undefined) {
+                                                                customErrorHandle($('.step.third .step-errors-holder'), 'Please select specialization/s.');
+                                                                errors = true;
+                                                            }
+
+                                                            //check captcha length
+                                                            if ($('.dentist .form-register .step.third #register-captcha').val().trim() == '') {
+                                                                customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
+                                                                errors = true;
+                                                            }
+
+                                                            //check if privacy policy checkbox is checked
+                                                            if (!$('.dentist .form-register .step.third #privacy-policy-registration').is(':checked')) {
+                                                                customErrorHandle($('.step.third .step-errors-holder'), 'Please agree with our privacy policy.');
+                                                                errors = true;
+                                                            }
+
+                                                            if (!errors) {
+                                                                //submit the form
+                                                                $('form#dentist-register').submit();
+                                                            }
+                                                            return _context20.abrupt("break", 43);
+
+                                                        case 43:
+                                                        case "end":
+                                                            return _context20.stop();
                                                     }
-                                                    break;
-                                            }
-                                        });
+                                                }
+                                            }, _callee20, this);
+                                        })));
                                         // ====================== /DENTIST LOGIN/SIGNUP LOGIC ======================
 
                                     case 20:
                                     case "end":
-                                        return _context20.stop();
+                                        return _context21.stop();
                                 }
                             }
-                        }, _callee20, this);
+                        }, _callee21, this);
                     }));
 
                     function success(_x9) {
@@ -3797,11 +3883,11 @@ function initComboboxes() {
 function apiEventsListeners() {
     //login
     $(document).on('successResponseCoreDBApi', function () {
-        var _ref21 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee21(event) {
+        var _ref22 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22(event) {
             var custom_form_obj;
-            return _regeneratorRuntime.wrap(function _callee21$(_context21) {
+            return _regeneratorRuntime.wrap(function _callee22$(_context22) {
                 while (1) {
-                    switch (_context21.prev = _context21.next) {
+                    switch (_context22.prev = _context22.next) {
                         case 0:
                             if (event.response_data.token) {
                                 custom_form_obj = {
@@ -3829,14 +3915,14 @@ function apiEventsListeners() {
 
                         case 1:
                         case "end":
-                            return _context21.stop();
+                            return _context22.stop();
                     }
                 }
-            }, _callee21, this);
+            }, _callee22, this);
         }));
 
         return function (_x14) {
-            return _ref21.apply(this, arguments);
+            return _ref22.apply(this, arguments);
         };
     }());
 
@@ -4310,14 +4396,14 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function () {
-                            var _ref25 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee25(response) {
+                            var _ref26 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee26(response) {
                                 var render_form, decrypted_pdf_response;
-                                return _regeneratorRuntime.wrap(function _callee25$(_context25) {
+                                return _regeneratorRuntime.wrap(function _callee26$(_context26) {
                                     while (1) {
-                                        switch (_context25.prev = _context25.next) {
+                                        switch (_context26.prev = _context26.next) {
                                             case 0:
                                                 if (!response.success) {
-                                                    _context25.next = 14;
+                                                    _context26.next = 14;
                                                     break;
                                                 }
 
@@ -4331,16 +4417,16 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 }
 
                                                 if (!(render_pdf != null)) {
-                                                    _context25.next = 11;
+                                                    _context26.next = 11;
                                                     break;
                                                 }
 
                                                 render_form = $('form#render-pdf');
-                                                _context25.next = 6;
+                                                _context26.next = 6;
                                                 return getDecryptedPdfContent(encrypted_pdf_content, response.private_key);
 
                                             case 6:
-                                                decrypted_pdf_response = _context25.sent;
+                                                decrypted_pdf_response = _context26.sent;
 
 
                                                 $('.response-layer').hide();
@@ -4351,7 +4437,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 } else if (decrypted_pdf_response.error) {
                                                     basic.showAlert(decrypted_pdf_response.error, '', true);
                                                 }
-                                                _context25.next = 12;
+                                                _context26.next = 12;
                                                 break;
 
                                             case 11:
@@ -4378,7 +4464,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 });
 
                                             case 12:
-                                                _context25.next = 15;
+                                                _context26.next = 15;
                                                 break;
 
                                             case 14:
@@ -4389,14 +4475,14 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
 
                                             case 15:
                                             case "end":
-                                                return _context25.stop();
+                                                return _context26.stop();
                                         }
                                     }
-                                }, _callee25, this);
+                                }, _callee26, this);
                             }));
 
                             function success(_x17) {
-                                return _ref25.apply(this, arguments);
+                                return _ref26.apply(this, arguments);
                             }
 
                             return success;
@@ -4469,10 +4555,10 @@ function bindTransactionAddressVerify(keystore_file) {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function () {
-                        var _ref26 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee26(response) {
-                            return _regeneratorRuntime.wrap(function _callee26$(_context26) {
+                        var _ref27 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee27(response) {
+                            return _regeneratorRuntime.wrap(function _callee27$(_context27) {
                                 while (1) {
-                                    switch (_context26.prev = _context26.next) {
+                                    switch (_context27.prev = _context27.next) {
                                         case 0:
                                             if (response.success) {
                                                 //checking if the private key is related to the public key saved in the coredb
@@ -4502,14 +4588,14 @@ function bindTransactionAddressVerify(keystore_file) {
 
                                         case 1:
                                         case "end":
-                                            return _context26.stop();
+                                            return _context27.stop();
                                     }
                                 }
-                            }, _callee26, this);
+                            }, _callee27, this);
                         }));
 
                         function success(_x18) {
-                            return _ref26.apply(this, arguments);
+                            return _ref27.apply(this, arguments);
                         }
 
                         return success;
