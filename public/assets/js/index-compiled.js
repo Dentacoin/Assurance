@@ -28117,13 +28117,13 @@ if ($('body').hasClass('logged-in')) {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function success(response) {
-                    basic.showDialog(response.success, 'contact-clinic-popup', null, true);
+                    basic.showDialog(response.success, 'before-sending-email-confirmation-popup', null, true);
                     fixButtonsFocus();
 
                     var custom_form_obj = {
                         clinic_id: this_select.val().trim()
                     };
-                    $('.contact-clinic-popup .send-mail').click(function () {
+                    $('.before-sending-email-confirmation-popup .send-mail').click(function () {
                         $('.response-layer').show();
 
                         //clear spamming
@@ -29132,12 +29132,12 @@ if ($('form#invite-dentists').length) {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function success(response) {
-                    basic.showDialog(response.success, 'invite-dentists-popup', null, true);
+                    basic.showDialog(response.success, 'before-sending-email-confirmation-popup', null, true);
                     fixButtonsFocus();
 
                     var serialized_values = this_form.serializeArray();
                     var custom_form_obj = {};
-                    $('.invite-dentists-popup .send-mail').click(function () {
+                    $('.before-sending-email-confirmation-popup .send-mail').click(function () {
                         $('.response-layer').show();
 
                         //clear spamming

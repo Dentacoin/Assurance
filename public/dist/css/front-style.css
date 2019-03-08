@@ -5014,7 +5014,7 @@ input[type='file'].hide-input {
   border: 2px solid #239234;
   display: inline-block;
   cursor: pointer;
-  text-decoration: none;
+  text-decoration: none !important;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -5039,7 +5039,7 @@ input[type='file'].hide-input {
   border: 2px solid #126585;
   display: inline-block;
   cursor: pointer;
-  text-decoration: none;
+  text-decoration: none !important;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -6294,22 +6294,22 @@ body.logged-in .my-profile-page-content {
     height: 2px;
     background-color: #c9dfe7; }
 
-.bootbox.invite-dentists-popup .modal-dialog {
+.bootbox.before-sending-email-confirmation-popup .modal-dialog {
   width: 100%;
   max-width: 800px; }
-  .bootbox.invite-dentists-popup .modal-dialog .modal-body {
+  .bootbox.before-sending-email-confirmation-popup .modal-dialog .modal-body {
     padding: 20px 50px;
     position: relative; }
-    .bootbox.invite-dentists-popup .modal-dialog .modal-body .bootbox-close-button {
+    .bootbox.before-sending-email-confirmation-popup .modal-dialog .modal-body .bootbox-close-button {
       float: none;
       margin-top: auto !important;
       position: absolute;
       top: 0;
       font-size: 40px;
       right: 15px; }
-    .bootbox.invite-dentists-popup .modal-dialog .modal-body .single-line {
+    .bootbox.before-sending-email-confirmation-popup .modal-dialog .modal-body .single-line {
       border-bottom: 1px solid #b7b7b7; }
-      .bootbox.invite-dentists-popup .modal-dialog .modal-body .single-line label {
+      .bootbox.before-sending-email-confirmation-popup .modal-dialog .modal-body .single-line label {
         color: #777777; }
 
 .line-crossed-title {
