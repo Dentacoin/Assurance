@@ -4952,6 +4952,9 @@ input[type='file'].hide-input {
   background-position: center right;
   background-repeat: no-repeat; }
 
+.popover-el {
+  cursor: pointer; }
+
 .white-blue-green-btn {
   font-size: 20px;
   color: white;
@@ -5524,6 +5527,8 @@ input[type='file'].hide-input {
         text-decoration: underline; }
       .module.contract-single-page-nav li a.renew-contract-btn i {
         color: #239234; }
+    .module.contract-single-page-nav li i.fa-info-circle {
+      padding-left: 5px; }
 .module.single-contract-tile .contract-participant {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;

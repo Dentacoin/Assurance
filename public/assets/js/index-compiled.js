@@ -29858,6 +29858,16 @@ function convertUsdToDcn(usd_val) {
         return false;
     }
 }
+
+function initPopoverTooltips() {
+    if ($('.popover-el').length) {
+        $('.popover-el').popover({
+            trigger: 'hover',
+            html: true
+        });
+    }
+}
+initPopoverTooltips();
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1).Buffer))
 
 /***/ }),

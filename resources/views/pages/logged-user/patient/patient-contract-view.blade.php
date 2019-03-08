@@ -12,8 +12,9 @@
                     <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
                         <li class="inline-block">
                             <a href="javascript:void(0);" class="contract-decrypt" data-hash="{{$contract->document_hash}}" data-type="patient" itemprop="url" target="_blank">
-                                <span itemprop="name">Contract sample (pdf) <i class="fa fa-info-circle" data-toggle="popover" data-placement="bottom" data-content="Your contract is stored and encrypted in the <a href='https://ipfs.io/' target='_blank'>IPFS</a>. Reading it might take some time, if it takes too long please try again later."></i></span>
+                                <span itemprop="name">Contract sample (pdf)</span>
                             </a>
+                            <i class="fa fa-info-circle popover-el" data-toggle="popover" data-placement="bottom" data-content="Your contract is stored and encrypted in the <a href='https://ipfs.io/' target='_blank'>IPFS</a>. Reading it might take some time, if it takes too long please try again later."></i>
                             <form target="_blank" method="POST" action="{{route('render-pdf')}}" id="render-pdf">
                                 <input type="hidden" name="pdf_data"/>
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -22,8 +23,9 @@
                         <li class="inline-block">|</li>
                         <li class="inline-block">
                             <a href="https://ipfs.io/ipfs/{{$contract->document_hash}}" target="_blank" itemprop="url">
-                                <span itemprop="name">Public Proof <i class="fa fa-info-circle" data-toggle="popover" data-placement="bottom" data-content="Your contract is stored and encrypted in the <a href='https://ipfs.io/' target='_blank'>IPFS</a>. Reading it might take some time, if it takes too long please try again later."></i></span>
+                                <span itemprop="name">Public Proof</span>
                             </a>
+                            <i class="fa fa-info-circle popover-el" data-toggle="popover" data-placement="bottom" data-content="Your contract is stored and encrypted in the <a href='https://ipfs.io/' target='_blank'>IPFS</a>. Reading it might take some time, if it takes too long please try again later."></i>
                         </li>
                         @if($contract->status != 'cancelled')
                             <li class="inline-block">|</li>

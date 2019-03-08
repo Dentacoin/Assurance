@@ -4792,3 +4792,13 @@ function convertUsdToDcn(usd_val) {
         return false;
     }
 }
+
+function initPopoverTooltips() {
+    if ($('.popover-el').length) {
+        $('.popover-el').popover({
+            trigger: 'hover',
+            html: true
+        });
+    }
+}
+initPopoverTooltips();
