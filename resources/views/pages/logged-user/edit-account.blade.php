@@ -31,7 +31,7 @@
                             </div>
                             <div class="form-row padding-bottom-15 fs-0 suggester-parent module">
                                 <label class="inline-block fs-16" for="address">Postal Address:</label>
-                                <input type="text" name="address" class="custom-input fs-16 address-suggester @if((new \App\Http\Controllers\UserController())->checkDentistSession()) required @endif" autocomplete="off" placeholder="City, Street" @if(!empty($user_data) && !empty($user_data->address)) value="{{$user_data->address}}" @endif>
+                                <input type="text" name="address" id="address" class="custom-input fs-16 address-suggester @if((new \App\Http\Controllers\UserController())->checkDentistSession()) required @endif" autocomplete="off" placeholder="City, Street" @if(!empty($user_data) && !empty($user_data->address)) value="{{$user_data->address}}" @endif>
                                 <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
                                 <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
                                 <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
@@ -64,7 +64,7 @@
                                 </div>
                             @endif
                             <div class="form-row padding-bottom-40 fs-0">
-                                <label class="inline-block-top fs-16" id="custom-upload-avatar">Photo:</label>
+                                <label class="inline-block-top fs-16" for="custom-upload-avatar">Photo:</label>
                                 <div class="inline-block-top avatar module text-center upload-file" @if(!empty($user_data) && !empty($user_data->avatar_url)) data-current-user-avatar="{{$user_data->avatar_url}}" @endif>
                                     <input type="file" class="visualise-image inputfile" id="custom-upload-avatar" name="image" accept=".jpg,.png,.jpeg,.svg,.bmp"/>
                                     <div class="btn-wrapper"></div>
