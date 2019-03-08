@@ -2407,7 +2407,7 @@ if ($('body').hasClass('logged-in')) {
 
             var inner_error = false;
             for (var i = 0, len = step_fields.length; i < len; i += 1) {
-                if (step_fields.eq(i).val().trim() == '') {
+                if (step_fields.eq(i).val().trim() == '' || step_fields.eq(i).val().trim() == '0') {
                     customCreateContractErrorHandle(step_fields.eq(i), 'Required field cannot be left blank.');
                     inner_error = true;
                 } else if (step_fields.eq(i).attr('data-type') == 'email' && !basic.validateEmail(step_fields.eq(i).val().trim())) {
