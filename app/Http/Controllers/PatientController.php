@@ -122,7 +122,7 @@ class PatientController extends Controller {
         $receiver = $postdata['title'] . ' ' . $postdata['dentist-name'] . ' (' . $postdata['email'] . ')';
         $body = '<div class="padding-bottom-25 padding-top-15">My name is <span class="calibri-bold">'.$current_patient->name.'</span> and I as a patient of yours I would like to invite you to join <span class="calibri-bold">Dentacoin Assurance</span> - the first blockchain* dental assurance that entitles patients to preventive dental care against affordable monthly premiums in Dentacoin (DCN) currency.</div><div class="padding-bottom-25">It’s very easy to start: Just sign up, wait for approval and create your first contract. <a href="'.BASE_URL.'" target="_blank" class="blue-green-color calibri-bold">See how it works.</a> After/ if I agree to the conditions offered, we will get into a trustful agreement benefiting from an automated payment & notification system.</div><div class="padding-bottom-20">Affordable, preventive care for me - regular income and loyal patients for you!</div><div class="padding-bottom-20"><a href="{{BASE_URL}}support-guide" target="_blank" class="blue-green-white-btn">LEARN MORE</a></div><div class="padding-bottom-30">Looking forward to seeing you onboard! If you need any further information, do not hesitate to contact the Dentacoin Assurance team at <a href="mailto:assurance@dentacoin.com" class="blue-green-color calibri-bold">assurance@dentacoin.com</a>.</div>';
 
-        $view = view('partials/before-sending-email-confirmation-popup', ['data' => $postdata, 'sender' => $current_patient, 'receiver' => $receiver, 'mail_title' => 'Invite Your Dentist', 'mail_subject' => 'Invitation to join Dentacoin Assurance', 'mail_body' => $body]);
+        $view = view('partials/before-sending-email-confirmation-popup', ['sender' => $current_patient, 'receiver' => $receiver, 'mail_title' => 'Invite Your Dentist', 'mail_subject' => 'Invitation to join Dentacoin Assurance', 'mail_body' => $body]);
         $view = $view->render();
         return response()->json(['success' => $view]);
     }
@@ -445,15 +445,49 @@ class PatientController extends Controller {
         ]);
 
         $clinic = (new APIRequestsController())->getUserData($request->input('clinic_id'));
-        var_dump($clinic);
-
         $current_patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
-        die();
-        /*$receiver = $postdata['title'] . ' ' . $postdata['dentist-name'] . ' (' . $postdata['email'] . ')';
-        $body = '<div class="padding-bottom-25 padding-top-15">My name is <span class="calibri-bold">'.$current_patient->name.'</span> and I as a patient of yours I would like to invite you to join <span class="calibri-bold">Dentacoin Assurance</span> - the first blockchain* dental assurance that entitles patients to preventive dental care against affordable monthly premiums in Dentacoin (DCN) currency.</div><div class="padding-bottom-25">It’s very easy to start: Just sign up, wait for approval and create your first contract. <a href="'.BASE_URL.'" target="_blank" class="blue-green-color calibri-bold">See how it works.</a> After/ if I agree to the conditions offered, we will get into a trustful agreement benefiting from an automated payment & notification system.</div><div class="padding-bottom-20">Affordable, preventive care for me - regular income and loyal patients for you!</div><div class="padding-bottom-20"><a href="{{BASE_URL}}support-guide" target="_blank" class="blue-green-white-btn">LEARN MORE</a></div><div class="padding-bottom-30">Looking forward to seeing you onboard! If you need any further information, do not hesitate to contact the Dentacoin Assurance team at <a href="mailto:assurance@dentacoin.com" class="blue-green-color calibri-bold">assurance@dentacoin.com</a>.</div>';
+        $receiver = $clinic->name . ' (' . $clinic->email . ')';
+        if($clinic->is_clinic) {
+            $title = '';
+        } else {
+            $title = 'Dr. ';
+        }
 
-        $view = view('partials/before-sending-email-confirmation-popup', ['data' => $postdata, 'sender' => $current_patient, 'receiver' => $receiver, 'mail_title' => 'Invite Your Dentist', 'mail_subject' => 'Invitation to join Dentacoin Assurance', 'mail_body' => $body]);
+        $body = '<div class="padding-bottom-25 padding-top-15">Dear '.$title.'<span class="calibri-bold">'.$clinic->name.'</span> I\'d like to receive a Dentacoin Assurance contract sample by you.<br><br><br><a href="'.BASE_URL.'dentist/create-contract" style="font-size: 20px;color: #126585;background-color: white;padding: 10px 20px;text-decoration: none;font-weight: bold;border-radius: 4px;border: 2px solid #126585;" target="_blank">CREATE CONTRACT SAMPLE</a><br><br><br>';
+
+        $view = view('partials/before-sending-email-confirmation-popup', ['sender' => $current_patient, 'receiver' => $receiver, 'mail_title' => 'Send email to your dentist', 'mail_subject' => 'Please send me a Dentacoin Assurance contract sample', 'mail_body' => $body]);
         $view = $view->render();
-        return response()->json(['success' => $view]);*/
+        return response()->json(['success' => $view]);
+    }
+
+    protected function submitContactClinic(Request $request) {
+        $this->validate($request, [
+            'clinic_id' => 'required'
+        ], [
+            'clinic_id.required' => 'Clinic is required.'
+        ]);
+
+        $data = $this->clearPostData($request->input());
+        $clinic = (new APIRequestsController())->getUserData($request->input('clinic_id'));
+        $sender = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+        if($clinic->is_clinic) {
+            $title = '';
+        } else {
+            $title = 'Dr. ';
+        }
+
+        $body = '<!DOCTYPE html><html><head></head><body><div style="font-size: 16px;">Dear '.$title.$clinic->name.', <br><br><br>I\'d like to receive a Dentacoin Assurance contract sample by you.<br><br><br><a href="'.BASE_URL.'dentist/create-contract" style="font-size: 20px;color: #126585;background-color: white;padding: 10px 20px;text-decoration: none;font-weight: bold;border-radius: 4px;border: 2px solid #126585;" target="_blank">CREATE CONTRACT SAMPLE</a><br><br><br><i style="font-size: 13px;">* Blockchain is just a new technology used for secure storage and exchange of value and data.</i></div></body></html>';
+
+        Mail::send(array(), array(), function($message) use ($body, $clinic, $sender) {
+            $message->to($clinic->email)->subject('Please send me a Dentacoin Assurance contract sample');
+            $message->from($sender->email, $sender->name)->replyTo($sender->email, $sender->name);
+            $message->setBody($body, 'text/html');
+        });
+
+        if(count(Mail::failures()) > 0) {
+            return redirect()->route($data['redirect'])->with(['error' => 'Email has not been sent to your dentist, please try again later.']);
+        } else {
+            return redirect()->route($data['redirect'])->with(['success' => 'Contract sample request has been sent to your dentist successfully.']);
+        }
     }
 }

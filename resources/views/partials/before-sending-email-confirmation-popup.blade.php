@@ -8,5 +8,5 @@
         <div class="calibri-bold">{{$sender->name}}</div>
     </div>
     <div class="fs-14 calibri-light padding-bottom-30">* Blockchain is just a new technology used for secure storage and exchange of value and data. </div>
-    <div class="text-center padding-bottom-15 send-mail-invite-dentists"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250">SEND</a></div>
+    <div class="text-center padding-bottom-15 send-mail"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250">SEND</a></div>
 </div>

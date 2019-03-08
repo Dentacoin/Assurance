@@ -28108,7 +28108,7 @@ if ($('body').hasClass('logged-in')) {
             var this_select = $(this);
             $.ajax({
                 type: 'POST',
-                url: '/get-contact-clinic-popup',
+                url: '/patient/get-contact-clinic-popup',
                 dataType: 'json',
                 data: {
                     clinic_id: this_select.val().trim()
@@ -28116,7 +28116,24 @@ if ($('body').hasClass('logged-in')) {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function success(response) {}
+                success: function success(response) {
+                    basic.showDialog(response.success, 'contact-clinic-popup', null, true);
+                    fixButtonsFocus();
+
+                    var custom_form_obj = {
+                        clinic_id: this_select.val().trim()
+                    };
+                    $('.contact-clinic-popup .send-mail').click(function () {
+                        $('.response-layer').show();
+
+                        //clear spamming
+                        $(this).unbind();
+
+                        setTimeout(function () {
+                            customJavascriptForm('/patient/submit-contact-clinic', custom_form_obj, 'post');
+                        }, 1500);
+                    });
+                }
             });
         });
     }
@@ -29120,7 +29137,7 @@ if ($('form#invite-dentists').length) {
 
                     var serialized_values = this_form.serializeArray();
                     var custom_form_obj = {};
-                    $('.send-mail-invite-dentists').click(function () {
+                    $('.invite-dentists-popup .send-mail').click(function () {
                         $('.response-layer').show();
 
                         //clear spamming
