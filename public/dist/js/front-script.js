@@ -2567,7 +2567,11 @@ if ($('body').hasClass('logged-in')) {
 
         var form_props_arr = ['professional-company-number', 'postal-address', 'country', 'phone', 'website', 'address', 'fname', 'lname', 'email', 'monthly-premium', 'check-ups-per-year', 'teeth-cleaning-per-year'];
         var create_contract_form = $('form#dentist-create-contract');
-        create_contract_form.find('.terms-and-conditions-long-list').mCustomScrollbar();$('.contract-creation-steps-container button').bind('click.validateStepsNav', _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee12() {
+        create_contract_form.find('.terms-and-conditions-long-list').mCustomScrollbar();
+
+        $('.step.three [name="monthly-premium"]').on('input', function () {
+            $(this).val(Math.floor($(this).val()));
+        });$('.contract-creation-steps-container button').bind('click.validateStepsNav', _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee12() {
             var current_step_error, this_btn, this_btn_step, validate_steps_arr, validate_dentist_address, dentist_address, y, len;
             return _regeneratorRuntime.wrap(function _callee12$(_context12) {
                 while (1) {
@@ -2732,6 +2736,10 @@ if ($('body').hasClass('logged-in')) {
                 }
 
                 create_contract_form.find('.suggested-price').html(suggested_price);
+                create_contract_form.find('.suggested-price').html(suggested_price);
+                if ($('.step.three [name="monthly-premium"]').val().trim() == '') {
+                    $('.step.three [name="monthly-premium"]').val(suggested_price);
+                }
             } else {
                 $('.show-on-services-pick').fadeOut(500);
             }

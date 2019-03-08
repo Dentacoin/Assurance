@@ -1136,6 +1136,10 @@ if($('body').hasClass('logged-in')) {
         var create_contract_form = $('form#dentist-create-contract');
         create_contract_form.find('.terms-and-conditions-long-list').mCustomScrollbar();
 
+        $('.step.three [name="monthly-premium"]').on('input', function() {
+            $(this).val(Math.floor($(this).val()));
+        });
+
         //validation for all fields for each step
         function validateStepFields(step_fields, step) {
             step_fields.removeClass('with-error');
@@ -1410,6 +1414,10 @@ if($('body').hasClass('logged-in')) {
                 }
 
                 create_contract_form.find('.suggested-price').html(suggested_price);
+                create_contract_form.find('.suggested-price').html(suggested_price);
+                if($('.step.three [name="monthly-premium"]').val().trim() == '') {
+                    $('.step.three [name="monthly-premium"]').val(suggested_price);
+                }
             } else {
                 $('.show-on-services-pick').fadeOut(500);
             }

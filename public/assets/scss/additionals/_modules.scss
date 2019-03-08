@@ -314,11 +314,6 @@
             &.flex-row {
                 display: flex;
             }
-            input[type="number"]::-webkit-outer-spin-button,
-            input[type="number"]::-webkit-inner-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
-            }
             label {
                 width: 40%;
                 font-weight: normal;

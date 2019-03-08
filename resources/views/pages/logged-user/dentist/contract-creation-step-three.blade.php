@@ -78,7 +78,7 @@
         </div>
         <div class="single-row flex-row fs-0">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Monthly Premium:</label>
-            <input type="number" name="monthly-premium" maxlength="20" placeholder="The value is in USD" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background" @if(!empty($renew_contract)) value="{{$renew_contract->monthly_premium}}" @endif/>
+            <input type="number" name="monthly-premium" maxlength="20" placeholder="The value is in USD" class="right-field calibri-regular fs-18 dark-color inline-block" @if(!empty($renew_contract)) value="{{$renew_contract->monthly_premium}}" @endif/>
         </div>
         @if(!empty($renew_contract))
             @if(in_array('param_gd', $general_dentistry_arr) && in_array('param_cd', $general_dentistry_arr) && in_array('param_id', $general_dentistry_arr))

@@ -486,10 +486,6 @@
     border-bottom: 1px solid #ff8d8d; }
   .module.step-fields .single-row.flex-row {
     display: flex; }
-  .module.step-fields .single-row input[type="number"]::-webkit-outer-spin-button,
-  .module.step-fields .single-row input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0; }
   .module.step-fields .single-row label {
     width: 40%;
     font-weight: normal;
