@@ -3037,6 +3037,12 @@ if ($('body').hasClass('logged-in')) {
         }
     }
 
+    if ($('.dropdown-with-clinics').length) {
+        $('.dropdown-with-clinics').on('change', function () {
+            console.log($(this).val());
+        });
+    }
+
     if ($('.contract-decrypt').length) {
         $('.contract-decrypt').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee15() {
             var this_btn, encrypted_pdf_content, render_form, cached_key, decrypted_pdf_response;

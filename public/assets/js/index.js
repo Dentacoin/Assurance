@@ -1592,6 +1592,12 @@ if($('body').hasClass('logged-in')) {
         }
     }
 
+    if($('.dropdown-with-clinics').length) {
+        $('.dropdown-with-clinics').on('change', function() {
+            console.log($(this).val());
+        });
+    }
+
     if($('.contract-decrypt').length) {
         $('.contract-decrypt').click(async function() {
             var this_btn = $(this);

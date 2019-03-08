@@ -6,7 +6,7 @@
             <div class="row">
                 @if(!empty($clinics))
                     <div class="col-xs-12 col-sm-6 col-sm-offset-3 padding-top-20 padding-bottom-40">
-                        <select class="combobox custom-input green-arrow-background">
+                        <select class="combobox custom-input green-arrow-background dropdown-with-clinics">
                             <option></option>
                             @foreach($clinics as $clinic)
                                 <option value="{{$clinic->id}}">{{$clinic->name}}</option>

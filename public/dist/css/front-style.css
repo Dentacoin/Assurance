@@ -4964,6 +4964,7 @@ input[type='file'].hide-input {
   border: 2px solid #126585;
   display: inline-block;
   cursor: pointer;
+  text-decoration: none !important;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -4988,6 +4989,7 @@ input[type='file'].hide-input {
   border: 2px solid #e92f30;
   display: inline-block;
   cursor: pointer;
+  text-decoration: none !important;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -5012,6 +5014,7 @@ input[type='file'].hide-input {
   border: 2px solid #239234;
   display: inline-block;
   cursor: pointer;
+  text-decoration: none;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -5036,6 +5039,7 @@ input[type='file'].hide-input {
   border: 2px solid #126585;
   display: inline-block;
   cursor: pointer;
+  text-decoration: none;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -6143,6 +6147,10 @@ section#find-your-dentist .combobox-container .input-group {
       color: white; }
 .section-wallet-instructions-questions .question-content {
   display: none; }
+  .section-wallet-instructions-questions .question-content ul li {
+    list-style: disc inside none; }
+  .section-wallet-instructions-questions .question-content a {
+    text-decoration: underline; }
 
 body.logged-in .my-profile-menu {
   width: 300px;
