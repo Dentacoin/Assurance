@@ -26645,8 +26645,8 @@ var checkIfFreeEmail = function () {
     };
 }();
 
-var getDecryptedPrivateKey = function () {
-    var _ref32 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee32(key) {
+var checkCaptcha = function () {
+    var _ref32 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee32(captcha) {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee32$(_context32) {
             while (1) {
                 switch (_context32.prev = _context32.next) {
@@ -26654,10 +26654,10 @@ var getDecryptedPrivateKey = function () {
                         _context32.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/assurance-decrypt-private-key',
+                            url: '/check-captcha',
                             dataType: 'json',
                             data: {
-                                private_key: key
+                                captcha: captcha
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -26675,13 +26675,13 @@ var getDecryptedPrivateKey = function () {
         }, _callee32, this);
     }));
 
-    return function getDecryptedPrivateKey(_x24) {
+    return function checkCaptcha(_x24) {
         return _ref32.apply(this, arguments);
     };
 }();
 
-var getDecryptedKeystoreFile = function () {
-    var _ref33 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee33(keystore, password) {
+var getDecryptedPrivateKey = function () {
+    var _ref33 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee33(key) {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee33$(_context33) {
             while (1) {
                 switch (_context33.prev = _context33.next) {
@@ -26689,11 +26689,10 @@ var getDecryptedKeystoreFile = function () {
                         _context33.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-pk',
+                            url: '/assurance-decrypt-private-key',
                             dataType: 'json',
                             data: {
-                                keystore: keystore,
-                                password: password
+                                private_key: key
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -26711,13 +26710,13 @@ var getDecryptedKeystoreFile = function () {
         }, _callee33, this);
     }));
 
-    return function getDecryptedKeystoreFile(_x25, _x26) {
+    return function getDecryptedPrivateKey(_x25) {
         return _ref33.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContent = function () {
-    var _ref34 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee34(encrypted_html, key) {
+var getDecryptedKeystoreFile = function () {
+    var _ref34 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee34(keystore, password) {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee34$(_context34) {
             while (1) {
                 switch (_context34.prev = _context34.next) {
@@ -26725,14 +26724,14 @@ var getDecryptedPdfContent = function () {
                         _context34.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data',
+                            url: '/decrypt-pk',
                             dataType: 'json',
+                            data: {
+                                keystore: keystore,
+                                password: password
+                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
                             }
                         });
 
@@ -26747,8 +26746,44 @@ var getDecryptedPdfContent = function () {
         }, _callee34, this);
     }));
 
-    return function getDecryptedPdfContent(_x27, _x28) {
+    return function getDecryptedKeystoreFile(_x26, _x27) {
         return _ref34.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContent = function () {
+    var _ref35 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee35(encrypted_html, key) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee35$(_context35) {
+            while (1) {
+                switch (_context35.prev = _context35.next) {
+                    case 0:
+                        _context35.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context35.abrupt('return', _context35.sent);
+
+                    case 3:
+                    case 'end':
+                        return _context35.stop();
+                }
+            }
+        }, _callee35, this);
+    }));
+
+    return function getDecryptedPdfContent(_x28, _x29) {
+        return _ref35.apply(this, arguments);
     };
 }();
 
@@ -28638,14 +28673,14 @@ function bindLoginSigninPopupShow() {
 
                                         //DENTIST REGISTERING FORM
                                         $('.dentist .form-register .next-step').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee20() {
-                                            var this_btn, first_step_inputs, errors, i, len, check_email_if_free_response, second_step_inputs;
+                                            var this_btn, first_step_inputs, errors, i, len, check_email_if_free_response, second_step_inputs, check_captcha_response;
                                             return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee20$(_context20) {
                                                 while (1) {
                                                     switch (_context20.prev = _context20.next) {
                                                         case 0:
                                                             this_btn = $(this);
                                                             _context20.t0 = this_btn.attr('data-current-step');
-                                                            _context20.next = _context20.t0 === 'first' ? 4 : _context20.t0 === 'second' ? 27 : _context20.t0 === 'third' ? 35 : 43;
+                                                            _context20.next = _context20.t0 === 'first' ? 4 : _context20.t0 === 'second' ? 27 : _context20.t0 === 'third' ? 35 : 48;
                                                             break;
 
                                                         case 4:
@@ -28683,7 +28718,10 @@ function bindLoginSigninPopupShow() {
                                                         case 17:
                                                             check_email_if_free_response = _context20.sent;
 
-                                                            console.log(check_email_if_free_response, 'check_email_if_free_response');
+                                                            if (check_email_if_free_response.error) {
+                                                                customErrorHandle(first_step_inputs.eq(i).parent(), 'The email has already been taken.');
+                                                                errors = true;
+                                                            }
 
                                                         case 19:
 
@@ -28717,7 +28755,7 @@ function bindLoginSigninPopupShow() {
                                                                 this_btn.attr('data-current-step', 'second');
                                                                 this_btn.val('Next');
                                                             }
-                                                            return _context20.abrupt('break', 43);
+                                                            return _context20.abrupt('break', 48);
 
                                                         case 27:
                                                             second_step_inputs = $('.dentist .form-register .step.second .custom-input');
@@ -28805,7 +28843,7 @@ function bindLoginSigninPopupShow() {
                                                                 this_btn.attr('data-current-step', 'third');
                                                                 this_btn.val('Create profile');
                                                             }
-                                                            return _context20.abrupt('break', 43);
+                                                            return _context20.abrupt('break', 48);
 
                                                         case 35:
                                                             $('.dentist .form-register .step.third').find('.error-handle').remove();
@@ -28835,13 +28873,16 @@ function bindLoginSigninPopupShow() {
                                                                 errors = true;
                                                             }
 
-                                                            if (!errors) {
-                                                                //submit the form
-                                                                $('form#dentist-register').submit();
-                                                            }
-                                                            return _context20.abrupt('break', 43);
+                                                            _context20.next = 43;
+                                                            return checkCaptcha($('.dentist .form-register .step.third #register-captcha').val().trim());
 
                                                         case 43:
+                                                            check_captcha_response = _context20.sent;
+
+                                                            console.log(check_captcha_response, 'check_captcha_response');
+                                                            return _context20.abrupt('return', false);
+
+                                                        case 48:
                                                         case 'end':
                                                             return _context20.stop();
                                                     }

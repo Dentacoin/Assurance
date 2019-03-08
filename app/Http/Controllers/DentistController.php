@@ -72,7 +72,7 @@ class DentistController extends Controller
             'phone' => 'required|max:50',
             'website' => 'required|max:250',
             'specializations' => 'required',
-            'captcha' => 'required|captcha|max:5'
+            'captcha' => 'required|captcha|max:10'
         ], $customMessages);
 
         $data = $request->input();

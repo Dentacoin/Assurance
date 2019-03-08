@@ -2047,7 +2047,10 @@ function bindLoginSigninPopupShow() {
                                         } else if(first_step_inputs.eq(i).attr('type') == 'email' && basic.validateEmail(first_step_inputs.eq(i).val().trim())) {
                                             //coredb check if email is free
                                             var check_email_if_free_response = await checkIfFreeEmail(first_step_inputs.eq(i).val().trim());
-                                            console.log(check_email_if_free_response, 'check_email_if_free_response');
+                                            if(check_email_if_free_response.error) {
+                                                customErrorHandle(first_step_inputs.eq(i).parent(), 'The email has already been taken.');
+                                                errors = true;
+                                            }
                                         }
 
                                         if(first_step_inputs.eq(i).attr('type') == 'password' && first_step_inputs.eq(i).val().length < 6) {
@@ -2189,6 +2192,10 @@ function bindLoginSigninPopupShow() {
                                         customErrorHandle($('.step.third .step-errors-holder'), 'Please agree with our privacy policy.');
                                         errors = true;
                                     }
+
+                                    var check_captcha_response = await checkCaptcha($('.dentist .form-register .step.third #register-captcha').val().trim());
+                                    console.log(check_captcha_response, 'check_captcha_response');
+                                    return false;
 
                                     if(!errors) {
                                         //submit the form
@@ -3370,6 +3377,20 @@ async function checkIfFreeEmail(email) {
         dataType: 'json',
         data: {
             email: email
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+}
+
+async function checkCaptcha(captcha) {
+    return await $.ajax({
+        type: 'POST',
+        url: '/check-captcha',
+        dataType: 'json',
+        data: {
+            captcha: captcha
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

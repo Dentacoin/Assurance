@@ -130,8 +130,16 @@ class UserController extends Controller {
     function checkEmail(Request $request) {
         $data = $this->clearPostData($request->input());
         $api_response = (new APIRequestsController())->checkIfFreeEmail($data['email']);
+        if($api_response->success) {
+            return response()->json(['success' => true]);
+        } else if(!$api_response->success) {
+            return response()->json(['error' => true]);
+        }
+    }
 
-        var_dump($api_response);
+    function checkCaptcha(Request $request) {
+        $data = $this->clearPostData($request->input());
+        var_dump(captcha_check($data['captcha']));
         die();
     }
 
