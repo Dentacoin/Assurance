@@ -30,7 +30,7 @@
                                 </select>
                             </div>
                             <div class="form-row padding-bottom-15 fs-0 suggester-parent module">
-                                <label class="inline-block fs-16" for="country">Postal Address:</label>
+                                <label class="inline-block fs-16" for="address">Postal Address:</label>
                                 <input type="text" name="address" class="custom-input fs-16 address-suggester @if((new \App\Http\Controllers\UserController())->checkDentistSession()) required @endif" autocomplete="off" placeholder="City, Street" @if(!empty($user_data) && !empty($user_data->address)) value="{{$user_data->address}}" @endif>
                                 <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
                                 <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
@@ -64,15 +64,15 @@
                                 </div>
                             @endif
                             <div class="form-row padding-bottom-40 fs-0">
-                                <label class="inline-block-top fs-16">Photo:</label>
+                                <label class="inline-block-top fs-16" id="custom-upload-avatar">Photo:</label>
                                 <div class="inline-block-top avatar module text-center upload-file" @if(!empty($user_data) && !empty($user_data->avatar_url)) data-current-user-avatar="{{$user_data->avatar_url}}" @endif>
                                     <input type="file" class="visualise-image inputfile" id="custom-upload-avatar" name="image" accept=".jpg,.png,.jpeg,.svg,.bmp"/>
                                     <div class="btn-wrapper"></div>
                                 </div>
                             </div>
                             <div class="form-row padding-bottom-30 fs-0">
-                                <label class="inline-block fs-16" for="full-name">Your Wallet Address:</label>
-                                <input class="inline-block fs-16 custom-input" minlength="42" maxlength="42" name="dcn_address" placeholder="Wallet Address" type="text" @if(!empty($user_data) && !empty($user_data->dcn_address)) value="{{$user_data->dcn_address}}" @endif/>
+                                <label class="inline-block fs-16" for="dcn_address">Your Wallet Address:</label>
+                                <input class="inline-block fs-16 custom-input" minlength="42" maxlength="42" name="dcn_address" placeholder="Wallet Address" id="dcn_address" type="text" @if(!empty($user_data) && !empty($user_data->dcn_address)) value="{{$user_data->dcn_address}}" @endif/>
                                 @if(empty($user_data->dcn_address))
                                     <div class="fs-13 padding-top-10 padding-left-180">Don’t have a wallet yet? Create one at <a href="https://wallet.dentacoin.com/" class="lato-semibold blue-green-color" target="_blank">www.wallet.dentacoin.com</a>.</div>
                                 @endif
