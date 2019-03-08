@@ -28394,6 +28394,11 @@ function bindLoginSigninPopupShow() {
                 data.route = this_btn.attr('data-route');
                 data.slug = this_btn.attr('data-slug');
             }
+
+            if (this_btn.hasClass('dentist-side')) {
+                data.side = 'dentist';
+            }
+
             $.ajax({
                 type: 'POST',
                 url: '/get-login-signin',

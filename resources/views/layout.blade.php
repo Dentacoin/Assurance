@@ -47,7 +47,7 @@
                         <li class="inline-block">|</li>
                         <li class="inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == "patient-access") active @endif @endif"><a href="{{route('patient-access')}}" itemprop="url"><span itemprop="name">Patients</span></a></li>
                         <li class="inline-block">
-                            <a href="javascript:void(0)" itemprop="url" class="blue-green-white-btn show-login-signin"><span itemprop="name">SIGN IN</span></a>
+                            <a href="javascript:void(0)" itemprop="url" class="blue-green-white-btn show-login-signin @if(!empty(Route::current())) @if(Route::current()->getName() == "home") dentist-side @endif @endif"><span itemprop="name">SIGN IN</span></a>
                         </li>
                     </ul>
                 </nav>

@@ -23,6 +23,10 @@ class UserController extends Controller {
             $params['route'] = $request->input('route');
             $params['slug'] = $request->input('slug');
         }
+
+        if(!empty($request->input('side'))) {
+            $params['side'] = $request->input('side');
+        }
         $view = view('partials/login-signin', $params);
         $view = $view->render();
         return response()->json(['success' => $view]);

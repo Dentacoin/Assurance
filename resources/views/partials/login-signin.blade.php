@@ -1,9 +1,18 @@
+@if(isset($side))
+    @if($side = 'dentist')
+        @php($dentist_class = '')
+        @php($patient_class = 'custom-hide')
+    @endif
+@else
+    @php($patient_class = '')
+    @php($dentist_class = 'custom-hide')
+@endif
 <div class="fs-0 popup-header-action">
     <a href="javascript:void(0)" class="inline-block" data-type="patient">I'm a Patient</a>
     <a href="javascript:void(0)" class="inline-block" data-type="dentist">I'm a Dentist</a>
 </div>
 <div class="fs-0 popup-body">
-    <div class="patient inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == "home") custom-hide @endif @endif">
+    <div class="patient inline-block {{$patient_class}}">
         <div class="form-login">
             <h2>LOG IN</h2>
             <div class="padding-bottom-10">
@@ -46,7 +55,7 @@
             </div>
         </div>
     </div>
-    <div class="dentist inline-block @if(!empty(Route::current())) @if(Route::current()->getName() != "home") custom-hide @endif @endif">
+    <div class="dentist inline-block {{$dentist_class}}">
         <div class="form-login">
             <h2>LOG IN</h2>
             <form method="POST" action="{{ route('dentist-login') }}" id="dentist-login">
