@@ -117,6 +117,8 @@ class PatientController extends Controller {
     protected function getInviteDentistsPopup(Request $request) {
         $data = $request->input('serialized');
         parse_str($data, $postdata);
+        var_dump($data);
+        die();
 
         $current_patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
         $receiver = $data['title'] . ' ' . $data['name'] . ' (' . $data['email'] . ')';
