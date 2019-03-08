@@ -446,8 +446,6 @@ class PatientController extends Controller {
         ]);
 
         $clinic = (new APIRequestsController())->getUserData($request->input('clinic_id'));
-        var_dump($clinic);
-        die();
         $current_patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
         $receiver = $clinic->name . ' (' . $clinic->email . ')';
         if($clinic->is_clinic) {

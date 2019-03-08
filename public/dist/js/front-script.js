@@ -3055,7 +3055,8 @@ if ($('body').hasClass('logged-in')) {
                     fixButtonsFocus();
 
                     var custom_form_obj = {
-                        clinic_id: this_select.val().trim()
+                        clinic_id: this_select.val().trim(),
+                        _token: $('meta[name="csrf-token"]').attr('content')
                     };
                     $('.before-sending-email-confirmation-popup .send-mail').click(function () {
                         $('.response-layer').show();
