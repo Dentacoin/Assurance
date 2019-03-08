@@ -117,7 +117,8 @@ class APIRequestsController extends Controller {
     public function getAllClinicsByName($name = null) {
         $post_fields_arr = array(
             'type' => 'all-dentists',
-            'items_per_page' => 2000
+            'items_per_page' => 2000,
+            'status' => 'approved'
         );
 
         if(!empty($name)) {
