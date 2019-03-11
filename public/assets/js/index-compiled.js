@@ -25739,60 +25739,71 @@ var pagesDataOnContractInit = function () {
 
                                                                                 case 15:
                                                                                     _fireAssuranceContractCreationTransaction = function () {
-                                                                                        var _ref8 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
-                                                                                            var contract_creation_function_abi;
+                                                                                        var _ref8 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(nonce) {
+                                                                                            var contract_creation_function_abi, contract_creation_transaction_obj, contract_creation_transaction;
                                                                                             return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
                                                                                                 while (1) {
                                                                                                     switch (_context5.prev = _context5.next) {
                                                                                                         case 0:
-                                                                                                            _context5.next = 2;
+                                                                                                            if (!(nonce == undefined)) {
+                                                                                                                _context5.next = 4;
+                                                                                                                break;
+                                                                                                            }
+
+                                                                                                            _context5.next = 3;
+                                                                                                            return App.web3_1_0.eth.getTransactionCount(global_state.account);
+
+                                                                                                        case 3:
+                                                                                                            nonce = _context5.sent;
+
+                                                                                                        case 4:
+                                                                                                            _context5.next = 6;
                                                                                                             return App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
-                                                                                                        case 2:
+                                                                                                        case 6:
                                                                                                             contract_creation_function_abi = _context5.sent;
 
-                                                                                                            App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
-                                                                                                                console.log(nonce, 'nonce contract creation');
-                                                                                                                var contract_creation_transaction_obj = {
-                                                                                                                    gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + gas_cost_for_contract_creation * 5 / 100)),
-                                                                                                                    gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                                                                                    from: global_state.account,
-                                                                                                                    nonce: App.web3_1_0.utils.toHex(nonce),
-                                                                                                                    chainId: App.chain_id,
-                                                                                                                    data: contract_creation_function_abi,
-                                                                                                                    to: App.assurance_proxy_address
-                                                                                                                };
 
-                                                                                                                var contract_creation_transaction = new EthereumTx(contract_creation_transaction_obj);
-                                                                                                                //signing the transaction
-                                                                                                                contract_creation_transaction.sign(new Buffer(transaction_key, 'hex'));
+                                                                                                            console.log(nonce, 'contract creation');
+                                                                                                            contract_creation_transaction_obj = {
+                                                                                                                gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + gas_cost_for_contract_creation * 5 / 100)),
+                                                                                                                gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                                                                                from: global_state.account,
+                                                                                                                nonce: App.web3_1_0.utils.toHex(nonce),
+                                                                                                                chainId: App.chain_id,
+                                                                                                                data: contract_creation_function_abi,
+                                                                                                                to: App.assurance_proxy_address
+                                                                                                            };
+                                                                                                            contract_creation_transaction = new EthereumTx(contract_creation_transaction_obj);
+                                                                                                            //signing the transaction
 
-                                                                                                                //sending the transaction
-                                                                                                                App.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                                                                                    $.ajax({
-                                                                                                                        type: 'POST',
-                                                                                                                        url: '/patient/on-blockchain-contract-creation',
-                                                                                                                        dataType: 'json',
-                                                                                                                        data: {
-                                                                                                                            ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                                                                        },
-                                                                                                                        headers: {
-                                                                                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                                                                        },
-                                                                                                                        success: function success(inner_response) {
-                                                                                                                            if (inner_response.success) {
-                                                                                                                                $('.response-layer').hide();
-                                                                                                                                basic.showDialog(inner_response.success, '', null, true);
-                                                                                                                                $('.close-popup').click(function () {
-                                                                                                                                    basic.closeDialog();
-                                                                                                                                });
-                                                                                                                            }
+                                                                                                            contract_creation_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                                                                                            //sending the transaction
+                                                                                                            App.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                                                                                $.ajax({
+                                                                                                                    type: 'POST',
+                                                                                                                    url: '/patient/on-blockchain-contract-creation',
+                                                                                                                    dataType: 'json',
+                                                                                                                    data: {
+                                                                                                                        ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                                                                    },
+                                                                                                                    headers: {
+                                                                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                                                                    },
+                                                                                                                    success: function success(inner_response) {
+                                                                                                                        if (inner_response.success) {
+                                                                                                                            $('.response-layer').hide();
+                                                                                                                            basic.showDialog(inner_response.success, '', null, true);
+                                                                                                                            $('.close-popup').click(function () {
+                                                                                                                                basic.closeDialog();
+                                                                                                                            });
                                                                                                                         }
-                                                                                                                    });
+                                                                                                                    }
                                                                                                                 });
                                                                                                             });
 
-                                                                                                        case 4:
+                                                                                                        case 12:
                                                                                                         case 'end':
                                                                                                             return _context5.stop();
                                                                                                     }
@@ -25800,7 +25811,7 @@ var pagesDataOnContractInit = function () {
                                                                                             }, _callee5, this);
                                                                                         }));
 
-                                                                                        return function _fireAssuranceContractCreationTransaction() {
+                                                                                        return function _fireAssuranceContractCreationTransaction(_x8) {
                                                                                             return _ref8.apply(this, arguments);
                                                                                         };
                                                                                     }();
@@ -25853,7 +25864,7 @@ var pagesDataOnContractInit = function () {
                                                                                     approval_function_abi = _context6.sent;
 
                                                                                     App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
-                                                                                        console.log(nonce, 'nonce approval');
+                                                                                        console.log(nonce, 'approval');
                                                                                         var approval_transaction_obj = {
                                                                                             gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + gas_cost_for_approval * 5 / 100)),
                                                                                             gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
@@ -25870,7 +25881,7 @@ var pagesDataOnContractInit = function () {
 
                                                                                         //sending the transaction
                                                                                         App.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                                                            _fireAssuranceContractCreationTransaction();
+                                                                                            _fireAssuranceContractCreationTransaction(nonce + 1);
                                                                                         });
                                                                                     });
                                                                                     _context6.next = 38;
@@ -26293,7 +26304,7 @@ var onDocumentReadyPageData = function () {
                                 }, _callee22, this);
                             }));
 
-                            return function (_x17) {
+                            return function (_x18) {
                                 return _ref23.apply(this, arguments);
                             };
                         }());
@@ -26351,7 +26362,7 @@ var onDocumentReadyPageData = function () {
                                 }, _callee23, this);
                             }));
 
-                            return function (_x18) {
+                            return function (_x19) {
                                 return _ref24.apply(this, arguments);
                             };
                         }());
@@ -26526,7 +26537,7 @@ var validateUserAddress = function () {
         }, _callee27, this);
     }));
 
-    return function validateUserAddress(_x21, _x22) {
+    return function validateUserAddress(_x22, _x23) {
         return _ref27.apply(this, arguments);
     };
 }();
@@ -26562,7 +26573,7 @@ var getEncryptedContractPdfContent = function () {
         }, _callee28, this);
     }));
 
-    return function getEncryptedContractPdfContent(_x23, _x24) {
+    return function getEncryptedContractPdfContent(_x24, _x25) {
         return _ref28.apply(this, arguments);
     };
 }();
@@ -26629,7 +26640,7 @@ var checkIfFreeEmail = function () {
         }, _callee30, this);
     }));
 
-    return function checkIfFreeEmail(_x25) {
+    return function checkIfFreeEmail(_x26) {
         return _ref30.apply(this, arguments);
     };
 }();
@@ -26664,7 +26675,7 @@ var checkCaptcha = function () {
         }, _callee31, this);
     }));
 
-    return function checkCaptcha(_x26) {
+    return function checkCaptcha(_x27) {
         return _ref31.apply(this, arguments);
     };
 }();
@@ -26699,7 +26710,7 @@ var getDecryptedPrivateKey = function () {
         }, _callee32, this);
     }));
 
-    return function getDecryptedPrivateKey(_x27) {
+    return function getDecryptedPrivateKey(_x28) {
         return _ref32.apply(this, arguments);
     };
 }();
@@ -26735,7 +26746,7 @@ var getDecryptedKeystoreFile = function () {
         }, _callee33, this);
     }));
 
-    return function getDecryptedKeystoreFile(_x28, _x29) {
+    return function getDecryptedKeystoreFile(_x29, _x30) {
         return _ref33.apply(this, arguments);
     };
 }();
@@ -26771,7 +26782,7 @@ var getDecryptedPdfContent = function () {
         }, _callee34, this);
     }));
 
-    return function getDecryptedPdfContent(_x30, _x31) {
+    return function getDecryptedPdfContent(_x31, _x32) {
         return _ref34.apply(this, arguments);
     };
 }();
@@ -27615,7 +27626,7 @@ if ($('body').hasClass('logged-in')) {
                 }, _callee10, this);
             }));
 
-            return function validateStepFields(_x8, _x9) {
+            return function validateStepFields(_x9, _x10) {
                 return _ref10.apply(this, arguments);
             };
         }();
@@ -28127,7 +28138,7 @@ if ($('body').hasClass('logged-in')) {
                     }, _callee13, this);
                 }));
 
-                return function (_x10) {
+                return function (_x11) {
                     return _ref13.apply(this, arguments);
                 };
             }());
@@ -28633,7 +28644,7 @@ function bindLoginSigninPopupShow() {
                                                 }, _callee15, this);
                                             }));
 
-                                            return function (_x12) {
+                                            return function (_x13) {
                                                 return _ref16.apply(this, arguments);
                                             };
                                         }());
@@ -28654,7 +28665,7 @@ function bindLoginSigninPopupShow() {
                                                 }, _callee16, this);
                                             }));
 
-                                            return function (_x13) {
+                                            return function (_x14) {
                                                 return _ref17.apply(this, arguments);
                                             };
                                         }());
@@ -28675,7 +28686,7 @@ function bindLoginSigninPopupShow() {
                                                 }, _callee17, this);
                                             }));
 
-                                            return function (_x14) {
+                                            return function (_x15) {
                                                 return _ref18.apply(this, arguments);
                                             };
                                         }());
@@ -28696,7 +28707,7 @@ function bindLoginSigninPopupShow() {
                                                 }, _callee18, this);
                                             }));
 
-                                            return function (_x15) {
+                                            return function (_x16) {
                                                 return _ref19.apply(this, arguments);
                                             };
                                         }());
@@ -28998,7 +29009,7 @@ function bindLoginSigninPopupShow() {
                         }, _callee20, this);
                     }));
 
-                    function success(_x11) {
+                    function success(_x12) {
                         return _ref15.apply(this, arguments);
                     }
 
@@ -29127,7 +29138,7 @@ function apiEventsListeners() {
             }, _callee21, this);
         }));
 
-        return function (_x16) {
+        return function (_x17) {
             return _ref21.apply(this, arguments);
         };
     }());
@@ -29687,7 +29698,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                 }, _callee25, this);
                             }));
 
-                            function success(_x19) {
+                            function success(_x20) {
                                 return _ref25.apply(this, arguments);
                             }
 
@@ -29800,7 +29811,7 @@ function bindTransactionAddressVerify(keystore_file) {
                             }, _callee26, this);
                         }));
 
-                        function success(_x20) {
+                        function success(_x21) {
                             return _ref26.apply(this, arguments);
                         }
 
