@@ -110,7 +110,6 @@ class UserController extends Controller {
     }
 
     protected function getLoginSigninHtml(Request $request) {
-        die('wtf');
         //passing the countries
         $countries = (new APIRequestsController())->getAllCountries();
         $clinics = (new APIRequestsController())->getAllClinicsByName();
