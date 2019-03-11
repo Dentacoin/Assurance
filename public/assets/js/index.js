@@ -2987,6 +2987,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                 //checking if fake private key or just miss spell it
                                 if(checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address)) {
                                     basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
+                                    $('.response-layer').hide();
                                 } else {
                                     //if remember me option is checked
                                     if($('.proof-of-address #remember-my-private-key').is(':checked')) {

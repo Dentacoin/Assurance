@@ -4579,7 +4579,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         switch (_context26.prev = _context26.next) {
                                             case 0:
                                                 if (!response.success) {
-                                                    _context26.next = 21;
+                                                    _context26.next = 22;
                                                     break;
                                                 }
 
@@ -4590,15 +4590,16 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 user_data = _context26.sent;
 
                                                 if (!(checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address))) {
-                                                    _context26.next = 8;
+                                                    _context26.next = 9;
                                                     break;
                                                 }
 
                                                 basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
-                                                _context26.next = 19;
+                                                $('.response-layer').hide();
+                                                _context26.next = 20;
                                                 break;
 
-                                            case 8:
+                                            case 9:
                                                 //if remember me option is checked
                                                 if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
                                                     localStorage.setItem('current-account', JSON.stringify({
@@ -4609,15 +4610,15 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 }
 
                                                 if (!(render_pdf != null)) {
-                                                    _context26.next = 18;
+                                                    _context26.next = 19;
                                                     break;
                                                 }
 
                                                 render_form = $('form#render-pdf');
-                                                _context26.next = 13;
+                                                _context26.next = 14;
                                                 return getDecryptedPdfContent(encrypted_pdf_content, response.private_key);
 
-                                            case 13:
+                                            case 14:
                                                 decrypted_pdf_response = _context26.sent;
 
 
@@ -4629,10 +4630,10 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 } else if (decrypted_pdf_response.error) {
                                                     basic.showAlert(decrypted_pdf_response.error, '', true);
                                                 }
-                                                _context26.next = 19;
+                                                _context26.next = 20;
                                                 break;
 
-                                            case 18:
+                                            case 19:
                                                 $.ajax({
                                                     type: 'POST',
                                                     url: '/update-public-keys',
@@ -4655,17 +4656,17 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                     }
                                                 });
 
-                                            case 19:
-                                                _context26.next = 22;
+                                            case 20:
+                                                _context26.next = 23;
                                                 break;
 
-                                            case 21:
+                                            case 22:
                                                 if (response.error) {
                                                     $('.response-layer').hide();
                                                     basic.showAlert(response.error, '', true);
                                                 }
 
-                                            case 22:
+                                            case 23:
                                             case "end":
                                                 return _context26.stop();
                                         }
