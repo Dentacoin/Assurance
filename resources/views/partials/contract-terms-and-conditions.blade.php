@@ -1,5 +1,5 @@
 <h2 class="text-center fs-32 padding-bottom-10 calibri-bold">DENTACOIN ASSURANCE CONTRACT</h2>
-{{var_dump($contract->contract_active_at)}}
+{{var_dump($contract)}}
 @php(die("WTF"))
 @if(!empty($contract->contract_active_at))
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
