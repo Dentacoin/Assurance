@@ -263,11 +263,8 @@ class PatientController extends Controller {
             return abort(404);
         }
 
-        var_dump($contract->created_at->timestamp);
-        die();
-
         //check if contract expired
-        if((time() - strtotime($contract->created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) {
+        if((time() - $contract->created_at->timestamp) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) {
             return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'This contract proposal has expired.']);
         }
 
