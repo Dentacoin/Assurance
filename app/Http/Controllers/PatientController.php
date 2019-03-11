@@ -263,7 +263,7 @@ class PatientController extends Controller {
             return abort(404);
         }
 
-        var_dump($contract->created_at);
+        var_dump($contract->created_at->timestamp);
         die();
 
         //check if contract expired
