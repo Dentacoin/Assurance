@@ -5988,6 +5988,7 @@ body.home .dentist-or-patient-section .inline-block-top.left .hidden-container {
     display: none; }
 body.home .fixed-calculate-button {
   bottom: 0;
+  z-index: 10000;
   position: fixed;
   left: 50%;
   -webkit-transform: translateX(-50%);

@@ -716,7 +716,7 @@ async function pagesDataOnContractInit() {
                                                     App.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
                                                         $.ajax({
                                                             type: 'POST',
-                                                            url: '/on-blockchain-contract-creation',
+                                                            url: '/patient/on-blockchain-contract-creation',
                                                             dataType: 'json',
                                                             data: {
                                                                 ipfs_hash: response.contract_data.contract_ipfs_hash

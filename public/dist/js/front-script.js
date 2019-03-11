@@ -380,7 +380,7 @@ var pagesDataOnContractInit = function () {
                                                                                                                 App.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
                                                                                                                     $.ajax({
                                                                                                                         type: 'POST',
-                                                                                                                        url: '/on-blockchain-contract-creation',
+                                                                                                                        url: '/patient/on-blockchain-contract-creation',
                                                                                                                         dataType: 'json',
                                                                                                                         data: {
                                                                                                                             ipfs_hash: response.contract_data.contract_ipfs_hash
@@ -5044,7 +5044,7 @@ initPopoverTooltips();
 
 function showWarningTestingVersion() {
     if (basic.cookies.get('warning-test-version') != '1') {
-        basic.showDialog('<div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 inline-block"><img src="/assets/images/warning-pop-up.png"></div><div class="col-xs-12 col-md-5 col-sm-6 text-center inline-block padding-top-20 padding-bottom-20"><div class="warning"><img class="max-width-50" src="/assets/images/attention.svg"></div><div class="pink-warning lato-bold fs-30">WARNING:</div><div class="black-warning lato-bold fs-30 dark-color">THIS IS A TEST WEBSITE VERSION.</div><div class="additional-text padding-top-20 padding-bottom-20">Please do not make any transactions as your funds will be lost.We will notify you via email when the official version is launched.</div><div class="btn-container"><a href="javascript:void(0)" class="white-blue-green-btn min-width-220 understood">I UNDERSTOOD</a></div></div></div></div>', 'warning-test-version', true);
+        basic.showDialog('<div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 inline-block"><img src="/assets/images/warning-pop-up.png"></div><div class="col-xs-12 col-md-5 col-sm-6 text-center inline-block padding-top-20 padding-bottom-20"><div class="warning"><img class="max-width-50" src="/assets/images/attention.svg"></div><div class="lato-bold fs-30" style="color: #ff8d8d;">WARNING:</div><div class="black-warning lato-bold fs-30 dark-color">THIS IS A TEST WEBSITE VERSION.</div><div class="additional-text padding-top-20 padding-bottom-20 fs-20">Please do not make any transactions as your funds will be lost.We will notify you via email when the official version is launched.</div><div class="btn-container"><a href="javascript:void(0)" class="white-blue-green-btn min-width-220 understood">I UNDERSTOOD</a></div></div></div></div>', 'warning-test-version', true);
         $('.warning-test-version .understood').click(function () {
             basic.cookies.set('warning-test-version', 1);
             basic.closeDialog();
