@@ -662,7 +662,7 @@ async function pagesDataOnContractInit() {
                                                 }
                                             }
 
-                                            $('.response-layer .wrapper').append('<div class="text-center padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
+                                            $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
                                             $('.response-layer').show();
 
                                             const EthereumTx = require('ethereumjs-tx');
@@ -718,24 +718,32 @@ async function pagesDataOnContractInit() {
 
                                                 //sending the transaction
                                                 App.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                    $.ajax({
-                                                        type: 'POST',
-                                                        url: '/patient/on-blockchain-contract-creation',
-                                                        dataType: 'json',
-                                                        data: {
-                                                            ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                        },
-                                                        headers: {
-                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                        },
-                                                        success: function (inner_response) {
-                                                            if(inner_response.success) {
-                                                                $('.response-layer').hide();
-                                                                basic.showDialog(inner_response.success, '', null, true);
-                                                                $('.close-popup').click(function() {
-                                                                    basic.closeDialog();
-                                                                });
-                                                            }
+                                                    //doing setinterval check to check if the smart creation transaction got mined
+                                                    var contract_creation_interval_check = setInterval(async function() {
+                                                        var contract_creation_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
+                                                        if (contract_creation_status != null && has(contract_creation_status, 'status')) {
+                                                            clearInterval(contract_creation_interval_check);
+                                                            $.ajax({
+                                                                type: 'POST',
+                                                                url: '/patient/on-blockchain-contract-creation',
+                                                                dataType: 'json',
+                                                                data: {
+                                                                    ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                },
+                                                                headers: {
+                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                },
+                                                                success: function (inner_response) {
+                                                                    if (inner_response.success) {
+                                                                        $('.response-layer').hide();
+                                                                        $('.response-layer .transaction-text').remove();
+                                                                        basic.showDialog(inner_response.success, '', null, true);
+                                                                        $('.close-popup').click(function () {
+                                                                            basic.closeDialog();
+                                                                        });
+                                                                    }
+                                                                }
+                                                            });
                                                         }
                                                     });
                                                 });
