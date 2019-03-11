@@ -141,9 +141,9 @@ var App = {
 
         if($('body').hasClass('logged-in')) {
             var user_data = await getCurrentUserData();
-            console.log(user_data.success, 'user_data.success');
-            console.log(user_data.success.dcn_address, 'user_data.success.dcn_address');
-            global_state.account = checksumAddress(user_data.success.dcn_address);
+            if(user_data.success.dcn_address != null) {
+                global_state.account = checksumAddress(user_data.success.dcn_address);
+            }
 
             //if some fake or false current-account localstorage variable is set -> delete it
             if(localStorage.getItem('current-account') != null) {

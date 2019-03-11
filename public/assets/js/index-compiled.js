@@ -26964,7 +26964,7 @@ var App = {
                             }
 
                             if (!$('body').hasClass('logged-in')) {
-                                _context2.next = 9;
+                                _context2.next = 7;
                                 break;
                             }
 
@@ -26974,9 +26974,9 @@ var App = {
                         case 4:
                             user_data = _context2.sent;
 
-                            console.log(user_data.success, 'user_data.success');
-                            console.log(user_data.success.dcn_address, 'user_data.success.dcn_address');
-                            global_state.account = checksumAddress(user_data.success.dcn_address);
+                            if (user_data.success.dcn_address != null) {
+                                global_state.account = checksumAddress(user_data.success.dcn_address);
+                            }
 
                             //if some fake or false current-account localstorage variable is set -> delete it
                             if (localStorage.getItem('current-account') != null) {
@@ -26987,10 +26987,10 @@ var App = {
                                 }
                             }
 
-                        case 9:
+                        case 7:
                             return _context2.abrupt('return', App.initContract());
 
-                        case 10:
+                        case 8:
                         case 'end':
                             return _context2.stop();
                     }
