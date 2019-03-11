@@ -2983,49 +2983,55 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                         success: async function (response) {
                             //now with the address and the public key received from the nodejs api update the db
                             if(response.success) {
-                                //if remember me option is checked
-                                if($('.proof-of-address #remember-my-private-key').is(':checked')) {
-                                    localStorage.setItem('current-account', JSON.stringify({
-                                        address: response.address,
-                                        type: 'key',
-                                        key: response.private_key
-                                    }));
-                                }
-
-                                if(render_pdf != null) {
-                                    var render_form = $('form#render-pdf');
-                                    var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content, response.private_key);
-
-                                    $('.response-layer').hide();
-                                    if(decrypted_pdf_response.success) {
-                                        basic.closeDialog();
-                                        render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
-                                        render_form.submit();
-                                    } else if(decrypted_pdf_response.error) {
-                                        basic.showAlert(decrypted_pdf_response.error, '', true);
-                                    }
+                                var user_data = await getCurrentUserData();
+                                //checking if fake private key or just miss spell it
+                                if(checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address)) {
+                                    basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
                                 } else {
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '/update-public-keys',
-                                        dataType: 'json',
-                                        data: {
+                                    //if remember me option is checked
+                                    if($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                                        localStorage.setItem('current-account', JSON.stringify({
                                             address: response.address,
-                                            public_key: response.public_key
-                                        },
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        },
-                                        success: function (inner_response) {
-                                            $('.response-layer').hide();
-                                            if(inner_response.success) {
-                                                $('.proof-of-address').remove();
-                                                $('.proof-success').fadeIn(1500);
-                                            } else {
-                                                basic.showAlert(inner_response.error, '', true);
-                                            }
+                                            type: 'key',
+                                            key: response.private_key
+                                        }));
+                                    }
+
+                                    if(render_pdf != null) {
+                                        var render_form = $('form#render-pdf');
+                                        var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content, response.private_key);
+
+                                        $('.response-layer').hide();
+                                        if(decrypted_pdf_response.success) {
+                                            basic.closeDialog();
+                                            render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
+                                            render_form.submit();
+                                        } else if(decrypted_pdf_response.error) {
+                                            basic.showAlert(decrypted_pdf_response.error, '', true);
                                         }
-                                    });
+                                    } else {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/update-public-keys',
+                                            dataType: 'json',
+                                            data: {
+                                                address: response.address,
+                                                public_key: response.public_key
+                                            },
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success: function (inner_response) {
+                                                $('.response-layer').hide();
+                                                if(inner_response.success) {
+                                                    $('.proof-of-address').remove();
+                                                    $('.proof-success').fadeIn(1500);
+                                                } else {
+                                                    basic.showAlert(inner_response.error, '', true);
+                                                }
+                                            }
+                                        });
+                                    }
                                 }
                             } else if(response.error) {
                                 $('.response-layer').hide();
@@ -3102,7 +3108,9 @@ function bindTransactionAddressVerify(keystore_file) {
                     success: async function(response) {
                         if(response.success) {
                             //checking if the private key is related to the public key saved in the coredb
-                            if(global_state.account != checksumAddress(response.address)) {
+                            var user_data = await getCurrentUserData();
+                            //checking if fake private key or just miss spell it
+                            if(checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address)) {
                                 basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
                                 $('.response-layer').hide();
                             } else {
