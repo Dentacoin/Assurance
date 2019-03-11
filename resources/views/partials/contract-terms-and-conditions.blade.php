@@ -1,7 +1,5 @@
 <h2 class="text-center fs-32 padding-bottom-10 calibri-bold">DENTACOIN ASSURANCE CONTRACT</h2>
-{{var_dump($contract)}}
-@php(die("WTF"))
-@if(!empty($contract->contract_active_at))
+@if(!empty($contract->contract_active_at) && !empty($contract->document_hash))
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
     <div class="padding-bottom-20">This present Dentacoin Assurance Contract Agreement was reached on {{date('d/m/Y', strtotime($contract->contract_active_at))}}</div>
