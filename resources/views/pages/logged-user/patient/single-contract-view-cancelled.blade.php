@@ -1,16 +1,7 @@
 @extends('layout')
 @section('content')
-    @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
-    @if(!empty($contract->patient_id))
-        @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
-        @php($patient_name = $patient->name)
-        @php($patient_email = $patient->email)
-        @php($avatar_url = $patient->avatar_url)
-    @else
-        @php($patient_name = $contract->patient_fname . ' ' . $contract->patient_lname)
-        @php($patient_email = $contract->patient_email)
-        @php($avatar_url = '/assets/images/no-avatar.png')
-    @endif
+    @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
+    @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     <section class="padding-top-100 single-contract-view-section cancelled" data-created-at="{{strtotime($contract->contract_active_at)}}">
         <div class="container">
             <div class="row">
@@ -37,12 +28,6 @@
                             </li>
                             <li class="inline-block">|</li>
                         @endif
-                        <li class="inline-block">
-                            <a href="{{route('create-contract')}}?renew-contract={{$contract->slug}}" itemprop="url" class="renew-contract-btn">
-                                <span itemprop="name"><i class="fa fa-undo" aria-hidden="true"></i> Renew Contract</span>
-                            </a>
-                        </li>
-                        <li class="inline-block">|</li>
                         <li class="inline-block">
                             <a href="{{route('my-contracts')}}" itemprop="url">
                                 <span itemprop="name"><i class="fa fa-bars" aria-hidden="true"></i> List view all contracts</span>
@@ -72,11 +57,11 @@
                 </div>
                 <div class="col-xs-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                        <img alt="Patient avatar" src="{{$avatar_url}}" class="max-width-120"/>
+                        <img alt="Patient avatar" src="{{$patient->avatar_url}}" class="max-width-120"/>
                     </figure>
-                    <div class="fs-22 calibri-bold padding-top-15 padding-bottom-5">{{$patient_name}}</div>
+                    <div class="fs-22 calibri-bold padding-top-15 padding-bottom-5">{{$patient->name}}</div>
                     <div class="calibri-light fs-18">
-                        <a href="mailto:{{$patient_email}}" class="light-gray-color">{{$patient_email}}</a>
+                        <a href="mailto:{{$patient->email}}" class="light-gray-color">{{$patient->email}}</a>
                     </div>
                 </div>
             </div>
@@ -86,7 +71,7 @@
                     @if(!empty($contract->contract_active_at))
                         <time class="display-block padding-top-10 calibri-light fs-20">{{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
                     @else
-                        <div class="cancelled-color fs-20 calibri-light padding-top-10">Patient cancelled the contract before signing it.</div>
+                        <div class="cancelled-color fs-20 calibri-light padding-top-10">You have cancelled the contract before signing it.</div>
                     @endif
                 </div>
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CalculatorParameter;
 use App\InviteDentistsReward;
 use App\PublicKey;
 use App\TemporallyContract;
@@ -18,10 +19,6 @@ class PatientController extends Controller {
         return view('pages/logged-user/patient/invite-dentists', ['invited_dentists_list' => InviteDentistsReward::where(array('patient_id' => session('logged_user')['id']))->get()->sortByDesc('created_at')->all()]);
     }
 
-    public function renderTestContract() {
-        return view('pages/test-view-contract', ['contract' => TemporallyContract::where(array('id' => 8))->get()->first()]);
-    }
-
     protected function getCongratulationsView($slug) {
         $contract = TemporallyContract::where(array('slug' => $slug, 'status' => 'awaiting-payment'))->get()->first();
         if(!empty($contract)) {
@@ -36,7 +33,8 @@ class PatientController extends Controller {
         if($contract->status == 'pending') {
             return abort(404);
         } else {
-            return view('pages/logged-user/patient/patient-contract-view', ['contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH')]);
+            $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[(new APIRequestsController())->getUserData($contract->dentist_id)->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
+            return view('pages/logged-user/patient/single-contract-view-'.$contract->status, ['contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'), 'calculator_proposals' => $calculator_proposals]);
         }
     }
 
@@ -121,7 +119,7 @@ class PatientController extends Controller {
 
         $current_patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
         $receiver = $postdata['title'] . ' ' . $postdata['dentist-name'] . ' (' . $postdata['email'] . ')';
-        $body = '<div class="padding-bottom-25 padding-top-15">My name is <span class="calibri-bold">'.$current_patient->name.'</span> and I as a patient of yours I would like to invite you to join <span class="calibri-bold">Dentacoin Assurance</span> - the first blockchain* dental assurance that entitles patients to preventive dental care against affordable monthly premiums in Dentacoin (DCN) currency.</div><div class="padding-bottom-25">It’s very easy to start: Just sign up, wait for approval and create your first contract. <a href="'.BASE_URL.'" target="_blank" class="blue-green-color calibri-bold">See how it works.</a> After/ if I agree to the conditions offered, we will get into a trustful agreement benefiting from an automated payment & notification system.</div><div class="padding-bottom-20">Affordable, preventive care for me - regular income and loyal patients for you!</div><div class="padding-bottom-20"><a href="{{BASE_URL}}support-guide" target="_blank" class="blue-green-white-btn">LEARN MORE</a></div><div class="padding-bottom-30">Looking forward to seeing you onboard! If you need any further information, do not hesitate to contact the Dentacoin Assurance team at <a href="mailto:assurance@dentacoin.com" class="blue-green-color calibri-bold">assurance@dentacoin.com</a>.</div>';
+        $body = '<div class="padding-bottom-25 padding-top-15">My name is <span class="calibri-bold">'.$current_patient->name.'</span> and I as a patient of yours I would like to invite you to join <span class="calibri-bold">Dentacoin Assurance</span> - the first blockchain* dental assurance that entitles patients to preventive dental care against affordable monthly premiums in Dentacoin (DCN) currency.</div><div class="padding-bottom-25">It’s very easy to start: Just sign up, wait for approval and create your first contract. <a href="'.BASE_URL.'" target="_blank" class="blue-green-color calibri-bold">See how it works.</a> After/ if I agree to the conditions offered, we will get into a trustful agreement benefiting from an automated payment & notification system.</div><div class="padding-bottom-20">Affordable, preventive care for me - regular income and loyal patients for you!</div><div class="padding-bottom-20"><a href="'.BASE_URL.'support-guide" target="_blank" class="blue-green-white-btn">LEARN MORE</a></div><div class="padding-bottom-30">Looking forward to seeing you onboard! If you need any further information, do not hesitate to contact the Dentacoin Assurance team at <a href="mailto:assurance@dentacoin.com" class="blue-green-color calibri-bold">assurance@dentacoin.com</a>.</div>';
 
         $view = view('partials/before-sending-email-confirmation-popup', ['sender' => $current_patient, 'receiver' => $receiver, 'mail_title' => 'Invite Your Dentist', 'mail_subject' => 'Invitation to join Dentacoin Assurance', 'mail_body' => $body]);
         $view = $view->render();
@@ -422,9 +420,9 @@ class PatientController extends Controller {
         } else {
             return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['success' => 'Your monthly premium proposal has been sent successfully to your dentist.']);
         }
-    }/*
+    }
 
-    protected function PatientController(Request $request) {
+    protected function onBlockchainContractCreation(Request $request) {
         $this->validate($request, [
             'ipfs_hash' => 'required'
         ], [
@@ -435,8 +433,8 @@ class PatientController extends Controller {
         $contract->status = 'awaiting-approval';
         $contract->save();
 
-        return response()->json(['success' => true]);
-    }*/
+        return response()->json(['success' => '<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">THANK YOU</div><div class="padding-top-20 padding-bottom-15">Your first payment was processed successfully. Once your dentist has approved it, you smart contract will automatically be activated.</div><div class="btn-container padding-bottom-40"><a href="javascript:void(0)" class="white-blue-green-btn min-width-200 close-popup">OK</a></div></div>']);
+    }
 
     protected function getContactClinicPopup(Request $request) {
         $this->validate($request, [

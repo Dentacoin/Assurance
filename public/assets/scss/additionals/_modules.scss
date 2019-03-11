@@ -318,6 +318,9 @@
             &.flex-row {
                 display: flex;
             }
+            &.no-border {
+                border: 0;
+            }
             label {
                 width: 40%;
                 font-weight: normal;
@@ -842,6 +845,133 @@
             height: 200px;
             display: none;
             background: transparent;
+        }
+    }
+    &.contract-details {
+        .signature-and-checkboxes {
+            width: 300px;
+            margin: 0 auto;
+            display: block;
+            .checkbox-container {
+                text-align: left;
+                .pretty.on-white-background.p-svg .state .svg {
+                    top: 0;
+                }
+                .pretty.on-white-background .state label:after, .pretty.on-white-background .state label:before {
+                    top: 0;
+                }
+                label {
+                    a {
+                        color: $blue_green_color;
+                    }
+                }
+            }
+            .signature-wrapper canvas {
+                height: 150px;
+            }
+        }
+        .terms-and-conditions-long-list {
+            height: 350px;
+            h2, h3 {
+                border: 0;
+            }
+            ul {
+                padding-left: 20px;
+                li {
+                    list-style: disc inside none;
+                }
+            }
+        }
+        .right-extra-field {
+            label {
+                width: 100%;
+                white-space: normal;
+                line-height: 20px;
+            }
+        }
+        .top-right-page-alike {
+            border-left: 90px solid #f2f4f6;
+            border-top: 90px solid #d6dbe2;
+            position: absolute;
+            top: 0;
+            right: 0;
+            @include rounded(0 6px 0 0);
+        }
+        h3 {
+            border-bottom: 1px dashed black;
+            padding-bottom: 10px;
+            &.light-gray-bottom-border {
+                border-bottom: 1px solid $light_gray;
+            }
+        }
+        .single-row {
+            label {
+                padding-bottom: 15px;
+            }
+        }
+        .mCSB_inside > .mCSB_container {
+            margin-right: 35px !important;
+        }
+        .mCSB_scrollTools {
+            right: 8px !important;
+        }
+        .mCSB_scrollTools .mCSB_draggerRail {
+            width: 10px !important;
+            background-color: #9dadbc !important;
+        }
+        .mCSB_scrollTools .mCSB_dragger {
+            width: 30px !important;
+            height: 30px !important;
+            min-height: auto !important;
+            @include horizontal-align(absolute);
+            @include rounded(50%);
+        }
+        .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+            width: 20px !important;
+            height: 20px !important;
+            background-color: white !important;
+            top: 5px !important;
+            @include box-shadow(rgba(0, 0, 0, 0.4) 0px 0px 3px 3px);
+        }
+
+        .pretty input[disabled]~* {
+            opacity: 1;
+        }
+        .pretty {
+            svg.svg {
+                top: 0;
+            }
+        }
+        .pretty.on-white-background .state label:after, .pretty.on-white-background .state label:before {
+            top: 0;
+        }
+        .pretty label {
+            padding-top: 0;
+        }
+        .pretty.on-white-background.p-svg .state .svg {
+            border-color: $blue_green_color !important;
+        }
+    }
+    &.contract-details-container {
+        display: none;
+        margin-top: 40px;
+        padding: 0 15%;
+        position: relative;
+        @include box-shadow(0px 3px 90px -10px rgba(0, 0, 0, 0.4));
+        @include rounded(6px);
+        .contract-terms-and-conditions-signatures {
+            img {
+                width: 200px;
+            }
+            .signs-container .name {
+                text-align: right;
+                font-style: italic;
+                font-size: 16px;
+                width: 200px;
+            }
+        }
+        &.show-this {
+            display: block;
         }
     }
 }

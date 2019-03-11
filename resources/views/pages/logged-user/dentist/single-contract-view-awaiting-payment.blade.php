@@ -89,7 +89,14 @@
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                     <h2 class="fs-35 lato-bold padding-top-50 padding-bottom-20">Waiting for patient first payment.</h2>
                     <div class="fs-20 calibri-regular">You contract is already created in a .pdf file. Once your patient make their first payment, you will be asked to approve it and activate your contract on the blockchain as well.</div>
-                    <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color padding-top-20 inline-block">See details</a>
+                </div>
+                <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+                    <div class="padding-top-20">
+                        <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color">See details</a>
+                    </div>
+                    <div class="contract-details-container module fs-16 text-left padding-top-40 padding-bottom-60">
+                        @include('partials.contract-details', ['type' => 'single-page', 'contract' => $contract, 'dentist' => $dentist, 'patient' => $patient, 'calculator_proposals' => $calculator_proposals])
+                    </div>
                 </div>
             </div>
         </section>

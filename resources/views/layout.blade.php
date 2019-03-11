@@ -190,9 +190,18 @@
 
 {{--Success from controller response--}}
 @if (session('success'))
-    <script>
-        basic.showAlert("{{ session('success') }}", '', true);
-    </script>
+    @if(session('popup-html'))
+        <script>
+            basic.showDialog("{{ session('popup-html') }}", 'popup-html', null, true);
+            $('.close-popup').click(function() {
+                basic.closeDialog();
+            });
+        </script>
+    @else
+        <script>
+            basic.showAlert("{{ session('success') }}", '', true);
+        </script>
+    @endif
 @endif
 
 </body>

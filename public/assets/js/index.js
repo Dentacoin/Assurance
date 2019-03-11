@@ -537,15 +537,11 @@ async function pagesDataOnContractInit() {
     } else if($('body').hasClass('logged-in')) {
         if($('body').hasClass('patient-contract-view')) {
             var period_to_withdraw = parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
-            console.log(period_to_withdraw, 'period_to_withdraw');
             var next_transfer_timestamp = parseInt($('.contract-body').attr('data-time-left-next-transfer')) + period_to_withdraw;
-            console.log(parseInt($('.contract-body').attr('data-time-left-next-transfer')), 'parseInt($(\'.contract-body\').attr(\'data-time-left-next-transfer\'))');
-            console.log(next_transfer_timestamp, 'next_transfer_timestamp');
             if($('.converted-date').length > 0) {
                 var date_obj = new Date(next_transfer_timestamp * 1000);
                 $('.converted-date').html(dateObjToFormattedDate(date_obj));
             }
-            console.log(next_transfer_timestamp - new Date().getTime() / 1000, 'next_transfer_timestamp - new Date().getTime() / 1000');
             initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
 
             cancelContractEventInit();
@@ -666,11 +662,15 @@ async function pagesDataOnContractInit() {
                                                 }
                                             }
 
+                                            $('.response-layer .wrapper').append('<div class="text-center padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
+                                            $('.response-layer').show();
+
                                             const EthereumTx = require('ethereumjs-tx');
 
                                             if(!approval_given) {
                                                 var approval_function_abi = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
                                                 App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
+                                                    console.log(nonce, 'nonce approval');
                                                     var approval_transaction_obj = {
                                                         gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 5/100))),
                                                         gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
@@ -687,14 +687,7 @@ async function pagesDataOnContractInit() {
 
                                                     //sending the transaction
                                                     App.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                        $('.response-layer').show();
-                                                        var approval_interval_check = setInterval(async function() {
-                                                            var approval_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                            if(approval_status != null && has(approval_status, 'status')) {
-                                                                clearInterval(approval_interval_check);
-                                                                fireAssuranceContractCreationTransaction();
-                                                            }
-                                                        }, 1000);
+                                                        fireAssuranceContractCreationTransaction();
                                                     });
                                                 });
                                             } else {
@@ -704,6 +697,7 @@ async function pagesDataOnContractInit() {
                                             async function fireAssuranceContractCreationTransaction() {
                                                 var contract_creation_function_abi = await App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
                                                 App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
+                                                    console.log(nonce, 'nonce contract creation');
                                                     var contract_creation_transaction_obj = {
                                                         gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5/100))),
                                                         gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
@@ -725,7 +719,7 @@ async function pagesDataOnContractInit() {
                                                             if(contract_creation_status != null && has(contract_creation_status, 'status')) {
                                                                 clearInterval(contract_creation_interval_check);
 
-                                                                /*$.ajax({
+                                                                $.ajax({
                                                                     type: 'POST',
                                                                     url: '/on-blockchain-contract-creation',
                                                                     dataType: 'json',
@@ -736,12 +730,15 @@ async function pagesDataOnContractInit() {
                                                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                                     },
                                                                     success: function (inner_response) {
-                                                                        if(inner_response.success) {*/
+                                                                        if(inner_response.success) {
                                                                             $('.response-layer').hide();
-                                                                            basic.showAlert('Congratulations! Your contract is active now on the blockchain and waiting for your dentist approval. Once he approve the contract the payments will start running.', '', true);
-                                                                        /*}
+                                                                            basic.showDialog(inner_response.success, '', null, true);
+                                                                            $('.close-popup').click(function() {
+                                                                                basic.closeDialog();
+                                                                            });
+                                                                        }
                                                                     }
-                                                                });*/
+                                                                });
                                                             }
                                                         }, 1000);
                                                     });
@@ -1122,6 +1119,8 @@ if($('body').hasClass('logged-in')) {
         var signature_pad_inited = false;
         styleAvatarUploadButton('.steps-body .avatar .btn-wrapper label');
 
+        initTooltips();
+
         if($('.single-row.proof-of-address').length) {
             bindVerifyAddressLogic();
         }
@@ -1141,16 +1140,41 @@ if($('body').hasClass('logged-in')) {
         });
 
         //validation for all fields for each step
-        function validateStepFields(step_fields, step) {
+        async function validateStepFields(step_fields, step) {
             step_fields.removeClass('with-error');
             $('.step.'+step+' .single-row').removeClass('row-with-error');
             $('.step.'+step+' .single-row > label span').remove();
 
-            if(step == 'three' && $('.step.three [name="general-dentistry[]"]:checked').val() != undefined) {
+            var inner_error = false;
+
+            if(step == 'three' && $('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
+                console.log('check checkbox');
                 $('.step.three .checkboxes-right-container').removeClass('with-error');
+
+                if($('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
+                    $('.step.three .checkboxes-right-container').prev().find('span').remove();
+                    customCreateContractErrorHandle($('.step.three .checkboxes-right-container'), 'Please select at least one service.');
+                    inner_error = true;
+                }
+            } else if(step == 'one') {
+                var validate_dentist_address = false;
+                var dentist_address;
+                if($('.step.one #dcn_address').is('input')) {
+                    dentist_address = $('.step.one #dcn_address').val().trim();
+                } else {
+                    dentist_address = $('.step.one #dcn_address').html().trim();
+                }
+
+                if(innerAddressCheck(dentist_address)) {
+                    //method for first step validating the dentist address
+                    validate_dentist_address = await validateUserAddress(dentist_address, $('.step.one #dcn_address'));
+
+                    if(validate_dentist_address) {
+                        inner_error = true;
+                    }
+                }
             }
 
-            var inner_error = false;
             for(var i = 0, len = step_fields.length; i < len; i+=1) {
                 if(step_fields.eq(i).val().trim() == '' || step_fields.eq(i).val().trim() == '0') {
                     customCreateContractErrorHandle(step_fields.eq(i), 'Required field cannot be left blank.');
@@ -1186,39 +1210,17 @@ if($('body').hasClass('logged-in')) {
             if(this_btn.index() > $('.contract-creation-steps-container button[data-step="'+create_contract_form.find('.next').attr('data-current-step')+'"]').index()) {
                 var validate_steps_arr;
                 if(this_btn_step == 'two') {
-                    var validate_dentist_address = false;
-                    var dentist_address;
-                    if($('.step.one #dcn_address').is('input')) {
-                        dentist_address = $('.step.one #dcn_address').val().trim();
-                    } else {
-                        dentist_address = $('.step.one #dcn_address').html().trim();
-                    }
-
-                    if(innerAddressCheck(dentist_address)) {
-                        //method for first step validating the dentist address
-                        validate_dentist_address = await validateUserAddress(dentist_address, $('.step.one #dcn_address'));
-                    }
-
-                    if(validate_dentist_address) {
-                        current_step_error = true;
-                    }
-
                     validate_steps_arr = ['one'];
                 } else if(this_btn_step == 'three') {
                     validate_steps_arr = ['one', 'two'];
                 } else if(this_btn_step == 'four') {
-                    if($('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
-                        $('.step.three .checkboxes-right-container').prev().find('span').remove();
-                        customCreateContractErrorHandle($('.step.three .checkboxes-right-container'), 'Please select at least one service.');
-                        current_step_error = true;
-                    }
                     validate_steps_arr = ['one', 'two', 'three'];
                 }
 
                 //if validate_steps_arr is defined and if no errors until now
                 if(validate_steps_arr.length && !current_step_error) {
                     for(var y = 0, len = validate_steps_arr.length; y < len; y+=1) {
-                        current_step_error = validateStepFields($('.step.'+validate_steps_arr[y]+' input.right-field'), validate_steps_arr[y]);
+                        current_step_error = await validateStepFields($('.step.'+validate_steps_arr[y]+' input.right-field'), validate_steps_arr[y]);
                     }
                 } else if(current_step_error) {
                     $('html, body').animate({scrollTop: create_contract_form.offset().top}, 500);
@@ -1287,7 +1289,7 @@ if($('body').hasClass('logged-in')) {
             window.scrollTo(0, $('.contract-creation-steps-container').offset().top);
 
             if(next_step == 'four') {
-                fourthStepValidation(button);
+                fourthStepValidation();
             }
 
             $('.contract-creation-steps-container button[data-step="'+next_step+'"]').removeClass('not-allowed-cursor').addClass('active');
@@ -1316,13 +1318,26 @@ if($('body').hasClass('logged-in')) {
                 }
             }
 
+            $('.terms-and-conditions-long-list .terms-monthly-premium').html(create_contract_form.find('input[name="monthly-premium"]').val().trim());
+            $('.terms-and-conditions-long-list .terms-check-ups-per-year').html(create_contract_form.find('select[name="check-ups-per-year"]').val().trim());
+            $('.terms-and-conditions-long-list .terms-teeth-cleaning-per-year').html(create_contract_form.find('select[name="teeth-cleaning-per-year"]').val().trim());
+
+
             //clear step three services error
             $('.step.three .checkboxes-right-container').removeClass('with-error');
+
+            $('.prophylaxis-list').html('');
 
             $('.step.four .checkboxes-right-container input[type="checkbox"]').prop('checked', false);
             //update the disabled checkboxes on the sample contract
             for(var i = 0, len = $('.step.three [name="general-dentistry[]"]:checked').length; i < len; i+=1) {
                 $('.step.four input[type="checkbox"]#'+$('[name="general-dentistry[]"]:checked').eq(i).val()).prop('checked', true);
+
+                //update the contract details in step four
+                var parent = $('[name="general-dentistry[]"]:checked').eq(i).closest('.single-checkbox-container');
+                $('.prophylaxis-list').append('<div class="'+$('[name="general-dentistry[]"]:checked').eq(i).val()+'"><div class="fs-18 calibri-bold padding-top-15 prophylaxis-title"></div><ul class="inner-list"></ul></div>');
+                $('.terms-and-conditions-long-list .prophylaxis-list .'+$('[name="general-dentistry[]"]:checked').eq(i).val()+ ' .prophylaxis-title').html(parent.find('label').html());
+                $('.terms-and-conditions-long-list .prophylaxis-list .'+$('[name="general-dentistry[]"]:checked').eq(i).val()+ ' .inner-list').html(parent.next().find('ul').html())
             }
 
             //init the signature logic
@@ -1333,7 +1348,7 @@ if($('body').hasClass('logged-in')) {
         }
 
         //method for final step validation
-        function fourthStepValidation(button) {
+        function fourthStepValidation() {
             //update fourth step html based on previous steps
             for(var i = 0, len = form_props_arr.length; i < len; i+=1) {
                 if(create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('input')) {
@@ -2207,10 +2222,10 @@ function bindLoginSigninPopupShow() {
                                     $('.dentist .form-register .step.third').find('.error-handle').remove();
                                     var errors = false;
                                     //checking if empty avatar
-                                    if($('.dentist .form-register .step.third #custom-upload-avatar').val().trim() == '') {
+                                    /*if($('.dentist .form-register .step.third #custom-upload-avatar').val().trim() == '') {
                                         customErrorHandle($('.step.third .step-errors-holder'), 'Please select avatar.');
                                         errors = true;
-                                    }
+                                    }*/
 
                                     //checking if no specialization checkbox selected
                                     if($('.dentist .form-register .step.third [name="specializations[]"]:checked').val() == undefined) {
@@ -2585,6 +2600,19 @@ async function onDocumentReadyPageData() {
                 }
             });
         } else if($('body').hasClass('dentist-contract-view')) {
+            if($('.terms-and-conditions-long-list').length) {
+                $('.terms-and-conditions-long-list').mCustomScrollbar();
+            }
+
+            if($('.open-contract-details').length) {
+                $('.open-contract-details').on('click', function() {
+                    $(this).slideUp(300);
+                    $('.contract-details-container').slideDown(300);
+                });
+            }
+
+            initTooltips();
+
             if($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval')) {
                 $('.first-payment').html(dateObjToFormattedDate(new Date((parseInt($('.single-contract-view-section').attr('data-created-at')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw())) * 1000)));
             } else if($('.single-contract-view-section').hasClass('active')) {
@@ -2603,6 +2631,19 @@ async function onDocumentReadyPageData() {
 
                 $('.single-contract-view-section .row-with-bottom-squares .next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
             }
+        } else if($('body').hasClass('patient-contract-view')) {
+            if($('.terms-and-conditions-long-list').length) {
+                $('.terms-and-conditions-long-list').mCustomScrollbar();
+            }
+
+            if($('.open-contract-details').length) {
+                $('.open-contract-details').on('click', function() {
+                    $(this).slideUp(300);
+                    $('.contract-details-container').slideDown(300);
+                });
+            }
+
+            initTooltips();
         }
     } else {
         //adding civic and facebook logging scripts
@@ -3268,7 +3309,7 @@ async function validateUserAddress(user_address, value_element) {
 }
 
 function initTooltips() {
-    if($('[data-toggle="tooltip"]')) {
+    if($('[data-toggle="tooltip"]').length) {
         $('[data-toggle="tooltip"]').tooltip();
     }
 }
@@ -3513,3 +3554,15 @@ function initPopoverTooltips() {
     }
 }
 initPopoverTooltips();
+
+function showWarningTestingVersion() {
+    if(basic.cookies.get('warning-test-version') != '1') {
+        basic.showDialog('<div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 inline-block"><img src="/assets/images/warning-pop-up.png"></div><div class="col-xs-12 col-md-5 col-sm-6 text-center inline-block padding-top-20 padding-bottom-20"><div class="warning"><img class="max-width-50" src="/assets/images/attention.svg"></div><div class="pink-warning lato-bold fs-30">WARNING:</div><div class="black-warning lato-bold fs-30 dark-color">THIS IS A TEST WEBSITE VERSION.</div><div class="additional-text padding-top-20 padding-bottom-20">Please do not make any transactions as your funds will be lost.We will notify you via email when the official version is launched.</div><div class="btn-container"><a href="javascript:void(0)" class="white-blue-green-btn min-width-220 understood">I UNDERSTOOD</a></div></div></div></div>', 'warning-test-version', true);
+        $('.warning-test-version .understood').click(function() {
+            basic.cookies.set('warning-test-version', 1);
+            basic.closeDialog();
+        });
+
+    }
+}
+showWarningTestingVersion();

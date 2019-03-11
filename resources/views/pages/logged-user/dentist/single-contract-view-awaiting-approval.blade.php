@@ -86,13 +86,22 @@
         </section>
         <section class="container contract-details">
             <div class="row text-center">
-                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                <div class="col-xs-12">
                     <h2 class="fs-35 lato-bold padding-top-50 padding-bottom-20">You Have Received Your First Payment.</h2>
+                </div>
+
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                     <div class="fs-20 calibri-regular">Now you can check all details and give your approval in order to activate your contract on the blockchain as well.</div>
+                </div>
+
+                <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                     <div class="padding-top-20">
-                        <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color" onclick="alert('COMING SOON!')">See details</a>
+                        <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color">See details</a>
                     </div>
-                    <div class="padding-top-30">
+                    <div class="contract-details-container module fs-16 text-left padding-top-40 padding-bottom-60">
+                        @include('partials.contract-details', ['type' => 'single-page', 'contract' => $contract, 'dentist' => $dentist, 'patient' => $patient, 'calculator_proposals' => $calculator_proposals])
+                    </div>
+                    <div class="padding-top-40">
                         <a href="javascript:void(0)" class="white-green-btn min-width-300" onclick="alert('COMING SOON!')">APPROVE & ACTIVATE</a>
                     </div>
                 </div>

@@ -14,8 +14,8 @@
     </div>
     <div class="step-fields module padding-top-35">
         <div class="single-row flex-row fs-0">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Professional/Company Registration Number:</label>
-            <input type="text" maxlength="50" name="professional-company-number" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background" @if(!empty($renew_contract)) value="{{$renew_contract->professional_company_number}}" @endif/>
+            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer" for="professional-company-number">Professional/Company Registration Number:</label>
+            <input type="text" maxlength="50" name="professional-company-number" id="professional-company-number" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background " @if(!empty($renew_contract)) value="{{$renew_contract->professional_company_number}}" @endif/>
         </div>
         <div class="single-row flex-row fs-0">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Postal Address:</label>

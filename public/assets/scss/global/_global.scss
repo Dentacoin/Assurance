@@ -503,6 +503,33 @@ fieldset {
 }
 
 .bootbox {
+    &.popup-html {
+        .bootbox-close-button {
+            font-size: 45px;
+            margin-top: -20px;
+            opacity: 1;
+            color: #424242;
+        }
+        .modal-dialog {
+            .modal-body {
+                .bootbox-body {
+                    padding: 0 8%;
+                }
+            }
+        }
+    }
+    &.warning-test-version {
+        .bootbox-close-button {
+            display: none;
+        }
+        .modal-dialog {
+            width: 95%;
+            max-width: 1400px;
+            .modal-body {
+                padding: 0;
+            }
+        }
+    }
     &.calculator-popup {
         .bootbox-close-button {
             font-size: 45px;

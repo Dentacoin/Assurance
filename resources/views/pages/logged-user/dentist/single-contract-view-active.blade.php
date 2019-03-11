@@ -81,5 +81,17 @@
                 </div>
             </div>
         </section>
+        <section class="container contract-details">
+            <div class="row text-center">
+                <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+                    <div class="padding-top-40">
+                        <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color">See details</a>
+                    </div>
+                    <div class="contract-details-container module fs-16 text-left padding-top-40 padding-bottom-60">
+                        @include('partials.contract-details', ['type' => 'single-page', 'contract' => $contract, 'dentist' => $dentist, 'patient' => $patient, 'calculator_proposals' => $calculator_proposals])
+                    </div>
+                </div>
+            </div>
+        </section>
     </section>
 @endsection

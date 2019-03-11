@@ -1,31 +1,62 @@
-<h2 class="text-center fs-32 padding-bottom-30 calibri-bold">DENTACOIN ASSURANCE CONTRACT</h2>
+<h2 class="text-center fs-32 padding-bottom-10 calibri-bold">DENTACOIN ASSURANCE CONTRACT</h2>
 @if(!empty($contract->contract_active_at))
-    <div class="padding-bottom-20">This present Dentacoin Assurance Contract Agreement was reached on ------ <span class="calibri-bold">BETWEEN</span> <span class="calibri-bold">and</span></div>
+    @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
+    @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+    <div class="padding-bottom-20">This present Dentacoin Assurance Contract Agreement was reached on {{date('d/m/Y', strtotime($contract->contract_active_at))}}</div>
+    <div><span class="calibri-bold padding-top-10 padding-bottom-10 fs-18">BETWEEN</span></div>
+    <div class="padding-top-10 padding-bottom-10">
+        <div>Name - Dr. {{$dentist->name}}</div>
+        <div>Email - {{$dentist->email}}</div>
+        <div>Phone - {{$dentist->phone}}</div>
+        <div>Website - {{$dentist->website}}</div>
+        <div>Wallet Address - {{$dentist->dcn_address}}</div>
+    </div>
+    <div><span class="calibri-bold padding-top-10 padding-bottom-10 fs-18">and</span></div>
+    <div class="padding-top-10 padding-bottom-10">
+        <div>Name - {{$patient->name}}</div>
+        <div>Email - {{$patient->email}}</div>
+        <div>Wallet Address - {{$patient->dcn_address}}</div>
+    </div>
+    <div></div>
 @endif
 <h3 class="fs-22 calibri-bold padding-top-30 padding-bottom-15">1. DENTIST RIGHTS AND OBLIGATIONS</h3>
-<div class="padding-bottom-15">This present Dentacoin Assurance Contract obliges the Dentist to provide free of charge to the Patient [number of check-ups] check-ups per year and [number of tooth cleanings] professional tooth cleanings per year for the duration of the contract.</div>
+<div class="padding-bottom-15">This present Dentacoin Assurance Contract obliges the Dentist to provide free of charge to the Patient <span class="terms-check-ups-per-year"></span> check-ups per year and <span class="terms-teeth-cleaning-per-year"></span> professional tooth cleanings per year for the duration of the contract.</div>
 <div class="padding-bottom-15">The Dentist is also obliged to cover the costs for their work for the predefined set of possibly occurring treatments described in 3. Service Coverage.</div>
 <div class="padding-bottom-15">The Dentist has the right to withdraw the agreed monthly premium amount in Dentacoin (DCN) currency on the payment due date or later once the Patient has given their initial permission.</div>
 <div class="padding-bottom-15">The Dentist has the right to cancel the contract and/ or refuse a treatment in case the Patient has not visit the Dentist for the required number of check-ups and tooth cleanings per year. </div>
 <h3 class="fs-22 calibri-bold padding-top-30 padding-bottom-15">2. PATIENT RIGHTS AND OBLIGATIONS</h3>
-<div class="padding-bottom-15">This present Dentacoin Assurance Contract obliges the Patient to charge their wallet every month with the agreed assurance premium amount in Dentacoin (DCN) currency, namely an equivalent to [monthly assurance fee in USD] USD. The Patient must ensure that they have the full amount needed in their wallet latest on the payment due date ([payment due date]).</div>
-<div class="padding-bottom-15">The Patient is also obliged to visit the Dentist for [number of check-ups] check-ups per year and [number of tooth cleanings] professional tooth cleanings per year, as well as to use Dentacare Mobile app consistently for at least 90 days.</div>
+<div class="padding-bottom-15">This present Dentacoin Assurance Contract obliges the Patient to charge their wallet every month with the agreed assurance premium amount in Dentacoin (DCN) currency, namely an equivalent to <span class="terms-monthly-premium"></span> USD. The Patient must ensure that they have the full amount needed in their wallet latest on the payment due date.</div>
+<div class="padding-bottom-15">The Patient is also obliged to visit the Dentist for <span class="terms-check-ups-per-year"></span> check-ups per year and <span class="terms-teeth-cleaning-per-year"></span> professional tooth cleanings per year, as well as to use Dentacare Mobile app consistently for at least 90 days.</div>
 <div class="padding-bottom-15">In case the above-described recommendations are followed, the Patient has the right to have their occurring treatment costs covered for the predefined set of possibly occurring treatments described in 3. Service Coverage.</div>
 <div class="padding-bottom-15">The Patient has the right to cancel the contract at any given moment.</div>
 <h3 class="fs-22 calibri-bold padding-top-30 padding-bottom-15">3. DENTAL SERVICES COVERAGE</h3>
 <div class="fs-18 calibri-bold">Prophylaxis visits:</div>
-<ul>
-    <li>[number of check-ups] check-ups per year;</li>
-    <li>[number of tooth cleanings] professional tooth cleanings per year.</li>
-</ul>
-<div class="fs-18 calibri-bold padding-top-15">General Dentistry:</div>
-<ul>
-    <li>Fillings;</li>
-    <li>Caries infiltration;</li>
-    <li>Tooth extraction.</li>
-</ul>
+@if(!empty($contract))
+    @php($general_dentistry_arr = unserialize($contract->general_dentistry))
+    @php($prophylaxis_list = '')
+    @if(in_array('param_gd', $general_dentistry_arr))
+        @php($prophylaxis_list .= '<div class="param_gd"><div class="fs-18 calibri-bold padding-top-15 prophylaxis-title">General Dentistry</div><ul class="inner-list"><li>Check-up</li><li>Tooth cleaning / scaling / polishing</li><li>Fillings</li><li>Caries infiltration</li><li>Dental sealants for children</li><li>Root canal treatment</li><li>Periodontal treatment</li><li>Tooth extraction</li></ul></div>')
+    @endif
+    @if(in_array('param_cd', $general_dentistry_arr))
+        @php($prophylaxis_list .= '<div class="param_cd"><div class="fs-18 calibri-bold padding-top-15 prophylaxis-title">Cosmetic Dentistry</div><ul class="inner-list"><li>Composite bonding</li><li>Porcelain veneers (material & laboratory costs - not covered)</li><li>Composite veneers (material & laboratory costs - not covered)</li><li>Inlays & onlays (material & laboratory costs - not covered)</li><li>Crowns (material & laboratory costs - not covered)</li><li>Bridges (material & laboratory costs - not covered)</li><li>Dentures (material & laboratory costs - not covered)</li></ul></div>')
+    @endif
+    @if(in_array('param_id', $general_dentistry_arr))
+        @php($prophylaxis_list .= '<div class="param_id"><div class="fs-18 calibri-bold padding-top-15 prophylaxis-title">Implant Dentistry</div><ul class="inner-list"><li>Implant placement (implants and abutments - not covered)</li><li>Porcelain veneers (material & laboratory costs - not covered)</li><li>Composite veneers (material & laboratory costs - not covered)</li><li>Inlays & onlays (material & laboratory costs - not covered)</li><li>Crowns (material & laboratory costs - not covered)</li><li>Bridges (material & laboratory costs - not covered)</li><li>Bone augmentation (bone replacement material - not covered)</li></ul></div>')
+    @endif
+    <ul>
+        <li>{{$contract->check_ups_per_year}} check-ups per year;</li>
+        <li>{{$contract->teeth_cleaning_per_year}} professional tooth cleanings per year.</li>
+    </ul>
+    <div class="prophylaxis-list">{!! $prophylaxis_list !!}</div>
+@else
+    <ul>
+        <li><span class="terms-check-ups-per-year"></span> check-ups per year;</li>
+        <li><span class="terms-teeth-cleaning-per-year"></span> professional tooth cleanings per year.</li>
+    </ul>
+    <div class="prophylaxis-list"></div>
+@endif
 <h3 class="fs-22 calibri-bold padding-top-30 padding-bottom-15">4. PAYMENTS</h3>
-<div class="padding-bottom-15">The agreed monthly assurance premium between the Dentist and the Patient is equivalent to [monthly premium] USD in Dentacoin (DCN) currency and must be paid every month on the agreed payment due date ([payment due date]).</div>
+<div class="padding-bottom-15">The agreed monthly assurance premium between the Dentist and the Patient is equivalent to <span class="terms-monthly-premium"></span> USD in Dentacoin (DCN) currency and must be paid every month on the agreed payment due date.</div>
 <div class="padding-bottom-15">The Patient must ensure that they have the full amount needed in their wallet on the payment due date. There is a grace period of 21 (twenty one) days.</div>
 <div class="padding-bottom-15">The Dentist has the right to withdraw the agreed monthly premium amount in Dentacoin (DCN) currency on the payment due date or later once the Patient has given their initial permission.</div>
 <div class="padding-bottom-15">Both parties must only used the wallets explicitly specified in this contract.</div>
@@ -42,5 +73,16 @@
 <h3 class="fs-22 calibri-bold padding-top-30 padding-bottom-15">8. DATA PRIVACY</h3>
 <div class="padding-bottom-15">Dentacoin B.V. takes the protection of personal data very seriously. Personal data are treated as confidential and in accordance with the statutory data protection regulations and this Privacy Policy: <a href="//dentacoin.com/privacy-policy" target="_blank">https://dentacoin.com/privacy-policy</a>.</div>
 @if(!empty($contract->contract_active_at))
-    {{var_dump('SHOW PATIENT AND DENTIST SIGNATURES')}}
+    <div class="container-fluid contract-terms-and-conditions-signatures">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <img src="{{CONTRACTS.$contract->slug.'/dentist-signature.png'}}"/>
+                <div class="name">/ Dr. {{$dentist->name}} /</div>
+            </div>
+            <div class="col-xs-12 col-sm-6 text-right">
+                <img src="{{CONTRACTS.$contract->slug.'/patient-signature.png'}}"/>
+                <div class="name">/ {{$patient->name}} /</div>
+            </div>
+        </div>
+    </div>
 @endif

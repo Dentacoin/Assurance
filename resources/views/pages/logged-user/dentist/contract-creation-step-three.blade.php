@@ -3,11 +3,32 @@
         @php($general_dentistry_arr = unserialize($renew_contract->general_dentistry))
     @endif
     <h2 class="text-center calibri-bold fs-30 padding-bottom-25">CONTRACT CONDITIONS</h2>
-    <div class="step-fields module padding-top-35">
+    <h3 class="calibri-light light-gray-color fs-18 padding-top-35 padding-bottom-10 light-gray-bottom-border">Prophylaxis <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Prophylaxis visits are always covered by Dentacoin Assurance."></i></h3>
+    <div class="step-fields module margin-top-10">
+        <div class="single-row flex-row fs-0 no-border">
+            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
+            <select class="right-field calibri-regular fs-18 dark-color inline-block" name="check-ups-per-year">
+                @for ($i = 3; $i <= 12; $i+=1)
+                    <option @if(!empty($renew_contract) && $renew_contract->check_ups_per_year == $i) selected @endif>{{$i}}</option>
+                @endfor
+            </select>
+        </div>
+        <div class="single-row flex-row fs-0 no-border">
+            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Teeth Cleaning per Year:</label>
+            <select class="right-field calibri-regular fs-18 dark-color inline-block" name="teeth-cleaning-per-year">
+                @for ($i = 1; $i <= 4; $i+=1)
+                    <option @if(!empty($renew_contract) && $renew_contract->teeth_cleaning_per_year == $i) selected @endif>{{$i}}</option>
+                @endfor
+            </select>
+        </div>
+        <div class="single-row flex-row fs-0 padding-bottom-15">
+            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful Dentacare Journeys:</label>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">1 (90 days)</div>
+        </div>
         <div class="single-row fs-0">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 padding-top-0 margin-bottom-0 inline-block">Services Covered:</label>
             <div class="right-extra-field checkboxes-right-container calibri-regular fs-18 dark-color inline-block">
-                <div class="pretty margin-bottom-5 p-svg p-curve on-white-background">
+                <div class="pretty single-checkbox-container margin-bottom-5 p-svg p-curve on-white-background">
                     <input type="checkbox" name="general-dentistry[]" value="param_gd" @if(!empty($renew_contract) && in_array('param_gd', $general_dentistry_arr)) checked @endif/>
                     <div class="state p-success">
                         <!-- svg path -->
@@ -30,7 +51,7 @@
                         <li>Tooth extraction</li>
                     </ul>
                 </div>
-                <div class="pretty margin-bottom-5 p-svg p-curve on-white-background">
+                <div class="pretty single-checkbox-container margin-bottom-5 p-svg p-curve on-white-background">
                     <input type="checkbox" name="general-dentistry[]" value="param_cd" @if(!empty($renew_contract) && in_array('param_cd', $general_dentistry_arr)) checked @endif/>
                     <div class="state p-success">
                         <!-- svg path -->
@@ -52,7 +73,7 @@
                         <li>Dentures (material & laboratory costs - not covered)</li>
                     </ul>
                 </div>
-                <div class="pretty margin-bottom-5 p-svg p-curve on-white-background">
+                <div class="pretty single-checkbox-container margin-bottom-5 p-svg p-curve on-white-background">
                     <input type="checkbox" name="general-dentistry[]" value="param_id" @if(!empty($renew_contract) && in_array('param_id', $general_dentistry_arr)) checked @endif/>
                     <div class="state p-success">
                         <!-- svg path -->
@@ -77,8 +98,8 @@
             </div>
         </div>
         <div class="single-row flex-row fs-0">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Monthly Premium:</label>
-            <input type="number" name="monthly-premium" maxlength="20" placeholder="The value is in USD" class="right-field calibri-regular fs-18 dark-color inline-block" @if(!empty($renew_contract)) value="{{$renew_contract->monthly_premium}}" @endif/>
+            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer" for="monthly-premium">Monthly Premium:</label>
+            <input type="number" name="monthly-premium" id="monthly-premium" maxlength="20" placeholder="The value is in USD" class="right-field calibri-regular fs-18 dark-color inline-block" @if(!empty($renew_contract)) value="{{$renew_contract->monthly_premium}}" @endif/>
         </div>
         @if(!empty($renew_contract))
             @if(in_array('param_gd', $general_dentistry_arr) && in_array('param_cd', $general_dentistry_arr) && in_array('param_id', $general_dentistry_arr))
@@ -106,25 +127,5 @@
                 <div class="fs-14 calibri-light light-gray-color padding-bottom-25">You are free to propose a different rate to your patient.</div>
             </div>
         @endif
-        <div class="single-row flex-row fs-0">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
-            <select class="right-field calibri-regular fs-18 dark-color inline-block" name="check-ups-per-year">
-                @for ($i = 3; $i <= 12; $i+=1)
-                    <option @if(!empty($renew_contract) && $renew_contract->check_ups_per_year == $i) selected @endif>{{$i}}</option>
-                @endfor
-            </select>
-        </div>
-        <div class="single-row flex-row fs-0">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Teeth Cleaning per Year:</label>
-            <select class="right-field calibri-regular fs-18 dark-color inline-block" name="teeth-cleaning-per-year">
-                @for ($i = 1; $i <= 4; $i+=1)
-                    <option @if(!empty($renew_contract) && $renew_contract->teeth_cleaning_per_year == $i) selected @endif>{{$i}}</option>
-                @endfor
-            </select>
-        </div>
-        <div class="single-row flex-row fs-0">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful Dentacare Journeys:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">1 (90 days)</div>
-        </div>
     </div>
 </div>

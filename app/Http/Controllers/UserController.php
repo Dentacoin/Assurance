@@ -621,4 +621,9 @@ class UserController extends Controller {
             return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
         }
     }
+
+    public function getCountryNameById($id) {
+        $countries = (new APIRequestsController())->getAllCountries();
+        return $countries[$id - 1]->name;
+    }
 }

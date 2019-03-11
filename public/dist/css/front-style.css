@@ -4418,6 +4418,20 @@ fieldset {
   .container {
     width: 95%;
     max-width: 1700px; } }
+.bootbox.popup-html .bootbox-close-button {
+  font-size: 45px;
+  margin-top: -20px;
+  opacity: 1;
+  color: #424242; }
+.bootbox.popup-html .modal-dialog .modal-body .bootbox-body {
+  padding: 0 8%; }
+.bootbox.warning-test-version .bootbox-close-button {
+  display: none; }
+.bootbox.warning-test-version .modal-dialog {
+  width: 95%;
+  max-width: 1400px; }
+  .bootbox.warning-test-version .modal-dialog .modal-body {
+    padding: 0; }
 .bootbox.calculator-popup .bootbox-close-button {
   font-size: 45px;
   margin-top: -20px;
@@ -4950,7 +4964,12 @@ input[type='file'].hide-input {
   background-size: 20px auto;
   padding-right: 25px !important;
   background-position: center right;
-  background-repeat: no-repeat; }
+  background-repeat: no-repeat;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s; }
 
 .popover-el {
   cursor: pointer; }
@@ -5300,6 +5319,8 @@ input[type='file'].hide-input {
     border-bottom: 1px solid #ff8d8d; }
   .module.step-fields .single-row.flex-row {
     display: flex; }
+  .module.step-fields .single-row.no-border {
+    border: 0; }
   .module.step-fields .single-row label {
     width: 40%;
     font-weight: normal;
@@ -5310,6 +5331,8 @@ input[type='file'].hide-input {
       padding-top: 5px;
       padding-bottom: 5px;
       display: block; }
+    .module.step-fields .single-row label.cursor-pointer {
+      cursor: pointer; }
   .module.step-fields .single-row .right-field {
     width: 60%;
     padding: 20px 10px;
@@ -5399,6 +5422,12 @@ input[type='file'].hide-input {
       transform: translate(-50%, -50%); }
   .module.contract-proposal .wrapper .terms-and-conditions-long-list {
     height: 350px; }
+    .module.contract-proposal .wrapper .terms-and-conditions-long-list h2, .module.contract-proposal .wrapper .terms-and-conditions-long-list h3 {
+      border: 0; }
+    .module.contract-proposal .wrapper .terms-and-conditions-long-list ul {
+      padding-left: 20px; }
+      .module.contract-proposal .wrapper .terms-and-conditions-long-list ul li {
+        list-style: disc inside none; }
   .module.contract-proposal .wrapper .mCSB_inside > .mCSB_container {
     margin-right: 35px !important; }
   .module.contract-proposal .wrapper .mCSB_scrollTools {
@@ -5759,6 +5788,110 @@ input[type='file'].hide-input {
   height: 200px;
   display: none;
   background: transparent; }
+.module.contract-details .signature-and-checkboxes {
+  width: 300px;
+  margin: 0 auto;
+  display: block; }
+  .module.contract-details .signature-and-checkboxes .checkbox-container {
+    text-align: left; }
+    .module.contract-details .signature-and-checkboxes .checkbox-container .pretty.on-white-background.p-svg .state .svg {
+      top: 0; }
+    .module.contract-details .signature-and-checkboxes .checkbox-container .pretty.on-white-background .state label:after, .module.contract-details .signature-and-checkboxes .checkbox-container .pretty.on-white-background .state label:before {
+      top: 0; }
+    .module.contract-details .signature-and-checkboxes .checkbox-container label a {
+      color: #126585; }
+  .module.contract-details .signature-and-checkboxes .signature-wrapper canvas {
+    height: 150px; }
+.module.contract-details .terms-and-conditions-long-list {
+  height: 350px; }
+  .module.contract-details .terms-and-conditions-long-list h2, .module.contract-details .terms-and-conditions-long-list h3 {
+    border: 0; }
+  .module.contract-details .terms-and-conditions-long-list ul {
+    padding-left: 20px; }
+    .module.contract-details .terms-and-conditions-long-list ul li {
+      list-style: disc inside none; }
+.module.contract-details .right-extra-field label {
+  width: 100%;
+  white-space: normal;
+  line-height: 20px; }
+.module.contract-details .top-right-page-alike {
+  border-left: 90px solid #f2f4f6;
+  border-top: 90px solid #d6dbe2;
+  position: absolute;
+  top: 0;
+  right: 0;
+  -webkit-border-radius: 0 6px 0 0;
+  -moz-border-radius: 0 6px 0 0;
+  -ms-border-radius: 0 6px 0 0;
+  border-radius: 0 6px 0 0; }
+.module.contract-details h3 {
+  border-bottom: 1px dashed black;
+  padding-bottom: 10px; }
+  .module.contract-details h3.light-gray-bottom-border {
+    border-bottom: 1px solid #888888; }
+.module.contract-details .single-row label {
+  padding-bottom: 15px; }
+.module.contract-details .mCSB_inside > .mCSB_container {
+  margin-right: 35px !important; }
+.module.contract-details .mCSB_scrollTools {
+  right: 8px !important; }
+.module.contract-details .mCSB_scrollTools .mCSB_draggerRail {
+  width: 10px !important;
+  background-color: #9dadbc !important; }
+.module.contract-details .mCSB_scrollTools .mCSB_dragger {
+  width: 30px !important;
+  height: 30px !important;
+  min-height: auto !important;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%; }
+.module.contract-details .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  width: 20px !important;
+  height: 20px !important;
+  background-color: white !important;
+  top: 5px !important;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px;
+  -ms-box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px; }
+.module.contract-details .pretty input[disabled] ~ * {
+  opacity: 1; }
+.module.contract-details .pretty svg.svg {
+  top: 0; }
+.module.contract-details .pretty.on-white-background .state label:after, .module.contract-details .pretty.on-white-background .state label:before {
+  top: 0; }
+.module.contract-details .pretty label {
+  padding-top: 0; }
+.module.contract-details .pretty.on-white-background.p-svg .state .svg {
+  border-color: #126585 !important; }
+.module.contract-details-container {
+  display: none;
+  margin-top: 40px;
+  padding: 0 15%;
+  position: relative;
+  -webkit-box-shadow: 0px 3px 90px -10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 3px 90px -10px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0px 3px 90px -10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 3px 90px -10px rgba(0, 0, 0, 0.4);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  border-radius: 6px; }
+  .module.contract-details-container .contract-terms-and-conditions-signatures img {
+    width: 200px; }
+  .module.contract-details-container .contract-terms-and-conditions-signatures .signs-container .name {
+    text-align: right;
+    font-style: italic;
+    font-size: 16px;
+    width: 200px; }
+  .module.contract-details-container.show-this {
+    display: block; }
 
 header {
   width: 100%;
@@ -6460,6 +6593,8 @@ section.edit-account .custom-input.bootstrap-select {
   border-radius: 6px; }
   .steps-body .wrapper .step {
     display: none; }
+    .steps-body .wrapper .step h3.light-gray-bottom-border {
+      border-bottom: 1px solid #888888 !important; }
     .steps-body .wrapper .step.one {
       display: block; }
       .steps-body .wrapper .step.one .avatar {
@@ -6476,70 +6611,6 @@ section.edit-account .custom-input.bootstrap-select {
       padding: 5px 0 15px 25px; }
       .steps-body .wrapper .step.three .show-category-list ul li {
         list-style: disc inside none; }
-    .steps-body .wrapper .step.four .signature-and-checkboxes {
-      width: 300px;
-      margin: 0 auto;
-      display: block; }
-      .steps-body .wrapper .step.four .signature-and-checkboxes .checkbox-container {
-        text-align: left; }
-        .steps-body .wrapper .step.four .signature-and-checkboxes .checkbox-container .pretty.on-white-background.p-svg .state .svg {
-          top: 0; }
-        .steps-body .wrapper .step.four .signature-and-checkboxes .checkbox-container .pretty.on-white-background .state label:after, .steps-body .wrapper .step.four .signature-and-checkboxes .checkbox-container .pretty.on-white-background .state label:before {
-          top: 0; }
-        .steps-body .wrapper .step.four .signature-and-checkboxes .checkbox-container label a {
-          color: #126585; }
-      .steps-body .wrapper .step.four .signature-and-checkboxes .signature-wrapper canvas {
-        height: 150px; }
-    .steps-body .wrapper .step.four .terms-and-conditions-long-list {
-      height: 350px; }
-    .steps-body .wrapper .step.four .right-extra-field label {
-      width: 100%;
-      white-space: normal;
-      line-height: 20px; }
-    .steps-body .wrapper .step.four .top-right-page-alike {
-      border-left: 90px solid #f2f4f6;
-      border-top: 90px solid #d6dbe2;
-      position: absolute;
-      top: 0;
-      right: 0;
-      -webkit-border-radius: 0 6px 0 0;
-      -moz-border-radius: 0 6px 0 0;
-      -ms-border-radius: 0 6px 0 0;
-      border-radius: 0 6px 0 0; }
-    .steps-body .wrapper .step.four h3 {
-      border-bottom: 1px dashed black;
-      padding-bottom: 10px; }
-    .steps-body .wrapper .step.four .single-row label {
-      padding-bottom: 15px; }
-    .steps-body .wrapper .step.four .mCSB_inside > .mCSB_container {
-      margin-right: 35px !important; }
-    .steps-body .wrapper .step.four .mCSB_scrollTools {
-      right: 8px !important; }
-    .steps-body .wrapper .step.four .mCSB_scrollTools .mCSB_draggerRail {
-      width: 10px !important;
-      background-color: #9dadbc !important; }
-    .steps-body .wrapper .step.four .mCSB_scrollTools .mCSB_dragger {
-      width: 30px !important;
-      height: 30px !important;
-      min-height: auto !important;
-      position: absolute;
-      left: 50%;
-      -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-      transform: translateX(-50%);
-      -webkit-border-radius: 50%;
-      -moz-border-radius: 50%;
-      -ms-border-radius: 50%;
-      border-radius: 50%; }
-    .steps-body .wrapper .step.four .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
-      width: 20px !important;
-      height: 20px !important;
-      background-color: white !important;
-      top: 5px !important;
-      -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px;
-      -moz-box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px;
-      -ms-box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px;
-      box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 3px 3px; }
     .steps-body .wrapper .step .pretty input[disabled] ~ * {
       opacity: 1; }
     .steps-body .wrapper .step .pretty svg.svg {

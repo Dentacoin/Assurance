@@ -61,6 +61,11 @@
                     <h3 class="fs-20 calibri-bold">Suggested Monthly Premium:</h3>
                     <div class="display-block padding-top-10 calibri-light fs-20">{{$contract->monthly_premium}} USD</div>
                 </div>
+                <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+                    <div class="contract-details-container fs-16 show-this module text-left padding-top-40 padding-bottom-60">
+                        @include('partials.contract-details', ['type' => 'single-page', 'contract' => $contract, 'dentist' => $dentist, 'calculator_proposals' => $calculator_proposals])
+                    </div>
+                </div>
             </div>
         </div>
     </section>
