@@ -714,33 +714,26 @@ async function pagesDataOnContractInit() {
 
                                                     //sending the transaction
                                                     App.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                        var contract_creation_interval_check = setInterval(async function() {
-                                                            var contract_creation_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                            if(contract_creation_status != null && has(contract_creation_status, 'status')) {
-                                                                clearInterval(contract_creation_interval_check);
-
-                                                                $.ajax({
-                                                                    type: 'POST',
-                                                                    url: '/on-blockchain-contract-creation',
-                                                                    dataType: 'json',
-                                                                    data: {
-                                                                        ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                    },
-                                                                    headers: {
-                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                    },
-                                                                    success: function (inner_response) {
-                                                                        if(inner_response.success) {
-                                                                            $('.response-layer').hide();
-                                                                            basic.showDialog(inner_response.success, '', null, true);
-                                                                            $('.close-popup').click(function() {
-                                                                                basic.closeDialog();
-                                                                            });
-                                                                        }
-                                                                    }
-                                                                });
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: '/on-blockchain-contract-creation',
+                                                            dataType: 'json',
+                                                            data: {
+                                                                ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                            },
+                                                            headers: {
+                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                            },
+                                                            success: function (inner_response) {
+                                                                if(inner_response.success) {
+                                                                    $('.response-layer').hide();
+                                                                    basic.showDialog(inner_response.success, '', null, true);
+                                                                    $('.close-popup').click(function() {
+                                                                        basic.closeDialog();
+                                                                    });
+                                                                }
                                                             }
-                                                        }, 1000);
+                                                        });
                                                     });
                                                 });
                                             }
