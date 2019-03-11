@@ -192,7 +192,7 @@
 @if (session('success'))
     @if(session('popup-html'))
         <script>
-            basic.showDialog("{{ session('popup-html') }}", 'popup-html', null, true);
+            basic.showDialog("{!! session('popup-html') !!}", 'popup-html', null, true);
             $('.close-popup').click(function() {
                 basic.closeDialog();
             });
