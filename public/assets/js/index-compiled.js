@@ -29641,33 +29641,27 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                         },
                         success: function () {
                             var _ref26 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee26(response) {
-                                var user_data, render_form, decrypted_pdf_response;
+                                var render_form, decrypted_pdf_response;
                                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee26$(_context26) {
                                     while (1) {
                                         switch (_context26.prev = _context26.next) {
                                             case 0:
                                                 if (!response.success) {
-                                                    _context26.next = 22;
+                                                    _context26.next = 19;
                                                     break;
                                                 }
 
-                                                _context26.next = 3;
-                                                return getCurrentUserData();
-
-                                            case 3:
-                                                user_data = _context26.sent;
-
-                                                if (!(checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address))) {
-                                                    _context26.next = 9;
+                                                if (!(checksumAddress($('.proof-of-address').attr('data-address')) != checksumAddress(response.address))) {
+                                                    _context26.next = 6;
                                                     break;
                                                 }
 
                                                 basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
                                                 $('.response-layer').hide();
-                                                _context26.next = 20;
+                                                _context26.next = 17;
                                                 break;
 
-                                            case 9:
+                                            case 6:
                                                 //if remember me option is checked
                                                 if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
                                                     localStorage.setItem('current-account', JSON.stringify({
@@ -29678,15 +29672,15 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 }
 
                                                 if (!(render_pdf != null)) {
-                                                    _context26.next = 19;
+                                                    _context26.next = 16;
                                                     break;
                                                 }
 
                                                 render_form = $('form#render-pdf');
-                                                _context26.next = 14;
+                                                _context26.next = 11;
                                                 return getDecryptedPdfContent(encrypted_pdf_content, response.private_key);
 
-                                            case 14:
+                                            case 11:
                                                 decrypted_pdf_response = _context26.sent;
 
 
@@ -29698,10 +29692,10 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 } else if (decrypted_pdf_response.error) {
                                                     basic.showAlert(decrypted_pdf_response.error, '', true);
                                                 }
-                                                _context26.next = 20;
+                                                _context26.next = 17;
                                                 break;
 
-                                            case 19:
+                                            case 16:
                                                 $.ajax({
                                                     type: 'POST',
                                                     url: '/update-public-keys',
@@ -29724,17 +29718,17 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                     }
                                                 });
 
-                                            case 20:
-                                                _context26.next = 23;
+                                            case 17:
+                                                _context26.next = 20;
                                                 break;
 
-                                            case 22:
+                                            case 19:
                                                 if (response.error) {
                                                     $('.response-layer').hide();
                                                     basic.showAlert(response.error, '', true);
                                                 }
 
-                                            case 23:
+                                            case 20:
                                             case 'end':
                                                 return _context26.stop();
                                         }

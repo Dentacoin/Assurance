@@ -2985,9 +2985,8 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                         success: async function (response) {
                             //now with the address and the public key received from the nodejs api update the db
                             if(response.success) {
-                                var user_data = await getCurrentUserData();
                                 //checking if fake private key or just miss spell it
-                                if(checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address)) {
+                                if(checksumAddress($('.proof-of-address').attr('data-address')) != checksumAddress(response.address)) {
                                     basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
                                     $('.response-layer').hide();
                                 } else {
