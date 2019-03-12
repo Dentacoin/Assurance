@@ -61,7 +61,7 @@ class DentistController extends Controller
             'website.required' => 'Website is required.',
             'specializations.required' => 'Specialization is required.',
             'captcha.required' => 'Captcha is required.',
-            'captcha.captcha' => 'Please enter correct captcha.'
+            /*'captcha.captcha' => 'Please enter correct captcha.'*/
         ];
         $this->validate($request, [
             'dentist-or-practice-name' => 'required|max:250',
@@ -74,7 +74,8 @@ class DentistController extends Controller
             'phone' => 'required|max:50',
             'website' => 'required|max:250',
             'specializations' => 'required',
-            'captcha' => 'required|captcha|max:10'
+            /*'captcha' => 'required|captcha|max:10'*/
+            'captcha' => 'required|max:5'
         ], $customMessages);
 
         $data = $request->input();
