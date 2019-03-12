@@ -78,4 +78,14 @@ header {
             }
         }
     }
+    @include breakpoint($sm-down) {
+        position: static;
+        height: auto;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        >.container {
+            position: static;
+            transform: none;
+        }
+    }
 }

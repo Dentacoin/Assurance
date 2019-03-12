@@ -25762,9 +25762,6 @@ var pagesDataOnContractInit = function () {
 
                                                                                                         case 6:
                                                                                                             contract_creation_function_abi = _context6.sent;
-
-
-                                                                                                            console.log(nonce, 'contract creation');
                                                                                                             contract_creation_transaction_obj = {
                                                                                                                 gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + gas_cost_for_contract_creation * 5 / 100)),
                                                                                                                 gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
@@ -25812,7 +25809,7 @@ var pagesDataOnContractInit = function () {
                                                                                                                                                     $('.response-layer .transaction-text').remove();
                                                                                                                                                     basic.showDialog(inner_response.success, '', null, true);
                                                                                                                                                     $('.close-popup').click(function () {
-                                                                                                                                                        basic.closeDialog();
+                                                                                                                                                        window.location.reload();
                                                                                                                                                     });
                                                                                                                                                 }
                                                                                                                                             }
@@ -25828,7 +25825,7 @@ var pagesDataOnContractInit = function () {
                                                                                                                 })));
                                                                                                             });
 
-                                                                                                        case 12:
+                                                                                                        case 11:
                                                                                                         case 'end':
                                                                                                             return _context6.stop();
                                                                                                     }
@@ -25889,7 +25886,6 @@ var pagesDataOnContractInit = function () {
                                                                                     approval_function_abi = _context7.sent;
 
                                                                                     App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
-                                                                                        console.log(nonce, 'approval');
                                                                                         var approval_transaction_obj = {
                                                                                             gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + gas_cost_for_approval * 5 / 100)),
                                                                                             gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
@@ -27495,6 +27491,10 @@ if ($('body').hasClass('logged-in')) {
 
         if ($('form#withdraw').length) {
             $('form#withdraw').on('submit', function (event) {
+                basic.showAlert('COMING SOON!', '', true);
+                event.preventDefault();
+                return false;
+
                 var this_form = $(this);
                 this_form.find('.error-handle').remove();
 
@@ -28187,11 +28187,44 @@ if ($('body').hasClass('logged-in')) {
             if ($('.contracts-list.slider').eq(i).attr('data-slides-number') != undefined) {
                 slides_to_show = parseInt($('.contracts-list.slider').eq(i).attr('data-slides-number'));
             }
-            $('.contracts-list.slider').eq(i).slick({
+
+            var slider_params = {
                 slidesToShow: slides_to_show,
                 slidesToScroll: 3,
                 autoplaySpeed: 8000
-            });
+            };
+
+            if ($('.contracts-list.slider').eq(i).hasClass('active-contracts')) {
+                slider_params.responsive = [{
+                    breakpoint: 1600,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3
+                    }
+                }, {
+                    breakpoint: 1200,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                }, {
+                    breakpoint: 650,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }];
+            } else if ($('.contracts-list.slider').eq(i).hasClass('cancelleds') || $('.contracts-list.slider').eq(i).hasClass('pendings')) {
+                slider_params.responsive = [{
+                    breakpoint: 1400,
+                    settings: {
+                        slidesToShow: 1,
+                        arrows: false
+                    }
+                }];
+            }
+
+            $('.contracts-list.slider').eq(i).slick(slider_params);
         }
     }
 
@@ -28443,7 +28476,7 @@ if ($('body').hasClass('logged-in')) {
             } else if (!$('section.ready-to-purchase-with-external-api #privacy-policy-agree').is(':checked')) {
                 basic.showAlert('Please agree with our Privacy Policy.', '', true);
             } else {
-                window.location = 'https://indacoin.com/gw/payment_form?partner=dentacoin&cur_from=USD&cur_to=' + currency.toUpperCase() + '&amount=' + $('section.ready-to-purchase-with-external-api #usd-value').val().trim() + '&address=' + $('section.ready-to-purchase-with-external-api input#dcn_address').val().trim() + '&user_id=' + $('section.ready-to-purchase-with-external-api input#email').val().trim();
+                window.open = ('https://indacoin.com/gw/payment_form?partner=dentacoin&cur_from=USD&cur_to=' + currency.toUpperCase() + '&amount=' + $('section.ready-to-purchase-with-external-api #usd-value').val().trim() + '&address=' + $('section.ready-to-purchase-with-external-api input#dcn_address').val().trim() + '&user_id=' + $('section.ready-to-purchase-with-external-api input#email').val().trim(), '_blank');
             }
         });
 
@@ -28908,7 +28941,7 @@ function bindLoginSigninPopupShow() {
                                                                     }
 
                                                                     if (second_step_inputs.eq(i).attr('type') == 'url' && !basic.validateUrl(second_step_inputs.eq(i).val().trim())) {
-                                                                        customErrorHandle(second_step_inputs.eq(i).parent(), 'Please use valid website.');
+                                                                        customErrorHandle(second_step_inputs.eq(i).parent(), 'Please enter your website URL starting with http:// or https://.');
                                                                         errors = true;
                                                                     } else if (second_step_inputs.eq(i).attr('type') == 'number' && !basic.validatePhone(second_step_inputs.eq(i).val().trim())) {
                                                                         customErrorHandle(second_step_inputs.eq(i).parent(), 'Please use valid numbers.');
@@ -29656,7 +29689,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                     break;
                                                 }
 
-                                                basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
+                                                basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', '', true);
                                                 $('.response-layer').hide();
                                                 _context26.next = 17;
                                                 break;
@@ -30182,6 +30215,17 @@ function showWarningTestingVersion() {
     }
 }
 showWarningTestingVersion();
+
+function initMobileMenu() {
+    $('header .hamburger').click(function () {
+        $('nav.sidenav').addClass('active');
+    });
+
+    $('nav.sidenav .close-btn, nav.sidenav ul li a').click(function () {
+        $('nav.sidenav').removeClass('active');
+    });
+}
+initMobileMenu();
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1).Buffer))
 
 /***/ }),

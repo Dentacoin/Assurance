@@ -3,9 +3,17 @@
     background-size: cover;
     background-position: top 0 center;
     background-image: url(/assets/uploads/logged-patient-no-contracts-background.jpg);
-    .module.contract-tile {
-        padding-left: 25px;
-        padding-right: 25px;
+    @include breakpoint($max-1600) {
+        .module.contract-tile {
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+    }
+    @include breakpoint($xs) {
+        .module.contract-tile {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
     }
 }
 
@@ -32,6 +40,9 @@
             background-color: $light_gray;
             left: 0;
             position: absolute;
+            @include breakpoint($xs) {
+                display: none;
+            }
         }
     }
     .contract-tile {

@@ -102,7 +102,11 @@
                         <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color">See details</a>
                     </div>
                     <div class="contract-details-container module fs-16 text-left padding-top-40 padding-bottom-60">
-                        @include('partials.contract-details', ['type' => 'single-page', 'contract' => $contract, 'dentist' => $dentist, 'patient' => $patient, 'calculator_proposals' => $calculator_proposals])
+                        @php($contract_details_params = ['type' => 'single-page', 'contract' => $contract, 'dentist' => $dentist, 'calculator_proposals' => $calculator_proposals])
+                        @if(!empty($patient))
+                            @php($contract_details_params['patient'] = $patient)
+                        @endif
+                        @include('partials.contract-details', $contract_details_params)
                     </div>
                 </div>
             </div>

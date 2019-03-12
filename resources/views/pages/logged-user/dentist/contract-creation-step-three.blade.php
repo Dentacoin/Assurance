@@ -8,7 +8,7 @@
         <div class="single-row flex-row fs-0 no-border">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
             <select class="right-field calibri-regular fs-18 dark-color inline-block" name="check-ups-per-year">
-                @for ($i = 3; $i <= 12; $i+=1)
+                @for ($i = 2; $i <= 6; $i+=1)
                     <option @if(!empty($renew_contract) && $renew_contract->check_ups_per_year == $i) selected @endif>{{$i}}</option>
                 @endfor
             </select>
@@ -41,8 +41,6 @@
                 <div class="show-category-list">
                     <a href="javascript:void(0)" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
                     <ul>
-                        <li>Check-up</li>
-                        <li>Tooth cleaning / scaling / polishing</li>
                         <li>Fillings</li>
                         <li>Caries infiltration</li>
                         <li>Dental sealants for children</li>

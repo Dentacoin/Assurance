@@ -12,7 +12,14 @@
                     <div class="contracts-list slider">
                         @if(sizeof($contracts) > 0)
                             @foreach($contracts as $contract)
-                                <div class="module contract-tile padding-bottom-10 {{$contract->status}}">
+                                @if($contract->status == 'pending')
+                                    @php($url = route('contract-proposal', ['slug' => $contract->slug]))
+                                    @php($btn_label = 'Details and Sign')
+                                @else
+                                    @php($url = route('patient-contract-view', ['slug' => $contract->slug]))
+                                    @php($btn_label = 'Details')
+                                @endif
+                                <div class="module contract-tile padding-bottom-10 {{$contract->status}}" onclick="location.href='{{$url}}';">
                                     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
                                     <div class="tile-wrapper fs-0">
                                         <div class="inline-block-top figure-container">
@@ -44,11 +51,7 @@
                                             <time class="display-block fs-14 calibri-light">Sent on: {{$contract->created_at->format('d/m/Y')}}</time>
                                             <div class="lato-semibold fs-24 padding-top-5 padding-bottom-5">{{$contract->monthly_premium}}$</div>
                                             <div class="btn-container">
-                                                @if($contract->status == 'pending')
-                                                    <a href="{{route('contract-proposal', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details and Sign</a>
-                                                @else
-                                                    <a href="{{route('patient-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details</a>
-                                                @endif
+                                                <a href="{{$url}}" class="white-blue-green-btn">{{$btn_label}}</a>
                                             </div>
                                         </div>
                                     </div>

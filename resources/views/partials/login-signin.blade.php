@@ -45,7 +45,7 @@
                         <svg class="svg svg-icon" viewBox="0 0 20 20">
                             <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
                         </svg>
-                        <label class="fs-16">By continuing you agree to our <a href="//dentacoin.com/privacy-policy" target="_blank">Privacy Policy</a></label>
+                        <label class="fs-16">I agree with <a href="//dentacoin.com/privacy-policy" target="_blank">Privacy Policy</a></label>
                     </div>
                 </div>
             </div>
@@ -133,12 +133,12 @@
                             @endif
                         </select>
                     </div>
-                    <div class="padding-bottom-10 suggester-parent module">
-                        <input type="text" name="address" class="custom-input address-suggester" autocomplete="off" placeholder="City, Street">
+                    {{--<div class="padding-bottom-10 suggester-parent module">
+                        <input type="text" name="address" class="custom-input address-suggester" autocomplete="off" placeholder="Street, Number, City">
                         <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
                         <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
                         <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
-                    </div>
+                    </div>--}}
                     <div class="padding-bottom-10 phone">
                         <div class="country-code" name="phone-code">{{$current_phone_code}}</div>
                         <div class="input-phone">
@@ -173,16 +173,16 @@
                         </div>
                         <div class="search-for-clinic padding-top-15 padding-bottom-15"></div>
                         <div class="fs-0 captcha-parent padding-bottom-15">
-                            <div class="inline-block fs-14 width-50 padding-right-10">
-                                <input type="text" name="captcha" id="register-captcha" placeholder="Calculate captcha" maxlength="5" class="custom-input"/>
-                            </div>
-                            <div class="inline-block width-50">
+                            <div class="inline-block width-50 width-xs-100 padding-bottom-xs-15">
                                 <div class="captcha-container flex text-center">
                                     <span>{!! captcha_img() !!}</span>
                                     <button type="button" class="refresh-captcha">
                                         <i class="fa fa-refresh" aria-hidden="true"></i>
                                     </button>
                                 </div>
+                            </div>
+                            <div class="inline-block fs-14 width-50 width-xs-100 padding-left-10">
+                                <input type="text" name="captcha" id="register-captcha" placeholder="Please calculate" maxlength="5" class="custom-input"/>
                             </div>
                         </div>
                         <div class="privacy-policy-row">
@@ -193,7 +193,7 @@
                                     <svg class="svg svg-icon" viewBox="0 0 20 20">
                                         <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
                                     </svg>
-                                    <label class="fs-14">I’ve read and agree to the <a href="//dentacoin.com/privacy-policy" target="_blank">Privacy Policy</a></label>
+                                    <label class="fs-14">I agree with <a href="//dentacoin.com/privacy-policy" target="_blank">Privacy Policy</a></label>
                                 </div>
                             </div>
                         </div>

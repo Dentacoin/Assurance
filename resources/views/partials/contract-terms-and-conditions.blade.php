@@ -35,7 +35,7 @@
     @php($general_dentistry_arr = unserialize($contract->general_dentistry))
     @php($prophylaxis_list = '')
     @if(in_array('param_gd', $general_dentistry_arr))
-        @php($prophylaxis_list .= '<div class="param_gd"><div class="fs-18 calibri-bold padding-top-15 prophylaxis-title">General Dentistry</div><ul class="inner-list"><li>Check-up</li><li>Tooth cleaning / scaling / polishing</li><li>Fillings</li><li>Caries infiltration</li><li>Dental sealants for children</li><li>Root canal treatment</li><li>Periodontal treatment</li><li>Tooth extraction</li></ul></div>')
+        @php($prophylaxis_list .= '<div class="param_gd"><div class="fs-18 calibri-bold padding-top-15 prophylaxis-title">General Dentistry</div><ul class="inner-list"><li>Fillings</li><li>Caries infiltration</li><li>Dental sealants for children</li><li>Root canal treatment</li><li>Periodontal treatment</li><li>Tooth extraction</li></ul></div>')
     @endif
     @if(in_array('param_cd', $general_dentistry_arr))
         @php($prophylaxis_list .= '<div class="param_cd"><div class="fs-18 calibri-bold padding-top-15 prophylaxis-title">Cosmetic Dentistry</div><ul class="inner-list"><li>Composite bonding</li><li>Porcelain veneers (material & laboratory costs - not covered)</li><li>Composite veneers (material & laboratory costs - not covered)</li><li>Inlays & onlays (material & laboratory costs - not covered)</li><li>Crowns (material & laboratory costs - not covered)</li><li>Bridges (material & laboratory costs - not covered)</li><li>Dentures (material & laboratory costs - not covered)</li></ul></div>')

@@ -9,9 +9,9 @@
                 Dentist
             @endif
         </th>
-        <th class="date">Date Signed/Initiated</th>
+        <th class="date">Date Signed</th>
         <th class="no-sort">Monthly Premium</th>
-        <th>Next Payment/Due date</th>
+        <th class="no-sort">Next Payment/Due date</th>
         <th class="no-sort">Contract Details</th>
     </tr>
     </thead>

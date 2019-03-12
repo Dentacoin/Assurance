@@ -88,7 +88,7 @@
 .calibri-regular {
   font-family: "Calibri-Regular"; }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   .col-xxs-12 {
     width: 100%; }
 
@@ -343,7 +343,27 @@
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%); }
+    transform: translate(-50%, -50%);
+    font-size: 30px; }
+    @media screen and (min-width: 768px) and (max-width: 991px) {
+      .module.dentist-or-patient-section .inline-block-top .hidden-container a {
+        min-width: 150px;
+        padding: 10px 0;
+        text-align: center;
+        font-size: 20px; } }
+    @media screen and (max-width: 767px) {
+      .module.dentist-or-patient-section .inline-block-top .hidden-container a {
+        font-size: 16px;
+        top: auto;
+        left: auto;
+        position: absolute;
+        text-align: center;
+        padding: 0;
+        border: 0;
+        transform: none;
+        width: 100%;
+        bottom: 0;
+        padding-top: 78%; } }
   .module.dentist-or-patient-section .inline-block-top .hidden-container .hidden-label {
     display: none;
     position: absolute;
@@ -355,6 +375,20 @@
     .module.dentist-or-patient-section .inline-block-top .hidden-container .hidden-label:hover {
       color: white;
       background-color: transparent; }
+  @media screen and (max-width: 767px) {
+    .module.dentist-or-patient-section .inline-block-top .hidden-container {
+      width: calc(100% - 5px);
+      opacity: 1;
+      background-color: transparent; }
+      .module.dentist-or-patient-section .inline-block-top .hidden-container .white-transparent-btn {
+        color: #212121; }
+      .module.dentist-or-patient-section .inline-block-top .hidden-container:hover {
+        background-color: rgba(18, 101, 133, 0.7); }
+        .module.dentist-or-patient-section .inline-block-top .hidden-container:hover .white-transparent-btn {
+          color: white; }
+          .module.dentist-or-patient-section .inline-block-top .hidden-container:hover .white-transparent-btn:hover {
+            background-color: transparent;
+            color: white; } }
 .module.dentist-or-patient-section .inline-block-top.right .hidden-container {
   right: 0;
   -webkit-border-radius: 4px 0 0 4px;
@@ -378,6 +412,24 @@
     transform: translate(-50%, -50%); }
     .module.intro-section .absolute-container picture img {
       width: 100%; }
+  @media screen and (max-width: 991px) {
+    .module.intro-section {
+      background-image: url(/assets/uploads/mobile-bg-900.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: top 15% center; }
+      .module.intro-section .absolute-container {
+        position: relative;
+        transform: none;
+        top: auto;
+        left: auto; }
+      .module.intro-section > picture {
+        display: none; } }
+  @media screen and (max-width: 500px) {
+    .module.intro-section {
+      background-image: url(/assets/uploads/mobile-bg-500.jpg);
+      background-repeat: no-repeat;
+      background-size: cover; } }
 .module.easy-fast-steps-section .line {
   width: 2px;
   height: 100%;
@@ -403,20 +455,25 @@
 .module.section-ideal-use-cases.background {
   background-image: url(/assets/uploads/shield-background.svg);
   background-repeat: no-repeat;
-  background-size: cover; }
-.module.section-ideal-use-cases .custom-container figure {
+  background-size: cover;
+  background-position: center center; }
+.module.section-ideal-use-cases .custom-container .custom-row figure {
+  order: 0;
   padding-top: 20px;
   padding-bottom: 20px;
   width: calc(50% - 30px); }
-.module.section-ideal-use-cases .custom-container .line-and-bullet {
+  .module.section-ideal-use-cases .custom-container .custom-row figure.order-2 {
+    order: 2; }
+.module.section-ideal-use-cases .custom-container .custom-row .line-and-bullet {
+  order: 1;
   width: 60px; }
-  .module.section-ideal-use-cases .custom-container .line-and-bullet .line {
+  .module.section-ideal-use-cases .custom-container .custom-row .line-and-bullet .line {
     width: 2px;
     margin: 0 auto;
     height: 100%;
     background-color: black;
     position: relative; }
-    .module.section-ideal-use-cases .custom-container .line-and-bullet .line .bullet {
+    .module.section-ideal-use-cases .custom-container .custom-row .line-and-bullet .line .bullet {
       width: 15px;
       height: 15px;
       border: 2px solid white;
@@ -431,10 +488,11 @@
       -moz-border-radius: 50%;
       -ms-border-radius: 50%;
       border-radius: 50%; }
-.module.section-ideal-use-cases .custom-container .content {
+.module.section-ideal-use-cases .custom-container .custom-row .content {
+  order: 2;
   width: calc(50% - 30px);
   position: relative; }
-  .module.section-ideal-use-cases .custom-container .content .wrapper {
+  .module.section-ideal-use-cases .custom-container .custom-row .content .wrapper {
     width: 80%;
     position: absolute;
     top: 50%;
@@ -442,6 +500,30 @@
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%); }
+  .module.section-ideal-use-cases .custom-container .custom-row .content.order-1 {
+    order: 1; }
+@media screen and (max-width: 767px) {
+  .module.section-ideal-use-cases .custom-container .custom-row figure {
+    width: 100%; }
+  .module.section-ideal-use-cases .custom-container .custom-row .line-and-bullet {
+    display: none; }
+  .module.section-ideal-use-cases .custom-container .custom-row .content {
+    width: 100%; }
+    .module.section-ideal-use-cases .custom-container .custom-row .content .wrapper {
+      width: 90%;
+      position: static;
+      text-align: center;
+      transform: none;
+      margin: 0 auto; }
+      .module.section-ideal-use-cases .custom-container .custom-row .content .wrapper .after-xs:after {
+        content: "";
+        height: 50px;
+        background: #212121;
+        width: 2px;
+        margin: 10px auto 0;
+        display: block; }
+  .module.section-ideal-use-cases .custom-container .custom-row:last-child .content .wrapper .after-xs:after {
+    display: none; } }
 .module.avatar input[type="file"] {
   display: none; }
 .module.avatar .btn-wrapper {
@@ -477,6 +559,9 @@
       .module.avatar .btn-wrapper label .inner .inner-label {
         font-size: 18px;
         padding: 0 10px; }
+        @media screen and (max-width: 767px) {
+          .module.avatar .btn-wrapper label .inner .inner-label {
+            font-size: 16px; } }
 .module.step-fields .single-row {
   border-bottom: 1px solid #888888;
   -webkit-transition: 0.3s;
@@ -640,10 +725,13 @@
       color: #126585; }
 .module.contract-tile {
   padding-left: 10px;
-  padding-right: 10px; }
+  padding-right: 10px;
+  cursor: pointer; }
   .module.contract-tile .tile-wrapper {
     background-color: white;
-    padding: 15px;
+    padding: 15px 10px;
+    max-width: 450px;
+    margin: 0 auto;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     -ms-border-radius: 6px;
@@ -653,7 +741,7 @@
     -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
     .module.contract-tile .tile-wrapper .figure-container {
-      width: 140px; }
+      width: 120px; }
       .module.contract-tile .tile-wrapper .figure-container figure {
         width: 100%;
         height: 100px;
@@ -683,7 +771,7 @@
           width: 100%;
           color: white; }
     .module.contract-tile .tile-wrapper .contract-info {
-      width: calc(100% - 140px);
+      width: calc(100% - 120px);
       padding-left: 15px; }
       .module.contract-tile .tile-wrapper .contract-info .title {
         word-wrap: break-word; }
@@ -700,6 +788,14 @@
     background-color: #239289; }
   .module.contract-tile.cancelled .tile-wrapper figcaption {
     background-color: #e92f30; }
+  @media screen and (max-width: 767px) {
+    .module.contract-tile .tile-wrapper .figure-container {
+      width: 100px; }
+    .module.contract-tile .tile-wrapper .contract-info {
+      width: calc(100% - 100px); }
+      .module.contract-tile .tile-wrapper .contract-info .btn-container .white-blue-green-btn {
+        font-size: 14px;
+        padding: 0 5px; } }
 .module.signature-wrapper {
   -moz-user-select: none;
   -webkit-user-select: none;

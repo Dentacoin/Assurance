@@ -1,10 +1,11 @@
-$xxs: ( max:  400px );
-$xs: ( max:  767px );
-$sm: ( min:  768px);
-$md: ( min:  992px);
+$xxs: ( max:  450px );
+$xs: ( max: 767px );
+$sm: ( min: 768px);
+$md: ( min: 992px);
 $lg: ( min: 1200px );
 $lgl: ( min: 1400px );
 $max-lgl: ( max: 1450px );
+$max-1600: ( max: 1600px );
 $sm-only: ( min: map-get($sm, min), max: map-get($md, min) - 1 );
 $sm-only-landscape-only: ( min: map-get($sm, min), max: map-get($md, min) - 1, orientation: "landscape");
 $md-only: ( min: map-get($md, min), max: map-get($lg, min) - 1 );

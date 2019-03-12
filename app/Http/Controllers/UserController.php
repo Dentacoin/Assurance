@@ -33,11 +33,11 @@ class UserController extends Controller {
 
     protected function getMyContractsView()     {
         if($this->checkPatientSession()) {
-            return view('pages/logged-user/my-contracts', ['patient_or_not' => false, 'contracts' => TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->sortByDesc('contract_active_at')]);
+            return view('pages/logged-user/my-contracts', ['patient_or_not' => false, 'contracts' => TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->sortByDesc('created_at')]);
         } else if($this->checkDentistSession()) {
             if(!empty(Input::get('status'))) {
                 //if get parameter is passed query by status
-                return view('pages/logged-user/my-contracts', ['patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id'], 'status' => Input::get('status')))->get()->sortByDesc('contract_active_at')]);
+                return view('pages/logged-user/my-contracts', ['patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id'], 'status' => Input::get('status')))->get()->sortByDesc('created_at')]);
             }
             return view('pages/logged-user/my-contracts', ['patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->sortByDesc('contract_active_at')]);
         }
@@ -102,7 +102,7 @@ class UserController extends Controller {
         $view_params = array('currency_arr' => $currency_arr);
 
         $dcn_balance_api_method_response = (new APIRequestsController())->getDCNBalance();
-        if($dcn_balance_api_method_response->success) {
+        if($dcn_balance_api_method_response && $dcn_balance_api_method_response->success) {
             $view_params['dcn_amount'] = $dcn_balance_api_method_response->data;
         }
 

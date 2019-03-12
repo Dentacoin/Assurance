@@ -32,25 +32,47 @@
     </script>
 </head>
 <body class="@if(!empty(Route::current())) {{Route::current()->getName()}} @else class-404 @endif @if(\App\Http\Controllers\UserController::instance()->checkSession()) logged-in @endif" @if(isset($gas_estimation)) data-current-gas-estimation="{{$gas_estimation}}" @endif>
+@if(isset($mobile) && $mobile)
+    <nav class="sidenav">
+        <div class="wrapper">
+            <a href="javascript:void(0)" class="close-btn"><i class="fa fa-times" aria-hidden="true"></i></a>
+            <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
+                <li class="lato-semibold @if(!empty(Route::current())) @if(Route::current()->getName() == "home") active @endif @endif"><a href="{{route('home')}}" itemprop="url"><span itemprop="name">Dentists</span></a>
+                </li>
+                <li class="lato-semibold @if(!empty(Route::current())) @if(Route::current()->getName() == "patient-access") active @endif @endif"><a href="{{route('patient-access')}}" itemprop="url"><span itemprop="name">Patients</span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" itemprop="url" class="white-blue-green-btn show-login-signin @if(!empty(Route::current())) @if(Route::current()->getName() == "home") dentist-side @endif @endif"><span itemprop="name">SIGN IN</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+@endif
 <header>
     <div class="container">
         <div class="row fs-0">
             <figure itemscope="" itemtype="http://schema.org/Organization" class="col-xs-3 logo-container inline-block">
                 <a itemprop="url" href="{{ route('home') }}" @if(!empty(Route::current())) @if(Route::current()->getName() == "home") tabindex="=-1" @endif @endif>
-                    <img src="{{URL::asset('assets/images/logo.svg') }}" itemprop="logo" alt="Dentacoin logo" class="max-width-50 max-width-xs-40"/>
+                    <img src="{{URL::asset('assets/uploads/assurance-logo.svg') }}" itemprop="logo" alt="Dentacoin logo" class="max-width-50 max-width-xs-40"/>
                 </a>
             </figure>
             @if(!\App\Http\Controllers\UserController::instance()->checkSession())
-                <nav class="col-xs-9 inline-block">
-                    <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
-                        <li class="inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == "home") active @endif @endif"><a href="{{route('home')}}" itemprop="url"><span itemprop="name">Dentists</span></a></li>
-                        <li class="inline-block">|</li>
-                        <li class="inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == "patient-access") active @endif @endif"><a href="{{route('patient-access')}}" itemprop="url"><span itemprop="name">Patients</span></a></li>
-                        <li class="inline-block">
-                            <a href="javascript:void(0)" itemprop="url" class="blue-green-white-btn show-login-signin @if(!empty(Route::current())) @if(Route::current()->getName() == "home") dentist-side @endif @endif"><span itemprop="name">SIGN IN</span></a>
-                        </li>
-                    </ul>
-                </nav>
+                @if(isset($mobile) && !$mobile)
+                    <nav class="col-xs-9 inline-block">
+                        <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
+                            <li class="inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == "home") active @endif @endif"><a href="{{route('home')}}" itemprop="url"><span itemprop="name">Dentists</span></a></li>
+                            <li class="inline-block">|</li>
+                            <li class="inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == "patient-access") active @endif @endif"><a href="{{route('patient-access')}}" itemprop="url"><span itemprop="name">Patients</span></a></li>
+                            <li class="inline-block">
+                                <a href="javascript:void(0)" itemprop="url" class="blue-green-white-btn show-login-signin @if(!empty(Route::current())) @if(Route::current()->getName() == "home") dentist-side @endif @endif"><span itemprop="name">SIGN IN</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                @else
+                    <div class="col-xs-9 inline-block text-right">
+                        <a href="javascript:void(0)" class="hamburger"><i class="fa fa-bars fs-32 dark-color" aria-hidden="true"></i></a>
+                    </div>
+                @endif
             @else
                 <div class="col-xs-9 inline-block text-right logged-user">
                     <a href="javascript:void(0)">
