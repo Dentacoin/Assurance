@@ -49,6 +49,8 @@ class DentistController extends Controller
     }
 
     protected function register(Request $request) {
+        var_dump($request->input());
+        die();
         $customMessages = [
             'dentist-or-practice-name.required' => 'Dentist or Practice Name is required.',
             'email.required' => 'Email address is required.',
@@ -61,7 +63,7 @@ class DentistController extends Controller
             'website.required' => 'Website is required.',
             'specializations.required' => 'Specialization is required.',
             'captcha.required' => 'Captcha is required.',
-            'captcha.captcha' => 'Please type the code from the captcha image.'
+            'captcha.captcha' => 'Please enter correct captcha.'
         ];
         $this->validate($request, [
             'dentist-or-practice-name' => 'required|max:250',
