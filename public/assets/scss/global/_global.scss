@@ -566,6 +566,11 @@ fieldset {
 }
 
 .bootbox {
+    @include breakpoint($xs) {
+        .modal-dialog {
+            margin-bottom: 50px;
+        }
+    }
     &.popup-html {
         .bootbox-close-button {
             font-size: 45px;

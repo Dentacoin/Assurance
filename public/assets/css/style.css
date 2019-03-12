@@ -5888,6 +5888,9 @@ fieldset {
   .container {
     width: 95%;
     max-width: 1700px; } }
+@media screen and (max-width: 767px) {
+  .bootbox .modal-dialog {
+    margin-bottom: 50px; } }
 .bootbox.popup-html .bootbox-close-button {
   font-size: 45px;
   margin-top: -20px;
