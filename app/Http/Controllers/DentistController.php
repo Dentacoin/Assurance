@@ -49,6 +49,7 @@ class DentistController extends Controller
     }
 
     protected function register(Request $request) {
+        var_dump(captcha_check($request->input('captcha')));
         var_dump($request->input());
         die();
         $customMessages = [
