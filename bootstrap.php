@@ -2,7 +2,8 @@
 //define PATHS
 define('DS', '/');
 define('ROOT', realpath(dirname(__FILE__)) . DS);
-define('BASE_URL', 'https://dev-test.dentacoin.com/');
+//define('BASE_URL', 'https://dev-test.dentacoin.com/');
+define('BASE_URL', 'https://assurance.dentacoin.com/');
 define('UPLOADS', ROOT . 'public' . DS . 'assets' . DS . 'uploads' . DS);
 define('CONTRACTS', ROOT . 'public' . DS . 'assets' . DS . 'contracts' . DS);
 define('ZIP_EXTRACTS', ROOT . 'public' . DS . 'assets' . DS . 'zip-extracts' . DS);
