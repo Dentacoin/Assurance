@@ -2280,20 +2280,15 @@ function bindLoginSigninPopupShow() {
                                         errors = true;
                                     }
 
-                                    //check captcha length
-                                    if($('.dentist .form-register .step.third #register-captcha').val().trim() == '') {
-                                        customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
-                                        errors = true;
-                                    }
-
                                     //check if privacy policy checkbox is checked
                                     if(!$('.dentist .form-register .step.third #privacy-policy-registration').is(':checked')) {
                                         customErrorHandle($('.step.third .step-errors-holder'), 'Please agree with our privacy policy.');
                                         errors = true;
                                     }
 
+                                    //check captcha
                                     var check_captcha_response = await checkCaptcha($('.dentist .form-register .step.third #register-captcha').val().trim());
-                                    if(check_captcha_response.error) {
+                                    if(check_captcha_response.error || $('.dentist .form-register .step.third #register-captcha').val().trim() == '') {
                                         customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
                                         errors = true;
                                     }
