@@ -2287,8 +2287,8 @@ function bindLoginSigninPopupShow() {
                                     }
 
                                     //check captcha
-                                    var check_captcha_response = await checkCaptcha($('.dentist .form-register .step.third #register-captcha').val().trim());
-                                    if(check_captcha_response.error || $('.dentist .form-register .step.third #register-captcha').val().trim() == '') {
+                                    /*var check_captcha_response = await checkCaptcha($('.dentist .form-register .step.third #register-captcha').val().trim());*/
+                                    if(/*check_captcha_response.error || */$('.dentist .form-register .step.third #register-captcha').val().trim() == '') {
                                         customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
                                         errors = true;
                                     }
