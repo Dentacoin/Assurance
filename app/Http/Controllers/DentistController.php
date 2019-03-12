@@ -77,12 +77,12 @@ class DentistController extends Controller
             'captcha' => 'required|captcha|max:10'
         ], $customMessages);
 
-
-
         $data = $request->input();
         $files = $request->file();
 
         var_dump('koz');
+        var_dump(captcha_check($request->input('captcha')));
+        var_dump($request->input('captcha'));
         die();
 
         //check email validation
