@@ -3769,14 +3769,14 @@ function bindLoginSigninPopupShow() {
 
                                         //DENTIST REGISTERING FORM
                                         $('.dentist .form-register .next-step').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee20() {
-                                            var this_btn, first_step_inputs, errors, i, len, check_email_if_free_response, second_step_inputs;
+                                            var this_btn, first_step_inputs, errors, i, len, check_email_if_free_response, second_step_inputs, check_captcha_response;
                                             return _regeneratorRuntime.wrap(function _callee20$(_context20) {
                                                 while (1) {
                                                     switch (_context20.prev = _context20.next) {
                                                         case 0:
                                                             this_btn = $(this);
                                                             _context20.t0 = this_btn.attr('data-current-step');
-                                                            _context20.next = _context20.t0 === 'first' ? 4 : _context20.t0 === 'second' ? 27 : _context20.t0 === 'third' ? 35 : 41;
+                                                            _context20.next = _context20.t0 === 'first' ? 4 : _context20.t0 === 'second' ? 27 : _context20.t0 === 'third' ? 35 : 45;
                                                             break;
 
                                                         case 4:
@@ -3851,7 +3851,7 @@ function bindLoginSigninPopupShow() {
                                                                 this_btn.attr('data-current-step', 'second');
                                                                 this_btn.val('Next');
                                                             }
-                                                            return _context20.abrupt("break", 41);
+                                                            return _context20.abrupt("break", 45);
 
                                                         case 27:
                                                             second_step_inputs = $('.dentist .form-register .step.second .custom-input');
@@ -3939,7 +3939,7 @@ function bindLoginSigninPopupShow() {
                                                                 this_btn.attr('data-current-step', 'third');
                                                                 this_btn.val('Create profile');
                                                             }
-                                                            return _context20.abrupt("break", 41);
+                                                            return _context20.abrupt("break", 45);
 
                                                         case 35:
                                                             $('.dentist .form-register .step.third').find('.error-handle').remove();
@@ -3964,21 +3964,24 @@ function bindLoginSigninPopupShow() {
                                                             }
 
                                                             //check captcha
-                                                            /*var check_captcha_response = await checkCaptcha($('.dentist .form-register .step.third #register-captcha').val().trim());
-                                                            if(!$('.dentist .form-register .step.third #register-captcha').length) {
-                                                                window.location.reload();
-                                                            } else if(check_captcha_response.error || $('.dentist .form-register .step.third #register-captcha').val().trim() == '') {
+                                                            _context20.next = 41;
+                                                            return checkCaptcha($('.dentist .form-register .step.third #register-captcha').val().trim());
+
+                                                        case 41:
+                                                            check_captcha_response = _context20.sent;
+
+                                                            if ($('.dentist .form-register .step.third #register-captcha').val().trim() == '' || $('.dentist .form-register .step.third #register-captcha').val().trim().length < 5) {
                                                                 customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
                                                                 errors = true;
-                                                            }*/
+                                                            }
 
                                                             if (!errors) {
                                                                 //submit the form
                                                                 $('form#dentist-register').submit();
                                                             }
-                                                            return _context20.abrupt("break", 41);
+                                                            return _context20.abrupt("break", 45);
 
-                                                        case 41:
+                                                        case 45:
                                                         case "end":
                                                             return _context20.stop();
                                                     }

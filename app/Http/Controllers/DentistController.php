@@ -49,9 +49,6 @@ class DentistController extends Controller
     }
 
     protected function register(Request $request) {
-        var_dump(session('captcha'));
-        var_dump(session());
-        die();
         $customMessages = [
             'dentist-or-practice-name.required' => 'Dentist or Practice Name is required.',
             'email.required' => 'Email address is required.',
@@ -83,12 +80,6 @@ class DentistController extends Controller
 
         $data = $request->input();
         $files = $request->file();
-
-
-        var_dump('koz');
-        var_dump(captcha_check($request->input('captcha')));
-        var_dump($request->input('captcha'));
-        die();
 
         //check email validation
         if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL))   {
