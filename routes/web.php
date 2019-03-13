@@ -58,6 +58,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::post('/check-email', 'UserController@checkEmail')->name('check-email');
 
     Route::post('/check-captcha', 'UserController@checkCaptcha')->name('check-captcha');
+
+    Route::post('/download-gdpr-data', 'UserController@downloadGDPRData')->name('download-gdpr-data');
     //======================================= /AJAX ========================================
 
     Route::group(['prefix' => 'patient', 'middleware' => 'HandlePatientSession'], function () {

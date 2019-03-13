@@ -631,4 +631,13 @@ class UserController extends Controller {
         $countries = (new APIRequestsController())->getAllCountries();
         return $countries[$id - 1]->name;
     }
+
+    protected function downloadGDPRData() {
+        $api_response = (new APIRequestsController())->getGDPRDownloadLink();
+        if($api_response->success) {
+            return response()->json(['success' => $api_response->data]);
+        } else {
+            return response()->json(['error' => 'Downloading your personal data is not possible at the moment, please try again later.']);
+        }
+    }
 }

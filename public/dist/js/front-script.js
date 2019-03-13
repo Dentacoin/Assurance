@@ -2367,6 +2367,24 @@ if ($('body').hasClass('logged-in')) {
             }
         });
     } else if ($('body').hasClass('manage-privacy')) {
+        $('.download-gdpr-data').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '/download-gdpr-data',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function success(response) {
+                    if (response.success) {
+                        window.open = (response.success, '_blank');
+                    } else if (response.error) {
+                        basic.showAlert(response.error, '', true);
+                    }
+                }
+            });
+        });
+
         if (localStorage.getItem('current-account') != null) {
             var title;
             var text;
