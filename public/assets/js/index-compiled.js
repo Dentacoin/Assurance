@@ -29036,7 +29036,7 @@ function bindLoginSigninPopupShow() {
                                                         case 41:
                                                             check_captcha_response = _context20.sent;
 
-                                                            if ($('.dentist .form-register .step.third #register-captcha').val().trim() == '' || $('.dentist .form-register .step.third #register-captcha').val().trim().length < 5) {
+                                                            if (check_captcha_response.error || $('.dentist .form-register .step.third #register-captcha').val().trim() == '' || $('.dentist .form-register .step.third #register-captcha').val().trim().length < 5) {
                                                                 customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
                                                                 errors = true;
                                                             }
