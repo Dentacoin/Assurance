@@ -490,7 +490,7 @@ class APIRequestsController extends Controller {
         $header[] = 'Authorization: Bearer ' . session('logged_user')['token'];
         $header[] = 'Cache-Control: no-cache';
 
-        var_dump('asd');
+        var_dump( session('logged_user')['token']);
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
