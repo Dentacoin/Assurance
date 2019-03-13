@@ -504,7 +504,8 @@ class APIRequestsController extends Controller {
         $resp = curl_exec($curl);
         curl_close($curl);
 
-        return $resp;
+        var_dump($resp);
+        die();
 
         /*if(!empty($resp))   {
             return $resp;
