@@ -110,9 +110,6 @@ class DentistController extends Controller
             return redirect()->route('home')->with(['error' => 'Please select avatar and try again.']);
         }*/
 
-        var_dump('SUCCESSFUL DENTIST REGISTRATION');
-        die();
-
         //handle the API response
         $api_response = (new APIRequestsController())->dentistRegister($data, $files);
         if($api_response['success']) {
