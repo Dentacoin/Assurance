@@ -11,7 +11,7 @@
             </figure>
             <div class="welcome-name inline-block fs-16 lato-bold">Welcome, {{(new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id'])->name}}</div>
         </div>
-        <nav>
+        <nav class="profile-menu module">
             <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
                 <li>
                     <a href="{{ route('home') }}" itemprop="url">

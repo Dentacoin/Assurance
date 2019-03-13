@@ -7582,6 +7582,33 @@ nav.sidenav {
     width: 200px; }
   .module.contract-details-container.show-this {
     display: block; }
+.module.profile-menu li a {
+  display: block;
+  font-size: 16px;
+  padding: 10px;
+  color: #212121;
+  border-left: 3px solid transparent;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s; }
+  .module.profile-menu li a.active {
+    border-left: 3px solid #126585;
+    background: #f0f9ff;
+    color: #126585; }
+  .module.profile-menu li a:hover {
+    border-left: 3px solid #126585;
+    background: #f0f9ff;
+    color: #126585; }
+  .module.profile-menu li a figure {
+    padding-right: 10px;
+    padding-left: 10px;
+    vertical-align: middle; }
+    .module.profile-menu li a figure img {
+      width: 20px; }
+  .module.profile-menu li a span {
+    vertical-align: middle; }
 
 header {
   width: 100%;
@@ -7656,6 +7683,14 @@ header {
           font-size: 24px;
           vertical-align: middle;
           margin-right: 5px; }
+  header .show-on-mobile {
+    display: none; }
+    @media screen and (max-width: 991px) {
+      header .show-on-mobile {
+        display: inline-block; } }
+  @media screen and (max-width: 991px) {
+    header .hide-on-mobile {
+      display: none; } }
   @media screen and (max-width: 991px) {
     header {
       position: static;
@@ -8103,33 +8138,6 @@ body.logged-in .my-profile-menu {
       body.logged-in .my-profile-menu .wrapper .avatar-and-name .welcome-name {
         width: calc(100% - 40px);
         padding-left: 10px; }
-    body.logged-in .my-profile-menu .wrapper nav li a {
-      display: block;
-      font-size: 16px;
-      padding: 10px;
-      color: #212121;
-      border-left: 3px solid transparent;
-      -webkit-transition: 0.3s;
-      -moz-transition: 0.3s;
-      -o-transition: 0.3s;
-      -ms-transition: 0.3s;
-      transition: 0.3s; }
-      body.logged-in .my-profile-menu .wrapper nav li a.active {
-        border-left: 3px solid #126585;
-        background: #f0f9ff;
-        color: #126585; }
-      body.logged-in .my-profile-menu .wrapper nav li a:hover {
-        border-left: 3px solid #126585;
-        background: #f0f9ff;
-        color: #126585; }
-      body.logged-in .my-profile-menu .wrapper nav li a figure {
-        padding-right: 10px;
-        padding-left: 10px;
-        vertical-align: middle; }
-        body.logged-in .my-profile-menu .wrapper nav li a figure img {
-          width: 20px; }
-      body.logged-in .my-profile-menu .wrapper nav li a span {
-        vertical-align: middle; }
   @media screen and (max-width: 991px) {
     body.logged-in .my-profile-menu {
       display: none; } }
@@ -8264,6 +8272,33 @@ body.logged-in .my-profile-page-content {
   top: 0; }
 .ready-to-purchase-with-external-api .checkbox-container label a {
   color: #126585 !important; }
+
+.logged-mobile-profile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100%;
+  z-index: 100005;
+  background-color: rgba(0, 0, 0, 0.6);
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s; }
+  .logged-mobile-profile-menu nav {
+    width: 70%;
+    height: 100%;
+    background-color: white;
+    float: right;
+    padding-top: 35px; }
+  .logged-mobile-profile-menu .close-logged-mobile-profile-menu {
+    position: absolute;
+    top: 10px;
+    font-size: 20px;
+    right: 20px; }
+  .logged-mobile-profile-menu.active {
+    right: 0; }
 
 .manage-privacy-container .delete-local-storage-border-bottom {
   border-bottom: 3px solid black; }
@@ -8597,8 +8632,26 @@ section.congratulation-and-time-section {
             font-size: 60px;
             background: #438199; }
 
+.my-contracts ::-webkit-scrollbar {
+  -webkit-appearance: none; }
+.my-contracts ::-webkit-scrollbar:vertical {
+  width: 12px; }
+.my-contracts ::-webkit-scrollbar:horizontal {
+  height: 12px; }
+.my-contracts ::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  border: 2px solid white; }
+.my-contracts ::-webkit-scrollbar-track {
+  background-color: white;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  border-radius: 10px; }
 .my-contracts .table-container {
   padding-top: 30px; }
+  .my-contracts .table-container .dataTables_wrapper {
+    overflow-x: scroll; }
   .my-contracts .table-container .hide-this {
     display: none; }
   .my-contracts .table-container .dataTables_empty {
@@ -8646,6 +8699,9 @@ section.congratulation-and-time-section {
         -o-transition: none;
         -ms-transition: none;
         transition: none; }
+      @media screen and (max-width: 767px) {
+        .my-contracts .table-container .dataTables_filter label {
+          margin: 0 auto; } }
     .my-contracts .table-container .dataTables_filter .custom-filter {
       width: calc(50% - 150px);
       display: inline-block; }
@@ -8662,7 +8718,7 @@ section.congratulation-and-time-section {
           margin-left: 5px; }
         .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn .custom-filter-body {
           position: absolute;
-          right: 0;
+          right: 5px;
           top: 100%;
           display: none;
           text-align: left;
@@ -8694,11 +8750,24 @@ section.congratulation-and-time-section {
             vertical-align: middle; }
           .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn .custom-filter-body .filter-row:hover label {
             color: #126585; }
-        .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn:hover .custom-filter-body {
-          display: block; }
+          @media screen and (max-width: 767px) {
+            .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn .custom-filter-body {
+              left: 50%;
+              transform: translateX(-50%);
+              right: auto; } }
+        @media screen and (min-width: 991px) {
+          .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn:hover .custom-filter-body {
+            display: block; } }
+      @media screen and (max-width: 767px) {
+        .my-contracts .table-container .dataTables_filter .custom-filter {
+          width: 100%;
+          padding-top: 15px; }
+          .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn {
+            text-align: center; } }
   .my-contracts .table-container .dataTables_paginate {
     text-align: center;
-    padding-top: 25px; }
+    padding-top: 25px;
+    padding-bottom: 20px; }
     .my-contracts .table-container .dataTables_paginate a {
       color: #000;
       padding: 0 5px;

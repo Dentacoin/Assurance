@@ -20,39 +20,6 @@ body.logged-in {
                     padding-left: 10px;
                 }
             }
-            nav {
-                li {
-                    a {
-                        display: block;
-                        font-size: 16px;
-                        padding: 10px;
-                        color: $dark_color;
-                        border-left: 3px solid transparent;
-                        @include simple_transition(.3s);
-                        &.active {
-                            border-left: 3px solid $blue_green_color;
-                            background: #f0f9ff;
-                            color: $blue_green_color;
-                        }
-                        &:hover {
-                            border-left: 3px solid $blue_green_color;
-                            background: #f0f9ff;
-                            color: $blue_green_color;
-                        }
-                        figure {
-                            padding-right: 10px;
-                            padding-left: 10px;
-                            vertical-align: middle;
-                            img {
-                                width: 20px;
-                            }
-                        }
-                        span {
-                            vertical-align: middle;
-                        }
-                    }
-                }
-            }
         }
         @include breakpoint($sm-down) {
             display: none;
@@ -217,5 +184,32 @@ body.logged-in {
                 color: $blue_green_color !important;
             }
         }
+    }
+}
+
+.logged-mobile-profile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    z-index: 100005;
+    background-color: rgba(0, 0, 0, 0.6);
+    @include simple_transition(.3s);
+    nav {
+        width: 70%;
+        height: 100%;
+        background-color: white;
+        float: right;
+        padding-top: 35px;
+    }
+    .close-logged-mobile-profile-menu {
+        position: absolute;
+        top: 10px;
+        font-size: 20px;
+        right: 20px;
+    }
+    &.active {
+        right: 0;
     }
 }

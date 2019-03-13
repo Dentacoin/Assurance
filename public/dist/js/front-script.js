@@ -3092,6 +3092,16 @@ if ($('body').hasClass('logged-in')) {
         $('.logged-user .hidden-box').hide();
     });
 
+    if ($('.logged-user-hamburger').length) {
+        $('.logged-user-hamburger').click(function () {
+            $('.logged-mobile-profile-menu').addClass('active');
+        });
+
+        $('.close-logged-mobile-profile-menu').click(function () {
+            $('.logged-mobile-profile-menu').removeClass('active');
+        });
+    }
+
     if ($('.contracts-list.slider').length) {
         var slides_to_show = 3;
         for (var i = 0, len = $('.contracts-list.slider').length; i < len; i += 1) {
@@ -4964,6 +4974,13 @@ function initDataTable(filter_param) {
 
         if ($('table.table.table-without-reorder').hasClass('my-contracts')) {
             $('.dataTables_filter').append('<div class="custom-filter"><a href="javascript:void(0)" class="custom-btn"><img alt="Filter icon" class="filter-icon" src="/assets/images/filter-icon.svg"/> Filter <img alt="Caret icon" class="caret-down" src="/assets/images/caret-down.svg"/><div class="custom-filter-body"><div class="custom-title">Filter by Status</div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="pending" ' + pending_check + '/> <label for="pending">Pending</label></div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="active" ' + active_check + '/> <label for="active">Active</label></div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="awaiting-payment" ' + awaiting_payment_check + '/> <label for="awaiting-payment">Active - awaiting payment</label></div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="awaiting-approval" ' + awaiting_approval_check + '/> <label for="awaiting-approval">Active - awaiting approval</label></div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="cancelled" ' + cancelled_check + '/> <label for="cancelled">Cancelled</label></div></div></a></div>');
+
+            if (basic.isMobile()) {
+                $('section.my-contracts .custom-btn').click(function () {
+                    $('section.my-contracts .custom-filter-body').toggle(300);
+                });
+            }
+
             $('.dataTables_filter > label > input').addClass('custom-input green-arrow-background').attr('placeholder', 'Search for contract');
 
             $('input[type="checkbox"].filter-contracts').on('change', function () {

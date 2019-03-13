@@ -1117,4 +1117,37 @@
             display: block;
         }
     }
+    &.profile-menu {
+        li {
+            a {
+                display: block;
+                font-size: 16px;
+                padding: 10px;
+                color: $dark_color;
+                border-left: 3px solid transparent;
+                @include simple_transition(.3s);
+                &.active {
+                    border-left: 3px solid $blue_green_color;
+                    background: #f0f9ff;
+                    color: $blue_green_color;
+                }
+                &:hover {
+                    border-left: 3px solid $blue_green_color;
+                    background: #f0f9ff;
+                    color: $blue_green_color;
+                }
+                figure {
+                    padding-right: 10px;
+                    padding-left: 10px;
+                    vertical-align: middle;
+                    img {
+                        width: 20px;
+                    }
+                }
+                span {
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
 }

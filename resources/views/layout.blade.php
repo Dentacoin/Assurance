@@ -48,6 +48,84 @@
         </div>
     </nav>
 @endif
+
+@if(\App\Http\Controllers\UserController::instance()->checkSession())
+    <div class="logged-mobile-profile-menu">
+        <nav class="profile-menu module">
+            <a href="javascript:void(0)" class="close-logged-mobile-profile-menu"><i class="fa fa-times" aria-hidden="true"></i></a>
+            <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
+                <li>
+                    <a href="{{ route('home') }}" itemprop="url">
+                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                            <img alt="Home icon" src="/assets/uploads/home.svg"/>
+                        </figure>
+                        <span itemprop="name">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('my-profile') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'my-profile') class="active" @endif itemprop="url">
+                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                            <img alt="Wallet icon" src="/assets/uploads/wallet-icon.svg"/>
+                        </figure>
+                        <span itemprop="name">My Wallet</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('edit-account') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'edit-account') class="active" @endif itemprop="url">
+                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                            <img alt="Edit account icon" src="/assets/uploads/edit-account-icon.svg"/>
+                        </figure>
+                        <span itemprop="name">Edit Account</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('manage-privacy') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'manage-privacy') class="active" @endif itemprop="url">
+                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                            <img alt="Privacy icon" src="/assets/uploads/privacy-icon.svg"/>
+                        </figure>
+                        <span itemprop="name">Manage Privacy</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('my-contracts') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'my-contracts') class="active" @endif itemprop="url">
+                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                            <img alt="Contracts list" src="/assets/uploads/contracts-list.svg"/>
+                        </figure>
+                        <span itemprop="name">My contracts</span>
+                    </a>
+                </li>
+                @if(session('logged_user')['type'] == 'patient')
+                    <li>
+                        <a href="{{ route('invite-dentists') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'invite-dentists') class="active" @endif itemprop="url">
+                            <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                                <img alt="Add dentist" src="/assets/uploads/add-dentist.svg"/>
+                            </figure>
+                            <span itemprop="name">Invite Dentists</span>
+                        </a>
+                    </li>
+                @elseif(session('logged_user')['type'] == 'dentist')
+                    <li>
+                        <a href="{{ route('create-contract') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'create-contract') class="active" @endif itemprop="url">
+                            <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                                <img alt="Create new contract" src="/assets/uploads/create-new-contract.svg"/>
+                            </figure>
+                            <span itemprop="name">Create contract</span>
+                        </a>
+                    </li>
+                @endif
+                <li>
+                    <a href="{{ route('user-logout') }}" itemprop="url">
+                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                            <img alt="Logout icon" src="/assets/uploads/logout-icon.svg"/>
+                        </figure>
+                        <span itemprop="name">Log out</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+@endif
+
 <header>
     <div class="container">
         <div class="row fs-0">
@@ -74,31 +152,14 @@
                     </div>
                 @endif
             @else
-                <div class="col-xs-9 inline-block text-right logged-user">
-                    <a href="javascript:void(0)">
-                        <span>{{(new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id'])->name}}</span>
-                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
-                            @php($avatar_url = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id'])->avatar_url)
-                            @if(!empty($avatar_url))
-                                <img alt="" itemprop="contentUrl" src="{{$avatar_url}}"/>
-                            @else
-                                <img alt="" itemprop="contentUrl" src="/assets/images/avatar-icon.svg"/>
-                            @endif
-                        </figure>
-                    </a>
-                    <div class="hidden-box">
-                        <div class="container-fluid text-center">
-                            <div class="row">
-                                <div class="col-xs-6 inline-block">
-                                    <a href="{{ route('user-logout') }}" class="logout"><i class="fa fa-power-off" aria-hidden="true"></i> Log out</a>
-                                </div>
-                                <div class="col-xs-6 inline-block">
-                                    <a href="{{ route('my-profile') }}" class="white-blue-green-btn">My profile</a>
-                                </div>
-                            </div>
-                        </div>
+                @if(!empty(Route::current()) && in_array(Route::current()->getName(), array('my-profile', 'edit-account', 'manage-privacy', 'my-contracts')))
+                    <div class="col-xs-9 inline-block text-right show-on-mobile">
+                        <a href="javascript:void(0)" class="logged-user-hamburger"><i class="fa fa-bars fs-32 dark-color" aria-hidden="true"></i></a>
                     </div>
-                </div>
+                    @include('partials.logged-user-desktop-header-menu', ['class' => 'hide-on-mobile'])
+                @else
+                    @include('partials.logged-user-desktop-header-menu')
+                @endif
             @endif
         </div>
     </div>

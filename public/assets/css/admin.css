@@ -1166,6 +1166,33 @@
     width: 200px; }
   .module.contract-details-container.show-this {
     display: block; }
+.module.profile-menu li a {
+  display: block;
+  font-size: 16px;
+  padding: 10px;
+  color: #212121;
+  border-left: 3px solid transparent;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s; }
+  .module.profile-menu li a.active {
+    border-left: 3px solid #126585;
+    background: #f0f9ff;
+    color: #126585; }
+  .module.profile-menu li a:hover {
+    border-left: 3px solid #126585;
+    background: #f0f9ff;
+    color: #126585; }
+  .module.profile-menu li a figure {
+    padding-right: 10px;
+    padding-left: 10px;
+    vertical-align: middle; }
+    .module.profile-menu li a figure img {
+      width: 20px; }
+  .module.profile-menu li a span {
+    vertical-align: middle; }
 
 body {
   background-color: #222d32; }

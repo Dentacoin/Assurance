@@ -1,6 +1,31 @@
 .my-contracts {
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+    }
+
+    ::-webkit-scrollbar:vertical {
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar:horizontal {
+        height: 12px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, .5);
+        border-radius: 10px;
+        border: 2px solid white;
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: white;
+        @include rounded(10px);
+    }
     .table-container {
         padding-top: 30px;
+        .dataTables_wrapper {
+            overflow-x: scroll;
+        }
         .hide-this {
             display: none;
         }
@@ -54,6 +79,9 @@
                     font-weight: normal;
                     @include simple_transition(none);
                 }
+                @include breakpoint($xs) {
+                    margin: 0 auto;
+                }
             }
             .custom-filter {
                 width: calc(50% - 150px);
@@ -73,7 +101,7 @@
                     }
                     .custom-filter-body {
                         position: absolute;
-                        right: 0;
+                        right: 5px;
                         top: 100%;
                         display: none;
                         text-align: left;
@@ -102,11 +130,25 @@
                                 }
                             }
                         }
-                    }
-                    &:hover {
-                        .custom-filter-body {
-                            display: block;
+                        @include breakpoint($xs) {
+                            left: 50%;
+                            transform: translateX(-50%);
+                            right: auto;
                         }
+                    }
+                    @include breakpoint($sm-up) {
+                        &:hover {
+                            .custom-filter-body {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+                @include breakpoint($xs) {
+                    width: 100%;
+                    padding-top: 15px;
+                    .custom-btn {
+                        text-align: center;
                     }
                 }
             }
@@ -114,6 +156,7 @@
         .dataTables_paginate {
             text-align: center;
             padding-top: 25px;
+            padding-bottom: 20px;
             a {
                 color: #000;
                 padding: 0 5px;

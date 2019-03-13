@@ -78,6 +78,17 @@ header {
             }
         }
     }
+    .show-on-mobile {
+        display: none;
+        @include breakpoint($sm-down) {
+            display: inline-block;
+        }
+    }
+    .hide-on-mobile {
+        @include breakpoint($sm-down) {
+            display: none;
+        }
+    }
     @include breakpoint($sm-down) {
         position: static;
         height: auto;

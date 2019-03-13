@@ -29,7 +29,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::get('/wallet-instructions', 'WalletInstructionsController@getView')->name('wallet-instructions');
 
     Route::get('/test', function() {
-        var_dump((new \App\Http\Controllers\DentistController())->testCaptchaMethods());
+        var_dump((new \App\Http\Controllers\APIRequestsController())->getGDPRDownloadLink());
         //var_dump((new \App\Http\Controllers\PatientController())->renderTestPdf());
         //var_dump((new \App\Http\Controllers\Controller())->fillCountriesFromCsv());
         //var_dump((new \App\Http\Controllers\Controller())->testZipCreation());

@@ -1,6 +1,6 @@
 @extends("layout")
 @section("content")
-    <section class="my-contracts padding-top-100">
+    <section class="my-contracts padding-top-100 padding-top-xs-30">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 fs-0">
