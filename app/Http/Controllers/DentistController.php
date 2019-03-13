@@ -61,7 +61,7 @@ class DentistController extends Controller
             'website.required' => 'Website is required.',
             'specializations.required' => 'Specialization is required.',
             'captcha.required' => 'Captcha is required.',
-            /*'captcha.captcha' => 'Please enter correct captcha.'*/
+            'captcha.captcha' => 'Please enter correct captcha.',
         ];
         $this->validate($request, [
             'dentist-or-practice-name' => 'required|max:250',
@@ -74,12 +74,16 @@ class DentistController extends Controller
             'phone' => 'required|max:50',
             'website' => 'required|max:250',
             'specializations' => 'required',
-            /*'captcha' => 'required|captcha|max:10'*/
-            'captcha' => 'required|max:5'
+            'captcha' => 'required|captcha|max:5'
         ], $customMessages);
 
         $data = $request->input();
         $files = $request->file();
+
+        //check captcha
+        if(!captcha_validate($data['captcha'])) {
+            return redirect()->route('home')->with(['error' => 'Please enter correct captcha.']);
+        }
 
         //check email validation
         if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL))   {
@@ -110,6 +114,9 @@ class DentistController extends Controller
         } /*else {
             return redirect()->route('home')->with(['error' => 'Please select avatar and try again.']);
         }*/
+
+        var_dump('SUCCESSFUL DENTIST REGISTRATION');
+        die();
 
         //handle the API response
         $api_response = (new APIRequestsController())->dentistRegister($data, $files);

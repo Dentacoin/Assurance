@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fbb6ed5e8eafd7bc3d6a5a3f195b1558",
+    "content-hash": "121fbcde14a728f5a83049c7bf3f5e71",
     "packages": [
         {
             "name": "chumper/zipper",
@@ -1432,16 +1432,16 @@
         },
         {
             "name": "mews/captcha",
-            "version": "2.2.4",
+            "version": "2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mewebstudio/captcha.git",
-                "reference": "df9cc9a2f80b2aa17c68daa8f3b35f43fe28e8aa"
+                "reference": "56b044e650a7f9b234f2262b9e377cfb66b94f03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mewebstudio/captcha/zipball/df9cc9a2f80b2aa17c68daa8f3b35f43fe28e8aa",
-                "reference": "df9cc9a2f80b2aa17c68daa8f3b35f43fe28e8aa",
+                "url": "https://api.github.com/repos/mewebstudio/captcha/zipball/56b044e650a7f9b234f2262b9e377cfb66b94f03",
+                "reference": "56b044e650a7f9b234f2262b9e377cfb66b94f03",
                 "shasum": ""
             },
             "require": {
@@ -1495,7 +1495,7 @@
                 "laravel5 Captcha",
                 "laravel5 Security"
             ],
-            "time": "2018-11-15T00:54:41+00:00"
+            "time": "2018-10-05T19:58:36+00:00"
         },
         {
             "name": "mobiledetect/mobiledetectlib",

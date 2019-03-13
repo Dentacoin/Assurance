@@ -46,7 +46,8 @@ mix.scripts([
     'public/assets/libs/jquery-animate-number/jquery.animateNumber.min.js',
     'public/assets/libs/FlipClock-master/compiled/flipclock.min.js',
     'node_modules/datatables.net/js/jquery.dataTables.min.js',
-    'public/assets/libs/truffle-contract/truffle-contract-compiled.js'
+    'public/assets/libs/truffle-contract/truffle-contract-compiled.js',
+    'public/assets/js/address.js',
 ], 'public/dist/js/front-libs-script.js');
 
 mix.babel([

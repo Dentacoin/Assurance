@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
+use Validator;
 
 class UserController extends Controller {
     public static function instance() {
@@ -113,7 +114,7 @@ class UserController extends Controller {
         //passing the countries
         $countries = (new APIRequestsController())->getAllCountries();
         $clinics = (new APIRequestsController())->getAllClinicsByName();
-        $params = ['countries' => $countries, 'clinics' => $clinics, 'current_user_country_code' => mb_strtolower(trim(file_get_contents("http://ipinfo.io/" . $_SERVER['REMOTE_ADDR'] .  "/country")))];
+        $params = ['countries' => $countries, 'clinics' => $clinics, /*'current_user_country_code' => mb_strtolower(trim(file_get_contents("http://ipinfo.io/" . $_SERVER['REMOTE_ADDR'] .  "/country"))),*/ 'current_user_country_code' => 'bg'];
         if(!empty($request->input('route')) && !empty($request->input('slug'))) {
             $params['route'] = $request->input('route');
             $params['slug'] = $request->input('slug');
@@ -138,10 +139,14 @@ class UserController extends Controller {
     }
 
     function checkCaptcha(Request $request) {
-        $data = $this->clearPostData($request->input());
-        if(captcha_check($data['captcha'])) {
+        $temp_save_captcha_session = session('captcha');
+        //saving the session again, because theres bug in the captcha library
+
+        if (captcha_check($request->input('captcha'))) {
+            session(['captcha' => $temp_save_captcha_session]);;
             return response()->json(['success' => true]);
         } else {
+            session(['captcha' => $temp_save_captcha_session]);
             return response()->json(['error' => true]);
         }
     }

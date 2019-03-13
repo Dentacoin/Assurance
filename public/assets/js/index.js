@@ -74,25 +74,6 @@ function checkIfCookie()    {
     }
 }
 
-//binding the refresh captcha event to existing button
-function initCaptchaRefreshEvent()  {
-    if($('.refresh-captcha').length > 0)    {
-        $('.refresh-captcha').click(function()  {
-            $.ajax({
-                type: 'GET',
-                url: '/refresh-captcha',
-                dataType: 'json',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (response) {
-                    $('.captcha-container span').html(response.captcha);
-                }
-            });
-        });
-    }
-} 
-
 var global_state = {};
 var temporally_timestamp = 0;
 var metamask = typeof(web3) !== 'undefined' && web3.currentProvider.isMetaMask === true;
@@ -2021,7 +2002,7 @@ function bindLoginSigninPopupShow() {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: async function (response) {
+                success: function (response) {
                     if(response.success) {
                         basic.closeDialog();
                         basic.showDialog(response.success, 'login-signin-popup', null, true);
@@ -2056,7 +2037,7 @@ function bindLoginSigninPopupShow() {
                             }
                         });
 
-                        $(document).on('civicCustomBtnClicked', async function (event) {
+                        $(document).on('civicCustomBtnClicked', function (event) {
                             $('.patient .form-register .step-errors-holder').html('');
                         });
 
@@ -2064,11 +2045,11 @@ function bindLoginSigninPopupShow() {
                             $('.response-layer').show();
                         });
 
-                        $(document).on('facebookCustomBtnClicked', async function (event) {
+                        $(document).on('facebookCustomBtnClicked', function (event) {
                             $('.patient .form-register .step-errors-holder').html('');
                         });
 
-                        $(document).on('customCivicFbStopperTriggered', async function (event) {
+                        $(document).on('customCivicFbStopperTriggered', function (event) {
                             customErrorHandle($('.patient .form-register .step-errors-holder'), 'Please agree with our privacy policy.');
                         });
                         // ====================== /PATIENT LOGIN/SIGNUP LOGIC ======================
@@ -2119,9 +2100,6 @@ function bindLoginSigninPopupShow() {
                         });
 
                         //SECOND STEP INIT LOGIC
-                        //load address script
-                        await $.getScript('/assets/js/address.js', function() {});
-
                         $('#dentist-country').on('change', function() {
                             $('.step.second .phone .country-code').html('+'+$(this).find('option:selected').attr('data-code'));
                         });
@@ -2167,8 +2145,6 @@ function bindLoginSigninPopupShow() {
                                         customErrorHandle($('.step.first .custom-input.repeat-password').parent(), 'Both passwords don\'t match.');
                                         errors = true;
                                     }
-
-
 
                                     if(!errors) {
                                         $('.dentist .form-register .step').removeClass('visible');
@@ -2287,10 +2263,15 @@ function bindLoginSigninPopupShow() {
                                     }
 
                                     //check captcha
-                                    var check_captcha_response = await checkCaptcha($('.dentist .form-register .step.third #register-captcha').val().trim());
-                                    if(check_captcha_response.error || $('.dentist .form-register .step.third #register-captcha').val().trim() == '' || $('.dentist .form-register .step.third #register-captcha').val().trim().length < 5) {
-                                        customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
+                                    if(!$('.dentist .form-register .step.third .captcha-parent').length || !$('.dentist .form-register .step.third #register-captcha').length) {
                                         errors = true;
+                                        window.location.reload();
+                                    } else {
+                                        var check_captcha_response = await checkCaptcha($('.dentist .form-register .step.third #register-captcha').val().trim());
+                                        if(check_captcha_response.error) {
+                                            customErrorHandle($('.step.third .step-errors-holder'), 'Please enter correct captcha.');
+                                            errors = true;
+                                        }
                                     }
 
                                     if(!errors) {
@@ -2584,15 +2565,10 @@ async function onDocumentReadyPageData() {
                 table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">'+next_payment_timestamp+'</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
             }
         } else if($('body').hasClass('contract-proposal')) {
-            await $.getScript('/assets/js/address.js', function() {});
-
             if ($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined) {
                 var date_obj = new Date((parseInt($('.contract-proposal.section').attr('data-created-at-timestamp')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw())) * 1000);
                 $('.active-until').html(dateObjToFormattedDate(date_obj));
             }
-        }else if($('body').hasClass('edit-account')) {
-            //loading address logic
-            await $.getScript('/assets/js/address.js', function() {});
         }else if($('body').hasClass('my-profile')) {
             //loading address logic
             await $.getScript('//dentacoin.com/assets/libs/civic-login/civic-kyc.js', function() {});
@@ -3628,3 +3604,22 @@ function initMobileMenu() {
 
 }
 initMobileMenu();
+
+//binding the refresh captcha event to existing button
+function initCaptchaRefreshEvent()  {
+    if($('.refresh-captcha').length > 0)    {
+        $('.refresh-captcha').click(function()  {
+            $.ajax({
+                type: 'GET',
+                url: '/refresh-captcha',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    $('.captcha-container span').html(response.captcha);
+                }
+            });
+        });
+    }
+}
