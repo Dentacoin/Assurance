@@ -1,6 +1,6 @@
 @extends("layout")
 @section("content")
-    <section class="edit-account padding-top-100">
+    <section class="edit-account padding-top-100 padding-top-xs-30">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1 fs-0">

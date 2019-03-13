@@ -25943,10 +25943,10 @@ var pagesDataOnContractInit = function () {
                             });
                         } else if (current_user_eth_balance < 0.005) {
                             //not enough ETH balance
-                            console.log('not enough ETH balance');
+                            basic.showAlert('You don\'t have enough ETH balance to create the smart contract on the blockchain. Please refill.');
                         } else if (current_user_dcn_balance < monthly_premium_in_dcn) {
                             //not enough DCN balance
-                            console.log('not enough DCN balance');
+                            basic.showAlert('You don\'t have enough DCN balance to create the smart contract on the blockchain. Please refill');
                         }
 
                     case 62:
@@ -26119,7 +26119,20 @@ var initPagesLogic = function () {
                             if ($('.support-guide-slider').length) {
                                 $('.support-guide-slider').slick({
                                     slidesToShow: 3,
-                                    slidesToScroll: 3
+                                    slidesToScroll: 3,
+                                    responsive: [{
+                                        breakpoint: 992,
+                                        settings: {
+                                            slidesToShow: 2,
+                                            slidesToScroll: 2
+                                        }
+                                    }, {
+                                        breakpoint: 768,
+                                        settings: {
+                                            slidesToShow: 1,
+                                            slidesToScroll: 1
+                                        }
+                                    }]
                                 });
                             }
 
@@ -26520,7 +26533,7 @@ var validateUserAddress = function () {
                             error = false;
                         } else if (check_public_key_ajax_result.error) {
                             if (value_element.is('input')) {
-                                $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="' + user_address + '"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-5 inline-block padding-left-30"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18"><span>Enter your Private Key<div class="fs-16">(not recommended)</div></span></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-5 inline-block padding-right-30"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><div class="btn-wrapper"></div></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
+                                $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="' + user_address + '"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-5 inline-block padding-left-30 padding-left-xs-15"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18"><span>Enter your Private Key<div class="fs-16">(not recommended)</div></span></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-5 inline-block padding-right-30 padding-right-xs-15"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><div class="btn-wrapper"></div></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
                                 $('.proof-of-address').addClass('proof-failed');
 
                                 fixButtonsFocus();
@@ -27438,7 +27451,7 @@ if ($('body').hasClass('logged-in')) {
                 alert_response = 'Your keystore file has been deleted from your browser successfully.';
             }
 
-            $('.delete-local-storage').html('<div class="padding-bottom-50 padding-top-60 delete-local-storage-border-bottom"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block-top"><img alt="Cancel icon" src="/assets/uploads/cancel.svg"/></figure><div class="text inline-block-top"><h3 class="fs-20 padding-bottom-20 lato-bold dark-color">' + title + '</h3><div class="fs-16 dark-color">' + text + '</div></div><div class="btn-container text-right padding-top-30"><a href="javascript:void(0);" class="white-blue-green-btn clear-current-account-local-storage" onclick="return confirm(\'Are you sure you want to continue?\')">' + btn_label + '</a></div></div>');
+            $('.delete-local-storage').html('<div class="padding-bottom-50 padding-top-60 padding-top-xs-30 padding-bottom-xs-30 delete-local-storage-border-bottom"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block-top"><img alt="Cancel icon" src="/assets/uploads/cancel.svg"/></figure><div class="text inline-block-top"><h3 class="fs-20 padding-bottom-20 lato-bold dark-color">' + title + '</h3><div class="fs-16 dark-color">' + text + '</div></div><div class="btn-container text-right padding-top-30 text-center-xs"><a href="javascript:void(0);" class="white-blue-green-btn clear-current-account-local-storage" onclick="return confirm(\'Are you sure you want to continue?\')">' + btn_label + '</a></div></div>');
 
             $('.clear-current-account-local-storage').click(function () {
                 localStorage.removeItem('current-account');

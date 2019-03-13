@@ -243,14 +243,16 @@ body {
     }
 }
 
-.text-center-sm {
-    @include breakpoint($sm-only)    {
-        text-align: center !important;
-    }
+.text-left {
+    text-align: left !important;
 }
 
-.text-center-xs {
-    @include breakpoint($xs)    {
+.text-right {
+    text-align: right !important;
+}
+
+.text-center-sm {
+    @include breakpoint($sm-only)    {
         text-align: center !important;
     }
 }
@@ -261,12 +263,10 @@ body {
     }
 }
 
-.text-left {
-    text-align: left !important;
-}
-
-.text-right {
-    text-align: right !important;
+.text-center-xs {
+    @include breakpoint($xs)    {
+        text-align: center !important;
+    }
 }
 
 .text-right-xs {

@@ -13,5 +13,35 @@
         &.delete {
             border-bottom: 3px solid black;
         }
+        @include breakpoint($xs) {
+            text-align: center;
+            figure {
+                margin: 0 auto;
+            }
+            .text {
+                width: 100%;
+                padding-left: 0;
+                padding-top: 20px;
+                text-align: left;
+            }
+            &.delete {
+                input[type='submit'] {
+                    font-size: 16px;
+                    padding: 10px 0;
+                    text-align: center;
+                    width: 100%;
+                    max-width: 300px;
+                }
+            }
+            &.download, &.delete-local-storage {
+                a {
+                    font-size: 16px;
+                    padding: 10px 0;
+                    text-align: center;
+                    width: 100%;
+                    max-width: 300px;
+                }
+            }
+        }
     }
 }

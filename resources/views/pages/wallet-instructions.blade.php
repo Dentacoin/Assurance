@@ -1,10 +1,10 @@
 @extends("layout")
 @section("content")
-    <section class="padding-top-110 padding-bottom-40">
+    <section class="padding-top-110 padding-top-xs-30 padding-bottom-40 padding-bottom-xs-20">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <h1 class="text-center fs-45 lato-bold padding-bottom-50">How to Create a Wallet</h1>
+                    <h1 class="text-center fs-45 fs-xs-30 lato-bold padding-bottom-50">How to Create a Wallet</h1>
                 </div>
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <iframe class="block-with-full-width" height="320" src="https://www.youtube.com/embed/SR5gbFLT8a0"></iframe>
@@ -12,11 +12,11 @@
             </div>
         </div>
     </section>
-    <section class="padding-top-60">
+    <section class="padding-top-60 padding-top-xs-30">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <h2 class="text-center fs-45 lato-bold padding-bottom-50">Frequently Asked Questions</h2>
+                    <h2 class="text-center fs-45 fs-xs-30 lato-bold padding-bottom-50">Frequently Asked Questions</h2>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
     <section class="section-wallet-instructions-questions">
         <ul>
             <li class="margin-bottom-10">
-                <a href="javascript:void(0);" class="fs-20 padding-top-20 padding-bottom-20 question block-with-full-width">
+                <a href="javascript:void(0);" class="fs-20 fs-xs-18 padding-top-20 padding-bottom-20 question block-with-full-width">
                     <span class="container display-block">
                         <span class="row display-block">
                             <span class="col-xs-12 col-sm-10 col-sm-offset-1 display-block column padding-right-30">
@@ -44,7 +44,7 @@
                 </div>
             </li>
             <li class="margin-bottom-10">
-                <a href="javascript:void(0);" class="fs-20 padding-top-20 padding-bottom-20 question block-with-full-width">
+                <a href="javascript:void(0);" class="fs-20 fs-xs-18 padding-top-20 padding-bottom-20 question block-with-full-width">
                     <span class="container display-block">
                         <span class="row display-block">
                             <span class="col-xs-12 col-sm-10 col-sm-offset-1 display-block column padding-right-30">
@@ -64,7 +64,7 @@
                 </div>
             </li>
             <li class="margin-bottom-10">
-                <a href="javascript:void(0);" class="fs-20 padding-top-20 padding-bottom-20 question block-with-full-width">
+                <a href="javascript:void(0);" class="fs-20 fs-xs-18 padding-top-20 padding-bottom-20 question block-with-full-width">
                     <span class="container display-block">
                         <span class="row display-block">
                             <span class="col-xs-12 col-sm-10 col-sm-offset-1 display-block column padding-right-30">
@@ -86,7 +86,7 @@
                 </div>
             </li>
             <li class="margin-bottom-10">
-                <a href="javascript:void(0);" class="fs-20 padding-top-20 padding-bottom-20 question block-with-full-width">
+                <a href="javascript:void(0);" class="fs-20 fs-xs-18 padding-top-20 padding-bottom-20 question block-with-full-width">
                     <span class="container display-block">
                         <span class="row display-block">
                             <span class="col-xs-12 col-sm-10 col-sm-offset-1 display-block column padding-right-30">
@@ -108,7 +108,7 @@
                 </div>
             </li>
             <li class="margin-bottom-10">
-                <a href="javascript:void(0);" class="fs-20 padding-top-20 padding-bottom-20 question block-with-full-width">
+                <a href="javascript:void(0);" class="fs-20 fs-xs-18 padding-top-20 padding-bottom-20 question block-with-full-width">
                     <span class="container display-block">
                         <span class="row display-block">
                             <span class="col-xs-12 col-sm-10 col-sm-offset-1 display-block column padding-right-30">

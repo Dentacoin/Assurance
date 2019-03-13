@@ -5634,23 +5634,23 @@ body {
   .hide-xs {
     display: none !important; } }
 
+.text-left {
+  text-align: left !important; }
+
+.text-right {
+  text-align: right !important; }
+
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .text-center-sm {
-    text-align: center !important; } }
-
-@media screen and (max-width: 767px) {
-  .text-center-xs {
     text-align: center !important; } }
 
 @media screen and (max-width: 767px) {
   .text-left-xs {
     text-align: left !important; } }
 
-.text-left {
-  text-align: left !important; }
-
-.text-right {
-  text-align: right !important; }
+@media screen and (max-width: 767px) {
+  .text-center-xs {
+    text-align: center !important; } }
 
 @media screen and (max-width: 767px) {
   .text-right-xs {
@@ -7467,6 +7467,13 @@ nav.sidenav {
       .module.camping-for-validation .proof-of-address .checkbox-container .pretty label i {
         display: inline;
         padding-left: 5px; }
+@media screen and (max-width: 767px) {
+  .module.camping-for-validation .proof-of-address .enter-private-key {
+    margin: 0 auto 10px;
+    max-width: 280px; }
+  .module.camping-for-validation .proof-of-address .upload-file-container {
+    margin: 10px auto 0;
+    max-width: 280px; } }
 .module.suggester-parent .suggester-map-div {
   height: 200px;
   display: none;
@@ -7916,9 +7923,18 @@ section#find-your-dentist .combobox-container .input-group {
   .logged-patient-your-benefits .custom-grid .cell:last-child {
     padding-right: 0; }
 
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .section-support-guide-slider-section .support-guide-slider .slick-next {
+    right: -30px; }
+  .section-support-guide-slider-section .support-guide-slider .slick-prev {
+    left: -30px; } }
 .section-support-guide-slider-section .support-guide-slider .single-slide {
   padding-left: 20px;
   padding-right: 20px; }
+  @media screen and (max-width: 991px) {
+    .section-support-guide-slider-section .support-guide-slider .single-slide {
+      padding-left: 30px;
+      padding-right: 30px; } }
   .section-support-guide-slider-section .support-guide-slider .single-slide figure {
     background-color: white;
     -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
@@ -8114,6 +8130,9 @@ body.logged-in .my-profile-menu {
           width: 20px; }
       body.logged-in .my-profile-menu .wrapper nav li a span {
         vertical-align: middle; }
+  @media screen and (max-width: 991px) {
+    body.logged-in .my-profile-menu {
+      display: none; } }
 body.logged-in .my-profile-page-content {
   width: calc(100% - 300px);
   padding: 15px;
@@ -8125,36 +8144,10 @@ body.logged-in .my-profile-page-content {
     body.logged-in .my-profile-page-content .profile-page-title h2 {
       width: calc(100% - 30px);
       padding-left: 15px; }
-  body.logged-in .my-profile-page-content form#patient-update-profile .form-row > label {
-    width: 180px;
-    text-align: left;
-    padding-right: 15px; }
-  body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container {
-    width: calc(100% - 180px); }
-    body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty {
-      white-space: normal;
-      padding-bottom: 10px;
-      margin-bottom: 0; }
-      body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state {
-        position: relative; }
-        body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state .svg {
-          left: 1px;
-          top: 1px;
-          border-color: #126585 !important; }
-        body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state i {
-          left: 1px;
-          top: 1px;
-          position: absolute; }
-        body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state label {
-          line-height: 20px;
-          padding-left: 5px; }
-          body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state label:before, body.logged-in .my-profile-page-content form#patient-update-profile .form-row .checkboxes-container .pretty .state label:after {
-            left: 1px;
-            top: 1px; }
-  body.logged-in .my-profile-page-content form#patient-update-profile .form-row .custom-input {
-    width: calc(100% - 180px); }
-  body.logged-in .my-profile-page-content form#patient-update-profile .form-row .avatar {
-    width: 150px; }
+  @media screen and (max-width: 991px) {
+    body.logged-in .my-profile-page-content {
+      width: 100%;
+      padding: 0; } }
 
 .contract-creation-steps-container {
   font-size: 0; }
@@ -8281,6 +8274,28 @@ body.logged-in .my-profile-page-content {
   padding-left: 20px; }
 .manage-privacy-container .delete.delete, .manage-privacy-container .download.delete, .manage-privacy-container .delete-local-storage.delete {
   border-bottom: 3px solid black; }
+@media screen and (max-width: 767px) {
+  .manage-privacy-container .delete, .manage-privacy-container .download, .manage-privacy-container .delete-local-storage {
+    text-align: center; }
+    .manage-privacy-container .delete figure, .manage-privacy-container .download figure, .manage-privacy-container .delete-local-storage figure {
+      margin: 0 auto; }
+    .manage-privacy-container .delete .text, .manage-privacy-container .download .text, .manage-privacy-container .delete-local-storage .text {
+      width: 100%;
+      padding-left: 0;
+      padding-top: 20px;
+      text-align: left; }
+    .manage-privacy-container .delete.delete input[type='submit'], .manage-privacy-container .download.delete input[type='submit'], .manage-privacy-container .delete-local-storage.delete input[type='submit'] {
+      font-size: 16px;
+      padding: 10px 0;
+      text-align: center;
+      width: 100%;
+      max-width: 300px; }
+    .manage-privacy-container .delete.download a, .manage-privacy-container .delete.delete-local-storage a, .manage-privacy-container .download.download a, .manage-privacy-container .download.delete-local-storage a, .manage-privacy-container .delete-local-storage.download a, .manage-privacy-container .delete-local-storage.delete-local-storage a {
+      font-size: 16px;
+      padding: 10px 0;
+      text-align: center;
+      width: 100%;
+      max-width: 300px; } }
 
 .invite-dentists-container .my-profile-page-content .dcn-background {
   background-image: url(/assets/uploads/dentacoin-symbol-background.png);
@@ -8346,6 +8361,44 @@ body.logged-in .my-profile-page-content {
 .my-profile .my-profile-page-content .missing-dcn-address .custom-input {
   max-width: 450px; }
 
+section.edit-account form#patient-update-profile .form-row > label {
+  width: 180px;
+  text-align: left;
+  padding-right: 15px; }
+section.edit-account form#patient-update-profile .form-row .checkboxes-container {
+  width: calc(100% - 180px); }
+  section.edit-account form#patient-update-profile .form-row .checkboxes-container .pretty {
+    white-space: normal;
+    padding-bottom: 10px;
+    margin-bottom: 0; }
+    section.edit-account form#patient-update-profile .form-row .checkboxes-container .pretty .state {
+      position: relative; }
+      section.edit-account form#patient-update-profile .form-row .checkboxes-container .pretty .state .svg {
+        left: 1px;
+        top: 1px;
+        border-color: #126585 !important; }
+      section.edit-account form#patient-update-profile .form-row .checkboxes-container .pretty .state i {
+        left: 1px;
+        top: 1px;
+        position: absolute; }
+      section.edit-account form#patient-update-profile .form-row .checkboxes-container .pretty .state label {
+        line-height: 20px;
+        padding-left: 5px; }
+        section.edit-account form#patient-update-profile .form-row .checkboxes-container .pretty .state label:before, section.edit-account form#patient-update-profile .form-row .checkboxes-container .pretty .state label:after {
+          left: 1px;
+          top: 1px; }
+section.edit-account form#patient-update-profile .form-row .custom-input {
+  width: calc(100% - 180px); }
+section.edit-account form#patient-update-profile .form-row .avatar {
+  width: 150px; }
+@media screen and (max-width: 767px) {
+  section.edit-account form#patient-update-profile .form-row > label {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-right: 0;
+    width: 100%; }
+  section.edit-account form#patient-update-profile .form-row .checkboxes-container, section.edit-account form#patient-update-profile .form-row .custom-input {
+    width: 100%; } }
 section.edit-account .custom-input.bootstrap-select {
   padding: 0; }
   section.edit-account .custom-input.bootstrap-select > button {

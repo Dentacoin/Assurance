@@ -1,9 +1,9 @@
 @extends("layout")
 @section("content")
-    <section class="my-profile padding-top-100 padding-bottom-50">
+    <section class="my-profile padding-top-100 padding-bottom-50 padding-top-xs-30 padding-bottom-xs-0">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-10 col-sm-offset-1 fs-0">
+                <div class="col-xs-12 col-lg-10 col-lg-offset-1 fs-0">
                     @include('partials.my-profile-menu')
                     <div class="my-profile-page-content inline-block-top">
                         <div class="profile-page-title padding-bottom-50">

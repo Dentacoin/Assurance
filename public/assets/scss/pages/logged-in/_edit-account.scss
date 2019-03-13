@@ -1,4 +1,61 @@
 section.edit-account {
+    form#patient-update-profile {
+        .form-row {
+            > label {
+                width: 180px;
+                text-align: left;
+                padding-right: 15px;
+            }
+            .checkboxes-container {
+                width: calc(100% - 180px);
+                .pretty {
+                    white-space: normal;
+                    padding-bottom: 10px;
+                    margin-bottom: 0;
+                    .state {
+                        position: relative;
+                        .svg {
+                            left: 1px;
+                            top: 1px;
+                            border-color: $blue_green_color !important;
+                        }
+                        i {
+                            left: 1px;
+                            top: 1px;
+                            position: absolute;
+                        }
+                        label {
+                            line-height: 20px;
+                            padding-left: 5px;
+                            &:before, &:after {
+                                left: 1px;
+                                top: 1px;
+                            }
+                        }
+                    }
+                }
+            }
+            .custom-input {
+                width: calc(100% - 180px);
+            }
+            .avatar {
+                width: 150px;
+            }
+        }
+        @include breakpoint($xs) {
+            .form-row {
+                > label {
+                    padding-bottom: 5px;
+                    padding-top: 5px;
+                    padding-right: 0;
+                    width: 100%;
+                }
+                .checkboxes-container, .custom-input {
+                    width: 100%;
+                }
+            }
+        }
+    }
     .custom-input.bootstrap-select {
         padding: 0;
         > button {

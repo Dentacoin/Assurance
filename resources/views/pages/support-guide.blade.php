@@ -1,18 +1,18 @@
 @extends("layout")
 @section("content")
-    <section class="padding-top-110 padding-bottom-40 beige-background">
+    <section class="padding-top-110 padding-top-xs-30 padding-bottom-40 padding-bottom-xs-20 beige-background">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <h1 class="text-center fs-45 lato-bold">Support Guide</h1>
+                    <h1 class="text-center fs-45 fs-xs-30 lato-bold">Support Guide</h1>
                 </div>
             </div>
         </div>
     </section>
-    <section class="padding-bottom-50 beige-background section-support-guide-slider-section">
+    <section class="padding-bottom-50 padding-bottom-xs-10 beige-background section-support-guide-slider-section">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                <div class="col-xs-12 col-md-10 col-md-offset-1">
                     <div class="support-guide-slider second-type-arrows">
                         @foreach($posts as $post)
                             <div class="single-slide">
@@ -41,16 +41,16 @@
             </div>
         </div>
     </section>
-    <section class="padding-top-50 padding-bottom-50 section-support-guide-list">
+    <section class="padding-top-50 padding-top-xs-30 padding-bottom-50 section-support-guide-list">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <h2 class="text-center fs-45 lato-bold">Frequently Asked Questions</h2>
+                    <h2 class="text-center fs-45 fs-xs-30 lato-bold">Frequently Asked Questions</h2>
                     <section class="section-row">
-                        <div class="fs-30 section-title padding-top-30 padding-bottom-20 lato-bold">GENERAL</div>
+                        <div class="fs-30 fs-xs-20 section-title padding-top-30 padding-bottom-20 lato-bold">GENERAL</div>
                         <ul>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">01</span>What is Dentacoin Assurance?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">01</span>What is Dentacoin Assurance?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
                                     Dentacoin Assurance is the first blockchain-based dental assurance program that shifts the focus from treatment to prevention and brings the financial interests of patients and dentists into complete alignment without any intermediaries.
                                     <br><br>
@@ -60,7 +60,7 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">02</span>How does it work?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">02</span>How does it work?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
                                     Dentists register on assurance.dentacoin.com and wait for approval. Once approved, they can create a contract sample and send it to their Patient. The contract sample includes the chosen services to cover, as well as a monthly premium proposal. The Dentist recommends the number of required check-ups and tooth cleanings per year (those prophylaxis visits are always covered by Dentacoin Assurance).
                                     <br><br>
@@ -74,7 +74,7 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">03</span>Why should a Dentist give up regular insurances and choose Dentacoin Assurance?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">03</span>Why should a Dentist give up regular insurances and choose Dentacoin Assurance?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
                                     There is no need of that. Dentacoin Assurance does not compete with other public and private health insurance plans. Dentists are free to decide which insurance/ assurance programs to work with. They can either offer Dentacoin Assurance as a complementary plan which will cover/reduce their patients’ out-of-pocket costs or as a stand-alone plan in case other options are not available.
                                     <br><br>
@@ -90,7 +90,7 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">04</span>Are all Patients suitable for Dentacoin Assurance?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">04</span>Are all Patients suitable for Dentacoin Assurance?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
                                     There are no general limitations. However, there are ideal use cases such as:<br>
                                     <ul>
@@ -103,10 +103,10 @@
                         </ul>
                     </section>
                     <section class="section-row">
-                        <div class="fs-30 section-title padding-top-30 padding-bottom-20 lato-bold">CONTRACT CONDITIONS</div>
+                        <div class="fs-30 fs-xs-20 section-title padding-top-30 padding-bottom-20 lato-bold">CONTRACT CONDITIONS</div>
                         <ul>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">01</span>What are the obligations of Dentists and Patients?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">01</span>What are the obligations of Dentists and Patients?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">Dentists provide Patients with individualized advice on how to take the best possible care of their teeth, incl. how to form and maintain general dental care habits (through the Dentacare Health Training App), and how often to come for check-up and tooth cleaning.
                                     <br><br>
                                     Patients are encouraged (and incentivized in DCN) to take responsibility for their own dental health by adopting these recommendations into their daily lives and consistently following them.
@@ -116,7 +116,7 @@
                                     If the hard conditions in the contract are violated, e.g. a monthly premium is not paid or a patient hasn’t come for check-ups and tooth cleanings, the contract is automatically terminated.</div>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">02</span>What services are covered by Dentacoin Assurance?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">02</span>What services are covered by Dentacoin Assurance?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">Every dentist alone decides which category/categories of services to cover. The recommended number of check-ups/ tooth cleanings are always included in the package.
                                     <br><br>
                                     General Dentistry:
@@ -148,13 +148,13 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">03</span>How can a Dentacoin Assurance contract be ended?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">03</span>How can a Dentacoin Assurance contract be ended?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
                                     The contract is automatically cancelled if a payment is not made on time. The Dentist has the right to cancel the contract if the Patient does not come for the recommended number of check-ups and tooth cleanings. The Patient can also cancel the contract anytime if s/he is not satisfied with the service provided.
                                 </div>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">04</span>How does Dentacoin Foundation regulate the agreements? </a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">04</span>How does Dentacoin Foundation regulate the agreements? </a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
                                     We don’t. Dentacoin Assurance is based on direct contracts between Patients and Dentists. Dentacoin Foundation just provides the infrastructure for this to happen more easily.
                                 </div>
@@ -162,22 +162,22 @@
                         </ul>
                     </section>
                     <section class="section-row">
-                        <div class="fs-30 section-title padding-top-30 padding-bottom-20 lato-bold">DENTACOIN PAYMENTS</div>
+                        <div class="fs-30 fs-xs-20 section-title padding-top-30 padding-bottom-20 lato-bold">DENTACOIN PAYMENTS</div>
                         <ul>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">01</span>What is the monthly assurance premium?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">01</span>What is the monthly assurance premium?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
                                     Dentacoin Foundation shows average monthly premiums to Dentists when creating a new contract. Those vary greatly between USD 2.5 and USD 50 in DCN depending on location, average prices for dental services, and the scope of services covered by the Dentacoin Assurance contract. However, the Dentist alone decides what monthly premium to offer.
                                 </div>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">02</span>How is the assurance premium paid?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">02</span>How is the assurance premium paid?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
                                     All assurance premiums are paid in Dentacoin (DCN). Patients should just ensure that they have the needed amount of DCN in their wallets on the payment due date. The payments are then processed automatically.
                                 </div>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">03</span>What is Dentacoin (DCN)?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">03</span>What is Dentacoin (DCN)?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
                                     Dentacoin (DCN) is a cryptocurrency you can use as a means of payment for dental services and products <a href="//dentacoin.com/partner-network/" target="_blank">within the Dentacoin Network</a> . Dentacoin can be stored in a crypto wallet for future value multiplication or exchanged to other (crypto and standard) currencies on multiple international exchange platforms.
                                     <br><br>
@@ -185,13 +185,13 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">04</span>I don’t have a Dentacoin wallet yet. How to create one?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">04</span>I don’t have a Dentacoin wallet yet. How to create one?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
                                     Please follow our <a href="/wallet-instructions" target="_blank">Wallet Instructions</a>.
                                 </div>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">05</span>How can I get Dentacoin (DCN)?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">05</span>How can I get Dentacoin (DCN)?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
                                     You can always easily <a href="//wallet.dentacoin.com/buy" target="_blank">purchase DCN with a bank card</a>.
                                     <br><br>
@@ -204,7 +204,7 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="fs-20 question"><span class="lato-black fs-20">06</span>Is Dentacoin (DCN) currency only used to pay for assurance premiums?</a>
+                                <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">06</span>Is Dentacoin (DCN) currency only used to pay for assurance premiums?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
                                     No. Except for being embedded as a reward in all Dentacoin tools described above, Dentacoin (DCN) is also accepted as a means of payment by dental clinics, suppliers, manufacturers, labs, service providers in over 20 countries globally. <a href="//dentacoin.com/partner-network" target="_blank">Dentacoin Partner Network</a>
                                 </div>
