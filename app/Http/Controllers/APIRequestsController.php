@@ -490,8 +490,6 @@ class APIRequestsController extends Controller {
         $header[] = 'Authorization: Bearer ' . session('logged_user')['token'];
         $header[] = 'Cache-Control: no-cache';
 
-        var_dump( session('logged_user')['token']);
-
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -501,16 +499,13 @@ class APIRequestsController extends Controller {
             CURLOPT_HTTPHEADER => $header
         ));
 
-        $resp = curl_exec($curl);
+        $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        var_dump($resp);
-        die();
-
-        /*if(!empty($resp))   {
+        if(!empty($resp))   {
             return $resp;
         }else {
             return false;
-        }*/
+        }
     }
 }
