@@ -1029,9 +1029,12 @@ if($('body').hasClass('logged-in')) {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
+                    console.log(response, 'response');
                     if(response.success) {
+                        console.log('asd');
                         window.open = (response.success, '_blank');
                     } else if(response.error) {
+                        console.log('asd123');
                         basic.showAlert(response.error, '', true);
                     }
                 }
