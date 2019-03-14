@@ -1,17 +1,17 @@
 @extends("layout")
 @section("content")
-    <section class="padding-top-100 padding-bottom-50">
+    <section class="padding-top-100 padding-top-sm-30 padding-top-xs-30 padding-bottom-50">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <h1 class="lato-bold fs-45 text-center black-color padding-bottom-50">Create Assurance Contract</h1>
+                    <h1 class="lato-bold fs-45 fs-xs-30 text-center black-color padding-bottom-50 padding-bottom-xs-30">Create Assurance Contract</h1>
                 </div>
             </div>
         </div>
         @include('partials.contract-creation-steps')
         <div class="container steps-body">
             <div class="row">
-                <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+                <div class="col-xs-12 col-lg-10 col-lg-offset-1 no-gutter-xs">
                     @if(!empty($renew_contract))
                         @if(!empty($renew_contract->patient_id))
                             @php($renew_patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($renew_contract->patient_id))
@@ -28,7 +28,7 @@
                         <div class="text-center form-btn-container padding-top-40">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                             <input type="hidden" name="dentist_signature" value="">
-                            <a href="javascript:void(0);" data-current-step="one" class="white-blue-green-btn min-width-250 next">NEXT</a>
+                            <a href="javascript:void(0);" data-current-step="one" class="white-blue-green-btn min-width-250 min-width-xs-200 next">NEXT</a>
                         </div>
                     </form>
                 </div>

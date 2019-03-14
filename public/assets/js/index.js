@@ -1032,7 +1032,7 @@ if($('body').hasClass('logged-in')) {
                     console.log(response, 'response');
                     if(response.success) {
                         console.log('asd');
-                        window.open = (response.success, '_blank');
+                            window.open = (response.success, '_blank');
                     } else if(response.error) {
                         console.log('asd123');
                         basic.showAlert(response.error, '', true);
@@ -1676,6 +1676,23 @@ if($('body').hasClass('logged-in')) {
                         }
                     }
                 ];
+            } else if($('.contracts-list.slider').eq(i).hasClass('patient-contract-list')) {
+                slider_params.responsive = [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 650,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ];
             }
 
             $('.contracts-list.slider').eq(i).slick(slider_params);
@@ -2055,6 +2072,8 @@ function bindLoginSigninPopupShow() {
                         basic.showDialog(response.success, 'login-signin-popup', null, true);
 
                         fixButtonsFocus();
+
+                        initAddressSuggesters();
 
                         $('.popup-header-action a').click(function() {
                             $('.login-signin-popup .popup-body > .inline-block').addClass('custom-hide');

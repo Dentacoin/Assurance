@@ -1,15 +1,15 @@
 @extends("layout")
 @section("content")
-    <section class="padding-top-200 padding-bottom-60 contracts-list-section">
+    <section class="padding-top-200 padding-top-xs-70 padding-top-sm-100 padding-bottom-60 padding-bottom-xs-30 contracts-list-section">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-                    <h1 class="lato-bold fs-45 padding-bottom-70 text-center">Thank You for Helping Us Change Dentistry to the Better!</h1>
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+                    <h1 class="lato-bold fs-45 fs-xs-30 padding-bottom-70 padding-bottom-xs-30 text-center">Thank You for Helping Us Change Dentistry to the Better!</h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="contracts-list slider">
+                    <div class="contracts-list slider patient-contract-list">
                         @if(sizeof($contracts) > 0)
                             @foreach($contracts as $contract)
                                 @if($contract->status == 'pending')
@@ -63,15 +63,17 @@
             </div>
         </div>
     </section>
-    <section class="open-new-assurance-contact-section padding-top-50 padding-bottom-50">
+    <section class="open-new-assurance-contact-section padding-top-50 padding-bottom-50 padding-top-xs-30 padding-bottom-xs-30 padding-top-sm-30 padding-bottom-sm-30">
         <div class="container">
             <div class="row">
-                <h2 class="lato-bold fs-45 text-center">OPEN A NEW ASSURANCE CONTRACT</h2>
-                <div class="text-center fs-35 lato-regular padding-bottom-50">Find Your Dentist or Invite Them to Enroll!</div>
+                <div class="col-xs-12">
+                    <h2 class="lato-bold fs-45 fs-xs-30 text-center">OPEN A NEW ASSURANCE CONTRACT</h2>
+                    <div class="text-center fs-35 fs-xs-22 padding-top-xs-10 lato-regular padding-bottom-50 padding-bottom-xs-20">Find Your Dentist or Invite Them to Enroll!</div>
+                </div>
             </div>
             <div class="row">
                 @if(!empty($clinics))
-                    <div class="col-xs-12 col-sm-6 col-sm-offset-3 padding-bottom-40">
+                    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 padding-bottom-40">
                         <select class="combobox custom-input green-arrow-background dropdown-with-clinics" data-current-route="{{Route::current()->getName()}}">
                             <option></option>
                             @foreach($clinics as $clinic)
@@ -91,8 +93,8 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-4">
                     <div class="form-container">
-                        <h3 class="lato-bold fs-40">CAN’T FIND YOUR DENTIST? Invite Them and Earn 20K Dentacoin!</h3>
-                        <div class="fs-20 padding-top-15 padding-bottom-40 subtitle">Help us change dentistry to the better by inviting dentists you believe could be interested. For each accepted invitation, you will receive 20,000 Dentacoin.</div>
+                        <h3 class="lato-bold fs-40 fs-xs-30 fs-sm-30">CAN’T FIND YOUR DENTIST? Invite Them and Earn 20K Dentacoin!</h3>
+                        <div class="fs-20 fs-xs-18 padding-top-15 padding-bottom-40 subtitle">Help us change dentistry to the better by inviting dentists you believe could be interested. For each accepted invitation, you will receive 20,000 Dentacoin.</div>
                         @include('partials.invite-dentists-form', ['redirect' => 'patient-access'])
                     </div>
                 </div>

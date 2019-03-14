@@ -47,11 +47,11 @@ mix.scripts([
     'public/assets/libs/FlipClock-master/compiled/flipclock.min.js',
     'node_modules/datatables.net/js/jquery.dataTables.min.js',
     'public/assets/libs/truffle-contract/truffle-contract-compiled.js',
-    'public/assets/js/address.js',
 ], 'public/dist/js/front-libs-script.js');
 
 mix.babel([
     'public/assets/js/basic.js',
+    'public/assets/js/address.js',
     'public/assets/js/index.js',
 ], 'public/dist/js/front-script.js');
 /* ===== /PUBLIC =====*/

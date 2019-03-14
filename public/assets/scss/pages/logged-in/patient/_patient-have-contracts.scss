@@ -7,6 +7,11 @@ section.contracts-list-section {
         width: 70%;
         margin: 0 auto;
     }
+    @include breakpoint($max-lgl) {
+        h1 {
+            width: 100%;
+        }
+    }
 }
 
 section.open-new-assurance-contact-section {
@@ -57,6 +62,26 @@ section.invite-dentists-section {
         }
         input[type="submit"].white-blue-green-btn {
             min-width: 220px;
+        }
+    }
+    @include breakpoint($sm-down) {
+        .form-container {
+            .subtitle {
+                max-width: 100%;
+            }
+        }
+    }
+    @include breakpoint($sm-only) {
+        .form-container {
+            padding: 40px;
+        }
+    }
+    @include breakpoint($xs) {
+        .absolute-right-side {
+            display: none;
+        }
+        .form-container {
+            padding: 30px 15px;
         }
     }
 }

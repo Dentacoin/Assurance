@@ -12,54 +12,54 @@
             </figure>
         @endif
     </div>
-    <div class="step-fields module padding-top-35">
+    <div class="step-fields module padding-top-35 padding-top-xs-20">
         <div class="single-row flex-row fs-0">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer" for="professional-company-number">Professional/Company Registration Number:</label>
-            <input type="text" maxlength="50" name="professional-company-number" id="professional-company-number" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background " @if(!empty($renew_contract)) value="{{$renew_contract->professional_company_number}}" @endif/>
+            <label class="calibri-light light-gray-color fs-16 fs-xs-14 padding-right-15 margin-bottom-0 cursor-pointer" for="professional-company-number">Professional/Company Registration Number:</label>
+            <input type="text" maxlength="50" name="professional-company-number" id="professional-company-number" class="right-field calibri-regular fs-18 fs-xs-14 dark-color inline-block pencil-background " @if(!empty($renew_contract)) value="{{$renew_contract->professional_company_number}}" @endif/>
         </div>
         <div class="single-row flex-row fs-0">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Postal Address:</label>
-            <div class="right-field calibri-regular fs-18 dark-color" name="postal-address">{{$current_logged_dentist->address}}</div>
+            <label class="calibri-light light-gray-color fs-16 fs-xs-14 padding-right-15 margin-bottom-0">Postal Address:</label>
+            <div class="right-field calibri-regular fs-18 fs-xs-14 dark-color" name="postal-address">{{$current_logged_dentist->address}}</div>
         </div>
         <div class="single-row flex-row fs-0">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Country:</label>
-            <div class="right-field calibri-regular fs-18 dark-color" name="country">{{$countries[$current_logged_dentist->country_id - 1]->name}}</div>
+            <label class="calibri-light light-gray-color fs-16 fs-xs-14 padding-right-15 margin-bottom-0">Country:</label>
+            <div class="right-field calibri-regular fs-18 fs-xs-14 dark-color" name="country">{{$countries[$current_logged_dentist->country_id - 1]->name}}</div>
         </div>
         <div class="single-row flex-row fs-0">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Phone:</label>
+            <label class="calibri-light light-gray-color fs-16 fs-xs-14 padding-right-15 margin-bottom-0">Phone:</label>
             @if(!empty($current_logged_dentist->phone))
-                <div class="right-field calibri-regular fs-18 dark-color" name="phone">{{$current_logged_dentist->phone}}</div>
+                <div class="right-field calibri-regular fs-18 fs-xs-14 dark-color" name="phone">{{$current_logged_dentist->phone}}</div>
             @else
-                <input type="number" data-type="phone" name="phone" maxlength="50" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background"/>
+                <input type="number" data-type="phone" name="phone" maxlength="50" class="right-field calibri-regular fs-18 fs-xs-14 dark-color inline-block pencil-background"/>
             @endif
         </div>
         <div class="single-row flex-row fs-0">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Website:</label>
+            <label class="calibri-light light-gray-color fs-16 fs-xs-14 padding-right-15 margin-bottom-0">Website:</label>
             @if(!empty($current_logged_dentist->website))
-                <div class="right-field calibri-regular fs-18 dark-color" name="website"><a href="{{$current_logged_dentist->website}}" target="_blank">{{$current_logged_dentist->website}}</a></div>
+                <div class="right-field calibri-regular fs-18 fs-xs-14 dark-color" name="website"><a href="{{$current_logged_dentist->website}}" target="_blank">{{$current_logged_dentist->website}}</a></div>
             @else
-                <input type="text" data-type="website" name="website" maxlength="250" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background"/>
+                <input type="text" data-type="website" name="website" maxlength="250" class="right-field calibri-regular fs-18 fs-xs-14 dark-color inline-block pencil-background"/>
             @endif
         </div>
         <div class="single-row flex-row fs-0">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Wallet Address:</label>
+            <label class="calibri-light light-gray-color fs-16 fs-xs-14 padding-right-15 margin-bottom-0">Wallet Address:</label>
             @if(!empty($current_logged_dentist->dcn_address))
-                <div class="right-field calibri-regular fs-18 dark-color" name="address">
+                <div class="right-field calibri-regular fs-18 fs-xs-14 dark-color" name="address">
                     <a href="//etherscan.io/address/{{$current_logged_dentist->dcn_address}}" target="_blank" id="dcn_address">{{$current_logged_dentist->dcn_address}}</a>
                 </div>
             @else
-                <input type="text" data-type="address" id="dcn_address" name="address" maxlength="42" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background"/>
+                <input type="text" data-type="address" id="dcn_address" name="address" maxlength="42" class="right-field calibri-regular fs-18 fs-xs-14 dark-color inline-block pencil-background"/>
             @endif
         </div>
         <div class="camping-for-validation module">
             {{--RARE CASE - if user have address, but not from wallet.dentacoin.com--}}
             @if(!empty($current_logged_dentist->dcn_address) && !(new \App\Http\Controllers\UserController())->checkIfWeHavePublicKeyOfAddress($current_logged_dentist->dcn_address))
                 <div class="single-row proof-of-address padding-bottom-20" data-address="{{$current_logged_dentist->dcn_address}}">
-                    <div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div>
+                    <div class="text-center calibri-bold fs-18 fs-xs-14 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div>
                     <div class="container-fluid">
                         <div class="row fs-0">
                             <div class="col-xs-12 col-sm-5 inline-block padding-left-30 padding-left-xs-15">
-                                <a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18"><span>Enter your Private Key<div class="fs-16">(not recommended)</div></span></a>
+                                <a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 fs-xs-14 line-height-18"><span>Enter your Private Key<div class="fs-16 fs-xs-14">(not recommended)</div></span></a>
                             </div>
                             <div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div>
                             <div class="col-xs-12 col-sm-5 inline-block padding-right-30">

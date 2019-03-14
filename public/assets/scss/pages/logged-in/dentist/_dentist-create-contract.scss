@@ -1,3 +1,95 @@
+.contract-creation-steps-container {
+    font-size: 0;
+    button {
+        width: calc(25% - 37.5px);
+        font-size: 16px;
+        padding: 10px 20px;
+        font-family: 'Calibri-Bold';
+        display: inline-block;
+        @include rounded(4px);
+        &.not-passed {
+            background-color: white;
+            color: $blue_green_color;
+            border: 2px solid $light_blue_green_color;
+            @include simple_transition(.3s);
+            &:hover {
+                color: white;
+                background-color: $blue_green_color;
+                border: 2px solid $blue_green_color;
+            }
+        }
+        &.not-allowed-cursor {
+            cursor: not-allowed;
+            &:hover {
+                background-color: white !important;
+                color: $blue_green_color !important;
+                border: 2px solid $light_blue_green_color !important;
+            }
+        }
+        &.passed {
+            background-color: $light_blue_green_color;
+            color: $blue_green_color;
+            border: 2px solid $light_blue_green_color;
+            background-image: url(/assets/images/check.svg);
+            background-repeat: no-repeat;
+            background-size: 15px auto;
+            background-position: center left 15px;
+        }
+        &.active {
+            color: white;
+            background-color: $blue_green_color;
+            border: 2px solid $blue_green_color;
+            cursor: context-menu;
+        }
+    }
+    .separator {
+        width: 50px;
+        height: 2px;
+        background-color: $light_blue_green_color;
+    }
+    @include breakpoint($max-lgl) {
+        button {
+            width: calc(25% - 22.5px);
+            padding: 10px 5px;
+        }
+        .separator {
+            width: 30px;
+        }
+    }
+    @include breakpoint($sm-only) {
+        button {
+            width: calc(25% - 7.5px);
+            font-size: 14px;
+        }
+        .separator {
+            width: 10px;
+        }
+    }
+    @include breakpoint($xs) {
+        button {
+            width: calc(33.333333% - 60px);
+            padding: 10px 5px;
+            font-size: 12px;
+            span {
+                display: none;
+            }
+            &.passed {
+                background-size: 10px auto;
+                background-position: center left 3px;
+            }
+            &.active {
+                width: 150px;
+                span {
+                    display: inline-block;
+                }
+            }
+        }
+        .separator {
+            width: 10px;
+        }
+    }
+}
+
 .steps-body {
     .wrapper {
         margin-top: 40px;
@@ -57,6 +149,21 @@
             .pretty.on-white-background.p-svg .state .svg {
                 border-color: $blue_green_color !important;
             }
+        }
+    }
+    @include breakpoint($md-only) {
+        .wrapper {
+            padding: 0 10%;
+        }
+    }
+    @include breakpoint($sm-only) {
+        .wrapper {
+            padding: 0 5%;
+        }
+    }
+    @include breakpoint($xs) {
+        .wrapper {
+            padding: 0 5px;
         }
     }
 }

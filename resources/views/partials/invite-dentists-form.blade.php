@@ -31,6 +31,6 @@
     <div class="btn-container padding-top-40">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
         <input type="hidden" name="redirect" value="{{$redirect}}"/>
-        <input type="submit" value="SEND" class="white-blue-green-btn"/>
+        <input type="submit" value="SEND" class="white-blue-green-btn min-width-220"/>
     </div>
 </form>

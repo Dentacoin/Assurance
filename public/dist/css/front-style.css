@@ -7912,52 +7912,6 @@ section#find-your-dentist .combobox-container .input-group {
     .cant-find-your-dentist-section {
       margin-top: -20px; } }
 
-.section-logged-patient-form {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: top 0 center;
-  position: relative;
-  background-image: url(/assets/uploads/logged-patient-no-contracts-background.jpg); }
-  .section-logged-patient-form .white-bottom-background {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    background-color: white;
-    z-index: 5; }
-  .section-logged-patient-form .combobox-container .input-group {
-    display: block; }
-    .section-logged-patient-form .combobox-container .input-group .input-group-addon {
-      display: none; }
-    .section-logged-patient-form .combobox-container .input-group ul.dropdown-menu {
-      width: 100%; }
-  .section-logged-patient-form > .container {
-    z-index: 10;
-    position: relative; }
-    .section-logged-patient-form > .container .form .form-wrapper {
-      -webkit-border-radius: 20px;
-      -moz-border-radius: 20px;
-      -ms-border-radius: 20px;
-      border-radius: 20px;
-      -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-      -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-      -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
-      .section-logged-patient-form > .container .form .form-wrapper .btn-container {
-        text-align: center; }
-
-.logged-patient-your-benefits .custom-grid .cell {
-  width: 16.6666666%;
-  padding-right: 5px; }
-  .logged-patient-your-benefits .custom-grid .cell .cell-wrapper {
-    padding-top: 20px;
-    height: 200px;
-    padding-left: 25px;
-    padding-right: 25px; }
-  .logged-patient-your-benefits .custom-grid .cell:last-child {
-    padding-right: 0; }
-
 @media screen and (min-width: 992px) and (max-width: 1199px) {
   .section-support-guide-slider-section .support-guide-slider .slick-next {
     right: -30px; }
@@ -8156,55 +8110,6 @@ body.logged-in .my-profile-page-content {
     body.logged-in .my-profile-page-content {
       width: 100%;
       padding: 0; } }
-
-.contract-creation-steps-container {
-  font-size: 0; }
-  .contract-creation-steps-container button {
-    width: calc(25% - 37.5px);
-    font-size: 16px;
-    padding: 10px 20px;
-    font-family: 'Calibri-Bold';
-    display: inline-block;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    border-radius: 4px; }
-    .contract-creation-steps-container button.not-passed {
-      background-color: white;
-      color: #126585;
-      border: 2px solid #c9dfe7;
-      -webkit-transition: 0.3s;
-      -moz-transition: 0.3s;
-      -o-transition: 0.3s;
-      -ms-transition: 0.3s;
-      transition: 0.3s; }
-      .contract-creation-steps-container button.not-passed:hover {
-        color: white;
-        background-color: #126585;
-        border: 2px solid #126585; }
-    .contract-creation-steps-container button.not-allowed-cursor {
-      cursor: not-allowed; }
-      .contract-creation-steps-container button.not-allowed-cursor:hover {
-        background-color: white !important;
-        color: #126585 !important;
-        border: 2px solid #c9dfe7 !important; }
-    .contract-creation-steps-container button.passed {
-      background-color: #c9dfe7;
-      color: #126585;
-      border: 2px solid #c9dfe7;
-      background-image: url(/assets/images/check.svg);
-      background-repeat: no-repeat;
-      background-size: 15px auto;
-      background-position: center left 15px; }
-    .contract-creation-steps-container button.active {
-      color: white;
-      background-color: #126585;
-      border: 2px solid #126585;
-      cursor: context-menu; }
-  .contract-creation-steps-container .separator {
-    width: 50px;
-    height: 2px;
-    background-color: #c9dfe7; }
 
 .bootbox.before-sending-email-confirmation-popup .modal-dialog {
   width: 100%;
@@ -8445,6 +8350,83 @@ section.edit-account .custom-input.bootstrap-select {
   section.edit-account .custom-input.bootstrap-select .dropdown-menu {
     width: 100%; }
 
+.contract-creation-steps-container {
+  font-size: 0; }
+  .contract-creation-steps-container button {
+    width: calc(25% - 37.5px);
+    font-size: 16px;
+    padding: 10px 20px;
+    font-family: 'Calibri-Bold';
+    display: inline-block;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px; }
+    .contract-creation-steps-container button.not-passed {
+      background-color: white;
+      color: #126585;
+      border: 2px solid #c9dfe7;
+      -webkit-transition: 0.3s;
+      -moz-transition: 0.3s;
+      -o-transition: 0.3s;
+      -ms-transition: 0.3s;
+      transition: 0.3s; }
+      .contract-creation-steps-container button.not-passed:hover {
+        color: white;
+        background-color: #126585;
+        border: 2px solid #126585; }
+    .contract-creation-steps-container button.not-allowed-cursor {
+      cursor: not-allowed; }
+      .contract-creation-steps-container button.not-allowed-cursor:hover {
+        background-color: white !important;
+        color: #126585 !important;
+        border: 2px solid #c9dfe7 !important; }
+    .contract-creation-steps-container button.passed {
+      background-color: #c9dfe7;
+      color: #126585;
+      border: 2px solid #c9dfe7;
+      background-image: url(/assets/images/check.svg);
+      background-repeat: no-repeat;
+      background-size: 15px auto;
+      background-position: center left 15px; }
+    .contract-creation-steps-container button.active {
+      color: white;
+      background-color: #126585;
+      border: 2px solid #126585;
+      cursor: context-menu; }
+  .contract-creation-steps-container .separator {
+    width: 50px;
+    height: 2px;
+    background-color: #c9dfe7; }
+  @media screen and (max-width: 1450px) {
+    .contract-creation-steps-container button {
+      width: calc(25% - 22.5px);
+      padding: 10px 5px; }
+    .contract-creation-steps-container .separator {
+      width: 30px; } }
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    .contract-creation-steps-container button {
+      width: calc(25% - 7.5px);
+      font-size: 14px; }
+    .contract-creation-steps-container .separator {
+      width: 10px; } }
+  @media screen and (max-width: 767px) {
+    .contract-creation-steps-container button {
+      width: calc(33.333333% - 60px);
+      padding: 10px 5px;
+      font-size: 12px; }
+      .contract-creation-steps-container button span {
+        display: none; }
+      .contract-creation-steps-container button.passed {
+        background-size: 10px auto;
+        background-position: center left 3px; }
+      .contract-creation-steps-container button.active {
+        width: 150px; }
+        .contract-creation-steps-container button.active span {
+          display: inline-block; }
+    .contract-creation-steps-container .separator {
+      width: 10px; } }
+
 .steps-body .wrapper {
   margin-top: 40px;
   padding: 0 15%;
@@ -8487,6 +8469,15 @@ section.edit-account .custom-input.bootstrap-select {
       padding-top: 0; }
     .steps-body .wrapper .step .pretty.on-white-background.p-svg .state .svg {
       border-color: #126585 !important; }
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .steps-body .wrapper {
+    padding: 0 10%; } }
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .steps-body .wrapper {
+    padding: 0 5%; } }
+@media screen and (max-width: 767px) {
+  .steps-body .wrapper {
+    padding: 0 5px; } }
 
 .forgotten-and-recover-password-section {
   background-repeat: no-repeat;
@@ -8515,6 +8506,9 @@ section.contracts-list-section {
   section.contracts-list-section h1 {
     width: 70%;
     margin: 0 auto; }
+  @media screen and (max-width: 1450px) {
+    section.contracts-list-section h1 {
+      width: 100%; } }
 
 section.open-new-assurance-contact-section .combobox-container .input-group {
   display: block; }
@@ -8559,6 +8553,17 @@ section.invite-dentists-section {
       margin-right: auto; }
     section.invite-dentists-section .form-container input[type="submit"].white-blue-green-btn {
       min-width: 220px; }
+  @media screen and (max-width: 991px) {
+    section.invite-dentists-section .form-container .subtitle {
+      max-width: 100%; } }
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    section.invite-dentists-section .form-container {
+      padding: 40px; } }
+  @media screen and (max-width: 767px) {
+    section.invite-dentists-section .absolute-right-side {
+      display: none; }
+    section.invite-dentists-section .form-container {
+      padding: 30px 15px; } }
 
 section.contract-proposal .wrapper .step-fields .suggester-parent {
   width: 60%; }
@@ -8631,6 +8636,64 @@ section.congratulation-and-time-section {
           section.congratulation-and-time-section .timer-wrapper .clock ul li .inn {
             font-size: 60px;
             background: #438199; }
+
+.logged-patient-your-benefits .custom-grid .cell {
+  width: 16.6666666%;
+  padding-right: 5px; }
+  .logged-patient-your-benefits .custom-grid .cell .cell-wrapper {
+    padding-top: 20px;
+    height: 200px;
+    padding-left: 25px;
+    padding-right: 25px; }
+  .logged-patient-your-benefits .custom-grid .cell:last-child {
+    padding-right: 0; }
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .logged-patient-your-benefits .custom-grid .cell {
+    width: 33.3333%;
+    padding-bottom: 5px; } }
+@media screen and (max-width: 767px) {
+  .logged-patient-your-benefits .custom-grid {
+    text-align: center; }
+    .logged-patient-your-benefits .custom-grid .cell {
+      width: 100%;
+      max-width: 400px;
+      padding-right: 0;
+      padding-bottom: 5px; } }
+
+.section-logged-patient-form {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top 0 center;
+  position: relative;
+  background-image: url(/assets/uploads/logged-patient-no-contracts-background.jpg); }
+  .section-logged-patient-form .white-bottom-background {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: white;
+    z-index: 5; }
+  .section-logged-patient-form .combobox-container .input-group {
+    display: block; }
+    .section-logged-patient-form .combobox-container .input-group .input-group-addon {
+      display: none; }
+    .section-logged-patient-form .combobox-container .input-group ul.dropdown-menu {
+      width: 100%; }
+  .section-logged-patient-form > .container {
+    z-index: 10;
+    position: relative; }
+    .section-logged-patient-form > .container .form .form-wrapper {
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      -ms-border-radius: 20px;
+      border-radius: 20px;
+      -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+      -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
+      .section-logged-patient-form > .container .form .form-wrapper .btn-container {
+        text-align: center; }
 
 .my-contracts ::-webkit-scrollbar {
   -webkit-appearance: none; }
