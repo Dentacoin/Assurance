@@ -1,13 +1,13 @@
 @extends("layout")
 @section("content")
-    <section class="dentist-no-contracts-section padding-top-120">
+    <section class="dentist-no-contracts-section padding-top-120 padding-top-xs-30 padding-top-sm-30">
         <div class="absolute-white-background-line"></div>
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-8 col-md-offset-2 col-lg-6 col-lg-offset-3 padding-bottom-50">
-                    <h1 class="lato-bold fs-45 text-center padding-left-30 padding-right-30">Deliver Better Care & Get Paid for Prevention</h1>
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 padding-bottom-50 padding-bottom-xs-30">
+                    <h1 class="lato-bold fs-45 fs-xs-30 text-center padding-left-30 padding-right-30">Deliver Better Care & Get Paid for Prevention</h1>
                 </div>
-                <div class="col-xs-12 col-sm-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                     <div class="wrapper">
                         <div class="container-fluid">
                             <div class="row fs-0">

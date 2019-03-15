@@ -3,8 +3,8 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 text-center">
-                <h2 class="lato-bold fs-45 padding-top-60">Ready to do it now? </h2>
-                <div class="fs-20 padding-top-15 padding-bottom-20">Just follow the steps below in order to purchase Dentacoin (DCN) with your bank card.</div>
+                <h2 class="lato-bold fs-45 fs-xs-30 padding-top-60 padding-top-xs-30">Ready to do it now? </h2>
+                <div class="fs-20 fs-xs-18 padding-top-15 padding-bottom-20">Just follow the steps below in order to purchase Dentacoin (DCN) with your bank card.</div>
             </div>
         </div>
         <div class="row">
@@ -20,7 +20,7 @@
         </nav>
         <div class="container padding-top-40">
             <div class="row">
-                <div class="col-xs-12 col-sm-5 col-sm-offset-1 col-md-4 col-md-offset-2 padding-right-50">
+                <div class="col-xs-12 col-sm-5 col-sm-offset-1 col-md-4 col-md-offset-2 padding-right-50 padding-right-xs-15 padding-bottom-xs-20">
                     <div class="custom-google-label-style module fs-0 flex">
                         <div class="inline-block left-side">
                             <label class="active-label" for="usd-value">Pay with:</label>
@@ -28,9 +28,9 @@
                         </div>
                         <span class="inline-block">USD</span>
                     </div>
-                    <div class="fs-16 padding-left-15 calibri-light light-gray-color">Transaction limit: 30 - 6000 USD</div>
+                    <div class="fs-16 padding-left-15 padding-left-xs-0 calibri-light light-gray-color">Transaction limit: 30 - 6000 USD</div>
                 </div>
-                <div class="col-xs-12 col-sm-5 col-md-4 padding-left-50">
+                <div class="col-xs-12 col-sm-5 col-md-4 padding-left-50 padding-left-xs-15 padding-bottom-xs-20">
                     <div class="custom-google-label-style module fs-0 flex">
                         <div class="inline-block left-side">
                             <label for="crypto-amount" class="active-label">You get:</label>
@@ -38,10 +38,10 @@
                         </div>
                         <span class="inline-block crypto-label">DCN</span>
                     </div>
-                    <div class="fs-16 padding-left-15 calibri-light light-gray-color">The exchange rate may change in the process.</div>
+                    <div class="fs-16 padding-left-15 padding-left-xs-0 calibri-light light-gray-color">The exchange rate may change in the process.</div>
                 </div>
             </div>
-            <div class="row padding-top-50 padding-bottom-20">
+            <div class="row padding-top-50 padding-top-xs-0 padding-bottom-20">
                 <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
                     <div class="custom-google-label-style module" data-input-blue-green-border="true">
                         <label for="dcn_address" class="active-label">Address to receive DCN:</label>

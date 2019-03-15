@@ -31,7 +31,26 @@ section.contract-proposal {
                     canvas {
                         height: 150px;
                     }
-                } 
+                }
+                @include breakpoint($xs) {
+                    .dentist-sign, .signature-wrapper {
+                        display: block;
+                        margin: 0 auto;
+                        &.dentist-sign {
+                            margin-bottom: 30px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .btns-container {
+        @include breakpoint($xs) {
+            .white-red-btn, .white-blue-green-btn {
+                width: 100%;
+                font-size: 18px;
+                padding: 10px 5px;
+                text-align: center;
             }
         }
     }

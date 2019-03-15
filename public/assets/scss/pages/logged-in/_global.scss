@@ -51,7 +51,7 @@ body.logged-in {
 .bootbox {
     &.before-sending-email-confirmation-popup {
         .modal-dialog {
-            width: 100%;
+            width: 95%;
             max-width: 800px;
             .modal-body {
                 padding: 20px 50px;
@@ -69,6 +69,9 @@ body.logged-in {
                     label {
                         color: #777777;
                     }
+                }
+                @include breakpoint($xs) {
+                    padding: 20px 15px;
                 }
             }
         }
@@ -115,6 +118,9 @@ body.logged-in {
                     &.active {
                         color: white;
                         background-color: $blue_green_color;
+                    }
+                    @include breakpoint($xs) {
+                        font-size: 18px;
                     }
                 }
             }

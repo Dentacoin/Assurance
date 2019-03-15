@@ -25,8 +25,8 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.18">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.18">
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css{{--?v=1.0.18--}}">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css{{--?v=1.0.18--}}">
     <script>
         var HOME_URL = '{{ route("home") }}';
     </script>
@@ -221,25 +221,25 @@
     <div class="contract-response-layer">
         <div class="wrapper">
             <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                <img src="/assets/images/contract-assurance-loading.gif" class="max-width-440" alt="Loader">
+                <img src="/assets/images/contract-assurance-loading.gif" class="max-width-440 min-width-300" alt="Loader">
             </figure>
         </div>
     </div>
     <div class="contract-response-success-layer">
         <div class="wrapper">
             <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                <img src="/assets/images/contract-assurance-loading-success.gif" class="max-width-440" alt="Loader">
+                <img src="/assets/images/contract-assurance-loading-success.gif" class="max-width-440 min-width-300" alt="Loader">
             </figure>
         </div>
     </div>
 @endif
 
 {{--/Show the sticky calculate button only for dentists--}}
-<script src="/assets/js/basic.js?v=1.0.18"></script>
-<script src="/dist/js/front-libs-script.js?v=1.0.18"></script>
+<script src="/assets/js/basic.js{{--?v=1.0.18--}}"></script>
+<script src="/dist/js/front-libs-script.js{{--?v=1.0.18--}}"></script>
 {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-<script src="/assets/js/address.js?v=1.0.18"></script>
-<script src="/assets/js/index-compiled.js?v=1.0.18"></script>
+<script src="/assets/js/address.js{{--?v=1.0.18--}}"></script>
+<script src="/assets/js/index-compiled.js{{--?v=1.0.18--}}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 @yield('script_block')
 

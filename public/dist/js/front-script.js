@@ -2,7 +2,7 @@ import _regeneratorRuntime from "babel-runtime/regenerator";
 
 var pagesDataOnContractInit = function () {
     var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee9() {
-        var check_dentist_account, period_to_withdraw, next_transfer_timestamp, date_obj, current_user_eth_balance, current_user_dcn_balance, monthly_premium_in_dcn;
+        var check_dentist_account, period_to_withdraw, now_timestamp, time_passed_since_signed, next_payment_timestamp_date_obj, next_payment_timestamp_unix, next_payment_timestamp, remainder, current_user_eth_balance, current_user_dcn_balance, monthly_premium_in_dcn;
         return _regeneratorRuntime.wrap(function _callee9$(_context9) {
             while (1) {
                 switch (_context9.prev = _context9.next) {
@@ -49,7 +49,7 @@ var pagesDataOnContractInit = function () {
                         $('.break-contract').click(function () {
                             App.assurance_methods.breakContract($('.breakContract .patient-address').val().trim(), global_state.account);
                         });
-                        _context9.next = 62;
+                        _context9.next = 64;
                         break;
 
                     case 16:
@@ -103,17 +103,17 @@ var pagesDataOnContractInit = function () {
                         $('.break-contract').click(function () {
                             App.assurance_methods.breakContract(global_state.account, $('.breakContract .dentist-address').val().trim());
                         });
-                        _context9.next = 62;
+                        _context9.next = 64;
                         break;
 
                     case 37:
                         if (!$('body').hasClass('logged-in')) {
-                            _context9.next = 62;
+                            _context9.next = 64;
                             break;
                         }
 
                         if (!$('body').hasClass('patient-contract-view')) {
-                            _context9.next = 62;
+                            _context9.next = 64;
                             break;
                         }
 
@@ -124,31 +124,44 @@ var pagesDataOnContractInit = function () {
                     case 42:
                         _context9.t4 = _context9.sent;
                         period_to_withdraw = (0, _context9.t3)(_context9.t4);
-                        next_transfer_timestamp = parseInt($('.contract-body').attr('data-time-left-next-transfer')) + period_to_withdraw;
+                        now_timestamp = Math.round(new Date().getTime() / 1000);
+                        time_passed_since_signed = now_timestamp - parseInt($('.contract-body').attr('data-time-left-next-transfer'));
 
-                        if ($('.converted-date').length > 0) {
-                            date_obj = new Date(next_transfer_timestamp * 1000);
 
-                            $('.converted-date').html(dateObjToFormattedDate(date_obj));
+                        if (time_passed_since_signed > period_to_withdraw) {
+                            remainder = time_passed_since_signed % period_to_withdraw;
+
+                            next_payment_timestamp_unix = period_to_withdraw - remainder;
+                            next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
+                            next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
+                        } else {
+                            next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
+                            next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
+                            next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                         }
-                        initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
+
+                        if ($('.converted-date').length > 0 && next_payment_timestamp_date_obj != undefined) {
+                            $('.converted-date').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
+                        }
+
+                        initFlipClockTimer(next_payment_timestamp_unix);
 
                         cancelContractEventInit();
 
                         _context9.t5 = parseFloat;
                         _context9.t6 = App.web3_1_0.utils;
-                        _context9.next = 52;
+                        _context9.next = 54;
                         return App.helper.getAddressETHBalance(global_state.account);
 
-                    case 52:
+                    case 54:
                         _context9.t7 = _context9.sent;
                         _context9.t8 = _context9.t6.fromWei.call(_context9.t6, _context9.t7);
                         current_user_eth_balance = (0, _context9.t5)(_context9.t8);
                         _context9.t9 = parseFloat;
-                        _context9.next = 58;
+                        _context9.next = 60;
                         return App.dentacoin_token_methods.balanceOf(global_state.account);
 
-                    case 58:
+                    case 60:
                         _context9.t10 = _context9.sent;
                         current_user_dcn_balance = (0, _context9.t9)(_context9.t10);
                         monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
@@ -156,7 +169,7 @@ var pagesDataOnContractInit = function () {
 
                         if (current_user_dcn_balance > monthly_premium_in_dcn && current_user_eth_balance > 0.005) {
                             //show CONTINUE TO BLOCKCHAIN BTN
-                            $('.init-contract-section .camp').html('<h2 class="lato-bold fs-45 padding-top-60 padding-bottom-15 text-center">You are all set for your first payment.</h2><div class="padding-bottom-30 fs-20 text-center">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should pay your monthly premium before on <span>' + dateObjToFormattedDate(new Date(next_transfer_timestamp * 1000)) + '</span>.</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">PAY NOW</a></div>');
+                            $('.init-contract-section .camp').html('<h2 class="lato-bold fs-45 fs-xs-30 padding-top-60 padding-top-xs-30 padding-bottom-15 text-center">You are all set for your first payment.</h2><div class="padding-bottom-30 padding-bottom-xs-20 fs-20 fs-xs-16 text-center">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should pay your monthly premium before on <span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj) + '</span>.</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">PAY NOW</a></div>');
 
                             $('.call-recipe').click(function () {
                                 if (metamask) {
@@ -558,7 +571,7 @@ var pagesDataOnContractInit = function () {
                             basic.showAlert('You don\'t have enough DCN balance to create the smart contract on the blockchain. Please refill');
                         }
 
-                    case 62:
+                    case 64:
                     case "end":
                         return _context9.stop();
                 }
@@ -1753,7 +1766,7 @@ var prepareMapFunction = function prepareMapFunction(callback) {
     }
 };
 
-jQuery(document).ready(function ($) {
+$(document).ready(function ($) {
     setupMap = function setupMap(suggester_container, coords) {
         suggester_container.find('.suggester-map-div').show();
         if (!suggester_container.find('.suggester-map-div').attr('inited')) {
@@ -2525,12 +2538,9 @@ if ($('body').hasClass('logged-in')) {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function success(response) {
-                    console.log(response, 'response');
                     if (response.success) {
-                        console.log('asd');
-                        window.open = (response.success, '_blank');
+                        window.open(response.success, '_blank');
                     } else if (response.error) {
-                        console.log('asd123');
                         basic.showAlert(response.error, '', true);
                     }
                 }
@@ -3262,6 +3272,12 @@ if ($('body').hasClass('logged-in')) {
         $('.logged-user .hidden-box').hide();
     });
 
+    if ($('.open-mobile-single-page-nav').length) {
+        $('.open-mobile-single-page-nav').click(function () {
+            $(this).closest('.contract-single-page-nav').find('ul').toggle(300);
+        });
+    }
+
     if ($('.logged-user-hamburger').length) {
         $('.logged-user-hamburger').click(function () {
             $('.logged-mobile-profile-menu').addClass('active');
@@ -3581,7 +3597,7 @@ if ($('body').hasClass('logged-in')) {
             } else if (!$('section.ready-to-purchase-with-external-api #privacy-policy-agree').is(':checked')) {
                 basic.showAlert('Please agree with our Privacy Policy.', '', true);
             } else {
-                window.open = ('https://indacoin.com/gw/payment_form?partner=dentacoin&cur_from=USD&cur_to=' + currency.toUpperCase() + '&amount=' + $('section.ready-to-purchase-with-external-api #usd-value').val().trim() + '&address=' + $('section.ready-to-purchase-with-external-api input#dcn_address').val().trim() + '&user_id=' + $('section.ready-to-purchase-with-external-api input#email').val().trim(), '_blank');
+                window.open('https://indacoin.com/gw/payment_form?partner=dentacoin&cur_from=USD&cur_to=' + currency.toUpperCase() + '&amount=' + $('section.ready-to-purchase-with-external-api #usd-value').val().trim() + '&address=' + $('section.ready-to-purchase-with-external-api input#dcn_address').val().trim() + '&user_id=' + $('section.ready-to-purchase-with-external-api input#email').val().trim(), '_blank');
             }
         });
 

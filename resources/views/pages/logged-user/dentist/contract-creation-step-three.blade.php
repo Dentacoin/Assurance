@@ -2,7 +2,7 @@
     @if(!empty($renew_contract))
         @php($general_dentistry_arr = unserialize($renew_contract->general_dentistry))
     @endif
-    <h2 class="text-center calibri-bold fs-30 padding-bottom-25">CONTRACT CONDITIONS</h2>
+    <h2 class="text-center calibri-bold fs-30 padding-bottom-25 padding-bottom-xs-0">CONTRACT CONDITIONS</h2>
     <h3 class="calibri-light light-gray-color fs-18 padding-top-35 padding-bottom-10 light-gray-bottom-border">Prophylaxis <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Prophylaxis visits are always covered by Dentacoin Assurance."></i></h3>
     <div class="step-fields module margin-top-10">
         <div class="single-row flex-row fs-0 no-border">

@@ -31,5 +31,8 @@
                 }
             }
         }
+        @include breakpoint($xs) {
+            padding: 30px 15px;
+        }
     }
 }

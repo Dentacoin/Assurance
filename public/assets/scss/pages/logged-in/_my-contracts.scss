@@ -1,4 +1,14 @@
 .my-contracts {
+    .mobile-slide {
+        display: none;
+        padding-top: 10px;
+        img {
+            max-width: none;
+        }
+        @include breakpoint($sm-down) {
+            display: block;
+        }
+    }
     ::-webkit-scrollbar {
         -webkit-appearance: none;
     }

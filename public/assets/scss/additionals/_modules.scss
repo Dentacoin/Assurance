@@ -453,6 +453,11 @@
                 padding: 20px 10px;
                 border: 0;
                 @include box-shadow(none);
+                &.break-word {
+                    @include breakpoint($sm-down) {
+                        word-break: break-all;
+                    }
+                }
             }
             .with-error {
                 background-color: #ff8d8d;
@@ -462,6 +467,11 @@
             .right-extra-field {
                 width: 60%;
                 padding: 20px 10px;
+                &.break-word {
+                    @include breakpoint($sm-down) {
+                        word-break: break-all;
+                    }
+                }
             }
             input.right-field {
                 cursor: pointer;
@@ -497,6 +507,9 @@
                 top: 0;
                 right: 0;
                 @include rounded(0 6px 0 0);
+                @include breakpoint($xs) {
+                    display: none;
+                }
             }
             h3 {
                 border-bottom: 1px dashed black;
@@ -582,6 +595,31 @@
                     a {
                         color: $blue_green_color;
                     }
+                }
+            }
+        }
+        @include breakpoint($md-only) {
+            .wrapper {
+                padding: 0 10%;
+            }
+        }
+        @include breakpoint($sm-only) {
+            .wrapper {
+                padding: 0 5%;
+            }
+        }
+        @include breakpoint($xs) {
+            .wrapper {
+                padding: 0 5px;
+                .fs-18 {
+                    font-size: 16px !important;
+                }
+            }
+        }
+        @include breakpoint($xxs) {
+            .wrapper {
+                .fs-18, .fs-16 {
+                    font-size: 14px !important;
                 }
             }
         }
@@ -696,26 +734,61 @@
         font-size: 16px;
         padding-top: 10px;
         padding-bottom: 10px;
-        li {
-            padding: 0 10px;
-            a {
+        .open-mobile-single-page-nav {
+            display: none;
+            padding-top: 15px;
+            .nav-btn {
+                font-size: 35px;
+                padding: 5px 12px;
+                border: 2px solid $dark_color;
+                line-height: 14px;
                 color: $dark_color;
-                i {
-                    &.fa.fa-times {
-                        color: red;
-                    }
-                }
-                &:hover {
-                    text-decoration: underline;
-                }
-                &.renew-contract-btn {
+                @include rounded(4px);
+            }
+            @include breakpoint($xs) {
+                display: block;
+            }
+        }
+        ul {
+            li {
+                padding: 0 10px;
+                a {
+                    color: $dark_color;
                     i {
-                        color: $active;
+                        &.fa.fa-times {
+                            color: red;
+                        }
                     }
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                    &.renew-contract-btn {
+                        i {
+                            color: $active;
+                        }
+                    }
+                }
+                i.fa-info-circle {
+                    padding-left: 5px;
                 }
             }
-            i.fa-info-circle {
-                padding-left: 5px;
+            @include breakpoint($xs) {
+                display: none;
+                z-index: 10;
+                background-color: white;
+                width: 230px;
+                top: 100%;
+                @include horizontal-align(absolute);
+                @include rounded(4px);
+                @include box-shadow(0 1px 20px 0 rgba(0, 0, 0, 0.7));
+                .delimeter {
+                    display: none;
+                }
+                li {
+                    display: block;
+                    padding: 7px;
+                    border-bottom: 1px solid $light_gray;
+                }
             }
         }
     }
@@ -743,6 +816,24 @@
         .row-with-bottom-squares {
             .border-right-light-gray {
                 border-right: 2px solid #ededed;
+                @include breakpoint($xs) {
+                    border: 0;
+                    position: relative;
+                    &:after {
+                        content: '';
+                        width: 100px;
+                        height: 2px;
+                        background-color: #ededed;
+                        bottom: 0;
+                        @include horizontal-align(absolute);
+                    }
+                }
+            }
+            .show-on-xs {
+                display: none;
+                @include breakpoint($xs) {
+                    display: block;
+                }
             }
         }
         .contract-body {
@@ -760,57 +851,120 @@
                 position: absolute;
                 left: 46%;
             }
-            .clock {
-                display: inline-block;
-                text-align: center;
-                width: auto;
-                margin: 0;
-                padding-bottom: 20px;
-                .flip-clock-label {
-                    color: white;
-                    font-size: 12px;
-                    text-transform: uppercase;
-                    bottom: -15px;
-                    top: auto;
+        }
+        .clock {
+            display: inline-block;
+            text-align: center;
+            width: auto;
+            margin: 0;
+            padding-bottom: 20px;
+            .flip-clock-label {
+                color: white;
+                font-size: 12px;
+                text-transform: uppercase;
+                bottom: -15px;
+                top: auto;
+            }
+            .flip-clock-divider {
+                height: 60px;
+                .flip-clock-dot {
+                    background: #438199;
+                    width: 7px;
+                    height: 7px;
+                    &.bottom {
+                        bottom: auto;
+                        top: 35px;
+                    }
+                    &.top {
+                        top: 20px;
+                    }
                 }
-                .flip-clock-divider {
-                    height: 60px;
-                    .flip-clock-dot {
+                &.days {
+                    .flip-clock-label {
+                        right: -65px;
+                        @include breakpoint($md-only) {
+                            right: -55px;
+                        }
+                        @include breakpoint($sm-only) {
+                            right: -50px;
+                        }
+                        @include breakpoint($xxs) {
+                            right: -55px;
+                        }
+                    }
+                }
+                &.hours {
+                    .flip-clock-label {
+                        right: -73px;
+                        @include breakpoint($md-only) {
+                            right: -63px;
+                        }
+                        @include breakpoint($sm-only) {
+                            right: -58px;
+                        }
+                        @include breakpoint($xxs) {
+                            right: -63px;
+                        }
+                    }
+                }
+                &.minutes {
+                    .flip-clock-label {
+                        right: -77px;
+                        @include breakpoint($md-only) {
+                            right: -67px;
+                        }
+                        @include breakpoint($sm-only) {
+                            right: -64px;
+                        }
+                        @include breakpoint($xxs) {
+                            right: -67px;
+                        }
+                    }
+                }
+                @include breakpoint($sm-only) {
+                    width: 15px;
+                    &:first-child {
+                        width: 0;
+                    }
+                }
+                @include breakpoint($xxs) {
+                    width: 15px;
+                    &:first-child {
+                        width: 0;
+                    }
+                }
+            }
+            ul {
+                width: 40px;
+                height: 50px;
+                li {
+                    line-height: 50px;
+                    .inn {
+                        font-size: 40px;
                         background: #438199;
-                        width: 7px;
-                        height: 7px;
-                        &.bottom {
-                            bottom: auto;
-                            top: 35px;
-                        }
-                        &.top {
-                            top: 20px;
-                        }
                     }
-                    &.days {
-                        .flip-clock-label {
-                            right: -65px;
-                        }
-                    }
-                    &.hours {
-                        .flip-clock-label {
-                            right: -73px;
-                        }
-                    }
-                    &.minutes {
-                        .flip-clock-label {
-                            right: -77px;
+                }
+                @include breakpoint($md-only) {
+                    width: 30px;
+                    li {
+                        .inn {
+                            font-size: 35px;
                         }
                     }
                 }
-                ul {
-                    width: 40px;
-                    height: 50px;
+                @include breakpoint($sm-only) {
+                    width: 25px;
                     li {
-                        line-height: 50px;
                         .inn {
-                            font-size: 40px;
-                            background: #438199;
+                            font-size: 30px;
+                        }
+                    }
+                }
+                @include breakpoint($xxs) {
+                    width: 30px;
+                    li {
+                        .inn {
+                            font-size: 35px;
                         }
                     }
                 }
@@ -835,6 +989,23 @@
                 }
                 &.cancelled {
                     background-color: $cancelled;
+                }
+            }
+        }
+        @include breakpoint($xs) {
+            .contract-participant {
+                width: calc(50% - 15px);
+            }
+            .contract-body {
+                width: 30px;
+                line-height: 30px;
+                writing-mode: vertical-rl;
+                text-orientation: mixed;
+                .contract-header {
+                    width: 100%;
+                }
+                .wrapper {
+                    display: none;
                 }
             }
         }
@@ -1030,6 +1201,10 @@
                 width: 100%;
                 white-space: normal;
                 line-height: 20px;
+                @include breakpoint($xs) {
+                    padding-bottom: 10px;
+                    padding-left: 5px;
+                }
             }
         }
         .top-right-page-alike {
@@ -1039,6 +1214,9 @@
             top: 0;
             right: 0;
             @include rounded(0 6px 0 0);
+            @include breakpoint($xs) {
+                display: none;
+            }
         }
         h3 {
             border-bottom: 1px dashed black;
@@ -1115,6 +1293,10 @@
         }
         &.show-this {
             display: block;
+        }
+        @include breakpoint($xs) {
+            margin-top: 20px;
+            padding: 0 10px;
         }
     }
     &.profile-menu {

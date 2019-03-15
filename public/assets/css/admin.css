@@ -597,6 +597,9 @@
     -moz-box-shadow: none;
     -ms-box-shadow: none;
     box-shadow: none; }
+    @media screen and (max-width: 991px) {
+      .module.step-fields .single-row .right-field.break-word {
+        word-break: break-all; } }
   .module.step-fields .single-row .with-error {
     background-color: #ff8d8d;
     background-image: none;
@@ -607,6 +610,9 @@
   .module.step-fields .single-row .right-extra-field {
     width: 60%;
     padding: 20px 10px; }
+    @media screen and (max-width: 991px) {
+      .module.step-fields .single-row .right-extra-field.break-word {
+        word-break: break-all; } }
   .module.step-fields .single-row input.right-field {
     cursor: pointer; }
     .module.step-fields .single-row input.right-field:focus {
@@ -648,6 +654,9 @@
     -moz-border-radius: 0 6px 0 0;
     -ms-border-radius: 0 6px 0 0;
     border-radius: 0 6px 0 0; }
+    @media screen and (max-width: 767px) {
+      .module.contract-proposal .wrapper .top-right-page-alike {
+        display: none; } }
   .module.contract-proposal .wrapper h3 {
     border-bottom: 1px dashed black;
     padding-bottom: 10px; }
@@ -723,6 +732,20 @@
       top: 0; }
     .module.contract-proposal .wrapper .checkbox-container label a {
       color: #126585; }
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .module.contract-proposal .wrapper {
+    padding: 0 10%; } }
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .module.contract-proposal .wrapper {
+    padding: 0 5%; } }
+@media screen and (max-width: 767px) {
+  .module.contract-proposal .wrapper {
+    padding: 0 5px; }
+    .module.contract-proposal .wrapper .fs-18 {
+      font-size: 16px !important; } }
+@media screen and (max-width: 450px) {
+  .module.contract-proposal .wrapper .fs-18, .module.contract-proposal .wrapper .fs-16 {
+    font-size: 14px !important; } }
 .module.contract-tile {
   padding-left: 10px;
   padding-right: 10px;
@@ -813,18 +836,60 @@
   font-size: 16px;
   padding-top: 10px;
   padding-bottom: 10px; }
-  .module.contract-single-page-nav li {
+  .module.contract-single-page-nav .open-mobile-single-page-nav {
+    display: none;
+    padding-top: 15px; }
+    .module.contract-single-page-nav .open-mobile-single-page-nav .nav-btn {
+      font-size: 35px;
+      padding: 5px 12px;
+      border: 2px solid #212121;
+      line-height: 14px;
+      color: #212121;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      border-radius: 4px; }
+    @media screen and (max-width: 767px) {
+      .module.contract-single-page-nav .open-mobile-single-page-nav {
+        display: block; } }
+  .module.contract-single-page-nav ul li {
     padding: 0 10px; }
-    .module.contract-single-page-nav li a {
+    .module.contract-single-page-nav ul li a {
       color: #212121; }
-      .module.contract-single-page-nav li a i.fa.fa-times {
+      .module.contract-single-page-nav ul li a i.fa.fa-times {
         color: red; }
-      .module.contract-single-page-nav li a:hover {
+      .module.contract-single-page-nav ul li a:hover {
         text-decoration: underline; }
-      .module.contract-single-page-nav li a.renew-contract-btn i {
+      .module.contract-single-page-nav ul li a.renew-contract-btn i {
         color: #239234; }
-    .module.contract-single-page-nav li i.fa-info-circle {
+    .module.contract-single-page-nav ul li i.fa-info-circle {
       padding-left: 5px; }
+  @media screen and (max-width: 767px) {
+    .module.contract-single-page-nav ul {
+      display: none;
+      z-index: 10;
+      background-color: white;
+      width: 230px;
+      top: 100%;
+      position: absolute;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      transform: translateX(-50%);
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      border-radius: 4px;
+      -webkit-box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.7);
+      -moz-box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.7);
+      -ms-box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.7);
+      box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.7); }
+      .module.contract-single-page-nav ul .delimeter {
+        display: none; }
+      .module.contract-single-page-nav ul li {
+        display: block;
+        padding: 7px;
+        border-bottom: 1px solid #888888; } }
 .module.single-contract-tile .contract-participant {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
@@ -854,6 +919,26 @@
     text-decoration: underline; }
 .module.single-contract-tile .row-with-bottom-squares .border-right-light-gray {
   border-right: 2px solid #ededed; }
+  @media screen and (max-width: 767px) {
+    .module.single-contract-tile .row-with-bottom-squares .border-right-light-gray {
+      border: 0;
+      position: relative; }
+      .module.single-contract-tile .row-with-bottom-squares .border-right-light-gray:after {
+        content: '';
+        width: 100px;
+        height: 2px;
+        background-color: #ededed;
+        bottom: 0;
+        position: absolute;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%); } }
+.module.single-contract-tile .row-with-bottom-squares .show-on-xs {
+  display: none; }
+  @media screen and (max-width: 767px) {
+    .module.single-contract-tile .row-with-bottom-squares .show-on-xs {
+      display: block; } }
 .module.single-contract-tile .contract-body {
   padding-left: 0;
   padding-right: 0; }
@@ -871,43 +956,95 @@
     top: 150%;
     position: absolute;
     left: 46%; }
-  .module.single-contract-tile .contract-body .clock {
-    display: inline-block;
-    text-align: center;
-    width: auto;
-    margin: 0;
-    padding-bottom: 20px; }
-    .module.single-contract-tile .contract-body .clock .flip-clock-label {
-      color: white;
-      font-size: 12px;
-      text-transform: uppercase;
-      bottom: -15px;
-      top: auto; }
-    .module.single-contract-tile .contract-body .clock .flip-clock-divider {
-      height: 60px; }
-      .module.single-contract-tile .contract-body .clock .flip-clock-divider .flip-clock-dot {
-        background: #438199;
-        width: 7px;
-        height: 7px; }
-        .module.single-contract-tile .contract-body .clock .flip-clock-divider .flip-clock-dot.bottom {
-          bottom: auto;
-          top: 35px; }
-        .module.single-contract-tile .contract-body .clock .flip-clock-divider .flip-clock-dot.top {
-          top: 20px; }
-      .module.single-contract-tile .contract-body .clock .flip-clock-divider.days .flip-clock-label {
-        right: -65px; }
-      .module.single-contract-tile .contract-body .clock .flip-clock-divider.hours .flip-clock-label {
-        right: -73px; }
-      .module.single-contract-tile .contract-body .clock .flip-clock-divider.minutes .flip-clock-label {
-        right: -77px; }
-    .module.single-contract-tile .contract-body .clock ul {
-      width: 40px;
-      height: 50px; }
-      .module.single-contract-tile .contract-body .clock ul li {
-        line-height: 50px; }
-        .module.single-contract-tile .contract-body .clock ul li .inn {
-          font-size: 40px;
-          background: #438199; }
+.module.single-contract-tile .clock {
+  display: inline-block;
+  text-align: center;
+  width: auto;
+  margin: 0;
+  padding-bottom: 20px; }
+  .module.single-contract-tile .clock .flip-clock-label {
+    color: white;
+    font-size: 12px;
+    text-transform: uppercase;
+    bottom: -15px;
+    top: auto; }
+  .module.single-contract-tile .clock .flip-clock-divider {
+    height: 60px; }
+    .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot {
+      background: #438199;
+      width: 7px;
+      height: 7px; }
+      .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot.bottom {
+        bottom: auto;
+        top: 35px; }
+      .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot.top {
+        top: 20px; }
+    .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
+      right: -65px; }
+      @media screen and (min-width: 992px) and (max-width: 1199px) {
+        .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
+          right: -55px; } }
+      @media screen and (min-width: 768px) and (max-width: 991px) {
+        .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
+          right: -50px; } }
+      @media screen and (max-width: 450px) {
+        .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
+          right: -55px; } }
+    .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
+      right: -73px; }
+      @media screen and (min-width: 992px) and (max-width: 1199px) {
+        .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
+          right: -63px; } }
+      @media screen and (min-width: 768px) and (max-width: 991px) {
+        .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
+          right: -58px; } }
+      @media screen and (max-width: 450px) {
+        .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
+          right: -63px; } }
+    .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
+      right: -77px; }
+      @media screen and (min-width: 992px) and (max-width: 1199px) {
+        .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
+          right: -67px; } }
+      @media screen and (min-width: 768px) and (max-width: 991px) {
+        .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
+          right: -64px; } }
+      @media screen and (max-width: 450px) {
+        .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
+          right: -67px; } }
+    @media screen and (min-width: 768px) and (max-width: 991px) {
+      .module.single-contract-tile .clock .flip-clock-divider {
+        width: 15px; }
+        .module.single-contract-tile .clock .flip-clock-divider:first-child {
+          width: 0; } }
+    @media screen and (max-width: 450px) {
+      .module.single-contract-tile .clock .flip-clock-divider {
+        width: 15px; }
+        .module.single-contract-tile .clock .flip-clock-divider:first-child {
+          width: 0; } }
+  .module.single-contract-tile .clock ul {
+    width: 40px;
+    height: 50px; }
+    .module.single-contract-tile .clock ul li {
+      line-height: 50px; }
+      .module.single-contract-tile .clock ul li .inn {
+        font-size: 40px;
+        background: #438199; }
+    @media screen and (min-width: 992px) and (max-width: 1199px) {
+      .module.single-contract-tile .clock ul {
+        width: 30px; }
+        .module.single-contract-tile .clock ul li .inn {
+          font-size: 35px; } }
+    @media screen and (min-width: 768px) and (max-width: 991px) {
+      .module.single-contract-tile .clock ul {
+        width: 25px; }
+        .module.single-contract-tile .clock ul li .inn {
+          font-size: 30px; } }
+    @media screen and (max-width: 450px) {
+      .module.single-contract-tile .clock ul {
+        width: 30px; }
+        .module.single-contract-tile .clock ul li .inn {
+          font-size: 35px; } }
 .module.single-contract-tile .contract-footer .wrapper {
   -webkit-border-radius: 0 0 20px 20px;
   -moz-border-radius: 0 0 20px 20px;
@@ -925,6 +1062,18 @@
   background-color: #239289; }
 .module.single-contract-tile.pending .contract-header.cancelled {
   background-color: #e92f30; }
+@media screen and (max-width: 767px) {
+  .module.single-contract-tile .contract-participant {
+    width: calc(50% - 15px); }
+  .module.single-contract-tile .contract-body {
+    width: 30px;
+    line-height: 30px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed; }
+    .module.single-contract-tile .contract-body .contract-header {
+      width: 100%; }
+    .module.single-contract-tile .contract-body .wrapper {
+      display: none; } }
 .module.custom-google-label-style {
   position: relative; }
   .module.custom-google-label-style label {
@@ -1088,6 +1237,10 @@
   width: 100%;
   white-space: normal;
   line-height: 20px; }
+  @media screen and (max-width: 767px) {
+    .module.contract-details .right-extra-field label {
+      padding-bottom: 10px;
+      padding-left: 5px; } }
 .module.contract-details .top-right-page-alike {
   border-left: 90px solid #f2f4f6;
   border-top: 90px solid #d6dbe2;
@@ -1098,6 +1251,9 @@
   -moz-border-radius: 0 6px 0 0;
   -ms-border-radius: 0 6px 0 0;
   border-radius: 0 6px 0 0; }
+  @media screen and (max-width: 767px) {
+    .module.contract-details .top-right-page-alike {
+      display: none; } }
 .module.contract-details h3 {
   border-bottom: 1px dashed black;
   padding-bottom: 10px; }
@@ -1166,6 +1322,10 @@
     width: 200px; }
   .module.contract-details-container.show-this {
     display: block; }
+  @media screen and (max-width: 767px) {
+    .module.contract-details-container {
+      margin-top: 20px;
+      padding: 0 10px; } }
 .module.profile-menu li a {
   display: block;
   font-size: 16px;

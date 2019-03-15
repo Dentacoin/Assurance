@@ -4,22 +4,22 @@
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
     @php($general_dentistry = unserialize($contract->general_dentistry))
     @php($created_at = $contract->created_at->format('d-m-Y'))
-    <section class="padding-top-100 padding-bottom-50 contract-proposal section module" data-created-at-timestamp="{{strtotime($created_at)}}" @if((time() - strtotime($created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) data-expired="true" @endif>
+    <section class="padding-top-100 padding-top-xs-30 padding-bottom-50 contract-proposal section module" data-created-at-timestamp="{{strtotime($created_at)}}" @if((time() - strtotime($created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) data-expired="true" @endif>
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <h1 class="lato-bold fs-45 text-center padding-bottom-50">Review Assurance Contract</h1>
+                    <h1 class="lato-bold fs-45 fs-xs-30 text-center padding-bottom-50 padding-bottom-xs-0">Review Assurance Contract</h1>
                 </div>
             </div>
         </div>
         <div class="container padding-top-40">
             <div class="row">
-                <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+                <div class="col-xs-12 col-lg-10 col-lg-offset-1 no-gutter-xs">
                     <div class="wrapper padding-top-50 padding-bottom-60">
                         <div class="top-right-page-alike"></div>
-                        <h2 class="text-center blue-green-color fs-30 lato-bold padding-bottom-20">ASSURANCE CONTRACT SAMPLE</h2>
+                        <h2 class="text-center blue-green-color fs-30 fs-xs-22 lato-bold padding-bottom-20">ASSURANCE CONTRACT SAMPLE</h2>
                         @if((time() - strtotime($created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL)
-                            <div class="calibri-bold fs-14 padding-bottom-50 text-center cancelled-color">This contract proposal has expired.</div>
+                            <div class="calibri-bold fs-14 padding-bottom-50 padding-bottom-xs-20 text-center cancelled-color">This contract proposal has expired.</div>
                         @else
                             <div class="calibri-bold fs-14 padding-bottom-50 text-center blue-green-color">( This contract proposal will be active until <span class="active-until">{{date('d/m/Y', strtotime('+'.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days', strtotime($created_at))) . PHP_EOL}}</span>. )</div>
                         @endif
@@ -48,13 +48,13 @@
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Website:</label>
-                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">
+                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">
                                         <a href="{{$dentist->website}}" target="_blank">{{$dentist->website}}</a>
                                     </div>
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Wallet Address:</label>
-                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">
+                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">
                                         <a href="//etherscan.io/address/{{$dentist->dcn_address}}" target="_blank">{{$dentist->dcn_address}}</a>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Email Address:</label>
-                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$contract->patient_email}}</div>
+                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">{{$contract->patient_email}}</div>
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0 cursor-pointer" for="patient-id-number">ID Number:</label>
@@ -105,9 +105,9 @@
                                 <div class="single-row fs-0 dcn-address-row">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 @if(empty($patient->dcn_address)) cursor-pointer padding-top-0 padding-bottom-0 @endif" @if(empty($patient->dcn_address)) for="dcn_address" @endif>Wallet Address:</label>
                                     @if(empty($patient->dcn_address))
-                                        <input type="text" maxlength="42" id="dcn_address" name="dcn_address" class="right-field required-field calibri-regular fs-18 dark-color inline-block pencil-background"/>
+                                        <input type="text" maxlength="42" id="dcn_address" name="dcn_address" class="right-field required-field calibri-regular fs-18 dark-color inline-block pencil-background break-word"/>
                                     @else
-                                        <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">
+                                        <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">
                                             <a href="//etherscan.io/address/{{$patient->dcn_address}}" target="_blank" id="dcn_address">{{$patient->dcn_address}}</a>
                                         </div>
                                     @endif
@@ -191,7 +191,7 @@
                                     <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">1 (90 days)</div>
                                 </div>
                                 <h3 class="calibri-bold fs-30 dark-color padding-top-70">CONTRACT DETAILS</h3>
-                                <div class="terms-and-conditions-long-list margin-top-30 margin-bottom-60">
+                                <div class="terms-and-conditions-long-list margin-top-30 margin-bottom-60 margin-bottom-xs-30">
                                     @include('partials.contract-terms-and-conditions', ['contract' => $contract])
                                 </div>
                                 <div class="singatures-row fs-0">
@@ -202,7 +202,7 @@
                                         </figure>
                                     </div>
                                     <div class="signature-wrapper inline-block module">
-                                        <div class="calibri-bold fs-26 text-center">Sign below</div>
+                                        <div class="calibri-bold fs-26 fs-xs-20 text-center">Sign below</div>
                                         <div class="calibri-light fs-14 text-center light-gray-color padding-bottom-5">Use your mouse or touch screen to sign.</div>
                                         <canvas id="signature-pad" class="signature-pad"></canvas>
                                         <a href="javascript:void(0)" class="blue-green-color calibri-bold fs-18 clear-signature">Clear</a>
@@ -230,17 +230,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-center padding-top-50">
+                                <div class="text-center btns-container padding-top-50">
                                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <input type="hidden" name="patient_signature"/>
                                     <input type="hidden" name="contract" value="{{$contract->slug}}"/>
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <div class="col-xs-6">
-                                                <a href="javascript:void(0)" class="white-red-btn min-width-220 cancel-contract-btn" data-contract="{{$contract->slug}}" onclick="return confirm('Are you sure you want to reject this contract?')">REJECT</a>
+                                            <div class="col-xs-6 padding-left-0 padding-right-5">
+                                                <a href="javascript:void(0)" class="white-red-btn min-width-220 min-width-xs-0 cancel-contract-btn" data-contract="{{$contract->slug}}" onclick="return confirm('Are you sure you want to reject this contract?')">REJECT</a>
                                             </div>
-                                            <div class="col-xs-6">
-                                                <input type="submit" value="SIGN CONTRACT" class="white-blue-green-btn min-width-220"/>
+                                            <div class="col-xs-6 padding-right-0 padding-left-5">
+                                                <input type="submit" value="SIGN CONTRACT" class="white-blue-green-btn min-width-220 min-width-xs-0"/>
                                             </div>
                                         </div>
                                     </div>

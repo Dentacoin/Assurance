@@ -126,6 +126,21 @@
                             list-style: disc inside none;
                         }
                     }
+                    @include breakpoint($xs) {
+                        padding-top: 10px;
+                        padding-bottom: 5px;
+                        ul {
+                            padding: 5px 0 15px 0;
+                        }
+                    }
+                }
+                @include breakpoint($xs) {
+                    .single-checkbox-container {
+                        label {
+                            width: 100%;
+                            padding-left: 5px;
+                        }
+                    }
                 }
             }
             &.four {
@@ -149,21 +164,6 @@
             .pretty.on-white-background.p-svg .state .svg {
                 border-color: $blue_green_color !important;
             }
-        }
-    }
-    @include breakpoint($md-only) {
-        .wrapper {
-            padding: 0 10%;
-        }
-    }
-    @include breakpoint($sm-only) {
-        .wrapper {
-            padding: 0 5%;
-        }
-    }
-    @include breakpoint($xs) {
-        .wrapper {
-            padding: 0 5px;
         }
     }
 }

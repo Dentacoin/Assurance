@@ -129,6 +129,38 @@ body {
     }
 }
 
+@for $i from 0 through 20 * 2 {
+    .margin-left-xs-#{$i * 5} {
+        @include breakpoint($xs) {
+            margin-left: 0px + $i * 5!important;
+        }
+    }
+}
+
+@for $i from 0 through 20 * 2 {
+    .margin-right-xs-#{$i * 5} {
+        @include breakpoint($xs) {
+            margin-right: 0px + $i * 5 !important;
+        }
+    }
+}
+
+@for $i from 0 through 20 * 2 {
+    .margin-bottom-xs-#{$i * 5} {
+        @include breakpoint($xs) {
+            margin-bottom: 0px + $i * 5 !important;
+        }
+    }
+}
+
+@for $i from 0 through 20 * 2 {
+    .margin-top-xs-#{$i * 5} {
+        @include breakpoint($xs) {
+            margin-top: 0px + $i * 5 !important;
+        }
+    }
+}
+
 @for $i from 0 through 30 * 2 {
     .max-width-#{$i * 10} {
         max-width: 0px + $i * 10!important;
@@ -1059,6 +1091,13 @@ fieldset {
                 }
             }
         }
+        @include breakpoint($xs) {
+            .modal-dialog {
+                .modal-body {
+                    padding: 10px 15px 40px;
+                }
+            }
+        }
     }
     &.address-validation-or-remember-me {
         .bootbox-close-button {
@@ -1399,4 +1438,8 @@ nav.sidenav {
     @include breakpoint($xs)    {
         width: 100%;
     }
+}
+
+.word-break {
+    word-break: break-all;
 }

@@ -1,10 +1,10 @@
 <div class="contract-details module">
     <div class="top-right-page-alike"></div>
-    <h2 class="text-center lato-bold fs-30 padding-bottom-45 blue-green-color">ASSURANCE CONTRACT SAMPLE</h2>
+    <h2 class="text-center lato-bold fs-30 fs-xs-24 padding-bottom-45 padding-bottom-xs-20 blue-green-color">ASSURANCE CONTRACT SAMPLE</h2>
     @if(!empty($contract))
-        <h3 class="calibri-bold fs-30 dark-color">DENTIST DETAILS</h3>
+        <h3 class="calibri-bold fs-30 fs-xs-22 dark-color">DENTIST DETAILS</h3>
     @else
-        <h3 class="calibri-bold fs-30 dark-color">YOUR DETAILS</h3>
+        <h3 class="calibri-bold fs-30 fs-xs-22 dark-color">YOUR DETAILS</h3>
     @endif
     <div class="step-fields module padding-top-20">
         <div class="single-row fs-0">
@@ -29,20 +29,20 @@
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Website:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="website">@if(!empty($dentist)){{$dentist->website}}@endif</div>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word" id="website">@if(!empty($dentist))<a href="{{$dentist->website}}" target="_blank">{{$dentist->website}}</a>@endif</div>
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Wallet Address:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="address">@if(!empty($dentist)){{$dentist->dcn_address}}@endif</div>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word" id="address">@if(!empty($dentist))<a href="//etherscan.io/address/{{$dentist->dcn_address}}" target="_blank">{{$dentist->dcn_address}}</a>@endif</div>
         </div>
         @if(!empty($patient))
-            <h3 class="calibri-bold fs-30 dark-color padding-top-50">PATIENT DETAILS</h3>
+            <h3 class="calibri-bold fs-30 fs-xs-22 dark-color padding-top-50">PATIENT DETAILS</h3>
             <div class="single-row fs-0">
                 <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Name:</label>
                 <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">{{$patient->name}}</div>
             </div>
         @elseif(!empty($contract))
-            <h3 class="calibri-bold fs-30 dark-color padding-top-50">PATIENT DETAILS</h3>
+            <h3 class="calibri-bold fs-30 fs-xs-22 dark-color padding-top-50">PATIENT DETAILS</h3>
             <div class="single-row fs-0">
                 <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Name:</label>
                 <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">{{$contract->patient_fname}} {{$contract->patient_lname}}</div>
@@ -50,7 +50,7 @@
         @else
             <div class="fs-14 calibri-light light-gray-color padding-top-10">This is the wallet where you will receive your monthly premiums. Please double-check if everything is correct.</div>
             <div class="fs-14 calibri-light light-gray-color">You don’t have a wallet? <a href="//wallet.dentacoin.com" target="_blank">Create one here.</a></div>
-            <h3 class="calibri-bold fs-30 dark-color padding-top-50">PATIENT DETAILS</h3>
+            <h3 class="calibri-bold fs-30 fs-xs-22 dark-color padding-top-50">PATIENT DETAILS</h3>
             <div class="single-row fs-0">
                 <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">First Name:</label>
                 <div class="right-extra-field calibri-bold fs-25 dark-color inline-block" id="fname"></div>
@@ -62,9 +62,14 @@
         @endif
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Email Address:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="email">@if(!empty($patient)){{$patient->email}} @elseif(!empty($contract)) {{$contract->patient_email}} @endif</div>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word" id="email">
+                @if(!empty($patient))
+                    <a href="mailto:{{$patient->email}}">{{$patient->email}}</a>
+                @elseif(!empty($contract))
+                    <a href="mailto:{{$contract->patient_email}}">{{$contract->patient_email}}</a>
+                @endif</div>
         </div>
-        <h3 class="calibri-bold fs-30 dark-color padding-top-50">CONTRACT CONDITIONS</h3>
+        <h3 class="calibri-bold fs-30 fs-xs-22 dark-color padding-top-50">CONTRACT CONDITIONS</h3>
         <h3 class="calibri-light light-gray-color fs-18 padding-top-35 padding-bottom-10 light-gray-bottom-border">Prophylaxis <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Prophylaxis visits are always covered by Dentacoin Assurance."></i></h3>
         <div class="single-row fs-0 no-border">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
@@ -140,8 +145,8 @@
             <div class="fs-14 calibri-light light-gray-color padding-top-5">Based on the services covered, the average monthly rate in your country is <span class="calibri-bold blue-green-color"><span id="suggested-price">@if(!empty($price)) {{$price}} @endif</span> USD</span> in Dentacoin (DCN).</div>
             <div class="fs-14 calibri-light light-gray-color padding-bottom-25">You are free to propose a different rate to your patient.</div>
         </div>
-        <h3 class="calibri-bold fs-30 dark-color padding-top-50">CONTRACT DETAILS</h3>
-        <div class="terms-and-conditions-long-list margin-top-30 margin-bottom-60">
+        <h3 class="calibri-bold fs-30 fs-xs-22 dark-color padding-top-50">CONTRACT DETAILS</h3>
+        <div class="terms-and-conditions-long-list margin-top-30 margin-bottom-60 margin-bottom-xs-30">
             @if(!empty($contract))
                 @include('partials.contract-terms-and-conditions', ['contract' => $contract])
             @else
@@ -150,7 +155,7 @@
         </div>
         @if($type == 'contract-creation-step-four')
             <div class="signature-and-checkboxes">
-                <div class="calibri-bold fs-26 text-center">Sign below</div>
+                <div class="calibri-bold fs-26 fs-xs-20 text-center">Sign below</div>
                 <div class="calibri-light fs-16 text-center light-gray-color padding-bottom-15">Use your mouse or touch screen to sign.</div>
                 <div class="signature-wrapper module">
                     <canvas id="signature-pad" class="signature-pad"></canvas>

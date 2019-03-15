@@ -40,6 +40,46 @@ section.congratulation-and-time-section {
                         background: #438199;
                     }
                 }
+                @include breakpoint($xs) {
+                    width: 35px;
+                    height: 60px;
+                    margin: 2px;
+                    li {
+                        line-height: 65px;
+                        .inn {
+                            font-size: 40px;
+                        }
+                    }
+                }
+            }
+            @include breakpoint($xs) {
+                margin: 0;
+                .flip-clock-divider {
+                    height: 60px;
+                    .flip-clock-dot {
+                        &.top {
+                            top: 15px;
+                        }
+                        &.bottom {
+                            bottom: 15px;
+                        }
+                    }
+                    &.days {
+                        .flip-clock-label {
+                            right: -57px;
+                        }
+                    }
+                    &.hours {
+                        .flip-clock-label {
+                            right: -61px;
+                        }
+                    }
+                    &.minutes {
+                        .flip-clock-label {
+                            right: -66px;
+                        }
+                    }
+                }
             }
         }
     }

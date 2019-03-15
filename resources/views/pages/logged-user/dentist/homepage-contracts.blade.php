@@ -1,6 +1,6 @@
 @extends("layout")
 @section("content")
-    <section class="dentist-contracts-section padding-top-200 padding-top-xs-100">
+    <section class="dentist-contracts-section padding-top-200 padding-top-xs-50 padding-top-sm-50">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center padding-bottom-120 padding-bottom-xs-50">
