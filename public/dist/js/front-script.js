@@ -1054,292 +1054,300 @@ var onDocumentReadyPageData = function () {
                         _context24.t13.html.call(_context24.t13, _context24.t23);
 
                         $('.approve-contract-recipe').click(function () {
-                            if (metamask) {
-                                //metamask way
-                            } else {
-                                //custom
-                                var cached_key = localStorage.getItem('current-account') == null;
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/get-recipe-popup',
-                                    dataType: 'json',
-                                    data: {
-                                        to: App.assurance_proxy_address,
-                                        cached_key: cached_key,
-                                        contract: $('.init-contract-section').attr('data-contract'),
-                                        show_dcn_bar: false
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function () {
-                                        var _ref22 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee23(response) {
-                                            var on_page_load_gwei, on_page_load_gas_price, gas_cost_for_contract_approval, eth_fee, transaction_key, decrypted_private_key_response;
-                                            return _regeneratorRuntime.wrap(function _callee23$(_context23) {
-                                                while (1) {
-                                                    switch (_context23.prev = _context23.next) {
-                                                        case 0:
-                                                            if (!response.success) {
-                                                                _context23.next = 34;
+                            if (current_user_dcn_balance > monthly_premium_in_dcn && current_user_eth_balance > 0.005) {
+                                if (metamask) {
+                                    //metamask way
+                                } else {
+                                    //custom
+                                    var cached_key = localStorage.getItem('current-account') == null;
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/get-recipe-popup',
+                                        dataType: 'json',
+                                        data: {
+                                            to: App.assurance_proxy_address,
+                                            cached_key: cached_key,
+                                            contract: $('.init-contract-section').attr('data-contract'),
+                                            show_dcn_bar: false
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function () {
+                                            var _ref22 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee23(response) {
+                                                var on_page_load_gwei, on_page_load_gas_price, gas_cost_for_contract_approval, eth_fee, transaction_key, decrypted_private_key_response;
+                                                return _regeneratorRuntime.wrap(function _callee23$(_context23) {
+                                                    while (1) {
+                                                        switch (_context23.prev = _context23.next) {
+                                                            case 0:
+                                                                if (!response.success) {
+                                                                    _context23.next = 34;
+                                                                    break;
+                                                                }
+
+                                                                basic.closeDialog();
+                                                                basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                                                fixButtonsFocus();
+
+                                                                on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                                                                //adding 10% just in case the transaction dont fail
+
+                                                                on_page_load_gas_price = on_page_load_gwei * 100000000 + on_page_load_gwei * 100000000 * 10 / 100;
+
+                                                                //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+
+                                                                _context23.next = 8;
+                                                                return App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).estimateGas({ from: global_state.account, gas: 50000 });
+
+                                                            case 8:
+                                                                gas_cost_for_contract_approval = _context23.sent;
+                                                                eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_contract_approval * on_page_load_gas_price).toString(), 'ether');
+
+                                                                $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                                                $('.recipe-popup .ether-fee i').popover({
+                                                                    trigger: 'click',
+                                                                    html: true
+                                                                });
+
+                                                                if (!cached_key) {
+                                                                    _context23.next = 17;
+                                                                    break;
+                                                                }
+
+                                                                bindVerifyAddressLogic(true);
+                                                                $(document).on('on-transaction-recipe-agree', function (event) {
+                                                                    transaction_key = event.response_data;
+                                                                    setTimeout(function () {
+                                                                        $('.response-layer').hide();
+
+                                                                        $('.proof-of-address').remove();
+                                                                        $('.proof-success').fadeIn(1500);
+                                                                    }, 500);
+                                                                });
+                                                                _context23.next = 31;
                                                                 break;
-                                                            }
 
-                                                            basic.closeDialog();
-                                                            basic.showDialog(response.success, 'recipe-popup', null, true);
+                                                            case 17:
+                                                                if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
+                                                                    _context23.next = 30;
+                                                                    break;
+                                                                }
 
-                                                            fixButtonsFocus();
+                                                                _context23.next = 20;
+                                                                return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
 
-                                                            on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
-                                                            //adding 10% just in case the transaction dont fail
+                                                            case 20:
+                                                                decrypted_private_key_response = _context23.sent;
 
-                                                            on_page_load_gas_price = on_page_load_gwei * 100000000 + on_page_load_gwei * 100000000 * 10 / 100;
+                                                                if (!decrypted_private_key_response.success) {
+                                                                    _context23.next = 25;
+                                                                    break;
+                                                                }
 
-                                                            //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-
-                                                            _context23.next = 8;
-                                                            return App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).estimateGas({ from: global_state.account, gas: 50000 });
-
-                                                        case 8:
-                                                            gas_cost_for_contract_approval = _context23.sent;
-                                                            eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_contract_approval * on_page_load_gas_price).toString(), 'ether');
-
-                                                            $('.recipe-popup .ether-fee .field').html(eth_fee);
-
-                                                            $('.recipe-popup .ether-fee i').popover({
-                                                                trigger: 'click',
-                                                                html: true
-                                                            });
-
-                                                            if (!cached_key) {
-                                                                _context23.next = 17;
-                                                                break;
-                                                            }
-
-                                                            bindVerifyAddressLogic(true);
-                                                            $(document).on('on-transaction-recipe-agree', function (event) {
-                                                                transaction_key = event.response_data;
-                                                                setTimeout(function () {
-                                                                    $('.response-layer').hide();
-
-                                                                    $('.proof-of-address').remove();
-                                                                    $('.proof-success').fadeIn(1500);
-                                                                }, 500);
-                                                            });
-                                                            _context23.next = 31;
-                                                            break;
-
-                                                        case 17:
-                                                            if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
-                                                                _context23.next = 30;
-                                                                break;
-                                                            }
-
-                                                            _context23.next = 20;
-                                                            return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
-
-                                                        case 20:
-                                                            decrypted_private_key_response = _context23.sent;
-
-                                                            if (!decrypted_private_key_response.success) {
-                                                                _context23.next = 25;
-                                                                break;
-                                                            }
-
-                                                            transaction_key = decrypted_private_key_response.success;
-                                                            _context23.next = 28;
-                                                            break;
-
-                                                        case 25:
-                                                            if (!decrypted_private_key_response.error) {
+                                                                transaction_key = decrypted_private_key_response.success;
                                                                 _context23.next = 28;
                                                                 break;
-                                                            }
 
-                                                            basic.showAlert(decrypted_private_key_response.error, '', true);
-                                                            return _context23.abrupt("return", false);
+                                                            case 25:
+                                                                if (!decrypted_private_key_response.error) {
+                                                                    _context23.next = 28;
+                                                                    break;
+                                                                }
 
-                                                        case 28:
-                                                            _context23.next = 31;
-                                                            break;
+                                                                basic.showAlert(decrypted_private_key_response.error, '', true);
+                                                                return _context23.abrupt("return", false);
 
-                                                        case 30:
-                                                            if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
-                                                                $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>');
-                                                            }
+                                                            case 28:
+                                                                _context23.next = 31;
+                                                                break;
 
-                                                        case 31:
+                                                            case 30:
+                                                                if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
+                                                                    $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>');
+                                                                }
 
-                                                            $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22() {
-                                                                var decrypted_keystore_file_response, EthereumTx, nonce, contract_approval_function_abi, contract_approval_transaction_obj, contract_approval_transaction;
-                                                                return _regeneratorRuntime.wrap(function _callee22$(_context22) {
-                                                                    while (1) {
-                                                                        switch (_context22.prev = _context22.next) {
-                                                                            case 0:
-                                                                                if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
-                                                                                    _context22.next = 5;
-                                                                                    break;
-                                                                                }
+                                                            case 31:
 
-                                                                                basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
-                                                                                return _context22.abrupt("return", false);
+                                                                $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22() {
+                                                                    var decrypted_keystore_file_response, EthereumTx, nonce, contract_approval_function_abi, contract_approval_transaction_obj, contract_approval_transaction;
+                                                                    return _regeneratorRuntime.wrap(function _callee22$(_context22) {
+                                                                        while (1) {
+                                                                            switch (_context22.prev = _context22.next) {
+                                                                                case 0:
+                                                                                    if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                                                        _context22.next = 5;
+                                                                                        break;
+                                                                                    }
 
-                                                                            case 5:
-                                                                                if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '')) {
-                                                                                    _context22.next = 10;
-                                                                                    break;
-                                                                                }
+                                                                                    basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                                                    return _context22.abrupt("return", false);
 
-                                                                                basic.showAlert('Please enter the secret password for your keystore file.', '', true);
-                                                                                return _context22.abrupt("return", false);
+                                                                                case 5:
+                                                                                    if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '')) {
+                                                                                        _context22.next = 10;
+                                                                                        break;
+                                                                                    }
 
-                                                                            case 10:
-                                                                                if ($('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                                                    _context22.next = 15;
-                                                                                    break;
-                                                                                }
+                                                                                    basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                                                    return _context22.abrupt("return", false);
 
-                                                                                basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
-                                                                                return _context22.abrupt("return", false);
+                                                                                case 10:
+                                                                                    if ($('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                                                        _context22.next = 15;
+                                                                                        break;
+                                                                                    }
 
-                                                                            case 15:
-                                                                                if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
+                                                                                    basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                                                    return _context22.abrupt("return", false);
+
+                                                                                case 15:
+                                                                                    if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
+                                                                                        _context22.next = 26;
+                                                                                        break;
+                                                                                    }
+
+                                                                                    _context22.next = 18;
+                                                                                    return getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+
+                                                                                case 18:
+                                                                                    decrypted_keystore_file_response = _context22.sent;
+
+                                                                                    if (!decrypted_keystore_file_response.success) {
+                                                                                        _context22.next = 23;
+                                                                                        break;
+                                                                                    }
+
+                                                                                    transaction_key = decrypted_keystore_file_response.to_string;
                                                                                     _context22.next = 26;
                                                                                     break;
-                                                                                }
 
-                                                                                _context22.next = 18;
-                                                                                return getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                                                case 23:
+                                                                                    if (!decrypted_keystore_file_response.error) {
+                                                                                        _context22.next = 26;
+                                                                                        break;
+                                                                                    }
 
-                                                                            case 18:
-                                                                                decrypted_keystore_file_response = _context22.sent;
+                                                                                    basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                                                    return _context22.abrupt("return", false);
 
-                                                                                if (!decrypted_keystore_file_response.success) {
-                                                                                    _context22.next = 23;
-                                                                                    break;
-                                                                                }
+                                                                                case 26:
 
-                                                                                transaction_key = decrypted_keystore_file_response.to_string;
-                                                                                _context22.next = 26;
-                                                                                break;
+                                                                                    $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
+                                                                                    $('.response-layer').show();
 
-                                                                            case 23:
-                                                                                if (!decrypted_keystore_file_response.error) {
-                                                                                    _context22.next = 26;
-                                                                                    break;
-                                                                                }
+                                                                                    EthereumTx = require('ethereumjs-tx');
+                                                                                    _context22.next = 31;
+                                                                                    return App.web3_1_0.eth.getTransactionCount(global_state.account);
 
-                                                                                basic.showAlert(decrypted_keystore_file_response.error, '', true);
-                                                                                return _context22.abrupt("return", false);
+                                                                                case 31:
+                                                                                    nonce = _context22.sent;
+                                                                                    _context22.next = 34;
+                                                                                    return App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).encodeABI();
 
-                                                                            case 26:
+                                                                                case 34:
+                                                                                    contract_approval_function_abi = _context22.sent;
+                                                                                    contract_approval_transaction_obj = {
+                                                                                        gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + gas_cost_for_contract_approval * 5 / 100)),
+                                                                                        gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                                                        from: global_state.account,
+                                                                                        nonce: App.web3_1_0.utils.toHex(nonce),
+                                                                                        chainId: App.chain_id,
+                                                                                        data: contract_approval_function_abi,
+                                                                                        to: App.assurance_proxy_address
+                                                                                    };
+                                                                                    contract_approval_transaction = new EthereumTx(contract_approval_transaction_obj);
+                                                                                    //signing the transaction
 
-                                                                                $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
-                                                                                $('.response-layer').show();
+                                                                                    contract_approval_transaction.sign(new Buffer(transaction_key, 'hex'));
 
-                                                                                EthereumTx = require('ethereumjs-tx');
-                                                                                _context22.next = 31;
-                                                                                return App.web3_1_0.eth.getTransactionCount(global_state.account);
+                                                                                    //sending the transaction
+                                                                                    App.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                                                        //doing setinterval check to check if the smart creation transaction got mined
+                                                                                        var contract_approval_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee21() {
+                                                                                            var contract_approval_status;
+                                                                                            return _regeneratorRuntime.wrap(function _callee21$(_context21) {
+                                                                                                while (1) {
+                                                                                                    switch (_context21.prev = _context21.next) {
+                                                                                                        case 0:
+                                                                                                            _context21.next = 2;
+                                                                                                            return App.web3_1_0.eth.getTransactionReceipt(transactionHash);
 
-                                                                            case 31:
-                                                                                nonce = _context22.sent;
-                                                                                _context22.next = 34;
-                                                                                return App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).encodeABI();
+                                                                                                        case 2:
+                                                                                                            contract_approval_status = _context21.sent;
 
-                                                                            case 34:
-                                                                                contract_approval_function_abi = _context22.sent;
-                                                                                contract_approval_transaction_obj = {
-                                                                                    gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + gas_cost_for_contract_approval * 5 / 100)),
-                                                                                    gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                                                    from: global_state.account,
-                                                                                    nonce: App.web3_1_0.utils.toHex(nonce),
-                                                                                    chainId: App.chain_id,
-                                                                                    data: contract_approval_function_abi,
-                                                                                    to: App.assurance_proxy_address
-                                                                                };
-                                                                                contract_approval_transaction = new EthereumTx(contract_approval_transaction_obj);
-                                                                                //signing the transaction
-
-                                                                                contract_approval_transaction.sign(new Buffer(transaction_key, 'hex'));
-
-                                                                                //sending the transaction
-                                                                                App.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                                                    //doing setinterval check to check if the smart creation transaction got mined
-                                                                                    var contract_approval_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee21() {
-                                                                                        var contract_approval_status;
-                                                                                        return _regeneratorRuntime.wrap(function _callee21$(_context21) {
-                                                                                            while (1) {
-                                                                                                switch (_context21.prev = _context21.next) {
-                                                                                                    case 0:
-                                                                                                        _context21.next = 2;
-                                                                                                        return App.web3_1_0.eth.getTransactionReceipt(transactionHash);
-
-                                                                                                    case 2:
-                                                                                                        contract_approval_status = _context21.sent;
-
-                                                                                                        if (contract_approval_status != null && has(contract_approval_status, 'status')) {
-                                                                                                            clearInterval(contract_approval_interval_check);
-                                                                                                            $.ajax({
-                                                                                                                type: 'POST',
-                                                                                                                url: '/dentist/on-blockchain-contract-approval',
-                                                                                                                dataType: 'json',
-                                                                                                                data: {
-                                                                                                                    ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                                                                },
-                                                                                                                headers: {
-                                                                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                                                                },
-                                                                                                                success: function success(inner_response) {
-                                                                                                                    if (inner_response.success) {
-                                                                                                                        $('.response-layer').hide();
-                                                                                                                        $('.response-layer .transaction-text').remove();
-                                                                                                                        basic.showDialog(inner_response.success, '', null, true);
-                                                                                                                        $('.close-popup').click(function () {
-                                                                                                                            window.location.reload();
-                                                                                                                        });
+                                                                                                            if (contract_approval_status != null && has(contract_approval_status, 'status')) {
+                                                                                                                clearInterval(contract_approval_interval_check);
+                                                                                                                $.ajax({
+                                                                                                                    type: 'POST',
+                                                                                                                    url: '/dentist/on-blockchain-contract-approval',
+                                                                                                                    dataType: 'json',
+                                                                                                                    data: {
+                                                                                                                        ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                                                                    },
+                                                                                                                    headers: {
+                                                                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                                                                    },
+                                                                                                                    success: function success(inner_response) {
+                                                                                                                        if (inner_response.success) {
+                                                                                                                            $('.response-layer').hide();
+                                                                                                                            $('.response-layer .transaction-text').remove();
+                                                                                                                            basic.showDialog(inner_response.success, '', null, true);
+                                                                                                                            $('.close-popup').click(function () {
+                                                                                                                                window.location.reload();
+                                                                                                                            });
+                                                                                                                        }
                                                                                                                     }
-                                                                                                                }
-                                                                                                            });
-                                                                                                        }
+                                                                                                                });
+                                                                                                            }
 
-                                                                                                    case 4:
-                                                                                                    case "end":
-                                                                                                        return _context21.stop();
+                                                                                                        case 4:
+                                                                                                        case "end":
+                                                                                                            return _context21.stop();
+                                                                                                    }
                                                                                                 }
-                                                                                            }
-                                                                                        }, _callee21, this);
-                                                                                    })));
-                                                                                });
+                                                                                            }, _callee21, this);
+                                                                                        })));
+                                                                                    });
 
-                                                                            case 39:
-                                                                            case "end":
-                                                                                return _context22.stop();
+                                                                                case 39:
+                                                                                case "end":
+                                                                                    return _context22.stop();
+                                                                            }
                                                                         }
-                                                                    }
-                                                                }, _callee22, this);
-                                                            })));
-                                                            _context23.next = 35;
-                                                            break;
+                                                                    }, _callee22, this);
+                                                                })));
+                                                                _context23.next = 35;
+                                                                break;
 
-                                                        case 34:
-                                                            if (response.error) {
-                                                                basic.showAlert(response.error, '', true);
-                                                            }
+                                                            case 34:
+                                                                if (response.error) {
+                                                                    basic.showAlert(response.error, '', true);
+                                                                }
 
-                                                        case 35:
-                                                        case "end":
-                                                            return _context23.stop();
+                                                            case 35:
+                                                            case "end":
+                                                                return _context23.stop();
+                                                        }
                                                     }
-                                                }
-                                            }, _callee23, this);
-                                        }));
+                                                }, _callee23, this);
+                                            }));
 
-                                        function success(_x16) {
-                                            return _ref22.apply(this, arguments);
-                                        }
+                                            function success(_x16) {
+                                                return _ref22.apply(this, arguments);
+                                            }
 
-                                        return success;
-                                    }()
-                                });
+                                            return success;
+                                        }()
+                                    });
+                                }
+                            } else if (current_user_eth_balance < 0.005) {
+                                //not enough ETH balance
+                                basic.showAlert('You don\'t have enough ETH balance to create the smart contract on the blockchain. Please refill.');
+                            } else if (current_user_dcn_balance < monthly_premium_in_dcn) {
+                                //not enough DCN balance
+                                basic.showAlert('You don\'t have enough DCN balance to create the smart contract on the blockchain. Please refill');
                             }
                         });
                         _context24.next = 81;
