@@ -293,4 +293,18 @@ class DentistController extends Controller
             return redirect()->route('create-contract')->with(['error' => 'Something went wrong with sending contract via email. Please try again later.']);
         }
     }
+
+    protected function onBlockchainContractApproval(Request $request) {
+        $this->validate($request, [
+            'ipfs_hash' => 'required'
+        ], [
+            'ipfs_hash.required' => 'IPFS hash is required.'
+        ]);
+
+        $contract = TemporallyContract::where(array('document_hash' => $request->input('ipfs_hash'), 'dentist_id' => session('logged_user')['id']))->get()->first();
+        $contract->status = 'active';
+        $contract->save();
+
+        return response()->json(['success' => 'You have approved this contract successfully. Now you can withdraw your Dentacoins every month.']);
+    }
 }

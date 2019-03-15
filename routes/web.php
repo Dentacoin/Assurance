@@ -98,6 +98,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
         Route::post('/store-and-submit-temporally-contract', 'DentistController@storeAndSubmitTemporallyContract')->middleware('HandleUserSession')->name('store-and-submit-temporally-contract');
 
         Route::get('/contract/{slug}', 'DentistController@getDentistContractView')->name('dentist-contract-view');
+
+        Route::post('/on-blockchain-contract-approval', 'PatientController@onBlockchainContractApproval')->name('on-blockchain-contract-approval');
     });
 
     Route::get('/my-profile', 'UserController@getMyProfileView')->middleware('HandleUserSession')->name('my-profile');
@@ -109,6 +111,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::get('/my-contracts', 'UserController@getMyContractsView')->middleware('HandleUserSession')->name('my-contracts');
 
     Route::post('/filter-my-contracts', 'UserController@filterMyContracts')->middleware('HandleUserSession')->name('filter-my-contracts');
+
+    Route::post('/get-popup-cancel-contract', 'UserController@getPopupCancelContract')->middleware('HandleUserSession')->name('get-popup-cancel-contract');
 
     Route::post('/validate-civic-kyc', 'UserController@validateCivicKyc')->middleware('HandleUserSession')->name('validate-civic-kyc');
 

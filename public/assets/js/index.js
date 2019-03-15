@@ -566,7 +566,8 @@ async function pagesDataOnContractInit() {
                             data: {
                                 to: App.assurance_proxy_address,
                                 cached_key: cached_key,
-                                contract: $('.init-contract-section').attr('data-contract')
+                                contract: $('.init-contract-section').attr('data-contract'),
+                                show_dcn_bar: true
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -597,7 +598,7 @@ async function pagesDataOnContractInit() {
                                     }
 
                                     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                                    var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({from: App.dummy_address, gas: 500000});
+                                    var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({from: App.dummy_address, gas: 400000});
 
                                     var methods_gas_cost;
                                     if(!approval_given) {
@@ -2703,6 +2704,8 @@ async function onDocumentReadyPageData() {
                 }
             });
         } else if($('body').hasClass('dentist-contract-view')) {
+            cancelContractEventInit();
+
             if($('.terms-and-conditions-long-list').length) {
                 $('.terms-and-conditions-long-list').mCustomScrollbar();
             }
@@ -2718,6 +2721,157 @@ async function onDocumentReadyPageData() {
 
             if($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval')) {
                 $('.first-payment').html(dateObjToFormattedDate(new Date((parseInt($('.single-contract-view-section').attr('data-created-at')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw())) * 1000)));
+
+                $('.approve-contract-recipe').click(function() {
+                    if (metamask) {
+                        //metamask way
+                    } else {
+                        //custom
+                        var cached_key = localStorage.getItem('current-account') == null;
+                        $.ajax({
+                            type: 'POST',
+                            url: '/get-recipe-popup',
+                            dataType: 'json',
+                            data: {
+                                to: App.assurance_proxy_address,
+                                cached_key: cached_key,
+                                contract: $('.init-contract-section').attr('data-contract'),
+                                show_dcn_bar: false
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: async function (response) {
+                                if(response.success) {
+                                    basic.closeDialog();
+                                    basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                    fixButtonsFocus();
+
+                                    const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                                    //adding 10% just in case the transaction dont fail
+                                    const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
+
+                                    //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+                                    var gas_cost_for_contract_approval = await App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).estimateGas({from: global_state.account, gas: 50000});
+
+                                    var eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_contract_approval * on_page_load_gas_price).toString(), 'ether');
+                                    $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                    $('.recipe-popup .ether-fee i').popover({
+                                        trigger: 'click',
+                                        html: true
+                                    });
+
+                                    var transaction_key;
+                                    if(cached_key) {
+                                        bindVerifyAddressLogic(true);
+                                        $(document).on('on-transaction-recipe-agree', function(event) {
+                                            transaction_key = event.response_data;
+                                            setTimeout(function() {
+                                                $('.response-layer').hide();
+
+                                                $('.proof-of-address').remove();
+                                                $('.proof-success').fadeIn(1500);
+                                            }, 500);
+                                        });
+                                    } else {
+                                        if(JSON.parse(localStorage.getItem('current-account')).type == 'key') {
+                                            var decrypted_private_key_response = await getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
+                                            if(decrypted_private_key_response.success) {
+                                                transaction_key = decrypted_private_key_response.success;
+                                            } else if(decrypted_private_key_response.error) {
+                                                basic.showAlert(decrypted_private_key_response.error, '', true);
+                                                return false;
+                                            }
+                                        } else if(JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
+                                            $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>')
+                                        }
+                                    }
+
+                                    $('.recipe-popup .execute-transaction').click(async function() {
+                                        if (global_state.account == '' || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                            basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                            return false;
+                                        } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                            basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                            return false;
+                                        } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                            basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                            return false;
+                                        } else {
+                                            if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                var decrypted_keystore_file_response = await getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                if (decrypted_keystore_file_response.success) {
+                                                    transaction_key = decrypted_keystore_file_response.to_string;
+                                                } else if (decrypted_keystore_file_response.error) {
+                                                    basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                    return false;
+                                                }
+                                            }
+
+                                            $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
+                                            $('.response-layer').show();
+
+                                            const EthereumTx = require('ethereumjs-tx');
+                                            var nonce = await App.web3_1_0.eth.getTransactionCount(global_state.account);
+
+                                            var contract_approval_function_abi = await App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).encodeABI();
+
+                                            var contract_approval_transaction_obj = {
+                                                gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + (gas_cost_for_contract_approval * 5/100))),
+                                                gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                from: global_state.account,
+                                                nonce: App.web3_1_0.utils.toHex(nonce),
+                                                chainId: App.chain_id,
+                                                data: contract_approval_function_abi,
+                                                to: App.assurance_proxy_address
+                                            };
+
+                                            const contract_approval_transaction = new EthereumTx(contract_approval_transaction_obj);
+                                            //signing the transaction
+                                            contract_approval_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                            //sending the transaction
+                                            App.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                //doing setinterval check to check if the smart creation transaction got mined
+                                                var contract_approval_interval_check = setInterval(async function() {
+                                                    var contract_approval_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
+                                                    if (contract_approval_status != null && has(contract_approval_status, 'status')) {
+                                                        clearInterval(contract_approval_interval_check);
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: '/dentist/on-blockchain-contract-approval',
+                                                            dataType: 'json',
+                                                            data: {
+                                                                ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                            },
+                                                            headers: {
+                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                            },
+                                                            success: function (inner_response) {
+                                                                if (inner_response.success) {
+                                                                    $('.response-layer').hide();
+                                                                    $('.response-layer .transaction-text').remove();
+                                                                    basic.showDialog(inner_response.success, '', null, true);
+                                                                    $('.close-popup').click(function () {
+                                                                        window.location.reload();
+                                                                    });
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            });
+                                        }
+                                    });
+                                } else if(response.error) {
+                                    basic.showAlert(response.error, '', true);
+                                }
+                            }
+                        });
+                    }
+                });
             } else if($('.single-contract-view-section').hasClass('active')) {
                 var now_timestamp = Math.round((new Date()).getTime() / 1000);
                 var smart_contract_withdraw_period = parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
@@ -2780,24 +2934,70 @@ function cancelContractEventInit() {
     if($('.cancel-contract-btn').length) {
         $('.cancel-contract-btn').click(function() {
             //CHECK FOR CONTRACT ON THE BLOCKCHAIN
-
             var this_btn = $(this);
             $.ajax({
                 type: 'POST',
-                url: '/update-contract-status',
+                url: '/get-popup-cancel-contract',
                 dataType: 'json',
                 data: {
-                    contract: this_btn.attr('data-contract'),
-                    status: 'cancelled'
+                    contract: this_btn.attr('data-contract')
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
-                    if (response.success) {
-                        window.location = '/' + response.path + '/contract/' + this_btn.attr('data-contract');
-                    } else if (response.error) {
-                        basic.showAlert(response.error, '', true);
+                    if(response.success) {
+                        basic.closeDialog();
+                        basic.showDialog(response.success, 'popup-cancel-contract', null, true);
+
+                        $('.popup-cancel-contract #cancel-contract-reason').on('change', function() {
+                            if($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
+                                $('.camp-for-row').html('<div class="popup-row"><label for="cancel-contract-other-reason" class="inline-block-top">Other reason:</label><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background inline-block-top" maxlength="255"/></div>');
+                            } else {
+                                $('.camp-for-row').html('');
+                            }
+                        });
+
+                        $('.popup-cancel-contract .cancel-contract-popup-confirmation').click(function() {
+                            if($('.popup-cancel-contract #cancel-contract-other-reason').length && $('.popup-cancel-contract #cancel-contract-other-reason').val().trim() == '') {
+                                basic.showAlert('Please enter other reason.', '', true);
+                            } else if($('.popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
+                                basic.showAlert('Please enter comments.', '', true);
+                            } else {
+                                var data = {
+                                    contract: this_btn.attr('data-contract'),
+                                    status: 'cancelled',
+                                    comments: $('.popup-cancel-contract #cancel-contract-comments').val().trim()
+                                };
+
+                                if($('.popup-cancel-contract #cancel-contract-other-reason').length) {
+                                    data.reason = $('.popup-cancel-contract #cancel-contract-other-reason').val().trim();
+                                } else {
+                                    data.reason = $('#cancel-contract-reason option:selected').html();
+                                }
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/update-contract-status',
+                                    dataType: 'json',
+                                    data: data,
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function (inner_response) {
+                                        $('.response-layer').show();
+                                        if (inner_response.success) {
+                                            window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
+                                        } else if (inner_response.error) {
+                                            $('.response-layer').hide();
+                                            basic.showAlert(inner_response.error, '', true);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    } else if(response.error) {
+                        basic.showAlert('Wrong contract.', '', true);
                     }
                 }
             });

@@ -37,10 +37,12 @@
         </g>
 </svg> Pay Your First Premium</div>
 <div class="text-center padding-bottom-20 fs-20">and activate your smart contract</div>
-<div class="section-blue-green-background text-center">
-    <div class="usd_val">$<span></span></div>
-    <div class="dcn_val">= <span></span> DCN</div>
-</div>
+@if(filter_var($show_dcn_bar, FILTER_VALIDATE_BOOLEAN))
+    <div class="section-blue-green-background text-center">
+        <div class="usd_val">$<span></span></div>
+        <div class="dcn_val">= <span></span> DCN</div>
+    </div>
+@endif
 <div class="input-row fs-0 margin-top-15">
     <label class="inline-block">To:</label>
     <div class="field inline-block">{{$to}}</div>

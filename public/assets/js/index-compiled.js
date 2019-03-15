@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 113);
+/******/ 	return __webpack_require__(__webpack_require__.s = 114);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -107,8 +107,8 @@ if (typeof Object.create === 'function') {
 
 
 
-var base64 = __webpack_require__(115)
-var ieee754 = __webpack_require__(116)
+var base64 = __webpack_require__(116)
+var ieee754 = __webpack_require__(117)
 var isArray = __webpack_require__(54)
 
 exports.Buffer = Buffer
@@ -6984,7 +6984,7 @@ var elliptic = exports;
 
 elliptic.version = __webpack_require__(150).version;
 elliptic.utils = __webpack_require__(151);
-elliptic.rand = __webpack_require__(64);
+elliptic.rand = __webpack_require__(65);
 elliptic.curve = __webpack_require__(30);
 elliptic.curves = __webpack_require__(157);
 
@@ -7269,7 +7269,7 @@ assert.equal = function assertEqual(l, r, msg) {
 
 var _ = __webpack_require__(5);
 var ethjsUnit = __webpack_require__(184);
-var utils = __webpack_require__(71);
+var utils = __webpack_require__(72);
 var soliditySha3 = __webpack_require__(188);
 var randomHex = __webpack_require__(189);
 
@@ -8028,7 +8028,7 @@ var util = __webpack_require__(23);
 util.inherits = __webpack_require__(0);
 /*</replacement>*/
 
-var Readable = __webpack_require__(55);
+var Readable = __webpack_require__(56);
 var Writable = __webpack_require__(40);
 
 util.inherits(Duplex, Readable);
@@ -9422,12 +9422,12 @@ Stream.prototype.pipe = function(dest, options) {
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(55);
+exports = module.exports = __webpack_require__(56);
 exports.Stream = exports;
 exports.Readable = exports;
 exports.Writable = __webpack_require__(40);
 exports.Duplex = __webpack_require__(13);
-exports.Transform = __webpack_require__(58);
+exports.Transform = __webpack_require__(59);
 exports.PassThrough = __webpack_require__(131);
 
 
@@ -9672,7 +9672,7 @@ BlockHash.prototype._pad = function pad() {
 
 
 
-var punycode = __webpack_require__(76);
+var punycode = __webpack_require__(77);
 var util = __webpack_require__(199);
 
 exports.parse = urlParse;
@@ -10410,7 +10410,7 @@ asn1.bignum = __webpack_require__(3);
 
 asn1.define = __webpack_require__(270).define;
 asn1.base = __webpack_require__(28);
-asn1.constants = __webpack_require__(101);
+asn1.constants = __webpack_require__(102);
 asn1.decoders = __webpack_require__(276);
 asn1.encoders = __webpack_require__(278);
 
@@ -10422,8 +10422,8 @@ asn1.encoders = __webpack_require__(278);
 var base = exports;
 
 base.Reporter = __webpack_require__(273).Reporter;
-base.DecoderBuffer = __webpack_require__(100).DecoderBuffer;
-base.EncoderBuffer = __webpack_require__(100).EncoderBuffer;
+base.DecoderBuffer = __webpack_require__(101).DecoderBuffer;
+base.EncoderBuffer = __webpack_require__(101).EncoderBuffer;
 base.Node = __webpack_require__(274);
 
 
@@ -10524,7 +10524,7 @@ curve.edwards = __webpack_require__(156);
 
 
 var EventEmitter = __webpack_require__(217);
-var Promise = __webpack_require__(81);
+var Promise = __webpack_require__(82);
 
 /**
  * This function generates a defer promise and adds eventEmitter functionality to it
@@ -10850,7 +10850,7 @@ exports.setCensorship = setCensorship;
 
 exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = __webpack_require__(20)
 exports.createHash = exports.Hash = __webpack_require__(14)
-exports.createHmac = exports.Hmac = __webpack_require__(87)
+exports.createHmac = exports.Hmac = __webpack_require__(88)
 
 var algos = __webpack_require__(245)
 var algoKeys = Object.keys(algos)
@@ -11733,7 +11733,7 @@ var internalUtil = {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(56);
+var Stream = __webpack_require__(57);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -11749,7 +11749,7 @@ function _isUint8Array(obj) {
 
 /*</replacement>*/
 
-var destroyImpl = __webpack_require__(57);
+var destroyImpl = __webpack_require__(58);
 
 util.inherits(Writable, Stream);
 
@@ -12654,7 +12654,7 @@ function simpleEnd(buf) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(Buffer) {
 var inherits = __webpack_require__(0)
-var HashBase = __webpack_require__(60)
+var HashBase = __webpack_require__(61)
 
 var ARRAY16 = new Array(16)
 
@@ -12808,7 +12808,7 @@ module.exports = MD5
 
 var Buffer = __webpack_require__(1).Buffer
 var inherits = __webpack_require__(0)
-var HashBase = __webpack_require__(60)
+var HashBase = __webpack_require__(61)
 
 var ARRAY16 = new Array(16)
 
@@ -12986,9 +12986,9 @@ var exports = module.exports = function SHA (algorithm) {
 exports.sha = __webpack_require__(145)
 exports.sha1 = __webpack_require__(146)
 exports.sha224 = __webpack_require__(147)
-exports.sha256 = __webpack_require__(61)
+exports.sha256 = __webpack_require__(62)
 exports.sha384 = __webpack_require__(148)
-exports.sha512 = __webpack_require__(62)
+exports.sha512 = __webpack_require__(63)
 
 
 /***/ }),
@@ -13017,8 +13017,8 @@ hash.ripemd160 = hash.ripemd.ripemd160;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(206)
-var response = __webpack_require__(78)
-var extend = __webpack_require__(79)
+var response = __webpack_require__(79)
+var extend = __webpack_require__(80)
 var statusCodes = __webpack_require__(208)
 var url = __webpack_require__(25)
 
@@ -13348,7 +13348,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports.pbkdf2 = __webpack_require__(246)
-exports.pbkdf2Sync = __webpack_require__(92)
+exports.pbkdf2Sync = __webpack_require__(93)
 
 
 /***/ }),
@@ -13371,7 +13371,7 @@ exports.EDE = __webpack_require__(253);
 
 var ciphers = __webpack_require__(254)
 var deciphers = __webpack_require__(262)
-var modes = __webpack_require__(95)
+var modes = __webpack_require__(96)
 
 function getCiphers () {
   return Object.keys(modes)
@@ -13395,11 +13395,11 @@ var modeModules = {
   CFB8: __webpack_require__(258),
   CFB1: __webpack_require__(259),
   OFB: __webpack_require__(260),
-  CTR: __webpack_require__(93),
-  GCM: __webpack_require__(93)
+  CTR: __webpack_require__(94),
+  GCM: __webpack_require__(94)
 }
 
-var modes = __webpack_require__(95)
+var modes = __webpack_require__(96)
 
 for (var key in modes) {
   modes[key].module = modeModules[modes[key].mode]
@@ -13471,6 +13471,338 @@ module.exports = Array.isArray || function (arr) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function(Buffer) {
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ethUtil = __webpack_require__(121);
+var fees = __webpack_require__(177);
+var BN = ethUtil.BN;
+
+// secp256k1n/2
+var N_DIV_2 = new BN('7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0', 16);
+
+/**
+ * Creates a new transaction object.
+ *
+ * @example
+ * var rawTx = {
+ *   nonce: '00',
+ *   gasPrice: '09184e72a000',
+ *   gasLimit: '2710',
+ *   to: '0000000000000000000000000000000000000000',
+ *   value: '00',
+ *   data: '7f7465737432000000000000000000000000000000000000000000000000000000600057',
+ *   v: '1c',
+ *   r: '5e1d3a76fbf824220eafc8c79ad578ad2b67d01b0c2425eb1f1347e8f50882ab',
+ *   s: '5bd428537f05f9830e93792f90ea6a3e2d1ee84952dd96edbae9f658f831ab13'
+ * };
+ * var tx = new Transaction(rawTx);
+ *
+ * @class
+ * @param {Buffer | Array | Object} data a transaction can be initiailized with either a buffer containing the RLP serialized transaction or an array of buffers relating to each of the tx Properties, listed in order below in the exmple.
+ *
+ * Or lastly an Object containing the Properties of the transaction like in the Usage example.
+ *
+ * For Object and Arrays each of the elements can either be a Buffer, a hex-prefixed (0x) String , Number, or an object with a toBuffer method such as Bignum
+ *
+ * @property {Buffer} raw The raw rlp encoded transaction
+ * @param {Buffer} data.nonce nonce number
+ * @param {Buffer} data.gasLimit transaction gas limit
+ * @param {Buffer} data.gasPrice transaction gas price
+ * @param {Buffer} data.to to the to address
+ * @param {Buffer} data.value the amount of ether sent
+ * @param {Buffer} data.data this will contain the data of the message or the init of a contract
+ * @param {Buffer} data.v EC signature parameter
+ * @param {Buffer} data.r EC signature parameter
+ * @param {Buffer} data.s EC recovery ID
+ * @param {Number} data.chainId EIP 155 chainId - mainnet: 1, ropsten: 3
+ * */
+
+var Transaction = function () {
+  function Transaction(data) {
+    _classCallCheck(this, Transaction);
+
+    data = data || {};
+    // Define Properties
+    var fields = [{
+      name: 'nonce',
+      length: 32,
+      allowLess: true,
+      default: new Buffer([])
+    }, {
+      name: 'gasPrice',
+      length: 32,
+      allowLess: true,
+      default: new Buffer([])
+    }, {
+      name: 'gasLimit',
+      alias: 'gas',
+      length: 32,
+      allowLess: true,
+      default: new Buffer([])
+    }, {
+      name: 'to',
+      allowZero: true,
+      length: 20,
+      default: new Buffer([])
+    }, {
+      name: 'value',
+      length: 32,
+      allowLess: true,
+      default: new Buffer([])
+    }, {
+      name: 'data',
+      alias: 'input',
+      allowZero: true,
+      default: new Buffer([])
+    }, {
+      name: 'v',
+      allowZero: true,
+      default: new Buffer([0x1c])
+    }, {
+      name: 'r',
+      length: 32,
+      allowZero: true,
+      allowLess: true,
+      default: new Buffer([])
+    }, {
+      name: 's',
+      length: 32,
+      allowZero: true,
+      allowLess: true,
+      default: new Buffer([])
+    }];
+
+    /**
+     * Returns the rlp encoding of the transaction
+     * @method serialize
+     * @return {Buffer}
+     * @memberof Transaction
+     * @name serialize
+     */
+    // attached serialize
+    ethUtil.defineProperties(this, fields, data);
+
+    /**
+     * @property {Buffer} from (read only) sender address of this transaction, mathematically derived from other parameters.
+     * @name from
+     * @memberof Transaction
+     */
+    Object.defineProperty(this, 'from', {
+      enumerable: true,
+      configurable: true,
+      get: this.getSenderAddress.bind(this)
+    });
+
+    // calculate chainId from signature
+    var sigV = ethUtil.bufferToInt(this.v);
+    var chainId = Math.floor((sigV - 35) / 2);
+    if (chainId < 0) chainId = 0;
+
+    // set chainId
+    this._chainId = chainId || data.chainId || 0;
+    this._homestead = true;
+  }
+
+  /**
+   * If the tx's `to` is to the creation address
+   * @return {Boolean}
+   */
+
+
+  Transaction.prototype.toCreationAddress = function toCreationAddress() {
+    return this.to.toString('hex') === '';
+  };
+
+  /**
+   * Computes a sha3-256 hash of the serialized tx
+   * @param {Boolean} [includeSignature=true] whether or not to inculde the signature
+   * @return {Buffer}
+   */
+
+
+  Transaction.prototype.hash = function hash(includeSignature) {
+    if (includeSignature === undefined) includeSignature = true;
+
+    // EIP155 spec:
+    // when computing the hash of a transaction for purposes of signing or recovering,
+    // instead of hashing only the first six elements (ie. nonce, gasprice, startgas, to, value, data),
+    // hash nine elements, with v replaced by CHAIN_ID, r = 0 and s = 0
+
+    var items = void 0;
+    if (includeSignature) {
+      items = this.raw;
+    } else {
+      if (this._chainId > 0) {
+        var raw = this.raw.slice();
+        this.v = this._chainId;
+        this.r = 0;
+        this.s = 0;
+        items = this.raw;
+        this.raw = raw;
+      } else {
+        items = this.raw.slice(0, 6);
+      }
+    }
+
+    // create hash
+    return ethUtil.rlphash(items);
+  };
+
+  /**
+   * returns the public key of the sender
+   * @return {Buffer}
+   */
+
+
+  Transaction.prototype.getChainId = function getChainId() {
+    return this._chainId;
+  };
+
+  /**
+   * returns the sender's address
+   * @return {Buffer}
+   */
+
+
+  Transaction.prototype.getSenderAddress = function getSenderAddress() {
+    if (this._from) {
+      return this._from;
+    }
+    var pubkey = this.getSenderPublicKey();
+    this._from = ethUtil.publicToAddress(pubkey);
+    return this._from;
+  };
+
+  /**
+   * returns the public key of the sender
+   * @return {Buffer}
+   */
+
+
+  Transaction.prototype.getSenderPublicKey = function getSenderPublicKey() {
+    if (!this._senderPubKey || !this._senderPubKey.length) {
+      if (!this.verifySignature()) throw new Error('Invalid Signature');
+    }
+    return this._senderPubKey;
+  };
+
+  /**
+   * Determines if the signature is valid
+   * @return {Boolean}
+   */
+
+
+  Transaction.prototype.verifySignature = function verifySignature() {
+    var msgHash = this.hash(false);
+    // All transaction signatures whose s-value is greater than secp256k1n/2 are considered invalid.
+    if (this._homestead && new BN(this.s).cmp(N_DIV_2) === 1) {
+      return false;
+    }
+
+    try {
+      var v = ethUtil.bufferToInt(this.v);
+      if (this._chainId > 0) {
+        v -= this._chainId * 2 + 8;
+      }
+      this._senderPubKey = ethUtil.ecrecover(msgHash, v, this.r, this.s);
+    } catch (e) {
+      return false;
+    }
+
+    return !!this._senderPubKey;
+  };
+
+  /**
+   * sign a transaction with a given a private key
+   * @param {Buffer} privateKey
+   */
+
+
+  Transaction.prototype.sign = function sign(privateKey) {
+    var msgHash = this.hash(false);
+    var sig = ethUtil.ecsign(msgHash, privateKey);
+    if (this._chainId > 0) {
+      sig.v += this._chainId * 2 + 8;
+    }
+    Object.assign(this, sig);
+  };
+
+  /**
+   * The amount of gas paid for the data in this tx
+   * @return {BN}
+   */
+
+
+  Transaction.prototype.getDataFee = function getDataFee() {
+    var data = this.raw[5];
+    var cost = new BN(0);
+    for (var i = 0; i < data.length; i++) {
+      data[i] === 0 ? cost.iaddn(fees.txDataZeroGas.v) : cost.iaddn(fees.txDataNonZeroGas.v);
+    }
+    return cost;
+  };
+
+  /**
+   * the minimum amount of gas the tx must have (DataFee + TxFee + Creation Fee)
+   * @return {BN}
+   */
+
+
+  Transaction.prototype.getBaseFee = function getBaseFee() {
+    var fee = this.getDataFee().iaddn(fees.txGas.v);
+    if (this._homestead && this.toCreationAddress()) {
+      fee.iaddn(fees.txCreation.v);
+    }
+    return fee;
+  };
+
+  /**
+   * the up front amount that an account must have for this transaction to be valid
+   * @return {BN}
+   */
+
+
+  Transaction.prototype.getUpfrontCost = function getUpfrontCost() {
+    return new BN(this.gasLimit).imul(new BN(this.gasPrice)).iadd(new BN(this.value));
+  };
+
+  /**
+   * validates the signature and checks to see if it has enough gas
+   * @param {Boolean} [stringError=false] whether to return a string with a dscription of why the validation failed or return a Bloolean
+   * @return {Boolean|String}
+   */
+
+
+  Transaction.prototype.validate = function validate(stringError) {
+    var errors = [];
+    if (!this.verifySignature()) {
+      errors.push('Invalid Signature');
+    }
+
+    if (this.getBaseFee().cmp(new BN(this.gasLimit)) > 0) {
+      errors.push(['gas limit is too low. Need at least ' + this.getBaseFee()]);
+    }
+
+    if (stringError === undefined || stringError === false) {
+      return errors.length === 0;
+    } else {
+      return errors.join(' ');
+    }
+  };
+
+  return Transaction;
+}();
+
+module.exports = Transaction;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -13520,7 +13852,7 @@ var EElistenerCount = function (emitter, type) {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(56);
+var Stream = __webpack_require__(57);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -13552,7 +13884,7 @@ if (debugUtil && debugUtil.debuglog) {
 /*</replacement>*/
 
 var BufferList = __webpack_require__(126);
-var destroyImpl = __webpack_require__(57);
+var destroyImpl = __webpack_require__(58);
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -14493,14 +14825,14 @@ function indexOf(xs, x) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(7)))
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(39).EventEmitter;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14580,7 +14912,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14800,13 +15132,13 @@ function done(stream, er, data) {
 }
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports) {
 
 module.exports = {"COMPRESSED_TYPE_INVALID":"compressed should be a boolean","EC_PRIVATE_KEY_TYPE_INVALID":"private key should be a Buffer","EC_PRIVATE_KEY_LENGTH_INVALID":"private key length is invalid","EC_PRIVATE_KEY_RANGE_INVALID":"private key range is invalid","EC_PRIVATE_KEY_TWEAK_ADD_FAIL":"tweak out of range or resulting private key is invalid","EC_PRIVATE_KEY_TWEAK_MUL_FAIL":"tweak out of range","EC_PRIVATE_KEY_EXPORT_DER_FAIL":"couldn't export to DER format","EC_PRIVATE_KEY_IMPORT_DER_FAIL":"couldn't import from DER format","EC_PUBLIC_KEYS_TYPE_INVALID":"public keys should be an Array","EC_PUBLIC_KEYS_LENGTH_INVALID":"public keys Array should have at least 1 element","EC_PUBLIC_KEY_TYPE_INVALID":"public key should be a Buffer","EC_PUBLIC_KEY_LENGTH_INVALID":"public key length is invalid","EC_PUBLIC_KEY_PARSE_FAIL":"the public key could not be parsed or is invalid","EC_PUBLIC_KEY_CREATE_FAIL":"private was invalid, try again","EC_PUBLIC_KEY_TWEAK_ADD_FAIL":"tweak out of range or resulting public key is invalid","EC_PUBLIC_KEY_TWEAK_MUL_FAIL":"tweak out of range","EC_PUBLIC_KEY_COMBINE_FAIL":"the sum of the public keys is not valid","ECDH_FAIL":"scalar was invalid (zero or overflow)","ECDSA_SIGNATURE_TYPE_INVALID":"signature should be a Buffer","ECDSA_SIGNATURE_LENGTH_INVALID":"signature length is invalid","ECDSA_SIGNATURE_PARSE_FAIL":"couldn't parse signature","ECDSA_SIGNATURE_PARSE_DER_FAIL":"couldn't parse DER signature","ECDSA_SIGNATURE_SERIALIZE_DER_FAIL":"couldn't serialize signature to DER format","ECDSA_SIGN_FAIL":"nonce generation function failed or private key is invalid","ECDSA_RECOVER_FAIL":"couldn't recover public key from signature","MSG32_TYPE_INVALID":"message should be a Buffer","MSG32_LENGTH_INVALID":"message length is invalid","OPTIONS_TYPE_INVALID":"options should be an Object","OPTIONS_DATA_TYPE_INVALID":"options.data should be a Buffer","OPTIONS_DATA_LENGTH_INVALID":"options.data length is invalid","OPTIONS_NONCEFN_TYPE_INVALID":"options.noncefn should be a Function","RECOVERY_ID_TYPE_INVALID":"recovery should be a Number","RECOVERY_ID_VALUE_INVALID":"recovery should have value between -1 and 4","TWEAK_TYPE_INVALID":"tweak should be a Buffer","TWEAK_LENGTH_INVALID":"tweak length is invalid"}
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14908,7 +15240,7 @@ module.exports = HashBase
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -15049,7 +15381,7 @@ module.exports = Sha256
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var inherits = __webpack_require__(0)
@@ -15315,7 +15647,7 @@ module.exports = Sha512
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15380,7 +15712,7 @@ utils.encode = function encode(arr, enc) {
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var r;
@@ -15451,7 +15783,7 @@ if (typeof self === 'object') {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15507,7 +15839,7 @@ exports.g1_256 = g1_256;
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15515,7 +15847,7 @@ exports.g1_256 = g1_256;
 
 var utils = __webpack_require__(11);
 var common = __webpack_require__(24);
-var shaCommon = __webpack_require__(65);
+var shaCommon = __webpack_require__(66);
 var assert = __webpack_require__(9);
 
 var sum32 = utils.sum32;
@@ -15619,7 +15951,7 @@ SHA256.prototype._digest = function digest(enc) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15956,7 +16288,7 @@ function g1_512_lo(xh, xl) {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports) {
 
 /**
@@ -15975,10 +16307,10 @@ module.exports = function isHexPrefixed(str) {
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isHexPrefixed = __webpack_require__(68);
+var isHexPrefixed = __webpack_require__(69);
 
 /**
  * Removes '0x' from a given `String` is present
@@ -15995,11 +16327,11 @@ module.exports = function stripHexPrefix(str) {
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var BN = __webpack_require__(186);
-var stripHexPrefix = __webpack_require__(69);
+var stripHexPrefix = __webpack_require__(70);
 
 /**
  * Returns a BN object, converts a number value to a BN
@@ -16039,7 +16371,7 @@ module.exports = function numberToBN(arg) {
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -16065,10 +16397,10 @@ module.exports = function numberToBN(arg) {
  */
 
 var _ = __webpack_require__(5);
-var BN = __webpack_require__(72);
-var numberToBN = __webpack_require__(70);
+var BN = __webpack_require__(73);
+var numberToBN = __webpack_require__(71);
 var utf8 = __webpack_require__(187);
-var Hash = __webpack_require__(73);
+var Hash = __webpack_require__(74);
 
 
 /**
@@ -16516,7 +16848,7 @@ module.exports = {
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {(function (module, exports) {
@@ -19950,7 +20282,7 @@ module.exports = {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)(module)))
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports) {
 
 // This was ported from https://github.com/emn178/js-sha3, with some minor
@@ -20294,7 +20626,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20568,7 +20900,7 @@ module.exports = Iban;
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20664,7 +20996,7 @@ module.exports = Jsonrpc;
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -21203,7 +21535,7 @@ module.exports = Jsonrpc;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)(module), __webpack_require__(4)))
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableStream)
@@ -21283,10 +21615,10 @@ xhr = null // Help gc
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(77)
+/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(78)
 var inherits = __webpack_require__(0)
 var stream = __webpack_require__(22)
 
@@ -21514,7 +21846,7 @@ IncomingMessage.prototype._onXHRProgress = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(1).Buffer, __webpack_require__(4)))
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -21539,7 +21871,7 @@ function extend() {
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var http = __webpack_require__(46)
@@ -21576,14 +21908,14 @@ function validateParams (params) {
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(218)().Promise
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21628,7 +21960,7 @@ var Subscription = __webpack_require__(32).subscription;
 var formatters = __webpack_require__(8).formatters;
 var errors = __webpack_require__(8).errors;
 var promiEvent = __webpack_require__(31);
-var abi = __webpack_require__(83);
+var abi = __webpack_require__(84);
 
 
 /**
@@ -22495,7 +22827,7 @@ module.exports = Contract;
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -22812,7 +23144,7 @@ module.exports = coder;
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22869,7 +23201,7 @@ exports.jsonCopy = jsonCopy;
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {var sha3 = __webpack_require__(235).keccak_256
@@ -22906,7 +23238,7 @@ exports.normalize = normalize
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23063,7 +23395,7 @@ module.exports = Personal;
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23072,7 +23404,7 @@ var inherits = __webpack_require__(0)
 var Legacy = __webpack_require__(244)
 var Base = __webpack_require__(12)
 var Buffer = __webpack_require__(2).Buffer
-var md5 = __webpack_require__(88)
+var md5 = __webpack_require__(89)
 var RIPEMD160 = __webpack_require__(43)
 
 var sha = __webpack_require__(44)
@@ -23132,7 +23464,7 @@ module.exports = function createHmac (alg, key) {
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var MD5 = __webpack_require__(42)
@@ -23143,13 +23475,13 @@ module.exports = function (buffer) {
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports) {
 
 module.exports = {"sha224WithRSAEncryption":{"sign":"rsa","hash":"sha224","id":"302d300d06096086480165030402040500041c"},"RSA-SHA224":{"sign":"ecdsa/rsa","hash":"sha224","id":"302d300d06096086480165030402040500041c"},"sha256WithRSAEncryption":{"sign":"rsa","hash":"sha256","id":"3031300d060960864801650304020105000420"},"RSA-SHA256":{"sign":"ecdsa/rsa","hash":"sha256","id":"3031300d060960864801650304020105000420"},"sha384WithRSAEncryption":{"sign":"rsa","hash":"sha384","id":"3041300d060960864801650304020205000430"},"RSA-SHA384":{"sign":"ecdsa/rsa","hash":"sha384","id":"3041300d060960864801650304020205000430"},"sha512WithRSAEncryption":{"sign":"rsa","hash":"sha512","id":"3051300d060960864801650304020305000440"},"RSA-SHA512":{"sign":"ecdsa/rsa","hash":"sha512","id":"3051300d060960864801650304020305000440"},"RSA-SHA1":{"sign":"rsa","hash":"sha1","id":"3021300906052b0e03021a05000414"},"ecdsa-with-SHA1":{"sign":"ecdsa","hash":"sha1","id":""},"sha256":{"sign":"ecdsa","hash":"sha256","id":""},"sha224":{"sign":"ecdsa","hash":"sha224","id":""},"sha384":{"sign":"ecdsa","hash":"sha384","id":""},"sha512":{"sign":"ecdsa","hash":"sha512","id":""},"DSA-SHA":{"sign":"dsa","hash":"sha1","id":""},"DSA-SHA1":{"sign":"dsa","hash":"sha1","id":""},"DSA":{"sign":"dsa","hash":"sha1","id":""},"DSA-WITH-SHA224":{"sign":"dsa","hash":"sha224","id":""},"DSA-SHA224":{"sign":"dsa","hash":"sha224","id":""},"DSA-WITH-SHA256":{"sign":"dsa","hash":"sha256","id":""},"DSA-SHA256":{"sign":"dsa","hash":"sha256","id":""},"DSA-WITH-SHA384":{"sign":"dsa","hash":"sha384","id":""},"DSA-SHA384":{"sign":"dsa","hash":"sha384","id":""},"DSA-WITH-SHA512":{"sign":"dsa","hash":"sha512","id":""},"DSA-SHA512":{"sign":"dsa","hash":"sha512","id":""},"DSA-RIPEMD160":{"sign":"dsa","hash":"rmd160","id":""},"ripemd160WithRSA":{"sign":"rsa","hash":"rmd160","id":"3021300906052b2403020105000414"},"RSA-RIPEMD160":{"sign":"rsa","hash":"rmd160","id":"3021300906052b2403020105000414"},"md5WithRSAEncryption":{"sign":"rsa","hash":"md5","id":"3020300c06082a864886f70d020505000410"},"RSA-MD5":{"sign":"rsa","hash":"md5","id":"3020300c06082a864886f70d020505000410"}}
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {var MAX_ALLOC = Math.pow(2, 30) - 1 // default in iojs
@@ -23184,7 +23516,7 @@ module.exports = function (password, salt, iterations, keylen) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {var defaultEncoding
@@ -23201,15 +23533,15 @@ module.exports = defaultEncoding
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var md5 = __webpack_require__(88)
+var md5 = __webpack_require__(89)
 var rmd160 = __webpack_require__(43)
 var sha = __webpack_require__(44)
 
-var checkParameters = __webpack_require__(90)
-var defaultEncoding = __webpack_require__(91)
+var checkParameters = __webpack_require__(91)
+var defaultEncoding = __webpack_require__(92)
 var Buffer = __webpack_require__(2).Buffer
 var ZEROS = Buffer.alloc(128)
 var sizes = {
@@ -23308,12 +23640,12 @@ module.exports = pbkdf2
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var xor = __webpack_require__(26)
 var Buffer = __webpack_require__(2).Buffer
-var incr32 = __webpack_require__(94)
+var incr32 = __webpack_require__(95)
 
 function getBlock (self) {
   var out = self._cipher.encryptBlockRaw(self._prev)
@@ -23344,7 +23676,7 @@ exports.encrypt = function (self, chunk) {
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports) {
 
 function incr32 (iv) {
@@ -23365,13 +23697,13 @@ module.exports = incr32
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports) {
 
 module.exports = {"aes-128-ecb":{"cipher":"AES","key":128,"iv":0,"mode":"ECB","type":"block"},"aes-192-ecb":{"cipher":"AES","key":192,"iv":0,"mode":"ECB","type":"block"},"aes-256-ecb":{"cipher":"AES","key":256,"iv":0,"mode":"ECB","type":"block"},"aes-128-cbc":{"cipher":"AES","key":128,"iv":16,"mode":"CBC","type":"block"},"aes-192-cbc":{"cipher":"AES","key":192,"iv":16,"mode":"CBC","type":"block"},"aes-256-cbc":{"cipher":"AES","key":256,"iv":16,"mode":"CBC","type":"block"},"aes128":{"cipher":"AES","key":128,"iv":16,"mode":"CBC","type":"block"},"aes192":{"cipher":"AES","key":192,"iv":16,"mode":"CBC","type":"block"},"aes256":{"cipher":"AES","key":256,"iv":16,"mode":"CBC","type":"block"},"aes-128-cfb":{"cipher":"AES","key":128,"iv":16,"mode":"CFB","type":"stream"},"aes-192-cfb":{"cipher":"AES","key":192,"iv":16,"mode":"CFB","type":"stream"},"aes-256-cfb":{"cipher":"AES","key":256,"iv":16,"mode":"CFB","type":"stream"},"aes-128-cfb8":{"cipher":"AES","key":128,"iv":16,"mode":"CFB8","type":"stream"},"aes-192-cfb8":{"cipher":"AES","key":192,"iv":16,"mode":"CFB8","type":"stream"},"aes-256-cfb8":{"cipher":"AES","key":256,"iv":16,"mode":"CFB8","type":"stream"},"aes-128-cfb1":{"cipher":"AES","key":128,"iv":16,"mode":"CFB1","type":"stream"},"aes-192-cfb1":{"cipher":"AES","key":192,"iv":16,"mode":"CFB1","type":"stream"},"aes-256-cfb1":{"cipher":"AES","key":256,"iv":16,"mode":"CFB1","type":"stream"},"aes-128-ofb":{"cipher":"AES","key":128,"iv":16,"mode":"OFB","type":"stream"},"aes-192-ofb":{"cipher":"AES","key":192,"iv":16,"mode":"OFB","type":"stream"},"aes-256-ofb":{"cipher":"AES","key":256,"iv":16,"mode":"OFB","type":"stream"},"aes-128-ctr":{"cipher":"AES","key":128,"iv":16,"mode":"CTR","type":"stream"},"aes-192-ctr":{"cipher":"AES","key":192,"iv":16,"mode":"CTR","type":"stream"},"aes-256-ctr":{"cipher":"AES","key":256,"iv":16,"mode":"CTR","type":"stream"},"aes-128-gcm":{"cipher":"AES","key":128,"iv":12,"mode":"GCM","type":"auth"},"aes-192-gcm":{"cipher":"AES","key":192,"iv":12,"mode":"GCM","type":"auth"},"aes-256-gcm":{"cipher":"AES","key":256,"iv":12,"mode":"GCM","type":"auth"}}
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var aes = __webpack_require__(36)
@@ -23380,7 +23712,7 @@ var Transform = __webpack_require__(12)
 var inherits = __webpack_require__(0)
 var GHASH = __webpack_require__(261)
 var xor = __webpack_require__(26)
-var incr32 = __webpack_require__(94)
+var incr32 = __webpack_require__(95)
 
 function xorTest (a, b) {
   var out = 0
@@ -23494,7 +23826,7 @@ module.exports = StreamCipher
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var aes = __webpack_require__(36)
@@ -23527,7 +23859,7 @@ module.exports = StreamCipher
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var randomBytes = __webpack_require__(20);
@@ -23536,7 +23868,7 @@ findPrime.simpleSieve = simpleSieve;
 findPrime.fermatTest = fermatTest;
 var BN = __webpack_require__(3);
 var TWENTYFOUR = new BN(24);
-var MillerRabin = __webpack_require__(99);
+var MillerRabin = __webpack_require__(100);
 var millerRabin = new MillerRabin();
 var ONE = new BN(1);
 var TWO = new BN(2);
@@ -23638,11 +23970,11 @@ function findPrime(bits, gen) {
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var bn = __webpack_require__(3);
-var brorand = __webpack_require__(64);
+var brorand = __webpack_require__(65);
 
 function MillerRabin(rand) {
   this.rand = rand || new brorand.Rand();
@@ -23759,7 +24091,7 @@ MillerRabin.prototype.getDivisor = function getDivisor(n, k) {
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var inherits = __webpack_require__(0);
@@ -23881,7 +24213,7 @@ EncoderBuffer.prototype.join = function join(out, offset) {
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var constants = exports;
@@ -23906,7 +24238,7 @@ constants.der = __webpack_require__(275);
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var inherits = __webpack_require__(0);
@@ -24236,7 +24568,7 @@ function derDecodeLen(buf, primitive, fail) {
 
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var inherits = __webpack_require__(0);
@@ -24537,13 +24869,13 @@ function encodeTag(tag, primitive, cls, reporter) {
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports) {
 
 module.exports = {"1.3.132.0.10":"secp256k1","1.3.132.0.33":"p224","1.2.840.10045.3.1.1":"p192","1.2.840.10045.3.1.7":"p256","1.3.132.0.34":"p384","1.3.132.0.35":"p521"}
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(14);
@@ -24565,7 +24897,7 @@ function i2ops(c) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports) {
 
 module.exports = function xor(a, b) {
@@ -24578,7 +24910,7 @@ module.exports = function xor(a, b) {
 };
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {var bn = __webpack_require__(3);
@@ -24594,7 +24926,7 @@ module.exports = withPublic;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var BN = __webpack_require__(3);
@@ -24663,7 +24995,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports) {
 
 // The RLP format
@@ -24741,7 +25073,7 @@ var decode = function decode(hex) {
 module.exports = { encode: encode, decode: decode };
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports) {
 
 // This was ported from https://github.com/emn178/js-sha3, with some minor
@@ -25085,7 +25417,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25182,7 +25514,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var A = __webpack_require__(313);
@@ -25375,19 +25707,19 @@ module.exports = {
 };
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(114);
+module.exports = __webpack_require__(115);
 
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(Buffer) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(117);
+/* WEBPACK VAR INJECTION */(function(Buffer) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 
 
@@ -25575,7 +25907,8 @@ var pagesDataOnContractInit = function () {
                                         data: {
                                             to: App.assurance_proxy_address,
                                             cached_key: cached_key,
-                                            contract: $('.init-contract-section').attr('data-contract')
+                                            contract: $('.init-contract-section').attr('data-contract'),
+                                            show_dcn_bar: true
                                         },
                                         headers: {
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -25638,7 +25971,7 @@ var pagesDataOnContractInit = function () {
 
                                                             case 20:
                                                                 _context8.next = 22;
-                                                                return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({ from: App.dummy_address, gas: 500000 });
+                                                                return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({ from: App.dummy_address, gas: 400000 });
 
                                                             case 22:
                                                                 gas_cost_for_contract_creation = _context8.sent;
@@ -25885,7 +26218,7 @@ var pagesDataOnContractInit = function () {
                                                                                     $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
                                                                                     $('.response-layer').show();
 
-                                                                                    EthereumTx = __webpack_require__(120);
+                                                                                    EthereumTx = __webpack_require__(55);
 
                                                                                     if (approval_given) {
                                                                                         _context7.next = 37;
@@ -26205,32 +26538,32 @@ var initPagesLogic = function () {
 }();
 
 var onDocumentReadyPageData = function () {
-    var _ref19 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee21() {
+    var _ref19 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee24() {
         var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_signed, remainder, next_payment_timestamp, next_payment_timestamp_date_obj;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee21$(_context21) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee24$(_context24) {
             while (1) {
-                switch (_context21.prev = _context21.next) {
+                switch (_context24.prev = _context24.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context21.next = 84;
+                            _context24.next = 86;
                             break;
                         }
 
                         if (!$('body').hasClass('congratulations')) {
-                            _context21.next = 14;
+                            _context24.next = 14;
                             break;
                         }
 
                         console.log('congratulations);');
-                        _context21.t0 = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
-                        _context21.t1 = parseInt;
-                        _context21.next = 7;
+                        _context24.t0 = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
+                        _context24.t1 = parseInt;
+                        _context24.next = 7;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 7:
-                        _context21.t2 = _context21.sent;
-                        _context21.t3 = (0, _context21.t1)(_context21.t2);
-                        next_transfer_timestamp = _context21.t0 + _context21.t3;
+                        _context24.t2 = _context24.sent;
+                        _context24.t3 = (0, _context24.t1)(_context24.t2);
+                        next_transfer_timestamp = _context24.t0 + _context24.t3;
 
                         if ($('.converted-date').length > 0) {
                             date_obj = new Date(next_transfer_timestamp * 1000);
@@ -26238,25 +26571,25 @@ var onDocumentReadyPageData = function () {
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context21.next = 82;
+                        _context24.next = 84;
                         break;
 
                     case 14:
                         if (!$('body').hasClass('my-contracts')) {
-                            _context21.next = 26;
+                            _context24.next = 26;
                             break;
                         }
 
                         initDataTable();
 
                         table_trs_with_timestamp = $('.table-container table tr[data-timestamp-signed]');
-                        _context21.t4 = parseInt;
-                        _context21.next = 20;
+                        _context24.t4 = parseInt;
+                        _context24.next = 20;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 20:
-                        _context21.t5 = _context21.sent;
-                        smart_contract_withdraw_period = (0, _context21.t4)(_context21.t5);
+                        _context24.t5 = _context24.sent;
+                        smart_contract_withdraw_period = (0, _context24.t4)(_context24.t5);
                         now_timestamp = Math.round(new Date().getTime() / 1000);
 
 
@@ -26274,46 +26607,46 @@ var onDocumentReadyPageData = function () {
 
                             table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">' + next_payment_timestamp + '</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
-                        _context21.next = 82;
+                        _context24.next = 84;
                         break;
 
                     case 26:
                         if (!$('body').hasClass('contract-proposal')) {
-                            _context21.next = 41;
+                            _context24.next = 41;
                             break;
                         }
 
                         if (!($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined)) {
-                            _context21.next = 39;
+                            _context24.next = 39;
                             break;
                         }
 
-                        _context21.t6 = Date;
-                        _context21.t7 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
-                        _context21.t8 = parseInt;
-                        _context21.next = 33;
+                        _context24.t6 = Date;
+                        _context24.t7 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
+                        _context24.t8 = parseInt;
+                        _context24.next = 33;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 33:
-                        _context21.t9 = _context21.sent;
-                        _context21.t10 = (0, _context21.t8)(_context21.t9);
-                        _context21.t11 = _context21.t7 + _context21.t10;
-                        _context21.t12 = _context21.t11 * 1000;
-                        date_obj = new _context21.t6(_context21.t12);
+                        _context24.t9 = _context24.sent;
+                        _context24.t10 = (0, _context24.t8)(_context24.t9);
+                        _context24.t11 = _context24.t7 + _context24.t10;
+                        _context24.t12 = _context24.t11 * 1000;
+                        date_obj = new _context24.t6(_context24.t12);
 
                         $('.active-until').html(dateObjToFormattedDate(date_obj));
 
                     case 39:
-                        _context21.next = 82;
+                        _context24.next = 84;
                         break;
 
                     case 41:
                         if (!$('body').hasClass('my-profile')) {
-                            _context21.next = 48;
+                            _context24.next = 48;
                             break;
                         }
 
-                        _context21.next = 44;
+                        _context24.next = 44;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic-kyc.js', function () {});
 
                     case 44:
@@ -26396,14 +26729,16 @@ var onDocumentReadyPageData = function () {
                                 return _ref21.apply(this, arguments);
                             };
                         }());
-                        _context21.next = 82;
+                        _context24.next = 84;
                         break;
 
                     case 48:
                         if (!$('body').hasClass('dentist-contract-view')) {
-                            _context21.next = 81;
+                            _context24.next = 83;
                             break;
                         }
+
+                        cancelContractEventInit();
 
                         if ($('.terms-and-conditions-long-list').length) {
                             $('.terms-and-conditions-long-list').mCustomScrollbar();
@@ -26419,45 +26754,334 @@ var onDocumentReadyPageData = function () {
                         initTooltips();
 
                         if (!($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval'))) {
-                            _context21.next = 69;
+                            _context24.next = 71;
                             break;
                         }
 
-                        _context21.t13 = $('.first-payment');
-                        _context21.t14 = dateObjToFormattedDate;
-                        _context21.t15 = Date;
-                        _context21.t16 = parseInt($('.single-contract-view-section').attr('data-created-at'));
-                        _context21.t17 = parseInt;
-                        _context21.next = 60;
+                        _context24.t13 = $('.first-payment');
+                        _context24.t14 = dateObjToFormattedDate;
+                        _context24.t15 = Date;
+                        _context24.t16 = parseInt($('.single-contract-view-section').attr('data-created-at'));
+                        _context24.t17 = parseInt;
+                        _context24.next = 61;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
-                    case 60:
-                        _context21.t18 = _context21.sent;
-                        _context21.t19 = (0, _context21.t17)(_context21.t18);
-                        _context21.t20 = _context21.t16 + _context21.t19;
-                        _context21.t21 = _context21.t20 * 1000;
-                        _context21.t22 = new _context21.t15(_context21.t21);
-                        _context21.t23 = (0, _context21.t14)(_context21.t22);
+                    case 61:
+                        _context24.t18 = _context24.sent;
+                        _context24.t19 = (0, _context24.t17)(_context24.t18);
+                        _context24.t20 = _context24.t16 + _context24.t19;
+                        _context24.t21 = _context24.t20 * 1000;
+                        _context24.t22 = new _context24.t15(_context24.t21);
+                        _context24.t23 = (0, _context24.t14)(_context24.t22);
 
-                        _context21.t13.html.call(_context21.t13, _context21.t23);
+                        _context24.t13.html.call(_context24.t13, _context24.t23);
 
-                        _context21.next = 79;
+                        $('.approve-contract-recipe').click(function () {
+                            if (metamask) {
+                                //metamask way
+                            } else {
+                                //custom
+                                var cached_key = localStorage.getItem('current-account') == null;
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/get-recipe-popup',
+                                    dataType: 'json',
+                                    data: {
+                                        to: App.assurance_proxy_address,
+                                        cached_key: cached_key,
+                                        contract: $('.init-contract-section').attr('data-contract'),
+                                        show_dcn_bar: false
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function () {
+                                        var _ref22 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee23(response) {
+                                            var on_page_load_gwei, on_page_load_gas_price, gas_cost_for_contract_approval, eth_fee, transaction_key, decrypted_private_key_response;
+                                            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee23$(_context23) {
+                                                while (1) {
+                                                    switch (_context23.prev = _context23.next) {
+                                                        case 0:
+                                                            if (!response.success) {
+                                                                _context23.next = 34;
+                                                                break;
+                                                            }
+
+                                                            basic.closeDialog();
+                                                            basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                                            fixButtonsFocus();
+
+                                                            on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                                                            //adding 10% just in case the transaction dont fail
+
+                                                            on_page_load_gas_price = on_page_load_gwei * 100000000 + on_page_load_gwei * 100000000 * 10 / 100;
+
+                                                            //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+
+                                                            _context23.next = 8;
+                                                            return App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).estimateGas({ from: global_state.account, gas: 50000 });
+
+                                                        case 8:
+                                                            gas_cost_for_contract_approval = _context23.sent;
+                                                            eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_contract_approval * on_page_load_gas_price).toString(), 'ether');
+
+                                                            $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                                            $('.recipe-popup .ether-fee i').popover({
+                                                                trigger: 'click',
+                                                                html: true
+                                                            });
+
+                                                            if (!cached_key) {
+                                                                _context23.next = 17;
+                                                                break;
+                                                            }
+
+                                                            bindVerifyAddressLogic(true);
+                                                            $(document).on('on-transaction-recipe-agree', function (event) {
+                                                                transaction_key = event.response_data;
+                                                                setTimeout(function () {
+                                                                    $('.response-layer').hide();
+
+                                                                    $('.proof-of-address').remove();
+                                                                    $('.proof-success').fadeIn(1500);
+                                                                }, 500);
+                                                            });
+                                                            _context23.next = 31;
+                                                            break;
+
+                                                        case 17:
+                                                            if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
+                                                                _context23.next = 30;
+                                                                break;
+                                                            }
+
+                                                            _context23.next = 20;
+                                                            return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
+
+                                                        case 20:
+                                                            decrypted_private_key_response = _context23.sent;
+
+                                                            if (!decrypted_private_key_response.success) {
+                                                                _context23.next = 25;
+                                                                break;
+                                                            }
+
+                                                            transaction_key = decrypted_private_key_response.success;
+                                                            _context23.next = 28;
+                                                            break;
+
+                                                        case 25:
+                                                            if (!decrypted_private_key_response.error) {
+                                                                _context23.next = 28;
+                                                                break;
+                                                            }
+
+                                                            basic.showAlert(decrypted_private_key_response.error, '', true);
+                                                            return _context23.abrupt('return', false);
+
+                                                        case 28:
+                                                            _context23.next = 31;
+                                                            break;
+
+                                                        case 30:
+                                                            if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
+                                                                $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>');
+                                                            }
+
+                                                        case 31:
+
+                                                            $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee22() {
+                                                                var decrypted_keystore_file_response, EthereumTx, nonce, contract_approval_function_abi, contract_approval_transaction_obj, contract_approval_transaction;
+                                                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee22$(_context22) {
+                                                                    while (1) {
+                                                                        switch (_context22.prev = _context22.next) {
+                                                                            case 0:
+                                                                                if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                                                    _context22.next = 5;
+                                                                                    break;
+                                                                                }
+
+                                                                                basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                                                return _context22.abrupt('return', false);
+
+                                                                            case 5:
+                                                                                if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '')) {
+                                                                                    _context22.next = 10;
+                                                                                    break;
+                                                                                }
+
+                                                                                basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                                                return _context22.abrupt('return', false);
+
+                                                                            case 10:
+                                                                                if ($('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                                                    _context22.next = 15;
+                                                                                    break;
+                                                                                }
+
+                                                                                basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                                                return _context22.abrupt('return', false);
+
+                                                                            case 15:
+                                                                                if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
+                                                                                    _context22.next = 26;
+                                                                                    break;
+                                                                                }
+
+                                                                                _context22.next = 18;
+                                                                                return getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+
+                                                                            case 18:
+                                                                                decrypted_keystore_file_response = _context22.sent;
+
+                                                                                if (!decrypted_keystore_file_response.success) {
+                                                                                    _context22.next = 23;
+                                                                                    break;
+                                                                                }
+
+                                                                                transaction_key = decrypted_keystore_file_response.to_string;
+                                                                                _context22.next = 26;
+                                                                                break;
+
+                                                                            case 23:
+                                                                                if (!decrypted_keystore_file_response.error) {
+                                                                                    _context22.next = 26;
+                                                                                    break;
+                                                                                }
+
+                                                                                basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                                                return _context22.abrupt('return', false);
+
+                                                                            case 26:
+
+                                                                                $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
+                                                                                $('.response-layer').show();
+
+                                                                                EthereumTx = __webpack_require__(55);
+                                                                                _context22.next = 31;
+                                                                                return App.web3_1_0.eth.getTransactionCount(global_state.account);
+
+                                                                            case 31:
+                                                                                nonce = _context22.sent;
+                                                                                _context22.next = 34;
+                                                                                return App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).encodeABI();
+
+                                                                            case 34:
+                                                                                contract_approval_function_abi = _context22.sent;
+                                                                                contract_approval_transaction_obj = {
+                                                                                    gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + gas_cost_for_contract_approval * 5 / 100)),
+                                                                                    gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                                                    from: global_state.account,
+                                                                                    nonce: App.web3_1_0.utils.toHex(nonce),
+                                                                                    chainId: App.chain_id,
+                                                                                    data: contract_approval_function_abi,
+                                                                                    to: App.assurance_proxy_address
+                                                                                };
+                                                                                contract_approval_transaction = new EthereumTx(contract_approval_transaction_obj);
+                                                                                //signing the transaction
+
+                                                                                contract_approval_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                                                                //sending the transaction
+                                                                                App.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                                                    //doing setinterval check to check if the smart creation transaction got mined
+                                                                                    var contract_approval_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee21() {
+                                                                                        var contract_approval_status;
+                                                                                        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee21$(_context21) {
+                                                                                            while (1) {
+                                                                                                switch (_context21.prev = _context21.next) {
+                                                                                                    case 0:
+                                                                                                        _context21.next = 2;
+                                                                                                        return App.web3_1_0.eth.getTransactionReceipt(transactionHash);
+
+                                                                                                    case 2:
+                                                                                                        contract_approval_status = _context21.sent;
+
+                                                                                                        if (contract_approval_status != null && has(contract_approval_status, 'status')) {
+                                                                                                            clearInterval(contract_approval_interval_check);
+                                                                                                            $.ajax({
+                                                                                                                type: 'POST',
+                                                                                                                url: '/dentist/on-blockchain-contract-approval',
+                                                                                                                dataType: 'json',
+                                                                                                                data: {
+                                                                                                                    ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                                                                },
+                                                                                                                headers: {
+                                                                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                                                                },
+                                                                                                                success: function success(inner_response) {
+                                                                                                                    if (inner_response.success) {
+                                                                                                                        $('.response-layer').hide();
+                                                                                                                        $('.response-layer .transaction-text').remove();
+                                                                                                                        basic.showDialog(inner_response.success, '', null, true);
+                                                                                                                        $('.close-popup').click(function () {
+                                                                                                                            window.location.reload();
+                                                                                                                        });
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            });
+                                                                                                        }
+
+                                                                                                    case 4:
+                                                                                                    case 'end':
+                                                                                                        return _context21.stop();
+                                                                                                }
+                                                                                            }
+                                                                                        }, _callee21, this);
+                                                                                    })));
+                                                                                });
+
+                                                                            case 39:
+                                                                            case 'end':
+                                                                                return _context22.stop();
+                                                                        }
+                                                                    }
+                                                                }, _callee22, this);
+                                                            })));
+                                                            _context23.next = 35;
+                                                            break;
+
+                                                        case 34:
+                                                            if (response.error) {
+                                                                basic.showAlert(response.error, '', true);
+                                                            }
+
+                                                        case 35:
+                                                        case 'end':
+                                                            return _context23.stop();
+                                                    }
+                                                }
+                                            }, _callee23, this);
+                                        }));
+
+                                        function success(_x16) {
+                                            return _ref22.apply(this, arguments);
+                                        }
+
+                                        return success;
+                                    }()
+                                });
+                            }
+                        });
+                        _context24.next = 81;
                         break;
 
-                    case 69:
+                    case 71:
                         if (!$('.single-contract-view-section').hasClass('active')) {
-                            _context21.next = 79;
+                            _context24.next = 81;
                             break;
                         }
 
                         now_timestamp = Math.round(new Date().getTime() / 1000);
-                        _context21.t24 = parseInt;
-                        _context21.next = 74;
+                        _context24.t24 = parseInt;
+                        _context24.next = 76;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
-                    case 74:
-                        _context21.t25 = _context21.sent;
-                        smart_contract_withdraw_period = (0, _context21.t24)(_context21.t25);
+                    case 76:
+                        _context24.t25 = _context24.sent;
+                        smart_contract_withdraw_period = (0, _context24.t24)(_context24.t25);
                         time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-timestamp-signed'));
 
 
@@ -26472,11 +27096,11 @@ var onDocumentReadyPageData = function () {
 
                         $('.single-contract-view-section .row-with-bottom-squares .next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
 
-                    case 79:
-                        _context21.next = 82;
+                    case 81:
+                        _context24.next = 84;
                         break;
 
-                    case 81:
+                    case 83:
                         if ($('body').hasClass('patient-contract-view')) {
                             if ($('.terms-and-conditions-long-list').length) {
                                 $('.terms-and-conditions-long-list').mCustomScrollbar();
@@ -26492,24 +27116,24 @@ var onDocumentReadyPageData = function () {
                             initTooltips();
                         }
 
-                    case 82:
-                        _context21.next = 88;
+                    case 84:
+                        _context24.next = 90;
                         break;
 
-                    case 84:
-                        _context21.next = 86;
+                    case 86:
+                        _context24.next = 88;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic.js', function () {});
 
-                    case 86:
-                        _context21.next = 88;
+                    case 88:
+                        _context24.next = 90;
                         return $.getScript('//dentacoin.com/assets/libs/facebook-login/facebook.js', function () {});
 
-                    case 88:
+                    case 90:
                     case 'end':
-                        return _context21.stop();
+                        return _context24.stop();
                 }
             }
-        }, _callee21, this);
+        }, _callee24, this);
     }));
 
     return function onDocumentReadyPageData() {
@@ -26518,13 +27142,13 @@ var onDocumentReadyPageData = function () {
 }();
 
 var validateUserAddress = function () {
-    var _ref24 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee24(user_address, value_element) {
+    var _ref27 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee27(user_address, value_element) {
         var error, check_public_key_ajax_result;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee24$(_context24) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee27$(_context27) {
             while (1) {
-                switch (_context24.prev = _context24.next) {
+                switch (_context27.prev = _context27.next) {
                     case 0:
-                        _context24.next = 2;
+                        _context27.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/check-public-key',
@@ -26538,7 +27162,7 @@ var validateUserAddress = function () {
                         });
 
                     case 2:
-                        check_public_key_ajax_result = _context24.sent;
+                        check_public_key_ajax_result = _context27.sent;
 
 
                         if (check_public_key_ajax_result.success) {
@@ -26557,28 +27181,28 @@ var validateUserAddress = function () {
                                 error = true;
                             }
                         }
-                        return _context24.abrupt('return', error);
+                        return _context27.abrupt('return', error);
 
                     case 5:
                     case 'end':
-                        return _context24.stop();
+                        return _context27.stop();
                 }
             }
-        }, _callee24, this);
+        }, _callee27, this);
     }));
 
-    return function validateUserAddress(_x18, _x19) {
-        return _ref24.apply(this, arguments);
+    return function validateUserAddress(_x19, _x20) {
+        return _ref27.apply(this, arguments);
     };
 }();
 
 var getEncryptedContractPdfContent = function () {
-    var _ref25 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee25(hash, type) {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee25$(_context25) {
+    var _ref28 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee28(hash, type) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee28$(_context28) {
             while (1) {
-                switch (_context25.prev = _context25.next) {
+                switch (_context28.prev = _context28.next) {
                     case 0:
-                        _context25.next = 2;
+                        _context28.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-contract',
@@ -26593,108 +27217,6 @@ var getEncryptedContractPdfContent = function () {
                         });
 
                     case 2:
-                        return _context25.abrupt('return', _context25.sent);
-
-                    case 3:
-                    case 'end':
-                        return _context25.stop();
-                }
-            }
-        }, _callee25, this);
-    }));
-
-    return function getEncryptedContractPdfContent(_x20, _x21) {
-        return _ref25.apply(this, arguments);
-    };
-}();
-
-var getCurrentUserData = function () {
-    var _ref26 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee26() {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee26$(_context26) {
-            while (1) {
-                switch (_context26.prev = _context26.next) {
-                    case 0:
-                        _context26.next = 2;
-                        return $.ajax({
-                            type: 'GET',
-                            url: '/get-current-user-data',
-                            dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
-                        return _context26.abrupt('return', _context26.sent);
-
-                    case 3:
-                    case 'end':
-                        return _context26.stop();
-                }
-            }
-        }, _callee26, this);
-    }));
-
-    return function getCurrentUserData() {
-        return _ref26.apply(this, arguments);
-    };
-}();
-
-var checkIfFreeEmail = function () {
-    var _ref27 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee27(email) {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee27$(_context27) {
-            while (1) {
-                switch (_context27.prev = _context27.next) {
-                    case 0:
-                        _context27.next = 2;
-                        return $.ajax({
-                            type: 'POST',
-                            url: '/check-email',
-                            dataType: 'json',
-                            data: {
-                                email: email
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
-                        return _context27.abrupt('return', _context27.sent);
-
-                    case 3:
-                    case 'end':
-                        return _context27.stop();
-                }
-            }
-        }, _callee27, this);
-    }));
-
-    return function checkIfFreeEmail(_x22) {
-        return _ref27.apply(this, arguments);
-    };
-}();
-
-var checkCaptcha = function () {
-    var _ref28 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee28(captcha) {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee28$(_context28) {
-            while (1) {
-                switch (_context28.prev = _context28.next) {
-                    case 0:
-                        _context28.next = 2;
-                        return $.ajax({
-                            type: 'POST',
-                            url: '/check-captcha',
-                            dataType: 'json',
-                            data: {
-                                captcha: captcha
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
                         return _context28.abrupt('return', _context28.sent);
 
                     case 3:
@@ -26705,25 +27227,22 @@ var checkCaptcha = function () {
         }, _callee28, this);
     }));
 
-    return function checkCaptcha(_x23) {
+    return function getEncryptedContractPdfContent(_x21, _x22) {
         return _ref28.apply(this, arguments);
     };
 }();
 
-var getDecryptedPrivateKey = function () {
-    var _ref29 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee29(key) {
+var getCurrentUserData = function () {
+    var _ref29 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee29() {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee29$(_context29) {
             while (1) {
                 switch (_context29.prev = _context29.next) {
                     case 0:
                         _context29.next = 2;
                         return $.ajax({
-                            type: 'POST',
-                            url: '/assurance-decrypt-private-key',
+                            type: 'GET',
+                            url: '/get-current-user-data',
                             dataType: 'json',
-                            data: {
-                                private_key: key
-                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
@@ -26740,13 +27259,13 @@ var getDecryptedPrivateKey = function () {
         }, _callee29, this);
     }));
 
-    return function getDecryptedPrivateKey(_x24) {
+    return function getCurrentUserData() {
         return _ref29.apply(this, arguments);
     };
 }();
 
-var getDecryptedKeystoreFile = function () {
-    var _ref30 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee30(keystore, password) {
+var checkIfFreeEmail = function () {
+    var _ref30 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee30(email) {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee30$(_context30) {
             while (1) {
                 switch (_context30.prev = _context30.next) {
@@ -26754,11 +27273,10 @@ var getDecryptedKeystoreFile = function () {
                         _context30.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-pk',
+                            url: '/check-email',
                             dataType: 'json',
                             data: {
-                                keystore: keystore,
-                                password: password
+                                email: email
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -26776,13 +27294,13 @@ var getDecryptedKeystoreFile = function () {
         }, _callee30, this);
     }));
 
-    return function getDecryptedKeystoreFile(_x25, _x26) {
+    return function checkIfFreeEmail(_x23) {
         return _ref30.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContent = function () {
-    var _ref31 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee31(encrypted_html, key) {
+var checkCaptcha = function () {
+    var _ref31 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee31(captcha) {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee31$(_context31) {
             while (1) {
                 switch (_context31.prev = _context31.next) {
@@ -26790,14 +27308,13 @@ var getDecryptedPdfContent = function () {
                         _context31.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data',
+                            url: '/check-captcha',
                             dataType: 'json',
+                            data: {
+                                captcha: captcha
+                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
                             }
                         });
 
@@ -26812,8 +27329,115 @@ var getDecryptedPdfContent = function () {
         }, _callee31, this);
     }));
 
-    return function getDecryptedPdfContent(_x27, _x28) {
+    return function checkCaptcha(_x24) {
         return _ref31.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPrivateKey = function () {
+    var _ref32 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee32(key) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee32$(_context32) {
+            while (1) {
+                switch (_context32.prev = _context32.next) {
+                    case 0:
+                        _context32.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/assurance-decrypt-private-key',
+                            dataType: 'json',
+                            data: {
+                                private_key: key
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                    case 2:
+                        return _context32.abrupt('return', _context32.sent);
+
+                    case 3:
+                    case 'end':
+                        return _context32.stop();
+                }
+            }
+        }, _callee32, this);
+    }));
+
+    return function getDecryptedPrivateKey(_x25) {
+        return _ref32.apply(this, arguments);
+    };
+}();
+
+var getDecryptedKeystoreFile = function () {
+    var _ref33 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee33(keystore, password) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee33$(_context33) {
+            while (1) {
+                switch (_context33.prev = _context33.next) {
+                    case 0:
+                        _context33.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-pk',
+                            dataType: 'json',
+                            data: {
+                                keystore: keystore,
+                                password: password
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                    case 2:
+                        return _context33.abrupt('return', _context33.sent);
+
+                    case 3:
+                    case 'end':
+                        return _context33.stop();
+                }
+            }
+        }, _callee33, this);
+    }));
+
+    return function getDecryptedKeystoreFile(_x26, _x27) {
+        return _ref33.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContent = function () {
+    var _ref34 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee34(encrypted_html, key) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee34$(_context34) {
+            while (1) {
+                switch (_context34.prev = _context34.next) {
+                    case 0:
+                        _context34.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context34.abrupt('return', _context34.sent);
+
+                    case 3:
+                    case 'end':
+                        return _context34.stop();
+                }
+            }
+        }, _callee34, this);
+    }));
+
+    return function getDecryptedPdfContent(_x28, _x29) {
+        return _ref34.apply(this, arguments);
     };
 }();
 
@@ -29339,24 +29963,70 @@ function cancelContractEventInit() {
     if ($('.cancel-contract-btn').length) {
         $('.cancel-contract-btn').click(function () {
             //CHECK FOR CONTRACT ON THE BLOCKCHAIN
-
             var this_btn = $(this);
             $.ajax({
                 type: 'POST',
-                url: '/update-contract-status',
+                url: '/get-popup-cancel-contract',
                 dataType: 'json',
                 data: {
-                    contract: this_btn.attr('data-contract'),
-                    status: 'cancelled'
+                    contract: this_btn.attr('data-contract')
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function success(response) {
                     if (response.success) {
-                        window.location = '/' + response.path + '/contract/' + this_btn.attr('data-contract');
+                        basic.closeDialog();
+                        basic.showDialog(response.success, 'popup-cancel-contract', null, true);
+
+                        $('.popup-cancel-contract #cancel-contract-reason').on('change', function () {
+                            if ($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
+                                $('.camp-for-row').html('<div class="popup-row"><label for="cancel-contract-other-reason" class="inline-block-top">Other reason:</label><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background inline-block-top" maxlength="255"/></div>');
+                            } else {
+                                $('.camp-for-row').html('');
+                            }
+                        });
+
+                        $('.popup-cancel-contract .cancel-contract-popup-confirmation').click(function () {
+                            if ($('.popup-cancel-contract #cancel-contract-other-reason').length && $('.popup-cancel-contract #cancel-contract-other-reason').val().trim() == '') {
+                                basic.showAlert('Please enter other reason.', '', true);
+                            } else if ($('.popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
+                                basic.showAlert('Please enter comments.', '', true);
+                            } else {
+                                var data = {
+                                    contract: this_btn.attr('data-contract'),
+                                    status: 'cancelled',
+                                    comments: $('.popup-cancel-contract #cancel-contract-comments').val().trim()
+                                };
+
+                                if ($('.popup-cancel-contract #cancel-contract-other-reason').length) {
+                                    data.reason = $('.popup-cancel-contract #cancel-contract-other-reason').val().trim();
+                                } else {
+                                    data.reason = $('#cancel-contract-reason option:selected').html();
+                                }
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/update-contract-status',
+                                    dataType: 'json',
+                                    data: data,
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function success(inner_response) {
+                                        $('.response-layer').show();
+                                        if (inner_response.success) {
+                                            window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
+                                        } else if (inner_response.error) {
+                                            $('.response-layer').hide();
+                                            basic.showAlert(inner_response.error, '', true);
+                                        }
+                                    }
+                                });
+                            }
+                        });
                     } else if (response.error) {
-                        basic.showAlert(response.error, '', true);
+                        basic.showAlert('Wrong contract.', '', true);
                     }
                 }
             });
@@ -29643,25 +30313,25 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function () {
-                            var _ref22 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee22(response) {
+                            var _ref25 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee25(response) {
                                 var render_form, decrypted_pdf_response;
-                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee22$(_context22) {
+                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee25$(_context25) {
                                     while (1) {
-                                        switch (_context22.prev = _context22.next) {
+                                        switch (_context25.prev = _context25.next) {
                                             case 0:
                                                 if (!response.success) {
-                                                    _context22.next = 19;
+                                                    _context25.next = 19;
                                                     break;
                                                 }
 
                                                 if (!(checksumAddress($('.proof-of-address').attr('data-address')) != checksumAddress(response.address))) {
-                                                    _context22.next = 6;
+                                                    _context25.next = 6;
                                                     break;
                                                 }
 
                                                 basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', '', true);
                                                 $('.response-layer').hide();
-                                                _context22.next = 17;
+                                                _context25.next = 17;
                                                 break;
 
                                             case 6:
@@ -29675,16 +30345,16 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 }
 
                                                 if (!(render_pdf != null)) {
-                                                    _context22.next = 16;
+                                                    _context25.next = 16;
                                                     break;
                                                 }
 
                                                 render_form = $('form#render-pdf');
-                                                _context22.next = 11;
+                                                _context25.next = 11;
                                                 return getDecryptedPdfContent(encrypted_pdf_content, response.private_key);
 
                                             case 11:
-                                                decrypted_pdf_response = _context22.sent;
+                                                decrypted_pdf_response = _context25.sent;
 
 
                                                 $('.response-layer').hide();
@@ -29695,7 +30365,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 } else if (decrypted_pdf_response.error) {
                                                     basic.showAlert(decrypted_pdf_response.error, '', true);
                                                 }
-                                                _context22.next = 17;
+                                                _context25.next = 17;
                                                 break;
 
                                             case 16:
@@ -29722,7 +30392,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 });
 
                                             case 17:
-                                                _context22.next = 20;
+                                                _context25.next = 20;
                                                 break;
 
                                             case 19:
@@ -29733,14 +30403,14 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
 
                                             case 20:
                                             case 'end':
-                                                return _context22.stop();
+                                                return _context25.stop();
                                         }
                                     }
-                                }, _callee22, this);
+                                }, _callee25, this);
                             }));
 
-                            function success(_x16) {
-                                return _ref22.apply(this, arguments);
+                            function success(_x17) {
+                                return _ref25.apply(this, arguments);
                             }
 
                             return success;
@@ -29813,22 +30483,22 @@ function bindTransactionAddressVerify(keystore_file) {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function () {
-                        var _ref23 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee23(response) {
+                        var _ref26 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee26(response) {
                             var user_data;
-                            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee23$(_context23) {
+                            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee26$(_context26) {
                                 while (1) {
-                                    switch (_context23.prev = _context23.next) {
+                                    switch (_context26.prev = _context26.next) {
                                         case 0:
                                             if (!response.success) {
-                                                _context23.next = 7;
+                                                _context26.next = 7;
                                                 break;
                                             }
 
-                                            _context23.next = 3;
+                                            _context26.next = 3;
                                             return getCurrentUserData();
 
                                         case 3:
-                                            user_data = _context23.sent;
+                                            user_data = _context26.sent;
 
                                             //checking if fake private key or just miss spell it
                                             if (checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address)) {
@@ -29850,7 +30520,7 @@ function bindTransactionAddressVerify(keystore_file) {
                                                     response_data: response.plain_private_key
                                                 });
                                             }
-                                            _context23.next = 8;
+                                            _context26.next = 8;
                                             break;
 
                                         case 7:
@@ -29861,14 +30531,14 @@ function bindTransactionAddressVerify(keystore_file) {
 
                                         case 8:
                                         case 'end':
-                                            return _context23.stop();
+                                            return _context26.stop();
                                     }
                                 }
-                            }, _callee23, this);
+                            }, _callee26, this);
                         }));
 
-                        function success(_x17) {
-                            return _ref23.apply(this, arguments);
+                        function success(_x18) {
+                            return _ref26.apply(this, arguments);
                         }
 
                         return success;
@@ -30225,7 +30895,7 @@ function initCaptchaRefreshEvent() {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1).Buffer))
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30383,7 +31053,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -30473,14 +31143,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(118);
+module.exports = __webpack_require__(119);
 
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -30505,7 +31175,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(119);
+module.exports = __webpack_require__(120);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -30521,7 +31191,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports) {
 
 /**
@@ -31252,338 +31922,6 @@ if (hadRuntime) {
   (function() { return this })() || Function("return this")()
 );
 
-
-/***/ }),
-/* 120 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(Buffer) {
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ethUtil = __webpack_require__(121);
-var fees = __webpack_require__(177);
-var BN = ethUtil.BN;
-
-// secp256k1n/2
-var N_DIV_2 = new BN('7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0', 16);
-
-/**
- * Creates a new transaction object.
- *
- * @example
- * var rawTx = {
- *   nonce: '00',
- *   gasPrice: '09184e72a000',
- *   gasLimit: '2710',
- *   to: '0000000000000000000000000000000000000000',
- *   value: '00',
- *   data: '7f7465737432000000000000000000000000000000000000000000000000000000600057',
- *   v: '1c',
- *   r: '5e1d3a76fbf824220eafc8c79ad578ad2b67d01b0c2425eb1f1347e8f50882ab',
- *   s: '5bd428537f05f9830e93792f90ea6a3e2d1ee84952dd96edbae9f658f831ab13'
- * };
- * var tx = new Transaction(rawTx);
- *
- * @class
- * @param {Buffer | Array | Object} data a transaction can be initiailized with either a buffer containing the RLP serialized transaction or an array of buffers relating to each of the tx Properties, listed in order below in the exmple.
- *
- * Or lastly an Object containing the Properties of the transaction like in the Usage example.
- *
- * For Object and Arrays each of the elements can either be a Buffer, a hex-prefixed (0x) String , Number, or an object with a toBuffer method such as Bignum
- *
- * @property {Buffer} raw The raw rlp encoded transaction
- * @param {Buffer} data.nonce nonce number
- * @param {Buffer} data.gasLimit transaction gas limit
- * @param {Buffer} data.gasPrice transaction gas price
- * @param {Buffer} data.to to the to address
- * @param {Buffer} data.value the amount of ether sent
- * @param {Buffer} data.data this will contain the data of the message or the init of a contract
- * @param {Buffer} data.v EC signature parameter
- * @param {Buffer} data.r EC signature parameter
- * @param {Buffer} data.s EC recovery ID
- * @param {Number} data.chainId EIP 155 chainId - mainnet: 1, ropsten: 3
- * */
-
-var Transaction = function () {
-  function Transaction(data) {
-    _classCallCheck(this, Transaction);
-
-    data = data || {};
-    // Define Properties
-    var fields = [{
-      name: 'nonce',
-      length: 32,
-      allowLess: true,
-      default: new Buffer([])
-    }, {
-      name: 'gasPrice',
-      length: 32,
-      allowLess: true,
-      default: new Buffer([])
-    }, {
-      name: 'gasLimit',
-      alias: 'gas',
-      length: 32,
-      allowLess: true,
-      default: new Buffer([])
-    }, {
-      name: 'to',
-      allowZero: true,
-      length: 20,
-      default: new Buffer([])
-    }, {
-      name: 'value',
-      length: 32,
-      allowLess: true,
-      default: new Buffer([])
-    }, {
-      name: 'data',
-      alias: 'input',
-      allowZero: true,
-      default: new Buffer([])
-    }, {
-      name: 'v',
-      allowZero: true,
-      default: new Buffer([0x1c])
-    }, {
-      name: 'r',
-      length: 32,
-      allowZero: true,
-      allowLess: true,
-      default: new Buffer([])
-    }, {
-      name: 's',
-      length: 32,
-      allowZero: true,
-      allowLess: true,
-      default: new Buffer([])
-    }];
-
-    /**
-     * Returns the rlp encoding of the transaction
-     * @method serialize
-     * @return {Buffer}
-     * @memberof Transaction
-     * @name serialize
-     */
-    // attached serialize
-    ethUtil.defineProperties(this, fields, data);
-
-    /**
-     * @property {Buffer} from (read only) sender address of this transaction, mathematically derived from other parameters.
-     * @name from
-     * @memberof Transaction
-     */
-    Object.defineProperty(this, 'from', {
-      enumerable: true,
-      configurable: true,
-      get: this.getSenderAddress.bind(this)
-    });
-
-    // calculate chainId from signature
-    var sigV = ethUtil.bufferToInt(this.v);
-    var chainId = Math.floor((sigV - 35) / 2);
-    if (chainId < 0) chainId = 0;
-
-    // set chainId
-    this._chainId = chainId || data.chainId || 0;
-    this._homestead = true;
-  }
-
-  /**
-   * If the tx's `to` is to the creation address
-   * @return {Boolean}
-   */
-
-
-  Transaction.prototype.toCreationAddress = function toCreationAddress() {
-    return this.to.toString('hex') === '';
-  };
-
-  /**
-   * Computes a sha3-256 hash of the serialized tx
-   * @param {Boolean} [includeSignature=true] whether or not to inculde the signature
-   * @return {Buffer}
-   */
-
-
-  Transaction.prototype.hash = function hash(includeSignature) {
-    if (includeSignature === undefined) includeSignature = true;
-
-    // EIP155 spec:
-    // when computing the hash of a transaction for purposes of signing or recovering,
-    // instead of hashing only the first six elements (ie. nonce, gasprice, startgas, to, value, data),
-    // hash nine elements, with v replaced by CHAIN_ID, r = 0 and s = 0
-
-    var items = void 0;
-    if (includeSignature) {
-      items = this.raw;
-    } else {
-      if (this._chainId > 0) {
-        var raw = this.raw.slice();
-        this.v = this._chainId;
-        this.r = 0;
-        this.s = 0;
-        items = this.raw;
-        this.raw = raw;
-      } else {
-        items = this.raw.slice(0, 6);
-      }
-    }
-
-    // create hash
-    return ethUtil.rlphash(items);
-  };
-
-  /**
-   * returns the public key of the sender
-   * @return {Buffer}
-   */
-
-
-  Transaction.prototype.getChainId = function getChainId() {
-    return this._chainId;
-  };
-
-  /**
-   * returns the sender's address
-   * @return {Buffer}
-   */
-
-
-  Transaction.prototype.getSenderAddress = function getSenderAddress() {
-    if (this._from) {
-      return this._from;
-    }
-    var pubkey = this.getSenderPublicKey();
-    this._from = ethUtil.publicToAddress(pubkey);
-    return this._from;
-  };
-
-  /**
-   * returns the public key of the sender
-   * @return {Buffer}
-   */
-
-
-  Transaction.prototype.getSenderPublicKey = function getSenderPublicKey() {
-    if (!this._senderPubKey || !this._senderPubKey.length) {
-      if (!this.verifySignature()) throw new Error('Invalid Signature');
-    }
-    return this._senderPubKey;
-  };
-
-  /**
-   * Determines if the signature is valid
-   * @return {Boolean}
-   */
-
-
-  Transaction.prototype.verifySignature = function verifySignature() {
-    var msgHash = this.hash(false);
-    // All transaction signatures whose s-value is greater than secp256k1n/2 are considered invalid.
-    if (this._homestead && new BN(this.s).cmp(N_DIV_2) === 1) {
-      return false;
-    }
-
-    try {
-      var v = ethUtil.bufferToInt(this.v);
-      if (this._chainId > 0) {
-        v -= this._chainId * 2 + 8;
-      }
-      this._senderPubKey = ethUtil.ecrecover(msgHash, v, this.r, this.s);
-    } catch (e) {
-      return false;
-    }
-
-    return !!this._senderPubKey;
-  };
-
-  /**
-   * sign a transaction with a given a private key
-   * @param {Buffer} privateKey
-   */
-
-
-  Transaction.prototype.sign = function sign(privateKey) {
-    var msgHash = this.hash(false);
-    var sig = ethUtil.ecsign(msgHash, privateKey);
-    if (this._chainId > 0) {
-      sig.v += this._chainId * 2 + 8;
-    }
-    Object.assign(this, sig);
-  };
-
-  /**
-   * The amount of gas paid for the data in this tx
-   * @return {BN}
-   */
-
-
-  Transaction.prototype.getDataFee = function getDataFee() {
-    var data = this.raw[5];
-    var cost = new BN(0);
-    for (var i = 0; i < data.length; i++) {
-      data[i] === 0 ? cost.iaddn(fees.txDataZeroGas.v) : cost.iaddn(fees.txDataNonZeroGas.v);
-    }
-    return cost;
-  };
-
-  /**
-   * the minimum amount of gas the tx must have (DataFee + TxFee + Creation Fee)
-   * @return {BN}
-   */
-
-
-  Transaction.prototype.getBaseFee = function getBaseFee() {
-    var fee = this.getDataFee().iaddn(fees.txGas.v);
-    if (this._homestead && this.toCreationAddress()) {
-      fee.iaddn(fees.txCreation.v);
-    }
-    return fee;
-  };
-
-  /**
-   * the up front amount that an account must have for this transaction to be valid
-   * @return {BN}
-   */
-
-
-  Transaction.prototype.getUpfrontCost = function getUpfrontCost() {
-    return new BN(this.gasLimit).imul(new BN(this.gasPrice)).iadd(new BN(this.value));
-  };
-
-  /**
-   * validates the signature and checks to see if it has enough gas
-   * @param {Boolean} [stringError=false] whether to return a string with a dscription of why the validation failed or return a Bloolean
-   * @return {Boolean|String}
-   */
-
-
-  Transaction.prototype.validate = function validate(stringError) {
-    var errors = [];
-    if (!this.verifySignature()) {
-      errors.push('Invalid Signature');
-    }
-
-    if (this.getBaseFee().cmp(new BN(this.gasLimit)) > 0) {
-      errors.push(['gas limit is too low. Need at least ' + this.getBaseFee()]);
-    }
-
-    if (stringError === undefined || stringError === false) {
-      return errors.length === 0;
-    } else {
-      return errors.join(' ');
-    }
-  };
-
-  return Transaction;
-}();
-
-module.exports = Transaction;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ }),
 /* 121 */
@@ -32909,7 +33247,7 @@ function config (name) {
 
 module.exports = PassThrough;
 
-var Transform = __webpack_require__(58);
+var Transform = __webpack_require__(59);
 
 /*<replacement>*/
 var util = __webpack_require__(23);
@@ -33326,7 +33664,7 @@ module.exports = __webpack_require__(140)(__webpack_require__(144))
 
 var assert = __webpack_require__(141)
 var der = __webpack_require__(142)
-var messages = __webpack_require__(59)
+var messages = __webpack_require__(60)
 
 function initCompressedValue (value, defaultValue) {
   if (value === undefined) return defaultValue
@@ -33952,7 +34290,7 @@ var createHash = __webpack_require__(14)
 var BN = __webpack_require__(3)
 var EC = __webpack_require__(6).ec
 
-var messages = __webpack_require__(59)
+var messages = __webpack_require__(60)
 
 var ec = new EC('secp256k1')
 var ecparams = ec.curve
@@ -34429,7 +34767,7 @@ module.exports = Sha1
  */
 
 var inherits = __webpack_require__(0)
-var Sha256 = __webpack_require__(61)
+var Sha256 = __webpack_require__(62)
 var Hash = __webpack_require__(18)
 var Buffer = __webpack_require__(2).Buffer
 
@@ -34480,7 +34818,7 @@ module.exports = Sha224
 /***/ (function(module, exports, __webpack_require__) {
 
 var inherits = __webpack_require__(0)
-var SHA512 = __webpack_require__(62)
+var SHA512 = __webpack_require__(63)
 var Hash = __webpack_require__(18)
 var Buffer = __webpack_require__(2).Buffer
 
@@ -34560,7 +34898,7 @@ module.exports = {"_args":[["elliptic@6.4.1","D:\\wamp\\www\\assurance-testing"]
 var utils = exports;
 var BN = __webpack_require__(3);
 var minAssert = __webpack_require__(9);
-var minUtils = __webpack_require__(63);
+var minUtils = __webpack_require__(64);
 
 utils.assert = minAssert;
 utils.toArray = minUtils.toArray;
@@ -36857,9 +37195,9 @@ defineCurve('secp256k1', {
 
 exports.sha1 = __webpack_require__(159);
 exports.sha224 = __webpack_require__(160);
-exports.sha256 = __webpack_require__(66);
+exports.sha256 = __webpack_require__(67);
 exports.sha384 = __webpack_require__(161);
-exports.sha512 = __webpack_require__(67);
+exports.sha512 = __webpack_require__(68);
 
 
 /***/ }),
@@ -36871,7 +37209,7 @@ exports.sha512 = __webpack_require__(67);
 
 var utils = __webpack_require__(11);
 var common = __webpack_require__(24);
-var shaCommon = __webpack_require__(65);
+var shaCommon = __webpack_require__(66);
 
 var rotl32 = utils.rotl32;
 var sum32 = utils.sum32;
@@ -36951,7 +37289,7 @@ SHA1.prototype._digest = function digest(enc) {
 
 
 var utils = __webpack_require__(11);
-var SHA256 = __webpack_require__(66);
+var SHA256 = __webpack_require__(67);
 
 function SHA224() {
   if (!(this instanceof SHA224))
@@ -36989,7 +37327,7 @@ SHA224.prototype._digest = function digest(enc) {
 
 var utils = __webpack_require__(11);
 
-var SHA512 = __webpack_require__(67);
+var SHA512 = __webpack_require__(68);
 
 function SHA384() {
   if (!(this instanceof SHA384))
@@ -38270,7 +38608,7 @@ EC.prototype.getKeyRecoveryParam = function(e, signature, Q, enc) {
 
 
 var hash = __webpack_require__(45);
-var utils = __webpack_require__(63);
+var utils = __webpack_require__(64);
 var assert = __webpack_require__(9);
 
 function HmacDRBG(options) {
@@ -40304,8 +40642,8 @@ function toBuffer(v) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(Buffer) {
 
-var isHexPrefixed = __webpack_require__(68);
-var stripHexPrefix = __webpack_require__(69);
+var isHexPrefixed = __webpack_require__(69);
+var stripHexPrefix = __webpack_require__(70);
 
 /**
  * Pads a `String` to have an even length
@@ -40594,7 +40932,7 @@ var version = __webpack_require__(180).version;
 var core = __webpack_require__(16);
 var Eth = __webpack_require__(222);
 var Net = __webpack_require__(33);
-var Personal = __webpack_require__(86);
+var Personal = __webpack_require__(87);
 var Shh = __webpack_require__(294);
 var Bzz = __webpack_require__(295);
 var utils = __webpack_require__(10);
@@ -40679,7 +41017,7 @@ module.exports = {"_from":"web3@^1.0.0-beta.36","_id":"web3@1.0.0-beta.37","_inB
 
 var _ = __webpack_require__(5);
 var errors = __webpack_require__(8).errors;
-var Jsonrpc = __webpack_require__(75);
+var Jsonrpc = __webpack_require__(76);
 var BatchManager = __webpack_require__(193);
 var givenProvider = __webpack_require__(194);
 
@@ -40987,7 +41325,7 @@ module.exports = {
 
 var _ = __webpack_require__(5);
 var utils = __webpack_require__(10);
-var Iban = __webpack_require__(74);
+var Iban = __webpack_require__(75);
 
 /**
  * Should the format output to a big number
@@ -41412,7 +41750,7 @@ module.exports = {
 
 
 var BN = __webpack_require__(185);
-var numberToBN = __webpack_require__(70);
+var numberToBN = __webpack_require__(71);
 
 var zero = new BN(0);
 var negative1 = new BN(-1);
@@ -48723,8 +49061,8 @@ module.exports = {
  */
 
 var _ = __webpack_require__(5);
-var BN = __webpack_require__(72);
-var utils = __webpack_require__(71);
+var BN = __webpack_require__(73);
+var utils = __webpack_require__(72);
 
 
 var _elementaryName = function (name) {
@@ -52492,7 +52830,7 @@ module.exports = window.crypto;
 
 
 
-var Jsonrpc = __webpack_require__(75);
+var Jsonrpc = __webpack_require__(76);
 var errors = __webpack_require__(8).errors;
 
 var Batch = function (requestManager) {
@@ -53361,7 +53699,7 @@ var objectKeys = Object.keys || function (obj) {
 var errors = __webpack_require__(8).errors;
 var XHR2 = __webpack_require__(204).XMLHttpRequest // jshint ignore: line
 var http = __webpack_require__(46);
-var https = __webpack_require__(80);
+var https = __webpack_require__(81);
 
 
 /**
@@ -53495,7 +53833,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var http = __webpack_require__(46);
-var https = __webpack_require__(80);
+var https = __webpack_require__(81);
 var os = __webpack_require__(209);
 var url = __webpack_require__(25);
 var progress_event_1 = __webpack_require__(210);
@@ -53927,9 +54265,9 @@ XMLHttpRequest.prototype.nodejsBaseUrl = null;
 /* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(77)
+/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(78)
 var inherits = __webpack_require__(0)
-var response = __webpack_require__(78)
+var response = __webpack_require__(79)
 var stream = __webpack_require__(22)
 var toArrayBuffer = __webpack_require__(207)
 
@@ -58961,11 +59299,11 @@ var utils = __webpack_require__(10);
 var Net = __webpack_require__(33);
 
 var ENS = __webpack_require__(223);
-var Personal = __webpack_require__(86);
-var BaseContract = __webpack_require__(82);
-var Iban = __webpack_require__(74);
+var Personal = __webpack_require__(87);
+var BaseContract = __webpack_require__(83);
+var Iban = __webpack_require__(75);
 var Accounts = __webpack_require__(241);
-var abi = __webpack_require__(83);
+var abi = __webpack_require__(84);
 
 var getNetworkType = __webpack_require__(293);
 var formatter = helpers.formatters;
@@ -59670,8 +60008,8 @@ module.exports = config;
 
 
 var _ = __webpack_require__(5);
-var Contract = __webpack_require__(82);
-var namehash = __webpack_require__(85);
+var Contract = __webpack_require__(83);
+var namehash = __webpack_require__(86);
 var PromiEvent = __webpack_require__(31);
 var REGISTRY_ABI = __webpack_require__(238);
 var RESOLVER_ABI = __webpack_require__(239);
@@ -59778,7 +60116,7 @@ var address_1 = __webpack_require__(228);
 var bignumber_1 = __webpack_require__(232);
 var bytes_1 = __webpack_require__(19);
 var utf8_1 = __webpack_require__(234);
-var properties_1 = __webpack_require__(84);
+var properties_1 = __webpack_require__(85);
 var errors = __importStar(__webpack_require__(34));
 var paramTypeBytes = new RegExp(/^bytes([0-9]*)$/);
 var paramTypeNumber = new RegExp(/^(u?int)([0-9]*)$/);
@@ -61460,7 +61798,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var bn_js_1 = __importDefault(__webpack_require__(3));
 var bytes_1 = __webpack_require__(19);
-var properties_1 = __webpack_require__(84);
+var properties_1 = __webpack_require__(85);
 var types_1 = __webpack_require__(233);
 var errors = __importStar(__webpack_require__(34));
 var BN_1 = new bn_js_1.default.BN(-1);
@@ -62304,7 +62642,7 @@ exports.toUtf8String = toUtf8String;
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(root, factory) {
   /* istanbul ignore next */
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(76), __webpack_require__(237)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(punycode, idna_map) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(77), __webpack_require__(237)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(punycode, idna_map) {
       return factory(punycode, idna_map);
     }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -63803,7 +64141,7 @@ module.exports = RESOLVER;
 
 
 var PromiEvent = __webpack_require__(31);
-var namehash = __webpack_require__(85);
+var namehash = __webpack_require__(86);
 var _ = __webpack_require__(5);
 
 /**
@@ -64003,11 +64341,11 @@ module.exports = ResolverMethodHandler;
 var _ = __webpack_require__(5);
 var core = __webpack_require__(16);
 var Method = __webpack_require__(17);
-var Promise = __webpack_require__(81);
+var Promise = __webpack_require__(82);
 var Account = __webpack_require__(242);
-var Hash = __webpack_require__(110);
-var RLP = __webpack_require__(109);
-var Nat = __webpack_require__(108);
+var Hash = __webpack_require__(111);
+var RLP = __webpack_require__(110);
+var Nat = __webpack_require__(109);
 var Bytes = __webpack_require__(48);
 var cryp = (typeof global === 'undefined') ? __webpack_require__(35) : __webpack_require__(35);
 var scryptsy = __webpack_require__(289);
@@ -64520,12 +64858,12 @@ module.exports = Accounts;
 /* WEBPACK VAR INJECTION */(function(Buffer) {var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var Bytes = __webpack_require__(48);
-var Nat = __webpack_require__(108);
+var Nat = __webpack_require__(109);
 var elliptic = __webpack_require__(6);
-var rlp = __webpack_require__(109);
+var rlp = __webpack_require__(110);
 var secp256k1 = new elliptic.ec("secp256k1"); // eslint-disable-line
 
-var _require = __webpack_require__(110),
+var _require = __webpack_require__(111),
     keccak256 = _require.keccak256,
     keccak256s = _require.keccak256s;
 
@@ -64702,16 +65040,16 @@ module.exports = Hmac
 /* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(89)
+module.exports = __webpack_require__(90)
 
 
 /***/ }),
 /* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global, process) {var checkParameters = __webpack_require__(90)
-var defaultEncoding = __webpack_require__(91)
-var sync = __webpack_require__(92)
+/* WEBPACK VAR INJECTION */(function(global, process) {var checkParameters = __webpack_require__(91)
+var defaultEncoding = __webpack_require__(92)
+var sync = __webpack_require__(93)
 var Buffer = __webpack_require__(2).Buffer
 
 var ZERO_BUF
@@ -65641,9 +65979,9 @@ EDE.prototype._unpad = DES.prototype._unpad;
 /***/ (function(module, exports, __webpack_require__) {
 
 var MODES = __webpack_require__(52)
-var AuthCipher = __webpack_require__(96)
+var AuthCipher = __webpack_require__(97)
 var Buffer = __webpack_require__(2).Buffer
-var StreamCipher = __webpack_require__(97)
+var StreamCipher = __webpack_require__(98)
 var Transform = __webpack_require__(12)
 var aes = __webpack_require__(36)
 var ebtk = __webpack_require__(37)
@@ -66032,10 +66370,10 @@ module.exports = GHASH
 /* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var AuthCipher = __webpack_require__(96)
+var AuthCipher = __webpack_require__(97)
 var Buffer = __webpack_require__(2).Buffer
 var MODES = __webpack_require__(52)
-var StreamCipher = __webpack_require__(97)
+var StreamCipher = __webpack_require__(98)
 var Transform = __webpack_require__(12)
 var aes = __webpack_require__(36)
 var ebtk = __webpack_require__(37)
@@ -66192,7 +66530,7 @@ exports['des-ede'] = {
 /* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer) {var generatePrime = __webpack_require__(98)
+/* WEBPACK VAR INJECTION */(function(Buffer) {var generatePrime = __webpack_require__(99)
 var primes = __webpack_require__(265)
 
 var DH = __webpack_require__(266)
@@ -66248,14 +66586,14 @@ module.exports = {"modp1":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {var BN = __webpack_require__(3);
-var MillerRabin = __webpack_require__(99);
+var MillerRabin = __webpack_require__(100);
 var millerRabin = new MillerRabin();
 var TWENTYFOUR = new BN(24);
 var ELEVEN = new BN(11);
 var TEN = new BN(10);
 var THREE = new BN(3);
 var SEVEN = new BN(7);
-var primes = __webpack_require__(98);
+var primes = __webpack_require__(99);
 var randomBytes = __webpack_require__(20);
 module.exports = DH;
 
@@ -66424,7 +66762,7 @@ var inherits = __webpack_require__(0)
 var sign = __webpack_require__(268)
 var verify = __webpack_require__(283)
 
-var algorithms = __webpack_require__(89)
+var algorithms = __webpack_require__(90)
 Object.keys(algorithms).forEach(function (key) {
   algorithms[key].id = new Buffer(algorithms[key].id, 'hex')
   algorithms[key.toLowerCase()] = algorithms[key]
@@ -66517,12 +66855,12 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {// much of this based on https://github.com/indutny/self-signed/blob/gh-pages/lib/rsa.js
-var createHmac = __webpack_require__(87)
+var createHmac = __webpack_require__(88)
 var crt = __webpack_require__(53)
 var EC = __webpack_require__(6).ec
 var BN = __webpack_require__(3)
 var parseKeys = __webpack_require__(38)
-var curves = __webpack_require__(104)
+var curves = __webpack_require__(105)
 
 function sign (hash, key, hashType, signType, tag) {
   var priv = parseKeys(key)
@@ -67790,7 +68128,7 @@ Node.prototype._isPrintstr = function isPrintstr(str) {
 /* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var constants = __webpack_require__(101);
+var constants = __webpack_require__(102);
 
 exports.tagClass = {
   0: 'universal',
@@ -67840,7 +68178,7 @@ exports.tagByName = constants._reverse(exports.tag);
 
 var decoders = exports;
 
-decoders.der = __webpack_require__(102);
+decoders.der = __webpack_require__(103);
 decoders.pem = __webpack_require__(277);
 
 
@@ -67851,7 +68189,7 @@ decoders.pem = __webpack_require__(277);
 var inherits = __webpack_require__(0);
 var Buffer = __webpack_require__(1).Buffer;
 
-var DERDecoder = __webpack_require__(102);
+var DERDecoder = __webpack_require__(103);
 
 function PEMDecoder(entity) {
   DERDecoder.call(this, entity);
@@ -67905,7 +68243,7 @@ PEMDecoder.prototype.decode = function decode(data, options) {
 
 var encoders = exports;
 
-encoders.der = __webpack_require__(103);
+encoders.der = __webpack_require__(104);
 encoders.pem = __webpack_require__(279);
 
 
@@ -67915,7 +68253,7 @@ encoders.pem = __webpack_require__(279);
 
 var inherits = __webpack_require__(0);
 
-var DEREncoder = __webpack_require__(103);
+var DEREncoder = __webpack_require__(104);
 
 function PEMEncoder(entity) {
   DEREncoder.call(this, entity);
@@ -68082,7 +68420,7 @@ module.exports = function (okey, password) {
 var BN = __webpack_require__(3)
 var EC = __webpack_require__(6).ec
 var parseKeys = __webpack_require__(38)
-var curves = __webpack_require__(104)
+var curves = __webpack_require__(105)
 
 function verify (sig, hash, key, signType, tag) {
   var pub = parseKeys(key)
@@ -68317,10 +68655,10 @@ exports.publicDecrypt = function publicDecrypt(key, buf) {
 /* WEBPACK VAR INJECTION */(function(Buffer) {var parseKeys = __webpack_require__(38);
 var randomBytes = __webpack_require__(20);
 var createHash = __webpack_require__(14);
-var mgf = __webpack_require__(105);
-var xor = __webpack_require__(106);
+var mgf = __webpack_require__(106);
+var xor = __webpack_require__(107);
 var bn = __webpack_require__(3);
-var withPublic = __webpack_require__(107);
+var withPublic = __webpack_require__(108);
 var crt = __webpack_require__(53);
 
 var constants = {
@@ -68416,12 +68754,12 @@ function nonZero(len, crypto) {
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {var parseKeys = __webpack_require__(38);
-var mgf = __webpack_require__(105);
-var xor = __webpack_require__(106);
+var mgf = __webpack_require__(106);
+var xor = __webpack_require__(107);
 var bn = __webpack_require__(3);
 var crt = __webpack_require__(53);
 var createHash = __webpack_require__(14);
-var withPublic = __webpack_require__(107);
+var withPublic = __webpack_require__(108);
 module.exports = function privateDecrypt(private_key, enc, reverse) {
   var padding;
   if (private_key.padding) {
@@ -69455,7 +69793,7 @@ var mimetype = { lookup: unavailable };
 var defaultArchives = {};
 var downloadUrl = null;
 var request = __webpack_require__(297);
-var bytes = __webpack_require__(112);
+var bytes = __webpack_require__(113);
 var hash = __webpack_require__(314);
 var pick = __webpack_require__(315);
 var swarm = __webpack_require__(316);
@@ -69497,7 +69835,7 @@ module.exports = function (url, options) {
 
 var queryString = __webpack_require__(299)
 var setQuery = __webpack_require__(302)
-var assign = __webpack_require__(111)
+var assign = __webpack_require__(112)
 var ensureHeader = __webpack_require__(303)
 
 // this is replaced in the browser
@@ -69563,7 +69901,7 @@ function xhrRequest (url, opt, cb) {
 "use strict";
 
 var strictUriEncode = __webpack_require__(300);
-var objectAssign = __webpack_require__(111);
+var objectAssign = __webpack_require__(112);
 var decodeComponent = __webpack_require__(301);
 
 function encoderForArrayFormat(opts) {
@@ -70000,7 +70338,7 @@ function xhrRequest (opt, cb) {
 var window = __webpack_require__(306)
 var isFunction = __webpack_require__(307)
 var parseHeaders = __webpack_require__(308)
-var xtend = __webpack_require__(79)
+var xtend = __webpack_require__(80)
 
 module.exports = createXHR
 // Allow use of default import syntax in TypeScript
@@ -70524,8 +70862,8 @@ module.exports = {
 
 // Thanks https://github.com/axic/swarmhash
 
-var keccak = __webpack_require__(73).keccak256;
-var Bytes = __webpack_require__(112);
+var keccak = __webpack_require__(74).keccak256;
+var Bytes = __webpack_require__(113);
 
 var swarmHashBlock = function swarmHashBlock(length, data) {
   var lengthEncoded = Bytes.reverse(Bytes.pad(6, Bytes.fromNumber(length)));

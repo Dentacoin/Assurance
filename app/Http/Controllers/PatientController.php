@@ -427,7 +427,7 @@ class PatientController extends Controller {
             'ipfs_hash.required' => 'IPFS hash is required.'
         ]);
 
-        $contract = TemporallyContract::where(array('document_hash' => $request->input('ipfs_hash')))->get()->first();
+        $contract = TemporallyContract::where(array('document_hash' => $request->input('ipfs_hash'), 'patient_id' => session('logged_user')['id']))->get()->first();
         $contract->status = 'awaiting-approval';
         $contract->save();
 

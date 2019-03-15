@@ -76,6 +76,66 @@ body.logged-in {
             }
         }
     }
+    &.popup-cancel-contract {
+        .bootbox-close-button {
+            font-size: 45px;
+            opacity: 1;
+            color: #424242;
+            right: 15px;
+            position: absolute;
+            float: none;
+        }
+        .modal-dialog {
+            width: 95%;
+            max-width: 800px;
+            .modal-body {
+                padding: 15px 15%;
+                svg {
+                    width: 30px;
+                }
+                .popup-row {
+                    border-bottom: 1px solid #888888;
+                    font-size: 0;
+                    input, select, textarea {
+                        width: 65%;
+                        color: black;
+                        font-family: 'Calibri Light';
+                        font-size: 18px;
+                        border: 0;
+                        padding: 15px 10px;
+                    }
+                    input, textarea {
+                        cursor: pointer;
+                        &:focus {
+                            cursor: text;
+                            background-color: #eaeaea;
+                            background-image: none;
+                            @include rounded(0);
+                        }
+                    }
+                    textarea {
+                        height: 100px;
+                        @include breakpoint($xs) {
+                            height: 150px;
+                        }
+                    }
+                    label {
+                        color: #888888;
+                        padding-top: 5px;
+                        width: 35%;
+                        padding-right: 10px;
+                        font-weight: normal;
+                        margin: 0;
+                        font-size: 18px;
+                        font-family: 'Calibri Light';
+                    }
+                }
+                @include breakpoint($xs) {
+                    padding: 15px;
+                }
+            }
+        }
+    }
 }
 
 .line-crossed-title {

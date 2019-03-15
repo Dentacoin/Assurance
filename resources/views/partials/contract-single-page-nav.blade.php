@@ -25,7 +25,7 @@
         @endif
         @if($contract->status != 'cancelled')
             <li class="inline-block">
-                <a href="javascript:void(0)" onclick="return confirm('Are you sure you want to cancel this contract?')"  itemprop="url" class="cancel-contract-btn" data-contract="{{$contract->slug}}">
+                <a href="javascript:void(0)" itemprop="url" class="cancel-contract-btn" data-contract="{{$contract->slug}}">
                     <span itemprop="name"><i class="fa fa-times" aria-hidden="true"></i> Cancel Contract</span>
                 </a>
             </li>

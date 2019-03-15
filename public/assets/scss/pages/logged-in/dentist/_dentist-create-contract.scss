@@ -166,4 +166,29 @@
             }
         }
     }
+    @include breakpoint($md-only) {
+        .wrapper {
+            padding: 0 10%;
+        }
+    }
+    @include breakpoint($sm-only) {
+        .wrapper {
+            padding: 0 5%;
+        }
+    }
+    @include breakpoint($xs) {
+        .wrapper {
+            padding: 0 5px;
+            .fs-18 {
+                font-size: 16px !important;
+            }
+        }
+    }
+    @include breakpoint($xxs) {
+        .wrapper {
+            .fs-18, .fs-16 {
+                font-size: 14px !important;
+            }
+        }
+    }
 }

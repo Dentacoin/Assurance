@@ -2,6 +2,7 @@
 @section('content')
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
+    @php($cancellation_reason = unserialize($contract->cancellation_reason))
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section cancelled" data-created-at="{{strtotime($contract->contract_active_at)}}">
         <div class="container">
             <div class="row">
@@ -13,7 +14,7 @@
         </div>
         <div class="container single-contract-tile module pending text-center padding-top-20">
             <div class="row fs-0 flex-xs">
-                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-bottom padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
+                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
                         <img alt="Dentist avatar" src="{{$dentist->avatar_url}}" class="max-width-120"/>
                     </figure>
@@ -26,10 +27,12 @@
                         <div class="cancelled-color fs-20 calibri-bold padding-top-15">Date Cancelled:</div>
                         <time class="display-block calibri-light fs-20">{{date('d/m/Y', strtotime($contract->cancelled_at))}}</time>
                         <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Reason:</div>
-                        <div class="calibri-light fs-20">Overdue payments by the Patient</div>
+                        <div class="calibri-light fs-20">{{$cancellation_reason['reason']}}</div>
+                        <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Comments:</div>
+                        <div class="calibri-light fs-20">{{$cancellation_reason['comments']}}</div>
                     </div>
                 </div>
-                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-bottom padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
+                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
                         <img alt="Patient avatar" src="{{$patient->avatar_url}}" class="max-width-120"/>
                     </figure>
@@ -43,9 +46,11 @@
                 @if(isset($mobile) && $mobile)
                     <div class="col-xs-12 padding-top-15 padding-bottom-15 border-right-light-gray show-on-xs">
                         <div class="cancelled-color fs-20 calibri-bold padding-top-15">Date Cancelled:</div>
-                        <time class="display-block calibri-light fs-20">{{date('d/m/Y', strtotime($contract->cancelled_at))}}</time>
+                        <time class="display-block calibri-light fs-18">{{date('d/m/Y', strtotime($contract->cancelled_at))}}</time>
                         <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Reason:</div>
-                        <div class="calibri-light fs-20">Overdue payments by the Patient</div>
+                        <div class="calibri-light fs-18">{{$cancellation_reason['reason']}}</div>
+                        <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Comments:</div>
+                        <div class="calibri-light fs-18">{{$cancellation_reason['comments']}}</div>
                     </div>
                 @endif
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15 border-right-light-gray">
@@ -53,12 +58,12 @@
                     @if(!empty($contract->contract_active_at))
                         <time class="display-block padding-top-10 calibri-light fs-20">{{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
                     @else
-                        <div class="cancelled-color fs-20 calibri-light padding-top-10">You have cancelled the contract before signing it.</div>
+                        <div class="cancelled-color fs-20 fs-xs-18 calibri-light padding-top-10">You have cancelled the contract before signing it.</div>
                     @endif
                 </div>
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15">
                     <h3 class="fs-20 calibri-bold">Monthly Premium:</h3>
-                    <div class="display-block padding-top-10 calibri-light fs-20">{{$contract->monthly_premium}} USD</div>
+                    <div class="display-block padding-top-10 calibri-light fs-20 fs-xs-18">{{$contract->monthly_premium}} USD</div>
                 </div>
             </div>
         </div>

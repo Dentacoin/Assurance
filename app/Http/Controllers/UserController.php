@@ -65,21 +65,54 @@ class UserController extends Controller {
         return response()->json(['success' => $view]);
     }
 
+    protected function getPopupCancelContract(Request $request) {
+        $contract = TemporallyContract::where(array('slug' => $request->input('contract')))->get()->first();
+        if(!empty($contract)) {
+            if($this->checkDentistSession()) {
+                if(!empty($contract->patient_id)) {
+                    $receiver_name = (new APIRequestsController())->getUserData($contract->patient_id)->name;
+                } else {
+                    $receiver_name = $contract->patient_fname . ' ' . $contract->patient_lname;
+                }
+            } else if($this->checkPatientSession()) {
+                $receiver_name = (new APIRequestsController())->getUserData($contract->dentist_id)->name;
+            }
+            $view = view('partials/popup-cancel-contract', ['receiver_name' => $receiver_name]);
+            $view = $view->render();
+            return response()->json(['success' => $view]);
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
+
     protected function getRecipePopup(Request $request) {
-        $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'status' => 'awaiting-payment'))->get()->first();
+        $current_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+        if(empty($current_user_data->dcn_address)) {
+            return response()->json(['error' => 'You cannot execute blockchain transactions without having your Wallet Address saved in your profile. Please save your Wallet Address in your profile and try again.']);
+        }
+
+        $contract = TemporallyContract::where(array('slug' => $request->input('contract')))->get()->first();
         if($contract) {
             $current_logged_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
-            $view = view('partials/transaction-recipe-popup', ['to' => $request->input('to'), 'current_logged_user' => $current_logged_user_data, 'cached_key' => $request->input('cached_key')]);
+            if($this->checkDentistSession()) {
+                $dentist_data = $current_logged_user_data;
+                $patient_data = (new APIRequestsController())->getUserData($contract->patient_id);
+            } else if($this->checkPatientSession()) {
+                $dentist_data = (new APIRequestsController())->getUserData($contract->dentist_id);
+                $patient_data = $current_logged_user_data;
+            }
+
+            $view = view('partials/transaction-recipe-popup', ['to' => $request->input('to'), 'current_logged_user' => $current_logged_user_data, 'cached_key' => $request->input('cached_key'), 'show_dcn_bar' => $request->input('show_dcn_bar')]);
             $view = $view->render();
             $contract_data = array(
-                'patient' => $current_logged_user_data->dcn_address,
-                'dentist' => (new APIRequestsController())->getUserData($contract->dentist_id)->dcn_address,
+                'patient' => $patient_data->dcn_address,
+                'dentist' => $dentist_data->dcn_address,
                 'value_usd' => $contract->monthly_premium,
                 'date_start_contract' => strtotime($contract->contract_active_at),
                 'contract_ipfs_hash' => $contract->document_hash
             );
 
-            return response()->json(['success' => $view, 'contract_data' => $contract_data]);
+            return response()->json(['success' => $view, 'contract_data' => $contract_data, 'dcn_address' => $current_user_data->dcn_address]);
         } else {
             return response()->json(['error' => 'Transaction failed, please try again later.']);
         }
@@ -319,22 +352,37 @@ class UserController extends Controller {
     protected function updateContractStatus(Request $request) {
         $data = $this->clearPostData($request->input());
         $response = array();
-        $contract = TemporallyContract::where(array('slug' => $data['contract'], 'patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->first();
+        $contract = TemporallyContract::where(array('slug' => $data['contract']))->get()->first();
         if($contract) {
-            $contract->status = $data['status'];
-            $contract->cancelled_at = new \DateTime();
-            $contract->save();
-            $response['success'] = true;
-            if($this->checkDentistSession()) {
-                $response['path'] = 'dentist';
-            } else if($this->checkPatientSession()) {
-                $response['path'] = 'patient';
+            if(session('logged_user')['id'] == $contract->patient_id || session('logged_user')['id'] == $contract->dentist_id || (new APIRequestsController())->getUserData(session('logged_user')['id'])->email == $contract->patient_email) {
+                $cancellation_reason = array(
+                    'reason' => $data['reason'],
+                    'comments' => $data['comments']
+                );
+
+                $contract->status = $data['status'];
+                $contract->cancelled_at = new \DateTime();
+                $contract->cancellation_reason = serialize($cancellation_reason);
+                $contract->save();
+
+                $response['success'] = true;
+                if($this->checkDentistSession()) {
+                    $response['path'] = 'dentist';
+                } else if($this->checkPatientSession()) {
+                    $response['path'] = 'patient';
+                }
+                echo json_encode($response);
+                die();
+            } else {
+                $response['error'] = 'Cancellation failed, wrong contract.';
+                echo json_encode($response);
+                die();
             }
         } else {
             $response['error'] = 'Cancellation failed, wrong contract.';
+            echo json_encode($response);
+            die();
         }
-        echo json_encode($response);
-        die();
     }
 
     public function checkIfWeHavePublicKeyOfAddress($address) {

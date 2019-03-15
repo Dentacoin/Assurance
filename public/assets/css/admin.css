@@ -195,6 +195,31 @@
   .white-red-btn:focus {
     color: #e92f30; }
 
+.red-white-btn {
+  font-size: 20px;
+  color: white;
+  background-color: #e92f30;
+  padding: 10px 20px;
+  font-family: 'Calibri-Bold';
+  border: 2px solid #e92f30;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none !important;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s; }
+  .red-white-btn:hover {
+    color: #e92f30;
+    background-color: white; }
+  .red-white-btn:focus {
+    color: white; }
+
 .white-green-btn {
   font-size: 20px;
   color: white;
@@ -1325,7 +1350,12 @@
   @media screen and (max-width: 767px) {
     .module.contract-details-container {
       margin-top: 20px;
-      padding: 0 10px; } }
+      padding: 0 10px; }
+      .module.contract-details-container .fs-18 {
+        font-size: 16px !important; } }
+  @media screen and (max-width: 450px) {
+    .module.contract-details-container .fs-18, .module.contract-details-container .fs-16 {
+      font-size: 14px !important; } }
 .module.profile-menu li a {
   display: block;
   font-size: 16px;

@@ -40,6 +40,27 @@
     }
 }
 
+.red-white-btn {
+    font-size: 20px;
+    color: white;
+    background-color: $cancelled;
+    padding: 10px 20px;
+    font-family: 'Calibri-Bold';
+    border: 2px solid $cancelled;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none !important;
+    @include rounded(4px);
+    @include simple_transition(.3s);
+    &:hover {
+        color: $cancelled;
+        background-color: white;
+    }
+    &:focus {
+        color: white;
+    }
+}
+
 .white-green-btn {
     font-size: 20px;
     color: white;
@@ -1297,6 +1318,14 @@
         @include breakpoint($xs) {
             margin-top: 20px;
             padding: 0 10px;
+            .fs-18 {
+                font-size: 16px !important;
+            }
+        }
+        @include breakpoint($xxs) {
+            .fs-18, .fs-16 {
+                font-size: 14px !important;
+            }
         }
     }
     &.profile-menu {

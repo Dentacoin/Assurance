@@ -7273,6 +7273,31 @@ nav.sidenav {
   .white-red-btn:focus {
     color: #e92f30; }
 
+.red-white-btn {
+  font-size: 20px;
+  color: white;
+  background-color: #e92f30;
+  padding: 10px 20px;
+  font-family: 'Calibri-Bold';
+  border: 2px solid #e92f30;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none !important;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s; }
+  .red-white-btn:hover {
+    color: #e92f30;
+    background-color: white; }
+  .red-white-btn:focus {
+    color: white; }
+
 .white-green-btn {
   font-size: 20px;
   color: white;
@@ -8403,7 +8428,12 @@ nav.sidenav {
   @media screen and (max-width: 767px) {
     .module.contract-details-container {
       margin-top: 20px;
-      padding: 0 10px; } }
+      padding: 0 10px; }
+      .module.contract-details-container .fs-18 {
+        font-size: 16px !important; } }
+  @media screen and (max-width: 450px) {
+    .module.contract-details-container .fs-18, .module.contract-details-container .fs-16 {
+      font-size: 14px !important; } }
 .module.profile-menu li a {
   display: block;
   font-size: 16px;
@@ -8953,6 +8983,57 @@ body.logged-in .my-profile-page-content {
     @media screen and (max-width: 767px) {
       .bootbox.before-sending-email-confirmation-popup .modal-dialog .modal-body {
         padding: 20px 15px; } }
+.bootbox.popup-cancel-contract .bootbox-close-button {
+  font-size: 45px;
+  opacity: 1;
+  color: #424242;
+  right: 15px;
+  position: absolute;
+  float: none; }
+.bootbox.popup-cancel-contract .modal-dialog {
+  width: 95%;
+  max-width: 800px; }
+  .bootbox.popup-cancel-contract .modal-dialog .modal-body {
+    padding: 15px 15%; }
+    .bootbox.popup-cancel-contract .modal-dialog .modal-body svg {
+      width: 30px; }
+    .bootbox.popup-cancel-contract .modal-dialog .modal-body .popup-row {
+      border-bottom: 1px solid #888888;
+      font-size: 0; }
+      .bootbox.popup-cancel-contract .modal-dialog .modal-body .popup-row input, .bootbox.popup-cancel-contract .modal-dialog .modal-body .popup-row select, .bootbox.popup-cancel-contract .modal-dialog .modal-body .popup-row textarea {
+        width: 65%;
+        color: black;
+        font-family: 'Calibri Light';
+        font-size: 18px;
+        border: 0;
+        padding: 15px 10px; }
+      .bootbox.popup-cancel-contract .modal-dialog .modal-body .popup-row input, .bootbox.popup-cancel-contract .modal-dialog .modal-body .popup-row textarea {
+        cursor: pointer; }
+        .bootbox.popup-cancel-contract .modal-dialog .modal-body .popup-row input:focus, .bootbox.popup-cancel-contract .modal-dialog .modal-body .popup-row textarea:focus {
+          cursor: text;
+          background-color: #eaeaea;
+          background-image: none;
+          -webkit-border-radius: 0;
+          -moz-border-radius: 0;
+          -ms-border-radius: 0;
+          border-radius: 0; }
+      .bootbox.popup-cancel-contract .modal-dialog .modal-body .popup-row textarea {
+        height: 100px; }
+        @media screen and (max-width: 767px) {
+          .bootbox.popup-cancel-contract .modal-dialog .modal-body .popup-row textarea {
+            height: 150px; } }
+      .bootbox.popup-cancel-contract .modal-dialog .modal-body .popup-row label {
+        color: #888888;
+        padding-top: 5px;
+        width: 35%;
+        padding-right: 10px;
+        font-weight: normal;
+        margin: 0;
+        font-size: 18px;
+        font-family: 'Calibri Light'; }
+    @media screen and (max-width: 767px) {
+      .bootbox.popup-cancel-contract .modal-dialog .modal-body {
+        padding: 15px; } }
 
 .line-crossed-title {
   position: relative; }
@@ -9307,6 +9388,20 @@ section.edit-account .custom-input.bootstrap-select {
       padding-top: 0; }
     .steps-body .wrapper .step .pretty.on-white-background.p-svg .state .svg {
       border-color: #126585 !important; }
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .steps-body .wrapper {
+    padding: 0 10%; } }
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .steps-body .wrapper {
+    padding: 0 5%; } }
+@media screen and (max-width: 767px) {
+  .steps-body .wrapper {
+    padding: 0 5px; }
+    .steps-body .wrapper .fs-18 {
+      font-size: 16px !important; } }
+@media screen and (max-width: 450px) {
+  .steps-body .wrapper .fs-18, .steps-body .wrapper .fs-16 {
+    font-size: 14px !important; } }
 
 .forgotten-and-recover-password-section {
   background-repeat: no-repeat;
