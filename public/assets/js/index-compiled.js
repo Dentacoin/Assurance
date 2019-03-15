@@ -26539,13 +26539,13 @@ var initPagesLogic = function () {
 
 var onDocumentReadyPageData = function () {
     var _ref19 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee24() {
-        var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_signed, remainder, next_payment_timestamp, next_payment_timestamp_date_obj;
+        var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_signed, remainder, next_payment_timestamp, next_payment_timestamp_date_obj, current_user_eth_balance, current_user_dcn_balance, monthly_premium_in_dcn;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee24$(_context24) {
             while (1) {
                 switch (_context24.prev = _context24.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context24.next = 86;
+                            _context24.next = 100;
                             break;
                         }
 
@@ -26571,7 +26571,7 @@ var onDocumentReadyPageData = function () {
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context24.next = 84;
+                        _context24.next = 98;
                         break;
 
                     case 14:
@@ -26607,7 +26607,7 @@ var onDocumentReadyPageData = function () {
 
                             table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">' + next_payment_timestamp + '</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
-                        _context24.next = 84;
+                        _context24.next = 98;
                         break;
 
                     case 26:
@@ -26637,7 +26637,7 @@ var onDocumentReadyPageData = function () {
                         $('.active-until').html(dateObjToFormattedDate(date_obj));
 
                     case 39:
-                        _context24.next = 84;
+                        _context24.next = 98;
                         break;
 
                     case 41:
@@ -26729,12 +26729,12 @@ var onDocumentReadyPageData = function () {
                                 return _ref21.apply(this, arguments);
                             };
                         }());
-                        _context24.next = 84;
+                        _context24.next = 98;
                         break;
 
                     case 48:
                         if (!$('body').hasClass('dentist-contract-view')) {
-                            _context24.next = 83;
+                            _context24.next = 97;
                             break;
                         }
 
@@ -26754,7 +26754,7 @@ var onDocumentReadyPageData = function () {
                         initTooltips();
 
                         if (!($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval'))) {
-                            _context24.next = 71;
+                            _context24.next = 85;
                             break;
                         }
 
@@ -26775,6 +26775,29 @@ var onDocumentReadyPageData = function () {
                         _context24.t23 = (0, _context24.t14)(_context24.t22);
 
                         _context24.t13.html.call(_context24.t13, _context24.t23);
+
+                        if (!$('.single-contract-view-section').hasClass('awaiting-approval')) {
+                            _context24.next = 83;
+                            break;
+                        }
+
+                        _context24.t24 = parseFloat;
+                        _context24.t25 = App.web3_1_0.utils;
+                        _context24.next = 73;
+                        return App.helper.getAddressETHBalance(global_state.account);
+
+                    case 73:
+                        _context24.t26 = _context24.sent;
+                        _context24.t27 = _context24.t25.fromWei.call(_context24.t25, _context24.t26);
+                        current_user_eth_balance = (0, _context24.t24)(_context24.t27);
+                        _context24.t28 = parseFloat;
+                        _context24.next = 79;
+                        return App.dentacoin_token_methods.balanceOf(global_state.account);
+
+                    case 79:
+                        _context24.t29 = _context24.sent;
+                        current_user_dcn_balance = (0, _context24.t28)(_context24.t29);
+                        monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.dentist-contract-single-page-section').attr('data-monthly-premium'))));
 
                         $('.approve-contract-recipe').click(function () {
                             if (current_user_dcn_balance > monthly_premium_in_dcn && current_user_eth_balance > 0.005) {
@@ -27073,23 +27096,25 @@ var onDocumentReadyPageData = function () {
                                 basic.showAlert('You don\'t have enough DCN balance to create the smart contract on the blockchain. Please refill');
                             }
                         });
-                        _context24.next = 81;
+
+                    case 83:
+                        _context24.next = 95;
                         break;
 
-                    case 71:
+                    case 85:
                         if (!$('.single-contract-view-section').hasClass('active')) {
-                            _context24.next = 81;
+                            _context24.next = 95;
                             break;
                         }
 
                         now_timestamp = Math.round(new Date().getTime() / 1000);
-                        _context24.t24 = parseInt;
-                        _context24.next = 76;
+                        _context24.t30 = parseInt;
+                        _context24.next = 90;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
-                    case 76:
-                        _context24.t25 = _context24.sent;
-                        smart_contract_withdraw_period = (0, _context24.t24)(_context24.t25);
+                    case 90:
+                        _context24.t31 = _context24.sent;
+                        smart_contract_withdraw_period = (0, _context24.t30)(_context24.t31);
                         time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-timestamp-signed'));
 
 
@@ -27104,11 +27129,11 @@ var onDocumentReadyPageData = function () {
 
                         $('.single-contract-view-section .row-with-bottom-squares .next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
 
-                    case 81:
-                        _context24.next = 84;
+                    case 95:
+                        _context24.next = 98;
                         break;
 
-                    case 83:
+                    case 97:
                         if ($('body').hasClass('patient-contract-view')) {
                             if ($('.terms-and-conditions-long-list').length) {
                                 $('.terms-and-conditions-long-list').mCustomScrollbar();
@@ -27124,19 +27149,19 @@ var onDocumentReadyPageData = function () {
                             initTooltips();
                         }
 
-                    case 84:
-                        _context24.next = 90;
+                    case 98:
+                        _context24.next = 104;
                         break;
 
-                    case 86:
-                        _context24.next = 88;
+                    case 100:
+                        _context24.next = 102;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic.js', function () {});
 
-                    case 88:
-                        _context24.next = 90;
+                    case 102:
+                        _context24.next = 104;
                         return $.getScript('//dentacoin.com/assets/libs/facebook-login/facebook.js', function () {});
 
-                    case 90:
+                    case 104:
                     case 'end':
                         return _context24.stop();
                 }
