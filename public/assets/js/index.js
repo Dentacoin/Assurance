@@ -669,7 +669,6 @@ async function pagesDataOnContractInit() {
                                             const EthereumTx = require('ethereumjs-tx');
 
                                             if(!approval_given) {
-                                                console.log(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 5/100)), 'Math.round(gas_cost_for_approval + (gas_cost_for_approval * 5/100)) APPROVAL');
                                                 var approval_function_abi = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
                                                 App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
                                                     var approval_transaction_obj = {
@@ -702,7 +701,6 @@ async function pagesDataOnContractInit() {
 
                                                 var contract_creation_function_abi = await App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
-                                                console.log(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5/100)), 'Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5/100)) CONTRAC CREATION');
                                                 var contract_creation_transaction_obj = {
                                                     gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5/100))),
                                                     gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
@@ -719,12 +717,14 @@ async function pagesDataOnContractInit() {
 
                                                 //sending the transaction
                                                 App.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                    var execute_ajax = true;
                                                     //doing setinterval check to check if the smart creation transaction got mined
                                                     var contract_creation_interval_check = setInterval(async function() {
                                                         var contract_creation_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
                                                         if (contract_creation_status != null && has(contract_creation_status, 'status')) {
                                                             clearInterval(contract_creation_interval_check);
-                                                            if(contract_creation_status.status) {
+                                                            if(contract_creation_status.status && execute_ajax) {
+                                                                execute_ajax = false;
                                                                 $.ajax({
                                                                     type: 'POST',
                                                                     url: '/patient/on-blockchain-contract-creation',
@@ -750,7 +750,7 @@ async function pagesDataOnContractInit() {
                                                                 basic.showAlert('Your transaction and blockchain contract creation failed. Please try again later when the gas cost is low or contact <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a>. You can see your transaction on <a href="https://rinkeby.etherscan.io/tx/'+transactionHash+'" target="_blank" class="etherscan-hash">Etherscan</a>');
                                                             }
                                                         }
-                                                    });
+                                                    }, 1000);
                                                 });
                                             }
                                         }
@@ -2848,34 +2848,39 @@ async function onDocumentReadyPageData() {
 
                                                     //sending the transaction
                                                     App.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                        var execute_ajax = true;
                                                         //doing setinterval check to check if the smart creation transaction got mined
                                                         var contract_approval_interval_check = setInterval(async function() {
                                                             var contract_approval_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
                                                             if (contract_approval_status != null && has(contract_approval_status, 'status')) {
-                                                                clearInterval(contract_approval_interval_check);
-                                                                $.ajax({
-                                                                    type: 'POST',
-                                                                    url: '/dentist/on-blockchain-contract-approval',
-                                                                    dataType: 'json',
-                                                                    data: {
-                                                                        ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                    },
-                                                                    headers: {
-                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                    },
-                                                                    success: function (inner_response) {
-                                                                        if (inner_response.success) {
-                                                                            $('.response-layer').hide();
-                                                                            $('.response-layer .transaction-text').remove();
-                                                                            basic.showDialog(inner_response.success, '', null, true);
-                                                                            $('.close-popup').click(function () {
-                                                                                window.location.reload();
-                                                                            });
+                                                                if(contract_approval_status.status && execute_ajax) {
+                                                                    execute_ajax = false;
+
+                                                                    clearInterval(contract_approval_interval_check);
+                                                                    $.ajax({
+                                                                        type: 'POST',
+                                                                        url: '/dentist/on-blockchain-contract-approval',
+                                                                        dataType: 'json',
+                                                                        data: {
+                                                                            ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                        },
+                                                                        headers: {
+                                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                        },
+                                                                        success: function (inner_response) {
+                                                                            if (inner_response.success) {
+                                                                                $('.response-layer').hide();
+                                                                                $('.response-layer .transaction-text').remove();
+                                                                                basic.showDialog(inner_response.success, '', null, true);
+                                                                                $('.close-popup').click(function () {
+                                                                                    window.location.reload();
+                                                                                });
+                                                                            }
                                                                         }
-                                                                    }
-                                                                });
+                                                                    });
+                                                                }
                                                             }
-                                                        });
+                                                        }, 1000);
                                                     });
                                                 }
                                             });

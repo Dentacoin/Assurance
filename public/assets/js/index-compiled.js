@@ -26109,9 +26109,6 @@ var pagesDataOnContractInit = function () {
 
                                                                                                         case 6:
                                                                                                             contract_creation_function_abi = _context6.sent;
-
-
-                                                                                                            console.log(Math.round(gas_cost_for_contract_creation + gas_cost_for_contract_creation * 5 / 100), 'Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5/100)) CONTRAC CREATION');
                                                                                                             contract_creation_transaction_obj = {
                                                                                                                 gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + gas_cost_for_contract_creation * 5 / 100)),
                                                                                                                 gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
@@ -26128,6 +26125,7 @@ var pagesDataOnContractInit = function () {
 
                                                                                                             //sending the transaction
                                                                                                             App.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                                                                                var execute_ajax = true;
                                                                                                                 //doing setinterval check to check if the smart creation transaction got mined
                                                                                                                 var contract_creation_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
                                                                                                                     var contract_creation_status;
@@ -26143,7 +26141,8 @@ var pagesDataOnContractInit = function () {
 
                                                                                                                                     if (contract_creation_status != null && has(contract_creation_status, 'status')) {
                                                                                                                                         clearInterval(contract_creation_interval_check);
-                                                                                                                                        if (contract_creation_status.status) {
+                                                                                                                                        if (contract_creation_status.status && execute_ajax) {
+                                                                                                                                            execute_ajax = false;
                                                                                                                                             $.ajax({
                                                                                                                                                 type: 'POST',
                                                                                                                                                 url: '/patient/on-blockchain-contract-creation',
@@ -26176,10 +26175,10 @@ var pagesDataOnContractInit = function () {
                                                                                                                             }
                                                                                                                         }
                                                                                                                     }, _callee5, this);
-                                                                                                                })));
+                                                                                                                })), 1000);
                                                                                                             });
 
-                                                                                                        case 12:
+                                                                                                        case 11:
                                                                                                         case 'end':
                                                                                                             return _context6.stop();
                                                                                                     }
@@ -26229,15 +26228,14 @@ var pagesDataOnContractInit = function () {
                                                                                     EthereumTx = __webpack_require__(55);
 
                                                                                     if (approval_given) {
-                                                                                        _context7.next = 38;
+                                                                                        _context7.next = 37;
                                                                                         break;
                                                                                     }
 
-                                                                                    console.log(Math.round(gas_cost_for_approval + gas_cost_for_approval * 5 / 100), 'Math.round(gas_cost_for_approval + (gas_cost_for_approval * 5/100)) APPROVAL');
-                                                                                    _context7.next = 34;
+                                                                                    _context7.next = 33;
                                                                                     return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
 
-                                                                                case 34:
+                                                                                case 33:
                                                                                     approval_function_abi = _context7.sent;
 
                                                                                     App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
@@ -26260,13 +26258,13 @@ var pagesDataOnContractInit = function () {
                                                                                             _fireAssuranceContractCreationTransaction(nonce + 1);
                                                                                         });
                                                                                     });
-                                                                                    _context7.next = 39;
+                                                                                    _context7.next = 38;
                                                                                     break;
 
-                                                                                case 38:
+                                                                                case 37:
                                                                                     _fireAssuranceContractCreationTransaction();
 
-                                                                                case 39:
+                                                                                case 38:
                                                                                 case 'end':
                                                                                     return _context7.stop();
                                                                             }
@@ -27022,6 +27020,7 @@ var onDocumentReadyPageData = function () {
 
                                                                                     //sending the transaction
                                                                                     App.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                                                        var execute_ajax = true;
                                                                                         //doing setinterval check to check if the smart creation transaction got mined
                                                                                         var contract_approval_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee21() {
                                                                                             var contract_approval_status;
@@ -27036,28 +27035,32 @@ var onDocumentReadyPageData = function () {
                                                                                                             contract_approval_status = _context21.sent;
 
                                                                                                             if (contract_approval_status != null && has(contract_approval_status, 'status')) {
-                                                                                                                clearInterval(contract_approval_interval_check);
-                                                                                                                $.ajax({
-                                                                                                                    type: 'POST',
-                                                                                                                    url: '/dentist/on-blockchain-contract-approval',
-                                                                                                                    dataType: 'json',
-                                                                                                                    data: {
-                                                                                                                        ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                                                                    },
-                                                                                                                    headers: {
-                                                                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                                                                    },
-                                                                                                                    success: function success(inner_response) {
-                                                                                                                        if (inner_response.success) {
-                                                                                                                            $('.response-layer').hide();
-                                                                                                                            $('.response-layer .transaction-text').remove();
-                                                                                                                            basic.showDialog(inner_response.success, '', null, true);
-                                                                                                                            $('.close-popup').click(function () {
-                                                                                                                                window.location.reload();
-                                                                                                                            });
+                                                                                                                if (contract_approval_status.status && execute_ajax) {
+                                                                                                                    execute_ajax = false;
+
+                                                                                                                    clearInterval(contract_approval_interval_check);
+                                                                                                                    $.ajax({
+                                                                                                                        type: 'POST',
+                                                                                                                        url: '/dentist/on-blockchain-contract-approval',
+                                                                                                                        dataType: 'json',
+                                                                                                                        data: {
+                                                                                                                            ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                                                                        },
+                                                                                                                        headers: {
+                                                                                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                                                                        },
+                                                                                                                        success: function success(inner_response) {
+                                                                                                                            if (inner_response.success) {
+                                                                                                                                $('.response-layer').hide();
+                                                                                                                                $('.response-layer .transaction-text').remove();
+                                                                                                                                basic.showDialog(inner_response.success, '', null, true);
+                                                                                                                                $('.close-popup').click(function () {
+                                                                                                                                    window.location.reload();
+                                                                                                                                });
+                                                                                                                            }
                                                                                                                         }
-                                                                                                                    }
-                                                                                                                });
+                                                                                                                    });
+                                                                                                                }
                                                                                                             }
 
                                                                                                         case 4:
@@ -27066,7 +27069,7 @@ var onDocumentReadyPageData = function () {
                                                                                                     }
                                                                                                 }
                                                                                             }, _callee21, this);
-                                                                                        })));
+                                                                                        })), 1000);
                                                                                     });
 
                                                                                 case 39:
