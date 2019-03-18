@@ -5,7 +5,7 @@
     <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
         @if(!empty($contract->document_hash))
             <li class="inline-block">
-                <a href="javascript:void(0);" class="contract-decrypt" data-hash="{{$contract->document_hash}}" data-type="patient" itemprop="url" target="_blank">
+                <a href="javascript:void(0);" class="contract-decrypt" data-hash="{{$contract->document_hash}}" @if((new \App\Http\Controllers\UserController())->checkPatientSession()) data-type="patient" @elseif((new \App\Http\Controllers\UserController())->checkDentistSession()) data-type="dentist" @endif itemprop="url" target="_blank">
                     <span itemprop="name">Contract sample (pdf)</span>
                 </a>
                 <i class="fa fa-info-circle popover-el" data-toggle="popover" data-placement="bottom" data-content="Your contract is stored and encrypted in the <a href='https://ipfs.io/' target='_blank'>IPFS</a>. Reading it might take some time, if it takes too long please try again later."></i>
