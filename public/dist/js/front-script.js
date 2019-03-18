@@ -322,7 +322,8 @@ var pagesDataOnContractInit = function () {
 
                                                             case 45:
                                                                 if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
-                                                                    $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>');
+                                                                    $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><div class="custom-google-label-style module fs-0 flex"><div class="inline-block left-side"><input type="password" class="keystore-password" value="30"/></div><span class="inline-block">Secret password</span></div></div>');
+                                                                    bindGoogleAlikeButtonsEvents();
                                                                 }
 
                                                             case 46:
