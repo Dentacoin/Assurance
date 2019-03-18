@@ -719,7 +719,8 @@ async function pagesDataOnContractInit() {
                                                     //doing setinterval check to check if the smart creation transaction got mined
                                                     var contract_creation_interval_check = setInterval(async function() {
                                                         var contract_creation_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                        if (contract_creation_status != null && has(contract_creation_status, 'status')) {
+                                                        console.log(contract_creation_status.status, 'contract_creation_status.status');
+                                                        if (contract_creation_status != null && has(contract_creation_status, 'status') && contract_creation_status.status) {
                                                             clearInterval(contract_creation_interval_check);
                                                             $.ajax({
                                                                 type: 'POST',
