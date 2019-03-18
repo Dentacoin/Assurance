@@ -26137,7 +26137,10 @@ var pagesDataOnContractInit = function () {
                                                                                                                                 case 2:
                                                                                                                                     contract_creation_status = _context5.sent;
 
-                                                                                                                                    console.log(contract_creation_status.status, 'contract_creation_status.status');
+                                                                                                                                    if (has(contract_creation_status, 'status')) {
+                                                                                                                                        console.log(contract_creation_status.status, 'contract_creation_status.status');
+                                                                                                                                    }
+
                                                                                                                                     if (contract_creation_status != null && has(contract_creation_status, 'status') && contract_creation_status.status) {
                                                                                                                                         clearInterval(contract_creation_interval_check);
                                                                                                                                         $.ajax({
