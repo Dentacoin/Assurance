@@ -330,39 +330,41 @@ var pagesDataOnContractInit = function () {
                                                             case 46:
 
                                                                 $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee7() {
-                                                                    var _fireAssuranceContractCreationTransaction, decrypted_keystore_file_response, EthereumTx, approval_function_abi;
+                                                                    var this_btn, _fireAssuranceContractCreationTransaction, decrypted_keystore_file_response, EthereumTx, approval_function_abi;
 
                                                                     return _regeneratorRuntime.wrap(function _callee7$(_context7) {
                                                                         while (1) {
                                                                             switch (_context7.prev = _context7.next) {
                                                                                 case 0:
+                                                                                    this_btn = $(this);
+
                                                                                     if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
-                                                                                        _context7.next = 5;
+                                                                                        _context7.next = 6;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                                                                     return _context7.abrupt("return", false);
 
-                                                                                case 5:
+                                                                                case 6:
                                                                                     if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '')) {
-                                                                                        _context7.next = 10;
+                                                                                        _context7.next = 11;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('Please enter the secret password for your keystore file.', '', true);
                                                                                     return _context7.abrupt("return", false);
 
-                                                                                case 10:
+                                                                                case 11:
                                                                                     if ($('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                                                        _context7.next = 15;
+                                                                                        _context7.next = 16;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
                                                                                     return _context7.abrupt("return", false);
 
-                                                                                case 15:
+                                                                                case 16:
                                                                                     _fireAssuranceContractCreationTransaction = function () {
                                                                                         var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee6(nonce) {
                                                                                             var contract_creation_function_abi, contract_creation_transaction_obj, contract_creation_transaction;
@@ -470,35 +472,35 @@ var pagesDataOnContractInit = function () {
                                                                                     }();
 
                                                                                     if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
-                                                                                        _context7.next = 27;
+                                                                                        _context7.next = 28;
                                                                                         break;
                                                                                     }
 
-                                                                                    _context7.next = 19;
+                                                                                    _context7.next = 20;
                                                                                     return getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
 
-                                                                                case 19:
+                                                                                case 20:
                                                                                     decrypted_keystore_file_response = _context7.sent;
 
                                                                                     if (!decrypted_keystore_file_response.success) {
-                                                                                        _context7.next = 24;
+                                                                                        _context7.next = 25;
                                                                                         break;
                                                                                     }
 
                                                                                     transaction_key = decrypted_keystore_file_response.to_string;
-                                                                                    _context7.next = 27;
+                                                                                    _context7.next = 28;
                                                                                     break;
 
-                                                                                case 24:
+                                                                                case 25:
                                                                                     if (!decrypted_keystore_file_response.error) {
-                                                                                        _context7.next = 27;
+                                                                                        _context7.next = 28;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert(decrypted_keystore_file_response.error, '', true);
                                                                                     return _context7.abrupt("return", false);
 
-                                                                                case 27:
+                                                                                case 28:
 
                                                                                     this_btn.unbind();
 
@@ -508,14 +510,14 @@ var pagesDataOnContractInit = function () {
                                                                                     EthereumTx = require('ethereumjs-tx');
 
                                                                                     if (approval_given) {
-                                                                                        _context7.next = 38;
+                                                                                        _context7.next = 39;
                                                                                         break;
                                                                                     }
 
-                                                                                    _context7.next = 34;
+                                                                                    _context7.next = 35;
                                                                                     return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
 
-                                                                                case 34:
+                                                                                case 35:
                                                                                     approval_function_abi = _context7.sent;
 
                                                                                     App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
@@ -538,13 +540,13 @@ var pagesDataOnContractInit = function () {
                                                                                             _fireAssuranceContractCreationTransaction(nonce + 1);
                                                                                         });
                                                                                     });
-                                                                                    _context7.next = 39;
+                                                                                    _context7.next = 40;
                                                                                     break;
 
-                                                                                case 38:
+                                                                                case 39:
                                                                                     _fireAssuranceContractCreationTransaction();
 
-                                                                                case 39:
+                                                                                case 40:
                                                                                 case "end":
                                                                                     return _context7.stop();
                                                                             }

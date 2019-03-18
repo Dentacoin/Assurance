@@ -644,6 +644,7 @@ async function pagesDataOnContractInit() {
                                     }
 
                                     $('.recipe-popup .execute-transaction').click(async function() {
+                                        var this_btn = $(this);
                                         if(global_state.account == '' || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
                                             basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                             return false;
