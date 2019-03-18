@@ -554,7 +554,6 @@ async function pagesDataOnContractInit() {
                 $('.init-contract-section .camp').html('<h2 class="lato-bold fs-45 fs-xs-30 padding-top-60 padding-top-xs-30 padding-bottom-15 text-center">You are all set for your first payment.</h2><div class="padding-bottom-30 padding-bottom-xs-20 fs-20 fs-xs-16 text-center">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should pay your monthly premium before on <span>'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">PAY NOW</a></div>');
 
                 $('.call-recipe').click(function() {
-                    $(this).unbind();
                     if(metamask) {
                         //metamask way
                     } else {
@@ -589,6 +588,7 @@ async function pagesDataOnContractInit() {
 
                                     var approval_given = false;
                                     //if approval is given already SOMEHOW ...
+                                    console.log(parseInt(await App.dentacoin_token_methods.allowance(checksumAddress(response.contract_data.patient), App.assurance_state_address)), 'patient approval given');
                                     if(parseInt(await App.dentacoin_token_methods.allowance(checksumAddress(response.contract_data.patient), App.assurance_state_address)) > 0) {
                                         approval_given = true;
                                     }
@@ -603,8 +603,10 @@ async function pagesDataOnContractInit() {
 
                                     var methods_gas_cost;
                                     if(!approval_given) {
+                                        console.log('methods_gas_cost 1');
                                         methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
                                     } else {
+                                        console.log('methods_gas_cost 2');
                                         methods_gas_cost = gas_cost_for_contract_creation;
                                     }
 
@@ -673,6 +675,7 @@ async function pagesDataOnContractInit() {
                                             const EthereumTx = require('ethereumjs-tx');
 
                                             if(!approval_given) {
+                                                console.log('fire approval transaction');
                                                 var approval_function_abi = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
                                                 App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
                                                     var approval_transaction_obj = {
@@ -699,6 +702,7 @@ async function pagesDataOnContractInit() {
                                             }
 
                                             async function fireAssuranceContractCreationTransaction(nonce) {
+                                                console.log('fire contract creation transaction');
                                                 if(nonce == undefined) {
                                                     nonce = await App.web3_1_0.eth.getTransactionCount(global_state.account);
                                                 }
@@ -2738,7 +2742,6 @@ async function onDocumentReadyPageData() {
                     var current_user_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(global_state.account));
                     var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.dentist-contract-single-page-section').attr('data-monthly-premium'))));
                     $('.approve-contract-recipe').click(function() {
-                        $(this).unbind();
                         if(current_user_dcn_balance > monthly_premium_in_dcn && current_user_eth_balance > 0.005) {
                             if (metamask) {
                                 //metamask way
