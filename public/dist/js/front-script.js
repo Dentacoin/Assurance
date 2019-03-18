@@ -4878,9 +4878,9 @@ function cancelContractEventInit() {
                                                                 basic.closeDialog();
                                                                 basic.showDialog(response.success, 'recipe-popup', null, true);
 
-                                                                $('.recipe-popup .extra-recipe-html').html('<div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-reason" class="inline-block">Cancellation reason</label><div class="field inline-block"><select id="cancel-contract-reason"><option>Overdue payments</option><option>Missed regular check-ups</option><option>Inappropriate behaviour</option><option data-open-bonus-field="true">Other</option></select></div></div><div class="camp-for-row"></div><div class="input-row"><label for="cancel-contract-comments" class="inline-block">Comments:</label><div class="field inline-block"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background" placeholder="Please enter"></textarea></div></div>');
+                                                                $('.recipe-popup .extra-recipe-html').html('<div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-reason" class="inline-block">Cancellation reason</label><div class="field inline-block"><select id="cancel-contract-reason"><option>Overdue payments</option><option>Missed regular check-ups</option><option>Inappropriate behaviour</option><option data-open-bonus-field="true">Other</option></select></div></div><div class="camp-for-row"></div><div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-comments" class="inline-block">Comments:</label><div class="field inline-block"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background" placeholder="Please enter"></textarea></div></div>');
 
-                                                                $('.recipe-popup .popup-cancel-contract #cancel-contract-reason').on('change', function () {
+                                                                $('.recipe-popup #cancel-contract-reason').on('change', function () {
                                                                     if ($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
                                                                         $('.recipe-popup .camp-for-row').html('<div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-other-reason" class="inline-block">Other reason:</label><div class="field inline-block"><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background" maxlength="255"/></div></div>');
                                                                     } else {
@@ -4982,7 +4982,7 @@ function cancelContractEventInit() {
                                                                                 case 0:
                                                                                     this_execute_transaction_btn = $(this);
 
-                                                                                    if (!($('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').length && $('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').val().trim() == '')) {
+                                                                                    if (!($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '')) {
                                                                                         _context26.next = 5;
                                                                                         break;
                                                                                     }
@@ -4992,7 +4992,7 @@ function cancelContractEventInit() {
                                                                                     break;
 
                                                                                 case 5:
-                                                                                    if (!($('.recipe-popup .popup-cancel-contract #cancel-contract-comments').val().trim() == '')) {
+                                                                                    if (!($('.recipe-popup #cancel-contract-comments').val().trim() == '')) {
                                                                                         _context26.next = 9;
                                                                                         break;
                                                                                     }
@@ -5064,12 +5064,12 @@ function cancelContractEventInit() {
                                                                                     cancellation_ajax_data = {
                                                                                         contract: this_btn.attr('data-contract'),
                                                                                         status: 'cancelled',
-                                                                                        comments: $('.recipe-popup .popup-cancel-contract #cancel-contract-comments').val().trim()
+                                                                                        comments: $('.recipe-popup #cancel-contract-comments').val().trim()
                                                                                     };
 
 
-                                                                                    if ($('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').length) {
-                                                                                        cancellation_ajax_data.reason = $('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').val().trim();
+                                                                                    if ($('.recipe-popup #cancel-contract-other-reason').length) {
+                                                                                        cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-other-reason').val().trim();
                                                                                     } else {
                                                                                         cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-reason option:selected').html();
                                                                                     }
