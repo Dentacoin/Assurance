@@ -3829,6 +3829,7 @@ if ($('body').hasClass('logged-in')) {
                                     success: function success(response) {
                                         basic.closeDialog();
                                         basic.showDialog(response.success, 'keystore-file-password-validation', null, true);
+                                        bindGoogleAlikeButtonsEvents();
                                         fixButtonsFocus();
                                         $('.keystore-file-password-validation .keystore-password').focus();
 
