@@ -99,7 +99,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
         Route::get('/contract/{slug}', 'DentistController@getDentistContractView')->name('dentist-contract-view');
 
-        Route::post('/on-blockchain-contract-approval', 'PatientController@onBlockchainContractApproval')->name('on-blockchain-contract-approval');
+        Route::post('/on-blockchain-contract-approval', 'DentistController@onBlockchainContractApproval')->name('on-blockchain-contract-approval');
     });
 
     Route::get('/my-profile', 'UserController@getMyProfileView')->middleware('HandleUserSession')->name('my-profile');
