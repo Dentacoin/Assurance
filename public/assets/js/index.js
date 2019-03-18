@@ -594,7 +594,7 @@ async function pagesDataOnContractInit() {
 
                                     if(!approval_given) {
                                         //gas estimation for DentacoinToken approval method
-                                        var gas_cost_for_approval = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({});
+                                        var gas_cost_for_approval = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({from: App.dummy_address, gas: 1000000});
                                     }
 
                                     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
@@ -637,7 +637,7 @@ async function pagesDataOnContractInit() {
                                                 return false;
                                             }
                                         } else if(JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
-                                            $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module  max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Address to receive DCN:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
+                                            $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module  max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                             bindGoogleAlikeButtonsEvents();
                                         }
                                     }
@@ -669,6 +669,7 @@ async function pagesDataOnContractInit() {
                                             const EthereumTx = require('ethereumjs-tx');
 
                                             if(!approval_given) {
+                                                console.log(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 5/100)), 'Math.round(gas_cost_for_approval + (gas_cost_for_approval * 5/100)) APPROVAL');
                                                 var approval_function_abi = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
                                                 App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
                                                     var approval_transaction_obj = {
@@ -701,6 +702,7 @@ async function pagesDataOnContractInit() {
 
                                                 var contract_creation_function_abi = await App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
+                                                console.log(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5/100)), 'Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5/100)) CONTRAC CREATION');
                                                 var contract_creation_transaction_obj = {
                                                     gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5/100))),
                                                     gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
@@ -2796,7 +2798,7 @@ async function onDocumentReadyPageData() {
                                                         return false;
                                                     }
                                                 } else if(JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
-                                                    $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Address to receive DCN:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
+                                                    $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                                     bindGoogleAlikeButtonsEvents();
                                                 }
                                             }

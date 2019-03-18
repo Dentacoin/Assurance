@@ -241,7 +241,7 @@ var pagesDataOnContractInit = function () {
                                                                 }
 
                                                                 _context8.next = 19;
-                                                                return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({});
+                                                                return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({ from: App.dummy_address, gas: 1000000 });
 
                                                             case 19:
                                                                 gas_cost_for_approval = _context8.sent;
@@ -322,7 +322,7 @@ var pagesDataOnContractInit = function () {
 
                                                             case 45:
                                                                 if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
-                                                                    $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module  max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Address to receive DCN:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
+                                                                    $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module  max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                                                     bindGoogleAlikeButtonsEvents();
                                                                 }
 
@@ -386,6 +386,9 @@ var pagesDataOnContractInit = function () {
 
                                                                                                         case 6:
                                                                                                             contract_creation_function_abi = _context6.sent;
+
+
+                                                                                                            console.log(Math.round(gas_cost_for_contract_creation + gas_cost_for_contract_creation * 5 / 100), 'Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5/100)) CONTRAC CREATION');
                                                                                                             contract_creation_transaction_obj = {
                                                                                                                 gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + gas_cost_for_contract_creation * 5 / 100)),
                                                                                                                 gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
@@ -453,7 +456,7 @@ var pagesDataOnContractInit = function () {
                                                                                                                 })));
                                                                                                             });
 
-                                                                                                        case 11:
+                                                                                                        case 12:
                                                                                                         case "end":
                                                                                                             return _context6.stop();
                                                                                                     }
@@ -503,14 +506,15 @@ var pagesDataOnContractInit = function () {
                                                                                     EthereumTx = require('ethereumjs-tx');
 
                                                                                     if (approval_given) {
-                                                                                        _context7.next = 37;
+                                                                                        _context7.next = 38;
                                                                                         break;
                                                                                     }
 
-                                                                                    _context7.next = 33;
+                                                                                    console.log(Math.round(gas_cost_for_approval + gas_cost_for_approval * 5 / 100), 'Math.round(gas_cost_for_approval + (gas_cost_for_approval * 5/100)) APPROVAL');
+                                                                                    _context7.next = 34;
                                                                                     return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
 
-                                                                                case 33:
+                                                                                case 34:
                                                                                     approval_function_abi = _context7.sent;
 
                                                                                     App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
@@ -533,13 +537,13 @@ var pagesDataOnContractInit = function () {
                                                                                             _fireAssuranceContractCreationTransaction(nonce + 1);
                                                                                         });
                                                                                     });
-                                                                                    _context7.next = 38;
+                                                                                    _context7.next = 39;
                                                                                     break;
 
-                                                                                case 37:
+                                                                                case 38:
                                                                                     _fireAssuranceContractCreationTransaction();
 
-                                                                                case 38:
+                                                                                case 39:
                                                                                 case "end":
                                                                                     return _context7.stop();
                                                                             }
@@ -1195,7 +1199,7 @@ var onDocumentReadyPageData = function () {
 
                                                             case 31:
                                                                 if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
-                                                                    $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Address to receive DCN:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
+                                                                    $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                                                     bindGoogleAlikeButtonsEvents();
                                                                 }
 
