@@ -27492,7 +27492,7 @@ var getDecryptedPdfContentByPlainKey = function () {
                             },
                             data: {
                                 encrypted_html: encrypted_html,
-                                plain_key: key
+                                private_key: key
                             }
                         });
 
@@ -30406,7 +30406,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
                                         render_form.submit();
                                     } else if (decrypted_pdf_response.error) {
-                                        basic.showAlert(decrypted_pdf_response.error, '', true);
+                                        basic.showAlert(decrypted_pdf_response.error.message, '', true);
                                     }
                                     _context26.next = 10;
                                     break;
