@@ -25,7 +25,7 @@
         @endif
         @if($contract->status != 'cancelled')
             <li class="inline-block">
-                <a href="javascript:void(0)" itemprop="url" class="cancel-contract-btn" data-contract="{{$contract->slug}}">
+                <a href="javascript:void(0)" itemprop="url" class="cancel-contract-btn" @if($contract->status != 'pending' && $contract->status != 'awaiting-payment' && !empty($contract->patient_address) && !empty($contract->dentist_address)) data-patient="{{$contract->patient_address}}" data-dentist="{{$contract->dentist_address}}" @endif data-contract="{{$contract->slug}}">
                     <span itemprop="name"><i class="fa fa-times" aria-hidden="true"></i> Cancel Contract</span>
                 </a>
             </li>

@@ -218,6 +218,15 @@ var App = {
                     console.error(error);
                 }
             });
+        },
+        getPatient: function(patient_addr, _dentist_addr)  {
+            return App.assurance_state_instance.methods.getPatient(patient_addr, _dentist_addr).call({}, function(error, result)   {
+                if(!error)  {
+                    return result;
+                }else {
+                    console.error(error);
+                }
+            });
         }
         /*getDentist: function(dentist_addr)  {
             return App.assurance_state_instance.methods.getDentist(dentist_addr).call({ from: global_state.account }, function(error, result)   {
@@ -2964,8 +2973,17 @@ function initFlipClockTimer(time_left) {
 //if cancel contract button exist add the event for it
 function cancelContractEventInit() {
     if($('.cancel-contract-btn').length) {
-        $('.cancel-contract-btn').click(function() {
-            //CHECK FOR CONTRACT ON THE BLOCKCHAIN
+        $('.cancel-contract-btn').click(async function() {
+            var this_btn = $(this);
+
+            if(this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined) {
+                //CHECK FOR CONTRACT ON THE BLOCKCHAIN
+                var exiting_contract = parseInt(await App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist')));
+                console.log(exiting_contract, 'exiting_contract');
+            }
+
+            console.log('contract cancellation');
+            return false;
             var this_btn = $(this);
             $.ajax({
                 type: 'POST',

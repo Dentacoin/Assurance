@@ -16,11 +16,13 @@ class CreateTemporallyContractsTable extends Migration
         Schema::create('temporally_contracts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('dentist_id');
+            $table->string('dentist_address', 42);
             $table->integer('patient_id')->nullable();
             $table->string('patient_fname', 100);
             $table->string('patient_lname', 100);
             $table->string('patient_email', 100);
             $table->string('patient_id_number', 100);
+            $table->string('patient_address', 42);
             $table->string('professional_company_number', 100)->nullable();
             $table->string('general_dentistry');
             $table->float('monthly_premium');

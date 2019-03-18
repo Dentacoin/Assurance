@@ -308,12 +308,15 @@ class PatientController extends Controller {
             return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'No such public keys in the database.']);
         }
 
+        $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+
         //create image from the base64 signature
         $signature_filename = 'patient-signature.png';
         $temp_contract_folder_path = CONTRACTS . $data['contract'];
         file_put_contents($temp_contract_folder_path . DS . $signature_filename, $this->base64ToPng($data['patient_signature']));
 
         $contract->patient_id = $logged_patient->id;
+        $contract->patient_address = $logged_patient->dcn_address;
         $contract->patient_id_number = $data['patient-id-number'];
         $contract->contract_active_at = new \DateTime();
 

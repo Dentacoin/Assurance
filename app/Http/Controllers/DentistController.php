@@ -260,8 +260,11 @@ class DentistController extends Controller
             return redirect()->route('create-contract')->with(['error' => 'Something went wrong with contract creation. Please try again later.']);
         }
 
+        $sender = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+
         $temporally_contract = new TemporallyContract();
         $temporally_contract->dentist_id = session('logged_user')['id'];
+        $temporally_contract->dentist_address = $sender->dcn_address;
         $temporally_contract->patient_fname = trim($data['fname']);
         $temporally_contract->patient_lname = trim($data['lname']);
         $temporally_contract->patient_email = trim($data['email']);
@@ -275,7 +278,6 @@ class DentistController extends Controller
 
         if($temporally_contract->id) {
             //send email
-            $sender = (new APIRequestsController())->getUserData(session('logged_user')['id']);
             $body = '<!DOCTYPE html><html><head></head><body style="font-size: 16px;"><div>Dear '.$temporally_contract->patient_fname.' '.$temporally_contract->patient_lname.',<br><br><br>I have created an individualized Assurance Contract for you. It entitles you to prevention-focused dental services against an affordable monthly premium in Dentacoin (DCN) currency*.<br><br>It’s very easy to start: just click on the button below, sign up, check my proposal and follow the instructions if you are interested:<br><br><br><a href="'.route('contract-proposal', ['slug' => $temporally_contract->slug]).'" style="font-size: 20px;color: #126585;background-color: white;padding: 10px 20px;text-decoration: none;font-weight: bold;border-radius: 4px;border: 2px solid #126585;" target="_blank">SEE YOUR ASSURANCE CONTRACT</a><br><br><br>Looking forward to seeing you onboard!<br><br>Regards,<br><b>'.$sender->name.'</b><br><br><br><i style="font-size: 13px;">* Dentacoin is the first dental cryptocurrency which can be earned through the Dentacoin tools, used as a means of payment for dental services and assurance fees, and exchanged to any other crypto or traditional currency.</i></div></body></html>';
 
             Mail::send(array(), array(), function($message) use ($body, $data, $sender) {
