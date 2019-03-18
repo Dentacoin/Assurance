@@ -9014,13 +9014,13 @@ body.logged-in .my-profile-page-content {
       padding-bottom: 15px;
       margin: 0 60px; }
       .bootbox.recipe-popup .modal-dialog .modal-body .input-row label {
-        width: 120px;
+        width: 160px;
         color: #888888;
         font-size: 18px;
         margin: 0;
         font-family: 'Calibri Light'; }
       .bootbox.recipe-popup .modal-dialog .modal-body .input-row .field {
-        width: calc(100% - 120px);
+        width: calc(100% - 160px);
         text-align: right;
         font-size: 18px;
         color: #212121; }

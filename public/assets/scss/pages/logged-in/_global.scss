@@ -187,14 +187,14 @@ body.logged-in {
                     padding-bottom: 15px;
                     margin: 0 60px;
                     label {
-                        width: 120px;
+                        width: 160px;
                         color: $light_gray;
                         font-size: 18px;
                         margin: 0;
                         font-family: 'Calibri Light';
                     }
                     .field {
-                        width: calc(100% - 120px);
+                        width: calc(100% - 160px);
                         text-align: right;
                         font-size: 18px;
                         color: $dark_color;
