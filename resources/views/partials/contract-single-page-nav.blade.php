@@ -1,3 +1,5 @@
+@php($patient_session = (new \App\Http\Controllers\UserController())->checkPatientSession())
+@php($dentist_session = (new \App\Http\Controllers\UserController())->checkDentistSession())
 <nav class="col-xs-12 text-center contract-single-page-nav module">
     @if(isset($mobile) && $mobile)
         <div class="open-mobile-single-page-nav text-center"><a href="javascript:void(0);" class="nav-btn inline-block">···</a></div>
@@ -5,7 +7,7 @@
     <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
         @if(!empty($contract->document_hash))
             <li class="inline-block">
-                <a href="javascript:void(0);" class="contract-decrypt" data-hash="{{$contract->document_hash}}" @if((new \App\Http\Controllers\UserController())->checkPatientSession()) data-type="patient" @elseif((new \App\Http\Controllers\UserController())->checkDentistSession()) data-type="dentist" @endif itemprop="url" target="_blank">
+                <a href="javascript:void(0);" class="contract-decrypt" data-hash="{{$contract->document_hash}}" @if($patient_session) data-type="patient" @elseif($dentist_session) data-type="dentist" @endif itemprop="url" target="_blank">
                     <span itemprop="name">Contract sample (pdf)</span>
                 </a>
                 <i class="fa fa-info-circle popover-el" data-toggle="popover" data-placement="bottom" data-content="Your contract is stored and encrypted in the <a href='https://ipfs.io/' target='_blank'>IPFS</a>. Reading it might take some time, if it takes too long please try again later."></i>
@@ -25,7 +27,7 @@
         @endif
         @if($contract->status != 'cancelled')
             <li class="inline-block">
-                <a href="javascript:void(0)" itemprop="url" class="cancel-contract-btn" @if($contract->status != 'pending' && $contract->status != 'awaiting-payment' && !empty($contract->patient_address) && !empty($contract->dentist_address)) data-patient="{{$contract->patient_address}}" data-dentist="{{$contract->dentist_address}}" @endif data-contract="{{$contract->slug}}">
+                <a href="javascript:void(0)" itemprop="url" class="cancel-contract-btn" @if($contract->status != 'pending' && $contract->status != 'awaiting-payment' && !empty($contract->patient_address) && !empty($contract->dentist_address) && !empty($dentist_data) && !empty($patient_data)) data-patient="{{$contract->patient_address}}" data-dentist="{{$contract->dentist_address}}" data-recipe-title="Pay Your Network Fee" data-recipe-subtitle="to cancel this contract" @if($patient_session) data-recipe-checkbox-text="By clicking on the button below you confirm you understand that {{$dentist_data->name}} will no longer be obliged to cover any costs included in your contract. If you don't pay the network fee, your smart contract will still be active and {{$dentist_data->name}} will still be able to withdraw the monthly DCN premium." @elseif($dentist_session) data-recipe-checkbox-text="By clicking on the button below you confirm you understand that both you and {{$patient_data->name}} will no longer be obliged to adhere to the conditions in this contract. If you don't pay the network fee, your smart contract will still be active." @endif @endif data-contract="{{$contract->slug}}">
                     <span itemprop="name"><i class="fa fa-times" aria-hidden="true"></i> Cancel Contract</span>
                 </a>
             </li>

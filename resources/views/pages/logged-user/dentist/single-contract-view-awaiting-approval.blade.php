@@ -8,7 +8,7 @@
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
             </div>
             <div class="row">
-                @include('partials.contract-single-page-nav')
+                @include('partials.contract-single-page-nav', ['dentist_data' => $dentist, 'patient_data' => $patient])
             </div>
         </section>
         <section class="container single-contract-tile module pending text-center padding-top-20">

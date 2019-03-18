@@ -109,7 +109,7 @@ if (typeof Object.create === 'function') {
 
 var base64 = __webpack_require__(116)
 var ieee754 = __webpack_require__(117)
-var isArray = __webpack_require__(54)
+var isArray = __webpack_require__(55)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -7875,7 +7875,7 @@ exports.shr64_lo = shr64_lo;
 
 var Buffer = __webpack_require__(2).Buffer
 var Transform = __webpack_require__(21).Transform
-var StringDecoder = __webpack_require__(41).StringDecoder
+var StringDecoder = __webpack_require__(42).StringDecoder
 var inherits = __webpack_require__(0)
 
 function CipherBase (hashMode) {
@@ -8029,7 +8029,7 @@ util.inherits = __webpack_require__(0);
 /*</replacement>*/
 
 var Readable = __webpack_require__(56);
-var Writable = __webpack_require__(40);
+var Writable = __webpack_require__(41);
 
 util.inherits(Duplex, Readable);
 
@@ -8118,9 +8118,9 @@ Duplex.prototype._destroy = function (err, cb) {
 "use strict";
 
 var inherits = __webpack_require__(0)
-var MD5 = __webpack_require__(42)
-var RIPEMD160 = __webpack_require__(43)
-var sha = __webpack_require__(44)
+var MD5 = __webpack_require__(43)
+var RIPEMD160 = __webpack_require__(44)
+var sha = __webpack_require__(45)
 var Base = __webpack_require__(12)
 
 function Hash (hash) {
@@ -9312,7 +9312,7 @@ function randomBytes (size, cb) {
 
 module.exports = Stream;
 
-var EE = __webpack_require__(39).EventEmitter;
+var EE = __webpack_require__(40).EventEmitter;
 var inherits = __webpack_require__(0);
 
 inherits(Stream, EE);
@@ -9425,7 +9425,7 @@ Stream.prototype.pipe = function(dest, options) {
 exports = module.exports = __webpack_require__(56);
 exports.Stream = exports;
 exports.Readable = exports;
-exports.Writable = __webpack_require__(40);
+exports.Writable = __webpack_require__(41);
 exports.Duplex = __webpack_require__(13);
 exports.Transform = __webpack_require__(59);
 exports.PassThrough = __webpack_require__(131);
@@ -10859,7 +10859,7 @@ exports.getHashes = function () {
   return hashes
 }
 
-var p = __webpack_require__(49)
+var p = __webpack_require__(50)
 exports.pbkdf2 = p.pbkdf2
 exports.pbkdf2Sync = p.pbkdf2Sync
 
@@ -11184,7 +11184,7 @@ module.exports.AES = AES
 /***/ (function(module, exports, __webpack_require__) {
 
 var Buffer = __webpack_require__(2).Buffer
-var MD5 = __webpack_require__(42)
+var MD5 = __webpack_require__(43)
 
 /* eslint-disable camelcase */
 function EVP_BytesToKey (password, salt, keyBits, ivLen) {
@@ -11237,8 +11237,8 @@ module.exports = EVP_BytesToKey
 /* WEBPACK VAR INJECTION */(function(Buffer) {var asn1 = __webpack_require__(269)
 var aesid = __webpack_require__(281)
 var fixProc = __webpack_require__(282)
-var ciphers = __webpack_require__(51)
-var compat = __webpack_require__(49)
+var ciphers = __webpack_require__(52)
+var compat = __webpack_require__(50)
 module.exports = parseKeys
 
 function parseKeys (buffer) {
@@ -11345,6 +11345,338 @@ function decrypt (data, password) {
 
 /***/ }),
 /* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(Buffer) {
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ethUtil = __webpack_require__(121);
+var fees = __webpack_require__(177);
+var BN = ethUtil.BN;
+
+// secp256k1n/2
+var N_DIV_2 = new BN('7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0', 16);
+
+/**
+ * Creates a new transaction object.
+ *
+ * @example
+ * var rawTx = {
+ *   nonce: '00',
+ *   gasPrice: '09184e72a000',
+ *   gasLimit: '2710',
+ *   to: '0000000000000000000000000000000000000000',
+ *   value: '00',
+ *   data: '7f7465737432000000000000000000000000000000000000000000000000000000600057',
+ *   v: '1c',
+ *   r: '5e1d3a76fbf824220eafc8c79ad578ad2b67d01b0c2425eb1f1347e8f50882ab',
+ *   s: '5bd428537f05f9830e93792f90ea6a3e2d1ee84952dd96edbae9f658f831ab13'
+ * };
+ * var tx = new Transaction(rawTx);
+ *
+ * @class
+ * @param {Buffer | Array | Object} data a transaction can be initiailized with either a buffer containing the RLP serialized transaction or an array of buffers relating to each of the tx Properties, listed in order below in the exmple.
+ *
+ * Or lastly an Object containing the Properties of the transaction like in the Usage example.
+ *
+ * For Object and Arrays each of the elements can either be a Buffer, a hex-prefixed (0x) String , Number, or an object with a toBuffer method such as Bignum
+ *
+ * @property {Buffer} raw The raw rlp encoded transaction
+ * @param {Buffer} data.nonce nonce number
+ * @param {Buffer} data.gasLimit transaction gas limit
+ * @param {Buffer} data.gasPrice transaction gas price
+ * @param {Buffer} data.to to the to address
+ * @param {Buffer} data.value the amount of ether sent
+ * @param {Buffer} data.data this will contain the data of the message or the init of a contract
+ * @param {Buffer} data.v EC signature parameter
+ * @param {Buffer} data.r EC signature parameter
+ * @param {Buffer} data.s EC recovery ID
+ * @param {Number} data.chainId EIP 155 chainId - mainnet: 1, ropsten: 3
+ * */
+
+var Transaction = function () {
+  function Transaction(data) {
+    _classCallCheck(this, Transaction);
+
+    data = data || {};
+    // Define Properties
+    var fields = [{
+      name: 'nonce',
+      length: 32,
+      allowLess: true,
+      default: new Buffer([])
+    }, {
+      name: 'gasPrice',
+      length: 32,
+      allowLess: true,
+      default: new Buffer([])
+    }, {
+      name: 'gasLimit',
+      alias: 'gas',
+      length: 32,
+      allowLess: true,
+      default: new Buffer([])
+    }, {
+      name: 'to',
+      allowZero: true,
+      length: 20,
+      default: new Buffer([])
+    }, {
+      name: 'value',
+      length: 32,
+      allowLess: true,
+      default: new Buffer([])
+    }, {
+      name: 'data',
+      alias: 'input',
+      allowZero: true,
+      default: new Buffer([])
+    }, {
+      name: 'v',
+      allowZero: true,
+      default: new Buffer([0x1c])
+    }, {
+      name: 'r',
+      length: 32,
+      allowZero: true,
+      allowLess: true,
+      default: new Buffer([])
+    }, {
+      name: 's',
+      length: 32,
+      allowZero: true,
+      allowLess: true,
+      default: new Buffer([])
+    }];
+
+    /**
+     * Returns the rlp encoding of the transaction
+     * @method serialize
+     * @return {Buffer}
+     * @memberof Transaction
+     * @name serialize
+     */
+    // attached serialize
+    ethUtil.defineProperties(this, fields, data);
+
+    /**
+     * @property {Buffer} from (read only) sender address of this transaction, mathematically derived from other parameters.
+     * @name from
+     * @memberof Transaction
+     */
+    Object.defineProperty(this, 'from', {
+      enumerable: true,
+      configurable: true,
+      get: this.getSenderAddress.bind(this)
+    });
+
+    // calculate chainId from signature
+    var sigV = ethUtil.bufferToInt(this.v);
+    var chainId = Math.floor((sigV - 35) / 2);
+    if (chainId < 0) chainId = 0;
+
+    // set chainId
+    this._chainId = chainId || data.chainId || 0;
+    this._homestead = true;
+  }
+
+  /**
+   * If the tx's `to` is to the creation address
+   * @return {Boolean}
+   */
+
+
+  Transaction.prototype.toCreationAddress = function toCreationAddress() {
+    return this.to.toString('hex') === '';
+  };
+
+  /**
+   * Computes a sha3-256 hash of the serialized tx
+   * @param {Boolean} [includeSignature=true] whether or not to inculde the signature
+   * @return {Buffer}
+   */
+
+
+  Transaction.prototype.hash = function hash(includeSignature) {
+    if (includeSignature === undefined) includeSignature = true;
+
+    // EIP155 spec:
+    // when computing the hash of a transaction for purposes of signing or recovering,
+    // instead of hashing only the first six elements (ie. nonce, gasprice, startgas, to, value, data),
+    // hash nine elements, with v replaced by CHAIN_ID, r = 0 and s = 0
+
+    var items = void 0;
+    if (includeSignature) {
+      items = this.raw;
+    } else {
+      if (this._chainId > 0) {
+        var raw = this.raw.slice();
+        this.v = this._chainId;
+        this.r = 0;
+        this.s = 0;
+        items = this.raw;
+        this.raw = raw;
+      } else {
+        items = this.raw.slice(0, 6);
+      }
+    }
+
+    // create hash
+    return ethUtil.rlphash(items);
+  };
+
+  /**
+   * returns the public key of the sender
+   * @return {Buffer}
+   */
+
+
+  Transaction.prototype.getChainId = function getChainId() {
+    return this._chainId;
+  };
+
+  /**
+   * returns the sender's address
+   * @return {Buffer}
+   */
+
+
+  Transaction.prototype.getSenderAddress = function getSenderAddress() {
+    if (this._from) {
+      return this._from;
+    }
+    var pubkey = this.getSenderPublicKey();
+    this._from = ethUtil.publicToAddress(pubkey);
+    return this._from;
+  };
+
+  /**
+   * returns the public key of the sender
+   * @return {Buffer}
+   */
+
+
+  Transaction.prototype.getSenderPublicKey = function getSenderPublicKey() {
+    if (!this._senderPubKey || !this._senderPubKey.length) {
+      if (!this.verifySignature()) throw new Error('Invalid Signature');
+    }
+    return this._senderPubKey;
+  };
+
+  /**
+   * Determines if the signature is valid
+   * @return {Boolean}
+   */
+
+
+  Transaction.prototype.verifySignature = function verifySignature() {
+    var msgHash = this.hash(false);
+    // All transaction signatures whose s-value is greater than secp256k1n/2 are considered invalid.
+    if (this._homestead && new BN(this.s).cmp(N_DIV_2) === 1) {
+      return false;
+    }
+
+    try {
+      var v = ethUtil.bufferToInt(this.v);
+      if (this._chainId > 0) {
+        v -= this._chainId * 2 + 8;
+      }
+      this._senderPubKey = ethUtil.ecrecover(msgHash, v, this.r, this.s);
+    } catch (e) {
+      return false;
+    }
+
+    return !!this._senderPubKey;
+  };
+
+  /**
+   * sign a transaction with a given a private key
+   * @param {Buffer} privateKey
+   */
+
+
+  Transaction.prototype.sign = function sign(privateKey) {
+    var msgHash = this.hash(false);
+    var sig = ethUtil.ecsign(msgHash, privateKey);
+    if (this._chainId > 0) {
+      sig.v += this._chainId * 2 + 8;
+    }
+    Object.assign(this, sig);
+  };
+
+  /**
+   * The amount of gas paid for the data in this tx
+   * @return {BN}
+   */
+
+
+  Transaction.prototype.getDataFee = function getDataFee() {
+    var data = this.raw[5];
+    var cost = new BN(0);
+    for (var i = 0; i < data.length; i++) {
+      data[i] === 0 ? cost.iaddn(fees.txDataZeroGas.v) : cost.iaddn(fees.txDataNonZeroGas.v);
+    }
+    return cost;
+  };
+
+  /**
+   * the minimum amount of gas the tx must have (DataFee + TxFee + Creation Fee)
+   * @return {BN}
+   */
+
+
+  Transaction.prototype.getBaseFee = function getBaseFee() {
+    var fee = this.getDataFee().iaddn(fees.txGas.v);
+    if (this._homestead && this.toCreationAddress()) {
+      fee.iaddn(fees.txCreation.v);
+    }
+    return fee;
+  };
+
+  /**
+   * the up front amount that an account must have for this transaction to be valid
+   * @return {BN}
+   */
+
+
+  Transaction.prototype.getUpfrontCost = function getUpfrontCost() {
+    return new BN(this.gasLimit).imul(new BN(this.gasPrice)).iadd(new BN(this.value));
+  };
+
+  /**
+   * validates the signature and checks to see if it has enough gas
+   * @param {Boolean} [stringError=false] whether to return a string with a dscription of why the validation failed or return a Bloolean
+   * @return {Boolean|String}
+   */
+
+
+  Transaction.prototype.validate = function validate(stringError) {
+    var errors = [];
+    if (!this.verifySignature()) {
+      errors.push('Invalid Signature');
+    }
+
+    if (this.getBaseFee().cmp(new BN(this.gasLimit)) > 0) {
+      errors.push(['gas limit is too low. Need at least ' + this.getBaseFee()]);
+    }
+
+    if (stringError === undefined || stringError === false) {
+      return errors.length === 0;
+    } else {
+      return errors.join(' ');
+    }
+  };
+
+  return Transaction;
+}();
+
+module.exports = Transaction;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
+
+/***/ }),
+/* 40 */
 /***/ (function(module, exports) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -11652,7 +11984,7 @@ function isUndefined(arg) {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12346,7 +12678,7 @@ Writable.prototype._destroy = function (err, cb) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(128).setImmediate, __webpack_require__(4)))
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12648,7 +12980,7 @@ function simpleEnd(buf) {
 }
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12801,7 +13133,7 @@ module.exports = MD5
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12971,7 +13303,7 @@ module.exports = RIPEMD160
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var exports = module.exports = function SHA (algorithm) {
@@ -12992,7 +13324,7 @@ exports.sha512 = __webpack_require__(63)
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var hash = exports;
@@ -13013,7 +13345,7 @@ hash.ripemd160 = hash.ripemd.ripemd160;
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(206)
@@ -13104,7 +13436,7 @@ http.METHODS = [
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13151,7 +13483,7 @@ exports.XMLHttpRequestEventTarget = XMLHttpRequestEventTarget;
 //# sourceMappingURL=xml-http-request-event-target.js.map
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var A = __webpack_require__(243);
@@ -13344,7 +13676,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports.pbkdf2 = __webpack_require__(246)
@@ -13352,7 +13684,7 @@ exports.pbkdf2Sync = __webpack_require__(93)
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13366,7 +13698,7 @@ exports.EDE = __webpack_require__(253);
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ciphers = __webpack_require__(254)
@@ -13385,7 +13717,7 @@ exports.listCiphers = exports.getCiphers = getCiphers
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var modeModules = {
@@ -13409,7 +13741,7 @@ module.exports = modes
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {var bn = __webpack_require__(3);
@@ -13456,7 +13788,7 @@ function getr(priv) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -13465,338 +13797,6 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(Buffer) {
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ethUtil = __webpack_require__(121);
-var fees = __webpack_require__(177);
-var BN = ethUtil.BN;
-
-// secp256k1n/2
-var N_DIV_2 = new BN('7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0', 16);
-
-/**
- * Creates a new transaction object.
- *
- * @example
- * var rawTx = {
- *   nonce: '00',
- *   gasPrice: '09184e72a000',
- *   gasLimit: '2710',
- *   to: '0000000000000000000000000000000000000000',
- *   value: '00',
- *   data: '7f7465737432000000000000000000000000000000000000000000000000000000600057',
- *   v: '1c',
- *   r: '5e1d3a76fbf824220eafc8c79ad578ad2b67d01b0c2425eb1f1347e8f50882ab',
- *   s: '5bd428537f05f9830e93792f90ea6a3e2d1ee84952dd96edbae9f658f831ab13'
- * };
- * var tx = new Transaction(rawTx);
- *
- * @class
- * @param {Buffer | Array | Object} data a transaction can be initiailized with either a buffer containing the RLP serialized transaction or an array of buffers relating to each of the tx Properties, listed in order below in the exmple.
- *
- * Or lastly an Object containing the Properties of the transaction like in the Usage example.
- *
- * For Object and Arrays each of the elements can either be a Buffer, a hex-prefixed (0x) String , Number, or an object with a toBuffer method such as Bignum
- *
- * @property {Buffer} raw The raw rlp encoded transaction
- * @param {Buffer} data.nonce nonce number
- * @param {Buffer} data.gasLimit transaction gas limit
- * @param {Buffer} data.gasPrice transaction gas price
- * @param {Buffer} data.to to the to address
- * @param {Buffer} data.value the amount of ether sent
- * @param {Buffer} data.data this will contain the data of the message or the init of a contract
- * @param {Buffer} data.v EC signature parameter
- * @param {Buffer} data.r EC signature parameter
- * @param {Buffer} data.s EC recovery ID
- * @param {Number} data.chainId EIP 155 chainId - mainnet: 1, ropsten: 3
- * */
-
-var Transaction = function () {
-  function Transaction(data) {
-    _classCallCheck(this, Transaction);
-
-    data = data || {};
-    // Define Properties
-    var fields = [{
-      name: 'nonce',
-      length: 32,
-      allowLess: true,
-      default: new Buffer([])
-    }, {
-      name: 'gasPrice',
-      length: 32,
-      allowLess: true,
-      default: new Buffer([])
-    }, {
-      name: 'gasLimit',
-      alias: 'gas',
-      length: 32,
-      allowLess: true,
-      default: new Buffer([])
-    }, {
-      name: 'to',
-      allowZero: true,
-      length: 20,
-      default: new Buffer([])
-    }, {
-      name: 'value',
-      length: 32,
-      allowLess: true,
-      default: new Buffer([])
-    }, {
-      name: 'data',
-      alias: 'input',
-      allowZero: true,
-      default: new Buffer([])
-    }, {
-      name: 'v',
-      allowZero: true,
-      default: new Buffer([0x1c])
-    }, {
-      name: 'r',
-      length: 32,
-      allowZero: true,
-      allowLess: true,
-      default: new Buffer([])
-    }, {
-      name: 's',
-      length: 32,
-      allowZero: true,
-      allowLess: true,
-      default: new Buffer([])
-    }];
-
-    /**
-     * Returns the rlp encoding of the transaction
-     * @method serialize
-     * @return {Buffer}
-     * @memberof Transaction
-     * @name serialize
-     */
-    // attached serialize
-    ethUtil.defineProperties(this, fields, data);
-
-    /**
-     * @property {Buffer} from (read only) sender address of this transaction, mathematically derived from other parameters.
-     * @name from
-     * @memberof Transaction
-     */
-    Object.defineProperty(this, 'from', {
-      enumerable: true,
-      configurable: true,
-      get: this.getSenderAddress.bind(this)
-    });
-
-    // calculate chainId from signature
-    var sigV = ethUtil.bufferToInt(this.v);
-    var chainId = Math.floor((sigV - 35) / 2);
-    if (chainId < 0) chainId = 0;
-
-    // set chainId
-    this._chainId = chainId || data.chainId || 0;
-    this._homestead = true;
-  }
-
-  /**
-   * If the tx's `to` is to the creation address
-   * @return {Boolean}
-   */
-
-
-  Transaction.prototype.toCreationAddress = function toCreationAddress() {
-    return this.to.toString('hex') === '';
-  };
-
-  /**
-   * Computes a sha3-256 hash of the serialized tx
-   * @param {Boolean} [includeSignature=true] whether or not to inculde the signature
-   * @return {Buffer}
-   */
-
-
-  Transaction.prototype.hash = function hash(includeSignature) {
-    if (includeSignature === undefined) includeSignature = true;
-
-    // EIP155 spec:
-    // when computing the hash of a transaction for purposes of signing or recovering,
-    // instead of hashing only the first six elements (ie. nonce, gasprice, startgas, to, value, data),
-    // hash nine elements, with v replaced by CHAIN_ID, r = 0 and s = 0
-
-    var items = void 0;
-    if (includeSignature) {
-      items = this.raw;
-    } else {
-      if (this._chainId > 0) {
-        var raw = this.raw.slice();
-        this.v = this._chainId;
-        this.r = 0;
-        this.s = 0;
-        items = this.raw;
-        this.raw = raw;
-      } else {
-        items = this.raw.slice(0, 6);
-      }
-    }
-
-    // create hash
-    return ethUtil.rlphash(items);
-  };
-
-  /**
-   * returns the public key of the sender
-   * @return {Buffer}
-   */
-
-
-  Transaction.prototype.getChainId = function getChainId() {
-    return this._chainId;
-  };
-
-  /**
-   * returns the sender's address
-   * @return {Buffer}
-   */
-
-
-  Transaction.prototype.getSenderAddress = function getSenderAddress() {
-    if (this._from) {
-      return this._from;
-    }
-    var pubkey = this.getSenderPublicKey();
-    this._from = ethUtil.publicToAddress(pubkey);
-    return this._from;
-  };
-
-  /**
-   * returns the public key of the sender
-   * @return {Buffer}
-   */
-
-
-  Transaction.prototype.getSenderPublicKey = function getSenderPublicKey() {
-    if (!this._senderPubKey || !this._senderPubKey.length) {
-      if (!this.verifySignature()) throw new Error('Invalid Signature');
-    }
-    return this._senderPubKey;
-  };
-
-  /**
-   * Determines if the signature is valid
-   * @return {Boolean}
-   */
-
-
-  Transaction.prototype.verifySignature = function verifySignature() {
-    var msgHash = this.hash(false);
-    // All transaction signatures whose s-value is greater than secp256k1n/2 are considered invalid.
-    if (this._homestead && new BN(this.s).cmp(N_DIV_2) === 1) {
-      return false;
-    }
-
-    try {
-      var v = ethUtil.bufferToInt(this.v);
-      if (this._chainId > 0) {
-        v -= this._chainId * 2 + 8;
-      }
-      this._senderPubKey = ethUtil.ecrecover(msgHash, v, this.r, this.s);
-    } catch (e) {
-      return false;
-    }
-
-    return !!this._senderPubKey;
-  };
-
-  /**
-   * sign a transaction with a given a private key
-   * @param {Buffer} privateKey
-   */
-
-
-  Transaction.prototype.sign = function sign(privateKey) {
-    var msgHash = this.hash(false);
-    var sig = ethUtil.ecsign(msgHash, privateKey);
-    if (this._chainId > 0) {
-      sig.v += this._chainId * 2 + 8;
-    }
-    Object.assign(this, sig);
-  };
-
-  /**
-   * The amount of gas paid for the data in this tx
-   * @return {BN}
-   */
-
-
-  Transaction.prototype.getDataFee = function getDataFee() {
-    var data = this.raw[5];
-    var cost = new BN(0);
-    for (var i = 0; i < data.length; i++) {
-      data[i] === 0 ? cost.iaddn(fees.txDataZeroGas.v) : cost.iaddn(fees.txDataNonZeroGas.v);
-    }
-    return cost;
-  };
-
-  /**
-   * the minimum amount of gas the tx must have (DataFee + TxFee + Creation Fee)
-   * @return {BN}
-   */
-
-
-  Transaction.prototype.getBaseFee = function getBaseFee() {
-    var fee = this.getDataFee().iaddn(fees.txGas.v);
-    if (this._homestead && this.toCreationAddress()) {
-      fee.iaddn(fees.txCreation.v);
-    }
-    return fee;
-  };
-
-  /**
-   * the up front amount that an account must have for this transaction to be valid
-   * @return {BN}
-   */
-
-
-  Transaction.prototype.getUpfrontCost = function getUpfrontCost() {
-    return new BN(this.gasLimit).imul(new BN(this.gasPrice)).iadd(new BN(this.value));
-  };
-
-  /**
-   * validates the signature and checks to see if it has enough gas
-   * @param {Boolean} [stringError=false] whether to return a string with a dscription of why the validation failed or return a Bloolean
-   * @return {Boolean|String}
-   */
-
-
-  Transaction.prototype.validate = function validate(stringError) {
-    var errors = [];
-    if (!this.verifySignature()) {
-      errors.push('Invalid Signature');
-    }
-
-    if (this.getBaseFee().cmp(new BN(this.gasLimit)) > 0) {
-      errors.push(['gas limit is too low. Need at least ' + this.getBaseFee()]);
-    }
-
-    if (stringError === undefined || stringError === false) {
-      return errors.length === 0;
-    } else {
-      return errors.join(' ');
-    }
-  };
-
-  return Transaction;
-}();
-
-module.exports = Transaction;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ }),
 /* 56 */
@@ -13834,7 +13834,7 @@ var pna = __webpack_require__(29);
 module.exports = Readable;
 
 /*<replacement>*/
-var isArray = __webpack_require__(54);
+var isArray = __webpack_require__(55);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -13844,7 +13844,7 @@ var Duplex;
 Readable.ReadableState = ReadableState;
 
 /*<replacement>*/
-var EE = __webpack_require__(39).EventEmitter;
+var EE = __webpack_require__(40).EventEmitter;
 
 var EElistenerCount = function (emitter, type) {
   return emitter.listeners(type).length;
@@ -13974,7 +13974,7 @@ function ReadableState(options, stream) {
   this.decoder = null;
   this.encoding = null;
   if (options.encoding) {
-    if (!StringDecoder) StringDecoder = __webpack_require__(41).StringDecoder;
+    if (!StringDecoder) StringDecoder = __webpack_require__(42).StringDecoder;
     this.decoder = new StringDecoder(options.encoding);
     this.encoding = options.encoding;
   }
@@ -14130,7 +14130,7 @@ Readable.prototype.isPaused = function () {
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
-  if (!StringDecoder) StringDecoder = __webpack_require__(41).StringDecoder;
+  if (!StringDecoder) StringDecoder = __webpack_require__(42).StringDecoder;
   this._readableState.decoder = new StringDecoder(enc);
   this._readableState.encoding = enc;
   return this;
@@ -14828,7 +14828,7 @@ function indexOf(xs, x) {
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(39).EventEmitter;
+module.exports = __webpack_require__(40).EventEmitter;
 
 
 /***/ }),
@@ -21874,7 +21874,7 @@ function extend() {
 /* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var http = __webpack_require__(46)
+var http = __webpack_require__(47)
 var url = __webpack_require__(25)
 
 var https = module.exports
@@ -23405,9 +23405,9 @@ var Legacy = __webpack_require__(244)
 var Base = __webpack_require__(12)
 var Buffer = __webpack_require__(2).Buffer
 var md5 = __webpack_require__(89)
-var RIPEMD160 = __webpack_require__(43)
+var RIPEMD160 = __webpack_require__(44)
 
-var sha = __webpack_require__(44)
+var sha = __webpack_require__(45)
 
 var ZEROS = Buffer.alloc(128)
 
@@ -23467,7 +23467,7 @@ module.exports = function createHmac (alg, key) {
 /* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MD5 = __webpack_require__(42)
+var MD5 = __webpack_require__(43)
 
 module.exports = function (buffer) {
   return new MD5().update(buffer).digest()
@@ -23537,8 +23537,8 @@ module.exports = defaultEncoding
 /***/ (function(module, exports, __webpack_require__) {
 
 var md5 = __webpack_require__(89)
-var rmd160 = __webpack_require__(43)
-var sha = __webpack_require__(44)
+var rmd160 = __webpack_require__(44)
+var sha = __webpack_require__(45)
 
 var checkParameters = __webpack_require__(91)
 var defaultEncoding = __webpack_require__(92)
@@ -24930,7 +24930,7 @@ module.exports = withPublic;
 /***/ (function(module, exports, __webpack_require__) {
 
 var BN = __webpack_require__(3);
-var Bytes = __webpack_require__(48);
+var Bytes = __webpack_require__(49);
 
 var fromBN = function fromBN(bn) {
   return "0x" + bn.toString("hex");
@@ -25896,7 +25896,7 @@ var pagesDataOnContractInit = function () {
 
                             $('.call-recipe').click(function () {
                                 if (metamask) {
-                                    //metamask way
+                                    basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance.');
                                 } else {
                                     //custom
                                     var cached_key = localStorage.getItem('current-account') == null;
@@ -25908,7 +25908,10 @@ var pagesDataOnContractInit = function () {
                                             to: App.assurance_proxy_address,
                                             cached_key: cached_key,
                                             contract: $('.init-contract-section').attr('data-contract'),
-                                            show_dcn_bar: true
+                                            show_dcn_bar: true,
+                                            recipe_title: 'Pay Your First Premium',
+                                            recipe_subtitle: 'and activate your smart contract',
+                                            recipe_checkbox_text: 'By clicking on the button below you also agree that from now on your monthly premium amount will be automatically deducted from your wallet balance on the payment due date.'
                                         },
                                         headers: {
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -26229,7 +26232,7 @@ var pagesDataOnContractInit = function () {
                                                                                     $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
                                                                                     $('.response-layer').show();
 
-                                                                                    EthereumTx = __webpack_require__(55);
+                                                                                    EthereumTx = __webpack_require__(39);
 
                                                                                     if (approval_given) {
                                                                                         _context7.next = 39;
@@ -26813,7 +26816,7 @@ var onDocumentReadyPageData = function () {
                         $('.approve-contract-recipe').click(function () {
                             if (current_user_dcn_balance > monthly_premium_in_dcn && current_user_eth_balance > 0.005) {
                                 if (metamask) {
-                                    //metamask way
+                                    basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance.');
                                 } else {
                                     //custom
                                     var cached_key = localStorage.getItem('current-account') == null;
@@ -26825,7 +26828,10 @@ var onDocumentReadyPageData = function () {
                                             to: App.assurance_proxy_address,
                                             cached_key: cached_key,
                                             contract: $('.init-contract-section').attr('data-contract'),
-                                            show_dcn_bar: false
+                                            show_dcn_bar: false,
+                                            recipe_title: 'Approve This Contract',
+                                            recipe_subtitle: 'and withdraw monthly payments',
+                                            recipe_checkbox_text: 'By clicking on the button below you confirm that from now on every month you will withdraw the monthly premium amount on the payment due date or later.'
                                         },
                                         headers: {
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -26998,7 +27004,7 @@ var onDocumentReadyPageData = function () {
                                                                                     $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
                                                                                     $('.response-layer').show();
 
-                                                                                    EthereumTx = __webpack_require__(55);
+                                                                                    EthereumTx = __webpack_require__(39);
                                                                                     _context22.next = 33;
                                                                                     return App.web3_1_0.eth.getTransactionCount(global_state.account);
 
@@ -27195,13 +27201,13 @@ var onDocumentReadyPageData = function () {
 }();
 
 var validateUserAddress = function () {
-    var _ref29 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee29(user_address, value_element) {
+    var _ref32 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee32(user_address, value_element) {
         var error, check_public_key_ajax_result;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee29$(_context29) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee32$(_context32) {
             while (1) {
-                switch (_context29.prev = _context29.next) {
+                switch (_context32.prev = _context32.next) {
                     case 0:
-                        _context29.next = 2;
+                        _context32.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/check-public-key',
@@ -27215,7 +27221,7 @@ var validateUserAddress = function () {
                         });
 
                     case 2:
-                        check_public_key_ajax_result = _context29.sent;
+                        check_public_key_ajax_result = _context32.sent;
 
 
                         if (check_public_key_ajax_result.success) {
@@ -27234,28 +27240,28 @@ var validateUserAddress = function () {
                                 error = true;
                             }
                         }
-                        return _context29.abrupt('return', error);
+                        return _context32.abrupt('return', error);
 
                     case 5:
                     case 'end':
-                        return _context29.stop();
+                        return _context32.stop();
                 }
             }
-        }, _callee29, this);
+        }, _callee32, this);
     }));
 
-    return function validateUserAddress(_x19, _x20) {
-        return _ref29.apply(this, arguments);
+    return function validateUserAddress(_x20, _x21) {
+        return _ref32.apply(this, arguments);
     };
 }();
 
 var getEncryptedContractPdfContent = function () {
-    var _ref30 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee30(hash, type) {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee30$(_context30) {
+    var _ref33 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee33(hash, type) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee33$(_context33) {
             while (1) {
-                switch (_context30.prev = _context30.next) {
+                switch (_context33.prev = _context33.next) {
                     case 0:
-                        _context30.next = 2;
+                        _context33.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-contract',
@@ -27270,108 +27276,6 @@ var getEncryptedContractPdfContent = function () {
                         });
 
                     case 2:
-                        return _context30.abrupt('return', _context30.sent);
-
-                    case 3:
-                    case 'end':
-                        return _context30.stop();
-                }
-            }
-        }, _callee30, this);
-    }));
-
-    return function getEncryptedContractPdfContent(_x21, _x22) {
-        return _ref30.apply(this, arguments);
-    };
-}();
-
-var getCurrentUserData = function () {
-    var _ref31 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee31() {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee31$(_context31) {
-            while (1) {
-                switch (_context31.prev = _context31.next) {
-                    case 0:
-                        _context31.next = 2;
-                        return $.ajax({
-                            type: 'GET',
-                            url: '/get-current-user-data',
-                            dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
-                        return _context31.abrupt('return', _context31.sent);
-
-                    case 3:
-                    case 'end':
-                        return _context31.stop();
-                }
-            }
-        }, _callee31, this);
-    }));
-
-    return function getCurrentUserData() {
-        return _ref31.apply(this, arguments);
-    };
-}();
-
-var checkIfFreeEmail = function () {
-    var _ref32 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee32(email) {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee32$(_context32) {
-            while (1) {
-                switch (_context32.prev = _context32.next) {
-                    case 0:
-                        _context32.next = 2;
-                        return $.ajax({
-                            type: 'POST',
-                            url: '/check-email',
-                            dataType: 'json',
-                            data: {
-                                email: email
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
-                        return _context32.abrupt('return', _context32.sent);
-
-                    case 3:
-                    case 'end':
-                        return _context32.stop();
-                }
-            }
-        }, _callee32, this);
-    }));
-
-    return function checkIfFreeEmail(_x23) {
-        return _ref32.apply(this, arguments);
-    };
-}();
-
-var checkCaptcha = function () {
-    var _ref33 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee33(captcha) {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee33$(_context33) {
-            while (1) {
-                switch (_context33.prev = _context33.next) {
-                    case 0:
-                        _context33.next = 2;
-                        return $.ajax({
-                            type: 'POST',
-                            url: '/check-captcha',
-                            dataType: 'json',
-                            data: {
-                                captcha: captcha
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
                         return _context33.abrupt('return', _context33.sent);
 
                     case 3:
@@ -27382,25 +27286,22 @@ var checkCaptcha = function () {
         }, _callee33, this);
     }));
 
-    return function checkCaptcha(_x24) {
+    return function getEncryptedContractPdfContent(_x22, _x23) {
         return _ref33.apply(this, arguments);
     };
 }();
 
-var getDecryptedPrivateKey = function () {
-    var _ref34 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee34(key) {
+var getCurrentUserData = function () {
+    var _ref34 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee34() {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee34$(_context34) {
             while (1) {
                 switch (_context34.prev = _context34.next) {
                     case 0:
                         _context34.next = 2;
                         return $.ajax({
-                            type: 'POST',
-                            url: '/assurance-decrypt-private-key',
+                            type: 'GET',
+                            url: '/get-current-user-data',
                             dataType: 'json',
-                            data: {
-                                private_key: key
-                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
@@ -27417,13 +27318,13 @@ var getDecryptedPrivateKey = function () {
         }, _callee34, this);
     }));
 
-    return function getDecryptedPrivateKey(_x25) {
+    return function getCurrentUserData() {
         return _ref34.apply(this, arguments);
     };
 }();
 
-var getDecryptedKeystoreFile = function () {
-    var _ref35 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee35(keystore, password) {
+var checkIfFreeEmail = function () {
+    var _ref35 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee35(email) {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee35$(_context35) {
             while (1) {
                 switch (_context35.prev = _context35.next) {
@@ -27431,11 +27332,10 @@ var getDecryptedKeystoreFile = function () {
                         _context35.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-pk',
+                            url: '/check-email',
                             dataType: 'json',
                             data: {
-                                keystore: keystore,
-                                password: password
+                                email: email
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -27453,13 +27353,13 @@ var getDecryptedKeystoreFile = function () {
         }, _callee35, this);
     }));
 
-    return function getDecryptedKeystoreFile(_x26, _x27) {
+    return function checkIfFreeEmail(_x24) {
         return _ref35.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContent = function () {
-    var _ref36 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee36(encrypted_html, key) {
+var checkCaptcha = function () {
+    var _ref36 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee36(captcha) {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee36$(_context36) {
             while (1) {
                 switch (_context36.prev = _context36.next) {
@@ -27467,14 +27367,13 @@ var getDecryptedPdfContent = function () {
                         _context36.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data',
+                            url: '/check-captcha',
                             dataType: 'json',
+                            data: {
+                                captcha: captcha
+                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
                             }
                         });
 
@@ -27489,13 +27388,13 @@ var getDecryptedPdfContent = function () {
         }, _callee36, this);
     }));
 
-    return function getDecryptedPdfContent(_x28, _x29) {
+    return function checkCaptcha(_x25) {
         return _ref36.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContentByPlainKey = function () {
-    var _ref37 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee37(encrypted_html, key) {
+var getDecryptedPrivateKey = function () {
+    var _ref37 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee37(key) {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee37$(_context37) {
             while (1) {
                 switch (_context37.prev = _context37.next) {
@@ -27503,14 +27402,13 @@ var getDecryptedPdfContentByPlainKey = function () {
                         _context37.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data-plain-key',
+                            url: '/assurance-decrypt-private-key',
                             dataType: 'json',
+                            data: {
+                                private_key: key
+                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
                             }
                         });
 
@@ -27525,8 +27423,116 @@ var getDecryptedPdfContentByPlainKey = function () {
         }, _callee37, this);
     }));
 
-    return function getDecryptedPdfContentByPlainKey(_x30, _x31) {
+    return function getDecryptedPrivateKey(_x26) {
         return _ref37.apply(this, arguments);
+    };
+}();
+
+var getDecryptedKeystoreFile = function () {
+    var _ref38 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee38(keystore, password) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee38$(_context38) {
+            while (1) {
+                switch (_context38.prev = _context38.next) {
+                    case 0:
+                        _context38.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-pk',
+                            dataType: 'json',
+                            data: {
+                                keystore: keystore,
+                                password: password
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                    case 2:
+                        return _context38.abrupt('return', _context38.sent);
+
+                    case 3:
+                    case 'end':
+                        return _context38.stop();
+                }
+            }
+        }, _callee38, this);
+    }));
+
+    return function getDecryptedKeystoreFile(_x27, _x28) {
+        return _ref38.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContent = function () {
+    var _ref39 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee39(encrypted_html, key) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee39$(_context39) {
+            while (1) {
+                switch (_context39.prev = _context39.next) {
+                    case 0:
+                        _context39.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context39.abrupt('return', _context39.sent);
+
+                    case 3:
+                    case 'end':
+                        return _context39.stop();
+                }
+            }
+        }, _callee39, this);
+    }));
+
+    return function getDecryptedPdfContent(_x29, _x30) {
+        return _ref39.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContentByPlainKey = function () {
+    var _ref40 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee40(encrypted_html, key) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee40$(_context40) {
+            while (1) {
+                switch (_context40.prev = _context40.next) {
+                    case 0:
+                        _context40.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data-plain-key',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context40.abrupt('return', _context40.sent);
+
+                    case 3:
+                    case 'end':
+                        return _context40.stop();
+                }
+            }
+        }, _callee40, this);
+    }));
+
+    return function getDecryptedPdfContentByPlainKey(_x31, _x32) {
+        return _ref40.apply(this, arguments);
     };
 }();
 
@@ -30060,44 +30066,478 @@ function initFlipClockTimer(time_left) {
 //if cancel contract button exist add the event for it
 function cancelContractEventInit() {
     if ($('.cancel-contract-btn').length) {
-        $('.cancel-contract-btn').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee25() {
-            var this_btn, exiting_contract, exiting_contract1;
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee25$(_context25) {
+        $('.cancel-contract-btn').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee28() {
+            var this_btn, exiting_contract, current_user_eth_balance, current_user_dcn_balance;
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee28$(_context28) {
                 while (1) {
-                    switch (_context25.prev = _context25.next) {
+                    switch (_context28.prev = _context28.next) {
                         case 0:
                             this_btn = $(this);
 
                             if (!(this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined)) {
-                                _context25.next = 10;
+                                _context28.next = 21;
                                 break;
                             }
 
-                            _context25.next = 4;
+                            _context28.next = 4;
                             return App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
 
                         case 4:
-                            exiting_contract = _context25.sent;
-                            _context25.next = 7;
-                            return App.assurance_state_methods.getPatient(App.assurance_proxy_address, this_btn.attr('data-dentist'));
+                            exiting_contract = _context28.sent;
 
-                        case 7:
-                            exiting_contract1 = _context25.sent;
+                            if (!(new Date(parseInt(exiting_contract[0]) * 1000).getTime() > 0)) {
+                                _context28.next = 19;
+                                break;
+                            }
 
-                            console.log(exiting_contract, 'exiting_contract');
-                            console.log(exiting_contract1, 'exiting_contract1');
+                            _context28.t0 = parseFloat;
+                            _context28.t1 = App.web3_1_0.utils;
+                            _context28.next = 10;
+                            return App.helper.getAddressETHBalance(global_state.account);
 
                         case 10:
+                            _context28.t2 = _context28.sent;
+                            _context28.t3 = _context28.t1.fromWei.call(_context28.t1, _context28.t2);
+                            current_user_eth_balance = (0, _context28.t0)(_context28.t3);
+                            _context28.t4 = parseFloat;
+                            _context28.next = 16;
+                            return App.dentacoin_token_methods.balanceOf(global_state.account);
 
-                            console.log('contract cancellation');
-                            return _context25.abrupt('return', false);
+                        case 16:
+                            _context28.t5 = _context28.sent;
+                            current_user_dcn_balance = (0, _context28.t4)(_context28.t5);
 
-                        case 14:
+                            $('.approve-contract-recipe').click(function () {
+                                if (current_user_eth_balance > 0.005) {
+                                    if (metamask) {
+                                        basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance.');
+                                    } else {
+                                        //custom
+                                        var cached_key = localStorage.getItem('current-account') == null;
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/get-recipe-popup',
+                                            dataType: 'json',
+                                            data: {
+                                                to: App.assurance_proxy_address,
+                                                cached_key: cached_key,
+                                                contract: $('.init-contract-section').attr('data-contract'),
+                                                show_dcn_bar: false,
+                                                recipe_title: this_btn.attr('data-recipe-title'),
+                                                recipe_subtitle: this_btn.attr('data-recipe-subtitle'),
+                                                recipe_checkbox_text: this_btn.attr('data-recipe-checkbox-text')
+                                            },
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success: function () {
+                                                var _ref26 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee27(response) {
+                                                    var on_page_load_gwei, on_page_load_gas_price, gas_cost_for_contract_cancellation, eth_fee, transaction_key, decrypted_private_key_response;
+                                                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee27$(_context27) {
+                                                        while (1) {
+                                                            switch (_context27.prev = _context27.next) {
+                                                                case 0:
+                                                                    if (!response.success) {
+                                                                        _context27.next = 36;
+                                                                        break;
+                                                                    }
+
+                                                                    basic.closeDialog();
+                                                                    basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                                                    $('.recipe-popup .extra-recipe-html').html('<div class="popup-row"><label for="cancel-contract-reason" class="inline-block-top">Cancellation reason</label><div class="field"><select id="cancel-contract-reason" class="inline-block-top"><option>Overdue payments</option><option>Missed regular check-ups</option><option>Inappropriate behaviour</option><option data-open-bonus-field="true">Other</option></select></div></div><div class="camp-for-row"></div><div class="popup-row"><label for="cancel-contract-comments" class="inline-block-top">Comments:</label><div class="field"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background inline-block-top" placeholder="Please enter"></textarea></div></div>');
+
+                                                                    $('.recipe-popup .popup-cancel-contract #cancel-contract-reason').on('change', function () {
+                                                                        if ($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
+                                                                            $('.recipe-popup .camp-for-row').html('<div class="popup-row"><label for="cancel-contract-other-reason" class="inline-block-top">Other reason:</label><div class="field"><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background inline-block-top" maxlength="255"/></div></div>');
+                                                                        } else {
+                                                                            $('.recipe-popup .camp-for-row').html('');
+                                                                        }
+                                                                    });
+
+                                                                    fixButtonsFocus();
+
+                                                                    on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                                                                    //adding 10% just in case the transaction dont fail
+
+                                                                    on_page_load_gas_price = on_page_load_gwei * 100000000 + on_page_load_gwei * 100000000 * 10 / 100;
+
+                                                                    //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+
+                                                                    _context27.next = 10;
+                                                                    return App.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).estimateGas({
+                                                                        from: global_state.account,
+                                                                        gas: 500000
+                                                                    });
+
+                                                                case 10:
+                                                                    gas_cost_for_contract_cancellation = _context27.sent;
+                                                                    eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_contract_cancellation * on_page_load_gas_price).toString(), 'ether');
+
+                                                                    $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                                                    $('.recipe-popup .ether-fee i').popover({
+                                                                        trigger: 'click',
+                                                                        html: true
+                                                                    });
+
+                                                                    if (!cached_key) {
+                                                                        _context27.next = 19;
+                                                                        break;
+                                                                    }
+
+                                                                    bindVerifyAddressLogic(true);
+                                                                    $(document).on('on-transaction-recipe-agree', function (event) {
+                                                                        transaction_key = event.response_data;
+                                                                        setTimeout(function () {
+                                                                            $('.response-layer').hide();
+
+                                                                            $('.proof-of-address').remove();
+                                                                            $('.proof-success').fadeIn(1500);
+                                                                        }, 500);
+                                                                    });
+                                                                    _context27.next = 33;
+                                                                    break;
+
+                                                                case 19:
+                                                                    if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
+                                                                        _context27.next = 32;
+                                                                        break;
+                                                                    }
+
+                                                                    _context27.next = 22;
+                                                                    return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
+
+                                                                case 22:
+                                                                    decrypted_private_key_response = _context27.sent;
+
+                                                                    if (!decrypted_private_key_response.success) {
+                                                                        _context27.next = 27;
+                                                                        break;
+                                                                    }
+
+                                                                    transaction_key = decrypted_private_key_response.success;
+                                                                    _context27.next = 30;
+                                                                    break;
+
+                                                                case 27:
+                                                                    if (!decrypted_private_key_response.error) {
+                                                                        _context27.next = 30;
+                                                                        break;
+                                                                    }
+
+                                                                    basic.showAlert(decrypted_private_key_response.error, '', true);
+                                                                    return _context27.abrupt('return', false);
+
+                                                                case 30:
+                                                                    _context27.next = 33;
+                                                                    break;
+
+                                                                case 32:
+                                                                    if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
+                                                                        $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
+                                                                        bindGoogleAlikeButtonsEvents();
+                                                                    }
+
+                                                                case 33:
+
+                                                                    $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee26() {
+                                                                        var this_execute_transaction_btn, decrypted_keystore_file_response, cancellation_ajax_data, EthereumTx, nonce, contract_cancellation_function_abi, contract_cancellation_transaction_obj, contract_cancellation_transaction;
+                                                                        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee26$(_context26) {
+                                                                            while (1) {
+                                                                                switch (_context26.prev = _context26.next) {
+                                                                                    case 0:
+                                                                                        this_execute_transaction_btn = $(this);
+
+                                                                                        if (!($('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').length && $('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').val().trim() == '')) {
+                                                                                            _context26.next = 5;
+                                                                                            break;
+                                                                                        }
+
+                                                                                        basic.showAlert('Please enter other reason.', '', true);
+                                                                                        _context26.next = 51;
+                                                                                        break;
+
+                                                                                    case 5:
+                                                                                        if (!($('.recipe-popup .popup-cancel-contract #cancel-contract-comments').val().trim() == '')) {
+                                                                                            _context26.next = 9;
+                                                                                            break;
+                                                                                        }
+
+                                                                                        basic.showAlert('Please enter comments.', '', true);
+                                                                                        _context26.next = 51;
+                                                                                        break;
+
+                                                                                    case 9:
+                                                                                        if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                                                            _context26.next = 14;
+                                                                                            break;
+                                                                                        }
+
+                                                                                        basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                                                        return _context26.abrupt('return', false);
+
+                                                                                    case 14:
+                                                                                        if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '')) {
+                                                                                            _context26.next = 19;
+                                                                                            break;
+                                                                                        }
+
+                                                                                        basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                                                        return _context26.abrupt('return', false);
+
+                                                                                    case 19:
+                                                                                        if ($('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                                                            _context26.next = 24;
+                                                                                            break;
+                                                                                        }
+
+                                                                                        basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                                                        return _context26.abrupt('return', false);
+
+                                                                                    case 24:
+                                                                                        if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
+                                                                                            _context26.next = 35;
+                                                                                            break;
+                                                                                        }
+
+                                                                                        _context26.next = 27;
+                                                                                        return getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+
+                                                                                    case 27:
+                                                                                        decrypted_keystore_file_response = _context26.sent;
+
+                                                                                        if (!decrypted_keystore_file_response.success) {
+                                                                                            _context26.next = 32;
+                                                                                            break;
+                                                                                        }
+
+                                                                                        transaction_key = decrypted_keystore_file_response.to_string;
+                                                                                        _context26.next = 35;
+                                                                                        break;
+
+                                                                                    case 32:
+                                                                                        if (!decrypted_keystore_file_response.error) {
+                                                                                            _context26.next = 35;
+                                                                                            break;
+                                                                                        }
+
+                                                                                        basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                                                        return _context26.abrupt('return', false);
+
+                                                                                    case 35:
+                                                                                        this_execute_transaction_btn.unbind();
+
+                                                                                        cancellation_ajax_data = {
+                                                                                            contract: this_btn.attr('data-contract'),
+                                                                                            status: 'cancelled',
+                                                                                            comments: $('.recipe-popup .popup-cancel-contract #cancel-contract-comments').val().trim()
+                                                                                        };
+
+
+                                                                                        if ($('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').length) {
+                                                                                            cancellation_ajax_data.reason = $('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').val().trim();
+                                                                                        } else {
+                                                                                            cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-reason option:selected').html();
+                                                                                        }
+
+                                                                                        $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
+                                                                                        $('.response-layer').show();
+
+                                                                                        EthereumTx = __webpack_require__(39);
+                                                                                        _context26.next = 43;
+                                                                                        return App.web3_1_0.eth.getTransactionCount(global_state.account);
+
+                                                                                    case 43:
+                                                                                        nonce = _context26.sent;
+                                                                                        _context26.next = 46;
+                                                                                        return App.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).encodeABI();
+
+                                                                                    case 46:
+                                                                                        contract_cancellation_function_abi = _context26.sent;
+                                                                                        contract_cancellation_transaction_obj = {
+                                                                                            gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + gas_cost_for_contract_cancellation * 5 / 100)),
+                                                                                            gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                                                            from: global_state.account,
+                                                                                            nonce: App.web3_1_0.utils.toHex(nonce),
+                                                                                            chainId: App.chain_id,
+                                                                                            data: contract_cancellation_function_abi,
+                                                                                            to: App.assurance_proxy_address
+                                                                                        };
+                                                                                        contract_cancellation_transaction = new EthereumTx(contract_cancellation_transaction_obj);
+                                                                                        //signing the transaction
+
+                                                                                        contract_cancellation_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                                                                        //sending the transaction
+                                                                                        App.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                                                            var execute_ajax = true;
+                                                                                            //doing setinterval check to check if the smart creation transaction got mined
+                                                                                            var contract_cancellation_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee25() {
+                                                                                                var contract_cancellation_status;
+                                                                                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee25$(_context25) {
+                                                                                                    while (1) {
+                                                                                                        switch (_context25.prev = _context25.next) {
+                                                                                                            case 0:
+                                                                                                                _context25.next = 2;
+                                                                                                                return App.web3_1_0.eth.getTransactionReceipt(transactionHash);
+
+                                                                                                            case 2:
+                                                                                                                contract_cancellation_status = _context25.sent;
+
+                                                                                                                if (contract_cancellation_status != null && has(contract_cancellation_status, 'status')) {
+                                                                                                                    if (contract_cancellation_status.status && execute_ajax) {
+                                                                                                                        execute_ajax = false;
+                                                                                                                        clearInterval(contract_cancellation_interval_check);
+
+                                                                                                                        $.ajax({
+                                                                                                                            type: 'POST',
+                                                                                                                            url: '/update-contract-status',
+                                                                                                                            dataType: 'json',
+                                                                                                                            data: data,
+                                                                                                                            headers: {
+                                                                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                                                                            },
+                                                                                                                            success: function success(inner_response) {
+                                                                                                                                $('.response-layer').show();
+                                                                                                                                if (inner_response.success) {
+                                                                                                                                    window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
+                                                                                                                                } else if (inner_response.error) {
+                                                                                                                                    $('.response-layer').hide();
+                                                                                                                                    basic.showAlert(inner_response.error, '', true);
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        });
+                                                                                                                    }
+                                                                                                                }
+
+                                                                                                            case 4:
+                                                                                                            case 'end':
+                                                                                                                return _context25.stop();
+                                                                                                        }
+                                                                                                    }
+                                                                                                }, _callee25, this);
+                                                                                            })), 1000);
+                                                                                        });
+
+                                                                                    case 51:
+                                                                                    case 'end':
+                                                                                        return _context26.stop();
+                                                                                }
+                                                                            }
+                                                                        }, _callee26, this);
+                                                                    })));
+                                                                    _context27.next = 37;
+                                                                    break;
+
+                                                                case 36:
+                                                                    if (response.error) {
+                                                                        basic.showAlert(response.error, '', true);
+                                                                    }
+
+                                                                case 37:
+                                                                case 'end':
+                                                                    return _context27.stop();
+                                                            }
+                                                        }
+                                                    }, _callee27, this);
+                                                }));
+
+                                                function success(_x17) {
+                                                    return _ref26.apply(this, arguments);
+                                                }
+
+                                                return success;
+                                            }()
+                                        });
+                                    }
+                                } else if (current_user_eth_balance < 0.005) {
+                                    //not enough ETH balance
+                                    basic.showAlert('You don\'t have enough ETH balance to create the smart contract on the blockchain. Please refill.');
+                                } else if (current_user_dcn_balance) {
+                                    //not enough DCN balance
+                                    basic.showAlert('You don\'t have enough DCN balance to create the smart contract on the blockchain. Please refill');
+                                }
+                            });
+
+                        case 19:
+                            _context28.next = 22;
+                            break;
+
+                        case 21:
+                            $.ajax({
+                                type: 'POST',
+                                url: '/get-popup-cancel-contract',
+                                dataType: 'json',
+                                data: {
+                                    contract: this_btn.attr('data-contract')
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function success(response) {
+                                    if (response.success) {
+                                        basic.closeDialog();
+                                        basic.showDialog(response.success, 'popup-cancel-contract', null, true);
+
+                                        $('.popup-cancel-contract #cancel-contract-reason').on('change', function () {
+                                            if ($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
+                                                $('.camp-for-row').html('<div class="popup-row"><label for="cancel-contract-other-reason" class="inline-block-top">Other reason:</label><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background inline-block-top" maxlength="255"/></div>');
+                                            } else {
+                                                $('.camp-for-row').html('');
+                                            }
+                                        });
+
+                                        $('.popup-cancel-contract .cancel-contract-popup-confirmation').click(function () {
+                                            if ($('.popup-cancel-contract #cancel-contract-other-reason').length && $('.popup-cancel-contract #cancel-contract-other-reason').val().trim() == '') {
+                                                basic.showAlert('Please enter other reason.', '', true);
+                                            } else if ($('.popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
+                                                basic.showAlert('Please enter comments.', '', true);
+                                            } else {
+                                                var data = {
+                                                    contract: this_btn.attr('data-contract'),
+                                                    status: 'cancelled',
+                                                    comments: $('.popup-cancel-contract #cancel-contract-comments').val().trim()
+                                                };
+
+                                                if ($('.popup-cancel-contract #cancel-contract-other-reason').length) {
+                                                    data.reason = $('.popup-cancel-contract #cancel-contract-other-reason').val().trim();
+                                                } else {
+                                                    data.reason = $('#cancel-contract-reason option:selected').html();
+                                                }
+
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: '/update-contract-status',
+                                                    dataType: 'json',
+                                                    data: data,
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                    },
+                                                    success: function success(inner_response) {
+                                                        $('.response-layer').show();
+                                                        if (inner_response.success) {
+                                                            window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
+                                                        } else if (inner_response.error) {
+                                                            $('.response-layer').hide();
+                                                            basic.showAlert(inner_response.error, '', true);
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    } else if (response.error) {
+                                        basic.showAlert('Wrong contract.', '', true);
+                                    }
+                                }
+                            });
+
+                        case 22:
                         case 'end':
-                            return _context25.stop();
+                            return _context28.stop();
                     }
                 }
-            }, _callee25, this);
+            }, _callee28, this);
         })));
     }
 }
@@ -30369,23 +30809,23 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                 basic.showAlert('Please enter valid private key.', '', true);
             } else {
                 $('.response-layer').show();
-                setTimeout(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee27() {
+                setTimeout(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee30() {
                     var render_form, decrypted_pdf_response;
-                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee27$(_context27) {
+                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee30$(_context30) {
                         while (1) {
-                            switch (_context27.prev = _context27.next) {
+                            switch (_context30.prev = _context30.next) {
                                 case 0:
                                     if (!(render_pdf != null)) {
-                                        _context27.next = 9;
+                                        _context30.next = 9;
                                         break;
                                     }
 
                                     render_form = $('form#render-pdf');
-                                    _context27.next = 4;
+                                    _context30.next = 4;
                                     return getDecryptedPdfContentByPlainKey(encrypted_pdf_content, $('.proof-of-address #your-private-key').val().trim());
 
                                 case 4:
-                                    decrypted_pdf_response = _context27.sent;
+                                    decrypted_pdf_response = _context30.sent;
 
 
                                     $('.response-layer').hide();
@@ -30405,7 +30845,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                     } else if (decrypted_pdf_response.error) {
                                         basic.showAlert(decrypted_pdf_response.error, '', true);
                                     }
-                                    _context27.next = 10;
+                                    _context30.next = 10;
                                     break;
 
                                 case 9:
@@ -30420,10 +30860,10 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                         },
                                         success: function () {
-                                            var _ref27 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee26(response) {
-                                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee26$(_context26) {
+                                            var _ref30 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee29(response) {
+                                                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee29$(_context29) {
                                                     while (1) {
-                                                        switch (_context26.prev = _context26.next) {
+                                                        switch (_context29.prev = _context29.next) {
                                                             case 0:
                                                                 //now with the address and the public key received from the nodejs api update the db
                                                                 if (response.success) {
@@ -30470,14 +30910,14 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
 
                                                             case 1:
                                                             case 'end':
-                                                                return _context26.stop();
+                                                                return _context29.stop();
                                                         }
                                                     }
-                                                }, _callee26, this);
+                                                }, _callee29, this);
                                             }));
 
-                                            function success(_x17) {
-                                                return _ref27.apply(this, arguments);
+                                            function success(_x18) {
+                                                return _ref30.apply(this, arguments);
                                             }
 
                                             return success;
@@ -30486,10 +30926,10 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
 
                                 case 10:
                                 case 'end':
-                                    return _context27.stop();
+                                    return _context30.stop();
                             }
                         }
-                    }, _callee27, this);
+                    }, _callee30, this);
                 })), 1000);
             }
         }
@@ -30557,22 +30997,22 @@ function bindTransactionAddressVerify(keystore_file) {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function () {
-                        var _ref28 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee28(response) {
+                        var _ref31 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee31(response) {
                             var user_data;
-                            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee28$(_context28) {
+                            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee31$(_context31) {
                                 while (1) {
-                                    switch (_context28.prev = _context28.next) {
+                                    switch (_context31.prev = _context31.next) {
                                         case 0:
                                             if (!response.success) {
-                                                _context28.next = 7;
+                                                _context31.next = 7;
                                                 break;
                                             }
 
-                                            _context28.next = 3;
+                                            _context31.next = 3;
                                             return getCurrentUserData();
 
                                         case 3:
-                                            user_data = _context28.sent;
+                                            user_data = _context31.sent;
 
                                             //checking if fake private key or just miss spell it
                                             if (checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address)) {
@@ -30594,7 +31034,7 @@ function bindTransactionAddressVerify(keystore_file) {
                                                     response_data: response.plain_private_key
                                                 });
                                             }
-                                            _context28.next = 8;
+                                            _context31.next = 8;
                                             break;
 
                                         case 7:
@@ -30605,14 +31045,14 @@ function bindTransactionAddressVerify(keystore_file) {
 
                                         case 8:
                                         case 'end':
-                                            return _context28.stop();
+                                            return _context31.stop();
                                     }
                                 }
-                            }, _callee28, this);
+                            }, _callee31, this);
                         }));
 
-                        function success(_x18) {
-                            return _ref28.apply(this, arguments);
+                        function success(_x19) {
+                            return _ref31.apply(this, arguments);
                         }
 
                         return success;
@@ -33345,7 +33785,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 /* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(40);
+module.exports = __webpack_require__(41);
 
 
 /***/ }),
@@ -37058,7 +37498,7 @@ Point.prototype.mixedAdd = Point.prototype.add;
 
 var curves = exports;
 
-var hash = __webpack_require__(45);
+var hash = __webpack_require__(46);
 var elliptic = __webpack_require__(6);
 
 var assert = elliptic.utils.assert;
@@ -38682,7 +39122,7 @@ EC.prototype.getKeyRecoveryParam = function(e, signature, Q, enc) {
 "use strict";
 
 
-var hash = __webpack_require__(45);
+var hash = __webpack_require__(46);
 var utils = __webpack_require__(64);
 var assert = __webpack_require__(9);
 
@@ -39070,7 +39510,7 @@ Signature.prototype.toDER = function toDER(enc) {
 "use strict";
 
 
-var hash = __webpack_require__(45);
+var hash = __webpack_require__(46);
 var elliptic = __webpack_require__(6);
 var utils = elliptic.utils;
 var assert = utils.assert;
@@ -53773,7 +54213,7 @@ var objectKeys = Object.keys || function (obj) {
 
 var errors = __webpack_require__(8).errors;
 var XHR2 = __webpack_require__(204).XMLHttpRequest // jshint ignore: line
-var http = __webpack_require__(46);
+var http = __webpack_require__(47);
 var https = __webpack_require__(81);
 
 
@@ -53878,7 +54318,7 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(__webpack_require__(205));
-var xml_http_request_event_target_1 = __webpack_require__(47);
+var xml_http_request_event_target_1 = __webpack_require__(48);
 exports.XMLHttpRequestEventTarget = xml_http_request_event_target_1.XMLHttpRequestEventTarget;
 //# sourceMappingURL=index.js.map
 
@@ -53907,13 +54347,13 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var http = __webpack_require__(46);
+var http = __webpack_require__(47);
 var https = __webpack_require__(81);
 var os = __webpack_require__(209);
 var url = __webpack_require__(25);
 var progress_event_1 = __webpack_require__(210);
 var errors_1 = __webpack_require__(211);
-var xml_http_request_event_target_1 = __webpack_require__(47);
+var xml_http_request_event_target_1 = __webpack_require__(48);
 var xml_http_request_upload_1 = __webpack_require__(212);
 var Cookie = __webpack_require__(213);
 var XMLHttpRequest = /** @class */ (function (_super) {
@@ -54917,7 +55357,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var xml_http_request_event_target_1 = __webpack_require__(47);
+var xml_http_request_event_target_1 = __webpack_require__(48);
 var XMLHttpRequestUpload = /** @class */ (function (_super) {
     __extends(XMLHttpRequestUpload, _super);
     function XMLHttpRequestUpload() {
@@ -64421,7 +64861,7 @@ var Account = __webpack_require__(242);
 var Hash = __webpack_require__(111);
 var RLP = __webpack_require__(110);
 var Nat = __webpack_require__(109);
-var Bytes = __webpack_require__(48);
+var Bytes = __webpack_require__(49);
 var cryp = (typeof global === 'undefined') ? __webpack_require__(35) : __webpack_require__(35);
 var scryptsy = __webpack_require__(289);
 var uuid = __webpack_require__(291);
@@ -64932,7 +65372,7 @@ module.exports = Accounts;
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var Bytes = __webpack_require__(48);
+var Bytes = __webpack_require__(49);
 var Nat = __webpack_require__(109);
 var elliptic = __webpack_require__(6);
 var rlp = __webpack_require__(110);
@@ -65230,8 +65670,8 @@ module.exports = function (password, salt, iterations, keylen, digest, callback)
 /***/ (function(module, exports, __webpack_require__) {
 
 var DES = __webpack_require__(248)
-var aes = __webpack_require__(51)
-var aesModes = __webpack_require__(52)
+var aes = __webpack_require__(52)
+var aesModes = __webpack_require__(53)
 var desModes = __webpack_require__(263)
 var ebtk = __webpack_require__(37)
 
@@ -65303,7 +65743,7 @@ exports.listCiphers = exports.getCiphers = getCiphers
 /***/ (function(module, exports, __webpack_require__) {
 
 var CipherBase = __webpack_require__(12)
-var des = __webpack_require__(50)
+var des = __webpack_require__(51)
 var inherits = __webpack_require__(0)
 var Buffer = __webpack_require__(2).Buffer
 
@@ -65775,7 +66215,7 @@ Cipher.prototype._finalDecrypt = function _finalDecrypt() {
 var assert = __webpack_require__(9);
 var inherits = __webpack_require__(0);
 
-var des = __webpack_require__(50);
+var des = __webpack_require__(51);
 var utils = des.utils;
 var Cipher = des.Cipher;
 
@@ -65997,7 +66437,7 @@ proto._update = function _update(inp, inOff, out, outOff) {
 var assert = __webpack_require__(9);
 var inherits = __webpack_require__(0);
 
-var des = __webpack_require__(50);
+var des = __webpack_require__(51);
 var Cipher = des.Cipher;
 var DES = des.DES;
 
@@ -66053,7 +66493,7 @@ EDE.prototype._unpad = DES.prototype._unpad;
 /* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MODES = __webpack_require__(52)
+var MODES = __webpack_require__(53)
 var AuthCipher = __webpack_require__(97)
 var Buffer = __webpack_require__(2).Buffer
 var StreamCipher = __webpack_require__(98)
@@ -66447,7 +66887,7 @@ module.exports = GHASH
 
 var AuthCipher = __webpack_require__(97)
 var Buffer = __webpack_require__(2).Buffer
-var MODES = __webpack_require__(52)
+var MODES = __webpack_require__(53)
 var StreamCipher = __webpack_require__(98)
 var Transform = __webpack_require__(12)
 var aes = __webpack_require__(36)
@@ -66931,7 +67371,7 @@ module.exports = {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {// much of this based on https://github.com/indutny/self-signed/blob/gh-pages/lib/rsa.js
 var createHmac = __webpack_require__(88)
-var crt = __webpack_require__(53)
+var crt = __webpack_require__(54)
 var EC = __webpack_require__(6).ec
 var BN = __webpack_require__(3)
 var parseKeys = __webpack_require__(38)
@@ -68459,7 +68899,7 @@ var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:2
 var startRegex = /^-----BEGIN ((?:.* KEY)|CERTIFICATE)-----/m
 var fullRegex = /^-----BEGIN ((?:.* KEY)|CERTIFICATE)-----([0-9A-z\n\r\+\/\=]+)-----END \1-----$/m
 var evp = __webpack_require__(37)
-var ciphers = __webpack_require__(51)
+var ciphers = __webpack_require__(52)
 module.exports = function (okey, password) {
   var key = okey.toString()
   var match = key.match(findProc)
@@ -68734,7 +69174,7 @@ var mgf = __webpack_require__(106);
 var xor = __webpack_require__(107);
 var bn = __webpack_require__(3);
 var withPublic = __webpack_require__(108);
-var crt = __webpack_require__(53);
+var crt = __webpack_require__(54);
 
 var constants = {
   RSA_PKCS1_OAEP_PADDING: 4,
@@ -68832,7 +69272,7 @@ function nonZero(len, crypto) {
 var mgf = __webpack_require__(106);
 var xor = __webpack_require__(107);
 var bn = __webpack_require__(3);
-var crt = __webpack_require__(53);
+var crt = __webpack_require__(54);
 var createHash = __webpack_require__(14);
 var withPublic = __webpack_require__(108);
 module.exports = function privateDecrypt(private_key, enc, reverse) {
@@ -69065,7 +69505,7 @@ module.exports = __webpack_require__(290)
 /* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer) {var pbkdf2Sync = __webpack_require__(49).pbkdf2Sync
+/* WEBPACK VAR INJECTION */(function(Buffer) {var pbkdf2Sync = __webpack_require__(50).pbkdf2Sync
 
 var MAX_VALUE = 0x7fffffff
 

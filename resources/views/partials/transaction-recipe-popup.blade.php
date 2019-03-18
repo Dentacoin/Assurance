@@ -35,8 +35,8 @@
                 </g>
             </g>
         </g>
-</svg> Pay Your First Premium</div>
-<div class="text-center padding-bottom-20 fs-20">and activate your smart contract</div>
+</svg> {{$recipe_title}}</div>
+<div class="text-center padding-bottom-20 fs-20">{{$recipe_subtitle}}</div>
 @if(filter_var($show_dcn_bar, FILTER_VALIDATE_BOOLEAN))
     <div class="section-blue-green-background text-center">
         <div class="usd_val">$<span></span></div>
@@ -55,6 +55,7 @@
     <label class="inline-block">Ether Fee: <i class="fa fa-info-circle" data-toggle="popover" data-placement="bottom" data-content="Ether (ETH) is a currency that is used for covering your transaction costs. Don't have ETH? <a href='//wallet.dentacoin.com/buy' target='_blank'>Buy some with a card here</a>."></i></label>
     <div class="field inline-block"></div>
 </div>
+<div class="extra-recipe-html"></div>
 @if(filter_var($cached_key, FILTER_VALIDATE_BOOLEAN))
     <div class="margin-top-30">
         @include('partials.address-validation-or-remember-me', ['current_logged_user_dcn_address' => $current_logged_user->dcn_address, 'cache' => false])
@@ -62,7 +63,7 @@
 @endif
 <div class="camp-for-keystore-password"></div>
 <div class="proof-success no-transition fs-20 calibri-bold text-center">Successful address and key verification.</div>
-<div class="padding-top-30 fs-18 padding-bottom-20 text-center additional-text">By clicking on the button below you also agree that from now on your monthly premium amount will be automatically deducted from your wallet balance on the payment due date.</div>
+<div class="padding-top-30 fs-18 padding-bottom-20 text-center additional-text">{{$recipe_checkbox_text}}</div>
 <div class="checkbox-container text-center">
     <div class="pretty p-svg p-curve on-white-background inline-block-important">
         <input type="checkbox" id="understand-and-agree"/>
