@@ -4820,26 +4820,24 @@ function cancelContractEventInit() {
                             this_btn = $(this);
 
                             if (!(this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined)) {
-                                _context25.next = 8;
+                                _context25.next = 6;
                                 break;
                             }
 
-                            _context25.t0 = parseInt;
-                            _context25.next = 5;
+                            _context25.next = 4;
                             return App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
 
-                        case 5:
-                            _context25.t1 = _context25.sent;
-                            exiting_contract = (0, _context25.t0)(_context25.t1);
+                        case 4:
+                            exiting_contract = _context25.sent;
 
                             console.log(exiting_contract, 'exiting_contract');
 
-                        case 8:
+                        case 6:
 
                             console.log('contract cancellation');
                             return _context25.abrupt("return", false);
 
-                        case 12:
+                        case 10:
                         case "end":
                             return _context25.stop();
                     }
