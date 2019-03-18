@@ -3282,47 +3282,56 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                 basic.showAlert('Please enter valid private key.', '', true);
             } else {
                 $('.response-layer').show();
-                setTimeout(function() {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/assurance-import-private-key',
-                        dataType: 'json',
-                        data: {
-                            private_key: $('.proof-of-address #your-private-key').val().trim()
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: async function (response) {
-                            //now with the address and the public key received from the nodejs api update the db
-                            if(response.success) {
-                                //checking if fake private key or just miss spell it
-                                if(checksumAddress($('.proof-of-address').attr('data-address')) != checksumAddress(response.address)) {
-                                    basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', '', true);
-                                    $('.response-layer').hide();
-                                } else {
-                                    //if remember me option is checked
-                                    if($('.proof-of-address #remember-my-private-key').is(':checked')) {
-                                        localStorage.setItem('current-account', JSON.stringify({
-                                            address: response.address,
-                                            type: 'key',
-                                            key: response.private_key
-                                        }));
-                                    }
+                setTimeout(async function () {
+                    if (render_pdf != null) {
+                        var render_form = $('form#render-pdf');
+                        var decrypted_pdf_response = await getDecryptedPdfContentByPlainKey(encrypted_pdf_content, $('.proof-of-address #your-private-key').val().trim());
 
-                                    if(render_pdf != null) {
-                                        var render_form = $('form#render-pdf');
-                                        var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content, response.private_key);
+                        $('.response-layer').hide();
+                        if (decrypted_pdf_response.success) {
+                            //if remember me option is checked
+                            if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                                localStorage.setItem('current-account', JSON.stringify({
+                                    address: decrypted_pdf_response.success.address,
+                                    type: 'key',
+                                    key: decrypted_pdf_response.success.private_key
+                                }));
+                            }
 
+                            basic.closeDialog();
+                            render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
+                            render_form.submit();
+                        } else if (decrypted_pdf_response.error) {
+                            basic.showAlert(decrypted_pdf_response.error, '', true);
+                        }
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/assurance-import-private-key',
+                            dataType: 'json',
+                            data: {
+                                private_key: $('.proof-of-address #your-private-key').val().trim()
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: async function (response) {
+                                //now with the address and the public key received from the nodejs api update the db
+                                if (response.success) {
+                                    //checking if fake private key or just miss spell it
+                                    if (checksumAddress($('.proof-of-address').attr('data-address')) != checksumAddress(response.address)) {
+                                        basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', '', true);
                                         $('.response-layer').hide();
-                                        if(decrypted_pdf_response.success) {
-                                            basic.closeDialog();
-                                            render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
-                                            render_form.submit();
-                                        } else if(decrypted_pdf_response.error) {
-                                            basic.showAlert(decrypted_pdf_response.error, '', true);
-                                        }
                                     } else {
+                                        //if remember me option is checked
+                                        if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                                            localStorage.setItem('current-account', JSON.stringify({
+                                                address: decrypted_pdf_response.success.address,
+                                                type: 'key',
+                                                key: decrypted_pdf_response.success.private_key
+                                            }));
+                                        }
+
                                         $.ajax({
                                             type: 'POST',
                                             url: '/update-public-keys',
@@ -3336,7 +3345,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                             },
                                             success: function (inner_response) {
                                                 $('.response-layer').hide();
-                                                if(inner_response.success) {
+                                                if (inner_response.success) {
                                                     $('.proof-of-address').remove();
                                                     $('.proof-success').fadeIn(1500);
                                                 } else {
@@ -3345,13 +3354,13 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                             }
                                         });
                                     }
+                                } else if(response.error) {
+                                    $('.response-layer').hide();
+                                    basic.showAlert(response.error, '', true);
                                 }
-                            } else if(response.error) {
-                                $('.response-layer').hide();
-                                basic.showAlert(response.error, '', true);
                             }
-                        }
-                    });
+                        });
+                    }
                 }, 1000);
             }
         }
@@ -3848,6 +3857,21 @@ async function getDecryptedPdfContent(encrypted_html, key) {
         data: {
             encrypted_html: encrypted_html,
             private_key: key
+        }
+    });
+}
+
+async function getDecryptedPdfContentByPlainKey(encrypted_html, key) {
+    return await $.ajax({
+        type: 'POST',
+        url: '/decrypt-data-plain-key',
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            encrypted_html: encrypted_html,
+            plain_key: key
         }
     });
 }

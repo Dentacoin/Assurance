@@ -1104,7 +1104,7 @@ var onDocumentReadyPageData = function () {
                                                         switch (_context23.prev = _context23.next) {
                                                             case 0:
                                                                 if (!response.success) {
-                                                                    _context23.next = 34;
+                                                                    _context23.next = 35;
                                                                     break;
                                                                 }
 
@@ -1134,8 +1134,10 @@ var onDocumentReadyPageData = function () {
                                                                     html: true
                                                                 });
 
+                                                                console.log(cached_key, 'cached_key');
+
                                                                 if (!cached_key) {
-                                                                    _context23.next = 17;
+                                                                    _context23.next = 18;
                                                                     break;
                                                                 }
 
@@ -1149,49 +1151,49 @@ var onDocumentReadyPageData = function () {
                                                                         $('.proof-success').fadeIn(1500);
                                                                     }, 500);
                                                                 });
-                                                                _context23.next = 31;
+                                                                _context23.next = 32;
                                                                 break;
 
-                                                            case 17:
+                                                            case 18:
                                                                 if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
-                                                                    _context23.next = 30;
+                                                                    _context23.next = 31;
                                                                     break;
                                                                 }
 
-                                                                _context23.next = 20;
+                                                                _context23.next = 21;
                                                                 return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
 
-                                                            case 20:
+                                                            case 21:
                                                                 decrypted_private_key_response = _context23.sent;
 
                                                                 if (!decrypted_private_key_response.success) {
-                                                                    _context23.next = 25;
+                                                                    _context23.next = 26;
                                                                     break;
                                                                 }
 
                                                                 transaction_key = decrypted_private_key_response.success;
-                                                                _context23.next = 28;
+                                                                _context23.next = 29;
                                                                 break;
 
-                                                            case 25:
+                                                            case 26:
                                                                 if (!decrypted_private_key_response.error) {
-                                                                    _context23.next = 28;
+                                                                    _context23.next = 29;
                                                                     break;
                                                                 }
 
                                                                 basic.showAlert(decrypted_private_key_response.error, '', true);
                                                                 return _context23.abrupt("return", false);
 
-                                                            case 28:
-                                                                _context23.next = 31;
+                                                            case 29:
+                                                                _context23.next = 32;
                                                                 break;
 
-                                                            case 30:
+                                                            case 31:
                                                                 if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                                                     $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20 text-center"><input type="password" placeholder="Password" class="custom-input max-width-250 keystore-password"/></div>');
                                                                 }
 
-                                                            case 31:
+                                                            case 32:
 
                                                                 $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22() {
                                                                     var decrypted_keystore_file_response, EthereumTx, nonce, contract_approval_function_abi, contract_approval_transaction_obj, contract_approval_transaction;
@@ -1341,15 +1343,15 @@ var onDocumentReadyPageData = function () {
                                                                         }
                                                                     }, _callee22, this);
                                                                 })));
-                                                                _context23.next = 35;
+                                                                _context23.next = 36;
                                                                 break;
 
-                                                            case 34:
+                                                            case 35:
                                                                 if (response.error) {
                                                                     basic.showAlert(response.error, '', true);
                                                                 }
 
-                                                            case 35:
+                                                            case 36:
                                                             case "end":
                                                                 return _context23.stop();
                                                         }
@@ -1452,13 +1454,13 @@ var onDocumentReadyPageData = function () {
 }();
 
 var validateUserAddress = function () {
-    var _ref27 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee27(user_address, value_element) {
+    var _ref28 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee28(user_address, value_element) {
         var error, check_public_key_ajax_result;
-        return _regeneratorRuntime.wrap(function _callee27$(_context27) {
+        return _regeneratorRuntime.wrap(function _callee28$(_context28) {
             while (1) {
-                switch (_context27.prev = _context27.next) {
+                switch (_context28.prev = _context28.next) {
                     case 0:
-                        _context27.next = 2;
+                        _context28.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/check-public-key',
@@ -1472,7 +1474,7 @@ var validateUserAddress = function () {
                         });
 
                     case 2:
-                        check_public_key_ajax_result = _context27.sent;
+                        check_public_key_ajax_result = _context28.sent;
 
 
                         if (check_public_key_ajax_result.success) {
@@ -1491,28 +1493,28 @@ var validateUserAddress = function () {
                                 error = true;
                             }
                         }
-                        return _context27.abrupt("return", error);
+                        return _context28.abrupt("return", error);
 
                     case 5:
                     case "end":
-                        return _context27.stop();
+                        return _context28.stop();
                 }
             }
-        }, _callee27, this);
+        }, _callee28, this);
     }));
 
     return function validateUserAddress(_x19, _x20) {
-        return _ref27.apply(this, arguments);
+        return _ref28.apply(this, arguments);
     };
 }();
 
 var getEncryptedContractPdfContent = function () {
-    var _ref28 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee28(hash, type) {
-        return _regeneratorRuntime.wrap(function _callee28$(_context28) {
+    var _ref29 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee29(hash, type) {
+        return _regeneratorRuntime.wrap(function _callee29$(_context29) {
             while (1) {
-                switch (_context28.prev = _context28.next) {
+                switch (_context29.prev = _context29.next) {
                     case 0:
-                        _context28.next = 2;
+                        _context29.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-contract',
@@ -1527,38 +1529,6 @@ var getEncryptedContractPdfContent = function () {
                         });
 
                     case 2:
-                        return _context28.abrupt("return", _context28.sent);
-
-                    case 3:
-                    case "end":
-                        return _context28.stop();
-                }
-            }
-        }, _callee28, this);
-    }));
-
-    return function getEncryptedContractPdfContent(_x21, _x22) {
-        return _ref28.apply(this, arguments);
-    };
-}();
-
-var getCurrentUserData = function () {
-    var _ref29 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee29() {
-        return _regeneratorRuntime.wrap(function _callee29$(_context29) {
-            while (1) {
-                switch (_context29.prev = _context29.next) {
-                    case 0:
-                        _context29.next = 2;
-                        return $.ajax({
-                            type: 'GET',
-                            url: '/get-current-user-data',
-                            dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
                         return _context29.abrupt("return", _context29.sent);
 
                     case 3:
@@ -1569,25 +1539,22 @@ var getCurrentUserData = function () {
         }, _callee29, this);
     }));
 
-    return function getCurrentUserData() {
+    return function getEncryptedContractPdfContent(_x21, _x22) {
         return _ref29.apply(this, arguments);
     };
 }();
 
-var checkIfFreeEmail = function () {
-    var _ref30 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee30(email) {
+var getCurrentUserData = function () {
+    var _ref30 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee30() {
         return _regeneratorRuntime.wrap(function _callee30$(_context30) {
             while (1) {
                 switch (_context30.prev = _context30.next) {
                     case 0:
                         _context30.next = 2;
                         return $.ajax({
-                            type: 'POST',
-                            url: '/check-email',
+                            type: 'GET',
+                            url: '/get-current-user-data',
                             dataType: 'json',
-                            data: {
-                                email: email
-                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
@@ -1604,13 +1571,13 @@ var checkIfFreeEmail = function () {
         }, _callee30, this);
     }));
 
-    return function checkIfFreeEmail(_x23) {
+    return function getCurrentUserData() {
         return _ref30.apply(this, arguments);
     };
 }();
 
-var checkCaptcha = function () {
-    var _ref31 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee31(captcha) {
+var checkIfFreeEmail = function () {
+    var _ref31 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee31(email) {
         return _regeneratorRuntime.wrap(function _callee31$(_context31) {
             while (1) {
                 switch (_context31.prev = _context31.next) {
@@ -1618,10 +1585,10 @@ var checkCaptcha = function () {
                         _context31.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/check-captcha',
+                            url: '/check-email',
                             dataType: 'json',
                             data: {
-                                captcha: captcha
+                                email: email
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1639,13 +1606,13 @@ var checkCaptcha = function () {
         }, _callee31, this);
     }));
 
-    return function checkCaptcha(_x24) {
+    return function checkIfFreeEmail(_x23) {
         return _ref31.apply(this, arguments);
     };
 }();
 
-var getDecryptedPrivateKey = function () {
-    var _ref32 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee32(key) {
+var checkCaptcha = function () {
+    var _ref32 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee32(captcha) {
         return _regeneratorRuntime.wrap(function _callee32$(_context32) {
             while (1) {
                 switch (_context32.prev = _context32.next) {
@@ -1653,10 +1620,10 @@ var getDecryptedPrivateKey = function () {
                         _context32.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/assurance-decrypt-private-key',
+                            url: '/check-captcha',
                             dataType: 'json',
                             data: {
-                                private_key: key
+                                captcha: captcha
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1674,13 +1641,13 @@ var getDecryptedPrivateKey = function () {
         }, _callee32, this);
     }));
 
-    return function getDecryptedPrivateKey(_x25) {
+    return function checkCaptcha(_x24) {
         return _ref32.apply(this, arguments);
     };
 }();
 
-var getDecryptedKeystoreFile = function () {
-    var _ref33 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee33(keystore, password) {
+var getDecryptedPrivateKey = function () {
+    var _ref33 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee33(key) {
         return _regeneratorRuntime.wrap(function _callee33$(_context33) {
             while (1) {
                 switch (_context33.prev = _context33.next) {
@@ -1688,11 +1655,10 @@ var getDecryptedKeystoreFile = function () {
                         _context33.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-pk',
+                            url: '/assurance-decrypt-private-key',
                             dataType: 'json',
                             data: {
-                                keystore: keystore,
-                                password: password
+                                private_key: key
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1710,13 +1676,13 @@ var getDecryptedKeystoreFile = function () {
         }, _callee33, this);
     }));
 
-    return function getDecryptedKeystoreFile(_x26, _x27) {
+    return function getDecryptedPrivateKey(_x25) {
         return _ref33.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContent = function () {
-    var _ref34 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee34(encrypted_html, key) {
+var getDecryptedKeystoreFile = function () {
+    var _ref34 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee34(keystore, password) {
         return _regeneratorRuntime.wrap(function _callee34$(_context34) {
             while (1) {
                 switch (_context34.prev = _context34.next) {
@@ -1724,14 +1690,14 @@ var getDecryptedPdfContent = function () {
                         _context34.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data',
+                            url: '/decrypt-pk',
                             dataType: 'json',
+                            data: {
+                                keystore: keystore,
+                                password: password
+                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
                             }
                         });
 
@@ -1746,8 +1712,80 @@ var getDecryptedPdfContent = function () {
         }, _callee34, this);
     }));
 
-    return function getDecryptedPdfContent(_x28, _x29) {
+    return function getDecryptedKeystoreFile(_x26, _x27) {
         return _ref34.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContent = function () {
+    var _ref35 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee35(encrypted_html, key) {
+        return _regeneratorRuntime.wrap(function _callee35$(_context35) {
+            while (1) {
+                switch (_context35.prev = _context35.next) {
+                    case 0:
+                        _context35.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context35.abrupt("return", _context35.sent);
+
+                    case 3:
+                    case "end":
+                        return _context35.stop();
+                }
+            }
+        }, _callee35, this);
+    }));
+
+    return function getDecryptedPdfContent(_x28, _x29) {
+        return _ref35.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContentByPlainKey = function () {
+    var _ref36 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee36(encrypted_html, key) {
+        return _regeneratorRuntime.wrap(function _callee36$(_context36) {
+            while (1) {
+                switch (_context36.prev = _context36.next) {
+                    case 0:
+                        _context36.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data-plain-key',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                plain_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context36.abrupt("return", _context36.sent);
+
+                    case 3:
+                    case "end":
+                        return _context36.stop();
+                }
+            }
+        }, _callee36, this);
+    }));
+
+    return function getDecryptedPdfContentByPlainKey(_x30, _x31) {
+        return _ref36.apply(this, arguments);
     };
 }();
 
@@ -5085,122 +5123,128 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                 basic.showAlert('Please enter valid private key.', '', true);
             } else {
                 $('.response-layer').show();
-                setTimeout(function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/assurance-import-private-key',
-                        dataType: 'json',
-                        data: {
-                            private_key: $('.proof-of-address #your-private-key').val().trim()
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function () {
-                            var _ref25 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee25(response) {
-                                var render_form, decrypted_pdf_response;
-                                return _regeneratorRuntime.wrap(function _callee25$(_context25) {
-                                    while (1) {
-                                        switch (_context25.prev = _context25.next) {
-                                            case 0:
-                                                if (!response.success) {
-                                                    _context25.next = 19;
-                                                    break;
-                                                }
+                setTimeout(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee26() {
+                    var render_form, decrypted_pdf_response;
+                    return _regeneratorRuntime.wrap(function _callee26$(_context26) {
+                        while (1) {
+                            switch (_context26.prev = _context26.next) {
+                                case 0:
+                                    if (!(render_pdf != null)) {
+                                        _context26.next = 9;
+                                        break;
+                                    }
 
-                                                if (!(checksumAddress($('.proof-of-address').attr('data-address')) != checksumAddress(response.address))) {
-                                                    _context25.next = 6;
-                                                    break;
-                                                }
+                                    render_form = $('form#render-pdf');
+                                    _context26.next = 4;
+                                    return getDecryptedPdfContentByPlainKey(encrypted_pdf_content, $('.proof-of-address #your-private-key').val().trim());
 
-                                                basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', '', true);
-                                                $('.response-layer').hide();
-                                                _context25.next = 17;
-                                                break;
-
-                                            case 6:
-                                                //if remember me option is checked
-                                                if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
-                                                    localStorage.setItem('current-account', JSON.stringify({
-                                                        address: response.address,
-                                                        type: 'key',
-                                                        key: response.private_key
-                                                    }));
-                                                }
-
-                                                if (!(render_pdf != null)) {
-                                                    _context25.next = 16;
-                                                    break;
-                                                }
-
-                                                render_form = $('form#render-pdf');
-                                                _context25.next = 11;
-                                                return getDecryptedPdfContent(encrypted_pdf_content, response.private_key);
-
-                                            case 11:
-                                                decrypted_pdf_response = _context25.sent;
+                                case 4:
+                                    decrypted_pdf_response = _context26.sent;
 
 
-                                                $('.response-layer').hide();
-                                                if (decrypted_pdf_response.success) {
-                                                    basic.closeDialog();
-                                                    render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
-                                                    render_form.submit();
-                                                } else if (decrypted_pdf_response.error) {
-                                                    basic.showAlert(decrypted_pdf_response.error, '', true);
-                                                }
-                                                _context25.next = 17;
-                                                break;
+                                    $('.response-layer').hide();
+                                    if (decrypted_pdf_response.success) {
+                                        //if remember me option is checked
+                                        if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                                            localStorage.setItem('current-account', JSON.stringify({
+                                                address: decrypted_pdf_response.success.address,
+                                                type: 'key',
+                                                key: decrypted_pdf_response.success.private_key
+                                            }));
+                                        }
 
-                                            case 16:
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: '/update-public-keys',
-                                                    dataType: 'json',
-                                                    data: {
-                                                        address: response.address,
-                                                        public_key: response.public_key
-                                                    },
-                                                    headers: {
-                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                    },
-                                                    success: function success(inner_response) {
-                                                        $('.response-layer').hide();
-                                                        if (inner_response.success) {
-                                                            $('.proof-of-address').remove();
-                                                            $('.proof-success').fadeIn(1500);
-                                                        } else {
-                                                            basic.showAlert(inner_response.error, '', true);
+                                        basic.closeDialog();
+                                        render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
+                                        render_form.submit();
+                                    } else if (decrypted_pdf_response.error) {
+                                        basic.showAlert(decrypted_pdf_response.error, '', true);
+                                    }
+                                    _context26.next = 10;
+                                    break;
+
+                                case 9:
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/assurance-import-private-key',
+                                        dataType: 'json',
+                                        data: {
+                                            private_key: $('.proof-of-address #your-private-key').val().trim()
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function () {
+                                            var _ref26 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee25(response) {
+                                                return _regeneratorRuntime.wrap(function _callee25$(_context25) {
+                                                    while (1) {
+                                                        switch (_context25.prev = _context25.next) {
+                                                            case 0:
+                                                                //now with the address and the public key received from the nodejs api update the db
+                                                                if (response.success) {
+                                                                    //checking if fake private key or just miss spell it
+                                                                    if (checksumAddress($('.proof-of-address').attr('data-address')) != checksumAddress(response.address)) {
+                                                                        basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', '', true);
+                                                                        $('.response-layer').hide();
+                                                                    } else {
+                                                                        //if remember me option is checked
+                                                                        if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                                                                            localStorage.setItem('current-account', JSON.stringify({
+                                                                                address: decrypted_pdf_response.success.address,
+                                                                                type: 'key',
+                                                                                key: decrypted_pdf_response.success.private_key
+                                                                            }));
+                                                                        }
+
+                                                                        $.ajax({
+                                                                            type: 'POST',
+                                                                            url: '/update-public-keys',
+                                                                            dataType: 'json',
+                                                                            data: {
+                                                                                address: response.address,
+                                                                                public_key: response.public_key
+                                                                            },
+                                                                            headers: {
+                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                            },
+                                                                            success: function success(inner_response) {
+                                                                                $('.response-layer').hide();
+                                                                                if (inner_response.success) {
+                                                                                    $('.proof-of-address').remove();
+                                                                                    $('.proof-success').fadeIn(1500);
+                                                                                } else {
+                                                                                    basic.showAlert(inner_response.error, '', true);
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                } else if (response.error) {
+                                                                    $('.response-layer').hide();
+                                                                    basic.showAlert(response.error, '', true);
+                                                                }
+
+                                                            case 1:
+                                                            case "end":
+                                                                return _context25.stop();
                                                         }
                                                     }
-                                                });
+                                                }, _callee25, this);
+                                            }));
 
-                                            case 17:
-                                                _context25.next = 20;
-                                                break;
+                                            function success(_x17) {
+                                                return _ref26.apply(this, arguments);
+                                            }
 
-                                            case 19:
-                                                if (response.error) {
-                                                    $('.response-layer').hide();
-                                                    basic.showAlert(response.error, '', true);
-                                                }
+                                            return success;
+                                        }()
+                                    });
 
-                                            case 20:
-                                            case "end":
-                                                return _context25.stop();
-                                        }
-                                    }
-                                }, _callee25, this);
-                            }));
-
-                            function success(_x17) {
-                                return _ref25.apply(this, arguments);
+                                case 10:
+                                case "end":
+                                    return _context26.stop();
                             }
-
-                            return success;
-                        }()
-                    });
-                }, 1000);
+                        }
+                    }, _callee26, this);
+                })), 1000);
             }
         }
     });
@@ -5267,22 +5311,22 @@ function bindTransactionAddressVerify(keystore_file) {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function () {
-                        var _ref26 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee26(response) {
+                        var _ref27 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee27(response) {
                             var user_data;
-                            return _regeneratorRuntime.wrap(function _callee26$(_context26) {
+                            return _regeneratorRuntime.wrap(function _callee27$(_context27) {
                                 while (1) {
-                                    switch (_context26.prev = _context26.next) {
+                                    switch (_context27.prev = _context27.next) {
                                         case 0:
                                             if (!response.success) {
-                                                _context26.next = 7;
+                                                _context27.next = 7;
                                                 break;
                                             }
 
-                                            _context26.next = 3;
+                                            _context27.next = 3;
                                             return getCurrentUserData();
 
                                         case 3:
-                                            user_data = _context26.sent;
+                                            user_data = _context27.sent;
 
                                             //checking if fake private key or just miss spell it
                                             if (checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address)) {
@@ -5304,7 +5348,7 @@ function bindTransactionAddressVerify(keystore_file) {
                                                     response_data: response.plain_private_key
                                                 });
                                             }
-                                            _context26.next = 8;
+                                            _context27.next = 8;
                                             break;
 
                                         case 7:
@@ -5315,14 +5359,14 @@ function bindTransactionAddressVerify(keystore_file) {
 
                                         case 8:
                                         case "end":
-                                            return _context26.stop();
+                                            return _context27.stop();
                                     }
                                 }
-                            }, _callee26, this);
+                            }, _callee27, this);
                         }));
 
                         function success(_x18) {
-                            return _ref26.apply(this, arguments);
+                            return _ref27.apply(this, arguments);
                         }
 
                         return success;
