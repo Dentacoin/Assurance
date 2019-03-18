@@ -4854,7 +4854,7 @@ function cancelContractEventInit() {
                                         data: {
                                             to: App.assurance_proxy_address,
                                             cached_key: cached_key,
-                                            contract: $('.init-contract-section').attr('data-contract'),
+                                            contract: this_btn.attr('data-contract'),
                                             show_dcn_bar: false,
                                             recipe_title: this_btn.attr('data-recipe-title'),
                                             recipe_subtitle: this_btn.attr('data-recipe-subtitle'),
