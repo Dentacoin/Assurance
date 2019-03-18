@@ -2979,7 +2979,9 @@ function cancelContractEventInit() {
             if(this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined) {
                 //CHECK FOR CONTRACT ON THE BLOCKCHAIN
                 var exiting_contract = await App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
+                var exiting_contract1 = await App.assurance_state_methods.getPatient(App.assurance_proxy_address, this_btn.attr('data-dentist'));
                 console.log(exiting_contract, 'exiting_contract');
+                console.log(exiting_contract1, 'exiting_contract1');
             }
 
             console.log('contract cancellation');

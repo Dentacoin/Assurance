@@ -4812,7 +4812,7 @@ function initFlipClockTimer(time_left) {
 function cancelContractEventInit() {
     if ($('.cancel-contract-btn').length) {
         $('.cancel-contract-btn').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee25() {
-            var this_btn, exiting_contract;
+            var this_btn, exiting_contract, exiting_contract1;
             return _regeneratorRuntime.wrap(function _callee25$(_context25) {
                 while (1) {
                     switch (_context25.prev = _context25.next) {
@@ -4820,7 +4820,7 @@ function cancelContractEventInit() {
                             this_btn = $(this);
 
                             if (!(this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined)) {
-                                _context25.next = 6;
+                                _context25.next = 10;
                                 break;
                             }
 
@@ -4829,15 +4829,21 @@ function cancelContractEventInit() {
 
                         case 4:
                             exiting_contract = _context25.sent;
+                            _context25.next = 7;
+                            return App.assurance_state_methods.getPatient(App.assurance_proxy_address, this_btn.attr('data-dentist'));
+
+                        case 7:
+                            exiting_contract1 = _context25.sent;
 
                             console.log(exiting_contract, 'exiting_contract');
+                            console.log(exiting_contract1, 'exiting_contract1');
 
-                        case 6:
+                        case 10:
 
                             console.log('contract cancellation');
                             return _context25.abrupt("return", false);
 
-                        case 10:
+                        case 14:
                         case "end":
                             return _context25.stop();
                     }
