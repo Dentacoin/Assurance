@@ -25971,7 +25971,7 @@ var pagesDataOnContractInit = function () {
 
                                                             case 20:
                                                                 _context8.next = 22;
-                                                                return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({ from: App.dummy_address, gas: 500000 });
+                                                                return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({ from: App.dummy_address, gas: 1000000 });
 
                                                             case 22:
                                                                 gas_cost_for_contract_creation = _context8.sent;
@@ -26137,36 +26137,36 @@ var pagesDataOnContractInit = function () {
                                                                                                                                 case 2:
                                                                                                                                     contract_creation_status = _context5.sent;
 
-                                                                                                                                    if (has(contract_creation_status, 'status')) {
-                                                                                                                                        console.log(contract_creation_status.status, 'contract_creation_status.status');
-                                                                                                                                    }
-
-                                                                                                                                    if (contract_creation_status != null && has(contract_creation_status, 'status') && contract_creation_status.status) {
+                                                                                                                                    if (contract_creation_status != null && has(contract_creation_status, 'status')) {
                                                                                                                                         clearInterval(contract_creation_interval_check);
-                                                                                                                                        $.ajax({
-                                                                                                                                            type: 'POST',
-                                                                                                                                            url: '/patient/on-blockchain-contract-creation',
-                                                                                                                                            dataType: 'json',
-                                                                                                                                            data: {
-                                                                                                                                                ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                                                                                            },
-                                                                                                                                            headers: {
-                                                                                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                                                                                            },
-                                                                                                                                            success: function success(inner_response) {
-                                                                                                                                                if (inner_response.success) {
-                                                                                                                                                    $('.response-layer').hide();
-                                                                                                                                                    $('.response-layer .transaction-text').remove();
-                                                                                                                                                    basic.showDialog(inner_response.success, '', null, true);
-                                                                                                                                                    $('.close-popup').click(function () {
-                                                                                                                                                        window.location.reload();
-                                                                                                                                                    });
+                                                                                                                                        if (contract_creation_status.status) {
+                                                                                                                                            $.ajax({
+                                                                                                                                                type: 'POST',
+                                                                                                                                                url: '/patient/on-blockchain-contract-creation',
+                                                                                                                                                dataType: 'json',
+                                                                                                                                                data: {
+                                                                                                                                                    ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                                                                                                },
+                                                                                                                                                headers: {
+                                                                                                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                                                                                                },
+                                                                                                                                                success: function success(inner_response) {
+                                                                                                                                                    if (inner_response.success) {
+                                                                                                                                                        $('.response-layer').hide();
+                                                                                                                                                        $('.response-layer .transaction-text').remove();
+                                                                                                                                                        basic.showDialog(inner_response.success, '', null, true);
+                                                                                                                                                        $('.close-popup').click(function () {
+                                                                                                                                                            window.location.reload();
+                                                                                                                                                        });
+                                                                                                                                                    }
                                                                                                                                                 }
-                                                                                                                                            }
-                                                                                                                                        });
+                                                                                                                                            });
+                                                                                                                                        } else {
+                                                                                                                                            basic.showAlert('Your transaction and blockchain contract creation failed. Please try again later when the gas cost is low or contact <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a>. You can see your transaction on <a href="https://rinkeby.etherscan.io/tx/' + transactionHash + '" target="_blank" class="etherscan-hash">Etherscan</a>');
+                                                                                                                                        }
                                                                                                                                     }
 
-                                                                                                                                case 5:
+                                                                                                                                case 4:
                                                                                                                                 case 'end':
                                                                                                                                     return _context5.stop();
                                                                                                                             }
@@ -26848,7 +26848,7 @@ var onDocumentReadyPageData = function () {
                                                                 //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
 
                                                                 _context23.next = 8;
-                                                                return App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).estimateGas({ from: global_state.account, gas: 50000 });
+                                                                return App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).estimateGas({ from: global_state.account, gas: 500000 });
 
                                                             case 8:
                                                                 gas_cost_for_contract_approval = _context23.sent;

@@ -598,7 +598,7 @@ async function pagesDataOnContractInit() {
                                     }
 
                                     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                                    var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({from: App.dummy_address, gas: 500000});
+                                    var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({from: App.dummy_address, gas: 1000000});
 
                                     var methods_gas_cost;
                                     if(!approval_given) {
@@ -719,33 +719,33 @@ async function pagesDataOnContractInit() {
                                                     //doing setinterval check to check if the smart creation transaction got mined
                                                     var contract_creation_interval_check = setInterval(async function() {
                                                         var contract_creation_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                        if(has(contract_creation_status, 'status')) {
-                                                            console.log(contract_creation_status.status, 'contract_creation_status.status');
-                                                        }
-                                                        
-                                                        if (contract_creation_status != null && has(contract_creation_status, 'status') && contract_creation_status.status) {
+                                                        if (contract_creation_status != null && has(contract_creation_status, 'status')) {
                                                             clearInterval(contract_creation_interval_check);
-                                                            $.ajax({
-                                                                type: 'POST',
-                                                                url: '/patient/on-blockchain-contract-creation',
-                                                                dataType: 'json',
-                                                                data: {
-                                                                    ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                },
-                                                                headers: {
-                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                },
-                                                                success: function (inner_response) {
-                                                                    if (inner_response.success) {
-                                                                        $('.response-layer').hide();
-                                                                        $('.response-layer .transaction-text').remove();
-                                                                        basic.showDialog(inner_response.success, '', null, true);
-                                                                        $('.close-popup').click(function () {
-                                                                            window.location.reload();
-                                                                        });
+                                                            if(contract_creation_status.status) {
+                                                                $.ajax({
+                                                                    type: 'POST',
+                                                                    url: '/patient/on-blockchain-contract-creation',
+                                                                    dataType: 'json',
+                                                                    data: {
+                                                                        ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                    },
+                                                                    headers: {
+                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                    },
+                                                                    success: function (inner_response) {
+                                                                        if (inner_response.success) {
+                                                                            $('.response-layer').hide();
+                                                                            $('.response-layer .transaction-text').remove();
+                                                                            basic.showDialog(inner_response.success, '', null, true);
+                                                                            $('.close-popup').click(function () {
+                                                                                window.location.reload();
+                                                                            });
+                                                                        }
                                                                     }
-                                                                }
-                                                            });
+                                                                });
+                                                            } else {
+                                                                basic.showAlert('Your transaction and blockchain contract creation failed. Please try again later when the gas cost is low or contact <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a>. You can see your transaction on <a href="https://rinkeby.etherscan.io/tx/'+transactionHash+'" target="_blank" class="etherscan-hash">Etherscan</a>');
+                                                            }
                                                         }
                                                     });
                                                 });
@@ -2762,7 +2762,7 @@ async function onDocumentReadyPageData() {
                                             const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
 
                                             //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                                            var gas_cost_for_contract_approval = await App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).estimateGas({from: global_state.account, gas: 50000});
+                                            var gas_cost_for_contract_approval = await App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).estimateGas({from: global_state.account, gas: 500000});
 
                                             var eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_contract_approval * on_page_load_gas_price).toString(), 'ether');
                                             $('.recipe-popup .ether-fee .field').html(eth_fee);
