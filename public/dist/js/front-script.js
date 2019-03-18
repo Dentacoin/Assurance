@@ -252,7 +252,7 @@ var pagesDataOnContractInit = function () {
                                                                 }
 
                                                                 _context8.next = 26;
-                                                                return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({ from: App.dummy_address, gas: 1000000 });
+                                                                return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({ gas: 500000 });
 
                                                             case 26:
                                                                 gas_cost_for_approval = _context8.sent;

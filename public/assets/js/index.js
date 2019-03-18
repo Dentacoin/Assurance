@@ -595,7 +595,7 @@ async function pagesDataOnContractInit() {
 
                                     if(!approval_given) {
                                         //gas estimation for DentacoinToken approval method
-                                        var gas_cost_for_approval = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({from: App.dummy_address, gas: 1000000});
+                                        var gas_cost_for_approval = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({gas: 500000});
                                     }
 
                                     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
