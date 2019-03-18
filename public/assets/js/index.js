@@ -554,6 +554,7 @@ async function pagesDataOnContractInit() {
                 $('.init-contract-section .camp').html('<h2 class="lato-bold fs-45 fs-xs-30 padding-top-60 padding-top-xs-30 padding-bottom-15 text-center">You are all set for your first payment.</h2><div class="padding-bottom-30 padding-bottom-xs-20 fs-20 fs-xs-16 text-center">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should pay your monthly premium before on <span>'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">PAY NOW</a></div>');
 
                 $('.call-recipe').click(function() {
+                    $(this).unbind();
                     if(metamask) {
                         //metamask way
                     } else {
@@ -662,6 +663,8 @@ async function pagesDataOnContractInit() {
                                                     return false;
                                                 }
                                             }
+
+                                            this_btn.unbind();
 
                                             $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
                                             $('.response-layer').show();
@@ -2734,6 +2737,7 @@ async function onDocumentReadyPageData() {
                     var current_user_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(global_state.account));
                     var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.dentist-contract-single-page-section').attr('data-monthly-premium'))));
                     $('.approve-contract-recipe').click(function() {
+                        $(this).unbind();
                         if(current_user_dcn_balance > monthly_premium_in_dcn && current_user_eth_balance > 0.005) {
                             if (metamask) {
                                 //metamask way
@@ -2776,7 +2780,6 @@ async function onDocumentReadyPageData() {
                                             });
 
                                             var transaction_key;
-                                            console.log(cached_key, 'cached_key');
                                             if(cached_key) {
                                                 bindVerifyAddressLogic(true);
                                                 $(document).on('on-transaction-recipe-agree', function(event) {
@@ -2804,6 +2807,7 @@ async function onDocumentReadyPageData() {
                                             }
 
                                             $('.recipe-popup .execute-transaction').click(async function() {
+                                                var this_btn = $(this);
                                                 if (global_state.account == '' || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
                                                     basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                                     return false;
@@ -2823,6 +2827,7 @@ async function onDocumentReadyPageData() {
                                                             return false;
                                                         }
                                                     }
+                                                    this_btn.unbind();
 
                                                     $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
                                                     $('.response-layer').show();
