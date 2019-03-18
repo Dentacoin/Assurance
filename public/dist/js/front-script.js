@@ -5127,7 +5127,7 @@ function cancelContractEventInit() {
                                                                                                                         type: 'POST',
                                                                                                                         url: '/update-contract-status',
                                                                                                                         dataType: 'json',
-                                                                                                                        data: data,
+                                                                                                                        data: cancellation_ajax_data,
                                                                                                                         headers: {
                                                                                                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                                                                                         },
