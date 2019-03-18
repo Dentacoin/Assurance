@@ -588,7 +588,6 @@ async function pagesDataOnContractInit() {
 
                                     var approval_given = false;
                                     //if approval is given already SOMEHOW ...
-                                    console.log(parseInt(await App.dentacoin_token_methods.allowance(checksumAddress(response.contract_data.patient), App.assurance_state_address)), 'patient approval given');
                                     if(parseInt(await App.dentacoin_token_methods.allowance(checksumAddress(response.contract_data.patient), App.assurance_state_address)) > 0) {
                                         approval_given = true;
                                     }
@@ -603,10 +602,8 @@ async function pagesDataOnContractInit() {
 
                                     var methods_gas_cost;
                                     if(!approval_given) {
-                                        console.log('methods_gas_cost 1');
                                         methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
                                     } else {
-                                        console.log('methods_gas_cost 2');
                                         methods_gas_cost = gas_cost_for_contract_creation;
                                     }
 
@@ -675,7 +672,6 @@ async function pagesDataOnContractInit() {
                                             const EthereumTx = require('ethereumjs-tx');
 
                                             if(!approval_given) {
-                                                console.log('fire approval transaction');
                                                 var approval_function_abi = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).encodeABI();
                                                 App.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
                                                     var approval_transaction_obj = {
@@ -702,7 +698,6 @@ async function pagesDataOnContractInit() {
                                             }
 
                                             async function fireAssuranceContractCreationTransaction(nonce) {
-                                                console.log('fire contract creation transaction');
                                                 if(nonce == undefined) {
                                                     nonce = await App.web3_1_0.eth.getTransactionCount(global_state.account);
                                                 }
