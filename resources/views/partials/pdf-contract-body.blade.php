@@ -90,7 +90,7 @@
         </div>
         <div class="section-title">TERMS AND CONDITIONS</div>
         <div style="font-size: 14px;padding-top: 30px;
-padding-bottom:60px;">@include('partials.contract-terms-and-conditions')</div>
+padding-bottom:60px;">@include('partials.contract-terms-and-conditions', ['dont_show_terms_signatures' => true])</div>
         <div class="signs-container clearfix">
             <div class="doctor">
                 <img src="{{CONTRACTS.$contract->slug.'/dentist-signature.png'}}"/>
