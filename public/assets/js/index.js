@@ -2747,10 +2747,8 @@ async function onDocumentReadyPageData() {
 
                 if($('.single-contract-view-section').hasClass('awaiting-approval')) {
                     var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(global_state.account)));
-                    var current_user_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(global_state.account));
-                    var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.dentist-contract-single-page-section').attr('data-monthly-premium'))));
                     $('.approve-contract-recipe').click(function() {
-                        if(current_user_dcn_balance > monthly_premium_in_dcn && current_user_eth_balance > 0.005) {
+                        if(current_user_eth_balance > 0.005) {
                             if (metamask) {
                                 basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance.');
                             } else {
@@ -2912,10 +2910,7 @@ async function onDocumentReadyPageData() {
                             }
                         } else if(current_user_eth_balance < 0.005) {
                             //not enough ETH balance
-                            basic.showAlert('You don\'t have enough ETH balance to create the smart contract on the blockchain. Please refill.')
-                        } else if(current_user_dcn_balance < monthly_premium_in_dcn) {
-                            //not enough DCN balance
-                            basic.showAlert('You don\'t have enough DCN balance to create the smart contract on the blockchain. Please refill');
+                            basic.showAlert('You don\'t have enough ETH balance to create and sign transactions on the blockchain. Please refill.')
                         }
                     });
                 }
@@ -2987,202 +2982,196 @@ function cancelContractEventInit() {
                 var exiting_contract = await App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
                 if((new Date(parseInt(exiting_contract[0]) * 1000)).getTime() > 0) {
                     var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(global_state.account)));
-                    var current_user_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(global_state.account));
-                    $('.approve-contract-recipe').click(function() {
-                        if (current_user_eth_balance > 0.005) {
-                            if (metamask) {
-                                basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance.');
-                            } else {
-                                //custom
-                                var cached_key = localStorage.getItem('current-account') == null;
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/get-recipe-popup',
-                                    dataType: 'json',
-                                    data: {
-                                        to: App.assurance_proxy_address,
-                                        cached_key: cached_key,
-                                        contract: $('.init-contract-section').attr('data-contract'),
-                                        show_dcn_bar: false,
-                                        recipe_title: this_btn.attr('data-recipe-title'),
-                                        recipe_subtitle: this_btn.attr('data-recipe-subtitle'),
-                                        recipe_checkbox_text: this_btn.attr('data-recipe-checkbox-text')
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: async function (response) {
-                                        if (response.success) {
-                                            basic.closeDialog();
-                                            basic.showDialog(response.success, 'recipe-popup', null, true);
+                    if (current_user_eth_balance > 0.005) {
+                        if (metamask) {
+                            basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance.');
+                        } else {
+                            //custom
+                            var cached_key = localStorage.getItem('current-account') == null;
+                            $.ajax({
+                                type: 'POST',
+                                url: '/get-recipe-popup',
+                                dataType: 'json',
+                                data: {
+                                    to: App.assurance_proxy_address,
+                                    cached_key: cached_key,
+                                    contract: $('.init-contract-section').attr('data-contract'),
+                                    show_dcn_bar: false,
+                                    recipe_title: this_btn.attr('data-recipe-title'),
+                                    recipe_subtitle: this_btn.attr('data-recipe-subtitle'),
+                                    recipe_checkbox_text: this_btn.attr('data-recipe-checkbox-text')
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: async function (response) {
+                                    if (response.success) {
+                                        basic.closeDialog();
+                                        basic.showDialog(response.success, 'recipe-popup', null, true);
 
-                                            $('.recipe-popup .extra-recipe-html').html('<div class="popup-row"><label for="cancel-contract-reason" class="inline-block-top">Cancellation reason</label><div class="field"><select id="cancel-contract-reason" class="inline-block-top"><option>Overdue payments</option><option>Missed regular check-ups</option><option>Inappropriate behaviour</option><option data-open-bonus-field="true">Other</option></select></div></div><div class="camp-for-row"></div><div class="popup-row"><label for="cancel-contract-comments" class="inline-block-top">Comments:</label><div class="field"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background inline-block-top" placeholder="Please enter"></textarea></div></div>');
+                                        $('.recipe-popup .extra-recipe-html').html('<div class="popup-row"><label for="cancel-contract-reason" class="inline-block-top">Cancellation reason</label><div class="field"><select id="cancel-contract-reason" class="inline-block-top"><option>Overdue payments</option><option>Missed regular check-ups</option><option>Inappropriate behaviour</option><option data-open-bonus-field="true">Other</option></select></div></div><div class="camp-for-row"></div><div class="popup-row"><label for="cancel-contract-comments" class="inline-block-top">Comments:</label><div class="field"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background inline-block-top" placeholder="Please enter"></textarea></div></div>');
 
-                                            $('.recipe-popup .popup-cancel-contract #cancel-contract-reason').on('change', function() {
-                                                if($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
-                                                    $('.recipe-popup .camp-for-row').html('<div class="popup-row"><label for="cancel-contract-other-reason" class="inline-block-top">Other reason:</label><div class="field"><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background inline-block-top" maxlength="255"/></div></div>');
-                                                } else {
-                                                    $('.recipe-popup .camp-for-row').html('');
-                                                }
-                                            });
-
-                                            fixButtonsFocus();
-
-                                            const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
-                                            //adding 10% just in case the transaction dont fail
-                                            const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10 / 100);
-
-                                            //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                                            var gas_cost_for_contract_cancellation = await App.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).estimateGas({
-                                                from: global_state.account,
-                                                gas: 500000
-                                            });
-
-                                            var eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_contract_cancellation * on_page_load_gas_price).toString(), 'ether');
-                                            $('.recipe-popup .ether-fee .field').html(eth_fee);
-
-                                            $('.recipe-popup .ether-fee i').popover({
-                                                trigger: 'click',
-                                                html: true
-                                            });
-
-                                            var transaction_key;
-                                            if (cached_key) {
-                                                bindVerifyAddressLogic(true);
-                                                $(document).on('on-transaction-recipe-agree', function (event) {
-                                                    transaction_key = event.response_data;
-                                                    setTimeout(function () {
-                                                        $('.response-layer').hide();
-
-                                                        $('.proof-of-address').remove();
-                                                        $('.proof-success').fadeIn(1500);
-                                                    }, 500);
-                                                });
+                                        $('.recipe-popup .popup-cancel-contract #cancel-contract-reason').on('change', function() {
+                                            if($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
+                                                $('.recipe-popup .camp-for-row').html('<div class="popup-row"><label for="cancel-contract-other-reason" class="inline-block-top">Other reason:</label><div class="field"><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background inline-block-top" maxlength="255"/></div></div>');
                                             } else {
-                                                if (JSON.parse(localStorage.getItem('current-account')).type == 'key') {
-                                                    var decrypted_private_key_response = await getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
-                                                    if (decrypted_private_key_response.success) {
-                                                        transaction_key = decrypted_private_key_response.success;
-                                                    } else if (decrypted_private_key_response.error) {
-                                                        basic.showAlert(decrypted_private_key_response.error, '', true);
+                                                $('.recipe-popup .camp-for-row').html('');
+                                            }
+                                        });
+
+                                        fixButtonsFocus();
+
+                                        const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                                        //adding 10% just in case the transaction dont fail
+                                        const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10 / 100);
+
+                                        //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+                                        var gas_cost_for_contract_cancellation = await App.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).estimateGas({
+                                            from: global_state.account,
+                                            gas: 500000
+                                        });
+
+                                        var eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_contract_cancellation * on_page_load_gas_price).toString(), 'ether');
+                                        $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                        $('.recipe-popup .ether-fee i').popover({
+                                            trigger: 'click',
+                                            html: true
+                                        });
+
+                                        var transaction_key;
+                                        if (cached_key) {
+                                            bindVerifyAddressLogic(true);
+                                            $(document).on('on-transaction-recipe-agree', function (event) {
+                                                transaction_key = event.response_data;
+                                                setTimeout(function () {
+                                                    $('.response-layer').hide();
+
+                                                    $('.proof-of-address').remove();
+                                                    $('.proof-success').fadeIn(1500);
+                                                }, 500);
+                                            });
+                                        } else {
+                                            if (JSON.parse(localStorage.getItem('current-account')).type == 'key') {
+                                                var decrypted_private_key_response = await getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
+                                                if (decrypted_private_key_response.success) {
+                                                    transaction_key = decrypted_private_key_response.success;
+                                                } else if (decrypted_private_key_response.error) {
+                                                    basic.showAlert(decrypted_private_key_response.error, '', true);
+                                                    return false;
+                                                }
+                                            } else if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
+                                                $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
+                                                bindGoogleAlikeButtonsEvents();
+                                            }
+                                        }
+
+                                        $('.recipe-popup .execute-transaction').click(async function () {
+                                            var this_execute_transaction_btn = $(this);
+                                            if($('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').length && $('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').val().trim() == '') {
+                                                basic.showAlert('Please enter other reason.', '', true);
+                                            } else if($('.recipe-popup .popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
+                                                basic.showAlert('Please enter comments.', '', true);
+                                            } else if (global_state.account == '' || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                return false;
+                                            } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                                basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                return false;
+                                            } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                return false;
+                                            } else {
+                                                if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                    var decrypted_keystore_file_response = await getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                    if (decrypted_keystore_file_response.success) {
+                                                        transaction_key = decrypted_keystore_file_response.to_string;
+                                                    } else if (decrypted_keystore_file_response.error) {
+                                                        basic.showAlert(decrypted_keystore_file_response.error, '', true);
                                                         return false;
                                                     }
-                                                } else if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
-                                                    $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
-                                                    bindGoogleAlikeButtonsEvents();
                                                 }
-                                            }
+                                                this_execute_transaction_btn.unbind();
 
-                                            $('.recipe-popup .execute-transaction').click(async function () {
-                                                var this_execute_transaction_btn = $(this);
-                                                if($('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').length && $('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').val().trim() == '') {
-                                                    basic.showAlert('Please enter other reason.', '', true);
-                                                } else if($('.recipe-popup .popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
-                                                    basic.showAlert('Please enter comments.', '', true);
-                                                } else if (global_state.account == '' || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
-                                                    basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
-                                                    return false;
-                                                } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
-                                                    basic.showAlert('Please enter the secret password for your keystore file.', '', true);
-                                                    return false;
-                                                } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                    basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
-                                                    return false;
+                                                var cancellation_ajax_data = {
+                                                    contract: this_btn.attr('data-contract'),
+                                                    status: 'cancelled',
+                                                    comments: $('.recipe-popup .popup-cancel-contract #cancel-contract-comments').val().trim()
+                                                };
+
+                                                if($('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').length) {
+                                                    cancellation_ajax_data.reason = $('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').val().trim();
                                                 } else {
-                                                    if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                        var decrypted_keystore_file_response = await getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
-                                                        if (decrypted_keystore_file_response.success) {
-                                                            transaction_key = decrypted_keystore_file_response.to_string;
-                                                        } else if (decrypted_keystore_file_response.error) {
-                                                            basic.showAlert(decrypted_keystore_file_response.error, '', true);
-                                                            return false;
-                                                        }
-                                                    }
-                                                    this_execute_transaction_btn.unbind();
-
-                                                    var cancellation_ajax_data = {
-                                                        contract: this_btn.attr('data-contract'),
-                                                        status: 'cancelled',
-                                                        comments: $('.recipe-popup .popup-cancel-contract #cancel-contract-comments').val().trim()
-                                                    };
-
-                                                    if($('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').length) {
-                                                        cancellation_ajax_data.reason = $('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').val().trim();
-                                                    } else {
-                                                        cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-reason option:selected').html();
-                                                    }
-
-                                                    $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
-                                                    $('.response-layer').show();
-
-                                                    const EthereumTx = require('ethereumjs-tx');
-                                                    var nonce = await App.web3_1_0.eth.getTransactionCount(global_state.account);
-
-                                                    var contract_cancellation_function_abi = await App.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).encodeABI();
-
-                                                    var contract_cancellation_transaction_obj = {
-                                                        gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + (gas_cost_for_contract_cancellation * 5 / 100))),
-                                                        gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                        from: global_state.account,
-                                                        nonce: App.web3_1_0.utils.toHex(nonce),
-                                                        chainId: App.chain_id,
-                                                        data: contract_cancellation_function_abi,
-                                                        to: App.assurance_proxy_address
-                                                    };
-
-                                                    const contract_cancellation_transaction = new EthereumTx(contract_cancellation_transaction_obj);
-                                                    //signing the transaction
-                                                    contract_cancellation_transaction.sign(new Buffer(transaction_key, 'hex'));
-
-                                                    //sending the transaction
-                                                    App.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                        var execute_ajax = true;
-                                                        //doing setinterval check to check if the smart creation transaction got mined
-                                                        var contract_cancellation_interval_check = setInterval(async function () {
-                                                            var contract_cancellation_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                            if (contract_cancellation_status != null && has(contract_cancellation_status, 'status')) {
-                                                                if (contract_cancellation_status.status && execute_ajax) {
-                                                                    execute_ajax = false;
-                                                                    clearInterval(contract_cancellation_interval_check);
-
-                                                                    $.ajax({
-                                                                        type: 'POST',
-                                                                        url: '/update-contract-status',
-                                                                        dataType: 'json',
-                                                                        data: data,
-                                                                        headers: {
-                                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                        },
-                                                                        success: function (inner_response) {
-                                                                            $('.response-layer').show();
-                                                                            if (inner_response.success) {
-                                                                                window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
-                                                                            } else if (inner_response.error) {
-                                                                                $('.response-layer').hide();
-                                                                                basic.showAlert(inner_response.error, '', true);
-                                                                            }
-                                                                        }
-                                                                    });
-                                                                }
-                                                            }
-                                                        }, 1000);
-                                                    });
+                                                    cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-reason option:selected').html();
                                                 }
-                                            });
-                                        } else if (response.error) {
-                                            basic.showAlert(response.error, '', true);
-                                        }
+
+                                                $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
+                                                $('.response-layer').show();
+
+                                                const EthereumTx = require('ethereumjs-tx');
+                                                var nonce = await App.web3_1_0.eth.getTransactionCount(global_state.account);
+
+                                                var contract_cancellation_function_abi = await App.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).encodeABI();
+
+                                                var contract_cancellation_transaction_obj = {
+                                                    gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + (gas_cost_for_contract_cancellation * 5 / 100))),
+                                                    gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                    from: global_state.account,
+                                                    nonce: App.web3_1_0.utils.toHex(nonce),
+                                                    chainId: App.chain_id,
+                                                    data: contract_cancellation_function_abi,
+                                                    to: App.assurance_proxy_address
+                                                };
+
+                                                const contract_cancellation_transaction = new EthereumTx(contract_cancellation_transaction_obj);
+                                                //signing the transaction
+                                                contract_cancellation_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                                //sending the transaction
+                                                App.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                    var execute_ajax = true;
+                                                    //doing setinterval check to check if the smart creation transaction got mined
+                                                    var contract_cancellation_interval_check = setInterval(async function () {
+                                                        var contract_cancellation_status = await App.web3_1_0.eth.getTransactionReceipt(transactionHash);
+                                                        if (contract_cancellation_status != null && has(contract_cancellation_status, 'status')) {
+                                                            if (contract_cancellation_status.status && execute_ajax) {
+                                                                execute_ajax = false;
+                                                                clearInterval(contract_cancellation_interval_check);
+
+                                                                $.ajax({
+                                                                    type: 'POST',
+                                                                    url: '/update-contract-status',
+                                                                    dataType: 'json',
+                                                                    data: data,
+                                                                    headers: {
+                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                    },
+                                                                    success: function (inner_response) {
+                                                                        $('.response-layer').show();
+                                                                        if (inner_response.success) {
+                                                                            window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
+                                                                        } else if (inner_response.error) {
+                                                                            $('.response-layer').hide();
+                                                                            basic.showAlert(inner_response.error, '', true);
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+                                                    }, 1000);
+                                                });
+                                            }
+                                        });
+                                    } else if (response.error) {
+                                        basic.showAlert(response.error, '', true);
                                     }
-                                });
-                            }
-                        } else if (current_user_eth_balance < 0.005) {
-                            //not enough ETH balance
-                            basic.showAlert('You don\'t have enough ETH balance to create the smart contract on the blockchain. Please refill.')
-                        } else if (current_user_dcn_balance) {
-                            //not enough DCN balance
-                            basic.showAlert('You don\'t have enough DCN balance to create the smart contract on the blockchain. Please refill');
+                                }
+                            });
                         }
-                    });
+                    } else if (current_user_eth_balance < 0.005) {
+                        //not enough ETH balance
+                        basic.showAlert('You don\'t have enough ETH balance to create and sign transactions on the blockchain. Please refill.')
+                    }
                 }
             } else {
                 $.ajax({

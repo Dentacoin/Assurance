@@ -830,13 +830,13 @@ var initPagesLogic = function () {
 
 var onDocumentReadyPageData = function () {
     var _ref19 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee24() {
-        var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_signed, remainder, next_payment_timestamp, next_payment_timestamp_date_obj, current_user_eth_balance, current_user_dcn_balance, monthly_premium_in_dcn;
+        var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_signed, remainder, next_payment_timestamp, next_payment_timestamp_date_obj, current_user_eth_balance;
         return _regeneratorRuntime.wrap(function _callee24$(_context24) {
             while (1) {
                 switch (_context24.prev = _context24.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context24.next = 100;
+                            _context24.next = 94;
                             break;
                         }
 
@@ -862,7 +862,7 @@ var onDocumentReadyPageData = function () {
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context24.next = 98;
+                        _context24.next = 92;
                         break;
 
                     case 14:
@@ -898,7 +898,7 @@ var onDocumentReadyPageData = function () {
 
                             table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">' + next_payment_timestamp + '</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
-                        _context24.next = 98;
+                        _context24.next = 92;
                         break;
 
                     case 26:
@@ -928,7 +928,7 @@ var onDocumentReadyPageData = function () {
                         $('.active-until').html(dateObjToFormattedDate(date_obj));
 
                     case 39:
-                        _context24.next = 98;
+                        _context24.next = 92;
                         break;
 
                     case 41:
@@ -1020,12 +1020,12 @@ var onDocumentReadyPageData = function () {
                                 return _ref21.apply(this, arguments);
                             };
                         }());
-                        _context24.next = 98;
+                        _context24.next = 92;
                         break;
 
                     case 48:
                         if (!$('body').hasClass('dentist-contract-view')) {
-                            _context24.next = 97;
+                            _context24.next = 91;
                             break;
                         }
 
@@ -1045,7 +1045,7 @@ var onDocumentReadyPageData = function () {
                         initTooltips();
 
                         if (!($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval'))) {
-                            _context24.next = 85;
+                            _context24.next = 79;
                             break;
                         }
 
@@ -1068,7 +1068,7 @@ var onDocumentReadyPageData = function () {
                         _context24.t13.html.call(_context24.t13, _context24.t23);
 
                         if (!$('.single-contract-view-section').hasClass('awaiting-approval')) {
-                            _context24.next = 83;
+                            _context24.next = 77;
                             break;
                         }
 
@@ -1081,17 +1081,9 @@ var onDocumentReadyPageData = function () {
                         _context24.t26 = _context24.sent;
                         _context24.t27 = _context24.t25.fromWei.call(_context24.t25, _context24.t26);
                         current_user_eth_balance = (0, _context24.t24)(_context24.t27);
-                        _context24.t28 = parseFloat;
-                        _context24.next = 79;
-                        return App.dentacoin_token_methods.balanceOf(global_state.account);
-
-                    case 79:
-                        _context24.t29 = _context24.sent;
-                        current_user_dcn_balance = (0, _context24.t28)(_context24.t29);
-                        monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.dentist-contract-single-page-section').attr('data-monthly-premium'))));
 
                         $('.approve-contract-recipe').click(function () {
-                            if (current_user_dcn_balance > monthly_premium_in_dcn && current_user_eth_balance > 0.005) {
+                            if (current_user_eth_balance > 0.005) {
                                 if (metamask) {
                                     basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance.');
                                 } else {
@@ -1393,31 +1385,28 @@ var onDocumentReadyPageData = function () {
                                 }
                             } else if (current_user_eth_balance < 0.005) {
                                 //not enough ETH balance
-                                basic.showAlert('You don\'t have enough ETH balance to create the smart contract on the blockchain. Please refill.');
-                            } else if (current_user_dcn_balance < monthly_premium_in_dcn) {
-                                //not enough DCN balance
-                                basic.showAlert('You don\'t have enough DCN balance to create the smart contract on the blockchain. Please refill');
+                                basic.showAlert('You don\'t have enough ETH balance to create and sign transactions on the blockchain. Please refill.');
                             }
                         });
 
-                    case 83:
-                        _context24.next = 95;
+                    case 77:
+                        _context24.next = 89;
                         break;
 
-                    case 85:
+                    case 79:
                         if (!$('.single-contract-view-section').hasClass('active')) {
-                            _context24.next = 95;
+                            _context24.next = 89;
                             break;
                         }
 
                         now_timestamp = Math.round(new Date().getTime() / 1000);
-                        _context24.t30 = parseInt;
-                        _context24.next = 90;
+                        _context24.t28 = parseInt;
+                        _context24.next = 84;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
-                    case 90:
-                        _context24.t31 = _context24.sent;
-                        smart_contract_withdraw_period = (0, _context24.t30)(_context24.t31);
+                    case 84:
+                        _context24.t29 = _context24.sent;
+                        smart_contract_withdraw_period = (0, _context24.t28)(_context24.t29);
                         time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-timestamp-signed'));
 
 
@@ -1432,11 +1421,11 @@ var onDocumentReadyPageData = function () {
 
                         $('.single-contract-view-section .row-with-bottom-squares .next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
 
-                    case 95:
-                        _context24.next = 98;
+                    case 89:
+                        _context24.next = 92;
                         break;
 
-                    case 97:
+                    case 91:
                         if ($('body').hasClass('patient-contract-view')) {
                             if ($('.terms-and-conditions-long-list').length) {
                                 $('.terms-and-conditions-long-list').mCustomScrollbar();
@@ -1452,19 +1441,19 @@ var onDocumentReadyPageData = function () {
                             initTooltips();
                         }
 
-                    case 98:
-                        _context24.next = 104;
+                    case 92:
+                        _context24.next = 98;
                         break;
 
-                    case 100:
-                        _context24.next = 102;
+                    case 94:
+                        _context24.next = 96;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic.js', function () {});
 
-                    case 102:
-                        _context24.next = 104;
+                    case 96:
+                        _context24.next = 98;
                         return $.getScript('//dentacoin.com/assets/libs/facebook-login/facebook.js', function () {});
 
-                    case 104:
+                    case 98:
                     case "end":
                         return _context24.stop();
                 }
@@ -4818,7 +4807,7 @@ function initFlipClockTimer(time_left) {
 function cancelContractEventInit() {
     if ($('.cancel-contract-btn').length) {
         $('.cancel-contract-btn').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee28() {
-            var this_btn, exiting_contract, current_user_eth_balance, current_user_dcn_balance;
+            var this_btn, exiting_contract, current_user_eth_balance, cached_key;
             return _regeneratorRuntime.wrap(function _callee28$(_context28) {
                 while (1) {
                     switch (_context28.prev = _context28.next) {
@@ -4826,7 +4815,7 @@ function cancelContractEventInit() {
                             this_btn = $(this);
 
                             if (!(this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined)) {
-                                _context28.next = 21;
+                                _context28.next = 16;
                                 break;
                             }
 
@@ -4837,7 +4826,7 @@ function cancelContractEventInit() {
                             exiting_contract = _context28.sent;
 
                             if (!(new Date(parseInt(exiting_contract[0]) * 1000).getTime() > 0)) {
-                                _context28.next = 19;
+                                _context28.next = 14;
                                 break;
                             }
 
@@ -4850,372 +4839,361 @@ function cancelContractEventInit() {
                             _context28.t2 = _context28.sent;
                             _context28.t3 = _context28.t1.fromWei.call(_context28.t1, _context28.t2);
                             current_user_eth_balance = (0, _context28.t0)(_context28.t3);
-                            _context28.t4 = parseFloat;
-                            _context28.next = 16;
-                            return App.dentacoin_token_methods.balanceOf(global_state.account);
 
-                        case 16:
-                            _context28.t5 = _context28.sent;
-                            current_user_dcn_balance = (0, _context28.t4)(_context28.t5);
+                            if (current_user_eth_balance > 0.005) {
+                                if (metamask) {
+                                    basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance.');
+                                } else {
+                                    //custom
+                                    cached_key = localStorage.getItem('current-account') == null;
 
-                            $('.approve-contract-recipe').click(function () {
-                                if (current_user_eth_balance > 0.005) {
-                                    if (metamask) {
-                                        basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance.');
-                                    } else {
-                                        //custom
-                                        var cached_key = localStorage.getItem('current-account') == null;
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: '/get-recipe-popup',
-                                            dataType: 'json',
-                                            data: {
-                                                to: App.assurance_proxy_address,
-                                                cached_key: cached_key,
-                                                contract: $('.init-contract-section').attr('data-contract'),
-                                                show_dcn_bar: false,
-                                                recipe_title: this_btn.attr('data-recipe-title'),
-                                                recipe_subtitle: this_btn.attr('data-recipe-subtitle'),
-                                                recipe_checkbox_text: this_btn.attr('data-recipe-checkbox-text')
-                                            },
-                                            headers: {
-                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                            },
-                                            success: function () {
-                                                var _ref26 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee27(response) {
-                                                    var on_page_load_gwei, on_page_load_gas_price, gas_cost_for_contract_cancellation, eth_fee, transaction_key, decrypted_private_key_response;
-                                                    return _regeneratorRuntime.wrap(function _callee27$(_context27) {
-                                                        while (1) {
-                                                            switch (_context27.prev = _context27.next) {
-                                                                case 0:
-                                                                    if (!response.success) {
-                                                                        _context27.next = 36;
-                                                                        break;
-                                                                    }
-
-                                                                    basic.closeDialog();
-                                                                    basic.showDialog(response.success, 'recipe-popup', null, true);
-
-                                                                    $('.recipe-popup .extra-recipe-html').html('<div class="popup-row"><label for="cancel-contract-reason" class="inline-block-top">Cancellation reason</label><div class="field"><select id="cancel-contract-reason" class="inline-block-top"><option>Overdue payments</option><option>Missed regular check-ups</option><option>Inappropriate behaviour</option><option data-open-bonus-field="true">Other</option></select></div></div><div class="camp-for-row"></div><div class="popup-row"><label for="cancel-contract-comments" class="inline-block-top">Comments:</label><div class="field"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background inline-block-top" placeholder="Please enter"></textarea></div></div>');
-
-                                                                    $('.recipe-popup .popup-cancel-contract #cancel-contract-reason').on('change', function () {
-                                                                        if ($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
-                                                                            $('.recipe-popup .camp-for-row').html('<div class="popup-row"><label for="cancel-contract-other-reason" class="inline-block-top">Other reason:</label><div class="field"><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background inline-block-top" maxlength="255"/></div></div>');
-                                                                        } else {
-                                                                            $('.recipe-popup .camp-for-row').html('');
-                                                                        }
-                                                                    });
-
-                                                                    fixButtonsFocus();
-
-                                                                    on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
-                                                                    //adding 10% just in case the transaction dont fail
-
-                                                                    on_page_load_gas_price = on_page_load_gwei * 100000000 + on_page_load_gwei * 100000000 * 10 / 100;
-
-                                                                    //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-
-                                                                    _context27.next = 10;
-                                                                    return App.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).estimateGas({
-                                                                        from: global_state.account,
-                                                                        gas: 500000
-                                                                    });
-
-                                                                case 10:
-                                                                    gas_cost_for_contract_cancellation = _context27.sent;
-                                                                    eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_contract_cancellation * on_page_load_gas_price).toString(), 'ether');
-
-                                                                    $('.recipe-popup .ether-fee .field').html(eth_fee);
-
-                                                                    $('.recipe-popup .ether-fee i').popover({
-                                                                        trigger: 'click',
-                                                                        html: true
-                                                                    });
-
-                                                                    if (!cached_key) {
-                                                                        _context27.next = 19;
-                                                                        break;
-                                                                    }
-
-                                                                    bindVerifyAddressLogic(true);
-                                                                    $(document).on('on-transaction-recipe-agree', function (event) {
-                                                                        transaction_key = event.response_data;
-                                                                        setTimeout(function () {
-                                                                            $('.response-layer').hide();
-
-                                                                            $('.proof-of-address').remove();
-                                                                            $('.proof-success').fadeIn(1500);
-                                                                        }, 500);
-                                                                    });
-                                                                    _context27.next = 33;
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/get-recipe-popup',
+                                        dataType: 'json',
+                                        data: {
+                                            to: App.assurance_proxy_address,
+                                            cached_key: cached_key,
+                                            contract: $('.init-contract-section').attr('data-contract'),
+                                            show_dcn_bar: false,
+                                            recipe_title: this_btn.attr('data-recipe-title'),
+                                            recipe_subtitle: this_btn.attr('data-recipe-subtitle'),
+                                            recipe_checkbox_text: this_btn.attr('data-recipe-checkbox-text')
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function () {
+                                            var _ref26 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee27(response) {
+                                                var on_page_load_gwei, on_page_load_gas_price, gas_cost_for_contract_cancellation, eth_fee, transaction_key, decrypted_private_key_response;
+                                                return _regeneratorRuntime.wrap(function _callee27$(_context27) {
+                                                    while (1) {
+                                                        switch (_context27.prev = _context27.next) {
+                                                            case 0:
+                                                                if (!response.success) {
+                                                                    _context27.next = 36;
                                                                     break;
+                                                                }
 
-                                                                case 19:
-                                                                    if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
-                                                                        _context27.next = 32;
-                                                                        break;
+                                                                basic.closeDialog();
+                                                                basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                                                $('.recipe-popup .extra-recipe-html').html('<div class="popup-row"><label for="cancel-contract-reason" class="inline-block-top">Cancellation reason</label><div class="field"><select id="cancel-contract-reason" class="inline-block-top"><option>Overdue payments</option><option>Missed regular check-ups</option><option>Inappropriate behaviour</option><option data-open-bonus-field="true">Other</option></select></div></div><div class="camp-for-row"></div><div class="popup-row"><label for="cancel-contract-comments" class="inline-block-top">Comments:</label><div class="field"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background inline-block-top" placeholder="Please enter"></textarea></div></div>');
+
+                                                                $('.recipe-popup .popup-cancel-contract #cancel-contract-reason').on('change', function () {
+                                                                    if ($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
+                                                                        $('.recipe-popup .camp-for-row').html('<div class="popup-row"><label for="cancel-contract-other-reason" class="inline-block-top">Other reason:</label><div class="field"><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background inline-block-top" maxlength="255"/></div></div>');
+                                                                    } else {
+                                                                        $('.recipe-popup .camp-for-row').html('');
                                                                     }
+                                                                });
 
-                                                                    _context27.next = 22;
-                                                                    return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
+                                                                fixButtonsFocus();
 
-                                                                case 22:
-                                                                    decrypted_private_key_response = _context27.sent;
+                                                                on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                                                                //adding 10% just in case the transaction dont fail
 
-                                                                    if (!decrypted_private_key_response.success) {
-                                                                        _context27.next = 27;
-                                                                        break;
-                                                                    }
+                                                                on_page_load_gas_price = on_page_load_gwei * 100000000 + on_page_load_gwei * 100000000 * 10 / 100;
 
-                                                                    transaction_key = decrypted_private_key_response.success;
+                                                                //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+
+                                                                _context27.next = 10;
+                                                                return App.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).estimateGas({
+                                                                    from: global_state.account,
+                                                                    gas: 500000
+                                                                });
+
+                                                            case 10:
+                                                                gas_cost_for_contract_cancellation = _context27.sent;
+                                                                eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_contract_cancellation * on_page_load_gas_price).toString(), 'ether');
+
+                                                                $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                                                $('.recipe-popup .ether-fee i').popover({
+                                                                    trigger: 'click',
+                                                                    html: true
+                                                                });
+
+                                                                if (!cached_key) {
+                                                                    _context27.next = 19;
+                                                                    break;
+                                                                }
+
+                                                                bindVerifyAddressLogic(true);
+                                                                $(document).on('on-transaction-recipe-agree', function (event) {
+                                                                    transaction_key = event.response_data;
+                                                                    setTimeout(function () {
+                                                                        $('.response-layer').hide();
+
+                                                                        $('.proof-of-address').remove();
+                                                                        $('.proof-success').fadeIn(1500);
+                                                                    }, 500);
+                                                                });
+                                                                _context27.next = 33;
+                                                                break;
+
+                                                            case 19:
+                                                                if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
+                                                                    _context27.next = 32;
+                                                                    break;
+                                                                }
+
+                                                                _context27.next = 22;
+                                                                return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
+
+                                                            case 22:
+                                                                decrypted_private_key_response = _context27.sent;
+
+                                                                if (!decrypted_private_key_response.success) {
+                                                                    _context27.next = 27;
+                                                                    break;
+                                                                }
+
+                                                                transaction_key = decrypted_private_key_response.success;
+                                                                _context27.next = 30;
+                                                                break;
+
+                                                            case 27:
+                                                                if (!decrypted_private_key_response.error) {
                                                                     _context27.next = 30;
                                                                     break;
+                                                                }
 
-                                                                case 27:
-                                                                    if (!decrypted_private_key_response.error) {
-                                                                        _context27.next = 30;
-                                                                        break;
-                                                                    }
+                                                                basic.showAlert(decrypted_private_key_response.error, '', true);
+                                                                return _context27.abrupt("return", false);
 
-                                                                    basic.showAlert(decrypted_private_key_response.error, '', true);
-                                                                    return _context27.abrupt("return", false);
+                                                            case 30:
+                                                                _context27.next = 33;
+                                                                break;
 
-                                                                case 30:
-                                                                    _context27.next = 33;
-                                                                    break;
+                                                            case 32:
+                                                                if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
+                                                                    $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
+                                                                    bindGoogleAlikeButtonsEvents();
+                                                                }
 
-                                                                case 32:
-                                                                    if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
-                                                                        $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
-                                                                        bindGoogleAlikeButtonsEvents();
-                                                                    }
+                                                            case 33:
 
-                                                                case 33:
+                                                                $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee26() {
+                                                                    var this_execute_transaction_btn, decrypted_keystore_file_response, cancellation_ajax_data, EthereumTx, nonce, contract_cancellation_function_abi, contract_cancellation_transaction_obj, contract_cancellation_transaction;
+                                                                    return _regeneratorRuntime.wrap(function _callee26$(_context26) {
+                                                                        while (1) {
+                                                                            switch (_context26.prev = _context26.next) {
+                                                                                case 0:
+                                                                                    this_execute_transaction_btn = $(this);
 
-                                                                    $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee26() {
-                                                                        var this_execute_transaction_btn, decrypted_keystore_file_response, cancellation_ajax_data, EthereumTx, nonce, contract_cancellation_function_abi, contract_cancellation_transaction_obj, contract_cancellation_transaction;
-                                                                        return _regeneratorRuntime.wrap(function _callee26$(_context26) {
-                                                                            while (1) {
-                                                                                switch (_context26.prev = _context26.next) {
-                                                                                    case 0:
-                                                                                        this_execute_transaction_btn = $(this);
-
-                                                                                        if (!($('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').length && $('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').val().trim() == '')) {
-                                                                                            _context26.next = 5;
-                                                                                            break;
-                                                                                        }
-
-                                                                                        basic.showAlert('Please enter other reason.', '', true);
-                                                                                        _context26.next = 51;
+                                                                                    if (!($('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').length && $('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').val().trim() == '')) {
+                                                                                        _context26.next = 5;
                                                                                         break;
+                                                                                    }
 
-                                                                                    case 5:
-                                                                                        if (!($('.recipe-popup .popup-cancel-contract #cancel-contract-comments').val().trim() == '')) {
-                                                                                            _context26.next = 9;
-                                                                                            break;
-                                                                                        }
+                                                                                    basic.showAlert('Please enter other reason.', '', true);
+                                                                                    _context26.next = 51;
+                                                                                    break;
 
-                                                                                        basic.showAlert('Please enter comments.', '', true);
-                                                                                        _context26.next = 51;
+                                                                                case 5:
+                                                                                    if (!($('.recipe-popup .popup-cancel-contract #cancel-contract-comments').val().trim() == '')) {
+                                                                                        _context26.next = 9;
                                                                                         break;
+                                                                                    }
 
-                                                                                    case 9:
-                                                                                        if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
-                                                                                            _context26.next = 14;
-                                                                                            break;
-                                                                                        }
+                                                                                    basic.showAlert('Please enter comments.', '', true);
+                                                                                    _context26.next = 51;
+                                                                                    break;
 
-                                                                                        basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
-                                                                                        return _context26.abrupt("return", false);
+                                                                                case 9:
+                                                                                    if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                                                        _context26.next = 14;
+                                                                                        break;
+                                                                                    }
 
-                                                                                    case 14:
-                                                                                        if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '')) {
-                                                                                            _context26.next = 19;
-                                                                                            break;
-                                                                                        }
+                                                                                    basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                                                    return _context26.abrupt("return", false);
 
-                                                                                        basic.showAlert('Please enter the secret password for your keystore file.', '', true);
-                                                                                        return _context26.abrupt("return", false);
+                                                                                case 14:
+                                                                                    if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '')) {
+                                                                                        _context26.next = 19;
+                                                                                        break;
+                                                                                    }
 
-                                                                                    case 19:
-                                                                                        if ($('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                                                            _context26.next = 24;
-                                                                                            break;
-                                                                                        }
+                                                                                    basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                                                    return _context26.abrupt("return", false);
 
-                                                                                        basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
-                                                                                        return _context26.abrupt("return", false);
+                                                                                case 19:
+                                                                                    if ($('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                                                        _context26.next = 24;
+                                                                                        break;
+                                                                                    }
 
-                                                                                    case 24:
-                                                                                        if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
-                                                                                            _context26.next = 35;
-                                                                                            break;
-                                                                                        }
+                                                                                    basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                                                    return _context26.abrupt("return", false);
 
-                                                                                        _context26.next = 27;
-                                                                                        return getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
-
-                                                                                    case 27:
-                                                                                        decrypted_keystore_file_response = _context26.sent;
-
-                                                                                        if (!decrypted_keystore_file_response.success) {
-                                                                                            _context26.next = 32;
-                                                                                            break;
-                                                                                        }
-
-                                                                                        transaction_key = decrypted_keystore_file_response.to_string;
+                                                                                case 24:
+                                                                                    if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
                                                                                         _context26.next = 35;
                                                                                         break;
+                                                                                    }
 
-                                                                                    case 32:
-                                                                                        if (!decrypted_keystore_file_response.error) {
-                                                                                            _context26.next = 35;
-                                                                                            break;
-                                                                                        }
+                                                                                    _context26.next = 27;
+                                                                                    return getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
 
-                                                                                        basic.showAlert(decrypted_keystore_file_response.error, '', true);
-                                                                                        return _context26.abrupt("return", false);
+                                                                                case 27:
+                                                                                    decrypted_keystore_file_response = _context26.sent;
 
-                                                                                    case 35:
-                                                                                        this_execute_transaction_btn.unbind();
+                                                                                    if (!decrypted_keystore_file_response.success) {
+                                                                                        _context26.next = 32;
+                                                                                        break;
+                                                                                    }
 
-                                                                                        cancellation_ajax_data = {
-                                                                                            contract: this_btn.attr('data-contract'),
-                                                                                            status: 'cancelled',
-                                                                                            comments: $('.recipe-popup .popup-cancel-contract #cancel-contract-comments').val().trim()
-                                                                                        };
+                                                                                    transaction_key = decrypted_keystore_file_response.to_string;
+                                                                                    _context26.next = 35;
+                                                                                    break;
+
+                                                                                case 32:
+                                                                                    if (!decrypted_keystore_file_response.error) {
+                                                                                        _context26.next = 35;
+                                                                                        break;
+                                                                                    }
+
+                                                                                    basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                                                    return _context26.abrupt("return", false);
+
+                                                                                case 35:
+                                                                                    this_execute_transaction_btn.unbind();
+
+                                                                                    cancellation_ajax_data = {
+                                                                                        contract: this_btn.attr('data-contract'),
+                                                                                        status: 'cancelled',
+                                                                                        comments: $('.recipe-popup .popup-cancel-contract #cancel-contract-comments').val().trim()
+                                                                                    };
 
 
-                                                                                        if ($('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').length) {
-                                                                                            cancellation_ajax_data.reason = $('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').val().trim();
-                                                                                        } else {
-                                                                                            cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-reason option:selected').html();
-                                                                                        }
+                                                                                    if ($('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').length) {
+                                                                                        cancellation_ajax_data.reason = $('.recipe-popup .popup-cancel-contract #cancel-contract-other-reason').val().trim();
+                                                                                    } else {
+                                                                                        cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-reason option:selected').html();
+                                                                                    }
 
-                                                                                        $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
-                                                                                        $('.response-layer').show();
+                                                                                    $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
+                                                                                    $('.response-layer').show();
 
-                                                                                        EthereumTx = require('ethereumjs-tx');
-                                                                                        _context26.next = 43;
-                                                                                        return App.web3_1_0.eth.getTransactionCount(global_state.account);
+                                                                                    EthereumTx = require('ethereumjs-tx');
+                                                                                    _context26.next = 43;
+                                                                                    return App.web3_1_0.eth.getTransactionCount(global_state.account);
 
-                                                                                    case 43:
-                                                                                        nonce = _context26.sent;
-                                                                                        _context26.next = 46;
-                                                                                        return App.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).encodeABI();
+                                                                                case 43:
+                                                                                    nonce = _context26.sent;
+                                                                                    _context26.next = 46;
+                                                                                    return App.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).encodeABI();
 
-                                                                                    case 46:
-                                                                                        contract_cancellation_function_abi = _context26.sent;
-                                                                                        contract_cancellation_transaction_obj = {
-                                                                                            gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + gas_cost_for_contract_cancellation * 5 / 100)),
-                                                                                            gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                                                            from: global_state.account,
-                                                                                            nonce: App.web3_1_0.utils.toHex(nonce),
-                                                                                            chainId: App.chain_id,
-                                                                                            data: contract_cancellation_function_abi,
-                                                                                            to: App.assurance_proxy_address
-                                                                                        };
-                                                                                        contract_cancellation_transaction = new EthereumTx(contract_cancellation_transaction_obj);
-                                                                                        //signing the transaction
+                                                                                case 46:
+                                                                                    contract_cancellation_function_abi = _context26.sent;
+                                                                                    contract_cancellation_transaction_obj = {
+                                                                                        gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + gas_cost_for_contract_cancellation * 5 / 100)),
+                                                                                        gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                                                        from: global_state.account,
+                                                                                        nonce: App.web3_1_0.utils.toHex(nonce),
+                                                                                        chainId: App.chain_id,
+                                                                                        data: contract_cancellation_function_abi,
+                                                                                        to: App.assurance_proxy_address
+                                                                                    };
+                                                                                    contract_cancellation_transaction = new EthereumTx(contract_cancellation_transaction_obj);
+                                                                                    //signing the transaction
 
-                                                                                        contract_cancellation_transaction.sign(new Buffer(transaction_key, 'hex'));
+                                                                                    contract_cancellation_transaction.sign(new Buffer(transaction_key, 'hex'));
 
-                                                                                        //sending the transaction
-                                                                                        App.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                                                            var execute_ajax = true;
-                                                                                            //doing setinterval check to check if the smart creation transaction got mined
-                                                                                            var contract_cancellation_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee25() {
-                                                                                                var contract_cancellation_status;
-                                                                                                return _regeneratorRuntime.wrap(function _callee25$(_context25) {
-                                                                                                    while (1) {
-                                                                                                        switch (_context25.prev = _context25.next) {
-                                                                                                            case 0:
-                                                                                                                _context25.next = 2;
-                                                                                                                return App.web3_1_0.eth.getTransactionReceipt(transactionHash);
+                                                                                    //sending the transaction
+                                                                                    App.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                                                        var execute_ajax = true;
+                                                                                        //doing setinterval check to check if the smart creation transaction got mined
+                                                                                        var contract_cancellation_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee25() {
+                                                                                            var contract_cancellation_status;
+                                                                                            return _regeneratorRuntime.wrap(function _callee25$(_context25) {
+                                                                                                while (1) {
+                                                                                                    switch (_context25.prev = _context25.next) {
+                                                                                                        case 0:
+                                                                                                            _context25.next = 2;
+                                                                                                            return App.web3_1_0.eth.getTransactionReceipt(transactionHash);
 
-                                                                                                            case 2:
-                                                                                                                contract_cancellation_status = _context25.sent;
+                                                                                                        case 2:
+                                                                                                            contract_cancellation_status = _context25.sent;
 
-                                                                                                                if (contract_cancellation_status != null && has(contract_cancellation_status, 'status')) {
-                                                                                                                    if (contract_cancellation_status.status && execute_ajax) {
-                                                                                                                        execute_ajax = false;
-                                                                                                                        clearInterval(contract_cancellation_interval_check);
+                                                                                                            if (contract_cancellation_status != null && has(contract_cancellation_status, 'status')) {
+                                                                                                                if (contract_cancellation_status.status && execute_ajax) {
+                                                                                                                    execute_ajax = false;
+                                                                                                                    clearInterval(contract_cancellation_interval_check);
 
-                                                                                                                        $.ajax({
-                                                                                                                            type: 'POST',
-                                                                                                                            url: '/update-contract-status',
-                                                                                                                            dataType: 'json',
-                                                                                                                            data: data,
-                                                                                                                            headers: {
-                                                                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                                                                            },
-                                                                                                                            success: function success(inner_response) {
-                                                                                                                                $('.response-layer').show();
-                                                                                                                                if (inner_response.success) {
-                                                                                                                                    window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
-                                                                                                                                } else if (inner_response.error) {
-                                                                                                                                    $('.response-layer').hide();
-                                                                                                                                    basic.showAlert(inner_response.error, '', true);
-                                                                                                                                }
+                                                                                                                    $.ajax({
+                                                                                                                        type: 'POST',
+                                                                                                                        url: '/update-contract-status',
+                                                                                                                        dataType: 'json',
+                                                                                                                        data: data,
+                                                                                                                        headers: {
+                                                                                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                                                                        },
+                                                                                                                        success: function success(inner_response) {
+                                                                                                                            $('.response-layer').show();
+                                                                                                                            if (inner_response.success) {
+                                                                                                                                window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
+                                                                                                                            } else if (inner_response.error) {
+                                                                                                                                $('.response-layer').hide();
+                                                                                                                                basic.showAlert(inner_response.error, '', true);
                                                                                                                             }
-                                                                                                                        });
-                                                                                                                    }
+                                                                                                                        }
+                                                                                                                    });
                                                                                                                 }
+                                                                                                            }
 
-                                                                                                            case 4:
-                                                                                                            case "end":
-                                                                                                                return _context25.stop();
-                                                                                                        }
+                                                                                                        case 4:
+                                                                                                        case "end":
+                                                                                                            return _context25.stop();
                                                                                                     }
-                                                                                                }, _callee25, this);
-                                                                                            })), 1000);
-                                                                                        });
+                                                                                                }
+                                                                                            }, _callee25, this);
+                                                                                        })), 1000);
+                                                                                    });
 
-                                                                                    case 51:
-                                                                                    case "end":
-                                                                                        return _context26.stop();
-                                                                                }
+                                                                                case 51:
+                                                                                case "end":
+                                                                                    return _context26.stop();
                                                                             }
-                                                                        }, _callee26, this);
-                                                                    })));
-                                                                    _context27.next = 37;
-                                                                    break;
+                                                                        }
+                                                                    }, _callee26, this);
+                                                                })));
+                                                                _context27.next = 37;
+                                                                break;
 
-                                                                case 36:
-                                                                    if (response.error) {
-                                                                        basic.showAlert(response.error, '', true);
-                                                                    }
+                                                            case 36:
+                                                                if (response.error) {
+                                                                    basic.showAlert(response.error, '', true);
+                                                                }
 
-                                                                case 37:
-                                                                case "end":
-                                                                    return _context27.stop();
-                                                            }
+                                                            case 37:
+                                                            case "end":
+                                                                return _context27.stop();
                                                         }
-                                                    }, _callee27, this);
-                                                }));
+                                                    }
+                                                }, _callee27, this);
+                                            }));
 
-                                                function success(_x17) {
-                                                    return _ref26.apply(this, arguments);
-                                                }
+                                            function success(_x17) {
+                                                return _ref26.apply(this, arguments);
+                                            }
 
-                                                return success;
-                                            }()
-                                        });
-                                    }
-                                } else if (current_user_eth_balance < 0.005) {
-                                    //not enough ETH balance
-                                    basic.showAlert('You don\'t have enough ETH balance to create the smart contract on the blockchain. Please refill.');
-                                } else if (current_user_dcn_balance) {
-                                    //not enough DCN balance
-                                    basic.showAlert('You don\'t have enough DCN balance to create the smart contract on the blockchain. Please refill');
+                                            return success;
+                                        }()
+                                    });
                                 }
-                            });
+                            } else if (current_user_eth_balance < 0.005) {
+                                //not enough ETH balance
+                                basic.showAlert('You don\'t have enough ETH balance to create and sign transactions on the blockchain. Please refill.');
+                            }
 
-                        case 19:
-                            _context28.next = 22;
+                        case 14:
+                            _context28.next = 17;
                             break;
 
-                        case 21:
+                        case 16:
                             $.ajax({
                                 type: 'POST',
                                 url: '/get-popup-cancel-contract',
@@ -5283,7 +5261,7 @@ function cancelContractEventInit() {
                                 }
                             });
 
-                        case 22:
+                        case 17:
                         case "end":
                             return _context28.stop();
                     }
