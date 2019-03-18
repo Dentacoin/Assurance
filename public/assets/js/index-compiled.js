@@ -30406,7 +30406,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
                                         render_form.submit();
                                     } else if (decrypted_pdf_response.error) {
-                                        basic.showAlert(decrypted_pdf_response.error.message, '', true);
+                                        basic.showAlert(decrypted_pdf_response.error, '', true);
                                     }
                                     _context26.next = 10;
                                     break;
@@ -30753,6 +30753,7 @@ function openCacheKeyPopup(encrypted_pdf_content) {
         },
         success: function success(response) {
             if (response.success) {
+                basic.closeDialog();
                 basic.showDialog('<div class="lato-regular fs-24 text-center padding-bottom-40 padding-top-15">Unlock the PDF file with your private key or your keystore file</div>' + response.success, 'address-validation-or-remember-me', null, true);
 
                 styleUploadFileButton('UNLOCK', true, encrypted_pdf_content);
