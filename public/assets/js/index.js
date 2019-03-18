@@ -2769,6 +2769,7 @@ async function onDocumentReadyPageData() {
                                             });
 
                                             var transaction_key;
+                                            console.log(cached_key, 'cached_key');
                                             if(cached_key) {
                                                 bindVerifyAddressLogic(true);
                                                 $(document).on('on-transaction-recipe-agree', function(event) {

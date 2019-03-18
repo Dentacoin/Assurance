@@ -76,11 +76,11 @@
     <div class="container-fluid contract-terms-and-conditions-signatures">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <img src="{{CONTRACTS.$contract->slug.'/dentist-signature.png'}}"/>
+                <img src="/assets/contracts/{{$contract->slug.'/dentist-signature.png'}}"/>
                 <div class="name">/ Dr. {{$dentist->name}} /</div>
             </div>
             <div class="col-xs-12 col-sm-6 text-right">
-                <img src="{{CONTRACTS.$contract->slug.'/patient-signature.png'}}"/>
+                <img src="/assets/contracts/{{$contract->slug.'/patient-signature.png'}}"/>
                 <div class="name">/ {{$patient->name}} /</div>
             </div>
         </div>
