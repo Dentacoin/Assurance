@@ -14,32 +14,20 @@
 Route::get('/refresh-captcha', 'Controller@refreshCaptcha')->name('refresh-captcha');
 
 Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function () {
+    Route::get('sitemap.xml', 'Controller@getSitemap')->name('sitemap');
 
     //======================================= PAGES ========================================
     Route::get('/', 'HomeController@getView')->name('home');
 
     Route::get('/support-guide', 'SupportGuideController@getView')->name('support-guide');
 
-    Route::get('/contract-proposal/{slug}', 'PatientController@getContractProposal')->name('contract-proposal');
-
-    Route::post('/password-recover', 'UserController@getRecoverPassword')->name('password-recover');
-
-    Route::post('/password-recover-submit', 'UserController@changePasswordSubmit')->name('password-recover-submit');
-
     Route::get('/wallet-instructions', 'WalletInstructionsController@getView')->name('wallet-instructions');
 
-    Route::get('/test', function() {
-        var_dump((new \App\Http\Controllers\APIRequestsController())->getGDPRDownloadLink());
-        die();
-        //var_dump((new \App\Http\Controllers\PatientController())->renderTestPdf());
-        //var_dump((new \App\Http\Controllers\Controller())->fillCountriesFromCsv());
-        //var_dump((new \App\Http\Controllers\Controller())->testZipCreation());
-        //var_dump((new \App\Http\Controllers\APIRequestsController())->getAllEnums());
-        //var_dump((new \App\Http\Controllers\APIRequestsController())->getPatientsByEmail('miroslav.nedelchev@dentacoin.com'));
-        die();
-    })->name('test');
+    Route::get('/contract-proposal/{slug}', 'PatientController@getContractProposal')->name('contract-proposal');
 
-    Route::get('/test123', 'Controller@testingTest')->name('test123');
+    Route::get('/forgotten-password', 'UserController@getForgottenPasswordView')->name('forgotten-password');
+
+    Route::post('/password-recover', 'UserController@getRecoverPassword')->name('password-recover');
 
     //======================================= TEMPORALLY FOR DAPP TESTING ========================================
     Route::get('/dentist-test', 'HomeController@getDentistView')->name('dentist-test');
@@ -47,6 +35,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     //======================================= /TEMPORALLY FOR DAPP TESTING ========================================
 
     //======================================= AJAX ========================================
+    Route::post('/password-recover-submit', 'UserController@changePasswordSubmit')->name('password-recover-submit');
+
     Route::post('/get-calculator-html', 'HomeController@getCalculatorHtml')->name('get-calculator-html');
 
     Route::post('/get-calculator-result', 'HomeController@getCalculatorResult')->name('get-calculator-result');
@@ -60,6 +50,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::post('/check-captcha', 'UserController@checkCaptcha')->name('check-captcha');
 
     Route::post('/download-gdpr-data', 'UserController@downloadGDPRData')->name('download-gdpr-data');
+
+    Route::post('/forgotten-password-submit', 'UserController@forgottenPasswordSubmit')->name('forgotten-password-submit');
     //======================================= /AJAX ========================================
 
     Route::group(['prefix' => 'patient', 'middleware' => 'HandlePatientSession'], function () {
@@ -143,10 +135,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::post('/get-recipe-popup', 'UserController@getRecipePopup')->middleware('HandleUserSession')->name('get-recipe-popup');
 
     Route::post('/withdraw', 'UserController@withdraw')->middleware('HandleUserSession')->name('withdraw');
-
-    Route::get('/forgotten-password', 'UserController@getForgottenPasswordView')->name('forgotten-password');
-
-    Route::post('/forgotten-password-submit', 'UserController@forgottenPasswordSubmit')->name('forgotten-password-submit');
 
     Route::post('/dentist-register', 'DentistController@register')->name('dentist-register');
 

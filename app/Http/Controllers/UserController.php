@@ -651,6 +651,7 @@ class UserController extends Controller {
         $dcn_balance_api_method_response = (new APIRequestsController())->getDCNBalance();
         $failed_withdraw_error_msg = 'Withdraw failed, please try again later.';
         if($dcn_balance_api_method_response->success) {
+            //checking if the withdrawing amount is more than the balance
             if((int)$data['amount'] > $dcn_balance_api_method_response->data) {
                 return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
             } else {

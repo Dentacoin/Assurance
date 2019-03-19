@@ -72,15 +72,13 @@ class Controller extends BaseController
         //if(!$sitemap->isCached())  {
         // add item to the sitemap (url, date, priority, freq)
 
-        $sitemap->add(URL::to('/'), '2018-08-25T20:10:00+02:00', '1.0', 'daily');
-        //$sitemap->add(URL::to('publications'), '2012-08-25T20:10:00+02:00', '0.6', 'weekly');
-        $sitemap->add(URL::to('privacy-policy'), '2018-02-25T20:10:00+02:00', '0.4', 'monthly');
-        //$sitemap->add(URL::to('changelly'), '2018-08-25T20:10:00+02:00', '1.0', 'monthly');
-        $sitemap->add(URL::to('partner-network'), '2018-08-25T20:10:00+02:00', '0.8', 'daily');
-        $sitemap->add(URL::to('team'), '2018-09-25T20:10:00+02:00', '0.9', 'weekly');
-        $sitemap->add(URL::to('careers'), '2018-10-10T20:10:00+02:00', '1', 'daily');
+        $sitemap->add(URL::to('/'), '2019-03-20T20:10:00+02:00', '1.0', 'weekly');
+        $sitemap->add(URL::to('/patient'), '2019-03-20T20:10:00+02:00', '1.0', 'weekly');
+        $sitemap->add(URL::to('/wallet-instructions'), '2019-03-20T20:10:00+02:00', '0.8', 'weekly');
+        $sitemap->add(URL::to('/support-guide'), '2019-03-20T20:10:00+02:00', '0.8', 'weekly');
+        $sitemap->add(URL::to('/forgotten-password'), '2019-03-20T20:10:00+02:00', '0.3', 'monthly');
 
-        //getting all pagination pages for testimonials
+        /*//getting all pagination pages for testimonials
         for($i = 1, $length = (new UserExpressionsController())->getPagesCount(); $i <= $length; $i+=1) {
             $sitemap->add(URL::to('testimonials/page/'.$i), '2018-08-25T20:10:00+02:00', '0.7', 'daily');
         }
@@ -93,7 +91,7 @@ class Controller extends BaseController
         //getting all pagination pages for press-center
         foreach((new \App\Http\Controllers\Admin\CareersController())->getAllJobOffers() as $career)    {
             $sitemap->add(URL::to('careers/'.$career->slug), '2018-10-10T20:10:00+02:00', '0.5', 'weekly');
-        }
+        }*/
 
         // get all posts from db
         //$posts = DB::table('posts')->orderBy('created_at', 'desc')->get();

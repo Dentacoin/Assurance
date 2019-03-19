@@ -440,9 +440,9 @@ var pagesDataOnContractInit = function () {
                                                                                                                                                         $('.response-layer').hide();
                                                                                                                                                         $('.response-layer .transaction-text').remove();
                                                                                                                                                         basic.showDialog(inner_response.success, '', null, true);
-                                                                                                                                                        $('.close-popup').click(function () {
+                                                                                                                                                        setTimeout(function () {
                                                                                                                                                             window.location.reload();
-                                                                                                                                                        });
+                                                                                                                                                        }, 3000);
                                                                                                                                                     }
                                                                                                                                                 }
                                                                                                                                             });
@@ -1334,9 +1334,9 @@ var onDocumentReadyPageData = function () {
                                                                                                                                 $('.response-layer').hide();
                                                                                                                                 $('.response-layer .transaction-text').remove();
                                                                                                                                 basic.showDialog(inner_response.success, '', null, true);
-                                                                                                                                $('.close-popup').click(function () {
+                                                                                                                                setTimeout(function () {
                                                                                                                                     window.location.reload();
-                                                                                                                                });
+                                                                                                                                }, 3000);
                                                                                                                             }
                                                                                                                         }
                                                                                                                     });
@@ -2967,9 +2967,9 @@ if ($('body').hasClass('logged-in')) {
 
         if ($('form#withdraw').length) {
             $('form#withdraw').on('submit', function (event) {
-                basic.showAlert('COMING SOON!', '', true);
+                /*basic.showAlert('COMING SOON!', '', true);
                 event.preventDefault();
-                return false;
+                return false;*/
 
                 var this_form = $(this);
                 this_form.find('.error-handle').remove();
