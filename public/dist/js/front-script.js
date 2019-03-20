@@ -1467,13 +1467,13 @@ var onDocumentReadyPageData = function () {
 }();
 
 var validateUserAddress = function () {
-    var _ref32 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee32(user_address, value_element) {
+    var _ref33 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee33(user_address, value_element) {
         var error, check_public_key_ajax_result;
-        return _regeneratorRuntime.wrap(function _callee32$(_context32) {
+        return _regeneratorRuntime.wrap(function _callee33$(_context33) {
             while (1) {
-                switch (_context32.prev = _context32.next) {
+                switch (_context33.prev = _context33.next) {
                     case 0:
-                        _context32.next = 2;
+                        _context33.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/check-public-key',
@@ -1487,7 +1487,7 @@ var validateUserAddress = function () {
                         });
 
                     case 2:
-                        check_public_key_ajax_result = _context32.sent;
+                        check_public_key_ajax_result = _context33.sent;
 
 
                         if (check_public_key_ajax_result.success) {
@@ -1506,28 +1506,28 @@ var validateUserAddress = function () {
                                 error = true;
                             }
                         }
-                        return _context32.abrupt("return", error);
+                        return _context33.abrupt("return", error);
 
                     case 5:
                     case "end":
-                        return _context32.stop();
+                        return _context33.stop();
                 }
             }
-        }, _callee32, this);
+        }, _callee33, this);
     }));
 
-    return function validateUserAddress(_x20, _x21) {
-        return _ref32.apply(this, arguments);
+    return function validateUserAddress(_x21, _x22) {
+        return _ref33.apply(this, arguments);
     };
 }();
 
 var getEncryptedContractPdfContent = function () {
-    var _ref33 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee33(hash, type) {
-        return _regeneratorRuntime.wrap(function _callee33$(_context33) {
+    var _ref34 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee34(hash, type) {
+        return _regeneratorRuntime.wrap(function _callee34$(_context34) {
             while (1) {
-                switch (_context33.prev = _context33.next) {
+                switch (_context34.prev = _context34.next) {
                     case 0:
-                        _context33.next = 2;
+                        _context34.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-contract',
@@ -1542,38 +1542,6 @@ var getEncryptedContractPdfContent = function () {
                         });
 
                     case 2:
-                        return _context33.abrupt("return", _context33.sent);
-
-                    case 3:
-                    case "end":
-                        return _context33.stop();
-                }
-            }
-        }, _callee33, this);
-    }));
-
-    return function getEncryptedContractPdfContent(_x22, _x23) {
-        return _ref33.apply(this, arguments);
-    };
-}();
-
-var getCurrentUserData = function () {
-    var _ref34 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee34() {
-        return _regeneratorRuntime.wrap(function _callee34$(_context34) {
-            while (1) {
-                switch (_context34.prev = _context34.next) {
-                    case 0:
-                        _context34.next = 2;
-                        return $.ajax({
-                            type: 'GET',
-                            url: '/get-current-user-data',
-                            dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
                         return _context34.abrupt("return", _context34.sent);
 
                     case 3:
@@ -1584,25 +1552,22 @@ var getCurrentUserData = function () {
         }, _callee34, this);
     }));
 
-    return function getCurrentUserData() {
+    return function getEncryptedContractPdfContent(_x23, _x24) {
         return _ref34.apply(this, arguments);
     };
 }();
 
-var checkIfFreeEmail = function () {
-    var _ref35 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee35(email) {
+var getCurrentUserData = function () {
+    var _ref35 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee35() {
         return _regeneratorRuntime.wrap(function _callee35$(_context35) {
             while (1) {
                 switch (_context35.prev = _context35.next) {
                     case 0:
                         _context35.next = 2;
                         return $.ajax({
-                            type: 'POST',
-                            url: '/check-email',
+                            type: 'GET',
+                            url: '/get-current-user-data',
                             dataType: 'json',
-                            data: {
-                                email: email
-                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
@@ -1619,13 +1584,13 @@ var checkIfFreeEmail = function () {
         }, _callee35, this);
     }));
 
-    return function checkIfFreeEmail(_x24) {
+    return function getCurrentUserData() {
         return _ref35.apply(this, arguments);
     };
 }();
 
-var checkCaptcha = function () {
-    var _ref36 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee36(captcha) {
+var checkIfFreeEmail = function () {
+    var _ref36 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee36(email) {
         return _regeneratorRuntime.wrap(function _callee36$(_context36) {
             while (1) {
                 switch (_context36.prev = _context36.next) {
@@ -1633,10 +1598,10 @@ var checkCaptcha = function () {
                         _context36.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/check-captcha',
+                            url: '/check-email',
                             dataType: 'json',
                             data: {
-                                captcha: captcha
+                                email: email
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1654,13 +1619,13 @@ var checkCaptcha = function () {
         }, _callee36, this);
     }));
 
-    return function checkCaptcha(_x25) {
+    return function checkIfFreeEmail(_x25) {
         return _ref36.apply(this, arguments);
     };
 }();
 
-var getDecryptedPrivateKey = function () {
-    var _ref37 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee37(key) {
+var checkCaptcha = function () {
+    var _ref37 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee37(captcha) {
         return _regeneratorRuntime.wrap(function _callee37$(_context37) {
             while (1) {
                 switch (_context37.prev = _context37.next) {
@@ -1668,10 +1633,10 @@ var getDecryptedPrivateKey = function () {
                         _context37.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/assurance-decrypt-private-key',
+                            url: '/check-captcha',
                             dataType: 'json',
                             data: {
-                                private_key: key
+                                captcha: captcha
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1689,13 +1654,13 @@ var getDecryptedPrivateKey = function () {
         }, _callee37, this);
     }));
 
-    return function getDecryptedPrivateKey(_x26) {
+    return function checkCaptcha(_x26) {
         return _ref37.apply(this, arguments);
     };
 }();
 
-var getDecryptedKeystoreFile = function () {
-    var _ref38 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee38(keystore, password) {
+var getDecryptedPrivateKey = function () {
+    var _ref38 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee38(key) {
         return _regeneratorRuntime.wrap(function _callee38$(_context38) {
             while (1) {
                 switch (_context38.prev = _context38.next) {
@@ -1703,11 +1668,10 @@ var getDecryptedKeystoreFile = function () {
                         _context38.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-pk',
+                            url: '/assurance-decrypt-private-key',
                             dataType: 'json',
                             data: {
-                                keystore: keystore,
-                                password: password
+                                private_key: key
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1725,13 +1689,13 @@ var getDecryptedKeystoreFile = function () {
         }, _callee38, this);
     }));
 
-    return function getDecryptedKeystoreFile(_x27, _x28) {
+    return function getDecryptedPrivateKey(_x27) {
         return _ref38.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContent = function () {
-    var _ref39 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee39(encrypted_html, key) {
+var getDecryptedKeystoreFile = function () {
+    var _ref39 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee39(keystore, password) {
         return _regeneratorRuntime.wrap(function _callee39$(_context39) {
             while (1) {
                 switch (_context39.prev = _context39.next) {
@@ -1739,14 +1703,14 @@ var getDecryptedPdfContent = function () {
                         _context39.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data',
+                            url: '/decrypt-pk',
                             dataType: 'json',
+                            data: {
+                                keystore: keystore,
+                                password: password
+                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
                             }
                         });
 
@@ -1761,12 +1725,12 @@ var getDecryptedPdfContent = function () {
         }, _callee39, this);
     }));
 
-    return function getDecryptedPdfContent(_x29, _x30) {
+    return function getDecryptedKeystoreFile(_x28, _x29) {
         return _ref39.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContentByPlainKey = function () {
+var getDecryptedPdfContent = function () {
     var _ref40 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee40(encrypted_html, key) {
         return _regeneratorRuntime.wrap(function _callee40$(_context40) {
             while (1) {
@@ -1775,7 +1739,7 @@ var getDecryptedPdfContentByPlainKey = function () {
                         _context40.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data-plain-key',
+                            url: '/decrypt-data',
                             dataType: 'json',
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1797,8 +1761,44 @@ var getDecryptedPdfContentByPlainKey = function () {
         }, _callee40, this);
     }));
 
-    return function getDecryptedPdfContentByPlainKey(_x31, _x32) {
+    return function getDecryptedPdfContent(_x30, _x31) {
         return _ref40.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContentByPlainKey = function () {
+    var _ref41 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee41(encrypted_html, key) {
+        return _regeneratorRuntime.wrap(function _callee41$(_context41) {
+            while (1) {
+                switch (_context41.prev = _context41.next) {
+                    case 0:
+                        _context41.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data-plain-key',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context41.abrupt("return", _context41.sent);
+
+                    case 3:
+                    case "end":
+                        return _context41.stop();
+                }
+            }
+        }, _callee41, this);
+    }));
+
+    return function getDecryptedPdfContentByPlainKey(_x32, _x33) {
+        return _ref41.apply(this, arguments);
     };
 }();
 
@@ -5875,37 +5875,77 @@ function bindCacheKeyEvent(keystore_file) {
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        success: function success(response) {
-                            //now with the address and the public key received from the nodejs api update the db
-                            if (response.success) {
-                                localStorage.setItem('current-account', JSON.stringify({
-                                    address: response.address,
-                                    type: 'key',
-                                    key: response.private_key
-                                }));
+                        success: function () {
+                            var _ref32 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee32(response) {
+                                var user_data;
+                                return _regeneratorRuntime.wrap(function _callee32$(_context32) {
+                                    while (1) {
+                                        switch (_context32.prev = _context32.next) {
+                                            case 0:
+                                                if (!response.success) {
+                                                    _context32.next = 7;
+                                                    break;
+                                                }
 
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/update-public-keys',
-                                    dataType: 'json',
-                                    data: {
-                                        address: response.address,
-                                        public_key: response.public_key
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function success(inner_response) {
-                                        $('.response-layer').hide();
-                                        $('.remember-my-wallet-camp').remove();
-                                        basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', '', true);
+                                                _context32.next = 3;
+                                                return getCurrentUserData();
+
+                                            case 3:
+                                                user_data = _context32.sent;
+
+
+                                                //checking if fake private key or just miss spell it
+                                                if (checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address)) {
+                                                    basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
+                                                    $('.response-layer').hide();
+                                                } else {
+                                                    localStorage.setItem('current-account', JSON.stringify({
+                                                        address: response.address,
+                                                        type: 'key',
+                                                        key: response.private_key
+                                                    }));
+
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: '/update-public-keys',
+                                                        dataType: 'json',
+                                                        data: {
+                                                            address: response.address,
+                                                            public_key: response.public_key
+                                                        },
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                        },
+                                                        success: function success(inner_response) {
+                                                            $('.response-layer').hide();
+                                                            $('.remember-my-wallet-camp').remove();
+                                                            basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', '', true);
+                                                        }
+                                                    });
+                                                }
+                                                _context32.next = 8;
+                                                break;
+
+                                            case 7:
+                                                if (response.error) {
+                                                    $('.response-layer').hide();
+                                                    basic.showAlert(response.error, '', true);
+                                                }
+
+                                            case 8:
+                                            case "end":
+                                                return _context32.stop();
+                                        }
                                     }
-                                });
-                            } else if (response.error) {
-                                $('.response-layer').hide();
-                                basic.showAlert(response.error, '', true);
+                                }, _callee32, this);
+                            }));
+
+                            function success(_x20) {
+                                return _ref32.apply(this, arguments);
                             }
-                        }
+
+                            return success;
+                        }()
                     });
                 }, 1000);
             }

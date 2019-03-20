@@ -283,7 +283,7 @@
         </script>
     @else
         <script>
-            basic.showAlert("{{ session('success') }}", '', true);
+            basic.showAlert("{!! session('success') !!}", '', true);
         </script>
     @endif
 @endif
