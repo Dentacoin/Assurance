@@ -71,7 +71,7 @@
 <div class="padding-bottom-15">Dentacoin B.V. only provides the infrastructure to help both parties communicate and exchange value easier. If any technical difficulties are faced when using the website, Dentacoin B.V. can be contacted at <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a>.</div>
 <div class="padding-bottom-15">It is not Dentacoin B.V.’s responsibility to handle any complaints in regards to the violation of this contract.</div>
 <h3 class="fs-22 fs-xs-18 calibri-bold padding-top-30 padding-bottom-15">8. DATA PRIVACY</h3>
-<div class="padding-bottom-15">Dentacoin B.V. takes the protection of personal data very seriously. Personal data are treated as confidential and in accordance with the statutory data protection regulations and this Privacy Policy: <a href="//dentacoin.com/privacy-policy" target="_blank">https://dentacoin.com/privacy-policy</a>.</div>
+<div class="padding-bottom-15">Dentacoin B.V. takes the protection of personal data very seriously. Personal data are treated as confidential and in accordance with the statutory data protection regulations and this Privacy Policy: <a href="https://dentacoin.com/privacy-policy" target="_blank">https://dentacoin.com/privacy-policy</a>.</div>
 @if(!empty($contract->contract_active_at) && !isset($dont_show_terms_signatures))
     <div class="container-fluid contract-terms-and-conditions-signatures">
         <div class="row">

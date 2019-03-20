@@ -219,8 +219,8 @@ var App = {
                 }
             });
         },
-        getPatient: function(patient_addr, _dentist_addr)  {
-            return App.assurance_state_instance.methods.getPatient(patient_addr, _dentist_addr).call({}, function(error, result)   {
+        getPatient: function(_patient_addr, _dentist_addr)  {
+            return App.assurance_state_instance.methods.getPatient(_patient_addr, _dentist_addr).call({}, function(error, result)   {
                 if(!error)  {
                     return result;
                 }else {

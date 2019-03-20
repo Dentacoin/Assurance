@@ -695,4 +695,14 @@ class UserController extends Controller {
             return response()->json(['error' => 'Downloading your personal data is not possible at the moment, please try again later.']);
         }
     }
+
+    protected function getUserEmail(Request $request) {
+        $contract = TemporallyContract::where(array('document_hash' => $request->input('hash')))->get()->first();
+        $api_response = (new APIRequestsController())->getUserData($contract->patient_id);
+        if($api_response) {
+            return response()->json(['success' => $api_response->email]);
+        } else {
+            return response()->json(['error' => 'Downloading your personal data is not possible at the moment, please try again later.']);
+        }
+    }
 }
