@@ -649,7 +649,7 @@ class UserController extends Controller {
         $data = $this->clearPostData($request->input());
 
         $dcn_balance_api_method_response = (new APIRequestsController())->getDCNBalance();
-        $failed_withdraw_error_msg = 'Withdraw failed, please try again later.';
+        $failed_withdraw_error_msg = 'Withdraw failed, please try again later or contact <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a>.';
         if($dcn_balance_api_method_response->success) {
             //checking if the withdrawing amount is more than the balance
             if((int)$data['amount'] > $dcn_balance_api_method_response->data) {
@@ -661,14 +661,20 @@ class UserController extends Controller {
                     if(!$api_response) {
                         return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
                     } else {
-                        $widthdraw_response = (new APIRequestsController())->withdraw($data['amount']);
-                        var_dump($widthdraw_response);
-                        die();
+                        $withdraw_response = (new APIRequestsController())->withdraw($data['amount']);
+                        if($withdraw_response && $withdraw_response->success && $withdraw_response->data->transaction->success) {
+                            return redirect()->route('my-profile')->with(['success' => 'Your transaction was confirmed. Check here  <a href="https://etherscan.io/tx/'.$withdraw_response->data->transaction->message.'" class="etherscan-link">Etherscan</a>.']);
+                        } else {
+                            return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
+                        }
                     }
                 } else {
-                    $widthdraw_response = (new APIRequestsController())->withdraw($data['amount']);
-                    var_dump($widthdraw_response);
-                    die();
+                    $withdraw_response = (new APIRequestsController())->withdraw($data['amount']);
+                    if($withdraw_response && $withdraw_response->success && $withdraw_response->data->transaction->success) {
+                        return redirect()->route('my-profile')->with(['success' => 'Your transaction was confirmed. Check here  <a href="https://etherscan.io/tx/'.$withdraw_response->data->transaction->message.'" class="etherscan-link">Etherscan</a>.']);
+                    } else {
+                        return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
+                    }
                 }
             }
         } else {

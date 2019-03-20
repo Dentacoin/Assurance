@@ -1176,6 +1176,8 @@ if($('body').hasClass('logged-in')) {
                     }
                 }
             });
+        } else {
+            $('.remember-my-wallet-camp').html('<h3 class="line-crossed-title margin-bottom-50 fs-20 lato-bold black-color"><span>Remember my wallet</span></h3><div>You have cached your Wallet Address inside your browser. If you want to remove it please head to Manage Privacy and delete the cache.</div><div class="padding-bottom-50"></div>');
         }
     } else if($('body').hasClass('create-contract')) {
         var signature_pad_inited = false;
