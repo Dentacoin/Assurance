@@ -3,7 +3,8 @@
   src: url("/assets/fonts/OpenSans-SemiBold.eot");
   src: url("/assets/fonts/OpenSans-SemiBold.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/OpenSans-SemiBold.woff2") format("woff2"), url("/assets/fonts/OpenSans-SemiBold.woff") format("woff"), url("/assets/fonts/OpenSans-SemiBold.ttf") format("truetype");
   font-weight: normal;
-  font-style: normal; }
+  font-style: normal;
+  font-display: block; }
 @font-face {
   font-family: "OpenSans-Bold";
   src: url("/assets/fonts/OpenSans-Bold.eot");
