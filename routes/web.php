@@ -137,7 +137,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::get('/get-current-user-data', 'UserController@getCurrentUserData')->middleware('HandleUserSession')->name('get-current-user-data');
 
-    Route::post('/get-user-email', 'UserController@getUserEmail')->name('get-user-email');
+    Route::post('/get-user-data-for-nodejs-api', 'UserController@getUserDataForNodeJSApi')->name('get-user-data-for-nodejs-api');
 
     Route::post('/get-recipe-popup', 'UserController@getRecipePopup')->middleware('HandleUserSession')->name('get-recipe-popup');
 
