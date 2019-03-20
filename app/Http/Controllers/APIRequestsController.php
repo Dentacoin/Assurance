@@ -513,7 +513,6 @@ class APIRequestsController extends Controller {
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_POST => 1,
             CURLOPT_URL => 'https://api.dentacoin.com/api/transcations/',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_HTTPHEADER => $header
