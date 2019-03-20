@@ -90,7 +90,7 @@
                     <span class="container display-block">
                         <span class="row display-block">
                             <span class="col-xs-12 col-sm-10 col-sm-offset-1 display-block column padding-right-30">
-                                <span class="lato-black fs-20 padding-right-10 blue-green-color">04</span>How do I create a wallet via Dentacoin Walled dApp?
+                                <span class="lato-black fs-20 padding-right-10 blue-green-color">04</span>How do I create a wallet via Dentacoin Wallet dApp?
                             </span>
                         </span>
                     </span>
