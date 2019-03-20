@@ -1130,6 +1130,7 @@ if($('body').hasClass('logged-in')) {
                 }
 
                 if(!form_errors) {
+                    $('.response-layer').show();
                     this_form_native.submit();
                     this_form.unbind();
                 }
