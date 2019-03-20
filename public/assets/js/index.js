@@ -1112,21 +1112,26 @@ if($('body').hasClass('logged-in')) {
 
         if($('form#withdraw').length) {
             $('form#withdraw').on('submit', function(event) {
-                /*basic.showAlert('COMING SOON!', '', true);
-                event.preventDefault();
-                return false;*/
-
+                var this_form_native = this;
                 var this_form = $(this);
+                var form_errors = false;
                 this_form.find('.error-handle').remove();
 
                 for(var i = 0, len = this_form.find('.required').length; i < len; i+=1) {
                     if(this_form.find('.required').eq(i).val().trim() == '') {
                         customErrorHandle(this_form.find('.required').eq(i).parent(), 'This field is required.');
                         event.preventDefault();
+                        form_errors = true;
                     }else if(this_form.find('.required').eq(i).hasClass('address') && !innerAddressCheck(this_form.find('.required').eq(i).val().trim())) {
                         customErrorHandle(this_form.find('.required').eq(i).parent(), 'Please enter valid wallet address.');
                         event.preventDefault();
+                        form_errors = true;
                     }
+                }
+
+                if(!form_errors) {
+                    this_form_native.submit();
+                    this_form.unbind();
                 }
             });
         }
