@@ -663,7 +663,7 @@ class UserController extends Controller {
                     } else {
                         $withdraw_response = (new APIRequestsController())->withdraw($data['amount']);
                         if($withdraw_response && $withdraw_response->success && $withdraw_response->data->transaction->success) {
-                            return redirect()->route('my-profile')->with(['success' => "Your transaction was confirmed. Check here  <a href='https://etherscan.io/tx/".$withdraw_response->data->transaction->message."' class='etherscan-link'>Etherscan</a>."]);
+                            return redirect()->route('my-profile')->with(['success' => "Your transaction was confirmed. Check here  <a href='https://etherscan.io/tx/".$withdraw_response->data->transaction->message."' class='etherscan-link' target='_blank'>Etherscan</a>."]);
                         } else {
                             return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
                         }
@@ -671,7 +671,7 @@ class UserController extends Controller {
                 } else {
                     $withdraw_response = (new APIRequestsController())->withdraw($data['amount']);
                     if($withdraw_response && $withdraw_response->success && $withdraw_response->data->transaction->success) {
-                        return redirect()->route('my-profile')->with(['success' => "Your transaction was confirmed. Check here  <a href='https://etherscan.io/tx/".$withdraw_response->data->transaction->message."' class='etherscan-link'>Etherscan</a>."]);
+                        return redirect()->route('my-profile')->with(['success' => "Your transaction was confirmed. Check here  <a href='https://etherscan.io/tx/".$withdraw_response->data->transaction->message."' class='etherscan-link' target='_blank'>Etherscan</a>."]);
                     } else {
                         return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
                     }
