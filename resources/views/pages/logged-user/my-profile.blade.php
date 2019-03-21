@@ -78,7 +78,7 @@
                                     </form>
                                     @if(!empty($transaction_history))
                                         <h3 class="line-crossed-title margin-bottom-40 fs-20 margin-top-50 lato-bold black-color"><span>Withdraw History</span></h3>
-                                        <table class="transaction-history-table">
+                                        <table class="transaction-history-table table table-without-reorder table-striped text-left">
                                             <thead>
                                                 <tr>
                                                     <th>Date</th>
@@ -89,7 +89,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($transaction_history as $transaction)
-                                                    <tr data-transaction="{{$transaction->id}}">
+                                                    <tr>
                                                         <td>{{date('d/m/Y', strtotime($transaction->created_at))}}</td>
                                                         <td>{{$transaction->amount}}</td>
                                                         <td>{{$transaction->address}}</td>

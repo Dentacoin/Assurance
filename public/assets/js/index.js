@@ -1110,6 +1110,8 @@ if($('body').hasClass('logged-in')) {
             $('.my-profile-page-content .current-converted-price .symbol span').html(this_btn.html());
         });
 
+        initDataTable();
+
         if($('form#withdraw').length) {
             $('form#withdraw').on('submit', function(event) {
                 var this_form_native = this;

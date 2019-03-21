@@ -27865,8 +27865,8 @@ var App = {
                 }
             });
         },
-        getPatient: function getPatient(patient_addr, _dentist_addr) {
-            return App.assurance_state_instance.methods.getPatient(patient_addr, _dentist_addr).call({}, function (error, result) {
+        getPatient: function getPatient(_patient_addr, _dentist_addr) {
+            return App.assurance_state_instance.methods.getPatient(_patient_addr, _dentist_addr).call({}, function (error, result) {
                 if (!error) {
                     return result;
                 } else {
@@ -28213,6 +28213,8 @@ if ($('body').hasClass('logged-in')) {
             $('.my-profile-page-content .current-converted-price .amount').html((parseFloat($('.current-dcn-amount').html()) * parseFloat(this_btn.attr('data-multiple-with'))).toFixed(2));
             $('.my-profile-page-content .current-converted-price .symbol span').html(this_btn.html());
         });
+
+        initDataTable();
 
         if ($('form#withdraw').length) {
             $('form#withdraw').on('submit', function (event) {
