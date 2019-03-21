@@ -140,6 +140,14 @@ class UserController extends Controller {
             $view_params['dcn_amount'] = $dcn_balance_api_method_response->data;
         }
 
+        $dcn_transactions_history_response = (new \App\Http\Controllers\APIRequestsController())->getDCNTransactions();
+        if($dcn_transactions_history_response && $dcn_transactions_history_response->success) {
+            foreach($dcn_transactions_history_response as $transaction) {
+                var_dump($transaction);
+            }
+            die();
+        }
+
         return view('pages/logged-user/my-profile', $view_params);
     }
 
