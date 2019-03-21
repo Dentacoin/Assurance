@@ -142,7 +142,7 @@ class UserController extends Controller {
 
         $dcn_transactions_history_response = (new \App\Http\Controllers\APIRequestsController())->getDCNTransactions();
         if($dcn_transactions_history_response && $dcn_transactions_history_response->success) {
-            foreach($dcn_transactions_history_response as $transaction) {
+            foreach($dcn_transactions_history_response->success as $transaction) {
                 var_dump($transaction);
             }
             die();
