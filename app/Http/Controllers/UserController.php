@@ -144,6 +144,7 @@ class UserController extends Controller {
         if($dcn_transactions_history_response && $dcn_transactions_history_response->success) {
             foreach($dcn_transactions_history_response->success as $transaction) {
                 var_dump($transaction);
+                echo '=====<br><br><br>';
             }
             die();
         }
