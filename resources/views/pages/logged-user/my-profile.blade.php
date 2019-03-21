@@ -90,10 +90,10 @@
                                             <tbody>
                                                 @foreach($transaction_history as $transaction)
                                                     <tr>
-                                                        <td>{{date('d/m/Y', strtotime($transaction['created_at']))}}</td>
-                                                        <td>{{$transaction['reward']}}</td>
-                                                        <td>{{$transaction['address']}}</td>
-                                                        <td>{{$transaction['status']}}</td>
+                                                        <td>{{date('d/m/Y', strtotime($transaction->created_at))}}</td>
+                                                        <td>{{$transaction->reward}}</td>
+                                                        <td>{{$transaction->address}}</td>
+                                                        <td>{{$transaction->status}}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
