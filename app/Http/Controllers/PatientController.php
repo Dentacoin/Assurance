@@ -389,7 +389,7 @@ class PatientController extends Controller {
         file_put_contents($pdf_file_path, $pdf_file);
     }
 
-    protected function getIndacoinPricesInUSD($currency)    {
+    public function getIndacoinPricesInUSD($currency)    {
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,

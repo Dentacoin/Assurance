@@ -700,6 +700,6 @@ class UserController extends Controller {
         $contract = TemporallyContract::where(array('document_hash' => $request->input('hash')))->get()->first();
         $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
         $patient = (new APIRequestsController())->getUserData($contract->patient_id);
-        return response()->json(['success' => true, 'dentist_name' => $dentist->name, 'patient_name' => $patient->name, 'patient_email' => $patient->email, 'dentist_email' => $dentist->email, 'slug' => $contract->slug]);
+        return response()->json(['success' => true, 'dentist_name' => $dentist->name, 'patient_name' => $patient->name, 'patient_email' => $patient->email, 'dentist_email' => $dentist->email, 'slug' => $contract->slug, 'dentacoins_for_one_usd' => (new PatientController())->getIndacoinPricesInUSD('DCN')]);
     }
 }
