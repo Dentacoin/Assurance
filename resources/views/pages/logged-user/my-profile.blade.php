@@ -76,6 +76,29 @@
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         </div>
                                     </form>
+                                    @if(!empty($transaction_history))
+                                        <h3 class="line-crossed-title margin-bottom-40 fs-20 margin-top-50 lato-bold black-color"><span>Withdraw History</span></h3>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Amount</th>
+                                                    <th>Address</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($transaction_history as $transaction)
+                                                    <tr>
+                                                        <td>{{date('d/m/Y', strtotime($transaction['created_at']))}}</td>
+                                                        <td>{{$transaction['reward']}}</td>
+                                                        <td>{{$transaction['address']}}</td>
+                                                        <td>{{$transaction['status']}}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @endif
                                 @endif
                             @endif
                         @endif

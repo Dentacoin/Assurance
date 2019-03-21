@@ -142,11 +142,7 @@ class UserController extends Controller {
 
         $dcn_transactions_history_response = (new \App\Http\Controllers\APIRequestsController())->getDCNTransactions();
         if($dcn_transactions_history_response && $dcn_transactions_history_response->success) {
-            foreach($dcn_transactions_history_response->success as $transaction) {
-                var_dump($transaction);
-                echo '=====<br><br><br>';
-            }
-            die();
+            $view_params['transaction_history'] = $dcn_transactions_history_response->success;
         }
 
         return view('pages/logged-user/my-profile', $view_params);
