@@ -1,9 +1,10 @@
 <?php
+//TEMPORALLY REDIRECT UNTIL WE FIX DENTACOIN.COM SSL
 $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-var_dump($actual_link);
-die();
-
+if($actual_link == 'https://dentacoin.com/') {
+    header('Location: http://dentacoin.com/');
+    die();
+}
 
 //define PATHS
 define('DS', '/');
