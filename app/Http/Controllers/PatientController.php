@@ -372,10 +372,10 @@ class PatientController extends Controller {
 
                 return redirect()->route('congratulations', ['slug' => $data['contract']]);
             } else {
-                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again.']);
+                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again.1']);
             }
         } else {
-            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again.']);
+            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again.2']);
         }
     }
 
