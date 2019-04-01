@@ -78,7 +78,7 @@
                                     </form>
                                     @if(!empty($transaction_history))
                                         <h3 class="line-crossed-title margin-bottom-40 fs-20 margin-top-50 lato-bold black-color"><span>Withdraw History</span></h3>
-                                        <table class="transaction-history-table table table-without-reorder table-striped text-left">
+                                        <table>
                                             <thead>
                                                 <tr>
                                                     <th>Date</th>
