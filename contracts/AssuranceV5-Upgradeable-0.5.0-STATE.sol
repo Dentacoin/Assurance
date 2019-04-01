@@ -51,6 +51,11 @@ contract ownerSettings is Ownable {
         _;
     }
 
+    modifier onlyApprovedProxyOrAdmin() {
+        require(msg.sender == proxy_contract || msg.sender == admin);
+        _;
+    }
+
     modifier checkIfPaused() {
         require(!contract_paused, "Contract is paused. Please try again later.");
         _;
@@ -194,7 +199,7 @@ require(dcn.transferFrom(_patient_addr, _dentist_addr, _amount));
 }
 
 //can be called from patient and dentist
-function breakContract(address _patient_addr, address _dentist_addr) public onlyApprovedProxy checkIfPaused {
+function breakContract(address _patient_addr, address _dentist_addr) public onlyApprovedProxyOrAdmin checkIfPaused {
 //if there is proposal recorded from this dentist for this patient ----> delete it
 if(patient_contract_history[_patient_addr].dentists[_dentist_addr].exists) {
 //deleting the dentist address from the dentists_addresses array for the current patient

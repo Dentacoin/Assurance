@@ -15,7 +15,7 @@
                         </div>
                         @if(isset($mobile) && $mobile)
                             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="mobile-slide">
-                                <img src="/assets/uploads/	slide.gif" alt="Slide gif"/>
+                                <img src="/assets/uploads/slide.gif" alt="Slide gif"/>
                             </figure>
                         @endif
                     </div>

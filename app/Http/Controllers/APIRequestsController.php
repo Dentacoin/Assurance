@@ -218,7 +218,7 @@ class APIRequestsController extends Controller {
             CURLOPT_URL => 'https://api.dentacoin.com/api/recoverToken/',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => array(
-                'email' => $this->encrypt($email)
+                'email' => $this->encrypt($email, getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'))
             )
         ));
 
@@ -241,7 +241,7 @@ class APIRequestsController extends Controller {
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => array(
                 'recoverToken' => $data['token'],
-                'password' => $this->encrypt($data['password']),
+                'password' => $this->encrypt($data['password'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'))
             )
         ));
 
@@ -345,6 +345,33 @@ class APIRequestsController extends Controller {
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
             CURLOPT_URL => 'https://assurance.dentacoin.com/upload-file-to-ipfs',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_POSTFIELDS => $json
+        ));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
+            'Content-Type: application/json',
+            'Content-Length: ' . mb_strlen($json))
+        );
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        if(!empty($resp))   {
+            return $resp;
+        }else {
+            return false;
+        }
+    }
+
+    //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
+    public function sendETHamount($address) {
+        $curl = curl_init();
+        $json = '{"address":"'.$address.'"}';
+
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_POST => 1,
+            CURLOPT_URL => 'https://assurance.dentacoin.com/send-eth-to-patients',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => $json
         ));

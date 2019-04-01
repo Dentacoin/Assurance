@@ -361,6 +361,9 @@ class PatientController extends Controller {
                 $contract->status = 'awaiting-payment';
                 $contract->save();
 
+                //send ETH amount to patient
+                $send_eth_amount = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($this->encrypt($contract->patient_address, getenv('NODEJS_ADDITIONAL_API_METHOD'), getenv('NODEJS_ADDITIONAL_API_KEY')));
+
                 $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
                 $body = $email_view->render();
 

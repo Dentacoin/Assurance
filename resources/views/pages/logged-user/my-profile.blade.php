@@ -78,26 +78,33 @@
                                     </form>
                                     @if(!empty($transaction_history))
                                         <h3 class="line-crossed-title margin-bottom-40 fs-20 margin-top-50 lato-bold black-color"><span>Withdraw History</span></h3>
-                                        <table class="withdraw-table">
-                                            <thead>
+                                        <div class="table-wrapper">
+                                            <table class="withdraw-table">
+                                                <thead>
                                                 <tr>
                                                     <th>Date</th>
                                                     <th>Amount</th>
                                                     <th>Address</th>
                                                     <th>Status</th>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
+                                                </thead>
+                                                <tbody>
                                                 @foreach($transaction_history as $transaction)
                                                     <tr>
                                                         <td>{{date('d/m/Y', strtotime($transaction->created_at))}}</td>
-                                                        <td>{{$transaction->amount}}</td>
+                                                        <td>{{$transaction->amount}} DCN</td>
                                                         <td>{{$transaction->address}}</td>
                                                         <td>{{$transaction->status}}</td>
                                                     </tr>
                                                 @endforeach
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        @if(isset($mobile) && $mobile)
+                                            <figure itemscope="" itemtype="http://schema.org/ImageObject" class="mobile-slide">
+                                                <img src="/assets/uploads/slide.gif" alt="Slide gif"/>
+                                            </figure>
+                                        @endif
                                     @endif
                                 @endif
                             @endif

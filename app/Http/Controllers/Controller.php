@@ -220,10 +220,10 @@ class Controller extends BaseController
         }
     }*/
 
-    protected function encrypt($raw_text) {
-        $length = openssl_cipher_iv_length(getenv('API_ENCRYPTION_METHOD'));
+    protected function encrypt($raw_text, $algorithm, $key) {
+        $length = openssl_cipher_iv_length($algorithm);
         $iv = openssl_random_pseudo_bytes($length);
-        $encrypted = openssl_encrypt($raw_text, getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'), OPENSSL_RAW_DATA, $iv);
+        $encrypted = openssl_encrypt($raw_text, $algorithm, $key, OPENSSL_RAW_DATA, $iv);
         //here we append the $iv to the encrypted, because we will need it for the decryption
         $encrypted_with_iv = base64_encode($encrypted) . '|' . base64_encode($iv);
         return $encrypted_with_iv;
