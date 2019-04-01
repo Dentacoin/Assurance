@@ -9244,6 +9244,13 @@ body.logged-in .my-profile-page-content {
   max-width: 450px; }
 .my-profile .my-profile-page-content .transaction-history-table {
   width: 100%; }
+.my-profile .withdraw-table {
+  display: table;
+  width: 100%; }
+  .my-profile .withdraw-table td, .my-profile .withdraw-table th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px; }
 
 section.edit-account form#patient-update-profile .form-row > label {
   width: 180px;
