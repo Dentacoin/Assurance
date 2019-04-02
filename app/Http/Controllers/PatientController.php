@@ -238,6 +238,8 @@ class PatientController extends Controller {
             'contract.required' => 'Contract slug is required.',
         );
 
+        $this_patient_having_contracts = TemporallyContract::where(array('patient_id' => $logged_patient->id))->get()->all();
+
         if(empty($logged_patient->dcn_address)) {
             $required_fields_arr['dcn_address'] = 'required|max:42';
             $required_fields_msgs_arr['dcn_address.required'] = 'Wallet Address is required';
@@ -362,7 +364,10 @@ class PatientController extends Controller {
                 $contract->save();
 
                 //send ETH amount to patient
-                $send_eth_amount = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($this->encrypt($contract->patient_address, getenv('NODEJS_ADDITIONAL_API_METHOD'), getenv('NODEJS_ADDITIONAL_API_KEY')));
+                if(!$this_patient_having_contracts) {
+                    //only if no previous contracts, aka sending only for first contract
+                    $send_eth_amount = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($this->encrypt($contract->patient_address, getenv('NODEJS_ADDITIONAL_API_METHOD'), getenv('NODEJS_ADDITIONAL_API_KEY')));
+                }
 
                 $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
                 $body = $email_view->render();

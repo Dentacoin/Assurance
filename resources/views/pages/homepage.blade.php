@@ -154,40 +154,42 @@
             </div>
         </div>
     </section>
-    <section class="testimonials-section padding-bottom-xs-30">
-        <div class="container-fluid">
-            <div class="row fs-0">
-                <picture class="inline-block col-sm-4 col-lg-offset-1 hide-xs" itemscope="" itemtype="http://schema.org/ImageObject">
-                    <source media="(max-width: 768px)" srcset="/assets/uploads/dentist-testimonial-section-small.png" />
-                    <img alt="Two dentists" itemprop="contentUrl" src="/assets/uploads/dentist-testimonial-section-big.png"/>
-                </picture>
-                <div class="col-xs-12 col-sm-8 col-lg-6 inline-block">
-                    <div class="testimonials-slider">
-                        @foreach($testimonials as $testimonial)
-                            <div class="single-testimonial">
-                                <div class="description">{!! $testimonial->text !!}</div>
-                                <div class="img-title-job fs-0">
-                                    <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block-top">
-                                        @if(empty($testimonial->media_name))
-                                            <img src="/assets/images/avatar-icon.svg" alt="" itemprop="contentUrl"/>
-                                        @else
-                                            <img src="//dentacoin.com/assets/uploads/{{$testimonial->media_name}}" alt="{{$testimonial->media_alt}}" itemprop="contentUrl"/>
-                                        @endif
-                                    </figure>
-                                    <div class="title-job inline-block-top">
-                                        <div class="title color-black">{{explode(',', $testimonial->name_job)[0]}}</div>
-                                        @if(!empty(explode(',', $testimonial->name_job)[1]))
-                                            <div class="job">{{explode(',', $testimonial->name_job)[1]}}</div>
-                                        @endif
+    @if(!empty($testimonials))
+        <section class="testimonials-section padding-bottom-xs-30">
+            <div class="container-fluid">
+                <div class="row fs-0">
+                    <picture class="inline-block col-sm-4 col-lg-offset-1 hide-xs" itemscope="" itemtype="http://schema.org/ImageObject">
+                        <source media="(max-width: 768px)" srcset="/assets/uploads/dentist-testimonial-section-small.png" />
+                        <img alt="Two dentists" itemprop="contentUrl" src="/assets/uploads/dentist-testimonial-section-big.png"/>
+                    </picture>
+                    <div class="col-xs-12 col-sm-8 col-lg-6 inline-block">
+                        <div class="testimonials-slider">
+                            @foreach($testimonials as $testimonial)
+                                <div class="single-testimonial">
+                                    <div class="description">{!! $testimonial->text !!}</div>
+                                    <div class="img-title-job fs-0">
+                                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block-top">
+                                            @if(empty($testimonial->media_name))
+                                                <img src="/assets/images/avatar-icon.svg" alt="" itemprop="contentUrl"/>
+                                            @else
+                                                <img src="{{$testimonial->media_name}}" alt="{{$testimonial->media_alt}}" itemprop="contentUrl"/>
+                                            @endif
+                                        </figure>
+                                        <div class="title-job inline-block-top">
+                                            <div class="title color-black">{{explode(',', $testimonial->name_job)[0]}}</div>
+                                            @if(!empty(explode(',', $testimonial->name_job)[1]))
+                                                <div class="job">{{explode(',', $testimonial->name_job)[1]}}</div>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
     <section class="start-smart-today-section beige-background padding-top-80 padding-bottom-80 padding-top-xs-40 padding-bottom-xs-40">
         <div class="container">
             <div class="row">

@@ -35,8 +35,7 @@ class HomeController extends Controller
         } else if((new UserController())->checkPatientSession()) {
             return redirect()->route('patient-access');
         } else {
-            $testimonials = DB::connection('mysql2')->table('user_expressions')->leftJoin('media', 'user_expressions.media_id', '=', 'media.id')->select('user_expressions.*', 'media.name as media_name', 'media.alt as media_alt')->where('visible_assurance', 1)->orderByRaw('user_expressions.order_id ASC')->get()->toArray();
-            return view('pages/homepage', ['testimonials' => $testimonials]);
+            return view('pages/homepage', ['testimonials' => (new APIRequestsController())->getTestimonials()]);
         }
     }
 
