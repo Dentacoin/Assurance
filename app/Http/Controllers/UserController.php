@@ -359,7 +359,10 @@ class UserController extends Controller {
         $response = array();
         $contract = TemporallyContract::where(array('slug' => $data['contract']))->get()->first();
         if($contract) {
-            if(session('logged_user')['id'] == $contract->patient_id || session('logged_user')['id'] == $contract->dentist_id || (new APIRequestsController())->getUserData(session('logged_user')['id'])->email == $contract->patient_email) {
+            $current_logged_user = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+            if(session('logged_user')['id'] == $contract->patient_id || session('logged_user')['id'] == $contract->dentist_id || $current_logged_user->email == $contract->patient_email) {
+                //CURL check if contract is still on the blockchain ???
+
                 $cancellation_reason = array(
                     'reason' => $data['reason'],
                     'comments' => $data['comments']
@@ -373,8 +376,36 @@ class UserController extends Controller {
                 $response['success'] = true;
                 if($this->checkDentistSession()) {
                     $response['path'] = 'dentist';
+
+                    if(!empty($contract->patient_id)) {
+                        $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+                        $patient_name = $patient->name;
+                        $patient_email = $patient->email;
+                    } else {
+                        $patient_name = $contract->patient_fname . ' ' . $contract->patient_lname;
+                        $patient_email = $contract->patient_email;
+                    }
+
+                    $email_view = view('emails/dentist-cancel-contract', ['dentist_name' => $current_logged_user->name, 'patient_name' => $patient_name, 'reason' => $data['reason'], 'contract_slug' => $contract->slug]);
+                    $body = $email_view->render();
+
+                    Mail::send(array(), array(), function($message) use ($body, $patient_email, $current_logged_user) {
+                        $message->to($patient_email)->subject($current_logged_user->name . ' Has Cancelled Your Contract');
+                        $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                        $message->setBody($body, 'text/html');
+                    });
                 } else if($this->checkPatientSession()) {
                     $response['path'] = 'patient';
+
+                    $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
+                    $email_view = view('emails/patient-cancel-contract', ['dentist_name' => $dentist->name, 'patient_name' => $current_logged_user->name, 'reason' => $data['reason'], 'contract_slug' => $contract->slug]);
+                    $body = $email_view->render();
+
+                    Mail::send(array(), array(), function($message) use ($body, $dentist, $current_logged_user) {
+                        $message->to($current_logged_user->email)->subject($current_logged_user->name . ' Has Cancelled Their Contract');
+                        $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                        $message->setBody($body, 'text/html');
+                    });
                 }
                 echo json_encode($response);
                 die();

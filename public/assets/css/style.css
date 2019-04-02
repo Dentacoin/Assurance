@@ -9139,6 +9139,9 @@ body.logged-in .my-profile-page-content {
     background-color: white;
     float: right;
     padding-top: 35px; }
+    @media screen and (max-width: 991px) {
+      .logged-mobile-profile-menu nav {
+        overflow-y: auto; } }
   .logged-mobile-profile-menu .close-logged-mobile-profile-menu {
     position: absolute;
     top: 10px;
