@@ -2,7 +2,7 @@
 @if(!empty($contract->contract_active_at) && !empty($contract->document_hash))
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
-    <div class="padding-bottom-20">This present Dentacoin Assurance Contract Agreement was reached on {{date('d/m/Y', strtotime($contract->contract_active_at))}}</div>
+    <div class="padding-bottom-20">This present Dentacoin Assurance Contract Agreement was reached on </div>
     <div><span class="calibri-bold padding-top-10 padding-bottom-10 fs-18">BETWEEN</span></div>
     <div class="padding-top-10 padding-bottom-10">
         <div>Name - Dr. {{$dentist->name}}</div>
