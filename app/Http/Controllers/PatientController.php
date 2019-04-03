@@ -371,6 +371,7 @@ class PatientController extends Controller {
                     echo '<br><br><br>================<br><br><br>';
 
                     $send_eth_amount = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($contract->patient_address, $contract->dentist_address, $contract->monthly_premium, 55, $contract->contract_active_at->getTimestamp(), $contract->document_hash);
+                    var_dump($send_eth_amount);
                 }
 
                 die('WTF');
