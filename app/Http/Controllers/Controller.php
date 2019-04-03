@@ -236,6 +236,15 @@ class Controller extends BaseController
         return $raw_text;
     }
 
+    function node_encrypt($raw_text, $algorithm, $key) {
+        $iv_size        = openssl_cipher_iv_length($algorithm);
+        $iv             = openssl_random_pseudo_bytes($iv_size);
+        $ciphertext     = openssl_encrypt($raw_text, $algorithm, $key, OPENSSL_RAW_DATA, $iv);
+        $ciphertext_hex = bin2hex($ciphertext);
+        $iv_hex         = bin2hex($iv);
+        return "$iv_hex:$ciphertext_hex";
+    }
+
     protected function base64ToPng($base64_string) {
         return base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64_string));
     }
