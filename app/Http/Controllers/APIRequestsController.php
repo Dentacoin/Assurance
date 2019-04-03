@@ -356,11 +356,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
-            return $resp;
-        }else {
-            return false;
-        }
+        return $resp;
     }
 
     //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
