@@ -229,6 +229,15 @@ class Controller extends BaseController
         return $encrypted_with_iv;
     }
 
+    protected function encrypt1($raw_text, $algorithm, $key) {
+        $length = openssl_cipher_iv_length($algorithm);
+        $iv = openssl_random_pseudo_bytes($length);
+        $encrypted = openssl_encrypt($raw_text, $algorithm, $key, OPENSSL_RAW_DATA, $iv);
+        //here we append the $iv to the encrypted, because we will need it for the decryption
+        $encrypted_with_iv = bin2hex($iv) . '|' . bin2hex($encrypted);
+        return $encrypted_with_iv;
+    }
+
     protected function decrypt($encrypted_text) {
         list($data, $iv) = explode('|', $encrypted_text);
         $iv = base64_decode($iv);

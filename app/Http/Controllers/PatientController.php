@@ -369,7 +369,7 @@ class PatientController extends Controller {
                     //only if no previous contracts, aka sending only for first contract
                     var_dump($contract->patient_address);
                     var_dump($this->node_encrypt($contract->patient_address, getenv('NODEJS_ADDITIONAL_API_METHOD'), getenv('NODEJS_ADDITIONAL_API_KEY')));
-                    $send_eth_amount = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($this->node_encrypt($contract->patient_address, getenv('NODEJS_ADDITIONAL_API_METHOD'), getenv('NODEJS_ADDITIONAL_API_KEY')));
+                    $send_eth_amount = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($this->encrypt1($contract->patient_address, getenv('NODEJS_ADDITIONAL_API_METHOD'), getenv('NODEJS_ADDITIONAL_API_KEY')));
                     var_dump($send_eth_amount);
                 }
 
