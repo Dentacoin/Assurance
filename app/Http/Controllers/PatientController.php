@@ -363,18 +363,12 @@ class PatientController extends Controller {
                 $contract->status = 'awaiting-payment';
                 //$contract->save();
 
-                var_dump(getenv('API_ENCRYPTION_METHOD'));
-                var_dump(getenv('API_ENCRYPTION_KEY'));
-                var_dump(getenv('NODEJS_ADDITIONAL_API_METHOD'));
-                var_dump(getenv('NODEJS_ADDITIONAL_API_KEY'));
-                var_dump($contract->patient_address);
-                die();
-
 
                 //send ETH amount to patient
                 if(sizeof($this_patient_having_contracts) == 1) {
                     //only if no previous contracts, aka sending only for first contract
                     $send_eth_amount = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($this->encrypt($contract->patient_address, getenv('NODEJS_ADDITIONAL_API_METHOD'), getenv('NODEJS_ADDITIONAL_API_KEY')));
+                    var_dump($send_eth_amount);
                 }
 
                 die('WTF');
