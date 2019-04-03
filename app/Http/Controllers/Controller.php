@@ -230,12 +230,8 @@ class Controller extends BaseController
     }
 
     protected function encrypt1($raw_text, $algorithm, $key) {
-        $length = openssl_cipher_iv_length($algorithm);
-        $iv = openssl_random_pseudo_bytes($length);
-        $encrypted = openssl_encrypt($raw_text, $algorithm, $key, OPENSSL_RAW_DATA, $iv);
-        //here we append the $iv to the encrypted, because we will need it for the decryption
-        $encrypted_with_iv = bin2hex($iv) . '|' . bin2hex($encrypted);
-        return $encrypted_with_iv;
+        $iv = substr($key, 0, 16);
+        return openssl_encrypt($raw_text.'|'.$iv, $algorithm, $key,0, $iv);
     }
 
     protected function decrypt($encrypted_text) {
