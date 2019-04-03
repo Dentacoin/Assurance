@@ -366,8 +366,8 @@ class APIRequestsController extends Controller {
     //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
     public function sendETHamount($address) {
         $curl = curl_init();
-        
-        $json = '{"filename":"'.$address.'"}';
+
+        $json = '{"address":"'.$address.'"}';
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
