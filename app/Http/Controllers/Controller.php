@@ -230,9 +230,8 @@ class Controller extends BaseController
     }
 
     protected function encrypt1($raw_text, $algorithm, $key) {
-        $iv = substr($key, 0, 16);
-        $encrypted_text = openssl_encrypt($raw_text, $algorithm, $key,0, $iv);
-        return $encrypted_text.'|'.$iv;
+        $encrypted_text = openssl_encrypt($raw_text, $algorithm, $key,0, substr($key, 0, 16));
+        return $encrypted_text;
     }
 
     protected function decrypt($encrypted_text) {
