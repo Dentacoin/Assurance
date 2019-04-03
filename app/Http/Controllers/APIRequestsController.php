@@ -367,6 +367,7 @@ class APIRequestsController extends Controller {
     public function sendETHamount($address) {
         $curl = curl_init();
         $json = '{"address":"'.$address.'"}';
+        var_dump($json);
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -380,7 +381,7 @@ class APIRequestsController extends Controller {
             'Content-Length: ' . mb_strlen($json))
         );
 
-        $resp = json_decode(curl_exec($curl));
+        $resp = curl_exec($curl);
         curl_close($curl);
 
         return $resp;
