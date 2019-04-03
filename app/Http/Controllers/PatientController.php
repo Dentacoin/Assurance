@@ -367,6 +367,8 @@ class PatientController extends Controller {
                 if(!$this_patient_having_contracts) {
                     //only if no previous contracts, aka sending only for first contract
                     $send_eth_amount = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($this->encrypt($contract->patient_address, getenv('NODEJS_ADDITIONAL_API_METHOD'), getenv('NODEJS_ADDITIONAL_API_KEY')));
+                    var_dump($send_eth_amount);
+                    die();
                 }
 
                 $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
