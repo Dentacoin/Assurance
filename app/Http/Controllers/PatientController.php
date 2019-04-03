@@ -368,8 +368,15 @@ class PatientController extends Controller {
                 if(sizeof($this_patient_having_contracts) == 1) {
                     //only if no previous contracts, aka sending only for first contract
                     var_dump($contract->patient_address);
+                    var_dump($contract->dentist_address);
+                    var_dump($contract->monthly_premium);
+                    var_dump($contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'));
+                    var_dump($contract->contract_active_at);
+                    var_dump($contract->document_hash);
+
+                    echo '<br><br><br>================<br><br><br>';
+
                     $send_eth_amount = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($contract->patient_address, $contract->dentist_address, $contract->monthly_premium, $contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'), $contract->contract_active_at, $contract->document_hash);
-                    var_dump($send_eth_amount);
                 }
 
                 die('WTF');
