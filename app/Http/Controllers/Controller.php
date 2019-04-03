@@ -229,25 +229,11 @@ class Controller extends BaseController
         return $encrypted_with_iv;
     }
 
-    protected function encrypt1($raw_text, $algorithm, $key) {
-        $encrypted_text = openssl_encrypt($raw_text, $algorithm, $key,0, substr($key, 0, 16));
-        return $encrypted_text;
-    }
-
     protected function decrypt($encrypted_text) {
         list($data, $iv) = explode('|', $encrypted_text);
         $iv = base64_decode($iv);
         $raw_text = openssl_decrypt($data, getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'), 0, $iv);
         return $raw_text;
-    }
-
-    function node_encrypt($raw_text, $algorithm, $key) {
-        $iv_size        = openssl_cipher_iv_length($algorithm);
-        $iv             = openssl_random_pseudo_bytes($iv_size);
-        $ciphertext     = openssl_encrypt($raw_text, $algorithm, $key, OPENSSL_RAW_DATA, $iv);
-        $ciphertext_hex = bin2hex($ciphertext);
-        $iv_hex         = bin2hex($iv);
-        return "$iv_hex:$ciphertext_hex";
     }
 
     protected function base64ToPng($base64_string) {
