@@ -239,6 +239,8 @@ class PatientController extends Controller {
         );
 
         $this_patient_having_contracts = TemporallyContract::where(array('patient_id' => $logged_patient->id))->get()->all();
+        var_dump(sizeof($this_patient_having_contracts));
+        die();
 
         if(empty($logged_patient->dcn_address)) {
             $required_fields_arr['dcn_address'] = 'required|max:42';
