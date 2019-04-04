@@ -359,8 +359,7 @@ class PatientController extends Controller {
                 /*array_map('unlink', glob(CONTRACTS . $contract->slug . '/*.*'));
                 rmdir(CONTRACTS . $contract->slug);*/
 
-                var_dump($contract->monthly_premium);
-                var_dump($this->getIndacoinPricesInUSD('DCN'));
+                var_dump($contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'));
                 die();
 
 
