@@ -4,4 +4,13 @@
             background-color: #ebebeb;
         }
     }
+    .withdraw-section {
+        .dentist-withdraw {
+            &:hover {
+                .st0 {
+                    fill: $blue_green_color; 
+                }
+            }
+        }
+    }
 }
