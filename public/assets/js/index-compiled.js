@@ -26767,7 +26767,7 @@ var onDocumentReadyPageData = function () {
 
                         if ($('.dentist-withdraw').length) {
                             $('.dentist-withdraw').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee22() {
-                                var this_btn, current_user_eth_balance, exiting_contract, cached_key;
+                                var this_btn, current_user_eth_balance, exiting_contract, smart_contract_withdraw_period, now_timestamp, contract_dcn_amount, contract_next_payment, time_left_seconds, time_left_days, time_left_hrs, time_left_mnts, required_dcn_price, cached_key;
                                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee22$(_context22) {
                                     while (1) {
                                         switch (_context22.prev = _context22.next) {
@@ -26784,7 +26784,7 @@ var onDocumentReadyPageData = function () {
                                                 current_user_eth_balance = (0, _context22.t0)(_context22.t3);
 
                                                 if (!(current_user_eth_balance > 0.005)) {
-                                                    _context22.next = 15;
+                                                    _context22.next = 21;
                                                     break;
                                                 }
 
@@ -26793,12 +26793,84 @@ var onDocumentReadyPageData = function () {
 
                                             case 11:
                                                 exiting_contract = _context22.sent;
-
-
-                                                console.log(exiting_contract, 'exiting_contract');
-                                                return _context22.abrupt('return', false);
+                                                _context22.t4 = parseInt;
+                                                _context22.next = 15;
+                                                return App.assurance_state_methods.getPeriodToWithdraw();
 
                                             case 15:
+                                                _context22.t5 = _context22.sent;
+                                                smart_contract_withdraw_period = (0, _context22.t4)(_context22.t5);
+                                                now_timestamp = Math.round(new Date().getTime() / 1000);
+                                                contract_dcn_amount = exiting_contract[5];
+                                                //var contract_next_payment = parseInt(exiting_contract[0]);
+
+                                                contract_next_payment = 1547683200;
+
+
+                                                if (contract_next_payment > now_timestamp) {
+                                                    time_left_seconds = parseInt(contract_next_payment - now_timestamp, 10);
+                                                    time_left_days = Math.floor(time_left_seconds / (3600 * 24));
+
+                                                    time_left_seconds -= time_left_days * 3600 * 24;
+                                                    time_left_hrs = Math.floor(time_left_seconds / 3600);
+
+                                                    time_left_seconds -= time_left_hrs * 3600;
+                                                    time_left_mnts = Math.floor(time_left_seconds / 60);
+
+                                                    time_left_seconds -= time_left_mnts * 60;
+
+                                                    basic.showAlert('Withdrawal period did\'t pass yet. Please try again in' + time_left_days + ' days, ' + time_left_hrs + ' hours, ' + time_left_mnts + ' minutes, ' + time_left_seconds + ' seconds.', '', true);
+                                                } else if (contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > smart_contract_withdraw_period) {
+                                                    required_dcn_price = Math.floor(now_timestamp - contract_next_payment / smart_contract_withdraw_period) * contract_dcn_amount;
+
+                                                    console.log(required_dcn_price, 'required_dcn_price');
+                                                } else {
+                                                    if (metamask) {
+                                                        basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
+                                                    } else {
+                                                        //custom
+                                                        cached_key = localStorage.getItem('current-account') == null;
+
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: '/get-recipe-popup',
+                                                            dataType: 'json',
+                                                            data: {
+                                                                to: App.assurance_proxy_address,
+                                                                cached_key: cached_key,
+                                                                contract: this_btn.attr('data-contract'),
+                                                                show_dcn_bar: false,
+                                                                recipe_title: 'WITHDRAW NOW',
+                                                                recipe_subtitle: '',
+                                                                recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.'
+                                                            },
+                                                            headers: {
+                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                            },
+                                                            success: function () {
+                                                                var _ref23 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee21(response) {
+                                                                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee21$(_context21) {
+                                                                        while (1) {
+                                                                            switch (_context21.prev = _context21.next) {
+                                                                                case 0:
+                                                                                case 'end':
+                                                                                    return _context21.stop();
+                                                                            }
+                                                                        }
+                                                                    }, _callee21, this);
+                                                                }));
+
+                                                                function success(_x16) {
+                                                                    return _ref23.apply(this, arguments);
+                                                                }
+
+                                                                return success;
+                                                            }()
+                                                        });
+                                                    }
+                                                }
+
+                                            case 21:
                                             case 'end':
                                                 return _context22.stop();
                                         }

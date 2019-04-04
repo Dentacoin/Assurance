@@ -2756,34 +2756,52 @@ async function onDocumentReadyPageData() {
                     var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(global_state.account)));
                     if (current_user_eth_balance > 0.005) {
                         var exiting_contract = await App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
+                        var smart_contract_withdraw_period = parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
+                        var now_timestamp = Math.round((new Date()).getTime() / 1000);
+                        var contract_dcn_amount = exiting_contract[5];
+                        //var contract_next_payment = parseInt(exiting_contract[0]);
+                        var contract_next_payment = 1547683200;
 
-                        console.log(exiting_contract, 'exiting_contract');
-                        return false;
-                        if (metamask) {
-                            basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
+                        if(contract_next_payment > now_timestamp) {
+                            var time_left_seconds = parseInt(contract_next_payment - now_timestamp, 10);
+                            var time_left_days = Math.floor(time_left_seconds / (3600*24));
+                            time_left_seconds  -= time_left_days*3600*24;
+                            var time_left_hrs   = Math.floor(time_left_seconds / 3600);
+                            time_left_seconds  -= time_left_hrs*3600;
+                            var time_left_mnts = Math.floor(time_left_seconds / 60);
+                            time_left_seconds  -= time_left_mnts*60;
+
+                            basic.showAlert('Withdrawal period did\'t pass yet. Please try again in' + time_left_days + ' days, ' +time_left_hrs+' hours, '+time_left_mnts+' minutes, '+time_left_seconds+' seconds.', '', true);
+                        } else if(contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > smart_contract_withdraw_period) {
+                            var required_dcn_price = Math.floor(now_timestamp - contract_next_payment / smart_contract_withdraw_period) * contract_dcn_amount;
+                            console.log(required_dcn_price, 'required_dcn_price');
                         } else {
-                            //custom
-                            var cached_key = localStorage.getItem('current-account') == null;
-                            $.ajax({
-                                type: 'POST',
-                                url: '/get-recipe-popup',
-                                dataType: 'json',
-                                data: {
-                                    to: App.assurance_proxy_address,
-                                    cached_key: cached_key,
-                                    contract: this_btn.attr('data-contract'),
-                                    show_dcn_bar: false,
-                                    recipe_title: 'WITHDRAW NOW',
-                                    recipe_subtitle: '',
-                                    recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.'
-                                },
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success: async function (response) {
+                            if (metamask) {
+                                basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
+                            } else {
+                                //custom
+                                var cached_key = localStorage.getItem('current-account') == null;
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/get-recipe-popup',
+                                    dataType: 'json',
+                                    data: {
+                                        to: App.assurance_proxy_address,
+                                        cached_key: cached_key,
+                                        contract: this_btn.attr('data-contract'),
+                                        show_dcn_bar: false,
+                                        recipe_title: 'WITHDRAW NOW',
+                                        recipe_subtitle: '',
+                                        recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.'
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: async function (response) {
 
-                                }
-                            });
+                                    }
+                                });
+                            }
                         }
                     }
                 });
