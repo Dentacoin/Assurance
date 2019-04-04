@@ -832,32 +832,32 @@ var initPagesLogic = function () {
 }();
 
 var onDocumentReadyPageData = function () {
-    var _ref19 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee26() {
+    var _ref19 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee28() {
         var next_transfer_timestamp, date_obj, table_trs_with_timestamp, smart_contract_withdraw_period, now_timestamp, i, len, time_passed_since_signed, remainder, next_payment_timestamp, next_payment_timestamp_date_obj, current_user_eth_balance;
-        return _regeneratorRuntime.wrap(function _callee26$(_context26) {
+        return _regeneratorRuntime.wrap(function _callee28$(_context28) {
             while (1) {
-                switch (_context26.prev = _context26.next) {
+                switch (_context28.prev = _context28.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context26.next = 95;
+                            _context28.next = 95;
                             break;
                         }
 
                         if (!$('body').hasClass('congratulations')) {
-                            _context26.next = 14;
+                            _context28.next = 14;
                             break;
                         }
 
                         console.log('congratulations);');
-                        _context26.t0 = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
-                        _context26.t1 = parseInt;
-                        _context26.next = 7;
+                        _context28.t0 = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
+                        _context28.t1 = parseInt;
+                        _context28.next = 7;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 7:
-                        _context26.t2 = _context26.sent;
-                        _context26.t3 = (0, _context26.t1)(_context26.t2);
-                        next_transfer_timestamp = _context26.t0 + _context26.t3;
+                        _context28.t2 = _context28.sent;
+                        _context28.t3 = (0, _context28.t1)(_context28.t2);
+                        next_transfer_timestamp = _context28.t0 + _context28.t3;
 
                         if ($('.converted-date').length > 0) {
                             date_obj = new Date(next_transfer_timestamp * 1000);
@@ -865,25 +865,25 @@ var onDocumentReadyPageData = function () {
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context26.next = 93;
+                        _context28.next = 93;
                         break;
 
                     case 14:
                         if (!$('body').hasClass('my-contracts')) {
-                            _context26.next = 26;
+                            _context28.next = 26;
                             break;
                         }
 
                         initDataTable();
 
                         table_trs_with_timestamp = $('.table-container table tr[data-timestamp-signed]');
-                        _context26.t4 = parseInt;
-                        _context26.next = 20;
+                        _context28.t4 = parseInt;
+                        _context28.next = 20;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 20:
-                        _context26.t5 = _context26.sent;
-                        smart_contract_withdraw_period = (0, _context26.t4)(_context26.t5);
+                        _context28.t5 = _context28.sent;
+                        smart_contract_withdraw_period = (0, _context28.t4)(_context28.t5);
                         now_timestamp = Math.round(new Date().getTime() / 1000);
 
 
@@ -901,46 +901,46 @@ var onDocumentReadyPageData = function () {
 
                             table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">' + next_payment_timestamp + '</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
-                        _context26.next = 93;
+                        _context28.next = 93;
                         break;
 
                     case 26:
                         if (!$('body').hasClass('contract-proposal')) {
-                            _context26.next = 41;
+                            _context28.next = 41;
                             break;
                         }
 
                         if (!($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined)) {
-                            _context26.next = 39;
+                            _context28.next = 39;
                             break;
                         }
 
-                        _context26.t6 = Date;
-                        _context26.t7 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
-                        _context26.t8 = parseInt;
-                        _context26.next = 33;
+                        _context28.t6 = Date;
+                        _context28.t7 = parseInt($('.contract-proposal.section').attr('data-created-at-timestamp'));
+                        _context28.t8 = parseInt;
+                        _context28.next = 33;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 33:
-                        _context26.t9 = _context26.sent;
-                        _context26.t10 = (0, _context26.t8)(_context26.t9);
-                        _context26.t11 = _context26.t7 + _context26.t10;
-                        _context26.t12 = _context26.t11 * 1000;
-                        date_obj = new _context26.t6(_context26.t12);
+                        _context28.t9 = _context28.sent;
+                        _context28.t10 = (0, _context28.t8)(_context28.t9);
+                        _context28.t11 = _context28.t7 + _context28.t10;
+                        _context28.t12 = _context28.t11 * 1000;
+                        date_obj = new _context28.t6(_context28.t12);
 
                         $('.active-until').html(dateObjToFormattedDate(date_obj));
 
                     case 39:
-                        _context26.next = 93;
+                        _context28.next = 93;
                         break;
 
                     case 41:
                         if (!$('body').hasClass('my-profile')) {
-                            _context26.next = 48;
+                            _context28.next = 48;
                             break;
                         }
 
-                        _context26.next = 44;
+                        _context28.next = 44;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic-kyc.js', function () {});
 
                     case 44:
@@ -1023,12 +1023,12 @@ var onDocumentReadyPageData = function () {
                                 return _ref21.apply(this, arguments);
                             };
                         }());
-                        _context26.next = 93;
+                        _context28.next = 93;
                         break;
 
                     case 48:
                         if (!$('body').hasClass('dentist-contract-view')) {
-                            _context26.next = 92;
+                            _context28.next = 92;
                             break;
                         }
 
@@ -1046,55 +1046,55 @@ var onDocumentReadyPageData = function () {
                         }
 
                         if ($('.dentist-withdraw').length) {
-                            $('.dentist-withdraw').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22() {
-                                var this_btn, current_user_eth_balance, grace_period_in_seconds, exiting_contract, smart_contract_withdraw_period, now_timestamp, contract_dcn_amount, contract_next_payment, current_patient_dcn_balance, cached_key;
-                                return _regeneratorRuntime.wrap(function _callee22$(_context22) {
+                            $('.dentist-withdraw').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee24() {
+                                var this_withdraw_btn, current_user_eth_balance, grace_period_in_seconds, exiting_contract, smart_contract_withdraw_period, now_timestamp, contract_dcn_amount, contract_next_payment, current_patient_dcn_balance, cached_key;
+                                return _regeneratorRuntime.wrap(function _callee24$(_context24) {
                                     while (1) {
-                                        switch (_context22.prev = _context22.next) {
+                                        switch (_context24.prev = _context24.next) {
                                             case 0:
-                                                this_btn = $(this);
-                                                _context22.t0 = parseFloat;
-                                                _context22.t1 = App.web3_1_0.utils;
-                                                _context22.next = 5;
+                                                this_withdraw_btn = $(this);
+                                                _context24.t0 = parseFloat;
+                                                _context24.t1 = App.web3_1_0.utils;
+                                                _context24.next = 5;
                                                 return App.helper.getAddressETHBalance(global_state.account);
 
                                             case 5:
-                                                _context22.t2 = _context22.sent;
-                                                _context22.t3 = _context22.t1.fromWei.call(_context22.t1, _context22.t2);
-                                                current_user_eth_balance = (0, _context22.t0)(_context22.t3);
+                                                _context24.t2 = _context24.sent;
+                                                _context24.t3 = _context24.t1.fromWei.call(_context24.t1, _context24.t2);
+                                                current_user_eth_balance = (0, _context24.t0)(_context24.t3);
 
                                                 if (!(current_user_eth_balance > 0.005)) {
-                                                    _context22.next = 30;
+                                                    _context24.next = 30;
                                                     break;
                                                 }
 
                                                 grace_period_in_seconds = 1814400;
-                                                _context22.next = 12;
-                                                return App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
+                                                _context24.next = 12;
+                                                return App.assurance_state_methods.getPatient(this_withdraw_btn.attr('data-patient'), this_withdraw_btn.attr('data-dentist'));
 
                                             case 12:
-                                                exiting_contract = _context22.sent;
+                                                exiting_contract = _context24.sent;
 
                                                 console.log(exiting_contract, 'exiting_contract');
-                                                _context22.t4 = parseInt;
-                                                _context22.next = 17;
+                                                _context24.t4 = parseInt;
+                                                _context24.next = 17;
                                                 return App.assurance_state_methods.getPeriodToWithdraw();
 
                                             case 17:
-                                                _context22.t5 = _context22.sent;
-                                                smart_contract_withdraw_period = (0, _context22.t4)(_context22.t5);
+                                                _context24.t5 = _context24.sent;
+                                                smart_contract_withdraw_period = (0, _context24.t4)(_context24.t5);
                                                 now_timestamp = Math.round(new Date().getTime() / 1000);
                                                 contract_dcn_amount = exiting_contract[5];
                                                 contract_next_payment = parseInt(exiting_contract[0]);
 
                                                 console.log(contract_next_payment, 'contract_next_payment');
-                                                _context22.t6 = parseFloat;
-                                                _context22.next = 26;
-                                                return App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient'));
+                                                _context24.t6 = parseFloat;
+                                                _context24.next = 26;
+                                                return App.dentacoin_token_methods.balanceOf(this_withdraw_btn.attr('data-patient'));
 
                                             case 26:
-                                                _context22.t7 = _context22.sent;
-                                                current_patient_dcn_balance = (0, _context22.t6)(_context22.t7);
+                                                _context24.t7 = _context24.sent;
+                                                current_patient_dcn_balance = (0, _context24.t6)(_context24.t7);
 
                                                 console.log(current_patient_dcn_balance, 'current_patient_dcn_balance');
 
@@ -1123,7 +1123,7 @@ var onDocumentReadyPageData = function () {
                                                             data: {
                                                                 to: App.assurance_proxy_address,
                                                                 cached_key: cached_key,
-                                                                contract: this_btn.attr('data-contract'),
+                                                                contract: this_withdraw_btn.attr('data-contract'),
                                                                 show_dcn_bar: false,
                                                                 recipe_title: 'WITHDRAW NOW',
                                                                 recipe_subtitle: '',
@@ -1133,14 +1133,14 @@ var onDocumentReadyPageData = function () {
                                                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                             },
                                                             success: function () {
-                                                                var _ref23 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee21(response) {
-                                                                    var on_page_load_gwei, on_page_load_gas_price, gas_cost_for_withdraw, eth_fee;
-                                                                    return _regeneratorRuntime.wrap(function _callee21$(_context21) {
+                                                                var _ref23 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee23(response) {
+                                                                    var on_page_load_gwei, on_page_load_gas_price, gas_cost_for_withdraw, eth_fee, transaction_key, decrypted_private_key_response;
+                                                                    return _regeneratorRuntime.wrap(function _callee23$(_context23) {
                                                                         while (1) {
-                                                                            switch (_context21.prev = _context21.next) {
+                                                                            switch (_context23.prev = _context23.next) {
                                                                                 case 0:
                                                                                     if (!response.success) {
-                                                                                        _context21.next = 12;
+                                                                                        _context23.next = 32;
                                                                                         break;
                                                                                     }
 
@@ -1156,14 +1156,14 @@ var onDocumentReadyPageData = function () {
 
                                                                                     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
 
-                                                                                    _context21.next = 8;
-                                                                                    return App.assurance_proxy_instance.methods.singleWithdraw(this_btn.attr('data-patient')).estimateGas({
+                                                                                    _context23.next = 8;
+                                                                                    return App.assurance_proxy_instance.methods.singleWithdraw(this_withdraw_btn.attr('data-patient')).estimateGas({
                                                                                         from: global_state.account,
                                                                                         gas: 500000
                                                                                     });
 
                                                                                 case 8:
-                                                                                    gas_cost_for_withdraw = _context21.sent;
+                                                                                    gas_cost_for_withdraw = _context23.sent;
                                                                                     eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_withdraw * on_page_load_gas_price).toString(), 'ether');
 
                                                                                     $('.recipe-popup .ether-fee .field').html(eth_fee);
@@ -1173,12 +1173,215 @@ var onDocumentReadyPageData = function () {
                                                                                         html: true
                                                                                     });
 
-                                                                                case 12:
+                                                                                    if (!cached_key) {
+                                                                                        _context23.next = 17;
+                                                                                        break;
+                                                                                    }
+
+                                                                                    bindVerifyAddressLogic(true);
+                                                                                    $(document).on('on-transaction-recipe-agree', function (event) {
+                                                                                        transaction_key = event.response_data;
+                                                                                        setTimeout(function () {
+                                                                                            $('.response-layer').hide();
+
+                                                                                            $('.proof-of-address').remove();
+                                                                                            $('.proof-success').fadeIn(1500);
+                                                                                        }, 500);
+                                                                                    });
+                                                                                    _context23.next = 31;
+                                                                                    break;
+
+                                                                                case 17:
+                                                                                    if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
+                                                                                        _context23.next = 30;
+                                                                                        break;
+                                                                                    }
+
+                                                                                    _context23.next = 20;
+                                                                                    return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
+
+                                                                                case 20:
+                                                                                    decrypted_private_key_response = _context23.sent;
+
+                                                                                    if (!decrypted_private_key_response.success) {
+                                                                                        _context23.next = 25;
+                                                                                        break;
+                                                                                    }
+
+                                                                                    transaction_key = decrypted_private_key_response.success;
+                                                                                    _context23.next = 28;
+                                                                                    break;
+
+                                                                                case 25:
+                                                                                    if (!decrypted_private_key_response.error) {
+                                                                                        _context23.next = 28;
+                                                                                        break;
+                                                                                    }
+
+                                                                                    basic.showAlert(decrypted_private_key_response.error, '', true);
+                                                                                    return _context23.abrupt("return", false);
+
+                                                                                case 28:
+                                                                                    _context23.next = 31;
+                                                                                    break;
+
+                                                                                case 30:
+                                                                                    if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
+                                                                                        $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
+                                                                                        bindGoogleAlikeButtonsEvents();
+                                                                                    }
+
+                                                                                case 31:
+
+                                                                                    $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22() {
+                                                                                        var this_btn, decrypted_keystore_file_response, EthereumTx, nonce, withdraw_function_abi, withdraw_transaction_obj, withdraw_transaction;
+                                                                                        return _regeneratorRuntime.wrap(function _callee22$(_context22) {
+                                                                                            while (1) {
+                                                                                                switch (_context22.prev = _context22.next) {
+                                                                                                    case 0:
+                                                                                                        this_btn = $(this);
+
+                                                                                                        if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                                                                            _context22.next = 6;
+                                                                                                            break;
+                                                                                                        }
+
+                                                                                                        basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                                                                        return _context22.abrupt("return", false);
+
+                                                                                                    case 6:
+                                                                                                        if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '')) {
+                                                                                                            _context22.next = 11;
+                                                                                                            break;
+                                                                                                        }
+
+                                                                                                        basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                                                                        return _context22.abrupt("return", false);
+
+                                                                                                    case 11:
+                                                                                                        if ($('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                                                                            _context22.next = 16;
+                                                                                                            break;
+                                                                                                        }
+
+                                                                                                        basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                                                                        return _context22.abrupt("return", false);
+
+                                                                                                    case 16:
+                                                                                                        if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
+                                                                                                            _context22.next = 27;
+                                                                                                            break;
+                                                                                                        }
+
+                                                                                                        _context22.next = 19;
+                                                                                                        return getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+
+                                                                                                    case 19:
+                                                                                                        decrypted_keystore_file_response = _context22.sent;
+
+                                                                                                        if (!decrypted_keystore_file_response.success) {
+                                                                                                            _context22.next = 24;
+                                                                                                            break;
+                                                                                                        }
+
+                                                                                                        transaction_key = decrypted_keystore_file_response.to_string;
+                                                                                                        _context22.next = 27;
+                                                                                                        break;
+
+                                                                                                    case 24:
+                                                                                                        if (!decrypted_keystore_file_response.error) {
+                                                                                                            _context22.next = 27;
+                                                                                                            break;
+                                                                                                        }
+
+                                                                                                        basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                                                                        return _context22.abrupt("return", false);
+
+                                                                                                    case 27:
+                                                                                                        this_btn.unbind();
+
+                                                                                                        $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
+                                                                                                        $('.response-layer').show();
+
+                                                                                                        EthereumTx = require('ethereumjs-tx');
+                                                                                                        _context22.next = 33;
+                                                                                                        return App.web3_1_0.eth.getTransactionCount(global_state.account);
+
+                                                                                                    case 33:
+                                                                                                        nonce = _context22.sent;
+                                                                                                        _context22.next = 36;
+                                                                                                        return App.assurance_proxy_instance.methods.singleWithdraw(this_withdraw_btn.attr('data-patient')).encodeABI();
+
+                                                                                                    case 36:
+                                                                                                        withdraw_function_abi = _context22.sent;
+                                                                                                        withdraw_transaction_obj = {
+                                                                                                            gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_withdraw + gas_cost_for_withdraw * 5 / 100)),
+                                                                                                            gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                                                                            from: global_state.account,
+                                                                                                            nonce: App.web3_1_0.utils.toHex(nonce),
+                                                                                                            chainId: App.chain_id,
+                                                                                                            data: withdraw_function_abi,
+                                                                                                            to: App.assurance_proxy_address
+                                                                                                        };
+                                                                                                        withdraw_transaction = new EthereumTx(withdraw_transaction_obj);
+                                                                                                        //signing the transaction
+
+                                                                                                        withdraw_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                                                                                        //sending the transaction
+                                                                                                        App.web3_1_0.eth.sendSignedTransaction('0x' + withdraw_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                                                                            var execute_ajax = true;
+                                                                                                            //doing setinterval check to check if the smart creation transaction got mined
+                                                                                                            var withdraw_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee21() {
+                                                                                                                var withdraw_status;
+                                                                                                                return _regeneratorRuntime.wrap(function _callee21$(_context21) {
+                                                                                                                    while (1) {
+                                                                                                                        switch (_context21.prev = _context21.next) {
+                                                                                                                            case 0:
+                                                                                                                                _context21.next = 2;
+                                                                                                                                return App.web3_1_0.eth.getTransactionReceipt(transactionHash);
+
+                                                                                                                            case 2:
+                                                                                                                                withdraw_status = _context21.sent;
+
+                                                                                                                                if (withdraw_status != null && has(withdraw_status, 'status')) {
+                                                                                                                                    if (withdraw_status.status && execute_ajax) {
+                                                                                                                                        execute_ajax = false;
+                                                                                                                                        clearInterval(withdraw_interval_check);
+
+                                                                                                                                        $('.response-layer').hide();
+                                                                                                                                        $('.response-layer .transaction-text').remove();
+
+                                                                                                                                        basic.showDialog('<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">SUCCESSFULLY WITHDRAWN</div><div class="padding-top-20 padding-bottom-15 fs-20">You have successfully withdrawn your Dentacoins from this contract. You will be notified via email when next withdraw is possible.</div><div class="btn-container padding-bottom-40"><a href="javascript:void(0)" class="white-blue-green-btn min-width-200 close-popup">OK</a></div></div>', '', null, true);
+                                                                                                                                        setTimeout(function () {
+                                                                                                                                            window.location.reload();
+                                                                                                                                        }, 3000);
+                                                                                                                                    }
+                                                                                                                                }
+
+                                                                                                                            case 4:
+                                                                                                                            case "end":
+                                                                                                                                return _context21.stop();
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }, _callee21, this);
+                                                                                                            })), 1000);
+                                                                                                        });
+
+                                                                                                    case 41:
+                                                                                                    case "end":
+                                                                                                        return _context22.stop();
+                                                                                                }
+                                                                                            }
+                                                                                        }, _callee22, this);
+                                                                                    })));
+
+                                                                                case 32:
                                                                                 case "end":
-                                                                                    return _context21.stop();
+                                                                                    return _context23.stop();
                                                                             }
                                                                         }
-                                                                    }, _callee21, this);
+                                                                    }, _callee23, this);
                                                                 }));
 
                                                                 function success(_x16) {
@@ -1193,52 +1396,52 @@ var onDocumentReadyPageData = function () {
 
                                             case 30:
                                             case "end":
-                                                return _context22.stop();
+                                                return _context24.stop();
                                         }
                                     }
-                                }, _callee22, this);
+                                }, _callee24, this);
                             })));
                         }
 
                         initTooltips();
 
                         if (!($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval'))) {
-                            _context26.next = 80;
+                            _context28.next = 80;
                             break;
                         }
 
-                        _context26.t13 = $('.first-payment');
-                        _context26.t14 = dateObjToFormattedDate;
-                        _context26.t15 = Date;
-                        _context26.t16 = parseInt($('.single-contract-view-section').attr('data-created-at'));
-                        _context26.t17 = parseInt;
-                        _context26.next = 62;
+                        _context28.t13 = $('.first-payment');
+                        _context28.t14 = dateObjToFormattedDate;
+                        _context28.t15 = Date;
+                        _context28.t16 = parseInt($('.single-contract-view-section').attr('data-created-at'));
+                        _context28.t17 = parseInt;
+                        _context28.next = 62;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 62:
-                        _context26.t18 = _context26.sent;
-                        _context26.t19 = (0, _context26.t17)(_context26.t18);
-                        _context26.t20 = _context26.t16 + _context26.t19;
-                        _context26.t21 = _context26.t20 * 1000;
-                        _context26.t22 = new _context26.t15(_context26.t21);
-                        _context26.t23 = (0, _context26.t14)(_context26.t22);
+                        _context28.t18 = _context28.sent;
+                        _context28.t19 = (0, _context28.t17)(_context28.t18);
+                        _context28.t20 = _context28.t16 + _context28.t19;
+                        _context28.t21 = _context28.t20 * 1000;
+                        _context28.t22 = new _context28.t15(_context28.t21);
+                        _context28.t23 = (0, _context28.t14)(_context28.t22);
 
-                        _context26.t13.html.call(_context26.t13, _context26.t23);
+                        _context28.t13.html.call(_context28.t13, _context28.t23);
 
                         if (!$('.single-contract-view-section').hasClass('awaiting-approval')) {
-                            _context26.next = 78;
+                            _context28.next = 78;
                             break;
                         }
 
-                        _context26.t24 = parseFloat;
-                        _context26.t25 = App.web3_1_0.utils;
-                        _context26.next = 74;
+                        _context28.t24 = parseFloat;
+                        _context28.t25 = App.web3_1_0.utils;
+                        _context28.next = 74;
                         return App.helper.getAddressETHBalance(global_state.account);
 
                     case 74:
-                        _context26.t26 = _context26.sent;
-                        _context26.t27 = _context26.t25.fromWei.call(_context26.t25, _context26.t26);
-                        current_user_eth_balance = (0, _context26.t24)(_context26.t27);
+                        _context28.t26 = _context28.sent;
+                        _context28.t27 = _context28.t25.fromWei.call(_context28.t25, _context28.t26);
+                        current_user_eth_balance = (0, _context28.t24)(_context28.t27);
 
                         $('.approve-contract-recipe').click(function () {
                             if (current_user_eth_balance > 0.005) {
@@ -1264,14 +1467,14 @@ var onDocumentReadyPageData = function () {
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                         },
                                         success: function () {
-                                            var _ref24 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee25(response) {
+                                            var _ref26 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee27(response) {
                                                 var on_page_load_gwei, on_page_load_gas_price, gas_cost_for_contract_approval, eth_fee, transaction_key, decrypted_private_key_response;
-                                                return _regeneratorRuntime.wrap(function _callee25$(_context25) {
+                                                return _regeneratorRuntime.wrap(function _callee27$(_context27) {
                                                     while (1) {
-                                                        switch (_context25.prev = _context25.next) {
+                                                        switch (_context27.prev = _context27.next) {
                                                             case 0:
                                                                 if (!response.success) {
-                                                                    _context25.next = 34;
+                                                                    _context27.next = 34;
                                                                     break;
                                                                 }
 
@@ -1287,11 +1490,11 @@ var onDocumentReadyPageData = function () {
 
                                                                 //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
 
-                                                                _context25.next = 8;
+                                                                _context27.next = 8;
                                                                 return App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).estimateGas({ from: global_state.account, gas: 500000 });
 
                                                             case 8:
-                                                                gas_cost_for_contract_approval = _context25.sent;
+                                                                gas_cost_for_contract_approval = _context27.sent;
                                                                 eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_contract_approval * on_page_load_gas_price).toString(), 'ether');
 
                                                                 $('.recipe-popup .ether-fee .field').html(eth_fee);
@@ -1302,7 +1505,7 @@ var onDocumentReadyPageData = function () {
                                                                 });
 
                                                                 if (!cached_key) {
-                                                                    _context25.next = 17;
+                                                                    _context27.next = 17;
                                                                     break;
                                                                 }
 
@@ -1316,41 +1519,41 @@ var onDocumentReadyPageData = function () {
                                                                         $('.proof-success').fadeIn(1500);
                                                                     }, 500);
                                                                 });
-                                                                _context25.next = 31;
+                                                                _context27.next = 31;
                                                                 break;
 
                                                             case 17:
                                                                 if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
-                                                                    _context25.next = 30;
+                                                                    _context27.next = 30;
                                                                     break;
                                                                 }
 
-                                                                _context25.next = 20;
+                                                                _context27.next = 20;
                                                                 return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
 
                                                             case 20:
-                                                                decrypted_private_key_response = _context25.sent;
+                                                                decrypted_private_key_response = _context27.sent;
 
                                                                 if (!decrypted_private_key_response.success) {
-                                                                    _context25.next = 25;
+                                                                    _context27.next = 25;
                                                                     break;
                                                                 }
 
                                                                 transaction_key = decrypted_private_key_response.success;
-                                                                _context25.next = 28;
+                                                                _context27.next = 28;
                                                                 break;
 
                                                             case 25:
                                                                 if (!decrypted_private_key_response.error) {
-                                                                    _context25.next = 28;
+                                                                    _context27.next = 28;
                                                                     break;
                                                                 }
 
                                                                 basic.showAlert(decrypted_private_key_response.error, '', true);
-                                                                return _context25.abrupt("return", false);
+                                                                return _context27.abrupt("return", false);
 
                                                             case 28:
-                                                                _context25.next = 31;
+                                                                _context27.next = 31;
                                                                 break;
 
                                                             case 30:
@@ -1361,69 +1564,69 @@ var onDocumentReadyPageData = function () {
 
                                                             case 31:
 
-                                                                $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee24() {
+                                                                $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee26() {
                                                                     var this_btn, decrypted_keystore_file_response, EthereumTx, nonce, contract_approval_function_abi, contract_approval_transaction_obj, contract_approval_transaction;
-                                                                    return _regeneratorRuntime.wrap(function _callee24$(_context24) {
+                                                                    return _regeneratorRuntime.wrap(function _callee26$(_context26) {
                                                                         while (1) {
-                                                                            switch (_context24.prev = _context24.next) {
+                                                                            switch (_context26.prev = _context26.next) {
                                                                                 case 0:
                                                                                     this_btn = $(this);
 
                                                                                     if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
-                                                                                        _context24.next = 6;
+                                                                                        _context26.next = 6;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
-                                                                                    return _context24.abrupt("return", false);
+                                                                                    return _context26.abrupt("return", false);
 
                                                                                 case 6:
                                                                                     if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '')) {
-                                                                                        _context24.next = 11;
+                                                                                        _context26.next = 11;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('Please enter the secret password for your keystore file.', '', true);
-                                                                                    return _context24.abrupt("return", false);
+                                                                                    return _context26.abrupt("return", false);
 
                                                                                 case 11:
                                                                                     if ($('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                                                        _context24.next = 16;
+                                                                                        _context26.next = 16;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
-                                                                                    return _context24.abrupt("return", false);
+                                                                                    return _context26.abrupt("return", false);
 
                                                                                 case 16:
                                                                                     if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
-                                                                                        _context24.next = 27;
+                                                                                        _context26.next = 27;
                                                                                         break;
                                                                                     }
 
-                                                                                    _context24.next = 19;
+                                                                                    _context26.next = 19;
                                                                                     return getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
 
                                                                                 case 19:
-                                                                                    decrypted_keystore_file_response = _context24.sent;
+                                                                                    decrypted_keystore_file_response = _context26.sent;
 
                                                                                     if (!decrypted_keystore_file_response.success) {
-                                                                                        _context24.next = 24;
+                                                                                        _context26.next = 24;
                                                                                         break;
                                                                                     }
 
                                                                                     transaction_key = decrypted_keystore_file_response.to_string;
-                                                                                    _context24.next = 27;
+                                                                                    _context26.next = 27;
                                                                                     break;
 
                                                                                 case 24:
                                                                                     if (!decrypted_keystore_file_response.error) {
-                                                                                        _context24.next = 27;
+                                                                                        _context26.next = 27;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert(decrypted_keystore_file_response.error, '', true);
-                                                                                    return _context24.abrupt("return", false);
+                                                                                    return _context26.abrupt("return", false);
 
                                                                                 case 27:
                                                                                     this_btn.unbind();
@@ -1432,16 +1635,16 @@ var onDocumentReadyPageData = function () {
                                                                                     $('.response-layer').show();
 
                                                                                     EthereumTx = require('ethereumjs-tx');
-                                                                                    _context24.next = 33;
+                                                                                    _context26.next = 33;
                                                                                     return App.web3_1_0.eth.getTransactionCount(global_state.account);
 
                                                                                 case 33:
-                                                                                    nonce = _context24.sent;
-                                                                                    _context24.next = 36;
+                                                                                    nonce = _context26.sent;
+                                                                                    _context26.next = 36;
                                                                                     return App.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).encodeABI();
 
                                                                                 case 36:
-                                                                                    contract_approval_function_abi = _context24.sent;
+                                                                                    contract_approval_function_abi = _context26.sent;
                                                                                     contract_approval_transaction_obj = {
                                                                                         gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + gas_cost_for_contract_approval * 5 / 100)),
                                                                                         gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
@@ -1460,17 +1663,17 @@ var onDocumentReadyPageData = function () {
                                                                                     App.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
                                                                                         var execute_ajax = true;
                                                                                         //doing setinterval check to check if the smart creation transaction got mined
-                                                                                        var contract_approval_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee23() {
+                                                                                        var contract_approval_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee25() {
                                                                                             var contract_approval_status;
-                                                                                            return _regeneratorRuntime.wrap(function _callee23$(_context23) {
+                                                                                            return _regeneratorRuntime.wrap(function _callee25$(_context25) {
                                                                                                 while (1) {
-                                                                                                    switch (_context23.prev = _context23.next) {
+                                                                                                    switch (_context25.prev = _context25.next) {
                                                                                                         case 0:
-                                                                                                            _context23.next = 2;
+                                                                                                            _context25.next = 2;
                                                                                                             return App.web3_1_0.eth.getTransactionReceipt(transactionHash);
 
                                                                                                         case 2:
-                                                                                                            contract_approval_status = _context23.sent;
+                                                                                                            contract_approval_status = _context25.sent;
 
                                                                                                             if (contract_approval_status != null && has(contract_approval_status, 'status')) {
                                                                                                                 if (contract_approval_status.status && execute_ajax) {
@@ -1503,21 +1706,21 @@ var onDocumentReadyPageData = function () {
 
                                                                                                         case 4:
                                                                                                         case "end":
-                                                                                                            return _context23.stop();
+                                                                                                            return _context25.stop();
                                                                                                     }
                                                                                                 }
-                                                                                            }, _callee23, this);
+                                                                                            }, _callee25, this);
                                                                                         })), 1000);
                                                                                     });
 
                                                                                 case 41:
                                                                                 case "end":
-                                                                                    return _context24.stop();
+                                                                                    return _context26.stop();
                                                                             }
                                                                         }
-                                                                    }, _callee24, this);
+                                                                    }, _callee26, this);
                                                                 })));
-                                                                _context25.next = 35;
+                                                                _context27.next = 35;
                                                                 break;
 
                                                             case 34:
@@ -1527,14 +1730,14 @@ var onDocumentReadyPageData = function () {
 
                                                             case 35:
                                                             case "end":
-                                                                return _context25.stop();
+                                                                return _context27.stop();
                                                         }
                                                     }
-                                                }, _callee25, this);
+                                                }, _callee27, this);
                                             }));
 
                                             function success(_x17) {
-                                                return _ref24.apply(this, arguments);
+                                                return _ref26.apply(this, arguments);
                                             }
 
                                             return success;
@@ -1548,23 +1751,23 @@ var onDocumentReadyPageData = function () {
                         });
 
                     case 78:
-                        _context26.next = 90;
+                        _context28.next = 90;
                         break;
 
                     case 80:
                         if (!$('.single-contract-view-section').hasClass('active')) {
-                            _context26.next = 90;
+                            _context28.next = 90;
                             break;
                         }
 
                         now_timestamp = Math.round(new Date().getTime() / 1000);
-                        _context26.t28 = parseInt;
-                        _context26.next = 85;
+                        _context28.t28 = parseInt;
+                        _context28.next = 85;
                         return App.assurance_state_methods.getPeriodToWithdraw();
 
                     case 85:
-                        _context26.t29 = _context26.sent;
-                        smart_contract_withdraw_period = (0, _context26.t28)(_context26.t29);
+                        _context28.t29 = _context28.sent;
+                        smart_contract_withdraw_period = (0, _context28.t28)(_context28.t29);
                         time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-timestamp-signed'));
 
 
@@ -1580,7 +1783,7 @@ var onDocumentReadyPageData = function () {
                         $('.single-contract-view-section .row-with-bottom-squares .next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
 
                     case 90:
-                        _context26.next = 93;
+                        _context28.next = 93;
                         break;
 
                     case 92:
@@ -1600,23 +1803,23 @@ var onDocumentReadyPageData = function () {
                         }
 
                     case 93:
-                        _context26.next = 99;
+                        _context28.next = 99;
                         break;
 
                     case 95:
-                        _context26.next = 97;
+                        _context28.next = 97;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic.js', function () {});
 
                     case 97:
-                        _context26.next = 99;
+                        _context28.next = 99;
                         return $.getScript('//dentacoin.com/assets/libs/facebook-login/facebook.js', function () {});
 
                     case 99:
                     case "end":
-                        return _context26.stop();
+                        return _context28.stop();
                 }
             }
-        }, _callee26, this);
+        }, _callee28, this);
     }));
 
     return function onDocumentReadyPageData() {
@@ -1625,13 +1828,13 @@ var onDocumentReadyPageData = function () {
 }();
 
 var validateUserAddress = function () {
-    var _ref35 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee35(user_address, value_element) {
+    var _ref37 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee37(user_address, value_element) {
         var error, check_public_key_ajax_result;
-        return _regeneratorRuntime.wrap(function _callee35$(_context35) {
+        return _regeneratorRuntime.wrap(function _callee37$(_context37) {
             while (1) {
-                switch (_context35.prev = _context35.next) {
+                switch (_context37.prev = _context37.next) {
                     case 0:
-                        _context35.next = 2;
+                        _context37.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/check-public-key',
@@ -1645,7 +1848,7 @@ var validateUserAddress = function () {
                         });
 
                     case 2:
-                        check_public_key_ajax_result = _context35.sent;
+                        check_public_key_ajax_result = _context37.sent;
 
 
                         if (check_public_key_ajax_result.success) {
@@ -1664,28 +1867,28 @@ var validateUserAddress = function () {
                                 error = true;
                             }
                         }
-                        return _context35.abrupt("return", error);
+                        return _context37.abrupt("return", error);
 
                     case 5:
                     case "end":
-                        return _context35.stop();
+                        return _context37.stop();
                 }
             }
-        }, _callee35, this);
+        }, _callee37, this);
     }));
 
     return function validateUserAddress(_x22, _x23) {
-        return _ref35.apply(this, arguments);
+        return _ref37.apply(this, arguments);
     };
 }();
 
 var getEncryptedContractPdfContent = function () {
-    var _ref36 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee36(hash, type) {
-        return _regeneratorRuntime.wrap(function _callee36$(_context36) {
+    var _ref38 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee38(hash, type) {
+        return _regeneratorRuntime.wrap(function _callee38$(_context38) {
             while (1) {
-                switch (_context36.prev = _context36.next) {
+                switch (_context38.prev = _context38.next) {
                     case 0:
-                        _context36.next = 2;
+                        _context38.next = 2;
                         return $.ajax({
                             type: 'POST',
                             url: '/decrypt-contract',
@@ -1700,73 +1903,6 @@ var getEncryptedContractPdfContent = function () {
                         });
 
                     case 2:
-                        return _context36.abrupt("return", _context36.sent);
-
-                    case 3:
-                    case "end":
-                        return _context36.stop();
-                }
-            }
-        }, _callee36, this);
-    }));
-
-    return function getEncryptedContractPdfContent(_x24, _x25) {
-        return _ref36.apply(this, arguments);
-    };
-}();
-
-var getCurrentUserData = function () {
-    var _ref37 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee37() {
-        return _regeneratorRuntime.wrap(function _callee37$(_context37) {
-            while (1) {
-                switch (_context37.prev = _context37.next) {
-                    case 0:
-                        _context37.next = 2;
-                        return $.ajax({
-                            type: 'GET',
-                            url: '/get-current-user-data',
-                            dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
-                        return _context37.abrupt("return", _context37.sent);
-
-                    case 3:
-                    case "end":
-                        return _context37.stop();
-                }
-            }
-        }, _callee37, this);
-    }));
-
-    return function getCurrentUserData() {
-        return _ref37.apply(this, arguments);
-    };
-}();
-
-var checkIfFreeEmail = function () {
-    var _ref38 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee38(email) {
-        return _regeneratorRuntime.wrap(function _callee38$(_context38) {
-            while (1) {
-                switch (_context38.prev = _context38.next) {
-                    case 0:
-                        _context38.next = 2;
-                        return $.ajax({
-                            type: 'POST',
-                            url: '/check-email',
-                            dataType: 'json',
-                            data: {
-                                email: email
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-
-                    case 2:
                         return _context38.abrupt("return", _context38.sent);
 
                     case 3:
@@ -1777,25 +1913,22 @@ var checkIfFreeEmail = function () {
         }, _callee38, this);
     }));
 
-    return function checkIfFreeEmail(_x26) {
+    return function getEncryptedContractPdfContent(_x24, _x25) {
         return _ref38.apply(this, arguments);
     };
 }();
 
-var checkCaptcha = function () {
-    var _ref39 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee39(captcha) {
+var getCurrentUserData = function () {
+    var _ref39 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee39() {
         return _regeneratorRuntime.wrap(function _callee39$(_context39) {
             while (1) {
                 switch (_context39.prev = _context39.next) {
                     case 0:
                         _context39.next = 2;
                         return $.ajax({
-                            type: 'POST',
-                            url: '/check-captcha',
+                            type: 'GET',
+                            url: '/get-current-user-data',
                             dataType: 'json',
-                            data: {
-                                captcha: captcha
-                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
@@ -1812,13 +1945,13 @@ var checkCaptcha = function () {
         }, _callee39, this);
     }));
 
-    return function checkCaptcha(_x27) {
+    return function getCurrentUserData() {
         return _ref39.apply(this, arguments);
     };
 }();
 
-var getDecryptedPrivateKey = function () {
-    var _ref40 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee40(key) {
+var checkIfFreeEmail = function () {
+    var _ref40 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee40(email) {
         return _regeneratorRuntime.wrap(function _callee40$(_context40) {
             while (1) {
                 switch (_context40.prev = _context40.next) {
@@ -1826,10 +1959,10 @@ var getDecryptedPrivateKey = function () {
                         _context40.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/assurance-decrypt-private-key',
+                            url: '/check-email',
                             dataType: 'json',
                             data: {
-                                private_key: key
+                                email: email
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1847,13 +1980,13 @@ var getDecryptedPrivateKey = function () {
         }, _callee40, this);
     }));
 
-    return function getDecryptedPrivateKey(_x28) {
+    return function checkIfFreeEmail(_x26) {
         return _ref40.apply(this, arguments);
     };
 }();
 
-var getDecryptedKeystoreFile = function () {
-    var _ref41 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee41(keystore, password) {
+var checkCaptcha = function () {
+    var _ref41 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee41(captcha) {
         return _regeneratorRuntime.wrap(function _callee41$(_context41) {
             while (1) {
                 switch (_context41.prev = _context41.next) {
@@ -1861,11 +1994,13 @@ var getDecryptedKeystoreFile = function () {
                         _context41.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: 'https://wallet.dentacoin.com/decrypt-pk',
+                            url: '/check-captcha',
                             dataType: 'json',
                             data: {
-                                keystore: keystore,
-                                password: password
+                                captcha: captcha
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
                         });
 
@@ -1880,13 +2015,13 @@ var getDecryptedKeystoreFile = function () {
         }, _callee41, this);
     }));
 
-    return function getDecryptedKeystoreFile(_x29, _x30) {
+    return function checkCaptcha(_x27) {
         return _ref41.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContent = function () {
-    var _ref42 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee42(encrypted_html, key) {
+var getDecryptedPrivateKey = function () {
+    var _ref42 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee42(key) {
         return _regeneratorRuntime.wrap(function _callee42$(_context42) {
             while (1) {
                 switch (_context42.prev = _context42.next) {
@@ -1894,14 +2029,13 @@ var getDecryptedPdfContent = function () {
                         _context42.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data',
+                            url: '/assurance-decrypt-private-key',
                             dataType: 'json',
+                            data: {
+                                private_key: key
+                            },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
                             }
                         });
 
@@ -1916,13 +2050,13 @@ var getDecryptedPdfContent = function () {
         }, _callee42, this);
     }));
 
-    return function getDecryptedPdfContent(_x31, _x32) {
+    return function getDecryptedPrivateKey(_x28) {
         return _ref42.apply(this, arguments);
     };
 }();
 
-var getDecryptedPdfContentByPlainKey = function () {
-    var _ref43 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee43(encrypted_html, key) {
+var getDecryptedKeystoreFile = function () {
+    var _ref43 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee43(keystore, password) {
         return _regeneratorRuntime.wrap(function _callee43$(_context43) {
             while (1) {
                 switch (_context43.prev = _context43.next) {
@@ -1930,14 +2064,11 @@ var getDecryptedPdfContentByPlainKey = function () {
                         _context43.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data-plain-key',
+                            url: 'https://wallet.dentacoin.com/decrypt-pk',
                             dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
                             data: {
-                                encrypted_html: encrypted_html,
-                                private_key: key
+                                keystore: keystore,
+                                password: password
                             }
                         });
 
@@ -1952,8 +2083,80 @@ var getDecryptedPdfContentByPlainKey = function () {
         }, _callee43, this);
     }));
 
-    return function getDecryptedPdfContentByPlainKey(_x33, _x34) {
+    return function getDecryptedKeystoreFile(_x29, _x30) {
         return _ref43.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContent = function () {
+    var _ref44 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee44(encrypted_html, key) {
+        return _regeneratorRuntime.wrap(function _callee44$(_context44) {
+            while (1) {
+                switch (_context44.prev = _context44.next) {
+                    case 0:
+                        _context44.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context44.abrupt("return", _context44.sent);
+
+                    case 3:
+                    case "end":
+                        return _context44.stop();
+                }
+            }
+        }, _callee44, this);
+    }));
+
+    return function getDecryptedPdfContent(_x31, _x32) {
+        return _ref44.apply(this, arguments);
+    };
+}();
+
+var getDecryptedPdfContentByPlainKey = function () {
+    var _ref45 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee45(encrypted_html, key) {
+        return _regeneratorRuntime.wrap(function _callee45$(_context45) {
+            while (1) {
+                switch (_context45.prev = _context45.next) {
+                    case 0:
+                        _context45.next = 2;
+                        return $.ajax({
+                            type: 'POST',
+                            url: '/decrypt-data-plain-key',
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                encrypted_html: encrypted_html,
+                                private_key: key
+                            }
+                        });
+
+                    case 2:
+                        return _context45.abrupt("return", _context45.sent);
+
+                    case 3:
+                    case "end":
+                        return _context45.stop();
+                }
+            }
+        }, _callee45, this);
+    }));
+
+    return function getDecryptedPdfContentByPlainKey(_x33, _x34) {
+        return _ref45.apply(this, arguments);
     };
 }();
 
@@ -4971,39 +5174,39 @@ function initFlipClockTimer(time_left) {
 //if cancel contract button exist add the event for it
 function cancelContractEventInit() {
     if ($('.cancel-contract-btn').length) {
-        $('.cancel-contract-btn').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee30() {
+        $('.cancel-contract-btn').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee32() {
             var this_btn, exiting_contract, current_user_eth_balance, cached_key;
-            return _regeneratorRuntime.wrap(function _callee30$(_context30) {
+            return _regeneratorRuntime.wrap(function _callee32$(_context32) {
                 while (1) {
-                    switch (_context30.prev = _context30.next) {
+                    switch (_context32.prev = _context32.next) {
                         case 0:
                             this_btn = $(this);
 
                             if (!(this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined)) {
-                                _context30.next = 16;
+                                _context32.next = 16;
                                 break;
                             }
 
-                            _context30.next = 4;
+                            _context32.next = 4;
                             return App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
 
                         case 4:
-                            exiting_contract = _context30.sent;
+                            exiting_contract = _context32.sent;
 
                             if (!(new Date(parseInt(exiting_contract[0]) * 1000).getTime() > 0)) {
-                                _context30.next = 14;
+                                _context32.next = 14;
                                 break;
                             }
 
-                            _context30.t0 = parseFloat;
-                            _context30.t1 = App.web3_1_0.utils;
-                            _context30.next = 10;
+                            _context32.t0 = parseFloat;
+                            _context32.t1 = App.web3_1_0.utils;
+                            _context32.next = 10;
                             return App.helper.getAddressETHBalance(global_state.account);
 
                         case 10:
-                            _context30.t2 = _context30.sent;
-                            _context30.t3 = _context30.t1.fromWei.call(_context30.t1, _context30.t2);
-                            current_user_eth_balance = (0, _context30.t0)(_context30.t3);
+                            _context32.t2 = _context32.sent;
+                            _context32.t3 = _context32.t1.fromWei.call(_context32.t1, _context32.t2);
+                            current_user_eth_balance = (0, _context32.t0)(_context32.t3);
 
                             if (current_user_eth_balance > 0.005) {
                                 if (metamask) {
@@ -5029,14 +5232,14 @@ function cancelContractEventInit() {
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                         },
                                         success: function () {
-                                            var _ref28 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee29(response) {
+                                            var _ref30 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee31(response) {
                                                 var on_page_load_gwei, on_page_load_gas_price, gas_cost_for_contract_cancellation, eth_fee, transaction_key, decrypted_private_key_response;
-                                                return _regeneratorRuntime.wrap(function _callee29$(_context29) {
+                                                return _regeneratorRuntime.wrap(function _callee31$(_context31) {
                                                     while (1) {
-                                                        switch (_context29.prev = _context29.next) {
+                                                        switch (_context31.prev = _context31.next) {
                                                             case 0:
                                                                 if (!response.success) {
-                                                                    _context29.next = 36;
+                                                                    _context31.next = 36;
                                                                     break;
                                                                 }
 
@@ -5062,14 +5265,14 @@ function cancelContractEventInit() {
 
                                                                 //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
 
-                                                                _context29.next = 10;
+                                                                _context31.next = 10;
                                                                 return App.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).estimateGas({
                                                                     from: global_state.account,
                                                                     gas: 500000
                                                                 });
 
                                                             case 10:
-                                                                gas_cost_for_contract_cancellation = _context29.sent;
+                                                                gas_cost_for_contract_cancellation = _context31.sent;
                                                                 eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_contract_cancellation * on_page_load_gas_price).toString(), 'ether');
 
                                                                 $('.recipe-popup .ether-fee .field').html(eth_fee);
@@ -5080,7 +5283,7 @@ function cancelContractEventInit() {
                                                                 });
 
                                                                 if (!cached_key) {
-                                                                    _context29.next = 19;
+                                                                    _context31.next = 19;
                                                                     break;
                                                                 }
 
@@ -5094,41 +5297,41 @@ function cancelContractEventInit() {
                                                                         $('.proof-success').fadeIn(1500);
                                                                     }, 500);
                                                                 });
-                                                                _context29.next = 33;
+                                                                _context31.next = 33;
                                                                 break;
 
                                                             case 19:
                                                                 if (!(JSON.parse(localStorage.getItem('current-account')).type == 'key')) {
-                                                                    _context29.next = 32;
+                                                                    _context31.next = 32;
                                                                     break;
                                                                 }
 
-                                                                _context29.next = 22;
+                                                                _context31.next = 22;
                                                                 return getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
 
                                                             case 22:
-                                                                decrypted_private_key_response = _context29.sent;
+                                                                decrypted_private_key_response = _context31.sent;
 
                                                                 if (!decrypted_private_key_response.success) {
-                                                                    _context29.next = 27;
+                                                                    _context31.next = 27;
                                                                     break;
                                                                 }
 
                                                                 transaction_key = decrypted_private_key_response.success;
-                                                                _context29.next = 30;
+                                                                _context31.next = 30;
                                                                 break;
 
                                                             case 27:
                                                                 if (!decrypted_private_key_response.error) {
-                                                                    _context29.next = 30;
+                                                                    _context31.next = 30;
                                                                     break;
                                                                 }
 
                                                                 basic.showAlert(decrypted_private_key_response.error, '', true);
-                                                                return _context29.abrupt("return", false);
+                                                                return _context31.abrupt("return", false);
 
                                                             case 30:
-                                                                _context29.next = 33;
+                                                                _context31.next = 33;
                                                                 break;
 
                                                             case 32:
@@ -5139,89 +5342,89 @@ function cancelContractEventInit() {
 
                                                             case 33:
 
-                                                                $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee28() {
+                                                                $('.recipe-popup .execute-transaction').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee30() {
                                                                     var this_execute_transaction_btn, decrypted_keystore_file_response, cancellation_ajax_data, EthereumTx, nonce, contract_cancellation_function_abi, contract_cancellation_transaction_obj, contract_cancellation_transaction;
-                                                                    return _regeneratorRuntime.wrap(function _callee28$(_context28) {
+                                                                    return _regeneratorRuntime.wrap(function _callee30$(_context30) {
                                                                         while (1) {
-                                                                            switch (_context28.prev = _context28.next) {
+                                                                            switch (_context30.prev = _context30.next) {
                                                                                 case 0:
                                                                                     this_execute_transaction_btn = $(this);
 
                                                                                     if (!($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '')) {
-                                                                                        _context28.next = 5;
+                                                                                        _context30.next = 5;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('Please enter other reason.', '', true);
-                                                                                    _context28.next = 51;
+                                                                                    _context30.next = 51;
                                                                                     break;
 
                                                                                 case 5:
                                                                                     if (!($('.recipe-popup #cancel-contract-comments').val().trim() == '')) {
-                                                                                        _context28.next = 9;
+                                                                                        _context30.next = 9;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('Please enter comments.', '', true);
-                                                                                    _context28.next = 51;
+                                                                                    _context30.next = 51;
                                                                                     break;
 
                                                                                 case 9:
                                                                                     if (!(global_state.account == '' || !cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address) || !cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
-                                                                                        _context28.next = 14;
+                                                                                        _context30.next = 14;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
-                                                                                    return _context28.abrupt("return", false);
+                                                                                    return _context30.abrupt("return", false);
 
                                                                                 case 14:
                                                                                     if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '')) {
-                                                                                        _context28.next = 19;
+                                                                                        _context30.next = 19;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('Please enter the secret password for your keystore file.', '', true);
-                                                                                    return _context28.abrupt("return", false);
+                                                                                    return _context30.abrupt("return", false);
 
                                                                                 case 19:
                                                                                     if ($('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                                                        _context28.next = 24;
+                                                                                        _context30.next = 24;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
-                                                                                    return _context28.abrupt("return", false);
+                                                                                    return _context30.abrupt("return", false);
 
                                                                                 case 24:
                                                                                     if (!(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '')) {
-                                                                                        _context28.next = 35;
+                                                                                        _context30.next = 35;
                                                                                         break;
                                                                                     }
 
-                                                                                    _context28.next = 27;
+                                                                                    _context30.next = 27;
                                                                                     return getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
 
                                                                                 case 27:
-                                                                                    decrypted_keystore_file_response = _context28.sent;
+                                                                                    decrypted_keystore_file_response = _context30.sent;
 
                                                                                     if (!decrypted_keystore_file_response.success) {
-                                                                                        _context28.next = 32;
+                                                                                        _context30.next = 32;
                                                                                         break;
                                                                                     }
 
                                                                                     transaction_key = decrypted_keystore_file_response.to_string;
-                                                                                    _context28.next = 35;
+                                                                                    _context30.next = 35;
                                                                                     break;
 
                                                                                 case 32:
                                                                                     if (!decrypted_keystore_file_response.error) {
-                                                                                        _context28.next = 35;
+                                                                                        _context30.next = 35;
                                                                                         break;
                                                                                     }
 
                                                                                     basic.showAlert(decrypted_keystore_file_response.error, '', true);
-                                                                                    return _context28.abrupt("return", false);
+                                                                                    return _context30.abrupt("return", false);
 
                                                                                 case 35:
                                                                                     this_execute_transaction_btn.unbind();
@@ -5243,16 +5446,16 @@ function cancelContractEventInit() {
                                                                                     $('.response-layer').show();
 
                                                                                     EthereumTx = require('ethereumjs-tx');
-                                                                                    _context28.next = 43;
+                                                                                    _context30.next = 43;
                                                                                     return App.web3_1_0.eth.getTransactionCount(global_state.account);
 
                                                                                 case 43:
-                                                                                    nonce = _context28.sent;
-                                                                                    _context28.next = 46;
+                                                                                    nonce = _context30.sent;
+                                                                                    _context30.next = 46;
                                                                                     return App.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).encodeABI();
 
                                                                                 case 46:
-                                                                                    contract_cancellation_function_abi = _context28.sent;
+                                                                                    contract_cancellation_function_abi = _context30.sent;
                                                                                     contract_cancellation_transaction_obj = {
                                                                                         gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + gas_cost_for_contract_cancellation * 5 / 100)),
                                                                                         gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
@@ -5271,17 +5474,17 @@ function cancelContractEventInit() {
                                                                                     App.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex'), function (err, transactionHash) {
                                                                                         var execute_ajax = true;
                                                                                         //doing setinterval check to check if the smart creation transaction got mined
-                                                                                        var contract_cancellation_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee27() {
+                                                                                        var contract_cancellation_interval_check = setInterval(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee29() {
                                                                                             var contract_cancellation_status;
-                                                                                            return _regeneratorRuntime.wrap(function _callee27$(_context27) {
+                                                                                            return _regeneratorRuntime.wrap(function _callee29$(_context29) {
                                                                                                 while (1) {
-                                                                                                    switch (_context27.prev = _context27.next) {
+                                                                                                    switch (_context29.prev = _context29.next) {
                                                                                                         case 0:
-                                                                                                            _context27.next = 2;
+                                                                                                            _context29.next = 2;
                                                                                                             return App.web3_1_0.eth.getTransactionReceipt(transactionHash);
 
                                                                                                         case 2:
-                                                                                                            contract_cancellation_status = _context27.sent;
+                                                                                                            contract_cancellation_status = _context29.sent;
 
                                                                                                             if (contract_cancellation_status != null && has(contract_cancellation_status, 'status')) {
                                                                                                                 if (contract_cancellation_status.status && execute_ajax) {
@@ -5311,21 +5514,21 @@ function cancelContractEventInit() {
 
                                                                                                         case 4:
                                                                                                         case "end":
-                                                                                                            return _context27.stop();
+                                                                                                            return _context29.stop();
                                                                                                     }
                                                                                                 }
-                                                                                            }, _callee27, this);
+                                                                                            }, _callee29, this);
                                                                                         })), 1000);
                                                                                     });
 
                                                                                 case 51:
                                                                                 case "end":
-                                                                                    return _context28.stop();
+                                                                                    return _context30.stop();
                                                                             }
                                                                         }
-                                                                    }, _callee28, this);
+                                                                    }, _callee30, this);
                                                                 })));
-                                                                _context29.next = 37;
+                                                                _context31.next = 37;
                                                                 break;
 
                                                             case 36:
@@ -5335,14 +5538,14 @@ function cancelContractEventInit() {
 
                                                             case 37:
                                                             case "end":
-                                                                return _context29.stop();
+                                                                return _context31.stop();
                                                         }
                                                     }
-                                                }, _callee29, this);
+                                                }, _callee31, this);
                                             }));
 
                                             function success(_x18) {
-                                                return _ref28.apply(this, arguments);
+                                                return _ref30.apply(this, arguments);
                                             }
 
                                             return success;
@@ -5355,7 +5558,7 @@ function cancelContractEventInit() {
                             }
 
                         case 14:
-                            _context30.next = 17;
+                            _context32.next = 17;
                             break;
 
                         case 16:
@@ -5428,10 +5631,10 @@ function cancelContractEventInit() {
 
                         case 17:
                         case "end":
-                            return _context30.stop();
+                            return _context32.stop();
                     }
                 }
-            }, _callee30, this);
+            }, _callee32, this);
         })));
     }
 }
@@ -5700,23 +5903,23 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                 basic.showAlert('Please enter valid private key.', '', true);
             } else {
                 $('.response-layer').show();
-                setTimeout(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee32() {
+                setTimeout(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee34() {
                     var render_form, decrypted_pdf_response;
-                    return _regeneratorRuntime.wrap(function _callee32$(_context32) {
+                    return _regeneratorRuntime.wrap(function _callee34$(_context34) {
                         while (1) {
-                            switch (_context32.prev = _context32.next) {
+                            switch (_context34.prev = _context34.next) {
                                 case 0:
                                     if (!(render_pdf != null)) {
-                                        _context32.next = 9;
+                                        _context34.next = 9;
                                         break;
                                     }
 
                                     render_form = $('form#render-pdf');
-                                    _context32.next = 4;
+                                    _context34.next = 4;
                                     return getDecryptedPdfContentByPlainKey(encrypted_pdf_content, $('.proof-of-address #your-private-key').val().trim());
 
                                 case 4:
-                                    decrypted_pdf_response = _context32.sent;
+                                    decrypted_pdf_response = _context34.sent;
 
 
                                     $('.response-layer').hide();
@@ -5736,7 +5939,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                     } else if (decrypted_pdf_response.error) {
                                         basic.showAlert(decrypted_pdf_response.error, '', true);
                                     }
-                                    _context32.next = 10;
+                                    _context34.next = 10;
                                     break;
 
                                 case 9:
@@ -5751,10 +5954,10 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                         },
                                         success: function () {
-                                            var _ref32 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee31(response) {
-                                                return _regeneratorRuntime.wrap(function _callee31$(_context31) {
+                                            var _ref34 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee33(response) {
+                                                return _regeneratorRuntime.wrap(function _callee33$(_context33) {
                                                     while (1) {
-                                                        switch (_context31.prev = _context31.next) {
+                                                        switch (_context33.prev = _context33.next) {
                                                             case 0:
                                                                 //now with the address and the public key received from the nodejs api update the db
                                                                 if (response.success) {
@@ -5801,14 +6004,14 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
 
                                                             case 1:
                                                             case "end":
-                                                                return _context31.stop();
+                                                                return _context33.stop();
                                                         }
                                                     }
-                                                }, _callee31, this);
+                                                }, _callee33, this);
                                             }));
 
                                             function success(_x19) {
-                                                return _ref32.apply(this, arguments);
+                                                return _ref34.apply(this, arguments);
                                             }
 
                                             return success;
@@ -5817,10 +6020,10 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
 
                                 case 10:
                                 case "end":
-                                    return _context32.stop();
+                                    return _context34.stop();
                             }
                         }
-                    }, _callee32, this);
+                    }, _callee34, this);
                 })), 1000);
             }
         }
@@ -5885,22 +6088,22 @@ function bindTransactionAddressVerify(keystore_file) {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function () {
-                        var _ref33 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee33(response) {
+                        var _ref35 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee35(response) {
                             var user_data;
-                            return _regeneratorRuntime.wrap(function _callee33$(_context33) {
+                            return _regeneratorRuntime.wrap(function _callee35$(_context35) {
                                 while (1) {
-                                    switch (_context33.prev = _context33.next) {
+                                    switch (_context35.prev = _context35.next) {
                                         case 0:
                                             if (!response.success) {
-                                                _context33.next = 7;
+                                                _context35.next = 7;
                                                 break;
                                             }
 
-                                            _context33.next = 3;
+                                            _context35.next = 3;
                                             return getCurrentUserData();
 
                                         case 3:
-                                            user_data = _context33.sent;
+                                            user_data = _context35.sent;
 
                                             //checking if fake private key or just miss spell it
                                             if (checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address)) {
@@ -5922,7 +6125,7 @@ function bindTransactionAddressVerify(keystore_file) {
                                                     response_data: response.plain_private_key
                                                 });
                                             }
-                                            _context33.next = 8;
+                                            _context35.next = 8;
                                             break;
 
                                         case 7:
@@ -5933,14 +6136,14 @@ function bindTransactionAddressVerify(keystore_file) {
 
                                         case 8:
                                         case "end":
-                                            return _context33.stop();
+                                            return _context35.stop();
                                     }
                                 }
-                            }, _callee33, this);
+                            }, _callee35, this);
                         }));
 
                         function success(_x20) {
-                            return _ref33.apply(this, arguments);
+                            return _ref35.apply(this, arguments);
                         }
 
                         return success;
@@ -6025,22 +6228,22 @@ function bindCacheKeyEvent(keystore_file) {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function () {
-                            var _ref34 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee34(response) {
+                            var _ref36 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee36(response) {
                                 var user_data;
-                                return _regeneratorRuntime.wrap(function _callee34$(_context34) {
+                                return _regeneratorRuntime.wrap(function _callee36$(_context36) {
                                     while (1) {
-                                        switch (_context34.prev = _context34.next) {
+                                        switch (_context36.prev = _context36.next) {
                                             case 0:
                                                 if (!response.success) {
-                                                    _context34.next = 7;
+                                                    _context36.next = 7;
                                                     break;
                                                 }
 
-                                                _context34.next = 3;
+                                                _context36.next = 3;
                                                 return getCurrentUserData();
 
                                             case 3:
-                                                user_data = _context34.sent;
+                                                user_data = _context36.sent;
 
 
                                                 //checking if fake private key or just miss spell it
@@ -6072,7 +6275,7 @@ function bindCacheKeyEvent(keystore_file) {
                                                         }
                                                     });
                                                 }
-                                                _context34.next = 8;
+                                                _context36.next = 8;
                                                 break;
 
                                             case 7:
@@ -6083,14 +6286,14 @@ function bindCacheKeyEvent(keystore_file) {
 
                                             case 8:
                                             case "end":
-                                                return _context34.stop();
+                                                return _context36.stop();
                                         }
                                     }
-                                }, _callee34, this);
+                                }, _callee36, this);
                             }));
 
                             function success(_x21) {
-                                return _ref34.apply(this, arguments);
+                                return _ref36.apply(this, arguments);
                             }
 
                             return success;
