@@ -26787,7 +26787,7 @@ var onDocumentReadyPageData = function () {
                                                 current_user_eth_balance = (0, _context22.t0)(_context22.t3);
 
                                                 if (!(current_user_eth_balance > 0.005)) {
-                                                    _context22.next = 26;
+                                                    _context22.next = 30;
                                                     break;
                                                 }
 
@@ -26811,8 +26811,13 @@ var onDocumentReadyPageData = function () {
                                                 contract_next_payment = parseInt(exiting_contract[0]);
 
                                                 console.log(contract_next_payment, 'contract_next_payment');
-                                                //var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
-                                                current_patient_dcn_balance = 86444;
+                                                _context22.t6 = parseFloat;
+                                                _context22.next = 26;
+                                                return App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient'));
+
+                                            case 26:
+                                                _context22.t7 = _context22.sent;
+                                                current_patient_dcn_balance = (0, _context22.t6)(_context22.t7);
 
                                                 console.log(current_patient_dcn_balance, 'current_patient_dcn_balance');
 
@@ -26909,7 +26914,7 @@ var onDocumentReadyPageData = function () {
                                                     }
                                                 }
 
-                                            case 26:
+                                            case 30:
                                             case 'end':
                                                 return _context22.stop();
                                         }

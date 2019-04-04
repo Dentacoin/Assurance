@@ -2764,8 +2764,7 @@ async function onDocumentReadyPageData() {
                         var contract_dcn_amount = exiting_contract[5];
                         var contract_next_payment = parseInt(exiting_contract[0]);
                         console.log(contract_next_payment, 'contract_next_payment');
-                        //var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
-                        var current_patient_dcn_balance = 86444;
+                        var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
                         console.log(current_patient_dcn_balance, 'current_patient_dcn_balance');
 
                         if(contract_next_payment > now_timestamp) {
