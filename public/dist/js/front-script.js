@@ -1708,9 +1708,6 @@ var getDecryptedKeystoreFile = function () {
                             data: {
                                 keystore: keystore,
                                 password: password
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
                         });
 
@@ -5693,9 +5690,6 @@ function bindTransactionAddressVerify(keystore_file) {
                     data: {
                         keystore: keystore_file,
                         password: $('.proof-of-address #your-secret-key-password').val().trim()
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function success(response) {
                         if (response.success) {
