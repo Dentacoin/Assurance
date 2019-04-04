@@ -2763,8 +2763,7 @@ async function onDocumentReadyPageData() {
                         var contract_dcn_amount = exiting_contract[5];
                         //var contract_next_payment = parseInt(exiting_contract[0]);
                         var contract_next_payment = 1554076800;
-                        //var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
-                        var current_patient_dcn_balance = 7604;
+                        var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
 
                         if(contract_next_payment > now_timestamp) {
                             //IF WITHDRAW PERIOD DIDN'T PASS YET
@@ -2800,7 +2799,30 @@ async function onDocumentReadyPageData() {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     success: async function (response) {
+                                        if(response.success) {
+                                            basic.closeDialog();
+                                            basic.showDialog(response.success, 'recipe-popup', null, true);
 
+                                            fixButtonsFocus();
+
+                                            const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                                            //adding 10% just in case the transaction dont fail
+                                            const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10 / 100);
+
+                                            //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+                                            var gas_cost_for_withdraw = await App.assurance_proxy_instance.methods.singleWithdraw(this_btn.attr('data-patient')).estimateGas({
+                                                from: global_state.account,
+                                                gas: 500000
+                                            });
+
+                                            var eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_withdraw * on_page_load_gas_price).toString(), 'ether');
+                                            $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                            $('.recipe-popup .ether-fee i').popover({
+                                                trigger: 'click',
+                                                html: true
+                                            });
+                                        }
                                     }
                                 });
                             }
@@ -4254,5 +4276,5 @@ function receiveSecondsReturnDaysHoursMinutesSecondsLeft(seconds) {
     var time_left_mnts = Math.floor(time_left_seconds / 60);
     time_left_seconds  -= time_left_mnts*60;
 
-    return time_left_days + ' days, ' +time_left_hrs+' hours, '+time_left_mnts+' minutes, '+time_left_seconds+' seconds';
+    return time_left_days + ' days ' +time_left_hrs+' hours '+time_left_mnts+' minutes '+time_left_seconds+' seconds';
 }

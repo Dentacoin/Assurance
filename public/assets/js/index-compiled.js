@@ -26784,7 +26784,7 @@ var onDocumentReadyPageData = function () {
                                                 current_user_eth_balance = (0, _context22.t0)(_context22.t3);
 
                                                 if (!(current_user_eth_balance > 0.005)) {
-                                                    _context22.next = 24;
+                                                    _context22.next = 28;
                                                     break;
                                                 }
 
@@ -26808,9 +26808,13 @@ var onDocumentReadyPageData = function () {
                                                 //var contract_next_payment = parseInt(exiting_contract[0]);
 
                                                 contract_next_payment = 1554076800;
-                                                //var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
+                                                _context22.t6 = parseFloat;
+                                                _context22.next = 25;
+                                                return App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient'));
 
-                                                current_patient_dcn_balance = 7604;
+                                            case 25:
+                                                _context22.t7 = _context22.sent;
+                                                current_patient_dcn_balance = (0, _context22.t6)(_context22.t7);
 
 
                                                 if (contract_next_payment > now_timestamp) {
@@ -26849,10 +26853,46 @@ var onDocumentReadyPageData = function () {
                                                             },
                                                             success: function () {
                                                                 var _ref23 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee21(response) {
+                                                                    var on_page_load_gwei, on_page_load_gas_price, gas_cost_for_withdraw, eth_fee;
                                                                     return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee21$(_context21) {
                                                                         while (1) {
                                                                             switch (_context21.prev = _context21.next) {
                                                                                 case 0:
+                                                                                    if (!response.success) {
+                                                                                        _context21.next = 12;
+                                                                                        break;
+                                                                                    }
+
+                                                                                    basic.closeDialog();
+                                                                                    basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                                                                    fixButtonsFocus();
+
+                                                                                    on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                                                                                    //adding 10% just in case the transaction dont fail
+
+                                                                                    on_page_load_gas_price = on_page_load_gwei * 100000000 + on_page_load_gwei * 100000000 * 10 / 100;
+
+                                                                                    //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+
+                                                                                    _context21.next = 8;
+                                                                                    return App.assurance_proxy_instance.methods.singleWithdraw(this_btn.attr('data-patient')).estimateGas({
+                                                                                        from: global_state.account,
+                                                                                        gas: 500000
+                                                                                    });
+
+                                                                                case 8:
+                                                                                    gas_cost_for_withdraw = _context21.sent;
+                                                                                    eth_fee = App.web3_1_0.utils.fromWei((gas_cost_for_withdraw * on_page_load_gas_price).toString(), 'ether');
+
+                                                                                    $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                                                                    $('.recipe-popup .ether-fee i').popover({
+                                                                                        trigger: 'click',
+                                                                                        html: true
+                                                                                    });
+
+                                                                                case 12:
                                                                                 case 'end':
                                                                                     return _context21.stop();
                                                                             }
@@ -26870,7 +26910,7 @@ var onDocumentReadyPageData = function () {
                                                     }
                                                 }
 
-                                            case 24:
+                                            case 28:
                                             case 'end':
                                                 return _context22.stop();
                                         }
@@ -31547,7 +31587,7 @@ function receiveSecondsReturnDaysHoursMinutesSecondsLeft(seconds) {
     var time_left_mnts = Math.floor(time_left_seconds / 60);
     time_left_seconds -= time_left_mnts * 60;
 
-    return time_left_days + ' days, ' + time_left_hrs + ' hours, ' + time_left_mnts + ' minutes, ' + time_left_seconds + ' seconds';
+    return time_left_days + ' days ' + time_left_hrs + ' hours ' + time_left_mnts + ' minutes ' + time_left_seconds + ' seconds';
 }
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1).Buffer))
 
