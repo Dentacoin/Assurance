@@ -2750,41 +2750,44 @@ async function onDocumentReadyPageData() {
                 });
             }
 
-            $('.dentist-withdraw').click(async function() {
-                var this_btn = $(this);
-                if (current_user_eth_balance > 0.005) {
-                    var exiting_contract = await App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
+            if($('.dentist-withdraw').length) {
+                $('.dentist-withdraw').click(async function() {
+                    var this_btn = $(this);
+                    var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(global_state.account)));
+                    if (current_user_eth_balance > 0.005) {
+                        var exiting_contract = await App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
 
-                    console.log(exiting_contract, 'exiting_contract');
-                    return false;
-                    if (metamask) {
-                        basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
-                    } else {
-                        //custom
-                        var cached_key = localStorage.getItem('current-account') == null;
-                        $.ajax({
-                            type: 'POST',
-                            url: '/get-recipe-popup',
-                            dataType: 'json',
-                            data: {
-                                to: App.assurance_proxy_address,
-                                cached_key: cached_key,
-                                contract: this_btn.attr('data-contract'),
-                                show_dcn_bar: false,
-                                recipe_title: 'WITHDRAW NOW',
-                                recipe_subtitle: '',
-                                recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.'
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: async function (response) {
+                        console.log(exiting_contract, 'exiting_contract');
+                        return false;
+                        if (metamask) {
+                            basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
+                        } else {
+                            //custom
+                            var cached_key = localStorage.getItem('current-account') == null;
+                            $.ajax({
+                                type: 'POST',
+                                url: '/get-recipe-popup',
+                                dataType: 'json',
+                                data: {
+                                    to: App.assurance_proxy_address,
+                                    cached_key: cached_key,
+                                    contract: this_btn.attr('data-contract'),
+                                    show_dcn_bar: false,
+                                    recipe_title: 'WITHDRAW NOW',
+                                    recipe_subtitle: '',
+                                    recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.'
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: async function (response) {
 
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
-                }
-            });
+                });
+            }
 
             initTooltips();
 

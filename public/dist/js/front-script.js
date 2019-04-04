@@ -1042,36 +1042,47 @@ var onDocumentReadyPageData = function () {
                             });
                         }
 
-                        $('.dentist-withdraw').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22() {
-                            var this_btn, exiting_contract, cached_key;
-                            return _regeneratorRuntime.wrap(function _callee22$(_context22) {
-                                while (1) {
-                                    switch (_context22.prev = _context22.next) {
-                                        case 0:
-                                            this_btn = $(this);
+                        if ($('.dentist-withdraw').length) {
+                            $('.dentist-withdraw').click(_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee22() {
+                                var this_btn, current_user_eth_balance, exiting_contract, cached_key;
+                                return _regeneratorRuntime.wrap(function _callee22$(_context22) {
+                                    while (1) {
+                                        switch (_context22.prev = _context22.next) {
+                                            case 0:
+                                                this_btn = $(this);
+                                                _context22.t0 = parseFloat;
+                                                _context22.t1 = App.web3_1_0.utils;
+                                                _context22.next = 5;
+                                                return App.helper.getAddressETHBalance(global_state.account);
 
-                                            if (!(current_user_eth_balance > 0.005)) {
-                                                _context22.next = 8;
-                                                break;
-                                            }
+                                            case 5:
+                                                _context22.t2 = _context22.sent;
+                                                _context22.t3 = _context22.t1.fromWei.call(_context22.t1, _context22.t2);
+                                                current_user_eth_balance = (0, _context22.t0)(_context22.t3);
 
-                                            _context22.next = 4;
-                                            return App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
+                                                if (!(current_user_eth_balance > 0.005)) {
+                                                    _context22.next = 15;
+                                                    break;
+                                                }
 
-                                        case 4:
-                                            exiting_contract = _context22.sent;
+                                                _context22.next = 11;
+                                                return App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
+
+                                            case 11:
+                                                exiting_contract = _context22.sent;
 
 
-                                            console.log(exiting_contract, 'exiting_contract');
-                                            return _context22.abrupt("return", false);
+                                                console.log(exiting_contract, 'exiting_contract');
+                                                return _context22.abrupt("return", false);
 
-                                        case 8:
-                                        case "end":
-                                            return _context22.stop();
+                                            case 15:
+                                            case "end":
+                                                return _context22.stop();
+                                        }
                                     }
-                                }
-                            }, _callee22, this);
-                        })));
+                                }, _callee22, this);
+                            })));
+                        }
 
                         initTooltips();
 
