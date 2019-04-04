@@ -1703,7 +1703,7 @@ var getDecryptedKeystoreFile = function () {
                         _context39.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-pk',
+                            url: 'https://wallet.dentacoin.com/decrypt-pk',
                             dataType: 'json',
                             data: {
                                 keystore: keystore,
@@ -5491,7 +5491,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                 setTimeout(function () {
                     $.ajax({
                         type: 'POST',
-                        url: '/app-import',
+                        url: 'https://wallet.dentacoin.com/app-import',
                         dataType: 'json',
                         data: {
                             address: $('.proof-of-address').attr('data-address'),
@@ -5688,7 +5688,7 @@ function bindTransactionAddressVerify(keystore_file) {
             } else {
                 $.ajax({
                     type: 'POST',
-                    url: '/decrypt-pk',
+                    url: 'https://wallet.dentacoin.com/decrypt-pk',
                     dataType: 'json',
                     data: {
                         keystore: keystore_file,
@@ -5816,7 +5816,7 @@ function bindCacheKeyEvent(keystore_file) {
                 setTimeout(function () {
                     $.ajax({
                         type: 'POST',
-                        url: '/app-import',
+                        url: 'https://wallet.dentacoin.com/app-import',
                         dataType: 'json',
                         data: {
                             address: $('.proof-of-address').attr('data-address'),
