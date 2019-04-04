@@ -26784,7 +26784,7 @@ var onDocumentReadyPageData = function () {
                                                 current_user_eth_balance = (0, _context22.t0)(_context22.t3);
 
                                                 if (!(current_user_eth_balance > 0.005)) {
-                                                    _context22.next = 28;
+                                                    _context22.next = 29;
                                                     break;
                                                 }
 
@@ -26816,6 +26816,8 @@ var onDocumentReadyPageData = function () {
                                                 _context22.t7 = _context22.sent;
                                                 current_patient_dcn_balance = (0, _context22.t6)(_context22.t7);
 
+
+                                                console.log(current_patient_dcn_balance, 'current_patient_dcn_balance');
 
                                                 if (contract_next_payment > now_timestamp) {
                                                     //IF WITHDRAW PERIOD DIDN'T PASS YET
@@ -26910,7 +26912,7 @@ var onDocumentReadyPageData = function () {
                                                     }
                                                 }
 
-                                            case 28:
+                                            case 29:
                                             case 'end':
                                                 return _context22.stop();
                                         }

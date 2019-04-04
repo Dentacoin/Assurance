@@ -2765,6 +2765,8 @@ async function onDocumentReadyPageData() {
                         var contract_next_payment = 1554076800;
                         var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
 
+                        console.log(current_patient_dcn_balance, 'current_patient_dcn_balance');
+
                         if(contract_next_payment > now_timestamp) {
                             //IF WITHDRAW PERIOD DIDN'T PASS YET
                             basic.showAlert('Withdrawal period did\'t pass yet. Please try again in' + receiveSecondsReturnDaysHoursMinutesSecondsLeft(contract_next_payment - now_timestamp) + '.', '', true);
