@@ -360,7 +360,7 @@ class PatientController extends Controller {
                 rmdir(CONTRACTS . $contract->slug);*/
 
                 var_dump($contract->monthly_premium);
-                var_dump($contract->monthly_premium * $this->getIndacoinPricesInUSD('DCN'));
+                var_dump($this->getIndacoinPricesInUSD('DCN'));
                 die();
 
 
