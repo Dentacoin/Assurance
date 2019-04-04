@@ -311,7 +311,7 @@ class DentistController extends Controller
         $contract->status = 'active';
         $contract->save();
 
-        $email_view = view('emails/dentist-cancel-contract', ['dentist_name' => $current_logged_user->name, 'patient_name' => $patient->name, 'contract_slug' => $contract->slug, 'amount' => $contract->amount]);
+        $email_view = view('emails/dentist-approve-contract-on-blockchain', ['dentist_name' => $current_logged_user->name, 'patient_name' => $patient->name, 'contract_slug' => $contract->slug, 'amount' => $contract->amount]);
         $body = $email_view->render();
 
         Mail::send(array(), array(), function($message) use ($body, $patient, $current_logged_user) {

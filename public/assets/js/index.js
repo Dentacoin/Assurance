@@ -3468,9 +3468,6 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                             keystore: keystore_file,
                             password: $('.proof-of-address #your-secret-key-password').val().trim()
                         },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
                         success: function (response) {
                             //now with the address and the public key received from the nodejs api update the db
                             if(response.success) {
@@ -3715,9 +3712,6 @@ function bindCacheKeyEvent(keystore_file) {
                             address: $('.proof-of-address').attr('data-address'),
                             keystore: keystore_file,
                             password: $('.proof-of-address #your-secret-key-password').val().trim()
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function (response) {
                             //now with the address and the public key received from the nodejs api update the db
