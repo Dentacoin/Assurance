@@ -359,22 +359,20 @@ class PatientController extends Controller {
                 /*array_map('unlink', glob(CONTRACTS . $contract->slug . '/*.*'));
                 rmdir(CONTRACTS . $contract->slug);*/
 
+                var_dump($contract->monthly_premium);
+                var_dump($contract->monthly_premium * $this->getIndacoinPricesInUSD('DCN'));
+                die();
+
+
                 //updating the status to awaiting-payment
                 $contract->status = 'awaiting-payment';
-                //$contract->save();
-
+                $contract->save();
 
                 //send ETH amount to patient
                 if(sizeof($this_patient_having_contracts) == 1) {
-                    //only if no previous contracts, aka sending only for first contract;
-
-                    echo '<br><br><br>================<br><br><br>';
-
-                    $send_eth_amount = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($contract->patient_address, $contract->dentist_address, $contract->monthly_premium, 55, $contract->contract_active_at->getTimestamp(), $contract->document_hash);
-                    var_dump($send_eth_amount);
+                    //only if no previous contracts, aka sending only for first contract
+                    (new \App\Http\Controllers\APIRequestsController())->sendETHamount($contract->patient_address, $contract->dentist_address, $contract->monthly_premium, 55, $contract->contract_active_at->getTimestamp(), $contract->document_hash);
                 }
-
-                die('WTF');
 
                 $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
                 $body = $email_view->render();
