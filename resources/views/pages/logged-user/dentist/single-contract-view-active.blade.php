@@ -59,7 +59,7 @@
                     <div>Your money is waiting for you.</div>
                     <div class="padding-bottom-20">Withdraw the Dentacoin tokens collected by Emilly Newman.</div>
                     <div>
-                        <a href="javascript:void(0)" class="dentist-withdraw white-blue-green-btn"><img src="/assets/images/withdraw.svg" alt="" class="max-width-20"/> WITHDRAW NOW</a>
+                        <a href="javascript:void(0)" class="dentist-withdraw white-blue-green-btn display-block margin-0-auto max-width-280"><img src="/assets/images/withdraw.svg" alt="" class="max-width-30 margin-right-5"/> WITHDRAW NOW</a>
                     </div>
                 </div>
             </div>
