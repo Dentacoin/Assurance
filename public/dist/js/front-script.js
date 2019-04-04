@@ -1098,6 +1098,9 @@ var onDocumentReadyPageData = function () {
 
                                                     basic.showAlert('Withdrawal period did\'t pass yet. Please try again in' + time_left_days + ' days, ' + time_left_hrs + ' hours, ' + time_left_mnts + ' minutes, ' + time_left_seconds + ' seconds.', '', true);
                                                 } else if (contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > smart_contract_withdraw_period) {
+                                                    console.log(now_timestamp - contract_next_payment);
+                                                    console.log(smart_contract_withdraw_period);
+                                                    console.log(Math.floor(now_timestamp - contract_next_payment / smart_contract_withdraw_period));
                                                     required_dcn_price = Math.floor(now_timestamp - contract_next_payment / smart_contract_withdraw_period) * contract_dcn_amount;
 
                                                     console.log(required_dcn_price, 'required_dcn_price');
