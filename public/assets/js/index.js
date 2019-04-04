@@ -2755,27 +2755,28 @@ async function onDocumentReadyPageData() {
                     var this_btn = $(this);
                     var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(global_state.account)));
                     if (current_user_eth_balance > 0.005) {
+                        var grace_period_in_seconds = 1814400;
                         var exiting_contract = await App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
                         console.log(exiting_contract, 'exiting_contract');
                         var smart_contract_withdraw_period = parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
                         var now_timestamp = Math.round((new Date()).getTime() / 1000);
                         var contract_dcn_amount = exiting_contract[5];
                         //var contract_next_payment = parseInt(exiting_contract[0]);
-                        var contract_next_payment = 1547683200;
+                        var contract_next_payment = 1554076800;
+                        //var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
+                        var current_patient_dcn_balance = 7604;
 
                         if(contract_next_payment > now_timestamp) {
-                            var time_left_seconds = parseInt(contract_next_payment - now_timestamp, 10);
-                            var time_left_days = Math.floor(time_left_seconds / (3600*24));
-                            time_left_seconds  -= time_left_days*3600*24;
-                            var time_left_hrs   = Math.floor(time_left_seconds / 3600);
-                            time_left_seconds  -= time_left_hrs*3600;
-                            var time_left_mnts = Math.floor(time_left_seconds / 60);
-                            time_left_seconds  -= time_left_mnts*60;
-
-                            basic.showAlert('Withdrawal period did\'t pass yet. Please try again in' + time_left_days + ' days, ' +time_left_hrs+' hours, '+time_left_mnts+' minutes, '+time_left_seconds+' seconds.', '', true);
-                        } else if(contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > smart_contract_withdraw_period) {
-                            var required_dcn_price = Math.floor((now_timestamp - contract_next_payment) / smart_contract_withdraw_period) * contract_dcn_amount;
-                            console.log(required_dcn_price, 'required_dcn_price');
+                            //IF WITHDRAW PERIOD DIDN'T PASS YET
+                            basic.showAlert('Withdrawal period did\'t pass yet. Please try again in' + receiveSecondsReturnDaysHoursMinutesSecondsLeft(contract_next_payment - now_timestamp) + '.', '', true);
+                        } else if(contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > smart_contract_withdraw_period * 2 && current_patient_dcn_balance < Math.floor((now_timestamp - contract_next_payment) / smart_contract_withdraw_period) * contract_dcn_amount) {
+                            //IF DENTIST DIDN'T WITHDRAW FOR MORE THAN 2 MONTHS
+                            //IF PATIENT DON'T HAVE ENOUGH DENTACOIN BALANCE FOR ALL THE MONTHS THAT DENTIST DIDN'T WITHDRAW HIS DENTACOINS
+                            basic.showAlert('This patient don\'t have enough Dentacoin balance. Please contact him to fill in.', '', true);
+                        } else if(contract_next_payment < now_timestamp && now_timestamp < contract_next_payment + grace_period_in_seconds && current_patient_dcn_balance < contract_dcn_amount) {
+                            //IF WITHDRAW PERIOD PASSED AND GRACE PERIOD IS ON
+                            //IF PATIENT DON'T HAVE ENOUGH DENTACOIN BALANCE FOR THE PREVIOUS MONTH
+                            basic.showAlert('This patient don\'t have enough Dentacoin balance, but the grace period is now on. The patient have '+receiveSecondsReturnDaysHoursMinutesSecondsLeft(contract_next_payment + grace_period_in_seconds - now_timestamp)+' more to fill in Dentacoins inside his Wallet Address.', '', true);
                         } else {
                             if (metamask) {
                                 basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
@@ -4242,4 +4243,16 @@ function initCaptchaRefreshEvent()  {
             });
         });
     }
+}
+
+function receiveSecondsReturnDaysHoursMinutesSecondsLeft(seconds) {
+    var time_left_seconds = parseInt(seconds, 10);
+    var time_left_days = Math.floor(time_left_seconds / (3600*24));
+    time_left_seconds  -= time_left_days*3600*24;
+    var time_left_hrs   = Math.floor(time_left_seconds / 3600);
+    time_left_seconds  -= time_left_hrs*3600;
+    var time_left_mnts = Math.floor(time_left_seconds / 60);
+    time_left_seconds  -= time_left_mnts*60;
+
+    return time_left_days + ' days, ' +time_left_hrs+' hours, '+time_left_mnts+' minutes, '+time_left_seconds+' seconds';
 }
