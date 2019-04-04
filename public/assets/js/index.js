@@ -714,8 +714,8 @@ async function pagesDataOnContractInit() {
                                                     nonce = await App.web3_1_0.eth.getTransactionCount(global_state.account);
                                                 }
 
-                                                //var contract_creation_function_abi = await App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
-                                                var contract_creation_function_abi = await App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, 1554076800, response.contract_data.contract_ipfs_hash).encodeABI();
+                                                var contract_creation_function_abi = await App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
+                                                //var contract_creation_function_abi = await App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, 1554076800, response.contract_data.contract_ipfs_hash).encodeABI();
 
                                                 var contract_creation_transaction_obj = {
                                                     gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5/100))),
@@ -2762,8 +2762,8 @@ async function onDocumentReadyPageData() {
                         var smart_contract_withdraw_period = parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
                         var now_timestamp = Math.round((new Date()).getTime() / 1000);
                         var contract_dcn_amount = exiting_contract[5];
-                        //var contract_next_payment = parseInt(exiting_contract[0]);
-                        var contract_next_payment = 1554076800;
+                        var contract_next_payment = parseInt(exiting_contract[0]);
+                        console.log(contract_next_payment, 'contract_next_payment');
                         //var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
                         var current_patient_dcn_balance = 86444;
                         console.log(current_patient_dcn_balance, 'current_patient_dcn_balance');

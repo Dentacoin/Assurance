@@ -26110,10 +26110,13 @@ var pagesDataOnContractInit = function () {
 
                                                                                                         case 4:
                                                                                                             _context6.next = 6;
-                                                                                                            return App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, 1554076800, response.contract_data.contract_ipfs_hash).encodeABI();
+                                                                                                            return App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
                                                                                                         case 6:
                                                                                                             contract_creation_function_abi = _context6.sent;
+
+                                                                                                            //var contract_creation_function_abi = await App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, 1554076800, response.contract_data.contract_ipfs_hash).encodeABI();
+
                                                                                                             contract_creation_transaction_obj = {
                                                                                                                 gasLimit: App.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + gas_cost_for_contract_creation * 5 / 100)),
                                                                                                                 gasPrice: App.web3_1_0.utils.toHex(on_page_load_gas_price),
@@ -26784,7 +26787,7 @@ var onDocumentReadyPageData = function () {
                                                 current_user_eth_balance = (0, _context22.t0)(_context22.t3);
 
                                                 if (!(current_user_eth_balance > 0.005)) {
-                                                    _context22.next = 25;
+                                                    _context22.next = 26;
                                                     break;
                                                 }
 
@@ -26805,11 +26808,10 @@ var onDocumentReadyPageData = function () {
                                                 smart_contract_withdraw_period = (0, _context22.t4)(_context22.t5);
                                                 now_timestamp = Math.round(new Date().getTime() / 1000);
                                                 contract_dcn_amount = exiting_contract[5];
-                                                //var contract_next_payment = parseInt(exiting_contract[0]);
+                                                contract_next_payment = parseInt(exiting_contract[0]);
 
-                                                contract_next_payment = 1554076800;
+                                                console.log(contract_next_payment, 'contract_next_payment');
                                                 //var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
-
                                                 current_patient_dcn_balance = 86444;
 
                                                 console.log(current_patient_dcn_balance, 'current_patient_dcn_balance');
@@ -26907,7 +26909,7 @@ var onDocumentReadyPageData = function () {
                                                     }
                                                 }
 
-                                            case 25:
+                                            case 26:
                                             case 'end':
                                                 return _context22.stop();
                                         }
