@@ -26110,7 +26110,7 @@ var pagesDataOnContractInit = function () {
 
                                                                                                         case 4:
                                                                                                             _context6.next = 6;
-                                                                                                            return App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
+                                                                                                            return App.assurance_proxy_instance.methods.registerContract(App.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), App.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, 1554076800, response.contract_data.contract_ipfs_hash).encodeABI();
 
                                                                                                         case 6:
                                                                                                             contract_creation_function_abi = _context6.sent;
@@ -26784,7 +26784,7 @@ var onDocumentReadyPageData = function () {
                                                 current_user_eth_balance = (0, _context22.t0)(_context22.t3);
 
                                                 if (!(current_user_eth_balance > 0.005)) {
-                                                    _context22.next = 29;
+                                                    _context22.next = 25;
                                                     break;
                                                 }
 
@@ -26808,14 +26808,9 @@ var onDocumentReadyPageData = function () {
                                                 //var contract_next_payment = parseInt(exiting_contract[0]);
 
                                                 contract_next_payment = 1554076800;
-                                                _context22.t6 = parseFloat;
-                                                _context22.next = 25;
-                                                return App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient'));
+                                                //var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
 
-                                            case 25:
-                                                _context22.t7 = _context22.sent;
-                                                current_patient_dcn_balance = (0, _context22.t6)(_context22.t7);
-
+                                                current_patient_dcn_balance = 86444;
 
                                                 console.log(current_patient_dcn_balance, 'current_patient_dcn_balance');
 
@@ -26912,7 +26907,7 @@ var onDocumentReadyPageData = function () {
                                                     }
                                                 }
 
-                                            case 29:
+                                            case 25:
                                             case 'end':
                                                 return _context22.stop();
                                         }

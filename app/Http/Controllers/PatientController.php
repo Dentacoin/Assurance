@@ -259,6 +259,7 @@ class PatientController extends Controller {
 
         $data = $this->clearPostData($request->input());
         $contract = TemporallyContract::where(array('slug' => $data['contract']))->get()->first();
+        $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
 
         //if user trying to fake the contract slug
         if(empty($contract) || (!empty($contract) && $contract->patient_email != $logged_patient->email)) {
@@ -268,6 +269,14 @@ class PatientController extends Controller {
         //check if contract expired
         if((time() - $contract->created_at->timestamp) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) {
             return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'This contract proposal has expired.']);
+        }
+
+        //check if have other contract with status active, pending, awaiting-payment or awaiting-approval
+        $other_contracts = TemporallyContract::where(array('dentist_id' => $contract->dentist_id, 'patient_id' => session('logged_user')['id']))->whereIn('status', array('active', 'awaiting-payment', 'awaiting-approval', 'pending'))->get()->all();
+        foreach($other_contracts as $other_contract) {
+            if($other_contract->id != $contract->id) {
+                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'You cannot have more than one pending or active contract with same dentist. Please first cancel your previous contract with '.$dentist->name.' and then try to sign this contract.']);
+            }
         }
 
         //update CoreDB api data for this patient
@@ -302,7 +311,6 @@ class PatientController extends Controller {
             }
         }
 
-        $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
         //getting the public key for this address stored in the assurance db (this table is getting updated by wallet.dentacoin.com)
         $patient_pub_key = PublicKey::where(array('address' => $logged_patient->dcn_address))->get()->first();
         $dentist_pub_key = PublicKey::where(array('address' => $dentist->dcn_address))->get()->first();
