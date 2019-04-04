@@ -1061,7 +1061,7 @@ var onDocumentReadyPageData = function () {
                                                 current_user_eth_balance = (0, _context22.t0)(_context22.t3);
 
                                                 if (!(current_user_eth_balance > 0.005)) {
-                                                    _context22.next = 21;
+                                                    _context22.next = 22;
                                                     break;
                                                 }
 
@@ -1070,11 +1070,13 @@ var onDocumentReadyPageData = function () {
 
                                             case 11:
                                                 exiting_contract = _context22.sent;
+
+                                                console.log(exiting_contract, 'exiting_contract');
                                                 _context22.t4 = parseInt;
-                                                _context22.next = 15;
+                                                _context22.next = 16;
                                                 return App.assurance_state_methods.getPeriodToWithdraw();
 
-                                            case 15:
+                                            case 16:
                                                 _context22.t5 = _context22.sent;
                                                 smart_contract_withdraw_period = (0, _context22.t4)(_context22.t5);
                                                 now_timestamp = Math.round(new Date().getTime() / 1000);
@@ -1098,10 +1100,7 @@ var onDocumentReadyPageData = function () {
 
                                                     basic.showAlert('Withdrawal period did\'t pass yet. Please try again in' + time_left_days + ' days, ' + time_left_hrs + ' hours, ' + time_left_mnts + ' minutes, ' + time_left_seconds + ' seconds.', '', true);
                                                 } else if (contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > smart_contract_withdraw_period) {
-                                                    console.log(now_timestamp - contract_next_payment);
-                                                    console.log(smart_contract_withdraw_period);
-                                                    console.log(Math.floor(now_timestamp - contract_next_payment / smart_contract_withdraw_period));
-                                                    required_dcn_price = Math.floor(now_timestamp - contract_next_payment / smart_contract_withdraw_period) * contract_dcn_amount;
+                                                    required_dcn_price = Math.floor((now_timestamp - contract_next_payment) / smart_contract_withdraw_period) * contract_dcn_amount;
 
                                                     console.log(required_dcn_price, 'required_dcn_price');
                                                 } else {
@@ -1150,7 +1149,7 @@ var onDocumentReadyPageData = function () {
                                                     }
                                                 }
 
-                                            case 21:
+                                            case 22:
                                             case "end":
                                                 return _context22.stop();
                                         }

@@ -2756,6 +2756,7 @@ async function onDocumentReadyPageData() {
                     var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(global_state.account)));
                     if (current_user_eth_balance > 0.005) {
                         var exiting_contract = await App.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
+                        console.log(exiting_contract, 'exiting_contract');
                         var smart_contract_withdraw_period = parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
                         var now_timestamp = Math.round((new Date()).getTime() / 1000);
                         var contract_dcn_amount = exiting_contract[5];
@@ -2773,10 +2774,7 @@ async function onDocumentReadyPageData() {
 
                             basic.showAlert('Withdrawal period did\'t pass yet. Please try again in' + time_left_days + ' days, ' +time_left_hrs+' hours, '+time_left_mnts+' minutes, '+time_left_seconds+' seconds.', '', true);
                         } else if(contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > smart_contract_withdraw_period) {
-                            console.log(now_timestamp - contract_next_payment);
-                            console.log(smart_contract_withdraw_period);
-                            console.log(Math.floor(now_timestamp - contract_next_payment / smart_contract_withdraw_period));
-                            var required_dcn_price = Math.floor(now_timestamp - contract_next_payment / smart_contract_withdraw_period) * contract_dcn_amount;
+                            var required_dcn_price = Math.floor((now_timestamp - contract_next_payment) / smart_contract_withdraw_period) * contract_dcn_amount;
                             console.log(required_dcn_price, 'required_dcn_price');
                         } else {
                             if (metamask) {
