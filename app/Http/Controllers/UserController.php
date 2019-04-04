@@ -92,6 +92,11 @@ class UserController extends Controller {
         }
 
         $contract = TemporallyContract::where(array('slug' => $request->input('contract')))->get()->first();
+        //check if user trying to cheat
+        if($contract->patient_id != session('logged_user')['id'] && $contract->dentist_id != session('logged_user')['id']) {
+            return response()->json(['error' => 'Wrong contract.']);
+        }
+
         if($contract) {
             $current_logged_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
             if($this->checkDentistSession()) {
