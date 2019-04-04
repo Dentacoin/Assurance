@@ -53,6 +53,17 @@
                 </div>
             </div>
         </section>
+        <section class="container withdraw-section padding-top-30 padding-bottom-30">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <div>Your money is waiting for you.</div>
+                    <div class="padding-bottom-20">Withdraw the Dentacoin tokens collected by Emilly Newman.</div>
+                    <div>
+                        <a href="javascript:void(0)" class="dentist-withdraw white-blue-green-btn"><img src="/assets/images/withdraw.svg" alt="" class="max-width-20"/> WITHDRAW NOW</a>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="container contract-details">
             <div class="row text-center">
                 <div class="col-xs-12 col-lg-10 col-lg-offset-1 no-gutter-xs">
