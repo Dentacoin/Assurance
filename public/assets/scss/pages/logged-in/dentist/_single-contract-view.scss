@@ -101,6 +101,41 @@
                             width: 0;
                         }
                     }
+                } 
+                ul {
+                    width: 40px;
+                    height: 50px;
+                    li {
+                        line-height: 50px;
+                        .inn {
+                            font-size: 40px;
+                            background: #438199;
+                        }
+                    }
+                    @include breakpoint($md-only) {
+                        width: 30px;
+                        li {
+                            .inn {
+                                font-size: 35px;
+                            }
+                        }
+                    }
+                    @include breakpoint($sm-only) {
+                        width: 25px;
+                        li {
+                            .inn {
+                                font-size: 30px;
+                            }
+                        }
+                    }
+                    @include breakpoint($xxs) {
+                        width: 30px;
+                        li {
+                            .inn {
+                                font-size: 35px;
+                            }
+                        }
+                    }
                 }
             }
         }
