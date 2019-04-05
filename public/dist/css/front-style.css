@@ -10051,5 +10051,15 @@ section.congratulation-and-time-section {
   background-color: #ebebeb; }
 .single-contract-view-section .withdraw-section .dentist-withdraw:hover .st0 {
   fill: #126585; }
+.single-contract-view-section .camping-withdraw-time-left-section .clock-container {
+  background-color: #126585;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  border-radius: 20px;
+  -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
 
 /*# sourceMappingURL=style.css.map */

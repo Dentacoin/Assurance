@@ -53,6 +53,7 @@
                 </div>
             </div>
         </section>
+        <section class="container camping-withdraw-time-left-section"></section>
         <section class="container withdraw-section padding-top-30 padding-bottom-30">
             <div class="row">
                 <div class="col-xs-12 text-center">
