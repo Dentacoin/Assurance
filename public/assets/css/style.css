@@ -8016,7 +8016,7 @@ nav.sidenav {
     color: white;
     font-size: 12px;
     text-transform: uppercase;
-    bottom: -25px;
+    bottom: -15px;
     top: auto; }
   .module.single-contract-tile .clock .flip-clock-divider {
     height: 60px; }
@@ -8026,9 +8026,9 @@ nav.sidenav {
       height: 7px; }
       .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot.bottom {
         bottom: auto;
-        top: 40px; }
+        top: 35px; }
       .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot.top {
-        top: 25px; }
+        top: 20px; }
     .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
       right: -65px; }
       @media screen and (min-width: 992px) and (max-width: 1199px) {
@@ -8041,7 +8041,7 @@ nav.sidenav {
         .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
           right: -55px; } }
     .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
-      right: -81px; }
+      right: -73px; }
       @media screen and (min-width: 992px) and (max-width: 1199px) {
         .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
           right: -63px; } }
@@ -8052,7 +8052,7 @@ nav.sidenav {
         .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
           right: -63px; } }
     .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
-      right: -85px; }
+      right: -77px; }
       @media screen and (min-width: 992px) and (max-width: 1199px) {
         .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
           right: -67px; } }
@@ -10073,7 +10073,7 @@ section.congratulation-and-time-section {
       color: white;
       font-size: 12px;
       text-transform: uppercase;
-      bottom: -15px;
+      bottom: -25px;
       top: auto; }
     .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider {
       height: 60px; }
@@ -10082,9 +10082,9 @@ section.congratulation-and-time-section {
         height: 7px; }
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider .flip-clock-dot.bottom {
           bottom: auto;
-          top: 35px; }
+          top: 40px; }
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider .flip-clock-dot.top {
-          top: 20px; }
+          top: 25px; }
       .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.days .flip-clock-label {
         right: -65px; }
         @media screen and (min-width: 992px) and (max-width: 1199px) {
@@ -10108,7 +10108,7 @@ section.congratulation-and-time-section {
           .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.hours .flip-clock-label {
             right: -63px; } }
       .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.minutes .flip-clock-label {
-        right: -77px; }
+        right: -85px; }
         @media screen and (min-width: 992px) and (max-width: 1199px) {
           .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.minutes .flip-clock-label {
             right: -67px; } }

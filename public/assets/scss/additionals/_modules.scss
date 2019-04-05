@@ -883,7 +883,7 @@
                 color: white;
                 font-size: 12px;
                 text-transform: uppercase;
-                bottom: -25px;
+                bottom: -15px;
                 top: auto;
             }
             .flip-clock-divider {
@@ -894,15 +894,15 @@
                     height: 7px;
                     &.bottom {
                         bottom: auto;
-                        top: 40px;
+                        top: 35px;
                     }
                     &.top {
-                        top: 25px;
+                        top: 20px;
                     }
                 }
                 &.days {
                     .flip-clock-label {
-                        right: -75px;
+                        right: -65px;
                         @include breakpoint($md-only) {
                             right: -55px;
                         }
@@ -916,7 +916,7 @@
                 }
                 &.hours {
                     .flip-clock-label {
-                        right: -80px;  
+                        right: -73px;
                         @include breakpoint($md-only) {
                             right: -63px;
                         }
@@ -930,7 +930,7 @@
                 }
                 &.minutes {
                     .flip-clock-label {
-                        right: -85px;
+                        right: -77px;
                         @include breakpoint($md-only) {
                             right: -67px;
                         }

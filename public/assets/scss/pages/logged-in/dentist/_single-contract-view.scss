@@ -30,7 +30,7 @@
                     color: white;
                     font-size: 12px;
                     text-transform: uppercase;
-                    bottom: -15px;
+                    bottom: -25px;
                     top: auto;
                 }
                 .flip-clock-divider {
@@ -40,15 +40,15 @@
                         height: 7px;
                         &.bottom {
                             bottom: auto;
-                            top: 35px;
+                            top: 40px;
                         }
                         &.top {
-                            top: 20px;
-                        }
+                            top: 25px;
+                        } 
                     }
                     &.days {
                         .flip-clock-label {
-                            right: -65px;
+                            right: -75px;
                             @include breakpoint($md-only) {
                                 right: -55px;
                             }
@@ -62,7 +62,7 @@
                     }
                     &.hours {
                         .flip-clock-label {
-                            right: -73px;
+                            right: -80px;
                             @include breakpoint($md-only) {
                                 right: -63px;
                             }
@@ -76,7 +76,7 @@
                     }
                     &.minutes {
                         .flip-clock-label {
-                            right: -77px;
+                            right: -85px;
                             @include breakpoint($md-only) {
                                 right: -67px;
                             }
