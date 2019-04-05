@@ -15,9 +15,94 @@
     }
     .camping-withdraw-time-left-section {
         .clock-container {
+            margin-top: 40px;
+            margin-bottom: 20px;
             background-color: $blue_green_color;
             @include rounded(20px);
-            @include box-shadow(0 2px 6px 0 rgba(0, 0, 0, 0.4)); 
+            @include box-shadow(0 2px 6px 0 rgba(0, 0, 0, 0.4));
+            .clock {
+                display: inline-block;
+                text-align: center;
+                width: auto;
+                margin: 0;
+                padding-bottom: 20px;
+                .flip-clock-label {
+                    color: white;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    bottom: -15px;
+                    top: auto;
+                }
+                .flip-clock-divider {
+                    height: 60px;
+                    .flip-clock-dot {
+                        background: #438199;
+                        width: 7px;
+                        height: 7px;
+                        &.bottom {
+                            bottom: auto;
+                            top: 35px;
+                        }
+                        &.top {
+                            top: 20px;
+                        }
+                    }
+                    &.days {
+                        .flip-clock-label {
+                            right: -65px;
+                            @include breakpoint($md-only) {
+                                right: -55px;
+                            }
+                            @include breakpoint($sm-only) {
+                                right: -50px;
+                            }
+                            @include breakpoint($xxs) {
+                                right: -55px;
+                            }
+                        }
+                    }
+                    &.hours {
+                        .flip-clock-label {
+                            right: -73px;
+                            @include breakpoint($md-only) {
+                                right: -63px;
+                            }
+                            @include breakpoint($sm-only) {
+                                right: -58px;
+                            }
+                            @include breakpoint($xxs) {
+                                right: -63px;
+                            }
+                        }
+                    }
+                    &.minutes {
+                        .flip-clock-label {
+                            right: -77px;
+                            @include breakpoint($md-only) {
+                                right: -67px;
+                            }
+                            @include breakpoint($sm-only) {
+                                right: -64px;
+                            }
+                            @include breakpoint($xxs) {
+                                right: -67px;
+                            }
+                        }
+                    }
+                    @include breakpoint($sm-only) {
+                        width: 15px;
+                        &:first-child {
+                            width: 0;
+                        }
+                    }
+                    @include breakpoint($xxs) {
+                        width: 15px;
+                        &:first-child {
+                            width: 0;
+                        }
+                    }
+                }
+            }
         }
     }
 }
