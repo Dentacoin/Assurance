@@ -4,7 +4,7 @@
             background-color: #ebebeb;
         }
     }
-    .withdraw-section {
+    .camping-withdraw-section {
         .dentist-withdraw {
             &:hover {
                 .st0 {
@@ -38,6 +38,7 @@
                     .flip-clock-dot {
                         width: 7px;
                         height: 7px;
+                        left: 6px;
                         &.bottom {
                             bottom: auto;
                             top: 40px;
@@ -49,12 +50,6 @@
                     &.days {
                         .flip-clock-label {
                             right: -75px;
-                            @include breakpoint($md-only) {
-                                right: -55px;
-                            }
-                            @include breakpoint($sm-only) {
-                                right: -50px;
-                            }
                             @include breakpoint($xxs) {
                                 right: -55px;
                             }
@@ -63,12 +58,6 @@
                     &.hours {
                         .flip-clock-label {
                             right: -80px;
-                            @include breakpoint($md-only) {
-                                right: -63px;
-                            }
-                            @include breakpoint($sm-only) {
-                                right: -58px;
-                            }
                             @include breakpoint($xxs) {
                                 right: -63px;
                             }
@@ -77,12 +66,6 @@
                     &.minutes {
                         .flip-clock-label {
                             right: -85px;
-                            @include breakpoint($md-only) {
-                                right: -67px;
-                            }
-                            @include breakpoint($sm-only) {
-                                right: -64px;
-                            }
                             @include breakpoint($xxs) {
                                 right: -67px;
                             }
@@ -109,7 +92,7 @@
                         .inn {
                             font-size: 45px;
                         }
-                    }   
+                    }
                     @include breakpoint($xxs) {
                         width: 30px;
                         li {
