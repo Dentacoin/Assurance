@@ -44,7 +44,7 @@
                         }
                         &.top {
                             top: 25px;
-                        } 
+                        }
                     }
                     &.days {
                         .flip-clock-label {
@@ -109,23 +109,7 @@
                         .inn {
                             font-size: 45px;
                         }
-                    }
-                    @include breakpoint($md-only) {
-                        width: 30px;
-                        li {
-                            .inn {
-                                font-size: 35px;
-                            }
-                        }
-                    }
-                    @include breakpoint($sm-only) {
-                        width: 25px;
-                        li {
-                            .inn {
-                                font-size: 30px;
-                            }
-                        }
-                    }
+                    }   
                     @include breakpoint($xxs) {
                         width: 30px;
                         li {

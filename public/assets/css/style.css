@@ -10086,7 +10086,7 @@ section.congratulation-and-time-section {
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider .flip-clock-dot.top {
           top: 25px; }
       .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.days .flip-clock-label {
-        right: -65px; }
+        right: -75px; }
         @media screen and (min-width: 992px) and (max-width: 1199px) {
           .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.days .flip-clock-label {
             right: -55px; } }
@@ -10097,7 +10097,7 @@ section.congratulation-and-time-section {
           .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.days .flip-clock-label {
             right: -55px; } }
       .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.hours .flip-clock-label {
-        right: -73px; }
+        right: -80px; }
         @media screen and (min-width: 992px) and (max-width: 1199px) {
           .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.hours .flip-clock-label {
             right: -63px; } }
@@ -10135,16 +10135,6 @@ section.congratulation-and-time-section {
         line-height: 60px; }
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul li .inn {
           font-size: 45px; }
-      @media screen and (min-width: 992px) and (max-width: 1199px) {
-        .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul {
-          width: 30px; }
-          .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul li .inn {
-            font-size: 35px; } }
-      @media screen and (min-width: 768px) and (max-width: 991px) {
-        .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul {
-          width: 25px; }
-          .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul li .inn {
-            font-size: 30px; } }
       @media screen and (max-width: 450px) {
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul {
           width: 30px; }
