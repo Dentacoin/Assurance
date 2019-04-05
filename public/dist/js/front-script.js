@@ -1440,7 +1440,7 @@ var onDocumentReadyPageData = function () {
                         contract_dcn_amount = on_load_exiting_contract[5];
                         //var contract_next_payment = parseInt(on_load_exiting_contract[0]);
 
-                        contract_next_payment = 1551398400;
+                        contract_next_payment = 1554076800;
                         grace_period_in_seconds = 1814400;
                         //var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
 

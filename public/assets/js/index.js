@@ -2947,7 +2947,7 @@ async function onDocumentReadyPageData() {
                 var on_load_exiting_contract = await App.assurance_state_methods.getPatient($('.single-contract-view-section').attr('data-patient'), $('.single-contract-view-section').attr('data-dentist'));
                 var contract_dcn_amount = on_load_exiting_contract[5];
                 //var contract_next_payment = parseInt(on_load_exiting_contract[0]);
-                var contract_next_payment = 1551398400;
+                var contract_next_payment = 1554076800;
                 var grace_period_in_seconds = 1814400;
                 //var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
                 var current_patient_dcn_balance = 5600;
