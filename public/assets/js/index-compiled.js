@@ -27161,7 +27161,9 @@ var onDocumentReadyPageData = function () {
                     case 83:
                         on_load_exiting_contract = _context28.sent;
                         contract_dcn_amount = on_load_exiting_contract[5];
-                        contract_next_payment = parseInt(on_load_exiting_contract[0]);
+                        //var contract_next_payment = parseInt(on_load_exiting_contract[0]);
+
+                        contract_next_payment = 1551398400;
                         grace_period_in_seconds = 1814400;
                         _context28.t26 = parseFloat;
                         _context28.next = 90;
@@ -27182,6 +27184,8 @@ var onDocumentReadyPageData = function () {
                             basic.showAlert('You haven\'t withdraw from this patient for ' + months_dentist_didnt_withdraw + ' months in a row, but the patient currently have not enough Dentacoins to cover all the months. Contact him and let him know to refill Dentacoins inside his Wallet Address.', '', true);
                         } else if (contract_next_payment < now_timestamp && now_timestamp < contract_next_payment + grace_period_in_seconds && current_patient_dcn_balance < contract_dcn_amount /* && current_patient_dcn_balance < (Math.floor((now_timestamp - contract_next_payment) / smart_contract_withdraw_period) + 1) * contract_dcn_amount*/) {
                                 //show red counter (grace period)
+                                $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container red-background text-center"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold white-color">Overdue payment. If the patient doesn\'t fill in ' + contract_dcn_amount + ' Dentacoins inside his Wallet Address the contract will be canceled in:</h2><div class="clock"></div><div class="flip-clock-message"></div></div></div>');
+                                initFlipClockTimer(contract_next_payment + grace_period_in_seconds - now_timestamp);
                             } else if (contract_next_payment < now_timestamp && now_timestamp > contract_next_payment + grace_period_in_seconds && current_patient_dcn_balance < contract_dcn_amount) {
                             //nodejs request contract cancel
                         } else {

@@ -10123,5 +10123,7 @@ section.congratulation-and-time-section {
           width: 30px; }
           .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul li .inn {
             font-size: 35px; } }
+  .single-contract-view-section .camping-withdraw-time-left-section .clock-container.red-background {
+    background-color: #d64949; }
 
 /*# sourceMappingURL=style.css.map */
