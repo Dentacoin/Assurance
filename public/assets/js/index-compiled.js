@@ -26570,7 +26570,7 @@ var onDocumentReadyPageData = function () {
                 switch (_context28.prev = _context28.next) {
                     case 0:
                         if (!$('body').hasClass('logged-in')) {
-                            _context28.next = 98;
+                            _context28.next = 94;
                             break;
                         }
 
@@ -26596,7 +26596,7 @@ var onDocumentReadyPageData = function () {
                             $('.converted-date').html(dateObjToFormattedDate(date_obj));
                         }
                         initFlipClockTimer(next_transfer_timestamp - new Date().getTime() / 1000);
-                        _context28.next = 96;
+                        _context28.next = 92;
                         break;
 
                     case 14:
@@ -26632,7 +26632,7 @@ var onDocumentReadyPageData = function () {
 
                             table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">' + next_payment_timestamp + '</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
-                        _context28.next = 96;
+                        _context28.next = 92;
                         break;
 
                     case 26:
@@ -26662,7 +26662,7 @@ var onDocumentReadyPageData = function () {
                         $('.active-until').html(dateObjToFormattedDate(date_obj));
 
                     case 39:
-                        _context28.next = 96;
+                        _context28.next = 92;
                         break;
 
                     case 41:
@@ -26754,12 +26754,12 @@ var onDocumentReadyPageData = function () {
                                 return _ref21.apply(this, arguments);
                             };
                         }());
-                        _context28.next = 96;
+                        _context28.next = 92;
                         break;
 
                     case 48:
                         if (!$('body').hasClass('dentist-contract-view')) {
-                            _context28.next = 95;
+                            _context28.next = 91;
                             break;
                         }
 
@@ -27124,12 +27124,12 @@ var onDocumentReadyPageData = function () {
                                 }
                             });
                         }
-                        _context28.next = 93;
+                        _context28.next = 89;
                         break;
 
                     case 71:
                         if (!$('.single-contract-view-section').hasClass('active')) {
-                            _context28.next = 93;
+                            _context28.next = 89;
                             break;
                         }
 
@@ -27165,13 +27165,9 @@ var onDocumentReadyPageData = function () {
 
                         contract_next_payment = 1551398400;
                         grace_period_in_seconds = 1814400;
-                        _context28.t26 = parseFloat;
-                        _context28.next = 90;
-                        return App.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient'));
+                        //var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
 
-                    case 90:
-                        _context28.t27 = _context28.sent;
-                        current_patient_dcn_balance = (0, _context28.t26)(_context28.t27);
+                        current_patient_dcn_balance = 5600;
 
 
                         if (contract_next_payment > now_timestamp) {
@@ -27509,11 +27505,11 @@ var onDocumentReadyPageData = function () {
                             })));
                         }
 
-                    case 93:
-                        _context28.next = 96;
+                    case 89:
+                        _context28.next = 92;
                         break;
 
-                    case 95:
+                    case 91:
                         if ($('body').hasClass('patient-contract-view')) {
                             if ($('.terms-and-conditions-long-list').length) {
                                 $('.terms-and-conditions-long-list').mCustomScrollbar();
@@ -27529,19 +27525,19 @@ var onDocumentReadyPageData = function () {
                             initTooltips();
                         }
 
-                    case 96:
-                        _context28.next = 102;
+                    case 92:
+                        _context28.next = 98;
                         break;
 
-                    case 98:
-                        _context28.next = 100;
+                    case 94:
+                        _context28.next = 96;
                         return $.getScript('//dentacoin.com/assets/libs/civic-login/civic.js', function () {});
 
-                    case 100:
-                        _context28.next = 102;
+                    case 96:
+                        _context28.next = 98;
                         return $.getScript('//dentacoin.com/assets/libs/facebook-login/facebook.js', function () {});
 
-                    case 102:
+                    case 98:
                     case 'end':
                         return _context28.stop();
                 }
