@@ -2948,7 +2948,7 @@ async function onDocumentReadyPageData() {
                 var contract_dcn_amount = on_load_exiting_contract[5];
                 var contract_next_payment = parseInt(on_load_exiting_contract[0]);
                 var grace_period_in_seconds = 1814400;
-                var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(this_withdraw_btn.attr('data-patient')));
+                var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
 
                 if(contract_next_payment > now_timestamp) {
                     $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold white-color">MAKE YOUR NEXT WITHDRAW IN</h2><div class="clock"></div><div class="flip-clock-message"></div></div></div>');

@@ -27165,7 +27165,7 @@ var onDocumentReadyPageData = function () {
                         grace_period_in_seconds = 1814400;
                         _context28.t26 = parseFloat;
                         _context28.next = 90;
-                        return App.dentacoin_token_methods.balanceOf(this_withdraw_btn.attr('data-patient'));
+                        return App.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient'));
 
                     case 90:
                         _context28.t27 = _context28.sent;
