@@ -8016,7 +8016,7 @@ nav.sidenav {
     color: white;
     font-size: 12px;
     text-transform: uppercase;
-    bottom: -15px;
+    bottom: -25px;
     top: auto; }
   .module.single-contract-tile .clock .flip-clock-divider {
     height: 60px; }
@@ -8026,9 +8026,9 @@ nav.sidenav {
       height: 7px; }
       .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot.bottom {
         bottom: auto;
-        top: 35px; }
+        top: 40px; }
       .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot.top {
-        top: 20px; }
+        top: 25px; }
     .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
       right: -65px; }
       @media screen and (min-width: 992px) and (max-width: 1199px) {
@@ -10078,7 +10078,6 @@ section.congratulation-and-time-section {
     .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider {
       height: 60px; }
       .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider .flip-clock-dot {
-        background: #438199;
         width: 7px;
         height: 7px; }
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider .flip-clock-dot.bottom {
@@ -10130,13 +10129,12 @@ section.congratulation-and-time-section {
           .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider:first-child {
             width: 0; } }
     .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul {
-      width: 40px;
-      height: 50px; }
+      width: 50px;
+      height: 60px; }
       .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul li {
-        line-height: 50px; }
+        line-height: 60px; }
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul li .inn {
-          font-size: 40px;
-          background: #438199; }
+          font-size: 45px; }
       @media screen and (min-width: 992px) and (max-width: 1199px) {
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul {
           width: 30px; }

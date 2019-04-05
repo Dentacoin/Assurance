@@ -883,7 +883,7 @@
                 color: white;
                 font-size: 12px;
                 text-transform: uppercase;
-                bottom: -15px;
+                bottom: -25px;
                 top: auto;
             }
             .flip-clock-divider {
@@ -892,12 +892,12 @@
                     background: #438199;
                     width: 7px;
                     height: 7px;
-                    &.bottom {
+                    &.bottom { 
                         bottom: auto;
-                        top: 35px;
+                        top: 40px;
                     }
                     &.top {
-                        top: 20px;
+                        top: 25px;
                     }
                 }
                 &.days {
