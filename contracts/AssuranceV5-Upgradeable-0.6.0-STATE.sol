@@ -1,165 +1,170 @@
 pragma solidity ^0.5.0;
 
 contract Ownable {
-address public owner;
-address public admin;
+    address public owner;
+    address public admin;
 
-constructor() public {
-owner = msg.sender;
-admin = msg.sender;
-}
+    constructor() public {
+        owner = msg.sender;
+        admin = msg.sender;
+    }
 
-modifier onlyOwner() {
-require(msg.sender == owner);
-_;
-}
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
 
-modifier onlyOwnerOrAdmin() {
-require(msg.sender == owner || msg.sender == admin);
-_;
-}
+    modifier onlyOwnerOrAdmin() {
+        require(msg.sender == owner || msg.sender == admin);
+        _;
+    }
 
-function transferOwnership(address _new_owner) public onlyOwner {
-require(_new_owner != address(0));
-owner = _new_owner;
-}
+    function transferOwnership(address _new_owner) public onlyOwner {
+        require(_new_owner != address(0));
+        owner = _new_owner;
+    }
 
-function transferAdmin(address _new_admin) public onlyOwner {
-require(_new_admin != address(0));
-admin = _new_admin;
-}
+    function transferAdmin(address _new_admin) public onlyOwner {
+        require(_new_admin != address(0));
+        admin = _new_admin;
+    }
 }
 
 contract ownerSettings is Ownable {
-bool public contract_paused = false;
-uint256 public period_to_withdraw = 180; //3 minutes for testing purpose
-uint256 public min_allowed_amount = 8000000000000; //minimum allowed amount to sign a contract
-uint256 public api_result_dcn_usd_price = 1700000; //usd for one dcn
-uint256 public api_decimals = 10; //decimals, because solidity doesn't support float at this time
-bool public usd_over_dcn = true;
-address public proxy_contract;
+    bool public contract_paused = false;
+    uint256 public period_to_withdraw = 180; //3 minutes for testing purpose
+    uint256 public min_allowed_amount = 8000000000000; //minimum allowed amount to sign a contract
+    uint256 public api_result_dcn_usd_price = 1700000; //usd for one dcn
+    uint256 public api_decimals = 10; //decimals, because solidity doesn't support float at this time
+    bool public usd_over_dcn = true;
+    address public proxy_contract;
 
-//DentacoinToken address
-address public dentacoin_token_address = 0x19f49a24c7CB0ca1cbf38436A86656C2F30ab362;
-//DentacoinToken instance
-DentacoinToken dcn = DentacoinToken(dentacoin_token_address);
+    //DentacoinToken address
+    address public dentacoin_token_address = 0x19f49a24c7CB0ca1cbf38436A86656C2F30ab362;
+    //DentacoinToken instance
+    DentacoinToken dcn = DentacoinToken(dentacoin_token_address);
 
 
-// ==================================== MODIFIERS ====================================
-modifier onlyApprovedProxy() {
-require(msg.sender == proxy_contract);
-_;
-}
+    // ==================================== MODIFIERS ====================================
+    modifier onlyApprovedProxy() {
+        require(msg.sender == proxy_contract);
+        _;
+    }
 
-modifier checkIfPaused() {
-require(!contract_paused, "Contract is paused. Please try again later.");
-_;
-}
-// ==================================== /MODIFIERS ====================================
+    modifier onlyApprovedProxyOrAdmin() {
+        require(msg.sender == proxy_contract || msg.sender == admin);
+        _;
+    }
 
-function circuitBreaker() public onlyOwner {
-if(!contract_paused) {
-contract_paused = true;
-}else {
-contract_paused = false;
-}
-}
+    modifier checkIfPaused() {
+        require(!contract_paused, "Contract is paused. Please try again later.");
+        _;
+    }
+    // ==================================== /MODIFIERS ====================================
 
-function changePeriodToWithdraw(uint256 _period_to_withdraw) public onlyOwner {
-period_to_withdraw = _period_to_withdraw;
-}
+    function circuitBreaker() public onlyOwner {
+        if(!contract_paused) {
+            contract_paused = true;
+        }else {
+            contract_paused = false;
+        }
+    }
 
-function changeProxyAddress(address _proxy_contract) public onlyOwner {
-proxy_contract = _proxy_contract;
-}
+    function changePeriodToWithdraw(uint256 _period_to_withdraw) public onlyOwner {
+        period_to_withdraw = _period_to_withdraw;
+    }
 
-function changeDentacoinTokenAddress(address _dentacoin_token_address) public onlyOwner {
-dentacoin_token_address = _dentacoin_token_address;
-}
+    function changeProxyAddress(address _proxy_contract) public onlyOwner {
+        proxy_contract = _proxy_contract;
+    }
 
-function changeMinimumAllowedAmount(uint256 _min_allowed_amount) public onlyOwner {
-min_allowed_amount = _min_allowed_amount;
-}
+    function changeDentacoinTokenAddress(address _dentacoin_token_address) public onlyOwner {
+        dentacoin_token_address = _dentacoin_token_address;
+    }
 
-function changeUsdOverDcn(bool _usd_over_dcn) public onlyOwner {
-usd_over_dcn = _usd_over_dcn;
-}
+    function changeMinimumAllowedAmount(uint256 _min_allowed_amount) public onlyOwner {
+        min_allowed_amount = _min_allowed_amount;
+    }
 
-// ====== PRICE SETTERS ======
-function changeApiResultDcnUsdPrice(uint256 _api_result_dcn_usd_price) public onlyOwnerOrAdmin {
-api_result_dcn_usd_price = _api_result_dcn_usd_price;
-}
+    function changeUsdOverDcn(bool _usd_over_dcn) public onlyOwner {
+        usd_over_dcn = _usd_over_dcn;
+    }
 
-function changeApiDecimals(uint256 _api_decimals) public onlyOwnerOrAdmin {
-api_decimals = _api_decimals;
-}
-// ====== /PRICE SETTERS ======
+    // ====== PRICE SETTERS ======
+    function changeApiResultDcnUsdPrice(uint256 _api_result_dcn_usd_price) public onlyOwnerOrAdmin {
+        api_result_dcn_usd_price = _api_result_dcn_usd_price;
+    }
 
-// ====== GETTERS ======
-function getPeriodToWithdraw() public view returns(uint256) {
-return period_to_withdraw;
-}
+    function changeApiDecimals(uint256 _api_decimals) public onlyOwnerOrAdmin {
+        api_decimals = _api_decimals;
+    }
+    // ====== /PRICE SETTERS ======
 
-function getMinAllowedAmount() public view returns(uint256) {
-return min_allowed_amount;
-}
+    // ====== GETTERS ======
+    function getPeriodToWithdraw() public view returns(uint256) {
+        return period_to_withdraw;
+    }
 
-function getApiResultDcnUsdPrice() public view returns(uint256) {
-return api_result_dcn_usd_price;
-}
+    function getMinAllowedAmount() public view returns(uint256) {
+        return min_allowed_amount;
+    }
 
-function getApiDecimals() public view returns(uint256) {
-return api_decimals;
-}
+    function getApiResultDcnUsdPrice() public view returns(uint256) {
+        return api_result_dcn_usd_price;
+    }
 
-function getUsdOverDcn() public view returns(bool) {
-return usd_over_dcn;
-}
+    function getApiDecimals() public view returns(uint256) {
+        return api_decimals;
+    }
 
-function getContractPaused() public view returns(bool) {
-return contract_paused;
-}
-// ====== /GETTERS ======
+    function getUsdOverDcn() public view returns(bool) {
+        return usd_over_dcn;
+    }
+
+    function getContractPaused() public view returns(bool) {
+        return contract_paused;
+    }
+    // ====== /GETTERS ======
 }
 
 contract Assurance is ownerSettings {
-// ==================================== STATE ====================================
-address public AssuranceContract = address(this);
+    // ==================================== STATE ====================================
+    address public AssuranceContract = address(this);
 
-struct contractStruct {
-uint256 next_transfer;
-bool approved_by_dentist;
-bool approved_by_patient;
-bool validation_checked;
-uint256 value_usd;
-uint256 value_dcn;
-string contract_ipfs_hash;
-uint256 index_in_patients_addresses;
-}
+    struct contractStruct {
+        uint256 next_transfer;
+        bool approved_by_dentist;
+        bool approved_by_patient;
+        bool validation_checked;
+        uint256 value_usd;
+        uint256 value_dcn;
+        string contract_ipfs_hash;
+        uint256 index_in_patients_addresses;
+    }
 
-struct dentistStruct {
-bool exists;
-address[] patients_addresses; //list of patients addresses for THIS dentist
-mapping (address => contractStruct) contracts; //list of contracts for THIS dentist
-}
+    struct dentistStruct {
+        bool exists;
+        address[] patients_addresses; //list of patients addresses for THIS dentist
+        mapping (address => contractStruct) contracts; //list of contracts for THIS dentist
+    }
 
-struct patientContractHistory {
-mapping (address => dentistSentProposal) dentists;
-address[] dentists_addresses;
-}
+    struct patientContractHistory {
+        mapping (address => dentistSentProposal) dentists;
+        address[] dentists_addresses;
+    }
 
-struct dentistSentProposal {
-uint256 index_in_dentists_addresses;
-bool exists;
-}
+    struct dentistSentProposal {
+        uint256 index_in_dentists_addresses;
+        bool exists;
+    }
 
-mapping (address => patientContractHistory) patient_contract_history; //incoming contracts for patient, waiting his approval
-mapping (address => dentistStruct) dentists; //list of dentists
-address[] dentists_addresses;
-// ==================================== /STATE ====================================
+    mapping (address => patientContractHistory) patient_contract_history; //incoming contracts for patient, waiting his approval
+    mapping (address => dentistStruct) dentists; //list of dentists
+    address[] dentists_addresses;
+    // ==================================== /STATE ====================================
 
-// ==================================== LOGIC ====================================
-function registerContract(address _patient_addr, address _dentist_addr, uint256 _date_start_contract, bool _approved_by_dentist, bool _approved_by_patient, bool _validation_checked, uint256 _value_usd, uint256 _value_dcn, string calldata _contract_ipfs_hash) external onlyApprovedProxy checkIfPaused {
+    // ==================================== LOGIC ====================================
+    function registerContract(address _patient_addr, address _dentist_addr, uint256 _date_start_contract, bool _approved_by_dentist, bool _approved_by_patient, bool _validation_checked, uint256 _value_usd, uint256 _value_dcn, string calldata _contract_ipfs_hash) external onlyApprovedProxy checkIfPaused {
 //if dentist not registered in the mapping add him
 if(!dentists[_dentist_addr].exists) {
 dentists[_dentist_addr] = dentistStruct(true, new address[](0));
@@ -194,7 +199,7 @@ require(dcn.transferFrom(_patient_addr, _dentist_addr, _amount));
 }
 
 //can be called from patient and dentist
-function breakContract(address _patient_addr, address _dentist_addr) public onlyApprovedProxy checkIfPaused {
+function breakContract(address _patient_addr, address _dentist_addr) public onlyApprovedProxyOrAdmin checkIfPaused {
 //if there is proposal recorded from this dentist for this patient ----> delete it
 if(patient_contract_history[_patient_addr].dentists[_dentist_addr].exists) {
 //deleting the dentist address from the dentists_addresses array for the current patient

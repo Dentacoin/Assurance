@@ -20,6 +20,13 @@ class DentistController extends Controller
         $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
         $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
         if(!empty($contract)) {
+            if($contract->status == 'active') {
+                $check_if_legit_contract = (new APIRequestsController())->cancelIfLatePayment($contract->patient_address, $contract->dentist_address);
+                if($check_if_legit_contract && $check_if_legit_contract->success) {
+                    var_dump('cancel contract');
+                    die();
+                }
+            }
             return view('pages/logged-user/dentist/single-contract-view-'.$contract->status, ['contract' => $contract, 'calculator_proposals' => $calculator_proposals]);
         } else {
             return abort(404);
