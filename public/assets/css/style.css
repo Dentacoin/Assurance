@@ -8041,7 +8041,7 @@ nav.sidenav {
         .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
           right: -55px; } }
     .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
-      right: -73px; }
+      right: -81px; }
       @media screen and (min-width: 992px) and (max-width: 1199px) {
         .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
           right: -63px; } }
@@ -8052,7 +8052,7 @@ nav.sidenav {
         .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
           right: -63px; } }
     .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
-      right: -77px; }
+      right: -85px; }
       @media screen and (min-width: 992px) and (max-width: 1199px) {
         .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
           right: -67px; } }
