@@ -10,7 +10,7 @@
     @else
         @php($cancelled_timestamp = strtotime($contract->cancelled_at))
     @endif
-    @php(die())
+    
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
     @php($cancellation_reason = unserialize($contract->cancellation_reason))
     @if(!empty($contract->patient_id))
