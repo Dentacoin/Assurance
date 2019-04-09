@@ -25,8 +25,7 @@ class DentistController extends Controller
                 if($check_if_legit_contract && isset($check_if_legit_contract->success)) {
                     //IF NORMAL PERIOD AND GRACE PERIOD PASSED CANCEL THIS CONTRACT
                     $cancellation_reason = array(
-                        'reason' => 'Late payment from patient.',
-                        'comments' => ''
+                        'reason' => 'Late payment from patient.'
                     );
 
                     $contract->status = 'cancelled';

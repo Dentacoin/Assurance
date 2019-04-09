@@ -2636,8 +2636,10 @@ function onWindowLoadPageData() {
 async function onDocumentReadyPageData() {
     if($('body').hasClass('logged-in')) {
         if($('body').hasClass('congratulations')) {
-            console.log('congratulations);');
             var next_transfer_timestamp = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
+            console.log($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
+            console.log(parseInt(await App.assurance_state_methods.getPeriodToWithdraw()));
+            console.log(next_transfer_timestamp, 'next_transfer_timestamp);')
             if($('.converted-date').length > 0) {
                 var date_obj = new Date(next_transfer_timestamp * 1000);
                 $('.converted-date').html(dateObjToFormattedDate(date_obj));
