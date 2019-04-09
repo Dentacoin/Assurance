@@ -1,5 +1,8 @@
 @extends('layout')
 @section('content')
+    {{var_dump($contract->contract_active_at)}}
+    {{var_dump($contract->cancelled_at)}}
+    @php(die())
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
     @php($cancellation_reason = unserialize($contract->cancellation_reason))
     @if(!empty($contract->patient_id))
