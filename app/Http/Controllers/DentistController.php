@@ -22,6 +22,8 @@ class DentistController extends Controller
         if(!empty($contract)) {
             if($contract->status == 'active') {
                 $check_if_legit_contract = (new APIRequestsController())->cancelIfLatePayment($contract->patient_address, $contract->dentist_address);
+                var_dump($check_if_legit_contract);
+                die();
                 if($check_if_legit_contract && $check_if_legit_contract->success) {
                     var_dump('cancel contract');
                     die();

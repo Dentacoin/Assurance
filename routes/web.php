@@ -14,11 +14,6 @@
 Route::get('/refresh-captcha', 'Controller@refreshCaptcha')->name('refresh-captcha');
 
 Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function () {
-    Route::get('test', function() {
-        var_dump((new \App\Http\Controllers\APIRequestsController())->getDCNTransactions());
-        die();
-    })->name('test');
-
     Route::get('sitemap.xml', 'Controller@getSitemap')->name('sitemap');
 
     //======================================= PAGES ========================================
