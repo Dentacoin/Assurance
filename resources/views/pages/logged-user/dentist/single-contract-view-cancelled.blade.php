@@ -23,7 +23,7 @@
         @php($patient_email = $contract->patient_email)
         @php($avatar_url = '/assets/images/no-avatar.png')
     @endif
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section cancelled" data-created-at="{{}}">
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section cancelled" data-created-at="{{strtotime($active_timestamp)}}">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
