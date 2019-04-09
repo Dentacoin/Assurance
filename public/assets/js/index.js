@@ -3725,9 +3725,9 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         //if remember me option is checked
                                         if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
                                             localStorage.setItem('current-account', JSON.stringify({
-                                                address: decrypted_pdf_response.success.address,
+                                                address: decrypted_pdf_response.address,
                                                 type: 'key',
-                                                key: decrypted_pdf_response.success.private_key
+                                                key: decrypted_pdf_response.private_key
                                             }));
                                         }
 

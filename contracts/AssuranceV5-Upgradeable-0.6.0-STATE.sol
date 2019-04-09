@@ -32,7 +32,7 @@ contract Ownable {
 
 contract ownerSettings is Ownable {
     bool public contract_paused = false;
-    uint256 public period_to_withdraw = 180; //3 minutes for testing purpose
+    uint256 public period_to_withdraw = 2592000; //one month
     uint256 public min_allowed_amount = 8000000000000; //minimum allowed amount to sign a contract
     uint256 public api_result_dcn_usd_price = 1700000; //usd for one dcn
     uint256 public api_decimals = 10; //decimals, because solidity doesn't support float at this time
