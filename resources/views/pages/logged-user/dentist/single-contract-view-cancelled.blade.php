@@ -1,7 +1,15 @@
 @extends('layout')
 @section('content')
-    {{var_dump($contract->contract_active_at)}}
-    {{var_dump($contract->cancelled_at)}}
+    @if(is_object($contract->contract_active_at))
+        @php($active_timestamp = strtotime($contract->contract_active_at->getTimestamp()))
+    @else
+        @php($active_timestamp = strtotime($contract->contract_active_at))
+    @endif
+    @if(is_object($contract->cancelled_at))
+        @php($cancelled_timestamp = strtotime($contract->cancelled_at->getTimestamp()))
+    @else
+        @php($cancelled_timestamp = strtotime($contract->cancelled_at))
+    @endif
     @php(die())
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
     @php($cancellation_reason = unserialize($contract->cancellation_reason))
@@ -15,7 +23,7 @@
         @php($patient_email = $contract->patient_email)
         @php($avatar_url = '/assets/images/no-avatar.png')
     @endif
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section cancelled" data-created-at="{{strtotime($contract->contract_active_at)}}">
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section cancelled" data-created-at="{{}}">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
@@ -33,11 +41,11 @@
                     <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$dentist->name}}</div>
                     <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$dentist->email}}</div>
                 </div>
-                <div class="col-xs-3 inline-block-top margin-top-40 margin-top-xs-0 contract-body text-center" data-time-left-next-transfer="{{strtotime($contract->contract_active_at)}}">
+                <div class="col-xs-3 inline-block-top margin-top-40 margin-top-xs-0 contract-body text-center" data-time-left-next-transfer="{{$active_timestamp}}">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-10 padding-bottom-15 cancelled">CANCELLED</div>
                     <div class="padding-left-15 padding-right-15 wrapper">
                         <div class="cancelled-color fs-20 calibri-bold padding-top-15">Date Cancelled:</div>
-                        <time class="display-block calibri-light fs-20">{{date('d/m/Y', strtotime($contract->cancelled_at))}}</time>
+                        <time class="display-block calibri-light fs-20">{{date('d/m/Y', $cancelled_timestamp)}}</time>
                         <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Reason:</div>
                         <div class="calibri-light fs-20">{{$cancellation_reason['reason']}}</div>
                         <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Comments:</div>
@@ -58,7 +66,7 @@
                 @if(isset($mobile) && $mobile)
                     <div class="col-xs-12 padding-top-15 padding-bottom-15 border-right-light-gray show-on-xs">
                         <div class="cancelled-color fs-20 calibri-bold padding-top-15">Date Cancelled:</div>
-                        <time class="display-block calibri-light fs-18">{{date('d/m/Y', strtotime($contract->cancelled_at))}}</time>
+                        <time class="display-block calibri-light fs-18">{{date('d/m/Y', $cancelled_timestamp)}}</time>
                         <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Reason:</div>
                         <div class="calibri-light fs-18">{{$cancellation_reason['reason']}}</div>
                         <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Comments:</div>
@@ -67,8 +75,8 @@
                 @endif
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15 border-right-light-gray">
                     <h3 class="fs-20 calibri-bold">Date Signed:</h3>
-                    @if(!empty($contract->contract_active_at))
-                        <time class="display-block padding-top-10 calibri-light fs-20">{{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
+                    @if(!empty($active_timestamp))
+                        <time class="display-block padding-top-10 calibri-light fs-20">{{date('d/m/Y', $active_timestamp)}}</time>
                     @else
                         <div class="cancelled-color fs-20 calibri-light padding-top-10">Patient cancelled the contract before signing it.</div>
                     @endif
