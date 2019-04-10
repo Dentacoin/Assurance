@@ -341,13 +341,14 @@ class PatientController extends Controller {
 
         $view_end = view('partials/pdf-contract-layout-end');
         $html_end = $view_end->render();
-
-        var_dump($html_body);
-
         echo '<br><br><br>PUBLIC KEYS <br>';
 
         var_dump($patient_pub_key->public_key);
         var_dump($dentist_pub_key->public_key);
+
+        echo '<br><br><br>ENTITIES <br>';
+        var_dump(htmlentities($html_body));
+
 
         echo '<br><br><br>ENCRYPTED <br>';
 
