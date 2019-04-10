@@ -1772,6 +1772,7 @@ if($('body').hasClass('logged-in')) {
         $('.contract-decrypt').click(async function() {
             var this_btn = $(this);
             var encrypted_pdf_content = await getEncryptedContractPdfContent(this_btn.attr('data-hash'), this_btn.attr('data-type'));
+            console.log(encrypted_pdf_content, 'encrypted_pdf_content');
             var render_form = $('form#render-pdf');
             if(encrypted_pdf_content.success) {
                 if(localStorage.getItem('current-account') != null) {
