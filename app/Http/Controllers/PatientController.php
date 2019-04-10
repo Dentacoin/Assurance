@@ -349,10 +349,6 @@ class PatientController extends Controller {
         var_dump($patient_pub_key->public_key);
         var_dump($dentist_pub_key->public_key);
 
-        echo '<br><br><br>HTLMENTITIES <br>';
-
-        var_dump(htmlentities($html_body));
-
         echo '<br><br><br>ENCRYPTED <br>';
 
         //sending the pdf html to encryption nodejs api
@@ -361,6 +357,8 @@ class PatientController extends Controller {
 
         var_dump($encrypted_html_by_patient);
         var_dump($encrypted_html_by_dentist);
+
+        die();
 
         echo '<br><br><br>DECRYPTED <br>';
 
