@@ -341,52 +341,10 @@ class PatientController extends Controller {
 
         $view_end = view('partials/pdf-contract-layout-end');
         $html_end = $view_end->render();
-        echo '<br><br><br>PUBLIC KEYS <br>';
-
-        var_dump($patient_pub_key->public_key);
-        var_dump($dentist_pub_key->public_key);
-
-        echo '<br><br><br>ENTITIES <br>';
-        var_dump(htmlentities($html_body));
-
-
-        echo '<br><br><br>ENCRYPTED <br>';
 
         //sending the pdf html to encryption nodejs api
         $encrypted_html_by_patient = (new \App\Http\Controllers\APIRequestsController())->encryptFile($patient_pub_key->public_key, htmlentities($html_body));
         $encrypted_html_by_dentist = (new \App\Http\Controllers\APIRequestsController())->encryptFile($dentist_pub_key->public_key, htmlentities($html_body));
-
-        var_dump($encrypted_html_by_patient);
-        var_dump($encrypted_html_by_dentist);
-
-        die();
-
-        echo '<br><br><br>DECRYPTED <br>';
-
-        $curl = curl_init();
-        $array = array(
-            'private_key' => strtolower('E49FF8B3C966E003022D215B64DC5F007A6FBF9A70067E315887F28B4C23E8DE'),
-            'encrypted_html' => $encrypted_html_by_patient->success
-        );
-        $json = json_encode($array);
-
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://assurance.dentacoin.com/decrypt-data-plain-key',
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POSTFIELDS => $json
-        ));
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
-                'Content-Type: application/json',
-                'Content-Length: ' . mb_strlen($json))
-        );
-
-        $resp = curl_exec($curl);
-        curl_close($curl);
-        var_dump($resp);
-
-        die();
 
         //if no errors from the api
         if($encrypted_html_by_patient && !isset($encrypted_html_by_patient->error) && $encrypted_html_by_dentist && !isset($encrypted_html_by_dentist->error)) {
