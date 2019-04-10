@@ -396,7 +396,7 @@ class APIRequestsController extends Controller {
 
         $array = array(
             'public_key' => $key,
-            'html' => $html
+            'post_html' => $html
         );
         $json = json_encode($array);
 
