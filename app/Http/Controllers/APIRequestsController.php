@@ -344,7 +344,7 @@ class APIRequestsController extends Controller {
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://assurance.dentacoin.com/upload-file-to-ipfs',
+            CURLOPT_URL => 'https://methods.dentacoin.com/upload-file-to-ipfs',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => $json
         ));
@@ -403,7 +403,7 @@ class APIRequestsController extends Controller {
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://assurance.dentacoin.com/encrypt',
+            CURLOPT_URL => 'https://methods.dentacoin.com/encrypt',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => $json
         ));

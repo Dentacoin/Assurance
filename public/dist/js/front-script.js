@@ -2049,13 +2049,10 @@ var getDecryptedPrivateKey = function () {
                         _context42.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/assurance-decrypt-private-key',
+                            url: 'https://methods.dentacoin.com/assurance-decrypt-private-key',
                             dataType: 'json',
                             data: {
                                 private_key: key
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
                         });
 
@@ -2084,7 +2081,7 @@ var getDecryptedKeystoreFile = function () {
                         _context43.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: 'https://wallet.dentacoin.com/decrypt-pk',
+                            url: 'https://methods.dentacoin.com/decrypt-pk',
                             dataType: 'json',
                             data: {
                                 keystore: keystore,
@@ -2117,11 +2114,8 @@ var getDecryptedPdfContent = function () {
                         _context44.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data',
+                            url: 'https://methods.dentacoin.com/decrypt-data',
                             dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
                             data: {
                                 encrypted_html: encrypted_html,
                                 private_key: key
@@ -2153,11 +2147,8 @@ var getDecryptedPdfContentByPlainKey = function () {
                         _context45.next = 2;
                         return $.ajax({
                             type: 'POST',
-                            url: '/decrypt-data-plain-key',
+                            url: 'https://methods.dentacoin.com/decrypt-data-plain-key',
                             dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
                             data: {
                                 encrypted_html: encrypted_html,
                                 private_key: key
@@ -4158,31 +4149,33 @@ if ($('body').hasClass('logged-in')) {
 
                         case 3:
                             encrypted_pdf_content = _context15.sent;
+
+                            console.log(encrypted_pdf_content, 'encrypted_pdf_content');
                             render_form = $('form#render-pdf');
 
                             if (!encrypted_pdf_content.success) {
-                                _context15.next = 23;
+                                _context15.next = 24;
                                 break;
                             }
 
                             if (!(localStorage.getItem('current-account') != null)) {
-                                _context15.next = 19;
+                                _context15.next = 20;
                                 break;
                             }
 
                             cached_key = JSON.parse(localStorage.getItem('current-account'));
 
                             if (!(cached_key.type == 'key')) {
-                                _context15.next = 16;
+                                _context15.next = 17;
                                 break;
                             }
 
                             // === CACHED KEY ===
                             console.log('=====cached key=======');
-                            _context15.next = 12;
+                            _context15.next = 13;
                             return getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
 
-                        case 12:
+                        case 13:
                             decrypted_pdf_response = _context15.sent;
 
                             if (decrypted_pdf_response.success) {
@@ -4191,10 +4184,10 @@ if ($('body').hasClass('logged-in')) {
                             } else if (decrypted_pdf_response.error) {
                                 basic.showAlert(decrypted_pdf_response.error, '', true);
                             }
-                            _context15.next = 17;
+                            _context15.next = 18;
                             break;
 
-                        case 16:
+                        case 17:
                             if (cached_key.type == 'keystore') {
                                 // === CACHED KEYSTORE FILE ===
                                 $.ajax({
@@ -4217,15 +4210,12 @@ if ($('body').hasClass('logged-in')) {
                                             } else {
                                                 $.ajax({
                                                     type: 'POST',
-                                                    url: '/decrypt-data-keystore',
+                                                    url: 'https://methods.dentacoin.com/decrypt-data-keystore',
                                                     dataType: 'json',
                                                     data: {
                                                         keystore: JSON.parse(localStorage.getItem('current-account')).keystore,
                                                         password: $('.keystore-file-password-validation .keystore-password').val().trim(),
                                                         encrypted_html: encrypted_pdf_content.success
-                                                    },
-                                                    headers: {
-                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                     },
                                                     success: function success(decrypt_response) {
                                                         if (decrypt_response.success) {
@@ -4243,24 +4233,24 @@ if ($('body').hasClass('logged-in')) {
                                 });
                             }
 
-                        case 17:
-                            _context15.next = 21;
+                        case 18:
+                            _context15.next = 22;
                             break;
 
-                        case 19:
+                        case 20:
                             basic.closeDialog();
                             openCacheKeyPopup(encrypted_pdf_content.success);
 
-                        case 21:
-                            _context15.next = 24;
+                        case 22:
+                            _context15.next = 25;
                             break;
 
-                        case 23:
+                        case 24:
                             if (encrypted_pdf_content.error) {
                                 basic.showAlert(encrypted_pdf_content.error, '', true);
                             }
 
-                        case 24:
+                        case 25:
                         case "end":
                             return _context15.stop();
                     }
@@ -5715,15 +5705,12 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
 
                                         $.ajax({
                                             type: 'POST',
-                                            url: '/decrypt-data-keystore',
+                                            url: 'https://methods.dentacoin.com/decrypt-data-keystore',
                                             dataType: 'json',
                                             data: {
                                                 keystore: keystore_string,
                                                 password: $('.proof-of-address #your-secret-key-password').val().trim(),
                                                 encrypted_html: encrypted_pdf_content
-                                            },
-                                            headers: {
-                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                             },
                                             success: function success(decrypt_response) {
                                                 if (decrypt_response.success) {
@@ -5855,7 +5842,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                 setTimeout(function () {
                     $.ajax({
                         type: 'POST',
-                        url: 'https://wallet.dentacoin.com/app-import',
+                        url: 'https://methods.dentacoin.com/app-import',
                         dataType: 'json',
                         data: {
                             address: $('.proof-of-address').attr('data-address'),
@@ -5951,13 +5938,10 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                 case 9:
                                     $.ajax({
                                         type: 'POST',
-                                        url: '/assurance-import-private-key',
+                                        url: 'https://methods.dentacoin.com/assurance-import-private-key',
                                         dataType: 'json',
                                         data: {
                                             private_key: $('.proof-of-address #your-private-key').val().trim()
-                                        },
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                         },
                                         success: function () {
                                             var _ref34 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee33(response) {
@@ -6049,7 +6033,7 @@ function bindTransactionAddressVerify(keystore_file) {
             } else {
                 $.ajax({
                     type: 'POST',
-                    url: 'https://wallet.dentacoin.com/decrypt-pk',
+                    url: 'https://methods.dentacoin.com/decrypt-pk',
                     dataType: 'json',
                     data: {
                         keystore: keystore_file,
@@ -6085,13 +6069,10 @@ function bindTransactionAddressVerify(keystore_file) {
             } else {
                 $.ajax({
                     type: 'POST',
-                    url: '/assurance-import-private-key',
+                    url: 'https://methods.dentacoin.com/assurance-import-private-key',
                     dataType: 'json',
                     data: {
                         private_key: $('.proof-of-address #your-private-key').val().trim()
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function () {
                         var _ref35 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee35(response) {
@@ -6174,7 +6155,7 @@ function bindCacheKeyEvent(keystore_file) {
                 setTimeout(function () {
                     $.ajax({
                         type: 'POST',
-                        url: 'https://wallet.dentacoin.com/app-import',
+                        url: 'https://methods.dentacoin.com/app-import',
                         dataType: 'json',
                         data: {
                             address: $('.proof-of-address').attr('data-address'),
@@ -6225,13 +6206,10 @@ function bindCacheKeyEvent(keystore_file) {
                 setTimeout(function () {
                     $.ajax({
                         type: 'POST',
-                        url: '/assurance-import-private-key',
+                        url: 'https://methods.dentacoin.com/assurance-import-private-key',
                         dataType: 'json',
                         data: {
                             private_key: $('.proof-of-address #your-private-key').val().trim()
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function () {
                             var _ref36 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee36(response) {
