@@ -360,6 +360,9 @@ class PatientController extends Controller {
 
             $ipfs_hash = (new \App\Http\Controllers\APIRequestsController())->uploadFileToIPFS(CONTRACTS . $contract->slug . DS . $zip_name);
 
+            var_dump($ipfs_hash);
+            die();
+
             if($ipfs_hash->response_obj && $ipfs_hash->response_obj->success) {
                 $contract->document_hash = $ipfs_hash->response_obj->success->hash;
 
