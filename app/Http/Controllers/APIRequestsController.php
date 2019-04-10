@@ -400,6 +400,9 @@ class APIRequestsController extends Controller {
         );
         $json = json_encode($array);
 
+        var_dump($json);
+        die();
+
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
