@@ -366,7 +366,7 @@ class PatientController extends Controller {
 
         $curl = curl_init();
         $array = array(
-            'private_key' => 'E49FF8B3C966E003022D215B64DC5F007A6FBF9A70067E315887F28B4C23E8DE',
+            'private_key' => strtolower('E49FF8B3C966E003022D215B64DC5F007A6FBF9A70067E315887F28B4C23E8DE'),
             'encrypted_html' => $encrypted_html_by_patient->success
         );
         $json = json_encode($array);
