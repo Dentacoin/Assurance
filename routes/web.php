@@ -17,8 +17,9 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::get('sitemap.xml', 'Controller@getSitemap')->name('sitemap');
 
     //======================================= PAGES ========================================
-    Route::get('/test', function() {
-
+    Route::get('/test123', function() {
+        var_dump(getenv('CROSS_WEBSITE_PASSWORD'));
+        die();
     })->name('test123');
 
     Route::get('/', 'HomeController@getView')->name('home');
