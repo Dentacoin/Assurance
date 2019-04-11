@@ -2297,6 +2297,12 @@ var basic = {
             "className": class_name
         };
 
+        if (class_name == 'login-signin-popup') {
+            atrs.onEscape = function () {
+                console.log('sup brah');
+            };
+        }
+
         if (dialog_type == "confirm" && params != undefined && params.buttons == undefined) {
             atrs.buttons = {
                 confirm: {
