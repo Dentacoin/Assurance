@@ -34,6 +34,7 @@ class Controller extends BaseController
             View::share('meta_data', $this->getMetaData());
             View::share('sections', $this->getDbSections());
             View::share('gas_estimation', $this->getGasEstimationFromEthgasstation());
+            View::share('client_ip', $this->getClientIp());
             /*View::share('countries', $this->getApiCountries());*/
             /*View::share('current_user_country_code', $this->getCurrentCountryCode());*/
         }
@@ -194,7 +195,7 @@ class Controller extends BaseController
         }
     }
 
-    function getClientIp() {
+    protected function getClientIp() {
         $ipaddress = '';
         if (getenv('HTTP_CLIENT_IP'))
             $ipaddress = getenv('HTTP_CLIENT_IP');

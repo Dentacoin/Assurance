@@ -19,11 +19,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     //======================================= PAGES ========================================
     Route::get('/test', function() {
 
-
-        var_dump(get_client_ip());
-        var_dump($_SERVER['REMOTE_ADDR']);
-        var_dump(mb_strtolower(trim(file_get_contents('http://ipinfo.io/' . $_SERVER['REMOTE_ADDR'] .  '/country'))));
-        die();
     })->name('test123');
 
     Route::get('/', 'HomeController@getView')->name('home');
