@@ -2364,6 +2364,7 @@ function bindLoginSigninPopupShow() {
 
                         if(!errors) {
                             //submit the form
+                            $('.response-layer').show();
                             $('form#dentist-register').submit();
                         }
                         break;
@@ -2453,7 +2454,6 @@ function hidePopupOnBackdropClick() {
     $(document).on('click', '.bootbox', function(event){
         var classname = event.target.className;
 
-        if(classname.includes('login-signin-popup')) {
         if(classname.includes('login-signin-popup')) {
             $('.hidden-login-form').html($('.login-signin-popup .bootbox-body').html())
         }

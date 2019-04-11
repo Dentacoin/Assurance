@@ -413,7 +413,7 @@
                                         </div>
                                     </div>
                                     <div class="inline-block fs-14 width-50 width-xs-100 padding-left-10">
-                                        <input type="text" name="captcha" id="register-captcha" placeholder="Please calculate" maxlength="5" class="custom-input"/>
+                                        <input type="text" name="captcha" id="register-captcha" placeholder="Enter captcha" maxlength="5" class="custom-input"/>
                                     </div>
                                 </div>
                                 <div class="privacy-policy-row">

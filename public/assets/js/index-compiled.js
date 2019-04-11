@@ -30104,6 +30104,7 @@ function bindLoginSigninPopupShow() {
 
                                 if (!errors) {
                                     //submit the form
+                                    $('.response-layer').show();
                                     $('form#dentist-register').submit();
                                 }
                                 return _context17.abrupt('break', 50);
