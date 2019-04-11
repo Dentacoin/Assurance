@@ -39,9 +39,9 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     //======================================= /TEMPORALLY FOR DAPP TESTING ========================================
 
     //======================================= AJAX ========================================
-    Route::post('/get-public-keys', 'Controller@getPublicKeys')->name('get-public-keys');
+    Route::post('/get-public-keys', 'WalletInstructionsController@getPublicKeys')->name('get-public-keys');
 
-    Route::post('/save-public-key', 'Controller@savePublicKey')->name('save-public-key');
+    Route::post('/save-public-key', 'WalletInstructionsController@savePublicKey')->name('save-public-key');
 
     Route::post('/password-recover-submit', 'UserController@changePasswordSubmit')->name('password-recover-submit');
 

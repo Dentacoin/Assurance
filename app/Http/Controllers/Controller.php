@@ -282,13 +282,5 @@ class Controller extends BaseController
     protected function getIpfsHashes() {
         return TemporallyContract::whereNotNull('contract_active_at')->get(['document_hash', 'contract_active_at']);
     }
-
-    protected function getPublicKeys() {
-        return PublicKey::all();
-    }
-
-    protected function savePublicKey() {
-        return PublicKey::all();
-    }
 }
 
