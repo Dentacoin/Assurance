@@ -2070,7 +2070,9 @@ function decodeEntities(string) {
 
 //call the popup for login/sign for patient and dentist
 function bindLoginSigninPopupShow() {
+    console.log('inited');
     $(document).on('click', '.show-login-signin', function() {
+        console.log('clicked');
         basic.closeDialog();
         basic.showDialog($('.hidden-login-form').html(), 'login-signin-popup', null, true);
 
