@@ -4497,6 +4497,8 @@ function bindLoginSigninPopupShow() {
         $('.show-login-signin').unbind();
         $('.show-login-signin').on('click', function () {
             basic.closeDialog();
+            console.log($('.hidden-login-form').html());
+            console.log('show popup');
             basic.showDialog($('.hidden-login-form').html(), 'login-signin-popup', null, true);
 
             fixButtonsFocus();
