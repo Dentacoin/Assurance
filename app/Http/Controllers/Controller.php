@@ -35,7 +35,7 @@ class Controller extends BaseController
             View::share('sections', $this->getDbSections());
             View::share('gas_estimation', $this->getGasEstimationFromEthgasstation());
             View::share('countries', $this->getApiCountries());
-            View::share('current_user_country_code', $this->getCurrentCountryCode());
+            /*View::share('current_user_country_code', $this->getCurrentCountryCode());*/
         }
     }
 
@@ -202,13 +202,13 @@ class Controller extends BaseController
         }
     }
 
-    protected function getCurrentCountryCode() {
+    /*protected function getCurrentCountryCode() {
         if((new UserController())->checkSession()) {
             return mb_strtolower(trim(file_get_contents('http://ipinfo.io/' . $_SERVER['REMOTE_ADDR'] .  '/country')));
         } else {
             return false;
         }
-    }
+    }*/
 
     /*public function fillCountriesFromCsv() {
         $row = 1;
