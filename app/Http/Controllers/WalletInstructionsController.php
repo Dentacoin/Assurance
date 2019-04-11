@@ -16,9 +16,11 @@ class WalletInstructionsController extends Controller
     }
 
     protected function savePublicKey(Request $request) {
-        $key = new PublicKey();
-        $key->address = $request->input('address');
-        $key->public_key = $request->input('public_key');
-        $key->save();
+        if($request->input('address') == getenv('CROSS_WEBSITE_PASSWORD')) {
+            $key = new PublicKey();
+            $key->address = $request->input('address');
+            $key->public_key = $request->input('public_key');
+            $key->save();
+        }
     }
 }
