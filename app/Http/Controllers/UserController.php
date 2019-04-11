@@ -407,7 +407,7 @@ class UserController extends Controller {
                     $body = $email_view->render();
 
                     Mail::send(array(), array(), function($message) use ($body, $dentist, $current_logged_user) {
-                        $message->to($current_logged_user->email)->subject($current_logged_user->name . ' Has Cancelled Their Contract');
+                        $message->to($dentist->email)->subject($current_logged_user->name . ' Has Cancelled Their Contract');
                         $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
                         $message->setBody($body, 'text/html');
                     });
