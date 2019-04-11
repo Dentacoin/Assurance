@@ -2454,6 +2454,7 @@ function hidePopupOnBackdropClick() {
         var classname = event.target.className;
 
         if(classname.includes('login-signin-popup')) {
+        if(classname.includes('login-signin-popup')) {
             $('.hidden-login-form').html($('.login-signin-popup .bootbox-body').html())
         }
         classname = classname.replace(/ /g, '.');

@@ -17,6 +17,12 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::get('sitemap.xml', 'Controller@getSitemap')->name('sitemap');
 
     //======================================= PAGES ========================================
+    Route::get('/test', function() {
+        var_dump($_SERVER['REMOTE_ADDR']);
+        var_dump(mb_strtolower(trim(file_get_contents('http://ipinfo.io/' . $_SERVER['REMOTE_ADDR'] .  '/country'))));
+        die();
+    })->name('test123');
+
     Route::get('/', 'HomeController@getView')->name('home');
 
     Route::get('/support-guide', 'SupportGuideController@getView')->name('support-guide');
