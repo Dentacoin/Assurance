@@ -748,7 +748,6 @@ var initPagesLogic = function () {
 
                                 //on enter press show login popup
                                 $('section#find-your-dentist select.combobox').on('change', function () {
-                                    basic.closeDialog();
                                     basic.showAlert('Please login to continue. If you don\'t have registration please click <a href="javascript:void(0)" class="show-login-signin">here</a>.', '', true);
                                     bindLoginSigninPopupShow();
                                 });
@@ -4497,15 +4496,11 @@ function bindLoginSigninPopupShow() {
         $('.show-login-signin').unbind();
         $('.show-login-signin').on('click', function () {
             basic.closeDialog();
-            console.log($('.hidden-login-form').html());
-            console.log('show popup');
             basic.showDialog($('.hidden-login-form').html(), 'login-signin-popup', null, true);
 
             fixButtonsFocus();
 
             initAddressSuggesters();
-
-            return false;
 
             $('.login-signin-popup .popup-header-action a').click(function () {
                 $('.login-signin-popup .popup-body > .inline-block').addClass('custom-hide');
