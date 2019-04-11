@@ -2070,6 +2070,7 @@ function decodeEntities(string) {
 
 //call the popup for login/sign for patient and dentist
 function bindLoginSigninPopupShow() {
+    console.log('inited1');
     $(document).on('click', '.show-login-signin', function() {
         basic.closeDialog();
         basic.showDialog($('.hidden-login-form').html(), 'login-signin-popup', null, true);
@@ -2124,7 +2125,6 @@ function bindLoginSigninPopupShow() {
         // ====================== /PATIENT LOGIN/SIGNUP LOGIC ======================
 
         // ====================== DENTIST LOGIN/SIGNUP LOGIC ======================
-return false;
         //DENTIST LOGIN
         $('.login-signin-popup form#dentist-login').on('submit', function(event) {
             //clear prev errors
@@ -2177,6 +2177,7 @@ return false;
         styleAvatarUploadButton('.bootbox.login-signin-popup .dentist .form-register .step.third .avatar .btn-wrapper label');
         initCaptchaRefreshEvent();
 
+        return false;
         //DENTIST REGISTERING FORM
         $('.login-signin-popup .dentist .form-register .next-step').click(async function() {
             var this_btn = $(this);
