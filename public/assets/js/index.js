@@ -2078,7 +2078,6 @@ function bindLoginSigninPopupShow() {
     if($('.show-login-signin').length) {
         $('.show-login-signin').unbind();
         $('.show-login-signin').on('click', function() {
-            console.log('show-login-signin clicked');
             basic.closeDialog();
             basic.showDialog($('.hidden-login-form').html(), 'login-signin-popup', null, true);
 
