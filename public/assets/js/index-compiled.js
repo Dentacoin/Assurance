@@ -29737,7 +29737,7 @@ function decodeEntities(string) {
 
 //call the popup for login/sign for patient and dentist
 function bindLoginSigninPopupShow() {
-    console.log('inited1');
+    console.log('inited2');
     $(document).on('click', '.show-login-signin', function () {
         basic.closeDialog();
         basic.showDialog($('.hidden-login-form').html(), 'login-signin-popup', null, true);
@@ -29861,7 +29861,6 @@ function bindLoginSigninPopupShow() {
         styleAvatarUploadButton('.bootbox.login-signin-popup .dentist .form-register .step.third .avatar .btn-wrapper label');
         initCaptchaRefreshEvent();
 
-        return false;
         //DENTIST REGISTERING FORM
         $('.login-signin-popup .dentist .form-register .next-step').click(_asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee17() {
             var this_btn, first_step_inputs, errors, i, len, check_email_if_free_response, second_step_inputs, check_captcha_response;
@@ -30097,6 +30096,7 @@ function bindLoginSigninPopupShow() {
                 }
             }, _callee17, this);
         })));
+        return false;
         // ====================== /DENTIST LOGIN/SIGNUP LOGIC ======================
     });
 }
