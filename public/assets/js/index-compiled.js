@@ -30190,6 +30190,7 @@ function hidePopupOnBackdropClick() {
         var classname = event.target.className;
 
         if (classname.includes('login-signin-popup')) {
+            console.log('asd');
             $('.hidden-login-form').html($('.login-signin-popup .bootbox-body').html());
         }
         classname = classname.replace(/ /g, '.');
