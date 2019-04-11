@@ -157,7 +157,7 @@ class UserController extends Controller {
         //passing the countries
         $countries = (new APIRequestsController())->getAllCountries();
         $clinics = (new APIRequestsController())->getAllClinicsByName();
-        $params = ['countries' => $countries, 'clinics' => $clinics, /*'current_user_country_code' => mb_strtolower(trim(file_get_contents("http://ipinfo.io/" . $_SERVER['REMOTE_ADDR'] .  "/country"))),*/ 'current_user_country_code' => 'bg'];
+        $params = ['countries' => $countries, 'current_user_country_code' => mb_strtolower(trim(file_get_contents("http://ipinfo.io/" . $_SERVER['REMOTE_ADDR'] .  "/country")))];
         if(!empty($request->input('route')) && !empty($request->input('slug'))) {
             $params['route'] = $request->input('route');
             $params['slug'] = $request->input('slug');
