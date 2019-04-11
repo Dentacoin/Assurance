@@ -29758,6 +29758,7 @@ function bindLoginSigninPopupShow() {
 
             basic.closeDialog();
             basic.showDialog($('.hidden-login-form').html(), 'login-signin-popup', null, true);
+            $('.hidden-login-form').html('');
 
             fixButtonsFocus();
 
@@ -30196,9 +30197,11 @@ function styleAvatarUploadButton(label_el) {
 function hidePopupOnBackdropClick() {
     $(document).on('click', '.bootbox', function (event) {
         var classname = event.target.className;
-        console.log(classname, 'classname');
+
+        if (classname.includes('login-signin-popup')) {
+            $('.hidden-login-form').html($('.login-signin-popup .bootbox-body').html());
+        }
         classname = classname.replace(/ /g, '.');
-        console.log(classname, 'classname');
 
         if (classname && !$('.' + classname).parents('.modal-dialog').length) {
             bootbox.hideAll();
