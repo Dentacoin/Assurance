@@ -2297,7 +2297,9 @@ var basic = {
             "className": class_name
         };
 
+        console.log(class_name, 'class_name');
         if (class_name == 'login-signin-popup') {
+            console.log('login-signin-popup');
             atrs.onEscape = function () {
                 console.log('sup brah');
             };
