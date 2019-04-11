@@ -2078,17 +2078,7 @@ function bindLoginSigninPopupShow() {
     if($('.show-login-signin').length) {
         $('.show-login-signin').unbind();
         $('.show-login-signin').on('click', function() {
-            var data = {};
-            var this_btn = $(this);
-            if(this_btn.hasClass('reload-here')) {
-                data.route = this_btn.attr('data-route');
-                data.slug = this_btn.attr('data-slug');
-            }
-
-            if(this_btn.hasClass('dentist-side')) {
-                data.side = 'dentist';
-            }
-
+            console.log('show-login-signin clicked');
             basic.closeDialog();
             basic.showDialog($('.hidden-login-form').html(), 'login-signin-popup', null, true);
             $('.hidden-login-form').html('');
