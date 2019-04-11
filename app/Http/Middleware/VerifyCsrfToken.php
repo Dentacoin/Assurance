@@ -12,6 +12,6 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        'get-user-data-for-nodejs-api'
+        'get-user-data-for-nodejs-api', 'get-public-keys', 'save-public-key'
     ];
 }
