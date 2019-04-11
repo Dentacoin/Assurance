@@ -738,8 +738,7 @@ var initPagesLogic = function () {
                             if ($('section#find-your-dentist select.combobox').length) {
                                 $('section#find-your-dentist select.combobox').on('keydown', function (e) {
                                     if (e.which == 13) {
-                                        basic.showAlert('Please login to continue. If you don\'t have registration please click <a href="javascript:void(0)" class="show-login-signin">here</a>.', '', true);
-                                        bindLoginSigninPopupShow();
+                                        $('.show-login-signin').click();
                                     }
                                 });
 
@@ -748,8 +747,7 @@ var initPagesLogic = function () {
 
                                 //on enter press show login popup
                                 $('section#find-your-dentist select.combobox').on('change', function () {
-                                    basic.showAlert('Please login to continue. If you don\'t have registration please click <a href="javascript:void(0)" class="show-login-signin">here</a>.', '', true);
-                                    bindLoginSigninPopupShow();
+                                    $('.show-login-signin').click();
                                 });
                             }
 
