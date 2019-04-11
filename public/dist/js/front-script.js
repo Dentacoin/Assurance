@@ -2297,14 +2297,6 @@ var basic = {
             "className": class_name
         };
 
-        console.log(class_name, 'class_name');
-        if (class_name == 'login-signin-popup') {
-            console.log('login-signin-popup');
-            atrs.onEscape = function () {
-                console.log('sup brah');
-            };
-        }
-
         if (dialog_type == "confirm" && params != undefined && params.buttons == undefined) {
             atrs.buttons = {
                 confirm: {
@@ -4955,7 +4947,9 @@ function styleAvatarUploadButton(label_el) {
 function hidePopupOnBackdropClick() {
     $(document).on('click', '.bootbox', function (event) {
         var classname = event.target.className;
+        console.log(classname, 'classname');
         classname = classname.replace(/ /g, '.');
+        console.log(classname, 'classname');
 
         if (classname && !$('.' + classname).parents('.modal-dialog').length) {
             bootbox.hideAll();

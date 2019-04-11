@@ -30196,7 +30196,9 @@ function styleAvatarUploadButton(label_el) {
 function hidePopupOnBackdropClick() {
     $(document).on('click', '.bootbox', function (event) {
         var classname = event.target.className;
+        console.log(classname, 'classname');
         classname = classname.replace(/ /g, '.');
+        console.log(classname, 'classname');
 
         if (classname && !$('.' + classname).parents('.modal-dialog').length) {
             bootbox.hideAll();
