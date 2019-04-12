@@ -8416,6 +8416,14 @@ nav.sidenav {
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   border-radius: 4px; }
+  .module.contract-response-message .wrapper .close-btn {
+    color: #126585;
+    opacity: 1;
+    font-size: 30px;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    font-weight: 700; }
 
 header {
   width: 100%;

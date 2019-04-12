@@ -1816,6 +1816,12 @@ var onDocumentReadyPageData = function () {
                                 });
                             }
 
+                            if ($('.contract-response-message').length) {
+                                $('.contract-response-message .close-btn').click(function () {
+                                    $(this).closest('.contract-response-message').remove();
+                                });
+                            }
+
                             initTooltips();
                         }
 
