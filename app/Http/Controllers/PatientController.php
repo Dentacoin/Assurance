@@ -388,7 +388,7 @@ class PatientController extends Controller {
                             $message->setBody($body, 'text/html');
                         });
 
-                        return view('pages/logged-user/patient/single-contract-view-awaiting-payment', ['contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'), 'congratulations' => true]);
+                        return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
                     } else {
                         return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href="mailto:assurance@dentacoin.com">Dentacoin team</a>.']);
                     }
@@ -402,7 +402,7 @@ class PatientController extends Controller {
                         $message->setBody($body, 'text/html');
                     });
 
-                    return view('pages/logged-user/patient/single-contract-view-awaiting-payment', ['contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'), 'congratulations' => true]);
+                    return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
                 }
                 //return redirect()->route('congratulations', ['slug' => $data['contract']]);
             } else {
