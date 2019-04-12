@@ -61,7 +61,7 @@
                             <div class="flip-clock-message"></div>
                         </div>
                     @endif
-                    <div class="timer-text">You should charge your wallet with <span class="calibri-bold">{{$contract->monthly_premium}} USD in DCN</span> <span class="calibri-bold">until <span class="converted-date"></span></span>.</div>
+                    <div class="timer-text"></div>
                 </div>
             </div>
         </div>
