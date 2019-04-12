@@ -530,10 +530,65 @@ async function pagesDataOnContractInit() {
 
             cancelContractEventInit();
 
-            var current_user_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf(global_state.account));
+            var current_user_dcn_balance = parseInt(await App.dentacoin_token_methods.balanceOf(global_state.account));
+            var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(global_state.account)));
+
+            const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+            //adding 10% just in case the transaction dont fail
+            const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
+
+            var approval_given = false;
+            //if approval is given already SOMEHOW ...
+            if(parseInt(await App.dentacoin_token_methods.allowance(checksumAddress(response.contract_data.patient), App.assurance_state_address)) > 0) {
+                approval_given = true;
+            }
+
+            if(!approval_given) {
+                //gas estimation for DentacoinToken approval method
+                var gas_cost_for_approval = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({gas: 500000});
+            }
+
+            //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+            var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({from: App.dummy_address, gas: 1000000});
+
+            var methods_gas_cost;
+            if(!approval_given) {
+                methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
+            } else {
+                methods_gas_cost = gas_cost_for_contract_creation;
+            }
+
+            //eth fee for firing blockchain transaction
+            var eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
+
             var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
 
-            if(current_user_dcn_balance > monthly_premium_in_dcn) {
+            console.log(current_user_dcn_balance, 'current_user_dcn_balance');
+            console.log(monthly_premium_in_dcn, 'monthly_premium_in_dcn');
+            console.log(eth_fee, 'eth_fee');
+            console.log(current_user_eth_balance, 'current_user_eth_balance');
+
+            if(current_user_dcn_balance > monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
+                //not enough DCN and ETH balance
+                $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10">You should charge your wallet with '+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN and '+eth_fee+' ETH <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div></div></div></div>');
+                initTooltips();
+                $('.contract-response-message .close-btn').click(function() {
+                    $(this).closest('.contract-response-message').remove();
+                });
+            } else if(current_user_dcn_balance > monthly_premium_in_dcn) {
+                //not enough DCN
+                $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10">You should charge your wallet with '+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN until '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div></div></div></div>');
+                $('.contract-response-message .close-btn').click(function() {
+                    $(this).closest('.contract-response-message').remove();
+                });
+            } else if(parseFloat(eth_fee) > current_user_eth_balance) {
+                //not enough ETH balance
+                $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10">You should charge your wallet with <with></with> '+eth_fee+' ETH <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div></div></div></div>');
+                initTooltips();
+                $('.contract-response-message .close-btn').click(function() {
+                    $(this).closest('.contract-response-message').remove();
+                });
+            } else {
                 //show CONTINUE TO BLOCKCHAIN BTN
                 $('.init-contract-section .camp').html('<h2 class="lato-bold fs-45 fs-xs-30 padding-top-60 padding-top-xs-30 padding-bottom-15 text-center">You are all set for your first payment.</h2><div class="padding-bottom-30 padding-bottom-xs-20 fs-20 fs-xs-16 text-center">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should pay your monthly premium before on <span>'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">PAY NOW</a></div>');
 
@@ -566,35 +621,9 @@ async function pagesDataOnContractInit() {
 
                                     fixButtonsFocus();
 
-                                    const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
-                                    //adding 10% just in case the transaction dont fail
-                                    const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
-
                                     $('.recipe-popup .usd_val span').html($('.patient-contract-single-page-section').attr('data-monthly-premium'));
                                     $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
 
-                                    var approval_given = false;
-                                    //if approval is given already SOMEHOW ...
-                                    if(parseInt(await App.dentacoin_token_methods.allowance(checksumAddress(response.contract_data.patient), App.assurance_state_address)) > 0) {
-                                        approval_given = true;
-                                    }
-
-                                    if(!approval_given) {
-                                        //gas estimation for DentacoinToken approval method
-                                        var gas_cost_for_approval = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({gas: 500000});
-                                    }
-
-                                    //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                                    var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({from: App.dummy_address, gas: 1000000});
-
-                                    var methods_gas_cost;
-                                    if(!approval_given) {
-                                        methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
-                                    } else {
-                                        methods_gas_cost = gas_cost_for_contract_creation;
-                                    }
-
-                                    var eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
                                     $('.recipe-popup .ether-fee .field').html(eth_fee);
 
                                     $('.recipe-popup .ether-fee i').popover({
@@ -631,7 +660,6 @@ async function pagesDataOnContractInit() {
 
                                     $('.recipe-popup .execute-transaction').click(async function() {
                                         var this_btn = $(this);
-                                        var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(global_state.account)));
                                         if(parseFloat(eth_fee) > current_user_eth_balance) {
                                             //not enough ETH balance
                                             basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
@@ -760,9 +788,6 @@ async function pagesDataOnContractInit() {
                         });
                     }
                 });
-            } else if(current_user_dcn_balance < monthly_premium_in_dcn) {
-                //not enough DCN balance
-                basic.showAlert('<div class="text-center fs-18">You don\'t have enough Dentacoin balance to create transaction on the blockchain. You need '+monthly_premium_in_dcn+' Dentacoins in order to create your first payment to the dentist. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
             }
         }
     }

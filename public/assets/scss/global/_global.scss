@@ -234,13 +234,13 @@ body {
     }
 }
 
-@for $i from 0 through 80 {
+@for $i from 0 through 100 {
     .line-height-#{$i} {
         line-height: 0px + $i!important;
     }
 }
 
-@for $i from 0 through 80 {
+@for $i from 0 through 100 {
     @include breakpoint($sm-only)    {
         .line-height-sm-#{$i} {
             line-height: 0px + $i!important;
@@ -248,7 +248,7 @@ body {
     }
 }
 
-@for $i from 0 through 80 {
+@for $i from 0 through 100 {
     @include breakpoint($xs)    {
         .line-height-xs-#{$i} {
             line-height: 0px + $i!important;
@@ -257,7 +257,7 @@ body {
 }
 
 
-@for $i from 0 through 80 {
+@for $i from 0 through 100 {
     @include breakpoint($xxs)    {
         .line-height-xxs-#{$i} {
             line-height: 0px + $i!important;
