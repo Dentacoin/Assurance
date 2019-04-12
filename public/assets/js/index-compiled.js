@@ -25725,7 +25725,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var pagesDataOnContractInit = function () {
     var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee9() {
-        var check_dentist_account, period_to_withdraw, now_timestamp, time_passed_since_signed, next_payment_timestamp_date_obj, next_payment_timestamp_unix, next_payment_timestamp, remainder, current_user_dcn_balance, current_user_eth_balance, on_page_load_gwei, on_page_load_gas_price, approval_given, gas_cost_for_approval, gas_cost_for_contract_creation, methods_gas_cost, eth_fee, monthly_premium_in_dcn;
+        var check_dentist_account, period_to_withdraw, now_timestamp, time_passed_since_signed, next_payment_timestamp_date_obj, next_payment_timestamp_unix, next_payment_timestamp, remainder, current_user_dcn_balance, current_user_eth_balance, monthly_premium_in_dcn, on_page_load_gwei, on_page_load_gas_price, approval_given, gas_cost_for_approval, gas_cost_for_contract_creation, methods_gas_cost, eth_fee;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee9$(_context9) {
             while (1) {
                 switch (_context9.prev = _context9.next) {
@@ -25887,6 +25887,7 @@ var pagesDataOnContractInit = function () {
                         _context9.t9 = _context9.sent;
                         _context9.t10 = _context9.t8.fromWei.call(_context9.t8, _context9.t9);
                         current_user_eth_balance = (0, _context9.t7)(_context9.t10);
+                        monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
                         on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
                         //adding 10% just in case the transaction dont fail
 
@@ -25895,37 +25896,37 @@ var pagesDataOnContractInit = function () {
                         //if approval is given already SOMEHOW ...
 
                         _context9.t11 = parseInt;
-                        _context9.next = 68;
+                        _context9.next = 69;
                         return App.dentacoin_token_methods.allowance(checksumAddress($('.patient-contract-single-page-section').attr('data-patient-address')), App.assurance_state_address);
 
-                    case 68:
+                    case 69:
                         _context9.t12 = _context9.sent;
                         _context9.t13 = (0, _context9.t11)(_context9.t12);
 
                         if (!(_context9.t13 > 0)) {
-                            _context9.next = 72;
+                            _context9.next = 73;
                             break;
                         }
 
                         approval_given = true;
 
-                    case 72:
+                    case 73:
                         if (approval_given) {
-                            _context9.next = 76;
+                            _context9.next = 77;
                             break;
                         }
 
-                        _context9.next = 75;
+                        _context9.next = 76;
                         return App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({ gas: 500000 });
 
-                    case 75:
+                    case 76:
                         gas_cost_for_approval = _context9.sent;
 
-                    case 76:
-                        _context9.next = 78;
+                    case 77:
+                        _context9.next = 79;
                         return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress($('.patient-contract-single-page-section').attr('data-dentist-address')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({ from: App.dummy_address, gas: 1000000 });
 
-                    case 78:
+                    case 79:
                         gas_cost_for_contract_creation = _context9.sent;
 
                         if (!approval_given) {
@@ -25936,7 +25937,6 @@ var pagesDataOnContractInit = function () {
 
                         //eth fee for firing blockchain transaction
                         eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
-                        monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
 
 
                         console.log(current_user_dcn_balance, 'current_user_dcn_balance');

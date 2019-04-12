@@ -532,7 +532,8 @@ async function pagesDataOnContractInit() {
 
             var current_user_dcn_balance = parseInt(await App.dentacoin_token_methods.balanceOf(global_state.account));
             var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(global_state.account)));
-
+            var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
+            
             const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
             //adding 10% just in case the transaction dont fail
             const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
@@ -560,8 +561,6 @@ async function pagesDataOnContractInit() {
 
             //eth fee for firing blockchain transaction
             var eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
-
-            var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
 
             console.log(current_user_dcn_balance, 'current_user_dcn_balance');
             console.log(monthly_premium_in_dcn, 'monthly_premium_in_dcn');
