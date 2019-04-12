@@ -539,7 +539,7 @@ async function pagesDataOnContractInit() {
 
             var approval_given = false;
             //if approval is given already SOMEHOW ...
-            if(parseInt(await App.dentacoin_token_methods.allowance(checksumAddress(response.contract_data.patient), App.assurance_state_address)) > 0) {
+            if(parseInt(await App.dentacoin_token_methods.allowance(checksumAddress($('.patient-contract-single-page-section').attr('data-patient-address')), App.assurance_state_address)) > 0) {
                 approval_given = true;
             }
 
@@ -549,7 +549,7 @@ async function pagesDataOnContractInit() {
             }
 
             //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-            var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({from: App.dummy_address, gas: 1000000});
+            var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress($('.patient-contract-single-page-section').attr('data-dentist-address')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: App.dummy_address, gas: 1000000});
 
             var methods_gas_cost;
             if(!approval_given) {

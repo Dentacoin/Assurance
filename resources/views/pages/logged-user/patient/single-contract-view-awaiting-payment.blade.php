@@ -2,7 +2,7 @@
 @section("content")
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section margin-bottom-20" data-monthly-premium="{{$contract->monthly_premium}}">
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section margin-bottom-20" data-monthly-premium="{{$contract->monthly_premium}}" data-patient-address="{{$contract->patient_address}}" data-dentist-address="{{$contract->dentist_address}}" data-date-start-contract="{{strtotime($contract->contract_active_at)}}" data-contract-ipfs="{{$contract->document_hash}}">
         @if(isset($congratulations))
             <div class="contract-response-message module container margin-bottom-50">
                 <div class="row">

@@ -25896,7 +25896,7 @@ var pagesDataOnContractInit = function () {
 
                         _context9.t11 = parseInt;
                         _context9.next = 68;
-                        return App.dentacoin_token_methods.allowance(checksumAddress(response.contract_data.patient), App.assurance_state_address);
+                        return App.dentacoin_token_methods.allowance(checksumAddress($('.patient-contract-single-page-section').attr('data-patient-address')), App.assurance_state_address);
 
                     case 68:
                         _context9.t12 = _context9.sent;
@@ -25923,7 +25923,7 @@ var pagesDataOnContractInit = function () {
 
                     case 76:
                         _context9.next = 78;
-                        return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).estimateGas({ from: App.dummy_address, gas: 1000000 });
+                        return App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress($('.patient-contract-single-page-section').attr('data-dentist-address')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({ from: App.dummy_address, gas: 1000000 });
 
                     case 78:
                         gas_cost_for_contract_creation = _context9.sent;
