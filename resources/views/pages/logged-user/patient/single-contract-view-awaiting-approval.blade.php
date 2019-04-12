@@ -2,7 +2,7 @@
 @section("content")
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section" data-monthly-premium="{{$contract->monthly_premium}}">
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section" data-monthly-premium="{{$contract->monthly_premium}}" data-patient-address="{{$contract->patient_address}}" data-dentist-address="{{$contract->dentist_address}}" data-date-start-contract="{{$contract_active_at}}" data-contract-ipfs="{{$contract->document_hash}}">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
@@ -47,7 +47,7 @@
                             <div class="flip-clock-message"></div>
                         </div>
                     @endif
-                    <div>You should charge your wallet with <span class="calibri-bold">{{$contract->monthly_premium}} USD in DCN</span> <span class="calibri-bold">until <span class="converted-date"></span></span>.</div>
+                    <div class="timer-text"></div>
                 </div>
             </div>
         </div>
