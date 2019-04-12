@@ -378,6 +378,8 @@ class PatientController extends Controller {
                 if(sizeof($this_patient_having_contracts) == 1) {
                     //only if no previous contracts, aka sending only for first contract
                     $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($contract->patient_address, $contract->dentist_address, $contract->monthly_premium, $contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'), $contract->contract_active_at->getTimestamp(), $contract->document_hash);
+                    var_dump($sending_eth_response);
+                    die();
                     if($sending_eth_response && $sending_eth_response->success) {
                         $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
                         $body = $email_view->render();
