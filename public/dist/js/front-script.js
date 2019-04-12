@@ -221,14 +221,14 @@ var pagesDataOnContractInit = function () {
                         console.log(eth_fee, 'eth_fee');
                         console.log(current_user_eth_balance, 'current_user_eth_balance');
 
-                        if (current_user_dcn_balance > monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
+                        if (current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
                             //not enough DCN and ETH balance
                             $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10">You should charge your wallet with ' + $('.patient-contract-single-page-section').attr('data-monthly-premium') + ' USD in DCN and ' + eth_fee + ' ETH <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until ' + dateObjToFormattedDate(next_payment_timestamp_date_obj) + '.</div></div></div></div>');
                             initTooltips();
                             $('.contract-response-message .close-btn').click(function () {
                                 $(this).closest('.contract-response-message').remove();
                             });
-                        } else if (current_user_dcn_balance > monthly_premium_in_dcn) {
+                        } else if (current_user_dcn_balance < monthly_premium_in_dcn) {
                             //not enough DCN
                             $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10">You should charge your wallet with ' + $('.patient-contract-single-page-section').attr('data-monthly-premium') + ' USD in DCN until ' + dateObjToFormattedDate(next_payment_timestamp_date_obj) + '.</div></div></div></div>');
                             $('.contract-response-message .close-btn').click(function () {
