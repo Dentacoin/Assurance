@@ -379,27 +379,40 @@ class PatientController extends Controller {
                 //send ETH amount to patient
                 if(sizeof($this_patient_having_contracts) == 1) {
                     //only if no previous contracts, aka sending only for first contract
-                    (new \App\Http\Controllers\APIRequestsController())->sendETHamount($contract->patient_address, $contract->dentist_address, $contract->monthly_premium, $contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'), $contract->contract_active_at->getTimestamp(), $contract->document_hash);
+                    $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($contract->patient_address, $contract->dentist_address, $contract->monthly_premium, $contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'), $contract->contract_active_at->getTimestamp(), $contract->document_hash);
+                    if($sending_eth_response->response_obj && $sending_eth_response->response_obj->success) {
+                        $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
+                        $body = $email_view->render();
+
+                        Mail::send(array(), array(), function($message) use ($body, $dentist, $logged_patient) {
+                            $message->to($dentist->email)->subject('Your patient '.$logged_patient->name.' has signed their contract');
+                            $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                            $message->setBody($body, 'text/html');
+                        });
+
+                        return view('pages/logged-user/patient/single-contract-view-awaiting-payment', ['contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'), 'congratulations' => true]);
+                    } else {
+                        return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href="mailto:assurance@dentacoin.com">Dentacoin team</a>.']);
+                    }
+                } else {
+
+                    $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
+                    $body = $email_view->render();
+
+                    Mail::send(array(), array(), function($message) use ($body, $dentist, $logged_patient) {
+                        $message->to($dentist->email)->subject('Your patient '.$logged_patient->name.' has signed their contract');
+                        $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                        $message->setBody($body, 'text/html');
+                    });
+
+                    return view('pages/logged-user/patient/single-contract-view-awaiting-payment', ['contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'), 'congratulations' => true]);
                 }
-
-                die('stop here');
-
-                $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
-                $body = $email_view->render();
-
-                Mail::send(array(), array(), function($message) use ($body, $dentist, $logged_patient) {
-                    $message->to($dentist->email)->subject('Your patient '.$logged_patient->name.' has signed their contract');
-                    $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
-                    $message->setBody($body, 'text/html');
-                });
-
-                return view('pages/logged-user/patient/single-contract-view-awaiting-payment', ['contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'), 'congratulations' => true]);
                 //return redirect()->route('congratulations', ['slug' => $data['contract']]);
             } else {
-                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again.']);
+                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href="mailto:assurance@dentacoin.com">Dentacoin team</a>.']);
             }
         } else {
-            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again.']);
+            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href="mailto:assurance@dentacoin.com">Dentacoin team</a>.']);
         }
     }
 
