@@ -608,7 +608,7 @@ async function pagesDataOnContractInit() {
                 });
 
                 $('.scroll-to-buy-section').click(function() {
-                    $('.ready-to-purchase-with-external-api [data-currency="eth"]').click()
+                    $('.ready-to-purchase-with-external-api [data-currency="eth"]').click();
                     $('html, body').animate({
                         scrollTop: $('.ready-to-purchase-with-external-api .form-container').offset().top
                     }, {
