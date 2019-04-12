@@ -374,13 +374,11 @@ class PatientController extends Controller {
                 $contract->status = 'awaiting-payment';
                 $contract->save();
 
-                var_dump(sizeof($this_patient_having_contracts));
-
                 //send ETH amount to patient
                 if(sizeof($this_patient_having_contracts) == 1) {
                     //only if no previous contracts, aka sending only for first contract
                     $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($contract->patient_address, $contract->dentist_address, $contract->monthly_premium, $contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'), $contract->contract_active_at->getTimestamp(), $contract->document_hash);
-                    if($sending_eth_response->response_obj && $sending_eth_response->response_obj->success) {
+                    if($sending_eth_response && $sending_eth_response->success) {
                         $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
                         $body = $email_view->render();
 
@@ -395,7 +393,6 @@ class PatientController extends Controller {
                         return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href="mailto:assurance@dentacoin.com">Dentacoin team</a>.']);
                     }
                 } else {
-
                     $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
                     $body = $email_view->render();
 
