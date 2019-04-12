@@ -1197,7 +1197,6 @@ if($('body').hasClass('logged-in')) {
             var inner_error = false;
 
             if(step == 'three' && $('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
-                console.log('check checkbox');
                 $('.step.three .checkboxes-right-container').removeClass('with-error');
 
                 if($('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
@@ -1769,14 +1768,12 @@ if($('body').hasClass('logged-in')) {
         $('.contract-decrypt').click(async function() {
             var this_btn = $(this);
             var encrypted_pdf_content = await getEncryptedContractPdfContent(this_btn.attr('data-hash'), this_btn.attr('data-type'));
-            console.log(encrypted_pdf_content, 'encrypted_pdf_content');
             var render_form = $('form#render-pdf');
             if(encrypted_pdf_content.success) {
                 if(localStorage.getItem('current-account') != null) {
                     var cached_key = JSON.parse(localStorage.getItem('current-account'));
                     if(cached_key.type == 'key') {
                         // === CACHED KEY ===
-                        console.log('=====cached key=======');
                         var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
                         if(decrypted_pdf_response.success) {
                             render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
@@ -2070,7 +2067,6 @@ function decodeEntities(string) {
 
 //call the popup for login/sign for patient and dentist
 function bindLoginSigninPopupShow() {
-    console.log('inited2');
     $(document).on('click', '.show-login-signin', function() {
         basic.closeDialog();
         basic.showDialog($('.hidden-login-form').html(), 'login-signin-popup', null, true);
@@ -2605,9 +2601,6 @@ async function onDocumentReadyPageData() {
     if($('body').hasClass('logged-in')) {
         if($('body').hasClass('congratulations')) {
             var next_transfer_timestamp = parseInt($('section.congratulation-and-time-section').attr('data-time-left-next-transfer')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
-            console.log($('section.congratulation-and-time-section').attr('data-time-left-next-transfer'));
-            console.log(parseInt(await App.assurance_state_methods.getPeriodToWithdraw()));
-            console.log(next_transfer_timestamp, 'next_transfer_timestamp);')
             if($('.converted-date').length > 0) {
                 var date_obj = new Date(next_transfer_timestamp * 1000);
                 $('.converted-date').html(dateObjToFormattedDate(date_obj));
@@ -2909,7 +2902,6 @@ async function onDocumentReadyPageData() {
                     //show red counter (grace period)
                     $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container red-background text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold white-color">Overdue payment. If the patient doesn\'t fill in '+contract_dcn_amount+' Dentacoins inside his Wallet Address the contract will be canceled in:</h2></div> </div><div class="clock"></div><div class="flip-clock-message"></div></div></div>');
                     initFlipClockTimer(contract_next_payment + grace_period_in_seconds - now_timestamp);
-                    console.log(3);
                 } else if(contract_next_payment < now_timestamp && now_timestamp > contract_next_payment + grace_period_in_seconds && current_patient_dcn_balance < contract_dcn_amount) {
                     //
                     //nodejs request contract cancel

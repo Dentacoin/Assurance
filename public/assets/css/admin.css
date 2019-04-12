@@ -1409,7 +1409,8 @@
     position: absolute;
     right: 10px;
     top: 0;
-    font-weight: 700; }
+    font-weight: 700;
+    cursor: pointer; }
 
 body {
   background-color: #222d32; }
