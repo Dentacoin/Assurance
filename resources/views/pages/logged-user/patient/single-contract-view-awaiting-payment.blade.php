@@ -17,6 +17,18 @@
                 </div>
             </div>
         @endif
+            <div class="contract-response-message module container margin-bottom-50">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center">
+                        <div class="close-btn">×</div>
+                        <figure itemscope="" itemtype="http://schema.org/ImageObject">
+                            <img alt="Check inside shield" src="/assets/uploads/shield-check.svg" class="max-width-70"/>
+                        </figure>
+                        <h1 class="lato-bold fs-30 padding-top-15">CONGRATULATION!</h1>
+                        <div class="fs-20 fs-xs-18 padding-top-10">Your Assurance Contract .pdf file was successfully created! </div>
+                    </div>
+                </div>
+            </div>
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
