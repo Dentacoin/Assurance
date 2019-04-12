@@ -2,7 +2,7 @@
 @section("content")
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
-    @if($congratulations)
+    @if(isset($congratulations))
         <div class="contract-response-message module container">
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center">
