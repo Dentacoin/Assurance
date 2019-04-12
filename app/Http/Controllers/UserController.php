@@ -50,7 +50,8 @@ class UserController extends Controller {
 
     protected function getAddressValidationOrRememberMe(Request $request) {
         $current_logged_user_dcn_address = (new APIRequestsController())->getUserData(session('logged_user')['id'])->dcn_address;
-        if(!empty($current_logged_user_dcn_address)) {
+        //only dentists are able to cache their keys
+        if(!empty($current_logged_user_dcn_address) && $this->checkDentistSession()) {
             $view = view('partials/address-validation-or-remember-me', ['current_logged_user_dcn_address' => $current_logged_user_dcn_address, 'cache' => $request->input('cache')]);
             $view = $view->render();
             return response()->json(['success' => $view]);
@@ -107,7 +108,7 @@ class UserController extends Controller {
                 $patient_data = $current_logged_user_data;
             }
 
-            $view = view('partials/transaction-recipe-popup', ['to' => $request->input('to'), 'current_logged_user' => $current_logged_user_data, 'cached_key' => $request->input('cached_key'), 'show_dcn_bar' => $request->input('show_dcn_bar'), 'recipe_title' => $request->input('recipe_title'), 'recipe_subtitle' => $request->input('recipe_subtitle'), 'recipe_checkbox_text' => $request->input('recipe_checkbox_text')]);
+            $view = view('partials/transaction-recipe-popup', [/*'to' => $request->input('to'), */'current_logged_user' => $current_logged_user_data, 'cached_key' => $request->input('cached_key'), 'show_dcn_bar' => $request->input('show_dcn_bar'), 'recipe_title' => $request->input('recipe_title'), 'recipe_subtitle' => $request->input('recipe_subtitle'), 'recipe_checkbox_text' => $request->input('recipe_checkbox_text')]);
             $view = $view->render();
             $contract_data = array(
                 'patient' => $patient_data->dcn_address,

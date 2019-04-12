@@ -548,7 +548,7 @@ async function pagesDataOnContractInit() {
                             url: '/get-recipe-popup',
                             dataType: 'json',
                             data: {
-                                to: App.assurance_proxy_address,
+                                /*to: App.assurance_proxy_address,*/
                                 cached_key: cached_key,
                                 contract: $('.init-contract-section').attr('data-contract'),
                                 show_dcn_bar: true,
@@ -2717,7 +2717,7 @@ async function onDocumentReadyPageData() {
                                 url: '/get-recipe-popup',
                                 dataType: 'json',
                                 data: {
-                                    to: App.assurance_proxy_address,
+                                    /*to: App.assurance_proxy_address,*/
                                     cached_key: cached_key,
                                     contract: $('.init-contract-section').attr('data-contract'),
                                     show_dcn_bar: false,
@@ -2928,7 +2928,7 @@ async function onDocumentReadyPageData() {
                                 url: '/get-recipe-popup',
                                 dataType: 'json',
                                 data: {
-                                    to: App.assurance_proxy_address,
+                                    /*to: App.assurance_proxy_address,*/
                                     cached_key: cached_key,
                                     contract: $('.single-contract-view-section').attr('data-contract'),
                                     show_dcn_bar: false,
@@ -3134,7 +3134,7 @@ function cancelContractEventInit() {
                             url: '/get-recipe-popup',
                             dataType: 'json',
                             data: {
-                                to: App.assurance_proxy_address,
+                                /*to: App.assurance_proxy_address,*/
                                 cached_key: cached_key,
                                 contract: this_btn.attr('data-contract'),
                                 show_dcn_bar: false,

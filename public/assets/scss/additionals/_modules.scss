@@ -1361,4 +1361,11 @@
             }
         }
     }
+    &.contract-response-message {
+        .wrapper {
+            border: 2px solid $blue_green_color;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+    }
 }

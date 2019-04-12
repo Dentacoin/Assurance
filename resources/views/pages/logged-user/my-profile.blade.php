@@ -12,7 +12,9 @@
                             </figure>
                             <h2 class="fs-24 lato-bold inline-block">My Wallet</h2>
                         </div>
-                        <div class="remember-my-wallet-camp"></div>
+                        @if((new \App\Http\Controllers\UserController())->checkDentistSession())
+                            <div class="remember-my-wallet-camp"></div>
+                        @endif
                         @if((new \App\Http\Controllers\UserController())->checkPatientSession())
                             <h3 class="line-crossed-title margin-bottom-50 fs-20 lato-bold black-color"><span>Dentacoin balance</span></h3>
                             <div class="fs-38 lato-bold black-color"><span class="current-dcn-amount">{{$dcn_amount}}</span> DCN</div>

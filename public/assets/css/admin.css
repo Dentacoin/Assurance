@@ -1394,6 +1394,10 @@
       width: 20px; }
   .module.profile-menu li a span {
     vertical-align: middle; }
+.module.contract-response-message .wrapper {
+  border: 2px solid #126585;
+  padding-top: 15px;
+  padding-bottom: 15px; }
 
 body {
   background-color: #222d32; }

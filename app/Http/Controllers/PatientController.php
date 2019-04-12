@@ -19,22 +19,25 @@ class PatientController extends Controller {
         return view('pages/logged-user/patient/invite-dentists', ['invited_dentists_list' => InviteDentistsReward::where(array('patient_id' => session('logged_user')['id']))->get()->sortByDesc('created_at')->all()]);
     }
 
-    protected function getCongratulationsView($slug) {
+    /*protected function getCongratulationsView($slug) {
         $contract = TemporallyContract::where(array('slug' => $slug, 'status' => 'awaiting-payment'))->get()->first();
         if(!empty($contract)) {
             return view('pages/logged-user/patient/congratulations', ['contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH')]);
         } else {
             return abort(404);
         }
-    }
+    }*/
 
     protected function getPatientContractView($slug) {
         $contract = TemporallyContract::where(array('slug' => $slug))->get()->first();
         if($contract->status == 'pending') {
             return abort(404);
         } else {
-            $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[(new APIRequestsController())->getUserData($contract->dentist_id)->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
-            return view('pages/logged-user/patient/single-contract-view-'.$contract->status, ['contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'), 'calculator_proposals' => $calculator_proposals]);
+            $params = array('contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'));
+            if($contract->status == 'cancelled') {
+                $params['calculator_proposals'] = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[(new APIRequestsController())->getUserData($contract->dentist_id)->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
+            }
+            return view('pages/logged-user/patient/single-contract-view-'.$contract->status, $params);
         }
     }
 
@@ -386,7 +389,8 @@ class PatientController extends Controller {
                     $message->setBody($body, 'text/html');
                 });
 
-                return redirect()->route('congratulations', ['slug' => $data['contract']]);
+                return view('pages/logged-user/patient/single-contract-view-awaiting-payment', ['contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'), 'congratulations' => true]);
+                //return redirect()->route('congratulations', ['slug' => $data['contract']]);
             } else {
                 return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again.']);
             }
