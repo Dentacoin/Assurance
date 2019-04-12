@@ -41,7 +41,7 @@
                         <a href="mailto:{{$dentist->email}}" class="light-gray-color fs-18 fs-xs-16 word-break">{{$dentist->email}}</a>
                     </div>
                 </div>
-                <div class="col-xs-4 inline-block-bottom blue-green-color-background contract-body" data-time-left-next-transfer="{{strtotime($contract->contract_active_at)}}">
+                <div class="col-xs-4 inline-block-bottom blue-green-color-background contract-body" data-time-left-next-transfer="{{$contract_active_at}}">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-payment">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING PAYMENT</div>
                     <div class="wrapper">
                         <div class="lato-bold fs-20 white-color padding-top-25 padding-bottom-15">YOUR FIRST PAYMENT IS DUE IN:</div>
