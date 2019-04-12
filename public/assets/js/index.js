@@ -569,26 +569,51 @@ async function pagesDataOnContractInit() {
 
             if(current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
                 //not enough DCN and ETH balance
-                $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10">You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div></div></div></div>');
+                $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10 padding-bottom-20">You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div><div><a href="javascript:void(0)" class="blue-green-white-btn scroll-to-buy-section">BUY</a></div></div></div></div>');
                 $('.timer-text').html('You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span>'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.');
                 initTooltips();
                 $('.contract-response-message .close-btn').click(function() {
                     $(this).closest('.contract-response-message').remove();
                 });
+
+                $('.scroll-to-buy-section').click(function() {
+                    $('html, body').animate({
+                        scrollTop: $('.ready-to-purchase-with-external-api .form-container').offset().top
+                    }, {
+                        duration: 500
+                    });
+                });
             } else if(current_user_dcn_balance < monthly_premium_in_dcn) {
                 //not enough DCN
                 $('.timer-text').html('You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> <span class="calibri-bold">until <span>'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.');
-                $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10">You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> until '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div></div></div></div>');
+                $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10 padding-bottom-20">You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> until '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div><div><a href="javascript:void(0)" class="blue-green-white-btn scroll-to-buy-section">BUY</a></div></div></div></div>');
                 $('.contract-response-message .close-btn').click(function() {
                     $(this).closest('.contract-response-message').remove();
+                });
+
+                $('.scroll-to-buy-section').click(function() {
+                    $('html, body').animate({
+                        scrollTop: $('.ready-to-purchase-with-external-api .form-container').offset().top
+                    }, {
+                        duration: 500
+                    });
                 });
             } else if(parseFloat(eth_fee) > current_user_eth_balance) {
                 //not enough ETH balance
                 $('.timer-text').html('You should charge your wallet with <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span>'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.');
-                $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10">You should charge your wallet with <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div></div></div></div>');
+                $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10 padding-bottom-20">You should charge your wallet with <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div><div><a href="javascript:void(0)" class="blue-green-white-btn scroll-to-buy-section">BUY</a></div></div></div></div>');
                 initTooltips();
                 $('.contract-response-message .close-btn').click(function() {
                     $(this).closest('.contract-response-message').remove();
+                });
+
+                $('.scroll-to-buy-section').click(function() {
+                    $('.ready-to-purchase-with-external-api [data-currency="eth"]').click()
+                    $('html, body').animate({
+                        scrollTop: $('.ready-to-purchase-with-external-api .form-container').offset().top
+                    }, {
+                        duration: 500
+                    });
                 });
             } else {
                 $('.timer-text').html('It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should pay your monthly premium before or on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.');
