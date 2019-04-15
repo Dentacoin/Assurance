@@ -2,6 +2,11 @@
 @section("content")
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
+    @if(is_object($contract->contract_active_at))
+        @php($contract_active_at = $contract->contract_active_at->getTimestamp())
+    @else
+        @php($contract_active_at = strtotime($contract->contract_active_at))
+    @endif
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section" data-monthly-premium="{{$contract->monthly_premium}}" data-patient-address="{{$contract->patient_address}}" data-dentist-address="{{$contract->dentist_address}}" data-date-start-contract="{{$contract_active_at}}" data-contract-ipfs="{{$contract->document_hash}}">
         <div class="container">
             <div class="row">
