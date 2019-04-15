@@ -365,6 +365,8 @@ class APIRequestsController extends Controller {
 
         $json = '{"address":"'.$address.'", "dentist_addr":"'.$dentist_addr.'", "value_usd":"'.$usd_amount.'", "monthly_premium_in_dcn":"'.$dcn_amount.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$hash.'"}';
 
+        var_dump($json);
+
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,

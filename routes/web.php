@@ -18,7 +18,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     //======================================= PAGES ========================================
     Route::get('/test', function() {
-        $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendETHamount('0x37e72780baacf8f020ab5588e1cd5701d0114f3f', '0x32e4c8584f4357de80812b048734a0c2fe6e31ab', 15, 5000, 1555326016, 'asdsaddsasdsssddsdsadsdsadsa');
+        $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendETHamount('0x37e72780baacf8f020ab5588e1cd5701d0114f3f', '0xd227bA0fE391Cf47663d6Aa65A26f20b5a20d3B5', 15, 5000, 1555326016, 'asdsaddsasdsssddsdsadsdsadsa');
         var_dump($sending_eth_response);
         die();
     })->name('test');
