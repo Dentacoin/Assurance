@@ -241,8 +241,6 @@ class PatientController extends Controller {
             'contract.required' => 'Contract slug is required.',
         );
 
-        $this_patient_having_contracts = TemporallyContract::where(array('patient_id' => $logged_patient->id))->get()->all();
-
         if(empty($logged_patient->dcn_address)) {
             $required_fields_arr['dcn_address'] = 'required|max:42';
             $required_fields_msgs_arr['dcn_address.required'] = 'Wallet Address is required';
@@ -373,6 +371,8 @@ class PatientController extends Controller {
                 //updating the status to awaiting-payment
                 $contract->status = 'awaiting-payment';
                 $contract->save();
+
+                $this_patient_having_contracts = TemporallyContract::where(array('patient_id' => $logged_patient->id))->get()->all();
                 var_dump(sizeof($this_patient_having_contracts));
 
                 //send ETH amount to patient
