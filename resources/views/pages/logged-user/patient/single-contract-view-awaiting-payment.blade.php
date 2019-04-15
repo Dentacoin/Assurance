@@ -8,7 +8,7 @@
         @php($contract_active_at = strtotime($contract->contract_active_at))
     @endif
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section margin-bottom-20" data-monthly-premium="{{$contract->monthly_premium}}" data-patient-address="{{$contract->patient_address}}" data-dentist-address="{{$contract->dentist_address}}" data-date-start-contract="{{$contract_active_at}}" data-contract-ipfs="{{$contract->document_hash}}">
-        @if(session('congratulation'))
+        @if(session('congratulations'))
             <div class="contract-response-message module container margin-bottom-50">
                 <div class="row">
                     <div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center">
@@ -22,7 +22,7 @@
                 </div>
             </div>
         @endif
-        <div class="container" @if(!empty(session('congratulation'))) data-session="{{session('congratulation')}}" @endif @if(!empty($congratulation)) data-var="{{$congratulation}}" @endif>
+        <div class="container" @if(!empty(session('congratulations'))) data-session="{{session('congratulations')}}" @endif @if(!empty($congratulations)) data-var="{{$congratulations}}" @endif>
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
             </div>
