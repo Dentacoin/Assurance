@@ -58104,6 +58104,8 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
     $('.proof-of-address .verify-address-btn').click(function() {
         if(keystore_file != null) {
             //import with keystore
+            console.log(JSON.parse(keystore_file).address.toLowerCase(), 'JSON.parse(keystore_file).address.toLowerCase()');
+            console.log('0x' + $('.proof-of-address').attr('data-address').toLowerCase(), '\'0x\' + $(\'.proof-of-address\').attr(\'data-address\').toLowerCase()');
             if(JSON.parse(keystore_file).address.toLowerCase() != '0x' + $('.proof-of-address').attr('data-address').toLowerCase()) {
                 basic.showAlert('Please enter valid keystore file for your Wallet Address.', '', true);
             } else if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
@@ -58305,6 +58307,8 @@ function bindCacheKeyEvent(keystore_file) {
     $('.proof-of-address .cache-key-btn').click(function() {
         if(keystore_file != null) {
             //import with keystore
+            console.log(JSON.parse(keystore_file).address.toLowerCase(), 'JSON.parse(keystore_file).address.toLowerCase()');
+            console.log('0x' + $('.proof-of-address').attr('data-address').toLowerCase(), '\'0x\' + $(\'.proof-of-address\').attr(\'data-address\').toLowerCase()');
             if(JSON.parse(keystore_file).address.toLowerCase() != '0x' + $('.proof-of-address').attr('data-address').toLowerCase()) {
                 basic.showAlert('Please enter valid keystore file for your Wallet Address.', '', true);
             } else if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
