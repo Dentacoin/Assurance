@@ -11,7 +11,7 @@
                 @include('partials.contract-single-page-nav', ['dentist_data' => $dentist, 'patient_data' => $patient])
             </div>
         </div>
-        <div class="container single-contract-tile module pending text-center padding-top-20">
+        <div class="container single-contract-tile module active text-center padding-top-20">
             <div class="row fs-0 flex-xs">
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-bottom padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-xs-4 inline-block-bottom blue-green-color-background contract-body" data-time-left-next-transfer="{{strtotime($contract->contract_active_at)}}">
-                    <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 active">ACTIVE</div>
+                    <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 active pending-background">ACTIVE</div>
                     <div class="wrapper">
                         <div class="lato-bold fs-20 white-color padding-top-25 padding-bottom-15">YOUR NEXT PAYMENT IS DUE IN:</div>
                         <div class="clock"></div>

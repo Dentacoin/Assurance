@@ -156,6 +156,9 @@
 .cancelled-color {
   color: #e92f30; }
 
+.pending-background {
+  background-color: #29adde; }
+
 .white-blue-green-btn {
   font-size: 20px;
   color: white;

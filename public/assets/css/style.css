@@ -194,6 +194,9 @@
 .cancelled-color {
   color: #e92f30; }
 
+.pending-background {
+  background-color: #29adde; }
+
 body {
   margin: 0;
   font-family: "Calibri-Regular";
