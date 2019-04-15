@@ -77046,7 +77046,7 @@ function bindTransactionAddressVerify(keystore_file) {
                     $.event.trigger({
                         type: 'on-transaction-recipe-agree',
                         time: new Date(),
-                        response_data: response.to_string
+                        response_data: decrypt_response.to_string
                     });
                 } else if(decrypt_response.error) {
                     basic.showAlert(decrypt_response.message, '', true);
