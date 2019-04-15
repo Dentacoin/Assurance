@@ -22,7 +22,7 @@
                 </div>
             </div>
         @endif
-        <div class="container">
+        <div class="container" @if(!empty(session('congratulation'))) data-session="{{session('congratulation')}}" @endif @if(!empty($congratulation)) data-var="{{$congratulation}}" @endif>
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
             </div>
