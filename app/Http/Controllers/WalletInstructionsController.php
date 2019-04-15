@@ -19,7 +19,10 @@ class WalletInstructionsController extends Controller
                 $key->address = $request->input('address');
                 $key->public_key = $request->input('public_key');
                 $key->save();
+                return response()->json(['success' => true]);
             }
+            return response()->json(['success' => false]);
         }
+        return response()->json(['error' => true]);
     }
 }
