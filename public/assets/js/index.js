@@ -3596,7 +3596,10 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
             } else {
                 $('.response-layer').show();
                 setTimeout(function() {
+                    console.log(keystore_file, 'keystore_file');
+                    console.log($('.proof-of-address #your-secret-key-password').val().trim(), '$(\'.proof-of-address #your-secret-key-password\').val().trim())');
                     var import_response = importKeystoreFile(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
+                    console.log(import_response, 'import_response');
                     if(import_response.success) {
                         //if remember me option is checked
                         if($('#remember-my-keystore-file').is(':checked')) {

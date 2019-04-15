@@ -10,7 +10,13 @@ const getWeb3 = (provider) => {
 };
 
 function importKeystoreFile(keystore, password) {
-    try {
+    var keyObject = JSON.parse(keystore);
+    console.log(keyObject, 'keyObject');
+    var private_key = keythereum.recover(password, keyObject);
+    console.log(private_key, 'private_key');
+    const public_key = EthCrypto.publicKeyByPrivateKey(private_key.toString('hex'));
+    console.log(public_key, 'public_key');
+    /*try {
         var keyObject = JSON.parse(keystore);
         var private_key = keythereum.recover(password, keyObject);
         const public_key = EthCrypto.publicKeyByPrivateKey(private_key.toString('hex'));
@@ -24,7 +30,7 @@ function importKeystoreFile(keystore, password) {
             error: true,
             message: 'Wrong secret password.'
         }
-    }
+    }*/
 }
 
 function decryptKeystore(keystore, password) {
