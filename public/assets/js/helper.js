@@ -9,10 +9,88 @@ const getWeb3 = (provider) => {
     return myWeb3;
 };
 
-// assumes passed-in web3 is v1.0 and creates a function to receive contract name
-const getContractInstance = (web3) => (contractName, address) => {
-    const instance = new web3.eth.Contract(contractName.abi, address);
-    return instance;
-};
+function importKeystoreFile(keystore, password) {
+    try {
+        var keyObject = JSON.parse(keystore);
+        var private_key = keythereum.recover(password, keyObject);
+        const public_key = EthCrypto.publicKeyByPrivateKey(private_key.toString('hex'));
+        return {
+            success: keyObject,
+            public_key: public_key,
+            address: JSON.parse(keystore).address
+        }
+    } catch (e) {
+        return {
+            error: true,
+            message: 'Wrong secret password.'
+        }
+    }
+}
 
-module.exports = {getWeb3, getContractInstance};
+function decryptKeystore(keystore, password) {
+    try {
+        return {
+            success: keythereum.recover(password, JSON.parse(keystore)), to_string: keythereum.recover(password, JSON.parse(keystore)).toString('hex')
+        }
+    } catch (e) {
+        return {
+            error: true,
+            message: 'Wrong secret password.'
+        }
+    }
+}
+
+async function decryptDataByPlainKey(encrypted_html, key) {
+    try {
+        const encrypted_obj = EthCrypto.cipher.parse(encrypted_html);
+        const public_key = EthCrypto.publicKeyByPrivateKey(key);
+        const address = EthCrypto.publicKey.toAddress(public_key);
+        const html = await EthCrypto.decryptWithPrivateKey(key, encrypted_obj);
+
+        return {
+            success: {decrypted: html, address: address}
+        }
+    } catch (e) {
+        return {
+            error: true,
+            message: 'Please enter correct private key.'
+        }
+    }
+}
+
+async function decryptDataByKeystore(encrypted_html, keystore, password) {
+    try {
+        var keyObject = JSON.parse(keystore);
+        const encrypted_obj = EthCrypto.cipher.parse(encrypted_html);
+        var private_key = keythereum.recover(password, keyObject).toString('hex');
+        const html = await EthCrypto.decryptWithPrivateKey(private_key, encrypted_obj);
+
+        return {
+            success: {
+                decrypted: html
+            }
+        }
+    } catch (e) {
+        return {
+            error: true,
+            message: 'Wrong password.'
+        }
+    }
+}
+
+function importPrivateKey(key) {
+    try {
+        //check if private_key is passed and if his length is not more than 64 hex characters
+        const public_key = EthCrypto.publicKeyByPrivateKey(key);
+        const address = EthCrypto.publicKey.toAddress(public_key);
+
+        return {success: true, address: address, public_key: public_key};
+    } catch (e) {
+        return {
+            error: true,
+            message: 'Wrong data passed.'
+        }
+    }
+}
+
+module.exports = {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore};

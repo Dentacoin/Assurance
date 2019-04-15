@@ -699,6 +699,7 @@ class UserController extends Controller {
             } else {
                 $current_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
                 if($current_user_data->dcn_address != $data['address']) {
+                    //updating the user address(CoreDB) only if he did type different address than the already saved in the CoreDB
                     $api_response = (new APIRequestsController())->updateUserData(array('dcn_address' => $data['address']));
                     if(!$api_response) {
                         return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);

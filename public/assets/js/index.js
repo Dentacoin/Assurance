@@ -1,4 +1,4 @@
-var {getWeb3, getContractInstance} = require('./helper');
+var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore} = require('./helper');
 
 basic.init();
 
@@ -562,11 +562,6 @@ async function pagesDataOnContractInit() {
             //eth fee for firing blockchain transaction
             var eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
 
-            console.log(current_user_dcn_balance, 'current_user_dcn_balance');
-            console.log(monthly_premium_in_dcn, 'monthly_premium_in_dcn');
-            console.log(eth_fee, 'eth_fee');
-            console.log(current_user_eth_balance, 'current_user_eth_balance');
-
             if(current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
                 //not enough DCN and ETH balance
                 $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10 padding-bottom-20">You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div></div>');
@@ -677,13 +672,7 @@ async function pagesDataOnContractInit() {
                                         });
                                     } else {
                                         if(JSON.parse(localStorage.getItem('current-account')).type == 'key') {
-                                            var decrypted_private_key_response = await getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
-                                            if(decrypted_private_key_response.success) {
-                                                transaction_key = decrypted_private_key_response.success;
-                                            } else if(decrypted_private_key_response.error) {
-                                                basic.showAlert(decrypted_private_key_response.error, '', true);
-                                                return false;
-                                            }
+                                            transaction_key = JSON.parse(localStorage.getItem('current-account')).key;
                                         } else if(JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                             $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module  max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                             bindGoogleAlikeButtonsEvents();
@@ -708,11 +697,11 @@ async function pagesDataOnContractInit() {
                                                 return false;
                                             } else {
                                                 if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                    var decrypted_keystore_file_response = await getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                    var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
                                                     if (decrypted_keystore_file_response.success) {
                                                         transaction_key = decrypted_keystore_file_response.to_string;
                                                     } else if (decrypted_keystore_file_response.error) {
-                                                        basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                        basic.showAlert(decrypted_keystore_file_response.message, '', true);
                                                         return false;
                                                     }
                                                 }
@@ -1831,12 +1820,12 @@ if($('body').hasClass('logged-in')) {
                     var cached_key = JSON.parse(localStorage.getItem('current-account'));
                     if(cached_key.type == 'key') {
                         // === CACHED KEY ===
-                        var decrypted_pdf_response = await getDecryptedPdfContent(encrypted_pdf_content.success, cached_key.key);
+                        var decrypted_pdf_response = await decryptDataByPlainKey(encrypted_pdf_content.success, cached_key.key);
                         if(decrypted_pdf_response.success) {
                             render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
                             render_form.submit();
                         } else if(decrypted_pdf_response.error) {
-                            basic.showAlert(decrypted_pdf_response.error, '', true);
+                            basic.showAlert(decrypted_pdf_response.message, '', true);
                         }
                     } else if(cached_key.type == 'keystore') {
                         // === CACHED KEYSTORE FILE ===
@@ -1854,29 +1843,18 @@ if($('body').hasClass('logged-in')) {
                                 fixButtonsFocus();
                                 $('.keystore-file-password-validation .keystore-password').focus();
 
-                                $('.keystore-file-password-validation .btn-container a').click(function() {
+                                $('.keystore-file-password-validation .btn-container a').click(async function() {
                                     if($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
                                         basic.showAlert('Please enter your password.', '', true);
                                     }else {
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'https://methods.dentacoin.com/decrypt-data-keystore',
-                                            dataType: 'json',
-                                            data: {
-                                                keystore: JSON.parse(localStorage.getItem('current-account')).keystore,
-                                                password: $('.keystore-file-password-validation .keystore-password').val().trim(),
-                                                encrypted_html: encrypted_pdf_content.success
-                                            },
-                                            success: function (decrypt_response) {
-                                                if(decrypt_response.success) {
-                                                    basic.closeDialog();
-                                                    render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
-                                                    render_form.submit();
-                                                } else if(decrypt_response.error) {
-                                                    basic.showAlert(decrypt_response.error, '', true);
-                                                }
-                                            }
-                                        });
+                                        var decrypt_response = await decryptDataByKeystore(encrypted_pdf_content.success, JSON.parse(localStorage.getItem('current-account')).keystore, $('.keystore-file-password-validation .keystore-password').val().trim());
+                                        if(decrypt_response.success) {
+                                            basic.closeDialog();
+                                            render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
+                                            render_form.submit();
+                                        } else if(decrypt_response.error) {
+                                            basic.showAlert(decrypt_response.message, '', true);
+                                        }
                                     }
                                 });
                             }
@@ -2814,13 +2792,7 @@ async function onDocumentReadyPageData() {
                                             });
                                         } else {
                                             if(JSON.parse(localStorage.getItem('current-account')).type == 'key') {
-                                                var decrypted_private_key_response = await getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
-                                                if(decrypted_private_key_response.success) {
-                                                    transaction_key = decrypted_private_key_response.success;
-                                                } else if(decrypted_private_key_response.error) {
-                                                    basic.showAlert(decrypted_private_key_response.error, '', true);
-                                                    return false;
-                                                }
+                                                transaction_key = JSON.parse(localStorage.getItem('current-account')).key;
                                             } else if(JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                                 $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                                 bindGoogleAlikeButtonsEvents();
@@ -2845,11 +2817,11 @@ async function onDocumentReadyPageData() {
                                                     return false;
                                                 } else {
                                                     if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                        var decrypted_keystore_file_response = await getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                        var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
                                                         if (decrypted_keystore_file_response.success) {
                                                             transaction_key = decrypted_keystore_file_response.to_string;
                                                         } else if (decrypted_keystore_file_response.error) {
-                                                            basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                            basic.showAlert(decrypted_keystore_file_response.message, '', true);
                                                             return false;
                                                         }
                                                     }
@@ -3027,13 +2999,7 @@ async function onDocumentReadyPageData() {
                                             });
                                         } else {
                                             if(JSON.parse(localStorage.getItem('current-account')).type == 'key') {
-                                                var decrypted_private_key_response = await getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
-                                                if(decrypted_private_key_response.success) {
-                                                    transaction_key = decrypted_private_key_response.success;
-                                                } else if(decrypted_private_key_response.error) {
-                                                    basic.showAlert(decrypted_private_key_response.error, '', true);
-                                                    return false;
-                                                }
+                                                transaction_key = JSON.parse(localStorage.getItem('current-account')).key;
                                             } else if(JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                                 $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                                 bindGoogleAlikeButtonsEvents();
@@ -3058,11 +3024,11 @@ async function onDocumentReadyPageData() {
                                                     return false;
                                                 } else {
                                                     if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                        var decrypted_keystore_file_response = await getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                        var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
                                                         if (decrypted_keystore_file_response.success) {
                                                             transaction_key = decrypted_keystore_file_response.to_string;
                                                         } else if (decrypted_keystore_file_response.error) {
-                                                            basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                            basic.showAlert(decrypted_keystore_file_response.message, '', true);
                                                             return false;
                                                         }
                                                     }
@@ -3249,13 +3215,7 @@ function cancelContractEventInit() {
                                         });
                                     } else {
                                         if (JSON.parse(localStorage.getItem('current-account')).type == 'key') {
-                                            var decrypted_private_key_response = await getDecryptedPrivateKey(JSON.parse(localStorage.getItem('current-account')).key);
-                                            if (decrypted_private_key_response.success) {
-                                                transaction_key = decrypted_private_key_response.success;
-                                            } else if (decrypted_private_key_response.error) {
-                                                basic.showAlert(decrypted_private_key_response.error, '', true);
-                                                return false;
-                                            }
+                                            transaction_key = JSON.parse(localStorage.getItem('current-account')).key;
                                         } else if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                             $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                             bindGoogleAlikeButtonsEvents();
@@ -3285,11 +3245,11 @@ function cancelContractEventInit() {
                                                 return false;
                                             } else {
                                                 if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                    var decrypted_keystore_file_response = await getDecryptedKeystoreFile(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                    var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
                                                     if (decrypted_keystore_file_response.success) {
                                                         transaction_key = decrypted_keystore_file_response.to_string;
                                                     } else if (decrypted_keystore_file_response.error) {
-                                                        basic.showAlert(decrypted_keystore_file_response.error, '', true);
+                                                        basic.showAlert(decrypted_keystore_file_response.message, '', true);
                                                         return false;
                                                     }
                                                 }
@@ -3501,7 +3461,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
 
                                 if(render_pdf != null && encrypted_pdf_content != null) {
                                     //if we have to render pdf
-                                    $('.proof-of-address .verify-address-btn').click(function() {
+                                    $('.proof-of-address .verify-address-btn').click(async function() {
 
                                         //if remember me option is checked
                                         if($('#remember-my-keystore-file').is(':checked')) {
@@ -3512,26 +3472,15 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                             }));
                                         }
 
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'https://methods.dentacoin.com/decrypt-data-keystore',
-                                            dataType: 'json',
-                                            data: {
-                                                keystore: keystore_string,
-                                                password: $('.proof-of-address #your-secret-key-password').val().trim(),
-                                                encrypted_html: encrypted_pdf_content
-                                            },
-                                            success: function (decrypt_response) {
-                                                if(decrypt_response.success) {
-                                                    var render_form = $('form#render-pdf');
-                                                    basic.closeDialog();
-                                                    render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
-                                                    render_form.submit();
-                                                } else if(decrypt_response.error) {
-                                                    basic.showAlert(decrypt_response.error, '', true);
-                                                }
-                                            }
-                                        });
+                                        var decrypt_response = await decryptDataByKeystore(encrypted_pdf_content, keystore_string, $('.proof-of-address #your-secret-key-password').val().trim());
+                                        if(decrypt_response.success) {
+                                            var render_form = $('form#render-pdf');
+                                            basic.closeDialog();
+                                            render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
+                                            render_form.submit();
+                                        } else if(decrypt_response.error) {
+                                            basic.showAlert(decrypt_response.message, '', true);
+                                        }
                                     });
                                 } else {
                                     if(for_transactions != null) {
@@ -3640,59 +3589,49 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
     $('.proof-of-address .verify-address-btn').click(function() {
         if(keystore_file != null) {
             //import with keystore
-            if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
+            if(JSON.parse(keystore_file).address.toLowerCase() != $('.proof-of-address').attr('data-address').toLowerCase()) {
+                basic.showAlert('Please enter valid keystore file for your Wallet Address.', '', true);
+            } else if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
                 basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
             } else {
                 $('.response-layer').show();
                 setTimeout(function() {
-                    $.ajax({
-                        type: 'POST',
-                        url: 'https://methods.dentacoin.com/app-import',
-                        dataType: 'json',
-                        data: {
-                            address: $('.proof-of-address').attr('data-address'),
-                            keystore: keystore_file,
-                            password: $('.proof-of-address #your-secret-key-password').val().trim()
-                        },
-                        success: function (response) {
-                            //now with the address and the public key received from the nodejs api update the db
-                            if(response.success) {
-                                //if remember me option is checked
-                                if($('#remember-my-keystore-file').is(':checked')) {
-                                    localStorage.setItem('current-account', JSON.stringify({
-                                        address: $('.proof-of-address').attr('data-address'),
-                                        type: 'keystore',
-                                        keystore: response.success
-                                    }));
-                                }
-
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/update-public-keys',
-                                    dataType: 'json',
-                                    data: {
-                                        address: $('.proof-of-address').attr('data-address'),
-                                        public_key: response.public_key
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function (inner_response) {
-                                        $('.response-layer').hide();
-                                        if(inner_response.success) {
-                                            $('.proof-of-address').remove();
-                                            $('.proof-success').fadeIn(1500);
-                                        } else {
-                                            basic.showAlert(inner_response.error, '', true);
-                                        }
-                                    }
-                                });
-                            } else if(response.error) {
-                                $('.response-layer').hide();
-                                basic.showAlert(response.error, '', true);
-                            }
+                    var import_response = importKeystoreFile(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
+                    if(import_response.success) {
+                        //if remember me option is checked
+                        if($('#remember-my-keystore-file').is(':checked')) {
+                            localStorage.setItem('current-account', JSON.stringify({
+                                address: $('.proof-of-address').attr('data-address'),
+                                type: 'keystore',
+                                keystore: import_response.success
+                            }));
                         }
-                    });
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/update-public-keys',
+                            dataType: 'json',
+                            data: {
+                                address: $('.proof-of-address').attr('data-address'),
+                                public_key: import_response.public_key
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (inner_response) {
+                                $('.response-layer').hide();
+                                if(inner_response.success) {
+                                    $('.proof-of-address').remove();
+                                    $('.proof-success').fadeIn(1500);
+                                } else {
+                                    basic.showAlert(inner_response.error, '', true);
+                                }
+                            }
+                        });
+                    } else if(import_response.error) {
+                        $('.response-layer').hide();
+                        basic.showAlert(import_response.message, '', true);
+                    }
                 }, 1000);
             }
         } else {
@@ -3704,7 +3643,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                 setTimeout(async function () {
                     if (render_pdf != null) {
                         var render_form = $('form#render-pdf');
-                        var decrypted_pdf_response = await getDecryptedPdfContentByPlainKey(encrypted_pdf_content, $('.proof-of-address #your-private-key').val().trim());
+                        var decrypted_pdf_response = await decryptDataByPlainKey(encrypted_pdf_content, $('.proof-of-address #your-private-key').val().trim());
 
                         $('.response-layer').hide();
                         if (decrypted_pdf_response.success) {
@@ -3713,7 +3652,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                 localStorage.setItem('current-account', JSON.stringify({
                                     address: decrypted_pdf_response.success.address,
                                     type: 'key',
-                                    key: decrypted_pdf_response.success.private_key
+                                    key: $('.proof-of-address #your-private-key').val().trim()
                                 }));
                             }
 
@@ -3721,61 +3660,52 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                             render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
                             render_form.submit();
                         } else if (decrypted_pdf_response.error) {
-                            basic.showAlert(decrypted_pdf_response.error, '', true);
+                            basic.showAlert(decrypted_pdf_response.message, '', true);
                         }
                     } else {
-                        $.ajax({
-                            type: 'POST',
-                            url: 'https://methods.dentacoin.com/assurance-import-private-key',
-                            dataType: 'json',
-                            data: {
-                                private_key: $('.proof-of-address #your-private-key').val().trim()
-                            },
-                            success: async function (response) {
-                                //now with the address and the public key received from the nodejs api update the db
-                                if (response.success) {
-                                    //checking if fake private key or just miss spell it
-                                    if (checksumAddress($('.proof-of-address').attr('data-address')) != checksumAddress(response.address)) {
-                                        basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', '', true);
-                                        $('.response-layer').hide();
-                                    } else {
-                                        //if remember me option is checked
-                                        if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
-                                            localStorage.setItem('current-account', JSON.stringify({
-                                                address: decrypted_pdf_response.address,
-                                                type: 'key',
-                                                key: decrypted_pdf_response.private_key
-                                            }));
-                                        }
-
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: '/update-public-keys',
-                                            dataType: 'json',
-                                            data: {
-                                                address: response.address,
-                                                public_key: response.public_key
-                                            },
-                                            headers: {
-                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                            },
-                                            success: function (inner_response) {
-                                                $('.response-layer').hide();
-                                                if (inner_response.success) {
-                                                    $('.proof-of-address').remove();
-                                                    $('.proof-success').fadeIn(1500);
-                                                } else {
-                                                    basic.showAlert(inner_response.error, '', true);
-                                                }
-                                            }
-                                        });
-                                    }
-                                } else if(response.error) {
-                                    $('.response-layer').hide();
-                                    basic.showAlert(response.error, '', true);
+                        var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
+                        //now with the address and the public key received from the nodejs api update the db
+                        if (import_response.success) {
+                            //checking if fake private key or just miss spell it
+                            if (checksumAddress($('.proof-of-address').attr('data-address')) != checksumAddress(import_response.address)) {
+                                basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', '', true);
+                                $('.response-layer').hide();
+                            } else {
+                                //if remember me option is checked
+                                if ($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                                    localStorage.setItem('current-account', JSON.stringify({
+                                        address: import_response.address,
+                                        type: 'key',
+                                        key: $('.proof-of-address #your-private-key').val().trim()
+                                    }));
                                 }
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/update-public-keys',
+                                    dataType: 'json',
+                                    data: {
+                                        address: import_response.address,
+                                        public_key: import_response.public_key
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function (inner_response) {
+                                        $('.response-layer').hide();
+                                        if (inner_response.success) {
+                                            $('.proof-of-address').remove();
+                                            $('.proof-success').fadeIn(1500);
+                                        } else {
+                                            basic.showAlert(inner_response.error, '', true);
+                                        }
+                                    }
+                                });
                             }
-                        });
+                        } else if(import_response.error) {
+                            $('.response-layer').hide();
+                            basic.showAlert(import_response.message, '', true);
+                        }
                     }
                 }, 1000);
             }
@@ -3787,86 +3717,67 @@ function bindTransactionAddressVerify(keystore_file) {
     if(keystore_file === undefined) {
         keystore_file = null;
     }
-    $('.proof-of-address .verify-address-btn').click(function() {
+    $('.proof-of-address .verify-address-btn').click(async function() {
         $('.response-layer').show();
         if(keystore_file != null) {
             //import with keystore
             if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
                 basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
             } else {
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://methods.dentacoin.com/decrypt-pk',
-                    dataType: 'json',
-                    data: {
-                        keystore: keystore_file,
-                        password: $('.proof-of-address #your-secret-key-password').val().trim()
-                    },
-                    success: function(response) {
-                        if(response.success) {
-                            //if remember me option is checked
-                            if($('#remember-my-keystore-file').is(':checked')) {
-                                localStorage.setItem('current-account', JSON.stringify({
-                                    address: $('.proof-of-address').attr('data-address'),
-                                    type: 'keystore',
-                                    keystore: keystore_file
-                                }));
-                            }
-
-                            $.event.trigger({
-                                type: 'on-transaction-recipe-agree',
-                                time: new Date(),
-                                response_data: response.to_string
-                            });
-                        } else if(response.error) {
-                            basic.showAlert(response.error, '', true);
-                            $('.response-layer').hide();
-                        }
+                var decrypt_response = decryptKeystore(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
+                if(decrypt_response.success) {
+                    //if remember me option is checked
+                    if($('#remember-my-keystore-file').is(':checked')) {
+                        localStorage.setItem('current-account', JSON.stringify({
+                            address: $('.proof-of-address').attr('data-address'),
+                            type: 'keystore',
+                            keystore: keystore_file
+                        }));
                     }
-                });
+
+                    $.event.trigger({
+                        type: 'on-transaction-recipe-agree',
+                        time: new Date(),
+                        response_data: response.to_string
+                    });
+                } else if(decrypt_response.error) {
+                    basic.showAlert(decrypt_response.message, '', true);
+                    $('.response-layer').hide();
+                }
             }
         } else {
             //import with private key
             if($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
                 basic.showAlert('Please enter valid private key.', '', true);
             } else {
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://methods.dentacoin.com/assurance-import-private-key',
-                    dataType: 'json',
-                    data: {
-                        private_key: $('.proof-of-address #your-private-key').val().trim()
-                    },
-                    success: async function(response) {
-                        if(response.success) {
-                            //checking if the private key is related to the public key saved in the coredb
-                            var user_data = await getCurrentUserData();
-                            //checking if fake private key or just miss spell it
-                            if(checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address)) {
-                                basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
-                                $('.response-layer').hide();
-                            } else {
-                                //if remember me option is checked
-                                if($('.proof-of-address #remember-my-private-key').is(':checked')) {
-                                    localStorage.setItem('current-account', JSON.stringify({
-                                        address: response.address,
-                                        type: 'key',
-                                        key: response.private_key
-                                    }));
-                                }
-
-                                $.event.trigger({
-                                    type: 'on-transaction-recipe-agree',
-                                    time: new Date(),
-                                    response_data: response.plain_private_key
-                                });
-                            }
-                        } else if(response.error) {
-                            basic.showAlert(response.error, '', true);
-                            $('.response-layer').hide();
+                var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
+                if(import_response.success) {
+                    //checking if the private key is related to the public key saved in the coredb
+                    var user_data = await getCurrentUserData();
+                    //checking if fake private key or just miss spell it
+                    if(checksumAddress(user_data.success.dcn_address) != checksumAddress(import_response.address)) {
+                        basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
+                        $('.response-layer').hide();
+                    } else {
+                        //if remember me option is checked
+                        if($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                            localStorage.setItem('current-account', JSON.stringify({
+                                address: import_response.address,
+                                type: 'key',
+                                key: $('.proof-of-address #your-private-key').val().trim()
+                            }));
                         }
+
+                        $.event.trigger({
+                            type: 'on-transaction-recipe-agree',
+                            time: new Date(),
+                            response_data: $('.proof-of-address #your-private-key').val().trim()
+                        });
                     }
-                });
+                } else if(import_response.error) {
+                    basic.showAlert(import_response.message, '', true);
+                    $('.response-layer').hide();
+                }
             }
         }
     });
@@ -3879,53 +3790,43 @@ function bindCacheKeyEvent(keystore_file) {
     $('.proof-of-address .cache-key-btn').click(function() {
         if(keystore_file != null) {
             //import with keystore
-            if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
+            if(JSON.parse(keystore_file).address.toLowerCase() != $('.proof-of-address').attr('data-address').toLowerCase()) {
+                basic.showAlert('Please enter valid keystore file for your Wallet Address.', '', true);
+            } else if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
                 basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
             } else {
                 $('.response-layer').show();
                 setTimeout(function() {
-                    $.ajax({
-                        type: 'POST',
-                        url: 'https://methods.dentacoin.com/app-import',
-                        dataType: 'json',
-                        data: {
+                    var import_response = importKeystoreFile(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
+                    if(import_response.success) {
+                        //if remember me option is checked
+                        localStorage.setItem('current-account', JSON.stringify({
                             address: $('.proof-of-address').attr('data-address'),
-                            keystore: keystore_file,
-                            password: $('.proof-of-address #your-secret-key-password').val().trim()
-                        },
-                        success: function (response) {
-                            //now with the address and the public key received from the nodejs api update the db
-                            if(response.success) {
-                                //if remember me option is checked
-                                localStorage.setItem('current-account', JSON.stringify({
-                                    address: $('.proof-of-address').attr('data-address'),
-                                    type: 'keystore',
-                                    keystore: response.success
-                                }));
+                            type: 'keystore',
+                            keystore: import_response.success
+                        }));
 
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/update-public-keys',
-                                    dataType: 'json',
-                                    data: {
-                                        address: $('.proof-of-address').attr('data-address'),
-                                        public_key: response.public_key
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function (inner_response) {
-                                        $('.response-layer').hide();
-                                        $('.remember-my-wallet-camp').remove();
-                                        basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', '', true);
-                                    }
-                                });
-                            } else if(response.error) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/update-public-keys',
+                            dataType: 'json',
+                            data: {
+                                address: $('.proof-of-address').attr('data-address'),
+                                public_key: import_response.public_key
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (inner_response) {
                                 $('.response-layer').hide();
-                                basic.showAlert(response.error, '', true);
+                                $('.remember-my-wallet-camp').remove();
+                                basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', '', true);
                             }
-                        }
-                    });
+                        });
+                    } else if(import_response.error) {
+                        $('.response-layer').hide();
+                        basic.showAlert(import_response.message, '', true);
+                    }
                 }, 1000);
             }
         } else {
@@ -3934,55 +3835,45 @@ function bindCacheKeyEvent(keystore_file) {
                 basic.showAlert('Please enter valid private key.', '', true);
             } else {
                 $('.response-layer').show();
-                setTimeout(function() {
-                    $.ajax({
-                        type: 'POST',
-                        url: 'https://methods.dentacoin.com/assurance-import-private-key',
-                        dataType: 'json',
-                        data: {
-                            private_key: $('.proof-of-address #your-private-key').val().trim()
-                        },
-                        success: async function (response) {
-                            //now with the address and the public key received from the nodejs api update the db
-                            if(response.success) {
-                                //checking if the private key is related to the public key saved in the coredb
-                                var user_data = await getCurrentUserData();
+                setTimeout(async function() {
+                    var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
+                    if(import_response.success) {
+                        //checking if the private key is related to the public key saved in the coredb
+                        var user_data = await getCurrentUserData();
 
-                                //checking if fake private key or just miss spell it
-                                if(checksumAddress(user_data.success.dcn_address) != checksumAddress(response.address)) {
-                                    basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
+                        //checking if fake private key or just miss spell it
+                        if(checksumAddress(user_data.success.dcn_address) != checksumAddress(import_response.address)) {
+                            basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
+                            $('.response-layer').hide();
+                        } else {
+                            localStorage.setItem('current-account', JSON.stringify({
+                                address: import_response.address,
+                                type: 'key',
+                                key: $('.proof-of-address #your-private-key').val().trim()
+                            }));
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/update-public-keys',
+                                dataType: 'json',
+                                data: {
+                                    address: import_response.address,
+                                    public_key: import_response.public_key
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function (inner_response) {
                                     $('.response-layer').hide();
-                                } else {
-                                    localStorage.setItem('current-account', JSON.stringify({
-                                        address: response.address,
-                                        type: 'key',
-                                        key: response.private_key
-                                    }));
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '/update-public-keys',
-                                        dataType: 'json',
-                                        data: {
-                                            address: response.address,
-                                            public_key: response.public_key
-                                        },
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        },
-                                        success: function (inner_response) {
-                                            $('.response-layer').hide();
-                                            $('.remember-my-wallet-camp').remove();
-                                            basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', '', true);
-                                        }
-                                    });
+                                    $('.remember-my-wallet-camp').remove();
+                                    basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', '', true);
                                 }
-                            } else if(response.error) {
-                                $('.response-layer').hide();
-                                basic.showAlert(response.error, '', true);
-                            }
+                            });
                         }
-                    });
+                    } else if(import_response.error) {
+                        $('.response-layer').hide();
+                        basic.showAlert(import_response.message, '', true);
+                    }
                 }, 1000);
             }
         }
@@ -4227,53 +4118,6 @@ async function checkCaptcha(captcha) {
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-}
-
-async function getDecryptedPrivateKey(key) {
-    return await $.ajax({
-        type: 'POST',
-        url: 'https://methods.dentacoin.com/assurance-decrypt-private-key',
-        dataType: 'json',
-        data: {
-            private_key: key
-        }
-    });
-}
-
-async function getDecryptedKeystoreFile(keystore, password) {
-    return await $.ajax({
-        type: 'POST',
-        url: 'https://methods.dentacoin.com/decrypt-pk',
-        dataType: 'json',
-        data: {
-            keystore: keystore,
-            password: password
-        }
-    });
-}
-
-async function getDecryptedPdfContent(encrypted_html, key) {
-    return await $.ajax({
-        type: 'POST',
-        url: 'https://methods.dentacoin.com/decrypt-data',
-        dataType: 'json',
-        data: {
-            encrypted_html: encrypted_html,
-            private_key: key
-        }
-    });
-}
-
-async function getDecryptedPdfContentByPlainKey(encrypted_html, key) {
-    return await $.ajax({
-        type: 'POST',
-        url: 'https://methods.dentacoin.com/decrypt-data-plain-key',
-        dataType: 'json',
-        data: {
-            encrypted_html: encrypted_html,
-            private_key: key
         }
     });
 }
