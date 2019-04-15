@@ -370,7 +370,6 @@ class PatientController extends Controller {
 
                 //updating the status to awaiting-payment
                 $contract->status = 'awaiting-payment';
-                $contract->save();
 
                 $this_patient_having_contracts = TemporallyContract::where(array('patient_id' => $logged_patient->id))->get()->all();
                 //send ETH amount to patient
@@ -387,6 +386,8 @@ class PatientController extends Controller {
                             $message->setBody($body, 'text/html');
                         });
 
+                        $contract->save();
+
                         return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
                     } else {
                         return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href="mailto:assurance@dentacoin.com">Dentacoin team</a>.']);
@@ -400,6 +401,8 @@ class PatientController extends Controller {
                         $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
                         $message->setBody($body, 'text/html');
                     });
+
+                    $contract->save();
 
                     return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
                 }
