@@ -17,12 +17,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::get('sitemap.xml', 'Controller@getSitemap')->name('sitemap');
 
     //======================================= PAGES ========================================
-    Route::get('/test', function() {
-        $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendETHamount('0x37e72780baacf8f020ab5588e1cd5701d0114f3f', '0xd227bA0fE391Cf47663d6Aa65A26f20b5a20d3B5', 15, 5000, 1555326016, 'asdsaddsasdsssddsdsadsdsadsa');
-        var_dump($sending_eth_response);
-        die();
-    })->name('test');
-
     Route::get('/', 'HomeController@getView')->name('home');
 
     Route::get('/support-guide', 'SupportGuideController@getView')->name('support-guide');
