@@ -386,8 +386,6 @@ class PatientController extends Controller {
                             $message->setBody($body, 'text/html');
                         });
 
-                        die('stoped for test');
-
                         $contract->save();
 
                         return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
