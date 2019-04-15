@@ -373,13 +373,9 @@ class PatientController extends Controller {
 
                 $this_patient_having_contracts = TemporallyContract::where(array('patient_id' => $logged_patient->id))->get()->all();
                 //send ETH amount to patient
-                var_dump($this_patient_having_contracts);
-                var_dump(sizeof($this_patient_having_contracts));
-                if(sizeof($this_patient_having_contracts) == 1) {
-                    var_dump(1);
+                if(sizeof($this_patient_having_contracts) == 0) {
                     //only if no previous contracts, aka sending only for first contract
                     $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($contract->patient_address, $contract->dentist_address, $contract->monthly_premium, $contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'), $contract->contract_active_at->getTimestamp(), $contract->document_hash);
-                    var_dump($sending_eth_response);
                     if($sending_eth_response && property_exists($sending_eth_response, 'success')) {
                         $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
                         $body = $email_view->render();
@@ -399,7 +395,6 @@ class PatientController extends Controller {
                         return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href="mailto:assurance@dentacoin.com">Dentacoin team</a>.']);
                     }
                 } else {
-                    var_dump(2);
                     $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
                     $body = $email_view->render();
 
@@ -408,8 +403,6 @@ class PatientController extends Controller {
                         $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
                         $message->setBody($body, 'text/html');
                     });
-
-                    die('stoped for test');
 
                     $contract->save();
 
