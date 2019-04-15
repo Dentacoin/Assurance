@@ -73836,7 +73836,7 @@ async function pagesDataOnContractInit() {
             cancelContractEventInit();
 
             //ONLY if status is AWAITING PAYMENT or ACTIVE
-            if($('.single-contract-tile').hasClass('awaiting-payment') || $('.single-contract-tile').hasClass('active')) {
+            if($('.contract-header').hasClass('awaiting-payment') || $('.contract-header').hasClass('active')) {
                 var current_user_dcn_balance = parseInt(await App.dentacoin_token_methods.balanceOf(global_state.account));
                 var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(global_state.account)));
                 var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));

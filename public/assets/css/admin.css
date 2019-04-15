@@ -1093,13 +1093,13 @@
   -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
   -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
-.module.single-contract-tile.pending .contract-header.pending {
+.module.single-contract-tile .contract-header.pending {
   background-color: #29adde; }
-.module.single-contract-tile.pending .contract-header.active {
+.module.single-contract-tile .contract-header.active {
   background-color: #239234; }
-.module.single-contract-tile.pending .contract-header.awaiting-payment, .module.single-contract-tile.pending .contract-header.awaiting-approval {
+.module.single-contract-tile .contract-header.awaiting-payment, .module.single-contract-tile .contract-header.awaiting-approval {
   background-color: #239289; }
-.module.single-contract-tile.pending .contract-header.cancelled {
+.module.single-contract-tile .contract-header.cancelled {
   background-color: #e92f30; }
 @media screen and (max-width: 767px) {
   .module.single-contract-tile .contract-participant {

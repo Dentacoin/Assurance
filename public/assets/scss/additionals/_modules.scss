@@ -997,20 +997,18 @@
                 @include box-shadow(0 2px 6px 0 rgba(0,0,0,.4));
             }
         }
-        &.pending {
-            .contract-header {
-                &.pending {
-                    background-color: $pending;
-                }
-                &.active {
-                    background-color: $active;
-                }
-                &.awaiting-payment, &.awaiting-approval {
-                    background-color: $awaiting_payment_awaiting_approval;
-                }
-                &.cancelled {
-                    background-color: $cancelled;
-                }
+        .contract-header {
+            &.pending {
+                background-color: $pending;
+            }
+            &.active {
+                background-color: $active;
+            }
+            &.awaiting-payment, &.awaiting-approval {
+                background-color: $awaiting_payment_awaiting_approval;
+            }
+            &.cancelled {
+                background-color: $cancelled;
             }
         }
         @include breakpoint($xs) {
