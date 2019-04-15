@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-xs-4 inline-block-bottom blue-green-color-background contract-body" data-time-left-next-transfer="{{strtotime($contract->contract_active_at)}}">
-                    <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 active pending-background">ACTIVE</div>
+                    <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 active">ACTIVE</div>
                     <div class="wrapper">
                         <div class="lato-bold fs-20 white-color padding-top-25 padding-bottom-15">YOUR NEXT PAYMENT IS DUE IN:</div>
                         <div class="clock"></div>
