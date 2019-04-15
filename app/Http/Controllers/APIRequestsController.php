@@ -359,11 +359,27 @@ class APIRequestsController extends Controller {
         return $resp;
     }
 
+    protected function getGasEstimationFromEthgasstation()  {
+        //API connection
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'https://ethgasstation.info/json/ethgasAPI.json',
+            CURLOPT_SSL_VERIFYPEER => 0
+        ));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+        if(!empty($resp))   {
+            return $resp->safeLow;
+        }
+    }
+
     //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
     public function sendETHamount($address, $dentist_addr, $usd_amount, $dcn_amount, $time, $hash) {
         $curl = curl_init();
 
-        $json = '{"address":"'.$address.'", "dentist_addr":"'.$dentist_addr.'", "value_usd":"'.$usd_amount.'", "monthly_premium_in_dcn":"'.$dcn_amount.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$hash.'"}';
+        $json = '{"address":"'.$address.'", "dentist_addr":"'.$dentist_addr.'", "value_usd":"'.$usd_amount.'", "monthly_premium_in_dcn":"'.$dcn_amount.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$hash.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'"}';
 
         var_dump($json);
 
