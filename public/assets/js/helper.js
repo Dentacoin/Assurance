@@ -1,4 +1,6 @@
 const Web3 = require("../../../node_modules/web3"); // import web3 v1.0 constructor
+const keythereum = require('../../../node_modules/keythereum');
+const EthCrypto = require('../../../node_modules/eth-crypto');
 
 // use globally injected web3 to find the currentProvider and wrap with web3 v1.0
 const getWeb3 = (provider) => {
@@ -10,13 +12,7 @@ const getWeb3 = (provider) => {
 };
 
 function importKeystoreFile(keystore, password) {
-    var keyObject = JSON.parse(keystore);
-    console.log(keyObject, 'keyObject');
-    var private_key = keythereum.recover(password, keyObject);
-    console.log(private_key, 'private_key');
-    const public_key = EthCrypto.publicKeyByPrivateKey(private_key.toString('hex'));
-    console.log(public_key, 'public_key');
-    /*try {
+    try {
         var keyObject = JSON.parse(keystore);
         var private_key = keythereum.recover(password, keyObject);
         const public_key = EthCrypto.publicKeyByPrivateKey(private_key.toString('hex'));
@@ -30,7 +26,7 @@ function importKeystoreFile(keystore, password) {
             error: true,
             message: 'Wrong secret password.'
         }
-    }*/
+    }
 }
 
 function decryptKeystore(keystore, password) {
