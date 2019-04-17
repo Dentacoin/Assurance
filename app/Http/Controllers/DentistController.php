@@ -94,9 +94,6 @@ class DentistController extends Controller
         $data = $request->input();
         $files = $request->file();
 
-        var_dump($files);
-        die();
-
         //check email validation
         if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL))   {
             return redirect()->route('home')->with(['error' => 'Your form was not sent. Please try again with valid email.']);
