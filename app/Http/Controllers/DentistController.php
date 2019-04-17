@@ -120,9 +120,9 @@ class DentistController extends Controller
                     }
                 }
             }
-        } /*else {
+        } else {
             return redirect()->route('home')->with(['error' => 'Please select avatar and try again.']);
-        }*/
+        }
 
         //handle the API response
         $api_response = (new APIRequestsController())->dentistRegister($data, $files);

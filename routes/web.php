@@ -43,8 +43,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/get-calculator-result', 'HomeController@getCalculatorResult')->name('get-calculator-result');
 
-    Route::post('/get-login-signin', 'UserController@getLoginSigninHtml')->name('get-login-signin');
-
     Route::post('/get-all-clinics', 'Controller@getAllClinicsResponse')->name('get-all-clinics');
 
     Route::post('/check-email', 'UserController@checkEmail')->name('check-email');

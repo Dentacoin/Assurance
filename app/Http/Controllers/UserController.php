@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
-use Validator;
 
 class UserController extends Controller {
     public static function instance() {
@@ -152,24 +151,6 @@ class UserController extends Controller {
         }
 
         return view('pages/logged-user/my-profile', $view_params);
-    }
-
-    protected function getLoginSigninHtml(Request $request) {
-        //passing the countries
-        $countries = (new APIRequestsController())->getAllCountries();
-        $clinics = (new APIRequestsController())->getAllClinicsByName();
-        $params = ['countries' => $countries, 'current_user_country_code' => mb_strtolower(trim(file_get_contents("http://ipinfo.io/" . $_SERVER['REMOTE_ADDR'] .  "/country")))];
-        if(!empty($request->input('route')) && !empty($request->input('slug'))) {
-            $params['route'] = $request->input('route');
-            $params['slug'] = $request->input('slug');
-        }
-
-        if(!empty($request->input('side'))) {
-            $params['side'] = $request->input('side');
-        }
-        $view = view('partials/login-signin', $params);
-        $view = $view->render();
-        return response()->json(['success' => $view]);
     }
 
     function checkEmail(Request $request) {

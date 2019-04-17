@@ -2347,10 +2347,10 @@ function bindLoginSigninPopupShow() {
                     $('.login-signin-popup .dentist .form-register .step.third').find('.error-handle').remove();
                     var errors = false;
                     //checking if empty avatar
-                    /*if($('.dentist .form-register .step.third #custom-upload-avatar').val().trim() == '') {
+                    if($('.dentist .form-register .step.third #custom-upload-avatar').val().trim() == '') {
                         customErrorHandle($('.step.third .step-errors-holder'), 'Please select avatar.');
                         errors = true;
-                    }*/
+                    }
 
                     //checking if no specialization checkbox selected
                     if($('.login-signin-popup .dentist .form-register .step.third [name="specializations[]"]:checked').val() == undefined) {
@@ -2494,7 +2494,7 @@ function apiEventsListeners() {
     });
 
     $(document).on('errorResponseCoreDBApi', function (event) {
-        console.log(event, 'errorResponseCoreDBApi');
+        basic.showAlert('Something went wrong with Civic. Please try again later or contact Dentacoin admin.', '', true);
     });
 }
 apiEventsListeners();

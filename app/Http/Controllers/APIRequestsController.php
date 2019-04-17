@@ -21,9 +21,9 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl), true);
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if(!empty($resp)) {
             return $resp;
-        }else {
+        } else {
             return false;
         }
     }
@@ -37,7 +37,7 @@ class APIRequestsController extends Controller {
             'password-repeat' => $data['repeat-password'],
             'country_code' => $data['country-code'],
             'address' => $data['address'],
-            /*'avatar' => curl_file_create($files['image']->getPathName(), 'image/'.pathinfo($files['image']->getClientOriginalName(), PATHINFO_EXTENSION), $files['image']->getClientOriginalName()),*/
+            'avatar' => curl_file_create($files['image']->getPathName(), 'image/'.pathinfo($files['image']->getClientOriginalName(), PATHINFO_EXTENSION), $files['image']->getClientOriginalName()),
             'phone' => $data['phone'],
             'website' => $data['website'],
             'specialisations' => json_encode($data['specializations'])
@@ -381,8 +381,6 @@ class APIRequestsController extends Controller {
 
         $json = '{"address":"'.$address.'", "dentist_addr":"'.$dentist_addr.'", "value_usd":"'.$usd_amount.'", "monthly_premium_in_dcn":"'.$dcn_amount.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$hash.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'"}';
 
-        var_dump($json);
-
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
@@ -404,9 +402,6 @@ class APIRequestsController extends Controller {
     //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
     public function encryptFile($key, $html) {
         $curl = curl_init();
-        /*$json = '{"public_key":"'.$key.'", "html":"'.$html.'"}';
-        var_dump($json);
-        var_dump(json_decode($json));*/
 
         $array = array(
             'public_key' => $key,

@@ -355,6 +355,37 @@
   .social-login-btn.facebook-custom-btn {
     background-image: url(/assets/uploads/facebook.svg); }
 
+.custom-input {
+  width: 100%;
+  padding: 12px 15px;
+  background-color: white;
+  font-size: 16px;
+  font-family: 'Calibri-Regular';
+  border: 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 2px 10px 0 rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 2px 10px 0 rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: 0px 2px 10px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 10px 0 rgba(0, 0, 0, 0.2);
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s; }
+  .custom-input.green-arrow-background {
+    background-image: url(/assets/images/green-arrow-rounded.png);
+    background-repeat: no-repeat;
+    background-size: 22px;
+    background-position: center right 10px; }
+  .custom-input:focus {
+    -webkit-box-shadow: 0px 2px 10px 0 #679dca;
+    -moz-box-shadow: 0px 2px 10px 0 #679dca;
+    -ms-box-shadow: 0px 2px 10px 0 #679dca;
+    box-shadow: 0px 2px 10px 0 #679dca; }
+
 .module.dentist-or-patient-section .inline-block-top picture img {
   width: 100%; }
 .module.dentist-or-patient-section .inline-block-top:hover .hidden-container {
