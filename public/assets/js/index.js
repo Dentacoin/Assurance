@@ -2103,11 +2103,13 @@ function decodeEntities(string) {
     return inner_html;
 }
 
+var hidden_popup_content = $('.hidden-login-form').html();
 //call the popup for login/sign for patient and dentist
 function bindLoginSigninPopupShow() {
     $(document).on('click', '.show-login-signin', function() {
         basic.closeDialog();
-        basic.showDialog($('.hidden-login-form').html(), 'login-signin-popup', null, true);
+        $('.hidden-login-form').html('');
+        basic.showDialog(hidden_popup_content, 'login-signin-popup', null, true);
 
         fixButtonsFocus();
 
@@ -2453,6 +2455,9 @@ function hidePopupOnBackdropClick() {
         classname = classname.replace(/ /g, '.');
 
         if(classname && !$('.' + classname).parents('.modal-dialog').length) {
+            if($('.bootbox.login-signin-popup').length) {
+                $('.hidden-login-form').html(hidden_popup_content);
+            }
             bootbox.hideAll();
         }
     });
