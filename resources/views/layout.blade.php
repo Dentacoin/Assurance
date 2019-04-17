@@ -488,9 +488,6 @@
     </script>
 @endif
 
-{{var_dump(session('success'))}}
-@php(die())
-
 {{--Success from controller response--}}
 @if(session('success'))
     @if(session('popup-html'))
