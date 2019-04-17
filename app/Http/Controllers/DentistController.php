@@ -94,6 +94,9 @@ class DentistController extends Controller
         $data = $request->input();
         $files = $request->file();
 
+        var_dump($files);
+        die();
+
         //check email validation
         if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL))   {
             return redirect()->route('home')->with(['error' => 'Your form was not sent. Please try again with valid email.']);
@@ -154,7 +157,7 @@ class DentistController extends Controller
         $api_response = (new APIRequestsController())->dentistLogin($data);
 
         if($api_response['success']) {
-            $approved_statuses = array('approved', 'pending');
+            $approved_statuses = array('approved', 'pending', 'test');
             if($api_response['data']['self_deleted'] != NULL) {
                 return redirect()->route('home')->with(['error' => 'This account is deleted, you cannot log in with this account anymore.']);
             } else if(!in_array($api_response['data']['status'], $approved_statuses)) {

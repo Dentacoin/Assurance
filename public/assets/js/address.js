@@ -58,7 +58,6 @@ $(document).ready(function($){
                 var suggester_container = $(this).closest('.address-suggester-wrapper');
                 suggester_container.find('.country-select').change( function() {
                     var cc = $(this).find('option:selected').val();
-                    console.log(cc, 'cc on change');
                     GMautocomplete.setComponentRestrictions({
                         'country': cc
                     });
@@ -69,13 +68,11 @@ $(document).ready(function($){
                         lat: parseFloat(suggester_container.find('.suggester-map-div').attr('lat')),
                         lng: parseFloat(suggester_container.find('.suggester-map-div').attr('lon'))
                     };
-                    console.log(coords, 'coords');
                     setupMap(suggester_container, coords);
                 }
 
                 var input = $(this)[0];
                 var cc = suggester_container.find('.country-select option:selected').val();
-                console.log(cc, 'cc on init');
                 var options = {
                     componentRestrictions: {
                         country: cc
