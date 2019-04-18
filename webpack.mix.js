@@ -32,7 +32,7 @@ mix.styles([
     'public/assets/css/style.css',
 ], 'public/dist/css/front-style.css');
 
-/*mix.scripts([
+mix.scripts([
     'node_modules/jquery/dist/jquery.min.js',
     'public/assets/libs/bootstrap/dist/js/bootstrap.min.js',
     'public/assets/libs/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js',
@@ -47,7 +47,7 @@ mix.styles([
     'public/assets/libs/FlipClock-master/compiled/flipclock.min.js',
     'node_modules/datatables.net/js/jquery.dataTables.min.js',
     'public/assets/libs/truffle-contract/truffle-contract-compiled.js',
-], 'public/dist/js/front-libs-script.js');*/
+], 'public/dist/js/front-libs-script.js');
 
 mix.babel([
     'public/assets/js/basic.js',
