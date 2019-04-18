@@ -76423,8 +76423,8 @@ async function onDocumentReadyPageData() {
         }
     } else {
         //adding civic and facebook logging scripts
-        await $.getScript('//dentacoin.com/assets/libs/civic-login/civic.js', function() {});
-        await $.getScript('//dentacoin.com/assets/libs/facebook-login/facebook.js', function() {});
+        //await $.getScript('//dentacoin.com/assets/libs/civic-login/civic.js', function() {});
+        //await $.getScript('//dentacoin.com/assets/libs/facebook-login/facebook.js', function() {});
     }
 }
 
