@@ -31,7 +31,7 @@
         var HOME_URL = '{{ route("home") }}';
     </script>
 </head>
-<body class="@if(!empty(Route::current())) {{Route::current()->getName()}} @else class-404 @endif @if(\App\Http\Controllers\UserController::instance()->checkSession()) logged-in @endif" @if(isset($gas_estimation)) data-current-gas-estimation="{{$gas_estimation}}" @endif>
+<body class="@if(!empty(Route::current())) {{Route::current()->getName()}} @else class-404 @endif @if(\App\Http\Controllers\UserController::instance()->checkSession()) logged-in @endif" @if(isset($gas_estimation) && (Route::current()->getName() == 'dentist-contract-view' || Route::current()->getName() == 'patient-contract-view')) data-current-gas-estimation="{{$gas_estimation}}" @endif>
 @if(isset($mobile) && $mobile)
     <nav class="sidenav">
         <div class="wrapper">

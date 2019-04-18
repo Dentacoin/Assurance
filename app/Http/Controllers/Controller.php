@@ -36,8 +36,6 @@ class Controller extends BaseController
             View::share('sections', $this->getDbSections());
             View::share('gas_estimation', $this->getGasEstimationFromEthgasstation());
             View::share('client_ip', $this->getClientIp());
-            /*View::share('countries', $this->getApiCountries());*/
-            /*View::share('current_user_country_code', $this->getCurrentCountryCode());*/
         }
     }
 
@@ -214,50 +212,6 @@ class Controller extends BaseController
             $ipaddress = 'UNKNOWN';
         return $ipaddress;
     }
-
-    /*protected function getApiCountries() {
-        if((new UserController())->checkSession()) {
-            return (new APIRequestsController())->getAllCountries();
-        } else {
-            return false;
-        }
-    }*/
-
-    /*protected function getCurrentCountryCode() {
-        if((new UserController())->checkSession()) {
-            return mb_strtolower(trim(file_get_contents('http://ipinfo.io/' . $_SERVER['REMOTE_ADDR'] .  '/country')));
-        } else {
-            return false;
-        }
-    }*/
-
-    /*public function fillCountriesFromCsv() {
-        $row = 1;
-        if (($handle = fopen(ROOT . 'public' . DS . 'assets' . DS . 'countries-test.csv', 'r')) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, "\n")) !== FALSE) {
-                $num = count($data);
-                $row++;
-                for ($c=0; $c < $num; $c+=1) {
-                    $row_data = explode('|',$data[$c]);
-                    $parameter = new CalculatorParameter();
-                    $parameter->country = $row_data[3];
-                    $parameter->code = $row_data[1];
-                    $parameter->slug = $row_data[2];
-                    $parameter->phone_code = $row_data[4];
-                    $parameter->param_gd_cd_id = $row_data[5];
-                    $parameter->param_gd_cd = $row_data[6];
-                    $parameter->param_gd_id = $row_data[7];
-                    $parameter->param_cd_id = $row_data[8];
-                    $parameter->param_gd = $row_data[9];
-                    $parameter->param_cd = $row_data[10];
-                    $parameter->param_id = $row_data[11];
-                    $parameter->save();
-                }
-            }
-            var_dump('done');
-            fclose($handle);
-        }
-    }*/
 
     protected function encrypt($raw_text, $algorithm, $key) {
         $length = openssl_cipher_iv_length($algorithm);
