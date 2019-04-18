@@ -1,3 +1,11 @@
+@if(session('success'))
+    {{var_dump(session('success'))}}
+    @if(session('popup-html'))
+        {{var_dump(session('popup-html'))}}
+    @endif
+    @php(die('asd'))
+@endif
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
