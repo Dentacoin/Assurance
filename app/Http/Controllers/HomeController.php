@@ -35,8 +35,7 @@ class HomeController extends Controller
         } else if((new UserController())->checkPatientSession()) {
             return redirect()->route('patient-access');
         } else {
-            die('test');
-            return view('pages/homepage', ['testimonials' => (new APIRequestsController())->getTestimonials()]);
+            return view('pages/homepage');
         }
     }
 
