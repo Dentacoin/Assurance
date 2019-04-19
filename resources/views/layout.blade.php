@@ -346,7 +346,7 @@
                             <div class="padding-bottom-10">
                                 <select name="country-code" id="dentist-country" class="custom-input country-select">
                                     @php($current_phone_code = '+')
-                                    @if(isset($client_ip))
+                                    @if(isset($client_ip) && $client_ip != '127.0.0.1')
                                         @php($current_user_country_code = mb_strtolower(trim(file_get_contents('http://ipinfo.io/' . $client_ip . '/country'))))
                                     @endif
                                     @php($countries = (new \App\Http\Controllers\APIRequestsController())->getAllCountries())
