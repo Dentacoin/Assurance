@@ -16,9 +16,9 @@ class AdditionalMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next) {
-        /*if(!isset($_COOKIE['testing-dev'])) {
+        if(!isset($_COOKIE['testing-dev'])) {
             return response(view('pages/maintenance'));
-        }*/
+        }
         $params = $request->route()->parameters();
         return (new App\Http\Controllers\Controller())->minifyHtml($next($request));
     }

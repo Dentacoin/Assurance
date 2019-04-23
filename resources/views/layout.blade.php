@@ -319,7 +319,7 @@
                                 <input class="custom-input repeat-password" name="repeat-password" minlength="6" maxlength="50" type="password" placeholder="Repeat password"/>
                             </div>
                         </div>
-                        <div class="step second address-suggester-wrapper" data-step="second">
+                        <div class="step second address-HandleUserSession" data-step="second">
                             <div class="padding-bottom-20 fs-16 radio-buttons-holder">
                                 <div class="pretty p-icon p-round">
                                     <input type="radio" name="work-type" value="independent-dental-practitioner"/>
@@ -457,7 +457,6 @@
 <script src="/assets/js/address.js{{--?v=1.0.18--}}"></script>
 <script src="/assets/js/index-bundled.js{{--?v=1.0.18--}}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
-@yield('script_block')
 
 {{--Multiple errors from laravel validation--}}
 @if(!empty($errors) && count($errors) > 0)
