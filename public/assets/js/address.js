@@ -79,6 +79,7 @@ $(document).ready(function($){
 
                 var input = $(this)[0];
                 var cc = suggester_container.find('.country-select option:selected').val();
+                console.log(cc, 'cc');
                 var options = {
                     componentRestrictions: {
                         country: cc
