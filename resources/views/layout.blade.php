@@ -383,7 +383,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="step third" data-step="third">
+                        <div class="step third address-suggester-wrapper" data-step="third">
                             <div class="padding-bottom-20 field-parent">
                                 <div class="custom-google-select-style module">
                                     <label>Select country:</label>
@@ -411,7 +411,7 @@
                             <div class="padding-bottom-15 suggester-parent module field-parent">
                                 <div class="custom-google-label-style module" data-input-blue-green-border="true">
                                     <label for="dentist-register-address">Address: Start typing street, No, city</label>
-                                    <input type="text" name="address" class="full-rounded form-field required address-suggester" autocomplete="off" id="dentist-register-address">
+                                    <input type="text" name="address" class="full-rounded form-field required address-suggester dont-init" autocomplete="off" id="dentist-register-address">
                                 </div>
                                 <div class="suggester-map-div margin-top-15 margin-bottom-10"></div>
                                 <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>

@@ -14,7 +14,6 @@ var prepareMapFunction = function(callback) {
 
 $(document).ready(function($){
     setupMap = function(suggester_container, coords) {
-        console.log('init setupMap');
         suggester_container.find('.suggester-map-div').show();
         if( !suggester_container.find('.suggester-map-div').attr('inited') ) {
             var profile_address_map = new google.maps.Map( suggester_container.find('.suggester-map-div')[0], {
@@ -35,11 +34,8 @@ $(document).ready(function($){
                 geocoder.geocode({'location': this.getPosition()}, (function(results, status) {
                     if (status == 'OK') {
                         var gstring = results[0].formatted_address;
-                        console.log(gstring, 'gstring');
                         var country_name = this.find('.country-select option:selected').text();
-                        console.log(country_name, 'country_name');
                         gstring = gstring.replace(', '+country_name, '');
-                        console.log(gstring, 'gstring');
 
                         this.find('.address-suggester').val(gstring).blur();
                     } else {
@@ -57,13 +53,16 @@ $(document).ready(function($){
     };
 
     initAddressSuggesters = function() {
-        console.log('initAddressSuggesters');
         prepareMapFunction(function() {
             $('.address-suggester').each( function() {
+                //dont init map which are not supposed to be inited at this time
+                if($(this).hasClass('dont-init')) {
+                    return false;
+                }
+
                 var suggester_container = $(this).closest('.address-suggester-wrapper');
                 suggester_container.find('.country-select').change( function() {
                     var cc = $(this).find('option:selected').val();
-                    console.log(cc, 'cc');
                     GMautocomplete.setComponentRestrictions({
                         'country': cc
                     });
@@ -79,7 +78,6 @@ $(document).ready(function($){
 
                 var input = $(this)[0];
                 var cc = suggester_container.find('.country-select option:selected').val();
-                console.log(cc, 'cc');
                 var options = {
                     componentRestrictions: {
                         country: cc
@@ -133,13 +131,9 @@ $(document).ready(function($){
         if( place && place.geometry ) {
             //address_components
             var gstring = suggester_container.find('.address-suggester').val();
-            console.log(gstring, 'gstring')
             var country_name = suggester_container.find('.country-select option:selected').text();
-            console.log(country_name, 'country_name')
             gstring = gstring.replace(', '+country_name, '');
-            console.log(gstring, 'gstring')
             suggester_container.find('.address-suggester').val(gstring);
-            console.log(suggester_container, 'suggester_container')
 
             var coords = {
                 lat: place.geometry.location.lat(),
@@ -153,4 +147,8 @@ $(document).ready(function($){
             suggester_container.find('.geoip-hint').show();
         }
     };
+
+    if($('.address-suggester').length) {
+        initAddressSuggesters();
+    }
 });
