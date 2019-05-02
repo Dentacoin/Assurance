@@ -143,4 +143,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::post('/dentist-login', 'DentistController@login')->name('dentist-login');
 
     Route::get('/ipfs-hashes', 'Controller@getIpfsHashes')->name('ipfs-hashes');
+
+    Route::post('/enrich-profile', 'DentistController@enrichProfile')->name('enrich-profile');
+
+    Route::post('/invite-your-clinic', 'DentistController@inviteYourClinic')->name('invite-your-clinic');
 });

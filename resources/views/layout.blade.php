@@ -286,11 +286,17 @@
                 <div class="form-login">
                     <h2>LOG IN</h2>
                     <form method="POST" action="{{ route('dentist-login') }}" id="dentist-login">
-                        <div class="padding-bottom-10">
-                            <input class="custom-input" name="email" maxlength="100" type="email" placeholder="Email address"/>
+                        <div class="padding-bottom-10 field-parent">
+                            <div class="custom-google-label-style module" data-input-blue-green-border="true">
+                                <label for="dentist-login-email">Email address:</label>
+                                <input class="full-rounded form-field" name="email" maxlength="100" type="email" id="dentist-login-email" placeholder=""/>
+                            </div>
                         </div>
-                        <div class="padding-bottom-20">
-                            <input class="custom-input" name="password" maxlength="50" type="password" placeholder="Password"/>
+                        <div class="padding-bottom-20 field-parent">
+                            <div class="custom-google-label-style module" data-input-blue-green-border="true">
+                                <label for="dentist-login-password">Password:</label>
+                                <input class="full-rounded form-field" name="password" maxlength="50" id="dentist-login-password" type="password"/>
+                            </div>
                         </div>
                         <div class="btn-container text-center">
                             <input type="submit" value="Log in" class="white-blue-green-btn"/>
@@ -303,84 +309,132 @@
                     </div>
                 </div>
                 <div class="form-register">
-                    <h2>SIGN UP</h2>
+                    <h2>Sign Up Now - Quick & Easy!</h2>
                     <form method="POST" enctype="multipart/form-data" id="dentist-register" action="{{ route('dentist-register') }}">
                         <div class="step first visible" data-step="first">
-                            <div class="padding-bottom-10">
-                                <input class="custom-input" name="dentist-or-practice-name" type="text" maxlength="100" placeholder="Dentist or Practice Name"/>
+                            <div class="padding-bottom-10 field-parent">
+                                <div class="custom-google-label-style module" data-input-blue-green-border="true">
+                                    <label for="dentist-register-email">Work Email Address:</label>
+                                    <input class="full-rounded form-field" name="email" maxlength="100" type="email" id="dentist-register-email"/>
+                                </div>
                             </div>
-                            <div class="padding-bottom-10">
-                                <input class="custom-input" name="email" type="email" maxlength="100" placeholder="Email address"/>
+                            <div class="padding-bottom-10 field-parent">
+                                <div class="custom-google-label-style module" data-input-blue-green-border="true">
+                                    <label for="dentist-register-password">Password:</label>
+                                    <input class="full-rounded form-field password" name="password" minlength="6" maxlength="50" type="password" id="dentist-register-password"/>
+                                </div>
                             </div>
-                            <div class="padding-bottom-10">
-                                <input class="custom-input password" name="password" minlength="6" maxlength="50" type="password" placeholder="Password"/>
-                            </div>
-                            <div class="padding-bottom-20">
-                                <input class="custom-input repeat-password" name="repeat-password" minlength="6" maxlength="50" type="password" placeholder="Repeat password"/>
+                            <div class="padding-bottom-20 field-parent">
+                                <div class="custom-google-label-style module" data-input-blue-green-border="true">
+                                    <label for="dentist-register-repeat-password">Repeat password:</label>
+                                    <input class="full-rounded form-field repeat-password" name="repeat-password" minlength="6" maxlength="50" type="password" id="dentist-register-repeat-password"/>
+                                </div>
                             </div>
                         </div>
-                        <div class="step second address-HandleUserSession" data-step="second">
-                            <div class="padding-bottom-20 fs-16 radio-buttons-holder">
-                                <div class="pretty p-icon p-round">
-                                    <input type="radio" name="work-type" value="independent-dental-practitioner"/>
-                                    <div class="state p-primary">
-                                        <i class="fa fa-check icon" aria-hidden="true"></i>
-                                        <label>I work as an independent dental practitioner</label>
-                                    </div>
+                        <div class="step second" data-step="second">
+                            <div class="padding-bottom-20 user-type-container fs-0">
+                                <input type="hidden" name="user-type" value="dentist"/>
+                                <div class="inline-block-top user-type active padding-right-15" data-type="dentist">
+                                    <a href="javascript:void(0)" class="custom-button">
+                                        <span class="custom-radio inline-block"><span class="circle"></span></span> <span class="inline-block">Dentist</span>
+                                    </a>
+                                    <div class="fs-14 light-gray-color">For associate dentists OR independent practitioners</div>
                                 </div>
-                                <div class="pretty p-icon p-round">
-                                    <input type="radio" name="work-type" value="represent-dental-practice"/>
-                                    <div class="state p-primary">
-                                        <i class="fa fa-check icon" aria-hidden="true"></i>
-                                        <label>I represent a dental practice/clinic with more than one dentist</label>
-                                    </div>
-                                </div>
-                                <div class="pretty p-icon p-round">
-                                    <input type="radio" name="work-type" value="an-associate-dentist"/>
-                                    <div class="state p-primary">
-                                        <i class="fa fa-check icon" aria-hidden="true"></i>
-                                        <label>I work as an associate dentist at a dental clinic</label>
-                                    </div>
+                                <div class="inline-block-top user-type padding-left-15" data-type="clinic">
+                                    <a href="javascript:void(0)" class="custom-button">
+                                        <span class="custom-radio inline-block"><span class="circle"></span></span> <span class="inline-block">Clinic</span>
+                                    </a>
+                                    <div class="fs-14 light-gray-color">For clinics with more than one dental practitioners</div>
                                 </div>
                             </div>
-                            <div class="padding-bottom-10">
-                                <select name="country-code" id="dentist-country" class="custom-input country-select">
-                                    @php($current_phone_code = '+')
-                                    @if(isset($client_ip) && $client_ip != '127.0.0.1')
-                                        @php($current_user_country_code = mb_strtolower(trim(file_get_contents('http://ipinfo.io/' . $client_ip . '/country'))))
-                                    @endif
-                                    @php($countries = (new \App\Http\Controllers\APIRequestsController())->getAllCountries())
-                                    @if(!empty($countries))
-                                        @foreach($countries as $country)
-                                            @php($selected = '')
-                                            @if(!empty($current_user_country_code))
-                                                @if($current_user_country_code == $country->code)
-                                                    @php($current_phone_code = $current_phone_code.$country->phone_code)
-                                                    @php($selected = 'selected')
-                                                @endif
-                                            @endif
-                                            <option value="{{$country->code}}" data-code="{{$country->phone_code}}" {{$selected}}>{{$country->name}}</option>
+                            <div class="padding-bottom-25 field-parent">
+                                <div class="custom-google-select-style module">
+                                    <label>Title:</label>
+                                    <select class="form-field required" name="dentist-title">
+                                        @foreach((new \App\Http\Controllers\APIRequestsController())->getAllEnums()->titles as $key => $title)
+                                            <option value="{{$key}}">{{$title}}</option>
                                         @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="padding-bottom-10 suggester-parent module">
-                                <input type="text" name="address" class="custom-input address-suggester" autocomplete="off" placeholder="Street, Number, City">
-                                <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
-                                <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
-                                <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
-                            </div>
-                            <div class="padding-bottom-10 phone">
-                                <div class="country-code" name="phone-code">{{$current_phone_code}}</div>
-                                <div class="input-phone">
-                                    <input class="custom-input" name="phone" maxlength="50" type="number" placeholder="Phone number"/>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="padding-bottom-20">
-                                <input class="custom-input" name="website" maxlength="250" type="url" placeholder="Website"/>
+                            <div class="padding-bottom-15 field-parent">
+                                <div class="custom-google-label-style module" data-input-blue-green-border="true">
+                                    <label for="dentist-register-latin-name">Your Name (Latin letters):</label>
+                                    <input class="full-rounded form-field required" name="latin-name" maxlength="100" type="text" id="dentist-register-latin-name"/>
+                                </div>
+                                <div class="fs-14 light-gray-color">Ex: Vladimir Alexandrovich (First name, Last name)</div>
+                            </div>
+                            <div class="padding-bottom-30 field-parent">
+                                <div class="custom-google-label-style module" data-input-blue-green-border="true">
+                                    <label for="dentist-register-alternative-name">Alternative Spelling (optional):</label>
+                                    <input class="full-rounded form-field" name="alternative-name" maxlength="100" type="text" id="dentist-register-alternative-name"/>
+                                </div>
+                                <div class="fs-14 light-gray-color">Ex: Владимир Александрович</div>
+                            </div>
+                            <div class="privacy-policy-row padding-bottom-20">
+                                <div class="pretty p-svg p-curve on-white-background">
+                                    <input type="checkbox" id="privacy-policy-registration"/>
+                                    <div class="state p-success">
+                                        <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                            <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                        </svg>
+                                        <label class="fs-14">I've read and agree to the <a href="//dentacoin.com/privacy-policy" target="_blank">Privacy Policy</a></label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="step third" data-step="third">
+                            <div class="padding-bottom-20 field-parent">
+                                <div class="custom-google-select-style module">
+                                    <label>Select country:</label>
+                                    <select name="country-code" id="dentist-country" class="form-field required country-select">
+                                        @php($current_phone_code = '+')
+                                        @if(isset($client_ip) && $client_ip != '127.0.0.1')
+                                            @php($current_user_country_code = mb_strtolower(trim(file_get_contents('http://ipinfo.io/' . $client_ip . '/country'))))
+                                        @endif
+                                        @php($countries = (new \App\Http\Controllers\APIRequestsController())->getAllCountries())
+                                        @if(!empty($countries))
+                                            @foreach($countries as $country)
+                                                @php($selected = '')
+                                                @if(!empty($current_user_country_code))
+                                                    @if($current_user_country_code == $country->code)
+                                                        @php($current_phone_code = $current_phone_code.$country->phone_code)
+                                                        @php($selected = 'selected')
+                                                    @endif
+                                                @endif
+                                                <option value="{{$country->code}}" data-code="{{$country->phone_code}}" {{$selected}}>{{$country->name}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="padding-bottom-15 suggester-parent module field-parent">
+                                <div class="custom-google-label-style module" data-input-blue-green-border="true">
+                                    <label for="dentist-register-address">Address: Start typing street, No, city</label>
+                                    <input type="text" name="address" class="full-rounded form-field required address-suggester" autocomplete="off" id="dentist-register-address">
+                                </div>
+                                <div class="suggester-map-div margin-top-15 margin-bottom-10"></div>
+                                <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
+                                <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
+                            </div>
+                            <div class="padding-bottom-15 field-parent">
+                                <div class="custom-google-label-style module" data-input-blue-green-border="true">
+                                    <label for="dentist-register-website">Website: http(s)://:</label>
+                                    <input class="full-rounded form-field required" name="website" id="dentist-register-website" maxlength="250" type="url"/>
+                                </div>
+                                <div class="fs-14 light-gray-color">No website? Add your most popular social page.</div>
+                            </div>
+                            <div class="padding-bottom-10 field-parent">
+                                <div class="phone">
+                                    <div class="country-code" name="phone-code">{{$current_phone_code}}</div>
+                                    <div class="custom-google-label-style module input-phone" data-input-blue-green-border="true">
+                                        <label for="dentist-register-phone">Phone number:</label>
+                                        <input class="full-rounded form-field required" name="phone" maxlength="50" type="number" id="dentist-register-phone"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step fourth" data-step="fourth">
                             <div class="padding-bottom-20 fs-0">
                                 <div class="inline-block-top avatar module upload-file">
                                     <input type="file" class="visualise-image inputfile" id="custom-upload-avatar" name="image" accept=".jpg,.png,.jpeg,.svg,.bmp"/>
@@ -402,8 +456,7 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <div class="search-for-clinic padding-top-15 padding-bottom-15"></div>
-                                <div class="fs-0 captcha-parent padding-bottom-15">
+                                <div class="fs-0 captcha-parent padding-bottom-15 padding-top-20">
                                     <div class="inline-block width-50 width-xs-100 padding-bottom-xs-15">
                                         <div class="captcha-container flex text-center">
                                             <span>{!! captcha_img() !!}</span>
@@ -413,18 +466,9 @@
                                         </div>
                                     </div>
                                     <div class="inline-block fs-14 width-50 width-xs-100 padding-left-10">
-                                        <input type="text" name="captcha" id="register-captcha" placeholder="Enter captcha" maxlength="5" class="custom-input"/>
-                                    </div>
-                                </div>
-                                <div class="privacy-policy-row">
-                                    <div class="pretty p-svg p-curve on-white-background">
-                                        <input type="checkbox" id="privacy-policy-registration"/>
-                                        <div class="state p-success">
-                                            <!-- svg path -->
-                                            <svg class="svg svg-icon" viewBox="0 0 20 20">
-                                                <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
-                                            </svg>
-                                            <label class="fs-14">I agree with <a href="//dentacoin.com/privacy-policy" target="_blank">Privacy Policy</a></label>
+                                        <div class="custom-google-label-style module" data-input-blue-green-border="true">
+                                            <label for="register-captcha">Enter captcha:</label>
+                                            <input type="text" name="captcha" id="register-captcha" maxlength="5" class="full-rounded form-field"/>
                                         </div>
                                     </div>
                                 </div>
@@ -492,9 +536,32 @@
     @if(session('popup-html'))
         <script>
             basic.showDialog('{!! session('popup-html') !!}', 'popup-html', null, true);
-            $('.close-popup').click(function() {
-                basic.closeDialog();
-            });
+            if($('.popup-html #enrich-profile').length) {
+                $('.popup-html #enrich-profile').on('submit', function(event) {
+                    var form_native = this;
+                    $(form_native).find('.error-handle').remove();
+                    event.preventDefault();
+
+                    if($(form_native).find('textarea').val().trim() == '') {
+                        $(form_native).find('textarea').closest('.form-row').append('<span class="error-handle">Please enter your description.</span>');
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/enrich-profile',
+                            dataType: 'json',
+                            data: {
+                                description: $(form_native).find('textarea').val().trim()
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                            },
+                            success: function (response) {
+                                console.log(response, 'response');
+                            }
+                        });
+                    }
+                });
+            }
         </script>
     @else
         <script>

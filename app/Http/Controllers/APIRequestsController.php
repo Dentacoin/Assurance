@@ -31,31 +31,29 @@ class APIRequestsController extends Controller {
     public function dentistRegister($data, $files) {
         $post_fields_arr = array(
             'platform' => 'assurance',
-            'name' => $data['dentist-or-practice-name'],
-            'email' => $data['email'],
-            'password' => $data['password'],
-            'password-repeat' => $data['repeat-password'],
-            'country_code' => $data['country-code'],
-            'address' => $data['address'],
+            'title' => trim($data['dentist-title']),
+            'name' => trim($data['latin-name']),
+            'email' => trim($data['email']),
+            'password' => trim($data['password']),
+            'password-repeat' => trim($data['repeat-password']),
+            'country_code' => trim($data['country-code']),
+            'address' => trim($data['address']),
             'avatar' => curl_file_create($files['image']->getPathName(), 'image/'.pathinfo($files['image']->getClientOriginalName(), PATHINFO_EXTENSION), $files['image']->getClientOriginalName()),
-            'phone' => $data['phone'],
-            'website' => $data['website'],
+            'phone' => trim($data['phone']),
+            'website' => trim($data['website']),
             'specialisations' => json_encode($data['specializations'])
         );
 
-        switch($data['work-type']) {
-            case 'independent-dental-practitioner':
-                $post_fields_arr['type'] = 'dentist';
-                break;
-            case 'represent-dental-practice':
-                $post_fields_arr['type'] = 'clinic';
-                break;
-            case 'an-associate-dentist':
-                $post_fields_arr['type'] = 'dentist';
+        if(!empty($data['alternative-name'])) {
+            $post_fields_arr['name_alternative'] = trim($data['alternative-name']);
+        }
 
-                if(!empty($data['clinic-id'])) {
-                    $post_fields_arr['clinic_id'] = $data['clinic-id'];
-                }
+        switch($data['user-type']) {
+            case 'dentist':
+                $post_fields_arr['type'] = 'dentist';
+                break;
+            case 'clinic':
+                $post_fields_arr['type'] = 'clinic';
                 break;
         }
 

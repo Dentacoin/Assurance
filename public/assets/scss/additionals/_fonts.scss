@@ -71,18 +71,6 @@
 }
 
 @font-face {
-    font-family: "Lato-Regular";
-    src: url("/assets/fonts/Lato-Regular.eot");
-    src: url("/assets/fonts/Lato-Regular.eot?#iefix") format("embedded-opentype"),
-    url("/assets/fonts/Lato-Regular.woff2") format("woff2"),
-    url("/assets/fonts/Lato-Regular.woff") format("woff"),
-    url("/assets/fonts/Lato-Regular.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
-}
-
-@font-face {
     font-family: "Lato-Black";
     src: url("/assets/fonts/Lato-Black.eot");
     src: url("/assets/fonts/Lato-Black.eot?#iefix") format("embedded-opentype"),
@@ -101,6 +89,18 @@
     url("/assets/fonts/Lato-Semibold.woff2") format("woff2"),
     url("/assets/fonts/Lato-Semibold.woff") format("woff"),
     url("/assets/fonts/Lato-Semibold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
+    font-family: "Lato-Regular";
+    src: url("/assets/fonts/Lato-Regular.eot");
+    src: url("/assets/fonts/Lato-Regular.eot?#iefix") format("embedded-opentype"),
+    url("/assets/fonts/Lato-Regular.woff2") format("woff2"),
+    url("/assets/fonts/Lato-Regular.woff") format("woff"),
+    url("/assets/fonts/Lato-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -134,20 +134,20 @@
     font-family: "Lato-Semibold";
 }
 
-.lato-black {
-    font-family: "Lato-Black";
+.lato-light {
+    font-family: "Lato-Light";
 }
 
 .lato-regular {
     font-family: "Lato-Regular";
 }
 
-.lato-bold {
-    font-family: "Lato-Bold";
+.lato-black {
+    font-family: "Lato-Black";
 }
 
-.lato-light {
-    font-family: "Lato-Light";
+.lato-bold {
+    font-family: "Lato-Bold";
 }
 
 .calibri-bold {

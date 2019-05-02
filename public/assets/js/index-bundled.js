@@ -73982,7 +73982,6 @@ async function pagesDataOnContractInit() {
                                                 transaction_key = JSON.parse(localStorage.getItem('current-account')).key;
                                             } else if(JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                                 $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module  max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
-                                                bindGoogleAlikeButtonsEvents();
                                             }
                                         }
 
@@ -74505,7 +74504,6 @@ if($('body').hasClass('logged-in')) {
                         $('.enter-private-key').unbind().click(function() {
                             $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 padding-left-30 padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
                             $('.proof-of-address #upload-keystore-file').val('');
-                            bindGoogleAlikeButtonsEvents();
                             bindCacheKeyEvent();
                         });
 
@@ -75147,7 +75145,6 @@ if($('body').hasClass('logged-in')) {
                             success: function (response) {
                                 basic.closeDialog();
                                 basic.showDialog(response.success, 'keystore-file-password-validation', null, true);
-                                bindGoogleAlikeButtonsEvents();
                                 fixButtonsFocus();
                                 $('.keystore-file-password-validation .keystore-password').focus();
 
@@ -75269,8 +75266,6 @@ if($('body').hasClass('logged-in')) {
                 window.open('https://indacoin.com/gw/payment_form?partner=dentacoin&cur_from=USD&cur_to='+currency.toUpperCase()+'&amount='+$('section.ready-to-purchase-with-external-api #usd-value').val().trim()+'&address='+$('section.ready-to-purchase-with-external-api input#dcn_address').val().trim()+'&user_id='+$('section.ready-to-purchase-with-external-api input#email').val().trim(), '_blank');
             }
         });
-
-        bindGoogleAlikeButtonsEvents();
     }
 }
 
@@ -75473,19 +75468,19 @@ function bindLoginSigninPopupShow() {
                 $('.login-signin-popup form#dentist-login .error-handle').remove();
             }
 
-            var form_fields = $(this).find('.custom-input');
+            var form_fields = $(this).find('.form-field');
             var dentist_login_errors = false;
             for(var i = 0, len = form_fields.length; i < len; i+=1) {
                 if(form_fields.eq(i).attr('type') == 'email' && !basic.validateEmail(form_fields.eq(i).val().trim())) {
-                    customErrorHandle(form_fields.eq(i).parent(), 'Please use valid email address.');
+                    customErrorHandle(form_fields.eq(i).closest('.field-parent'), 'Please use valid email address.');
                     dentist_login_errors = true;
                 } else if(form_fields.eq(i).attr('type') == 'password' && form_fields.eq(i).val().length < 6) {
-                    customErrorHandle(form_fields.eq(i).parent(), 'Passwords must be min length 6.');
+                    customErrorHandle(form_fields.eq(i).closest('.field-parent'), 'Passwords must be min length 6.');
                     dentist_login_errors = true;
                 }
 
                 if(form_fields.eq(i).val().trim() == '') {
-                    customErrorHandle(form_fields.eq(i).parent(), 'This field is required.');
+                    customErrorHandle(form_fields.eq(i).closest('.field-parent'), 'This field is required.');
                     dentist_login_errors = true;
                 }
             }
@@ -75510,12 +75505,19 @@ function bindLoginSigninPopupShow() {
         });
 
         //SECOND STEP INIT LOGIC
+        $('.login-signin-popup .step.second .user-type-container .user-type').click(function() {
+            $('.login-signin-popup .step.second .user-type-container .user-type').removeClass('active');
+            $(this).addClass('active');
+            $('.login-signin-popup .step.second .user-type-container [name="user-type"]').val($(this).attr('data-type'));
+        });
+
+        //THIRD STEP INIT LOGIC
         $('.login-signin-popup #dentist-country').on('change', function() {
             $('.login-signin-popup .step.second .phone .country-code').html('+'+$(this).find('option:selected').attr('data-code'));
         });
 
-        //THIRD STEP INIT LOGIC
-        styleAvatarUploadButton('.bootbox.login-signin-popup .dentist .form-register .step.third .avatar .btn-wrapper label');
+        //FOURTH STEP INIT LOGIC
+        styleAvatarUploadButton('.bootbox.login-signin-popup .dentist .form-register .step.fourth .avatar .btn-wrapper label');
         initCaptchaRefreshEvent();
 
         //DENTIST REGISTERING FORM
@@ -75524,35 +75526,35 @@ function bindLoginSigninPopupShow() {
 
             switch(this_btn.attr('data-current-step')) {
                 case 'first':
-                    var first_step_inputs = $('.login-signin-popup .dentist .form-register .step.first .custom-input');
+                    var first_step_inputs = $('.login-signin-popup .dentist .form-register .step.first .form-field');
                     var errors = false;
                     $('.login-signin-popup .dentist .form-register .step.first').parent().find('.error-handle').remove();
                     for(var i = 0, len = first_step_inputs.length; i < len; i+=1) {
                         if(first_step_inputs.eq(i).attr('type') == 'email' && !basic.validateEmail(first_step_inputs.eq(i).val().trim())) {
-                            customErrorHandle(first_step_inputs.eq(i).parent(), 'Please use valid email address.');
+                            customErrorHandle(first_step_inputs.eq(i).closest('.field-parent'), 'Please use valid email address.');
                             errors = true;
                         } else if(first_step_inputs.eq(i).attr('type') == 'email' && basic.validateEmail(first_step_inputs.eq(i).val().trim())) {
                             //coredb check if email is free
                             var check_email_if_free_response = await checkIfFreeEmail(first_step_inputs.eq(i).val().trim());
                             if(check_email_if_free_response.error) {
-                                customErrorHandle(first_step_inputs.eq(i).parent(), 'The email has already been taken.');
+                                customErrorHandle(first_step_inputs.eq(i).closest('.field-parent'), 'The email has already been taken.');
                                 errors = true;
                             }
                         }
 
                         if(first_step_inputs.eq(i).attr('type') == 'password' && first_step_inputs.eq(i).val().length < 6) {
-                            customErrorHandle(first_step_inputs.eq(i).parent(), 'Passwords must be min length 6.');
+                            customErrorHandle(first_step_inputs.eq(i).closest('.field-parent'), 'Passwords must be min length 6.');
                             errors = true;
                         }
 
                         if(first_step_inputs.eq(i).val().trim() == '') {
-                            customErrorHandle(first_step_inputs.eq(i).parent(), 'This field is required.');
+                            customErrorHandle(first_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
                             errors = true;
                         }
                     }
 
-                    if($('.login-signin-popup .dentist .form-register .step.first .custom-input.password').val().trim() != $('.login-signin-popup .step.first .custom-input.repeat-password').val().trim()) {
-                        customErrorHandle($('.login-signin-popup .step.first .custom-input.repeat-password').parent(), 'Both passwords don\'t match.');
+                    if($('.login-signin-popup .dentist .form-register .step.first .form-field.password').val().trim() != $('.login-signin-popup .step.first .form-field.repeat-password').val().trim()) {
+                        customErrorHandle($('.login-signin-popup .step.first .form-field.repeat-password').closest('.field-parent'), 'Both passwords don\'t match.');
                         errors = true;
                     }
 
@@ -75566,79 +75568,30 @@ function bindLoginSigninPopupShow() {
                     }
                     break;
                 case 'second':
-                    var second_step_inputs = $('.login-signin-popup .dentist .form-register .step.second .custom-input');
+                    var second_step_inputs = $('.login-signin-popup .dentist .form-register .step.second .form-field.required');
                     var errors = false;
                     $('.login-signin-popup .dentist .form-register .step.second').find('.error-handle').remove();
 
-                    //check custom-input fields
+                    //check form-field fields
                     for(var i = 0, len = second_step_inputs.length; i < len; i+=1) {
                         if(second_step_inputs.eq(i).is('select')) {
                             //IF SELECT TAG
                             if(second_step_inputs.eq(i).val().trim() == '') {
-                                customErrorHandle(second_step_inputs.eq(i).parent(), 'This field is required.');
+                                customErrorHandle(second_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
                                 errors = true;
                             }
                         } else if(second_step_inputs.eq(i).is('input')) {
                             //IF INPUT TAG
                             if(second_step_inputs.eq(i).val().trim() == '') {
-                                customErrorHandle(second_step_inputs.eq(i).parent(), 'This field is required.');
-                                errors = true;
-                            }
-
-                            if(second_step_inputs.eq(i).attr('type') == 'url' && !basic.validateUrl(second_step_inputs.eq(i).val().trim())) {
-                                customErrorHandle(second_step_inputs.eq(i).parent(), 'Please enter your website URL starting with http:// or https://.');
-                                errors = true;
-                            }else if(second_step_inputs.eq(i).attr('type') == 'number' && !basic.validatePhone(second_step_inputs.eq(i).val().trim())) {
-                                customErrorHandle(second_step_inputs.eq(i).parent(), 'Please use valid numbers.');
+                                customErrorHandle(second_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
                                 errors = true;
                             }
                         }
                     }
 
-                    //check custom radio buttons
-                    if($('.login-signin-popup .dentist .form-register .step.second [name="work-type"]:checked').val() == undefined) {
-                        customErrorHandle($('.login-signin-popup .dentist .form-register .step.second .radio-buttons-holder'), 'Please select one of the options.');
-                        errors = true;
-                    } else {
-                        if($('.login-signin-popup .dentist .form-register .step.second [name="work-type"]:checked').val() == 'an-associate-dentist') {
-                            $('.login-signin-popup .dentist .form-register .step.third .search-for-clinic').html('<div class="padding-bottom-10"><select class="combobox custom-input"></select><input type="hidden" name="clinic-id"/></div>');
-
-                            $.ajax({
-                                type: 'POST',
-                                url: '/get-all-clinics/',
-                                dataType: 'json',
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success: function (response) {
-                                    if(response.success && response.success.length > 0) {
-                                        var select_html = '<option></option>';
-                                        for(var i = 0, len = response.success.length; i < len; i+=1) {
-                                            select_html+='<option value="'+response.success[i].id+'">'+response.success[i].name+'</option>';
-                                        }
-
-                                        $('.login-signin-popup .dentist .form-register .step.third .search-for-clinic select.combobox').html(select_html);
-
-                                        initComboboxes();
-                                        $('.login-signin-popup .dentist .form-register .step.third .search-for-clinic input[type="text"].combobox').attr('placeholder', 'Search for a clinic...');
-
-                                        //update the hidden input value on the select change
-                                        $('.login-signin-popup .dentist .form-register .step.third .search-for-clinic select.combobox').on('change', function() {
-                                            $('.login-signin-popup .dentist .form-register .step.third .search-for-clinic input[name="clinic-id"]').val($(this).find('option:selected').val());
-                                        });
-                                    } else if(response.error) {
-                                        basic.showAlert(response.error);
-                                    }
-                                }
-                            });
-                        } else {
-                            $('.login-signin-popup .dentist .form-register .step.third .search-for-clinic').html('');
-                        }
-                    }
-
-                    //check if error from google place suggester
-                    if($('.login-signin-popup .dentist .form-register .step.second .suggester-parent .alert.alert-warning').is(':visible')) {
-                        customErrorHandle($('.login-signin-popup .dentist .form-register .step.second .radio-buttons-holder'), 'Please select one of the options.');
+                    //check if privacy policy checkbox is checked
+                    if(!$('.login-signin-popup .dentist .form-register .step.second #privacy-policy-registration').is(':checked')) {
+                        customErrorHandle($('.login-signin-popup .dentist .form-register .step.second .privacy-policy-row'), 'Please agree with our <a href="//dentacoin.com/privacy-policy" target="_blank">Privacy policy</a>.');
                         errors = true;
                     }
 
@@ -75647,38 +75600,68 @@ function bindLoginSigninPopupShow() {
                         $('.login-signin-popup .dentist .form-register .step.third').addClass('visible');
 
                         this_btn.attr('data-current-step', 'third');
-                        this_btn.val('Create profile');
+                        this_btn.val('Next');
                     }
                     break;
                 case 'third':
+                    var third_step_inputs = $('.login-signin-popup .dentist .form-register .step.third .form-field.required');
+                    var errors = false;
                     $('.login-signin-popup .dentist .form-register .step.third').find('.error-handle').remove();
+
+                    for(var i = 0, len = third_step_inputs.length; i < len; i+=1) {
+                        if(third_step_inputs.eq(i).is('select')) {
+                            //IF SELECT TAG
+                            if(third_step_inputs.eq(i).val().trim() == '') {
+                                customErrorHandle(third_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
+                                errors = true;
+                            }
+                        } else if(third_step_inputs.eq(i).is('input')) {
+                            //IF INPUT TAG
+                            if(third_step_inputs.eq(i).val().trim() == '') {
+                                customErrorHandle(third_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
+                                errors = true;
+                            }
+                            if(third_step_inputs.eq(i).attr('type') == 'url' && !basic.validateUrl(third_step_inputs.eq(i).val().trim())) {
+                                customErrorHandle(third_step_inputs.eq(i).closest('.field-parent'), 'Please enter your website URL starting with http:// or https://.');
+                                errors = true;
+                            }else if(third_step_inputs.eq(i).attr('type') == 'number' && !basic.validatePhone(third_step_inputs.eq(i).val().trim())) {
+                                customErrorHandle(third_step_inputs.eq(i).closest('.field-parent'), 'Please use valid numbers.');
+                                errors = true;
+                            }
+                        }
+                    }
+
+                    if(!errors) {
+                        $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
+                        $('.login-signin-popup .dentist .form-register .step.fourth').addClass('visible');
+
+                        this_btn.attr('data-current-step', 'fourth');
+                        this_btn.val('Create account');
+                    }
+                    break;
+                case 'fourth':
+                    $('.login-signin-popup .dentist .form-register .step.fourth').find('.error-handle').remove();
                     var errors = false;
                     //checking if empty avatar
-                    if($('.dentist .form-register .step.third #custom-upload-avatar').val().trim() == '') {
-                        customErrorHandle($('.step.third .step-errors-holder'), 'Please select avatar.');
+                    if($('.dentist .form-register .step.fourth #custom-upload-avatar').val().trim() == '') {
+                        customErrorHandle($('.step.fourth .step-errors-holder'), 'Please select avatar.');
                         errors = true;
                     }
 
                     //checking if no specialization checkbox selected
-                    if($('.login-signin-popup .dentist .form-register .step.third [name="specializations[]"]:checked').val() == undefined) {
-                        customErrorHandle($('.login-signin-popup .step.third .step-errors-holder'), 'Please select specialization/s.');
-                        errors = true;
-                    }
-
-                    //check if privacy policy checkbox is checked
-                    if(!$('.login-signin-popup .dentist .form-register .step.third #privacy-policy-registration').is(':checked')) {
-                        customErrorHandle($('.login-signin-popup .step.third .step-errors-holder'), 'Please agree with our privacy policy.');
+                    if($('.login-signin-popup .dentist .form-register .step.fourth [name="specializations[]"]:checked').val() == undefined) {
+                        customErrorHandle($('.login-signin-popup .step.fourth .step-errors-holder'), 'Please select specialization/s.');
                         errors = true;
                     }
 
                     //check captcha
-                    if(!$('.login-signin-popup .dentist .form-register .step.third .captcha-parent').length || !$('.login-signin-popup .dentist .form-register .step.third #register-captcha').length) {
+                    if(!$('.login-signin-popup .dentist .form-register .step.fourth .captcha-parent').length || !$('.login-signin-popup .dentist .form-register .step.fourth #register-captcha').length) {
                         errors = true;
                         window.location.reload();
                     } else {
-                        var check_captcha_response = await checkCaptcha($('.login-signin-popup .dentist .form-register .step.third #register-captcha').val().trim());
+                        var check_captcha_response = await checkCaptcha($('.login-signin-popup .dentist .form-register .step.fourth #register-captcha').val().trim());
                         if(check_captcha_response.error) {
-                            customErrorHandle($('.login-signin-popup .step.third .step-errors-holder'), 'Please enter correct captcha.');
+                            customErrorHandle($('.login-signin-popup .step.fourth .step-errors-holder'), 'Please enter correct captcha.');
                             errors = true;
                         }
                     }
@@ -76108,7 +76091,6 @@ async function onDocumentReadyPageData() {
                                                 transaction_key = JSON.parse(localStorage.getItem('current-account')).key;
                                             } else if(JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                                 $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
-                                                bindGoogleAlikeButtonsEvents();
                                             }
                                         }
 
@@ -76315,7 +76297,6 @@ async function onDocumentReadyPageData() {
                                                 transaction_key = JSON.parse(localStorage.getItem('current-account')).key;
                                             } else if(JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                                 $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
-                                                bindGoogleAlikeButtonsEvents();
                                             }
                                         }
 
@@ -76531,7 +76512,6 @@ function cancelContractEventInit() {
                                             transaction_key = JSON.parse(localStorage.getItem('current-account')).key;
                                         } else if (JSON.parse(localStorage.getItem('current-account')).type == 'keystore') {
                                             $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
-                                            bindGoogleAlikeButtonsEvents();
                                         }
                                     }
 
@@ -76760,7 +76740,6 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                             var keystore_string = e.target.result;
                             if(caching) {
                                 $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 col-sm-offset-7 padding-right-30 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
-                                bindGoogleAlikeButtonsEvents();
                                 bindCacheKeyEvent(keystore_string);
                             } else {
                                 var keystore_string = e.target.result;
@@ -76770,7 +76749,6 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                 }
                                 $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 col-sm-offset-7 padding-right-30 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-keystore-file"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-keystore-file">Remember my keystore file <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Remembering your keystore file allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">'+btn_name+'</a></div></div>');
                                 initTooltips();
-                                bindGoogleAlikeButtonsEvents();
 
                                 if(render_pdf != null && encrypted_pdf_content != null) {
                                     //if we have to render pdf
@@ -76822,30 +76800,30 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
 
 function bindGoogleAlikeButtonsEvents() {
     //google alike style for label/placeholders
-    if($('.custom-google-label-style').length) {
-        $('.custom-google-label-style label').unbind('click').on('click', function () {
-            $(this).addClass('active-label');
-            if($('.custom-google-label-style').attr('data-input-blue-green-border') == 'true') {
-                $(this).parent().find('input').addClass('blue-green-border');
-            }
-        });
+    $('body').on('click', '.custom-google-label-style label', function() {
+        $(this).addClass('active-label');
+        if($('.custom-google-label-style').attr('data-input-blue-green-border') == 'true') {
+            $(this).parent().find('input').addClass('blue-green-border');
+        }
+    });
 
-        $('.custom-google-label-style input').unbind('keyup change').on('keyup change', function () {
-            var value = $(this).val().trim();
-            if (value.length) {
-                $(this).closest('.custom-google-label-style').find('label').addClass('active-label');
-                if($('.custom-google-label-style').attr('data-input-blue-green-border') == 'true') {
-                    $(this).addClass('blue-green-border');
-                }
-            } else {
-                $(this).closest('.custom-google-label-style').find('label').removeClass('active-label');
-                if($('.custom-google-label-style').attr('data-input-blue-green-border') == 'true') {
-                    $(this).removeClass('blue-green-border');
-                }
+    $('body').on('keyup change', '.custom-google-label-style input', function() {
+        var value = $(this).val().trim();
+        if (value.length) {
+            $(this).closest('.custom-google-label-style').find('label').addClass('active-label');
+            if($(this).closest('.custom-google-label-style').attr('data-input-blue-green-border') == 'true') {
+                $(this).addClass('blue-green-border');
             }
-        });
-    }
+        } else {
+            $(this).closest('.custom-google-label-style').find('label').removeClass('active-label');
+            if($(this).closest('.custom-google-label-style').attr('data-input-blue-green-border') == 'true') {
+                $(this).removeClass('blue-green-border');
+            }
+        }
+    });
 }
+bindGoogleAlikeButtonsEvents();
+
 
 //check if object has property
 function has(object, key) {
@@ -76875,7 +76853,6 @@ function bindVerifyAddressLogic(for_transactions) {
         $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 padding-left-30 padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-private-key"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-private-key">Remember my private key <i class="fa fa-info-circle" aria-hidden="true"  data-toggle="tooltip" data-placement="top" title="Remembering your key allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">VERIFY</a></div></div>');
         initTooltips();
         $('.proof-of-address #upload-keystore-file').val('');
-        bindGoogleAlikeButtonsEvents();
 
         if(for_transactions != null) {
             bindTransactionAddressVerify();
@@ -77218,7 +77195,6 @@ function openCacheKeyPopup(encrypted_pdf_content) {
                     $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-5 padding-left-30 padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-private-key"/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-private-key">Remember my private key <i class="fa fa-info-circle" aria-hidden="true"  data-toggle="tooltip" data-placement="top" title="Remembering your key allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">UNLOCK</a></div></div>');
                     initTooltips();
                     $('.proof-of-address #upload-keystore-file').val('');
-                    bindGoogleAlikeButtonsEvents();
                     bindVerifyAddressEvent(null, true, encrypted_pdf_content);
                 });
 

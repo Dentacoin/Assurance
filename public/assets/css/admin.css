@@ -41,13 +41,6 @@
   font-style: normal;
   font-display: block; }
 @font-face {
-  font-family: "Lato-Regular";
-  src: url("/assets/fonts/Lato-Regular.eot");
-  src: url("/assets/fonts/Lato-Regular.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/Lato-Regular.woff2") format("woff2"), url("/assets/fonts/Lato-Regular.woff") format("woff"), url("/assets/fonts/Lato-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block; }
-@font-face {
   font-family: "Lato-Black";
   src: url("/assets/fonts/Lato-Black.eot");
   src: url("/assets/fonts/Lato-Black.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/Lato-Black.woff2") format("woff2"), url("/assets/fonts/Lato-Black.woff") format("woff"), url("/assets/fonts/Lato-Black.ttf") format("truetype");
@@ -58,6 +51,13 @@
   font-family: "Lato-Semibold";
   src: url("/assets/fonts/Lato-Semibold.eot");
   src: url("/assets/fonts/Lato-Semibold.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/Lato-Semibold.woff2") format("woff2"), url("/assets/fonts/Lato-Semibold.woff") format("woff"), url("/assets/fonts/Lato-Semibold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block; }
+@font-face {
+  font-family: "Lato-Regular";
+  src: url("/assets/fonts/Lato-Regular.eot");
+  src: url("/assets/fonts/Lato-Regular.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/Lato-Regular.woff2") format("woff2"), url("/assets/fonts/Lato-Regular.woff") format("woff"), url("/assets/fonts/Lato-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: block; }
@@ -78,17 +78,17 @@
 .lato-semibold {
   font-family: "Lato-Semibold"; }
 
-.lato-black {
-  font-family: "Lato-Black"; }
+.lato-light {
+  font-family: "Lato-Light"; }
 
 .lato-regular {
   font-family: "Lato-Regular"; }
 
+.lato-black {
+  font-family: "Lato-Black"; }
+
 .lato-bold {
   font-family: "Lato-Bold"; }
-
-.lato-light {
-  font-family: "Lato-Light"; }
 
 .calibri-bold {
   font-family: "Calibri-Bold"; }
@@ -1214,6 +1214,43 @@
     -moz-border-radius: 0 4px 4px 0;
     -ms-border-radius: 0 4px 4px 0;
     border-radius: 0 4px 4px 0; }
+.module.custom-google-select-style {
+  position: relative; }
+  .module.custom-google-select-style label {
+    width: auto !important;
+    font-size: 14px !important;
+    top: -8px;
+    padding: 0 5px !important;
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+    color: #126585;
+    font-weight: bold;
+    position: absolute;
+    cursor: pointer;
+    margin: 0;
+    background-color: white;
+    left: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -o-transition: 0.3s;
+    -ms-transition: 0.3s;
+    transition: 0.3s; }
+  .module.custom-google-select-style select {
+    border: 2px solid #126585;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Lato-Regular';
+    width: 100%;
+    padding: 10px 15px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px; }
 .module.camping-for-validation .proof-success {
   display: none;
   padding-left: 15px;
