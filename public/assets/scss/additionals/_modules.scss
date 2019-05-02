@@ -1145,6 +1145,7 @@
             font-family: 'Lato-Regular';
             width: 100%;
             padding: 10px 15px;
+            -webkit-appearance: initial;
             @include rounded(4px);
         }
     }

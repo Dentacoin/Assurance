@@ -147,4 +147,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::post('/enrich-profile', 'DentistController@enrichProfile')->name('enrich-profile');
 
     Route::post('/invite-your-clinic', 'DentistController@inviteYourClinic')->name('invite-your-clinic');
+
+    Route::post('/check-dentist-account', 'DentistController@checkDentistAccount')->name('check-dentist-account');
 });

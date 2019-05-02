@@ -2090,14 +2090,6 @@ function encodeEntities(string) {
     return inner_html;
 }
 
-function decodeEntities(string) {
-    var txt = document.createElement('textarea');
-    txt.innerHTML = string;
-    var inner_html = txt.value;
-    txt.remove();
-    return inner_html;
-}
-
 var hidden_popup_content = $('.hidden-login-form').html();
 //call the popup for login/sign for patient and dentist
 function bindLoginSigninPopupShow() {
@@ -2159,31 +2151,50 @@ function bindLoginSigninPopupShow() {
 
         // ====================== DENTIST LOGIN/SIGNUP LOGIC ======================
         //DENTIST LOGIN
-        $('.login-signin-popup form#dentist-login').on('submit', function(event) {
+        $('.login-signin-popup form#dentist-login').on('submit', async function(event) {
+            var this_form_native = this;
+            var this_form = $(this_form_native);
+            event.preventDefault();
             //clear prev errors
             if($('.login-signin-popup form#dentist-login .error-handle').length) {
                 $('.login-signin-popup form#dentist-login .error-handle').remove();
             }
 
-            var form_fields = $(this).find('.form-field');
-            var dentist_login_errors = false;
+            var form_fields = this_form.find('.form-field');
+            var submit_form = true;
             for(var i = 0, len = form_fields.length; i < len; i+=1) {
                 if(form_fields.eq(i).attr('type') == 'email' && !basic.validateEmail(form_fields.eq(i).val().trim())) {
                     customErrorHandle(form_fields.eq(i).closest('.field-parent'), 'Please use valid email address.');
-                    dentist_login_errors = true;
+                    submit_form = false;
                 } else if(form_fields.eq(i).attr('type') == 'password' && form_fields.eq(i).val().length < 6) {
                     customErrorHandle(form_fields.eq(i).closest('.field-parent'), 'Passwords must be min length 6.');
-                    dentist_login_errors = true;
+                    submit_form = false;
                 }
 
                 if(form_fields.eq(i).val().trim() == '') {
                     customErrorHandle(form_fields.eq(i).closest('.field-parent'), 'This field is required.');
-                    dentist_login_errors = true;
+                    submit_form = false;
                 }
             }
 
-            if(dentist_login_errors) {
-                event.preventDefault();
+            //check if existing account
+            var check_account_response = await $.ajax({
+                type: 'POST',
+                url: '/check-dentist-account',
+                dataType: 'json',
+                data: {
+                    email: $('.login-signin-popup form#dentist-login input[name="email"]').val().trim(),
+                    password: $('.login-signin-popup form#dentist-login input[name="password"]').val().trim()
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            if(submit_form && check_account_response.success) {
+                this_form_native.submit();
+            } else if(check_account_response.error) {
+                customErrorHandle(this_form.find('input[name="password"]').closest('.field-parent'), check_account_response.message);
             }
         });
 
@@ -2284,6 +2295,13 @@ function bindLoginSigninPopupShow() {
                                 errors = true;
                             }
                         }
+                    }
+
+                    //check if latin name accepts only LATIN characters
+                    if(!/^[a-z A-Z]+$/.test($('.login-signin-popup .dentist .form-register .step.second input[name="latin-name"]').val().trim())) {
+
+                        customErrorHandle($('.login-signin-popup .dentist .form-register .step.second input[name="latin-name"]').closest('.field-parent'), 'This field should contain only latin characters.');
+                        errors = true;
                     }
 
                     //check if privacy policy checkbox is checked
@@ -3504,7 +3522,7 @@ function bindGoogleAlikeButtonsEvents() {
         }
     });
 
-    $('body').on('keyup change', '.custom-google-label-style input', function() {
+    $('body').on('keyup change focusout', '.custom-google-label-style input', function() {
         var value = $(this).val().trim();
         if (value.length) {
             $(this).closest('.custom-google-label-style').find('label').addClass('active-label');
