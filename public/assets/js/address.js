@@ -4,7 +4,7 @@ var setupMap;
 var mapsLoaded = true;
 var mapsWaiting = [];
 
-var prepareMapFunction = function( callback ) {
+var prepareMapFunction = function(callback) {
     if(mapsLoaded) {
         callback();
     } else {
@@ -57,7 +57,7 @@ $(document).ready(function($){
     };
 
     initAddressSuggesters = function() {
-        console.log(initAddressSuggesters, 'initAddressSuggesters');
+        console.log('initAddressSuggesters');
         prepareMapFunction(function() {
             $('.address-suggester').each( function() {
                 var suggester_container = $(this).closest('.address-suggester-wrapper');
@@ -132,9 +132,13 @@ $(document).ready(function($){
         if( place && place.geometry ) {
             //address_components
             var gstring = suggester_container.find('.address-suggester').val();
+            console.log(gstring, 'gstring')
             var country_name = suggester_container.find('.country-select option:selected').text();
+            console.log(country_name, 'country_name')
             gstring = gstring.replace(', '+country_name, '');
+            console.log(gstring, 'gstring')
             suggester_container.find('.address-suggester').val(gstring);
+            console.log(suggester_container, 'suggester_container')
 
             var coords = {
                 lat: place.geometry.location.lat(),
