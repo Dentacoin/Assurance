@@ -1142,7 +1142,7 @@ fieldset {
                             }
                             .form-register, .form-login {
                                 width: 75%;
-                                margin: 0 auto;   
+                                margin: 0 auto;
                                 @include breakpoint($xs) {
                                     width: 90%;
                                 }
