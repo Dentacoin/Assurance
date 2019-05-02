@@ -153,8 +153,4 @@ $(document).ready(function($){
             suggester_container.find('.geoip-hint').show();
         }
     };
-
-    if($('.address-suggester').length) {
-        initAddressSuggesters();
-    }
 });
