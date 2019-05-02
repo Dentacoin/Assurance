@@ -75411,6 +75411,8 @@ function bindLoginSigninPopupShow() {
         $('.hidden-login-form').html('');
         basic.showDialog(hidden_popup_content, 'login-signin-popup', null, true);
 
+        $('.login-signin-popup .dentist .form-register .address-suggester').removeClass('dont-init');
+
         fixButtonsFocus();
 
         initAddressSuggesters();
