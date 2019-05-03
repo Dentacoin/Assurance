@@ -502,6 +502,12 @@
 <script src="/assets/js/index-bundled.js{{--?v=1.0.18--}}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
+{{--Load social logging scripts only if user is not logged--}}
+@if(!(new \App\Http\Controllers\UserController())->checkSession())
+    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.18"></script>
+    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.18"></script>
+@endif
+
 {{--Multiple errors from laravel validation--}}
 @if(!empty($errors) && count($errors) > 0)
     <script>
