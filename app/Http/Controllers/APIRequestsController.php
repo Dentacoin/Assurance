@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
+
 class APIRequestsController extends Controller {
     public function dentistLogin($data) {
         $curl = curl_init();
@@ -594,5 +596,31 @@ class APIRequestsController extends Controller {
         curl_close($curl);
 
         return $resp;
+    }
+
+    public function validateCivicToken($token) {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_POST => 1,
+            CURLOPT_URL => 'https://api.dentacoin.com/api/validateCivicToken',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_POSTFIELDS => array(
+                'token' => $token
+            )
+        ));
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        var_dump($resp);
+        die();
+
+        if(!empty($resp))   {
+            return $resp;
+        }else {
+            return false;
+        }
     }
 }

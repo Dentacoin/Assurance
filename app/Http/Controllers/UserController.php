@@ -635,25 +635,13 @@ class UserController extends Controller {
             'token.required' => 'Token is required.'
         ]);
 
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://api.dentacoin.com/api/validateCivicToken',
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POSTFIELDS => array(
-                'token' => $request->input('token')
-            )
-        ));
-
-        $civic_validation_response = json_decode(curl_exec($curl));
-        curl_close($curl);
+        $civic_validation_response = (new APIRequestsController())->validateCivicToken($request->input('token'));
 
         if($civic_validation_response->success) {
-            $update_user_data_response = (new APIRequestsController())->updateUserData(array('civic_kyc' => 1));
+            /*$update_user_data_response = (new APIRequestsController())->updateUserData(array('civic_kyc' => 1));
             if(!$update_user_data_response) {
                 return response()->json(['error' => 'Civic authentication failed.']);
-            }
+            }*/
             return response()->json(['success' => true]);
         } else {
             return response()->json(['error' => 'Civic authentication failed.']);
