@@ -2689,7 +2689,7 @@ async function onDocumentReadyPageData() {
                 if(event.response_data) {
                     $.ajax({
                         type: 'POST',
-                        url: 'https://dentacoin.net/civic',
+                        url: 'https://civic.dentacoin.net/civic',
                         dataType: 'json',
                         data: {
                             jwtToken: event.response_data
