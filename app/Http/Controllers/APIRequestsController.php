@@ -599,24 +599,27 @@ class APIRequestsController extends Controller {
     }
 
     public function validateCivicToken($token) {
+        $header = array();
+        $header[] = 'Accept: */*';
+        $header[] = 'Authorization: Bearer ' . session('logged_user')['token'];
+        $header[] = 'Cache-Control: no-cache';
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://api.dentacoin.com/api/validateCivicToken',
+            CURLOPT_URL => 'https://api.dentacoin.com/api/kyc/',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => array(
-                'token' => $token
-            )
+                'jwtToken' => $token
+            ),
+            CURLOPT_HTTPHEADER => $header
         ));
 
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
-        if(!empty($resp))   {
-            return $resp;
-        }else {
-            return false;
-        }
+
+        return $resp;
     }
 }

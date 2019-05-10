@@ -1241,12 +1241,16 @@
     -ms-transition: 0.3s;
     transition: 0.3s; }
   .module.custom-google-select-style select {
+    background-image: url("/assets/images/select-arrow.svg");
+    background-position: top 50% right 10px;
+    background-size: 15px;
+    background-repeat: no-repeat;
     border: 2px solid #126585;
     cursor: pointer;
     font-size: 16px;
     font-family: 'Lato-Regular';
     width: 100%;
-    padding: 10px 15px;
+    padding: 10px 30px 10px 15px;
     -webkit-appearance: initial;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;

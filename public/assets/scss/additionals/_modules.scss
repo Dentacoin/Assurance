@@ -1139,12 +1139,16 @@
             @include simple_transition(.3s);
         }
         select {
+            background-image: url('/assets/images/select-arrow.svg');
+            background-position: top 50% right 10px;
+            background-size: 15px;
+            background-repeat: no-repeat;
             border: 2px solid $blue_green_color;
             cursor: pointer;
             font-size: 16px;
             font-family: 'Lato-Regular';
             width: 100%;
-            padding: 10px 15px;
+            padding: 10px 30px 10px 15px;
             -webkit-appearance: initial;
             @include rounded(4px);
         }
