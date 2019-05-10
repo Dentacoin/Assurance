@@ -567,32 +567,6 @@
     @if(session('popup-html'))
         <script>
             basic.showDialog('{!! session('popup-html') !!}', 'popup-html', null, true);
-            if($('.popup-html #enrich-profile').length) {
-                $('.popup-html #enrich-profile').on('submit', function(event) {
-                    var form_native = this;
-                    $(form_native).find('.error-handle').remove();
-                    event.preventDefault();
-
-                    if($(form_native).find('textarea').val().trim() == '') {
-                        $(form_native).find('textarea').closest('.form-row').append('<span class="error-handle">Please enter your description.</span>');
-                    } else {
-                        $.ajax({
-                            type: 'POST',
-                            url: '/enrich-profile',
-                            dataType: 'json',
-                            data: {
-                                description: $(form_native).find('textarea').val().trim()
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                            },
-                            success: function (response) {
-                                console.log(response, 'response');
-                            }
-                        });
-                    }
-                });
-            }
         </script>
     @else
         <script>
