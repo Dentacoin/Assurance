@@ -47,7 +47,7 @@
             <div class="fs-14 calibri-light">This will improve your positions in Google and help more patients find you.</div>
         </div>
         <div class="btn-container text-center padding-bottom-30 padding-top-30">
-            <input type="submit" class="white-dark-blue-btn min-width-200" value="SAVE"/>
+            <input type="submit" class="white-blue-green-btn min-width-200" value="SAVE"/>
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="user" value="{{$user}}">
         </div>
