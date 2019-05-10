@@ -130,10 +130,10 @@ class DentistController extends Controller
         $api_response = (new APIRequestsController())->dentistRegister($data, $files);
         if($api_response['success']) {
             if($data['user-type'] == 'dentist') {
-                $popup_view = view('partials/popup-dentist-profile-verification');
+                $popup_view = view('partials/popup-dentist-profile-verification', ['user' => $api_response['data']['id']]);
                 return redirect()->route('home')->with(['success' => true, 'popup-html' => $popup_view->render()]);
             }else if($data['user-type'] == 'clinic') {
-                $popup_view = view('partials/popup-clinic-profile-verification');
+                $popup_view = view('partials/popup-clinic-profile-verification', ['user' => $api_response['data']['id']]);
                 return redirect()->route('home')->with(['success' => true, 'popup-html' => $popup_view->render()]);
             }
         } else {
@@ -375,15 +375,24 @@ class DentistController extends Controller
     //dentist can add profile description while waiting for approval from Dentacoin admin
     protected function enrichProfile(Request $request) {
         $this->validate($request, [
+            'user' => 'required',
             'description' => 'required'
         ], [
+            'user.required' => 'User is required.',
             'description.required' => 'Description is required.'
         ]);
 
         $data = $request->input();
-
-        var_dump($data);
-        die();
+        $post_api_data = array(
+            'id' => $this->encrypt($data['user'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY')),
+            'short_description' => $this->encrypt($data['description'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'))
+        );
+        $update_method_response = (new APIRequestsController())->updateAnonymousUserData($post_api_data);
+        if($update_method_response->success) {
+            return redirect()->route('home')->with(['success' => 'Your short description was saved successfully.']);
+        } else {
+            return redirect()->route('home')->with(['error' => 'Something went wrong, please try again later.']);
+        }
     }
 
     //dentist can add profile description while waiting for approval from Dentacoin admin

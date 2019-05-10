@@ -290,6 +290,10 @@ class UserController extends Controller {
             $post_fields_arr['dcn_address'] = $data['dcn_address'];
         }
 
+        if(isset($data['short_description']) && !empty($data['short_description'])) {
+            $post_fields_arr['short_description'] = $data['short_description'];
+        }
+
         if($this->checkDentistSession()) {
             $post_fields_arr['specialisations'] = $data['specialisations'];
         }

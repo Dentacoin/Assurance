@@ -3,14 +3,16 @@
     <h2 class="lato-bold fs-30">DENTIST PROFILE VERIFICATION</h2>
     <div class="padding-top-20 padding-bottom-15 fs-20">Thank you for submitting your registration form!  Our onboarding team will now assess the data you have provided to ensure that you are a real dentist.</div>
     <div class="padding-bottom-25 fs-20 {{--border-bottom--}}">You will receive an email notification as soon as the verification process is completed.</div>
-    {{--<h2 class="lato-bold fs-30 padding-top-25 padding-bottom-25 lato-bold fs-30">While waiting, why don’t you enrich your profile?</h2>
+    <h2 class="lato-bold fs-30 padding-top-25 padding-bottom-25 lato-bold fs-30">While waiting, why don’t you enrich your profile?</h2>
     <form method="POST" action="{{ route('enrich-profile') }}" id="enrich-profile">
         <div class="form-row">
             <textarea rows="4" name="description" maxlength="200" placeholder="Add your short description (140 characters):"></textarea>
             <div class="fs-14 calibri-light">This will improve your positions in Google and help more patients find you.</div>
         </div>
-        <div class="btn-container padding-top-30 text-center">
-            <input type="submit" class="white-blue-green-btn min-width-200" value="SAVE"/>
+        <div class="btn-container text-center padding-bottom-30 padding-top-30">
+            <input type="submit" class="white-dark-blue-btn min-width-200" value="SAVE"/>
+            <input type="hidden" name="_token" value="{{csrf_token()}}">
+            <input type="hidden" name="user" value="{{$user}}">
         </div>
-    </form>--}}
+    </form>
 </div>

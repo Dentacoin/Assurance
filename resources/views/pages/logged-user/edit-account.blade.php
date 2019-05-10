@@ -46,6 +46,10 @@
                                     <input class="inline-block fs-16 custom-input required" maxlength="255" type="text" name="website" id="website" @if(!empty($user_data) && !empty($user_data->website)) value="{{$user_data->website}}" @endif/>
                                 </div>
                                 <div class="form-row padding-bottom-15 fs-0">
+                                    <label class="inline-block fs-16" for="short_description">Short description:</label>
+                                    <textarea class="inline-block fs-16 custom-input required" rows="3" maxlength="255" name="short_description" id="short_description">@if(!empty($user_data) && !empty($user_data->short_description)) {{$user_data->short_description}} @endif</textarea>
+                                </div>
+                                <div class="form-row padding-bottom-15 fs-0">
                                     <label class="inline-block fs-16">Your specializations:</label>
                                     <div class="checkboxes-container inline-block">
                                         @foreach((new \App\Http\Controllers\APIRequestsController())->getAllEnums()->specialisations as $key => $specialisation)
