@@ -213,7 +213,7 @@ class Controller extends BaseController
         return $ipaddress;
     }
 
-    protected function encrypt($raw_text, $algorithm, $key) {
+    public function encrypt($raw_text, $algorithm, $key) {
         $length = openssl_cipher_iv_length($algorithm);
         $iv = openssl_random_pseudo_bytes($length);
         $encrypted = openssl_encrypt($raw_text, $algorithm, $key, OPENSSL_RAW_DATA, $iv);
@@ -222,7 +222,7 @@ class Controller extends BaseController
         return $encrypted_with_iv;
     }
 
-    protected function decrypt($encrypted_text) {
+    public function decrypt($encrypted_text) {
         list($data, $iv) = explode('|', $encrypted_text);
         $iv = base64_decode($iv);
         $raw_text = openssl_decrypt($data, getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'), 0, $iv);
