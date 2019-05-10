@@ -714,8 +714,9 @@ class UserController extends Controller {
         return response()->json(['success' => true, 'dentist_name' => $dentist->name, 'patient_name' => $patient->name, 'patient_email' => $patient->email, 'dentist_email' => $dentist->email, 'slug' => $contract->slug, 'dentacoins_for_one_usd' => (new PatientController())->getIndacoinPricesInUSD('DCN')]);
     }
 
-    protected function setCustomCookie(Request $request) {
+    protected function manageCustomCookie(Request $request) {
         if(!empty(Input::get('slug')) && !empty(Input::get('type')) && !empty(Input::get('token'))) {
+            //logging
             $slug = $this->decrypt(Input::get('slug'));
             $type = $this->decrypt(Input::get('type'));
             $token = $this->decrypt(Input::get('token'));
@@ -739,6 +740,13 @@ class UserController extends Controller {
                 }
             } else {
                 return abort(404);
+            }
+        } else if(!empty(Input::get('logout-token'))) {
+            //logging out
+            $token = $this->decrypt(Input::get('logout-token'));
+
+            if(session('logged_user')['token'] == $token) {
+                $request->session()->forget('logged_user');
             }
         } else {
             return abort(404);

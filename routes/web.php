@@ -150,5 +150,5 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/check-dentist-account', 'DentistController@checkDentistAccount')->name('check-dentist-account');
 
-    Route::get('/custom-cookie', 'UserController@setCustomCookie')->name('custom-cookie');
+    Route::get('/custom-cookie', 'UserController@manageCustomCookie')->name('custom-cookie');
 });

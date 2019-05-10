@@ -258,6 +258,10 @@
     <img src="//dentacoin.com/custom-cookie?slug={{ urlencode($slug) }}&type={{ urlencode($type) }}&token={{ urlencode($token) }}" class="hide"/>
     <img src="//dentists.dentacoin.com/custom-cookie?slug={{ urlencode($slug) }}&type={{ urlencode($type) }}&token={{ urlencode($token) }}" class="hide"/>
 @else
+    @if(!empty(session('logout_token')))
+        <img src="//dentacoin.com/custom-cookie?logout-token={{ urlencode(session('logout_token')) }}" class="hide"/>
+        <img src="//dentists.dentacoin.com/custom-cookie?logout-token={{ urlencode(session('logout_token')) }}" class="hide"/>
+    @endif
     <div class="hidden-login-form hide">
         <div class="fs-0 popup-header-action">
             <a href="javascript:void(0)" class="inline-block" data-type="patient">I'm a Patient</a>
