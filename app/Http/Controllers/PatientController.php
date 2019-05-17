@@ -244,6 +244,8 @@ class PatientController extends Controller {
 
     protected function updateAndSignContract(Request $request) {
         $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+        $edited_patient_account = false;
+
         $required_fields_arr = array(
             'patient_signature' => 'required',
             'patient-id-number' => 'required|max:20',
@@ -254,6 +256,7 @@ class PatientController extends Controller {
             'patient-id-number.required' => 'Patient ID number signature is required.',
             'contract.required' => 'Contract slug is required.',
         );
+
 
         if(empty($logged_patient->dcn_address)) {
             $required_fields_arr['dcn_address'] = 'required|max:42';
@@ -296,6 +299,7 @@ class PatientController extends Controller {
 
         //update CoreDB api data for this patient
         if(isset($data['country']) || isset($data['dcn_address']) || isset($data['address'])) {
+            $edited_patient_account = true;
             $curl_arr = array();
             if(isset($data['country'])) {
                 if(!empty($data['country'])) {
@@ -324,6 +328,11 @@ class PatientController extends Controller {
             if(!$api_response) {
                 return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['errors_response' => $api_response['errors']]);
             }
+        }
+
+        if($edited_patient_account) {
+            //asking for logged_patient updated data
+            $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         }
 
         //getting the public key for this address stored in the assurance db (this table is getting updated by wallet.dentacoin.com)
@@ -403,7 +412,7 @@ class PatientController extends Controller {
                         $contract->save();
                         return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
                     } else {
-                        return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
+                        return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "1 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
                     }
                 } else {
                     $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
@@ -420,10 +429,10 @@ class PatientController extends Controller {
                     return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
                 }
             } else {
-                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
+                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "2 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
             }
         } else {
-            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
+            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "3 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
         }
     }
 
