@@ -415,7 +415,7 @@ class PatientController extends Controller {
                         $contract->save();
                         return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
                     } else {
-                        return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
+                        return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "1 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
                     }
                 } else {
                     $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
@@ -432,10 +432,10 @@ class PatientController extends Controller {
                     return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
                 }
             } else {
-                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
+                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "2 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
             }
         } else {
-            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
+            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "3 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
         }
     }
 
