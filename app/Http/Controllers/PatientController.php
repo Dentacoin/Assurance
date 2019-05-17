@@ -77,6 +77,9 @@ class PatientController extends Controller {
             'id.required' => 'Email is required.'
         ]);
 
+        var_dump($request->input());
+        die();
+
         //change the email of the contract in case if the email which patient used for register is different
         $contract = TemporallyContract::where(array('slug' => $request->input('slug'), 'status' => 'pending'))->get()->first();
         if($contract->patient_email != $request->input('email')) {
