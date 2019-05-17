@@ -71,17 +71,21 @@ class PatientController extends Controller {
     protected function authenticate(Request $request) {
         $this->validate($request, [
             'token' => 'required',
+            'email' => 'required',
             'id' => 'required'
         ], [
             'token.required' => 'Token is required.',
+            'email.required' => 'Email is required.',
             'id.required' => 'Email is required.'
         ]);
 
         //change the email of the contract in case if the email which patient used for register is different
-        $contract = TemporallyContract::where(array('slug' => $request->input('slug'), 'status' => 'pending'))->get()->first();
-        if($contract->patient_email != $request->input('email')) {
-            $contract->patient_email = $request->input('email');
-            $contract->save();
+        if(!empty($request->input('slug'))) {
+            $contract = TemporallyContract::where(array('slug' => $request->input('slug'), 'status' => 'pending'))->get()->first();
+            if($contract->patient_email != $request->input('email')) {
+                $contract->patient_email = $request->input('email');
+                $contract->save();
+            }
         }
 
         $session_arr = [
