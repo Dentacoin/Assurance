@@ -16,7 +16,7 @@
             <div class="row fs-0 flex-xs">
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                        <img alt="Dentist avatar" src="{{$dentist->avatar_url}}" class="max-width-120"/>
+                        <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
                     </figure>
                     <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$dentist->name}}</div>
                     <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$dentist->email}}</div>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                        <img alt="Patient avatar" src="{{$patient->avatar_url}}" class="max-width-120"/>
+                        <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
                     </figure>
                     <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">{{$patient->name}}</div>
                     <div class="calibri-light">
@@ -70,11 +70,11 @@
         <section class="container contract-details no-gutter-xs">
             <div class="row text-center margin-left-xs-0 margin-right-xs-0">
                 <div class="col-xs-12 col-lg-10 col-lg-offset-1 no-gutter-xs">
-                    <div class="padding-top-40 padding-top-xs-10">
-                        <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color">See details</a>
-                    </div>
                     <div class="contract-details-container module fs-16 text-left padding-top-40 padding-bottom-60">
                         @include('partials.contract-details', ['type' => 'single-page', 'contract' => $contract, 'dentist' => $dentist, 'patient' => $patient, 'calculator_proposals' => $calculator_proposals])
+                    </div>
+                    <div class="padding-top-40">
+                        <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color" data-label-closed="See details" data-label-opened="Hide details" data-hidden-details="true">See details</a>
                     </div>
                 </div>
             </div>

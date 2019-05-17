@@ -35,12 +35,12 @@ header {
                 }
             }
         }
-        .logged-user {
+        .logged-user-nav {
             > a {
                 font-size: 16px;
                 color: black;
                 display: inline-block;
-                padding: 10px 0;
+                padding: 15px 0;
                 span {
                     vertical-align: middle;
                 }
@@ -51,28 +51,113 @@ header {
                     @include rounded(50%);
                 }
             }
+            .up-arrow {
+                color: white;
+                position: absolute;
+                top: calc(100% - 15px);
+                font-size: 16px;
+                z-index: 5000000000;
+                right: 30px;
+                display: none;
+                &.show-this {
+                    display: block;
+                }
+            }
+            &.with-hub {
+                .up-arrow {
+                    color: #669ccc;
+                }
+            }
             .hidden-box {
                 display: none;
+                visibility: hidden;
                 position: absolute;
                 min-width: 270px;
-                padding: 15px 0;
-                top: calc(100% - 10px);
+                max-width: 450px;
+                top: 100%;
                 right: 0;
                 background-color: white;
+                overflow: hidden;
                 z-index: 50;
-                border: 1px solid #e8e8e8;
-                @include box-shadow(0px 0px 7px 3px rgba(234, 234, 234, 0.5));
-                .white-blue-green-btn {
-                    font-size: 16px;
-                    padding: 5px 8px;
+                @include box-shadow(0px 0px 7px 1px rgba(0, 0, 0, 0.5));
+                @include rounded(15px);
+                .hidden-box-hub {
+                    background-image: url('/assets/images/dentacoin-ecosystem-background.jpg');
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    position: relative;
+                    padding: 30px 50px 15px;
+                    text-align: left;
+                    figure {
+                        figcaption {
+                            color: white;
+                        }
+                    }
+                    .close-btn {
+                        display: none;
+                        text-align: right;
+                        padding-bottom: 15px;
+                        a {
+                            font-size: 20px;
+                            color: white;
+                            span {
+                                background: white;
+                                color: black;
+                                width: 25px;
+                                height: 25px;
+                                display: inline-block;
+                                text-align: center;
+                                line-height: 25px;
+                                @include rounded(50%);
+                            }
+                        }
+                    }
+                    @include breakpoint($xs) {
+                        .close-btn {
+                            display: block;
+                        }
+                    }
                 }
-                .logout {
-                    font-size: 16px;
-                    color: black;
-                    i {
-                        font-size: 24px;
-                        vertical-align: middle;
-                        margin-right: 5px;
+                .hidden-box-footer {
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    background: white;
+                    .white-blue-rounded-btn {
+                        padding: 7px 15px;
+                    }
+                    .logout {
+                        font-size: 16px;
+                        color: black;
+                        i {
+                            font-size: 24px;
+                            vertical-align: middle;
+                            margin-right: 5px;
+                        }
+                    }
+                }
+                &.show-this {
+                    display: block;
+                    visibility: visible;
+                }
+            }
+            @include breakpoint($xs) {
+                &.with-hub {
+                    position: static;
+                    .up-arrow {
+                        display: none;
+                    }
+                    .hidden-box {
+                        min-width: 0;
+                        max-width: none;
+                        width: 100%;
+                        top: 0;
+                        height: 100vh;
+                        background-color: rgba(0, 0, 0, 0.6);
+                        overflow: auto;
+                        .hidden-box-hub {
+                            padding: 10px 15px 15px;
+                        }
                     }
                 }
             }

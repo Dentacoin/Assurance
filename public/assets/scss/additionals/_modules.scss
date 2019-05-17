@@ -184,6 +184,7 @@
         background-repeat: no-repeat;
         background-size: 22px;
         background-position: center right 10px;
+        padding-right: 35px;
     }
     &:focus {
         @include box-shadow(0px 2px 10px 0 #679dca);
@@ -475,6 +476,13 @@
             &.no-border {
                 border: 0;
             }
+            &.relative-position {
+                position: relative;
+            }
+            .absolute-currency-label {
+                display: none;
+                @include vertical-align(absolute);
+            }
             label {
                 width: 40%;
                 font-weight: normal;
@@ -702,7 +710,7 @@
             }
             .contract-info {
                 width: calc(100% - 120px);
-                padding-left: 15px;
+                padding-left: 10px;
                 .title {
                     word-wrap: break-word;
                 }
@@ -841,6 +849,10 @@
             figure {
                 height: 100px;
                 position: relative;
+                max-width: 130px;
+                margin: 0 auto;
+                overflow: hidden;
+                @include rounded(4px);
                 img {
                     height: 100%;
                     width: auto;
@@ -881,6 +893,9 @@
         .contract-body {
             padding-left: 0;
             padding-right: 0;
+            background-color: #ebebeb;
+            color: #888888;
+            @include box-shadow(0 2px 6px 0 rgba(0,0,0,.4));
             .absolute-hands {
                 width: 120%;
                 top: 130%;
@@ -901,18 +916,18 @@
             margin: 0;
             padding-bottom: 20px;
             .flip-clock-label {
-                color: white;
+                color: #888888;
                 font-size: 12px;
                 text-transform: uppercase;
-                bottom: -15px;
+                bottom: -5px;
                 top: auto;
             }
             .flip-clock-divider {
                 height: 60px;
                 .flip-clock-dot {
-                    background: #438199;
-                    width: 7px;
-                    height: 7px;
+                    background: #888888;
+                    width: 4px;
+                    height: 4px;
                     &.bottom {
                         bottom: auto;
                         top: 35px;
@@ -923,44 +938,17 @@
                 }
                 &.days {
                     .flip-clock-label {
-                        right: -65px;
-                        @include breakpoint($md-only) {
-                            right: -55px;
-                        }
-                        @include breakpoint($sm-only) {
-                            right: -50px;
-                        }
-                        @include breakpoint($xxs) {
-                            right: -55px;
-                        }
+                        right: -50px;
                     }
                 }
                 &.hours {
                     .flip-clock-label {
-                        right: -73px;
-                        @include breakpoint($md-only) {
-                            right: -63px;
-                        }
-                        @include breakpoint($sm-only) {
-                            right: -58px;
-                        }
-                        @include breakpoint($xxs) {
-                            right: -63px;
-                        }
+                        right: -55px;
                     }
                 }
                 &.minutes {
                     .flip-clock-label {
-                        right: -77px;
-                        @include breakpoint($md-only) {
-                            right: -67px;
-                        }
-                        @include breakpoint($sm-only) {
-                            right: -64px;
-                        }
-                        @include breakpoint($xxs) {
-                            right: -67px;
-                        }
+                        right: -60px;
                     }
                 }
                 @include breakpoint($sm-only) {
@@ -977,13 +965,19 @@
                 }
             }
             ul {
-                width: 40px;
+                width: 30px;
                 height: 50px;
+                margin: 0;
+                @include box-shadow(none);
                 li {
                     line-height: 50px;
+                    background-color: #ebebeb;
                     .inn {
                         font-size: 40px;
-                        background: #438199;
+                        color: #888888;
+                        background-color: #ebebeb;
+                        font-family: "Lato-Thin";
+                        text-shadow: none;
                     }
                 }
                 @include breakpoint($md-only) {
@@ -1014,6 +1008,8 @@
         }
         .contract-footer {
             .wrapper {
+                background-color: #ebebeb;
+                color: #888888;
                 @include rounded(0 0 20px 20px);
                 @include box-shadow(0 2px 6px 0 rgba(0,0,0,.4));
             }
@@ -1143,13 +1139,13 @@
             background-position: top 50% right 10px;
             background-size: 15px;
             background-repeat: no-repeat;
+            -webkit-appearance: initial;
             border: 2px solid $blue_green_color;
             cursor: pointer;
             font-size: 16px;
             font-family: 'Lato-Regular';
             width: 100%;
             padding: 10px 30px 10px 15px;
-            -webkit-appearance: initial;
             @include rounded(4px);
         }
     }
@@ -1416,20 +1412,27 @@
         }
     }
     &.contract-response-message {
+        overflow: hidden;
+        padding-bottom: 10px;
         .wrapper {
-            border: 2px solid $blue_green_color;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            @include rounded(4px);
+            position: relative;
+            padding: 10px 15px 30px;
+            @include rounded(0 0 6px 6px);
+            @include box-shadow(0 2px 6px 0 rgba(0,0,0,.4));
             .close-btn {
                 color: $blue_green_color;
                 opacity: 1;
                 font-size: 30px;
                 position: absolute;
                 right: 10px;
-                top: 0;
+                top: 5px;
                 font-weight: 700;
                 cursor: pointer;
+            }
+            h1 {
+                i {
+                    color: #888888;
+                }
             }
         }
     }

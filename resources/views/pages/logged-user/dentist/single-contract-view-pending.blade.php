@@ -14,7 +14,7 @@
             <div class="row fs-0 flex-xs">
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                        <img alt="Dentist avatar" src="{{$dentist->avatar_url}}" class="max-width-120"/>
+                        <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
                     </figure>
                     <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$dentist->name}}</div>
                     <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$dentist->email}}</div>
@@ -32,11 +32,21 @@
                 </div>
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                        <img alt="Patient avatar" src="/assets/images/no-avatar.png" class="max-width-120"/>
+                        <img alt="Patient avatar" src="/assets/images/no-avatar.png"/>
                     </figure>
                     <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">{{$contract->patient_fname}} {{$contract->patient_lname}}</div>
                     <div class="calibri-light">
                         <a href="mailto:{{$contract->patient_email}}" class="light-gray-color fs-18 fs-xs-16 word-break">{{$contract->patient_email}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row camping-for-popups">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module">
+                    <div class="wrapper text-center">
+                        <div class="close-btn">×</div>
+                        <div class="fs-90 line-height-90 blue-green-color">!</div>
+                        <h1 class="lato-bold fs-20 padding-top-15">WARNING</h1>
+                        <div class="fs-18 fs-xs-16 calibri-light padding-top-10">Your patient has received their contract but has not yet signed it. Check again later.</div>
                     </div>
                 </div>
             </div>

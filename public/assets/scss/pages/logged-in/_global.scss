@@ -236,6 +236,16 @@ body.logged-in {
                     width: 75%;
                     margin: 0 auto;
                 }
+                @include breakpoint($xs) {
+                    padding: 30px 15px;
+                    .input-row {
+                        margin: 0;
+                    }
+                    .additional-text {
+                        width: 100%;
+                        margin: 0 auto;
+                    }
+                }
             }
         }
     }

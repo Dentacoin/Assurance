@@ -3,8 +3,8 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 text-center">
-                <h2 class="lato-bold fs-45 fs-xs-30 padding-top-60 padding-top-xs-30">Ready to do it now? </h2>
-                <div class="fs-20 fs-xs-18 padding-top-15 padding-bottom-20">Just follow the steps below in order to purchase Dentacoin (DCN) with your bank card.</div>
+                <h2 class="lato-bold fs-45 fs-xs-30 padding-top-60 padding-top-xs-30">Ready to do it now?</h2>
+                <div class="fs-20 fs-xs-18 padding-top-15 padding-bottom-20">Follow the steps below to easily buy Dentacoin (DCN) with your bank card and charge your account.</div>
             </div>
         </div>
         <div class="row">

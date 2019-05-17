@@ -69,6 +69,13 @@
   font-style: normal;
   font-display: block; }
 @font-face {
+  font-family: "Lato-Thin";
+  src: url("/assets/fonts/Lato-Thin.eot");
+  src: url("/assets/fonts/Lato-Thin.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/Lato-Thin.woff2") format("woff2"), url("/assets/fonts/Lato-Thin.woff") format("woff"), url("/assets/fonts/Lato-Thin.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block; }
+@font-face {
   font-family: "Calibri-Regular";
   src: url("/assets/fonts/Calibri.eot");
   src: url("/assets/fonts/Calibri.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/Calibri.woff2") format("woff2"), url("/assets/fonts/Calibri.woff") format("woff"), url("/assets/fonts/Calibri.ttf") format("truetype");
@@ -89,6 +96,9 @@
 
 .lato-bold {
   font-family: "Lato-Bold"; }
+
+.lato-thin {
+  font-family: "Lato-Thin"; }
 
 .calibri-bold {
   font-family: "Calibri-Bold"; }
@@ -379,7 +389,8 @@
     background-image: url(/assets/images/green-arrow-rounded.png);
     background-repeat: no-repeat;
     background-size: 22px;
-    background-position: center right 10px; }
+    background-position: center right 10px;
+    padding-right: 35px; }
   .custom-input:focus {
     -webkit-box-shadow: 0px 2px 10px 0 #679dca;
     -moz-box-shadow: 0px 2px 10px 0 #679dca;
@@ -644,6 +655,15 @@
     display: flex; }
   .module.step-fields .single-row.no-border {
     border: 0; }
+  .module.step-fields .single-row.relative-position {
+    position: relative; }
+  .module.step-fields .single-row .absolute-currency-label {
+    display: none;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); }
   .module.step-fields .single-row label {
     width: 40%;
     font-weight: normal;
@@ -862,7 +882,7 @@
           color: white; }
     .module.contract-tile .tile-wrapper .contract-info {
       width: calc(100% - 120px);
-      padding-left: 15px; }
+      padding-left: 10px; }
       .module.contract-tile .tile-wrapper .contract-info .title {
         word-wrap: break-word; }
       .module.contract-tile .tile-wrapper .contract-info .btn-container {
@@ -968,7 +988,14 @@
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
   .module.single-contract-tile .contract-participant figure {
     height: 100px;
-    position: relative; }
+    position: relative;
+    max-width: 130px;
+    margin: 0 auto;
+    overflow: hidden;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px; }
     .module.single-contract-tile .contract-participant figure img {
       height: 100%;
       width: auto;
@@ -1008,7 +1035,13 @@
       display: block; } }
 .module.single-contract-tile .contract-body {
   padding-left: 0;
-  padding-right: 0; }
+  padding-right: 0;
+  background-color: #ebebeb;
+  color: #888888;
+  -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
   .module.single-contract-tile .contract-body .absolute-hands {
     width: 120%;
     top: 130%;
@@ -1030,55 +1063,28 @@
   margin: 0;
   padding-bottom: 20px; }
   .module.single-contract-tile .clock .flip-clock-label {
-    color: white;
+    color: #888888;
     font-size: 12px;
     text-transform: uppercase;
-    bottom: -15px;
+    bottom: -5px;
     top: auto; }
   .module.single-contract-tile .clock .flip-clock-divider {
     height: 60px; }
     .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot {
-      background: #438199;
-      width: 7px;
-      height: 7px; }
+      background: #888888;
+      width: 4px;
+      height: 4px; }
       .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot.bottom {
         bottom: auto;
         top: 35px; }
       .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot.top {
         top: 20px; }
     .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
-      right: -65px; }
-      @media screen and (min-width: 992px) and (max-width: 1199px) {
-        .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
-          right: -55px; } }
-      @media screen and (min-width: 768px) and (max-width: 991px) {
-        .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
-          right: -50px; } }
-      @media screen and (max-width: 450px) {
-        .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
-          right: -55px; } }
+      right: -50px; }
     .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
-      right: -73px; }
-      @media screen and (min-width: 992px) and (max-width: 1199px) {
-        .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
-          right: -63px; } }
-      @media screen and (min-width: 768px) and (max-width: 991px) {
-        .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
-          right: -58px; } }
-      @media screen and (max-width: 450px) {
-        .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
-          right: -63px; } }
+      right: -55px; }
     .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
-      right: -77px; }
-      @media screen and (min-width: 992px) and (max-width: 1199px) {
-        .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
-          right: -67px; } }
-      @media screen and (min-width: 768px) and (max-width: 991px) {
-        .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
-          right: -64px; } }
-      @media screen and (max-width: 450px) {
-        .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
-          right: -67px; } }
+      right: -60px; }
     @media screen and (min-width: 768px) and (max-width: 991px) {
       .module.single-contract-tile .clock .flip-clock-divider {
         width: 15px; }
@@ -1090,13 +1096,22 @@
         .module.single-contract-tile .clock .flip-clock-divider:first-child {
           width: 0; } }
   .module.single-contract-tile .clock ul {
-    width: 40px;
-    height: 50px; }
+    width: 30px;
+    height: 50px;
+    margin: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    box-shadow: none; }
     .module.single-contract-tile .clock ul li {
-      line-height: 50px; }
+      line-height: 50px;
+      background-color: #ebebeb; }
       .module.single-contract-tile .clock ul li .inn {
         font-size: 40px;
-        background: #438199; }
+        color: #888888;
+        background-color: #ebebeb;
+        font-family: "Lato-Thin";
+        text-shadow: none; }
     @media screen and (min-width: 992px) and (max-width: 1199px) {
       .module.single-contract-tile .clock ul {
         width: 30px; }
@@ -1113,6 +1128,8 @@
         .module.single-contract-tile .clock ul li .inn {
           font-size: 35px; } }
 .module.single-contract-tile .contract-footer .wrapper {
+  background-color: #ebebeb;
+  color: #888888;
   -webkit-border-radius: 0 0 20px 20px;
   -moz-border-radius: 0 0 20px 20px;
   -ms-border-radius: 0 0 20px 20px;
@@ -1245,13 +1262,13 @@
     background-position: top 50% right 10px;
     background-size: 15px;
     background-repeat: no-repeat;
+    -webkit-appearance: initial;
     border: 2px solid #126585;
     cursor: pointer;
     font-size: 16px;
     font-family: 'Lato-Regular';
     width: 100%;
     padding: 10px 30px 10px 15px;
-    -webkit-appearance: initial;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
@@ -1467,23 +1484,31 @@
       width: 20px; }
   .module.profile-menu li a span {
     vertical-align: middle; }
-.module.contract-response-message .wrapper {
-  border: 2px solid #126585;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  border-radius: 4px; }
-  .module.contract-response-message .wrapper .close-btn {
-    color: #126585;
-    opacity: 1;
-    font-size: 30px;
-    position: absolute;
-    right: 10px;
-    top: 0;
-    font-weight: 700;
-    cursor: pointer; }
+.module.contract-response-message {
+  overflow: hidden;
+  padding-bottom: 10px; }
+  .module.contract-response-message .wrapper {
+    position: relative;
+    padding: 10px 15px 30px;
+    -webkit-border-radius: 0 0 6px 6px;
+    -moz-border-radius: 0 0 6px 6px;
+    -ms-border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px;
+    -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
+    .module.contract-response-message .wrapper .close-btn {
+      color: #126585;
+      opacity: 1;
+      font-size: 30px;
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      font-weight: 700;
+      cursor: pointer; }
+    .module.contract-response-message .wrapper h1 i {
+      color: #888888; }
 
 body {
   background-color: #222d32; }

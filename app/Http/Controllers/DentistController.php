@@ -49,8 +49,15 @@ class DentistController extends Controller
 
     protected function getCreateContractView()   {
         $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
+        $existing_company_registration_number = TemporallyContract::where(array('dentist_id' => $current_logged_dentist->id))->whereNotNull('professional_company_number')->get()->first();
+
+        $dentist_registration_number = '';
+        if($existing_company_registration_number && $existing_company_registration_number->professional_company_number != '') {
+            $dentist_registration_number = $existing_company_registration_number->professional_company_number;
+        }
+
         $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
-        $params = ['countries' => (new APIRequestsController())->getAllCountries(), 'current_logged_dentist' => $current_logged_dentist, 'calculator_proposals' => $calculator_proposals];
+        $params = ['countries' => (new APIRequestsController())->getAllCountries(), 'current_logged_dentist' => $current_logged_dentist, 'calculator_proposals' => $calculator_proposals, 'dentist_registration_number' => $dentist_registration_number];
         if(!empty(Input::get('renew-contract'))) {
             $contract = TemporallyContract::where(array('slug' => Input::get('renew-contract'), 'status' => 'cancelled'))->get()->first();
             if(!empty($contract)) {
@@ -123,7 +130,7 @@ class DentistController extends Controller
                 }
             }
         } else {
-            return redirect()->route('home')->with(['error' => 'Please select avatar and try again.']);
+            return redirect()->route('home')->with(['error' => 'Please select profile picture and try again.']);
         }
 
         //handle the API response
@@ -330,7 +337,7 @@ class DentistController extends Controller
             $body = '<!DOCTYPE html><html><head></head><body style="font-size: 16px;"><div>Dear '.$temporally_contract->patient_fname.' '.$temporally_contract->patient_lname.',<br><br><br>I have created an individualized Assurance Contract for you. It entitles you to prevention-focused dental services against an affordable monthly premium in Dentacoin (DCN) currency*.<br><br>It’s very easy to start: just click on the button below, sign up, check my proposal and follow the instructions if you are interested:<br><br><br><a href="'.route('contract-proposal', ['slug' => $temporally_contract->slug]).'" style="font-size: 20px;color: #126585;background-color: white;padding: 10px 20px;text-decoration: none;font-weight: bold;border-radius: 4px;border: 2px solid #126585;" target="_blank">SEE YOUR ASSURANCE CONTRACT</a><br><br><br>Looking forward to seeing you onboard!<br><br>Regards,<br><b>'.$sender->name.'</b><br><br><br><i style="font-size: 13px;">* Dentacoin is the first dental cryptocurrency which can be earned through the Dentacoin tools, used as a means of payment for dental services and assurance fees, and exchanged to any other crypto or traditional currency.</i></div></body></html>';
 
             Mail::send(array(), array(), function($message) use ($body, $data, $sender) {
-                $message->to($data['email'])->subject('Dentist '.$sender->name.' invited you to join Dentacoin Assurance');
+                $message->to($data['email'])->subject('See & sign your Assurance contract');
                 $message->from($sender->email, $sender->name)->replyTo($sender->email, $sender->name);
                 $message->setBody($body, 'text/html');
             });

@@ -14,10 +14,13 @@
         }
     }
     .camping-withdraw-time-left-section {
+        h2 {
+            color: #888888;
+        }
         .clock-container {
             margin-top: 40px;
             margin-bottom: 20px;
-            background-color: $blue_green_color;
+            background-color: #ebebeb;
             @include rounded(20px);
             @include box-shadow(0 2px 6px 0 rgba(0, 0, 0, 0.4));
             .clock {
@@ -27,48 +30,39 @@
                 margin: 0;
                 padding-bottom: 20px;
                 .flip-clock-label {
-                    color: white;
+                    color: #888888;
                     font-size: 12px;
                     text-transform: uppercase;
-                    bottom: -25px;
+                    bottom: -5px;
                     top: auto;
                 }
                 .flip-clock-divider {
                     height: 60px;
                     .flip-clock-dot {
-                        width: 7px;
-                        height: 7px;
-                        left: 6px;
+                        background: #888888;
+                        width: 4px;
+                        height: 4px;
                         &.bottom {
                             bottom: auto;
-                            top: 40px;
+                            top: 35px;
                         }
                         &.top {
-                            top: 25px;
+                            top: 20px;
                         }
                     }
                     &.days {
                         .flip-clock-label {
-                            right: -75px;
-                            @include breakpoint($xxs) {
-                                right: -55px;
-                            }
+                            right: -50px;
                         }
                     }
                     &.hours {
                         .flip-clock-label {
-                            right: -80px;
-                            @include breakpoint($xxs) {
-                                right: -63px;
-                            }
+                            right: -55px;
                         }
                     }
                     &.minutes {
                         .flip-clock-label {
-                            right: -85px;
-                            @include breakpoint($xxs) {
-                                right: -67px;
-                            }
+                            right: -60px;
                         }
                     }
                     @include breakpoint($sm-only) {
@@ -85,12 +79,35 @@
                     }
                 }
                 ul {
-                    width: 50px;
-                    height: 60px;
+                    width: 30px;
+                    height: 50px;
+                    margin: 0;
+                    @include box-shadow(none);
                     li {
-                        line-height: 60px;
+                        line-height: 50px;
+                        background-color: #ebebeb;
                         .inn {
-                            font-size: 45px;
+                            font-size: 40px;
+                            color: #888888;
+                            background-color: #ebebeb;
+                            font-family: "Lato-Thin";
+                            text-shadow: none;
+                        }
+                    }
+                    @include breakpoint($md-only) {
+                        width: 30px;
+                        li {
+                            .inn {
+                                font-size: 35px;
+                            }
+                        }
+                    }
+                    @include breakpoint($sm-only) {
+                        width: 25px;
+                        li {
+                            .inn {
+                                font-size: 30px;
+                            }
                         }
                     }
                     @include breakpoint($xxs) {
@@ -104,7 +121,23 @@
                 }
             }
             &.red-background {
-                background-color: #d64949;
+                .clock {
+                    .flip-clock-label {
+                        color: #d64949;
+                    }
+                    .flip-clock-divider {
+                        .flip-clock-dot {
+                            background: #d64949;
+                        }
+                    }
+                    ul {
+                        li {
+                            .inn {
+                                color: #d64949;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

@@ -69,6 +69,13 @@
   font-style: normal;
   font-display: block; }
 @font-face {
+  font-family: "Lato-Thin";
+  src: url("/assets/fonts/Lato-Thin.eot");
+  src: url("/assets/fonts/Lato-Thin.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/Lato-Thin.woff2") format("woff2"), url("/assets/fonts/Lato-Thin.woff") format("woff"), url("/assets/fonts/Lato-Thin.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block; }
+@font-face {
   font-family: "Calibri-Regular";
   src: url("/assets/fonts/Calibri.eot");
   src: url("/assets/fonts/Calibri.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/Calibri.woff2") format("woff2"), url("/assets/fonts/Calibri.woff") format("woff"), url("/assets/fonts/Calibri.ttf") format("truetype");
@@ -89,6 +96,9 @@
 
 .lato-bold {
   font-family: "Lato-Bold"; }
+
+.lato-thin {
+  font-family: "Lato-Thin"; }
 
 .calibri-bold {
   font-family: "Calibri-Bold"; }
@@ -7470,6 +7480,14 @@ nav.sidenav {
 .word-break {
   word-break: break-all; }
 
+select.select-mac-fix {
+  background-image: url("/assets/images/select-arrow.svg");
+  background-position: top 50% right 10px;
+  background-size: 15px;
+  background-repeat: no-repeat;
+  -webkit-appearance: initial;
+  padding-right: 30px; }
+
 .white-blue-green-btn {
   font-size: 20px;
   color: white;
@@ -7693,7 +7711,8 @@ nav.sidenav {
     background-image: url(/assets/images/green-arrow-rounded.png);
     background-repeat: no-repeat;
     background-size: 22px;
-    background-position: center right 10px; }
+    background-position: center right 10px;
+    padding-right: 35px; }
   .custom-input:focus {
     -webkit-box-shadow: 0px 2px 10px 0 #679dca;
     -moz-box-shadow: 0px 2px 10px 0 #679dca;
@@ -7958,6 +7977,15 @@ nav.sidenav {
     display: flex; }
   .module.step-fields .single-row.no-border {
     border: 0; }
+  .module.step-fields .single-row.relative-position {
+    position: relative; }
+  .module.step-fields .single-row .absolute-currency-label {
+    display: none;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); }
   .module.step-fields .single-row label {
     width: 40%;
     font-weight: normal;
@@ -8176,7 +8204,7 @@ nav.sidenav {
           color: white; }
     .module.contract-tile .tile-wrapper .contract-info {
       width: calc(100% - 120px);
-      padding-left: 15px; }
+      padding-left: 10px; }
       .module.contract-tile .tile-wrapper .contract-info .title {
         word-wrap: break-word; }
       .module.contract-tile .tile-wrapper .contract-info .btn-container {
@@ -8282,7 +8310,14 @@ nav.sidenav {
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
   .module.single-contract-tile .contract-participant figure {
     height: 100px;
-    position: relative; }
+    position: relative;
+    max-width: 130px;
+    margin: 0 auto;
+    overflow: hidden;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px; }
     .module.single-contract-tile .contract-participant figure img {
       height: 100%;
       width: auto;
@@ -8322,7 +8357,13 @@ nav.sidenav {
       display: block; } }
 .module.single-contract-tile .contract-body {
   padding-left: 0;
-  padding-right: 0; }
+  padding-right: 0;
+  background-color: #ebebeb;
+  color: #888888;
+  -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
   .module.single-contract-tile .contract-body .absolute-hands {
     width: 120%;
     top: 130%;
@@ -8344,55 +8385,28 @@ nav.sidenav {
   margin: 0;
   padding-bottom: 20px; }
   .module.single-contract-tile .clock .flip-clock-label {
-    color: white;
+    color: #888888;
     font-size: 12px;
     text-transform: uppercase;
-    bottom: -15px;
+    bottom: -5px;
     top: auto; }
   .module.single-contract-tile .clock .flip-clock-divider {
     height: 60px; }
     .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot {
-      background: #438199;
-      width: 7px;
-      height: 7px; }
+      background: #888888;
+      width: 4px;
+      height: 4px; }
       .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot.bottom {
         bottom: auto;
         top: 35px; }
       .module.single-contract-tile .clock .flip-clock-divider .flip-clock-dot.top {
         top: 20px; }
     .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
-      right: -65px; }
-      @media screen and (min-width: 992px) and (max-width: 1199px) {
-        .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
-          right: -55px; } }
-      @media screen and (min-width: 768px) and (max-width: 991px) {
-        .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
-          right: -50px; } }
-      @media screen and (max-width: 450px) {
-        .module.single-contract-tile .clock .flip-clock-divider.days .flip-clock-label {
-          right: -55px; } }
+      right: -50px; }
     .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
-      right: -73px; }
-      @media screen and (min-width: 992px) and (max-width: 1199px) {
-        .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
-          right: -63px; } }
-      @media screen and (min-width: 768px) and (max-width: 991px) {
-        .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
-          right: -58px; } }
-      @media screen and (max-width: 450px) {
-        .module.single-contract-tile .clock .flip-clock-divider.hours .flip-clock-label {
-          right: -63px; } }
+      right: -55px; }
     .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
-      right: -77px; }
-      @media screen and (min-width: 992px) and (max-width: 1199px) {
-        .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
-          right: -67px; } }
-      @media screen and (min-width: 768px) and (max-width: 991px) {
-        .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
-          right: -64px; } }
-      @media screen and (max-width: 450px) {
-        .module.single-contract-tile .clock .flip-clock-divider.minutes .flip-clock-label {
-          right: -67px; } }
+      right: -60px; }
     @media screen and (min-width: 768px) and (max-width: 991px) {
       .module.single-contract-tile .clock .flip-clock-divider {
         width: 15px; }
@@ -8404,13 +8418,22 @@ nav.sidenav {
         .module.single-contract-tile .clock .flip-clock-divider:first-child {
           width: 0; } }
   .module.single-contract-tile .clock ul {
-    width: 40px;
-    height: 50px; }
+    width: 30px;
+    height: 50px;
+    margin: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    box-shadow: none; }
     .module.single-contract-tile .clock ul li {
-      line-height: 50px; }
+      line-height: 50px;
+      background-color: #ebebeb; }
       .module.single-contract-tile .clock ul li .inn {
         font-size: 40px;
-        background: #438199; }
+        color: #888888;
+        background-color: #ebebeb;
+        font-family: "Lato-Thin";
+        text-shadow: none; }
     @media screen and (min-width: 992px) and (max-width: 1199px) {
       .module.single-contract-tile .clock ul {
         width: 30px; }
@@ -8427,6 +8450,8 @@ nav.sidenav {
         .module.single-contract-tile .clock ul li .inn {
           font-size: 35px; } }
 .module.single-contract-tile .contract-footer .wrapper {
+  background-color: #ebebeb;
+  color: #888888;
   -webkit-border-radius: 0 0 20px 20px;
   -moz-border-radius: 0 0 20px 20px;
   -ms-border-radius: 0 0 20px 20px;
@@ -8555,28 +8580,17 @@ nav.sidenav {
     -ms-transition: 0.3s;
     transition: 0.3s; }
   .module.custom-google-select-style select {
-    border: 2px solid #126585;
-    cursor: pointer;
-    font-size: 16px;
-    font-family: 'Lato-Regular';
-    width: 100%;
-    padding: 10px 15px;
-    -webkit-appearance: initial;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    border-radius: 4px;
     background-image: url("/assets/images/select-arrow.svg");
     background-position: top 50% right 10px;
     background-size: 15px;
     background-repeat: no-repeat;
+    -webkit-appearance: initial;
     border: 2px solid #126585;
     cursor: pointer;
     font-size: 16px;
     font-family: 'Lato-Regular';
     width: 100%;
     padding: 10px 30px 10px 15px;
-    -webkit-appearance: initial;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
@@ -8792,23 +8806,31 @@ nav.sidenav {
       width: 20px; }
   .module.profile-menu li a span {
     vertical-align: middle; }
-.module.contract-response-message .wrapper {
-  border: 2px solid #126585;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  border-radius: 4px; }
-  .module.contract-response-message .wrapper .close-btn {
-    color: #126585;
-    opacity: 1;
-    font-size: 30px;
-    position: absolute;
-    right: 10px;
-    top: 0;
-    font-weight: 700;
-    cursor: pointer; }
+.module.contract-response-message {
+  overflow: hidden;
+  padding-bottom: 10px; }
+  .module.contract-response-message .wrapper {
+    position: relative;
+    padding: 10px 15px 30px;
+    -webkit-border-radius: 0 0 6px 6px;
+    -moz-border-radius: 0 0 6px 6px;
+    -ms-border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px;
+    -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
+    .module.contract-response-message .wrapper .close-btn {
+      color: #126585;
+      opacity: 1;
+      font-size: 30px;
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      font-weight: 700;
+      cursor: pointer; }
+    .module.contract-response-message .wrapper h1 i {
+      color: #888888; }
 
 header {
   width: 100%;
@@ -8844,14 +8866,14 @@ header {
         header > .container nav ul li.active {
           font-family: 'Lato-Black';
           text-transform: uppercase; }
-    header > .container .logged-user > a {
+    header > .container .logged-user-nav > a {
       font-size: 16px;
       color: black;
       display: inline-block;
-      padding: 10px 0; }
-      header > .container .logged-user > a span {
+      padding: 15px 0; }
+      header > .container .logged-user-nav > a span {
         vertical-align: middle; }
-      header > .container .logged-user > a figure {
+      header > .container .logged-user-nav > a figure {
         width: 40px;
         margin-left: 10px;
         overflow: hidden;
@@ -8859,30 +8881,100 @@ header {
         -moz-border-radius: 50%;
         -ms-border-radius: 50%;
         border-radius: 50%; }
-    header > .container .logged-user .hidden-box {
+    header > .container .logged-user-nav .up-arrow {
+      color: white;
+      position: absolute;
+      top: calc(100% - 15px);
+      font-size: 16px;
+      z-index: 5000000000;
+      right: 30px;
+      display: none; }
+      header > .container .logged-user-nav .up-arrow.show-this {
+        display: block; }
+    header > .container .logged-user-nav.with-hub .up-arrow {
+      color: #669ccc; }
+    header > .container .logged-user-nav .hidden-box {
       display: none;
+      visibility: hidden;
       position: absolute;
       min-width: 270px;
-      padding: 15px 0;
-      top: calc(100% - 10px);
+      max-width: 450px;
+      top: 100%;
       right: 0;
       background-color: white;
+      overflow: hidden;
       z-index: 50;
-      border: 1px solid #e8e8e8;
-      -webkit-box-shadow: 0px 0px 7px 3px rgba(234, 234, 234, 0.5);
-      -moz-box-shadow: 0px 0px 7px 3px rgba(234, 234, 234, 0.5);
-      -ms-box-shadow: 0px 0px 7px 3px rgba(234, 234, 234, 0.5);
-      box-shadow: 0px 0px 7px 3px rgba(234, 234, 234, 0.5); }
-      header > .container .logged-user .hidden-box .white-blue-green-btn {
-        font-size: 16px;
-        padding: 5px 8px; }
-      header > .container .logged-user .hidden-box .logout {
-        font-size: 16px;
-        color: black; }
-        header > .container .logged-user .hidden-box .logout i {
-          font-size: 24px;
-          vertical-align: middle;
-          margin-right: 5px; }
+      -webkit-box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.5);
+      -moz-box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.5);
+      -ms-box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.5);
+      box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.5);
+      -webkit-border-radius: 15px;
+      -moz-border-radius: 15px;
+      -ms-border-radius: 15px;
+      border-radius: 15px; }
+      header > .container .logged-user-nav .hidden-box .hidden-box-hub {
+        background-image: url("/assets/images/dentacoin-ecosystem-background.jpg");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+        padding: 30px 50px 15px;
+        text-align: left; }
+        header > .container .logged-user-nav .hidden-box .hidden-box-hub figure figcaption {
+          color: white; }
+        header > .container .logged-user-nav .hidden-box .hidden-box-hub .close-btn {
+          display: none;
+          text-align: right;
+          padding-bottom: 15px; }
+          header > .container .logged-user-nav .hidden-box .hidden-box-hub .close-btn a {
+            font-size: 20px;
+            color: white; }
+            header > .container .logged-user-nav .hidden-box .hidden-box-hub .close-btn a span {
+              background: white;
+              color: black;
+              width: 25px;
+              height: 25px;
+              display: inline-block;
+              text-align: center;
+              line-height: 25px;
+              -webkit-border-radius: 50%;
+              -moz-border-radius: 50%;
+              -ms-border-radius: 50%;
+              border-radius: 50%; }
+        @media screen and (max-width: 767px) {
+          header > .container .logged-user-nav .hidden-box .hidden-box-hub .close-btn {
+            display: block; } }
+      header > .container .logged-user-nav .hidden-box .hidden-box-footer {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background: white; }
+        header > .container .logged-user-nav .hidden-box .hidden-box-footer .white-blue-rounded-btn {
+          padding: 7px 15px; }
+        header > .container .logged-user-nav .hidden-box .hidden-box-footer .logout {
+          font-size: 16px;
+          color: black; }
+          header > .container .logged-user-nav .hidden-box .hidden-box-footer .logout i {
+            font-size: 24px;
+            vertical-align: middle;
+            margin-right: 5px; }
+      header > .container .logged-user-nav .hidden-box.show-this {
+        display: block;
+        visibility: visible; }
+    @media screen and (max-width: 767px) {
+      header > .container .logged-user-nav.with-hub {
+        position: static; }
+        header > .container .logged-user-nav.with-hub .up-arrow {
+          display: none; }
+        header > .container .logged-user-nav.with-hub .hidden-box {
+          min-width: 0;
+          max-width: none;
+          width: 100%;
+          top: 0;
+          height: 100vh;
+          background-color: rgba(0, 0, 0, 0.6);
+          overflow: auto; }
+          header > .container .logged-user-nav.with-hub .hidden-box .hidden-box-hub {
+            padding: 10px 15px 15px; } }
   header .show-on-mobile {
     display: none; }
     @media screen and (max-width: 991px) {
@@ -9468,6 +9560,14 @@ body.logged-in .my-profile-page-content {
     .bootbox.recipe-popup .modal-dialog .modal-body .additional-text {
       width: 75%;
       margin: 0 auto; }
+    @media screen and (max-width: 767px) {
+      .bootbox.recipe-popup .modal-dialog .modal-body {
+        padding: 30px 15px; }
+        .bootbox.recipe-popup .modal-dialog .modal-body .input-row {
+          margin: 0; }
+        .bootbox.recipe-popup .modal-dialog .modal-body .additional-text {
+          width: 100%;
+          margin: 0 auto; } }
 
 .line-crossed-title {
   position: relative; }
@@ -9907,7 +10007,16 @@ section.contracts-list-section {
     margin: 0 auto; }
   @media screen and (max-width: 1450px) {
     section.contracts-list-section h1 {
+      width: 85%; } }
+  @media screen and (max-width: 1199px) {
+    section.contracts-list-section h1 {
       width: 100%; } }
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    section.contracts-list-section {
+      background-size: 130%; } }
+  @media screen and (max-width: 767px) {
+    section.contracts-list-section {
+      background-size: 140%; } }
 
 section.open-new-assurance-contact-section .combobox-container .input-group {
   display: block; }
@@ -10452,10 +10561,12 @@ section.congratulation-and-time-section {
   background-color: #ebebeb; }
 .single-contract-view-section .camping-withdraw-section .dentist-withdraw:hover .st0 {
   fill: #126585; }
+.single-contract-view-section .camping-withdraw-time-left-section h2 {
+  color: #888888; }
 .single-contract-view-section .camping-withdraw-time-left-section .clock-container {
   margin-top: 40px;
   margin-bottom: 20px;
-  background-color: #126585;
+  background-color: #ebebeb;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;
@@ -10471,37 +10582,28 @@ section.congratulation-and-time-section {
     margin: 0;
     padding-bottom: 20px; }
     .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-label {
-      color: white;
+      color: #888888;
       font-size: 12px;
       text-transform: uppercase;
-      bottom: -25px;
+      bottom: -5px;
       top: auto; }
     .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider {
       height: 60px; }
       .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider .flip-clock-dot {
-        width: 7px;
-        height: 7px;
-        left: 6px; }
+        background: #888888;
+        width: 4px;
+        height: 4px; }
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider .flip-clock-dot.bottom {
           bottom: auto;
-          top: 40px; }
+          top: 35px; }
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider .flip-clock-dot.top {
-          top: 25px; }
+          top: 20px; }
       .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.days .flip-clock-label {
-        right: -75px; }
-        @media screen and (max-width: 450px) {
-          .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.days .flip-clock-label {
-            right: -55px; } }
+        right: -50px; }
       .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.hours .flip-clock-label {
-        right: -80px; }
-        @media screen and (max-width: 450px) {
-          .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.hours .flip-clock-label {
-            right: -63px; } }
+        right: -55px; }
       .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.minutes .flip-clock-label {
-        right: -85px; }
-        @media screen and (max-width: 450px) {
-          .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider.minutes .flip-clock-label {
-            right: -67px; } }
+        right: -60px; }
       @media screen and (min-width: 768px) and (max-width: 991px) {
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider {
           width: 15px; }
@@ -10513,18 +10615,42 @@ section.congratulation-and-time-section {
           .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock .flip-clock-divider:first-child {
             width: 0; } }
     .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul {
-      width: 50px;
-      height: 60px; }
+      width: 30px;
+      height: 50px;
+      margin: 0;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      -ms-box-shadow: none;
+      box-shadow: none; }
       .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul li {
-        line-height: 60px; }
+        line-height: 50px;
+        background-color: #ebebeb; }
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul li .inn {
-          font-size: 45px; }
+          font-size: 40px;
+          color: #888888;
+          background-color: #ebebeb;
+          font-family: "Lato-Thin";
+          text-shadow: none; }
+      @media screen and (min-width: 992px) and (max-width: 1199px) {
+        .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul {
+          width: 30px; }
+          .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul li .inn {
+            font-size: 35px; } }
+      @media screen and (min-width: 768px) and (max-width: 991px) {
+        .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul {
+          width: 25px; }
+          .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul li .inn {
+            font-size: 30px; } }
       @media screen and (max-width: 450px) {
         .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul {
           width: 30px; }
           .single-contract-view-section .camping-withdraw-time-left-section .clock-container .clock ul li .inn {
             font-size: 35px; } }
-  .single-contract-view-section .camping-withdraw-time-left-section .clock-container.red-background {
-    background-color: #d64949; }
+  .single-contract-view-section .camping-withdraw-time-left-section .clock-container.red-background .clock .flip-clock-label {
+    color: #d64949; }
+  .single-contract-view-section .camping-withdraw-time-left-section .clock-container.red-background .clock .flip-clock-divider .flip-clock-dot {
+    background: #d64949; }
+  .single-contract-view-section .camping-withdraw-time-left-section .clock-container.red-background .clock ul li .inn {
+    color: #d64949; }
 
 /*# sourceMappingURL=style.css.map */

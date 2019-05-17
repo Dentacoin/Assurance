@@ -42,7 +42,7 @@
         @endif
         <li class="inline-block">
             <a href="{{route('my-contracts')}}" itemprop="url">
-                <span itemprop="name"><i class="fa fa-bars" aria-hidden="true"></i> List view all contracts</span>
+                <span itemprop="name"><i class="fa fa-bars" aria-hidden="true"></i> View all contracts</span>
             </a>
         </li>
     </ul>

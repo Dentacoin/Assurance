@@ -82,7 +82,7 @@
             </div>
         @endif
         <h3 class="calibri-bold fs-30 fs-xs-22 dark-color padding-top-50">CONTRACT CONDITIONS</h3>
-        <h3 class="calibri-light light-gray-color fs-18 padding-top-35 padding-bottom-10 light-gray-bottom-border">Prophylaxis <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Prophylaxis visits are always covered by Dentacoin Assurance."></i></h3>
+        <h3 class="calibri-light light-gray-color fs-16 padding-top-35 padding-bottom-10 light-gray-bottom-border">Prophylaxis <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Prophylaxis visits are always covered by Dentacoin Assurance."></i></h3>
         <div class="single-row fs-0 no-border">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
             <<div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="check-ups-per-year">@if(!empty($contract)){{$contract->check_ups_per_year}}@endif</div>

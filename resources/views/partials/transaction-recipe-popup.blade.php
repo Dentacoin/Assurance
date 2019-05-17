@@ -1,4 +1,4 @@
-<div class="lato-regular fs-40 text-center padding-bottom-10 popup-title"><svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+<div class="lato-regular fs-40 fs-xs-30 text-center padding-bottom-10 popup-title"><svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
                                                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 63.2 59.1"
                                                                    style="enable-background:new 0 0 63.2 59.1;" xml:space="preserve">
 <style type="text/css">
@@ -75,4 +75,4 @@
         </div>
     </div>
 </div>
-<div class="text-center execute-transaction padding-top-20"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250">PAY NOW</a></div>
+<div class="text-center execute-transaction padding-top-20"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250">{{$btn_label}}</a></div>

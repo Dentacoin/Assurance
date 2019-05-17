@@ -6,10 +6,12 @@
                 <div class="col-xs-12 fs-0">
                     @include('partials.my-profile-menu')
                     <div class="my-profile-page-content inline-block-top">
-                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
-                            <img alt="Contracts list" src="/assets/uploads/contracts-list.svg"/>
-                        </figure>
-                        <h2 class="fs-24 lato-bold inline-block">My contracts</h2>
+                        <div class="profile-page-title">
+                            <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                                <img alt="Contracts list" src="/assets/uploads/contracts-list.svg"/>
+                            </figure>
+                            <h2 class="fs-24 lato-bold inline-block">My contracts</h2>
+                        </div>
                         <div class="table-container fs-16">
                             @include('partials.table-my-contracts')
                         </div>

@@ -50,6 +50,7 @@ function checkIfCookie()    {
     }
 }
 
+var is_mac = navigator.platform.indexOf('Mac') > -1;
 var global_state = {};
 var temporally_timestamp = 0;
 var metamask = typeof(web3) !== 'undefined' && web3.currentProvider.isMetaMask === true;
@@ -439,7 +440,7 @@ var App = {
 };
 
 async function pagesDataOnContractInit() {
-    if($('body').hasClass('dentist')) {
+    /*if($('body').hasClass('dentist')) {
         $('.additional-info .current-account a').html(global_state.account).attr('href', 'https://rinkeby.etherscan.io/address/' + global_state.account);
         $('.additional-info .assurance-account a').html(App.assurance_address).attr('href', 'https://rinkeby.etherscan.io/address/' + App.assurance_address);
         $('.additional-info .dentacointoken-account a').html(App.dentacoin_token_address).attr('href', 'https://rinkeby.etherscan.io/address/' + App.dentacoin_token_address);
@@ -502,7 +503,8 @@ async function pagesDataOnContractInit() {
         $('.break-contract').click(function() {
             App.assurance_methods.breakContract(global_state.account, $('.breakContract .dentist-address').val().trim());
         });
-    } else if($('body').hasClass('logged-in')) {
+    } else */
+    if($('body').hasClass('logged-in')) {
         if($('body').hasClass('patient-contract-view')) {
             var period_to_withdraw = parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
             var now_timestamp = Math.round((new Date()).getTime() / 1000);
@@ -535,8 +537,8 @@ async function pagesDataOnContractInit() {
                 var current_user_dcn_balance = parseInt(await App.dentacoin_token_methods.balanceOf(global_state.account));
                 var current_user_eth_balance = parseFloat(App.web3_1_0.utils.fromWei(await App.helper.getAddressETHBalance(global_state.account)));
                 var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
-
-                const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                var ethgasstation_json = await $.getJSON("https://ethgasstation.info/json/ethgasAPI.json");
+                const on_page_load_gwei = ethgasstation_json.safeLow;
                 //adding 10% just in case the transaction dont fail
                 const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
 
@@ -545,6 +547,7 @@ async function pagesDataOnContractInit() {
                 if(parseInt(await App.dentacoin_token_methods.allowance(checksumAddress($('.patient-contract-single-page-section').attr('data-patient-address')), App.assurance_state_address)) > 0) {
                     approval_given = true;
                 }
+
 
                 if(!approval_given) {
                     //gas estimation for DentacoinToken approval method
@@ -566,60 +569,24 @@ async function pagesDataOnContractInit() {
 
                 if(current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
                     //not enough DCN and ETH balance
-                    $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10 padding-bottom-20">You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div></div>');
-                    $('.timer-text').html('You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.');
-                    fixButtonsFocus();
-                    initTooltips();
-                    $('.contract-response-message .close-btn').click(function() {
-                        $(this).closest('.contract-response-message').remove();
-                    });
-
-                    $('.scroll-to-buy-section').click(function() {
-                        $('html, body').animate({
-                            scrollTop: $('.ready-to-purchase-with-external-api .form-container').offset().top
-                        }, {
-                            duration: 500
-                        });
-                    });
+                    $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-20 padding-top-15">WARNING</h1><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
+                    /*$('.timer-text').html('You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.');*/
+                    initPopupEvents(true);
                 } else if(current_user_dcn_balance < monthly_premium_in_dcn) {
                     //not enough DCN
-                    $('.timer-text').html('You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> <span class="calibri-bold">until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.');
-                    $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10 padding-bottom-20">You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div></div>');
-                    fixButtonsFocus();
-                    $('.contract-response-message .close-btn').click(function() {
-                        $(this).closest('.contract-response-message').remove();
-                    });
-
-                    $('.scroll-to-buy-section').click(function() {
-                        $('html, body').animate({
-                            scrollTop: $('.ready-to-purchase-with-external-api .form-container').offset().top
-                        }, {
-                            duration: 500
-                        });
-                    });
+                    /*$('.timer-text').html('You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> <span class="calibri-bold">until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.');*/
+                    $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-20 padding-top-15">WARNING</h1><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
+                    initPopupEvents(true);
                 } else if(parseFloat(eth_fee) > current_user_eth_balance) {
                     //not enough ETH balance
-                    $('.timer-text').html('You should charge your wallet with <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.');
-                    $('.patient-contract-single-page-section').prepend('<div class="contract-response-message module container margin-bottom-50"><div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-30 padding-top-15">WARNING</h1><div class="fs-20 fs-xs-18 padding-top-10 padding-bottom-20">You should charge your wallet with <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div></div>');
-                    fixButtonsFocus();
-                    initTooltips();
-                    $('.contract-response-message .close-btn').click(function() {
-                        $(this).closest('.contract-response-message').remove();
-                    });
-
-                    $('.scroll-to-buy-section').click(function() {
-                        $('.ready-to-purchase-with-external-api [data-currency="eth"]').click();
-                        $('html, body').animate({
-                            scrollTop: $('.ready-to-purchase-with-external-api .form-container').offset().top
-                        }, {
-                            duration: 500
-                        });
-                    });
+                    /*$('.timer-text').html('You should charge your wallet with <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.');*/
+                    $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-20 padding-top-15">WARNING</h1><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
+                    initPopupEvents(true);
                 } else {
-                    $('.timer-text').html('It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should pay your monthly premium before or on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.');
-
+                    /*$('.timer-text').html('It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should pay your monthly premium before or on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.');*/
                     //show CONTINUE TO BLOCKCHAIN BTN
-                    $('.init-contract-section .camp').html('<h2 class="lato-bold fs-45 fs-xs-30 padding-top-60 padding-top-xs-30 padding-bottom-15 text-center">You are all set for your first payment.</h2><div class="padding-bottom-30 padding-bottom-xs-20 fs-20 fs-xs-16 text-center">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should pay your monthly premium before on <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">PAY NOW</a></div>');
+                    $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Check inside shield" src="/assets/images/secure.svg" class="max-width-70"/></figure><h1 class="lato-bold fs-20 padding-top-15">ACTIVATE YOUR AUTOMATIC PAYMENTS <i class="fa fa-info-circle" aria-hidden="true" data-placement="left" data-toggle="tooltip" title="Enabling automatic payments means that your monthly premium amount will be automatically deducted from your wallet balance on the payment due date and you will never have to worry about a missed deadline."></i></h1><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet. You should activate your secure, automatic payments <span class="calibri-bold blue-green-color">before or on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.<br>Ready to do it now?</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">ACTIVATE NOW</a></div></div></div>');
+                    initPopupEvents();
 
                     $('.call-recipe').click(function() {
                         if(metamask) {
@@ -636,9 +603,10 @@ async function pagesDataOnContractInit() {
                                     cached_key: cached_key,
                                     contract: $('.init-contract-section').attr('data-contract'),
                                     show_dcn_bar: true,
-                                    recipe_title: 'Pay Your First Premium',
-                                    recipe_subtitle: 'and activate your smart contract',
-                                    recipe_checkbox_text: 'By clicking on the button below you also agree that from now on your monthly premium amount will be automatically deducted from your wallet balance on the payment due date.'
+                                    recipe_title: 'Activate Your Smart',
+                                    recipe_subtitle: 'Automatic Payments to never worry about a missed due date',
+                                    recipe_checkbox_text: 'By clicking on the button below you also agree that from now on your monthly premium amount will be automatically deducted from your wallet balance on the payment due date.',
+                                    btn_label: 'PAY NOW'
                                 },
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1223,8 +1191,12 @@ if($('body').hasClass('logged-in')) {
 
         //showing the list for each service category
         $('.show-category-list a').click(function() {
-            $(this).slideUp(300);
-            $(this).closest('.show-category-list').find('ul').slideDown(300);
+            if($(this).attr('data-hidden-list') == 'true') {
+                $(this).attr('data-hidden-list', 'false').html($(this).attr('data-label-opened'));
+            } else {
+                $(this).attr('data-hidden-list', 'true').html($(this).attr('data-label-closed'));
+            }
+            $(this).closest('.show-category-list').find('ul').toggle(300);
         });
 
         var form_props_arr = ['professional-company-number', 'postal-address', 'country', 'phone', 'website', 'address', 'fname', 'lname', 'email', 'monthly-premium', 'check-ups-per-year', 'teeth-cleaning-per-year'];
@@ -1232,7 +1204,13 @@ if($('body').hasClass('logged-in')) {
         create_contract_form.find('.terms-and-conditions-long-list').mCustomScrollbar();
 
         $('.step.three [name="monthly-premium"]').on('input', function() {
-            $(this).val(Math.floor($(this).val()));
+            if(parseInt($(this).val()) < 0) {
+                $(this).val(0);
+            } else {
+                $(this).val(Math.floor($(this).val()));
+            }
+
+            $(this).closest('.single-row').find('.absolute-currency-label').fadeIn(300).css({'left' : 'calc(40% + ' + (15 + $(this).val().length * 10) + 'px)'});
         });
 
         //validation for all fields for each step
@@ -1682,10 +1660,45 @@ if($('body').hasClass('logged-in')) {
 
 //THIS IS FUNCTIONALITY ONLY FOR LOGGED IN USERS (MODULES)
 if($('body').hasClass('logged-in')) {
-    $('.logged-user > a, .logged-user .hidden-box').hover(function(){
-        $('.logged-user .hidden-box').show();
-    }, function(){
-        $('.logged-user .hidden-box').hide();
+    var add_overflow_hidden_on_hidden_box_show = false;
+    $('body').addClass('overflow-hidden');
+    if($(window).width() < 992) {
+        add_overflow_hidden_on_hidden_box_show = true;
+    }
+    $('body').removeClass('overflow-hidden');
+
+    $('.logged-user-nav > a, .logged-user-nav .hidden-box').hover(function () {
+        $('.logged-user-nav .hidden-box').addClass('show-this');
+        if(add_overflow_hidden_on_hidden_box_show) {
+            $('body').addClass('overflow-hidden');
+            if(!$('.logged-user-nav').hasClass('with-hub')) {
+                $('.logged-user-nav .up-arrow').addClass('show-this');
+            }
+        } else {
+            $('.logged-user-nav .up-arrow').addClass('show-this');
+        }
+    }, function () {
+        $('.logged-user-nav .hidden-box').removeClass('show-this');
+        if(add_overflow_hidden_on_hidden_box_show) {
+            $('body').removeClass('overflow-hidden');
+            if(!$('.logged-user-nav').hasClass('with-hub')) {
+                $('.logged-user-nav .up-arrow').removeClass('show-this');
+            }
+        } else {
+            $('.logged-user-nav .up-arrow').removeClass('show-this');
+        }
+    });
+
+    $('.logged-user-nav .close-btn a').click(function() {
+        $('.logged-user-nav .hidden-box').removeClass('show-this');
+        if(add_overflow_hidden_on_hidden_box_show) {
+            $('body').removeClass('overflow-hidden');
+            if(!$('.logged-user-nav').hasClass('with-hub')) {
+                $('.logged-user-nav .up-arrow').removeClass('show-this');
+            }
+        } else {
+            $('.logged-user-nav .up-arrow').removeClass('show-this');
+        }
     });
 
     if($('.open-mobile-single-page-nav').length) {
@@ -2090,6 +2103,11 @@ function encodeEntities(string) {
     return inner_html;
 }
 
+//camp for popups from responses and bind the close event for the button in the popup
+$(document).on('click', '.close-popup', function() {
+    basic.closeDialog();
+});
+
 var hidden_popup_content = $('.hidden-login-form').html();
 //call the popup for login/sign for patient and dentist
 function bindLoginSigninPopupShow() {
@@ -2137,6 +2155,10 @@ function bindLoginSigninPopupShow() {
         });
 
         $(document).on('civicRead', async function (event) {
+            $('.response-layer').show();
+        });
+
+        $(document).on('receivedFacebookToken', async function (event) {
             $('.response-layer').show();
         });
 
@@ -2359,7 +2381,7 @@ function bindLoginSigninPopupShow() {
                     var errors = false;
                     //checking if empty avatar
                     if($('.dentist .form-register .step.fourth #custom-upload-avatar').val().trim() == '') {
-                        customErrorHandle($('.step.fourth .step-errors-holder'), 'Please select avatar.');
+                        customErrorHandle($('.step.fourth .step-errors-holder'), 'Please select profile picture.');
                         errors = true;
                     }
 
@@ -2523,13 +2545,7 @@ if($('form#invite-dentists').length) {
 
         //check custom-input fields
         for(var i = 0, len = form_fields.length; i < len; i+=1) {
-            if(form_fields.eq(i).is('select')) {
-                //IF SELECT TAG
-                if(form_fields.eq(i).val().trim() == '') {
-                    customErrorHandle(form_fields.eq(i).parent(), 'This field is required.');
-                    errors = true;
-                }
-            } else if(form_fields.eq(i).is('input')) {
+            if(form_fields.eq(i).is('input')) {
                 //IF INPUT TAG
                 if(form_fields.eq(i).val().trim() == '') {
                     customErrorHandle(form_fields.eq(i).parent(), 'This field is required.');
@@ -2578,8 +2594,6 @@ if($('form#invite-dentists').length) {
                     });
                 }
             });
-
-            //AJAX
         }
     });
 }
@@ -2728,20 +2742,29 @@ async function onDocumentReadyPageData() {
         } else if($('body').hasClass('dentist-contract-view')) {
             cancelContractEventInit();
 
-            if($('.terms-and-conditions-long-list').length) {
+            if ($('.terms-and-conditions-long-list').length) {
                 $('.terms-and-conditions-long-list').mCustomScrollbar();
             }
 
-            if($('.open-contract-details').length) {
-                $('.open-contract-details').on('click', function() {
-                    $(this).slideUp(300);
-                    $('.contract-details-container').slideDown(300);
+            if ($('.open-contract-details').length) {
+                $('.open-contract-details').on('click', function () {
+                    if ($(this).attr('data-hidden-details') == 'true') {
+                        $(this).attr('data-hidden-details', 'false');
+                        $(this).html($(this).attr('data-label-opened'));
+                    } else {
+                        $(this).attr('data-hidden-details', 'true');
+                        $(this).html($(this).attr('data-label-closed'));
+                    }
+
+                    $('.contract-details-container').toggle(300);
                 });
             }
 
             initTooltips();
 
-            if($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval')) {
+            if($('.single-contract-view-section').hasClass('pending')) {
+                initPopupEvents();
+            } else if($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval')) {
                 $('.first-payment').html(dateObjToFormattedDate(new Date((parseInt($('.single-contract-view-section').attr('data-created-at')) + parseInt(await App.assurance_state_methods.getPeriodToWithdraw())) * 1000)));
 
                 if($('.single-contract-view-section').hasClass('awaiting-approval')) {
@@ -2762,7 +2785,8 @@ async function onDocumentReadyPageData() {
                                     show_dcn_bar: false,
                                     recipe_title: 'Approve This Contract',
                                     recipe_subtitle: 'and withdraw monthly payments',
-                                    recipe_checkbox_text: 'By clicking on the button below you confirm that from now on every month you will withdraw the monthly premium amount on the payment due date or later.'
+                                    recipe_checkbox_text: 'By clicking on the button below you confirm that from now on every month you will withdraw the monthly premium amount on the payment due date or later.',
+                                    btn_label: 'PAY NOW'
                                 },
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2774,7 +2798,8 @@ async function onDocumentReadyPageData() {
 
                                         fixButtonsFocus();
 
-                                        const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                                        var ethgasstation_json = await $.getJSON("https://ethgasstation.info/json/ethgasAPI.json");
+                                        const on_page_load_gwei = ethgasstation_json.safeLow;
                                         //adding 10% just in case the transaction dont fail
                                         const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
 
@@ -2930,6 +2955,11 @@ async function onDocumentReadyPageData() {
                 var current_patient_dcn_balance = parseFloat(await App.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
                 //var current_patient_dcn_balance = 5600;
 
+                $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container red-background text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold white-color">Overdue payment. If the patient doesn\'t fill in '+contract_dcn_amount+' Dentacoins inside his Wallet Address the contract will be canceled in:</h2></div> </div><div class="clock"></div><div class="flip-clock-message"></div></div></div>');
+                initFlipClockTimer(contract_next_payment + grace_period_in_seconds - now_timestamp);
+
+                return false;
+
                 if(contract_next_payment > now_timestamp) {
                     $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold white-color">MAKE YOUR NEXT WITHDRAW IN</h2><div class="clock"></div><div class="flip-clock-message"></div></div></div>');
                     initFlipClockTimer(contract_next_payment - now_timestamp);
@@ -2965,7 +2995,8 @@ async function onDocumentReadyPageData() {
                                     show_dcn_bar: false,
                                     recipe_title: 'WITHDRAW NOW',
                                     recipe_subtitle: '',
-                                    recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.'
+                                    recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.',
+                                    btn_label: 'PAY NOW'
                                 },
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2977,7 +3008,8 @@ async function onDocumentReadyPageData() {
 
                                         fixButtonsFocus();
 
-                                        const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                                        var ethgasstation_json = await $.getJSON("https://ethgasstation.info/json/ethgasAPI.json");
+                                        const on_page_load_gwei = ethgasstation_json.safeLow;
                                         //adding 10% just in case the transaction dont fail
                                         const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10 / 100);
 
@@ -3104,8 +3136,15 @@ async function onDocumentReadyPageData() {
 
             if($('.open-contract-details').length) {
                 $('.open-contract-details').on('click', function() {
-                    $(this).slideUp(300);
-                    $('.contract-details-container').slideDown(300);
+                    if($(this).attr('data-hidden-details') == 'true') {
+                        $(this).attr('data-hidden-details', 'false');
+                        $(this).html($(this).attr('data-label-opened'));
+                    } else {
+                        $(this).attr('data-hidden-details', 'true');
+                        $(this).html($(this).attr('data-label-closed'));
+                    }
+
+                    $('.contract-details-container').toggle(300);
                 });
             }
 
@@ -3170,7 +3209,8 @@ function cancelContractEventInit() {
                                 show_dcn_bar: false,
                                 recipe_title: this_btn.attr('data-recipe-title'),
                                 recipe_subtitle: this_btn.attr('data-recipe-subtitle'),
-                                recipe_checkbox_text: this_btn.attr('data-recipe-checkbox-text')
+                                recipe_checkbox_text: this_btn.attr('data-recipe-checkbox-text'),
+                                btn_label: 'PAY NOW'
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -3180,7 +3220,9 @@ function cancelContractEventInit() {
                                     basic.closeDialog();
                                     basic.showDialog(response.success, 'recipe-popup', null, true);
 
-                                    $('.recipe-popup .extra-recipe-html').html('<div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-reason" class="inline-block">Cancellation reason</label><div class="field inline-block"><select id="cancel-contract-reason"><option>Overdue payments</option><option>Missed regular check-ups</option><option>Inappropriate behaviour</option><option data-open-bonus-field="true">Other</option></select></div></div><div class="camp-for-row"></div><div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-comments" class="inline-block">Comments:</label><div class="field inline-block"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background" placeholder="Please enter"></textarea></div></div>');
+                                    $('.recipe-popup .extra-recipe-html').html('<div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-reason" class="inline-block">Cancellation reason</label><div class="field inline-block"><select id="cancel-contract-reason"><option selected value="">Choose from the list</option><option value="Overdue payments">Overdue payments</option><option value="Missed regular check-ups">Missed regular check-ups</option><option value="Inappropriate behaviour">Inappropriate behaviour</option><option data-open-bonus-field="true" value="Other">Other</option></select></div></div><div class="camp-for-row"></div><div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-comments" class="inline-block">Comments:</label><div class="field inline-block"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background" placeholder="Describe the reason for cancelling this contract in more details (optional)"></textarea></div></div>');
+
+                                    fixSelectsOnMac();
 
                                     $('.recipe-popup #cancel-contract-reason').on('change', function() {
                                         if($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
@@ -3192,7 +3234,8 @@ function cancelContractEventInit() {
 
                                     fixButtonsFocus();
 
-                                    const on_page_load_gwei = parseInt($('body').attr('data-current-gas-estimation'), 10);
+                                    var ethgasstation_json = await $.getJSON("https://ethgasstation.info/json/ethgasAPI.json");
+                                    const on_page_load_gwei = ethgasstation_json.safeLow;
                                     //adding 10% just in case the transaction dont fail
                                     const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10 / 100);
 
@@ -3240,6 +3283,8 @@ function cancelContractEventInit() {
                                         } else {
                                             if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
                                                 basic.showAlert('Please enter other reason.', '', true);
+                                            } else if($('.popup-cancel-contract #cancel-contract-reason').val().trim() == '') {
+                                                basic.showAlert('Please select cancellation reason.', '', true);
                                             } else if ($('.recipe-popup #cancel-contract-comments').val().trim() == '') {
                                                 basic.showAlert('Please enter comments.', '', true);
                                             } else if (global_state.account == '' || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
@@ -3356,6 +3401,8 @@ function cancelContractEventInit() {
                             basic.closeDialog();
                             basic.showDialog(response.success, 'popup-cancel-contract', null, true);
 
+                            fixSelectsOnMac();
+
                             $('.popup-cancel-contract #cancel-contract-reason').on('change', function() {
                                 if($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
                                     $('.camp-for-row').html('<div class="popup-row"><label for="cancel-contract-other-reason" class="inline-block-top">Other reason:</label><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background inline-block-top" maxlength="255"/></div>');
@@ -3367,6 +3414,8 @@ function cancelContractEventInit() {
                             $('.popup-cancel-contract .cancel-contract-popup-confirmation').click(function() {
                                 if($('.popup-cancel-contract #cancel-contract-other-reason').length && $('.popup-cancel-contract #cancel-contract-other-reason').val().trim() == '') {
                                     basic.showAlert('Please enter other reason.', '', true);
+                                } else if($('.popup-cancel-contract #cancel-contract-reason').val().trim() == '') {
+                                    basic.showAlert('Please select cancellation reason.', '', true);
                                 } else if($('.popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
                                     basic.showAlert('Please enter comments.', '', true);
                                 } else {
@@ -4164,7 +4213,7 @@ initPopoverTooltips();
 
 function showWarningTestingVersion() {
     if(basic.cookies.get('warning-test-version') != '1') {
-        basic.showDialog('<div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 inline-block"><img src="/assets/images/warning-pop-up.png"></div><div class="col-xs-12 col-md-5 col-sm-6 text-center inline-block padding-top-20 padding-bottom-20"><div class="warning"><img class="max-width-50" src="/assets/images/attention.svg"></div><div class="lato-bold fs-30" style="color: #ff8d8d;">WARNING:</div><div class="black-warning lato-bold fs-30 dark-color">THIS IS A TEST WEBSITE VERSION.</div><div class="additional-text padding-top-20 padding-bottom-20 fs-20">Please do not make any transactions as your funds will be lost.We will notify you via email when the official version is launched.</div><div class="btn-container"><a href="javascript:void(0)" class="white-blue-green-btn min-width-220 understood">I UNDERSTAND</a></div></div></div></div>', 'warning-test-version', true);
+        basic.showDialog('<div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 inline-block"><img src="/assets/images/warning-pop-up.png"></div><div class="col-xs-12 col-md-5 col-sm-6 text-center inline-block padding-top-20 padding-bottom-20"><div class="warning"><img class="max-width-50" src="/assets/images/attention.svg" alt="attention icon"></div><div class="lato-bold fs-30" style="color: #ff8d8d;">WARNING:</div><div class="black-warning lato-bold fs-30 dark-color">THIS IS A TEST WEBSITE VERSION.</div><div class="additional-text padding-top-20 padding-bottom-20 fs-20">Please do not make any transactions as your funds will be lost.We will notify you via email when the official version is launched.</div><div class="btn-container"><a href="javascript:void(0)" class="white-blue-green-btn min-width-220 understood">I UNDERSTAND</a></div></div></div></div>', 'warning-test-version', true);
         $('.warning-test-version .understood').click(function() {
             basic.cookies.set('warning-test-version', 1);
             basic.closeDialog();
@@ -4215,4 +4264,29 @@ function receiveSecondsReturnDaysHoursMinutesSecondsLeft(seconds) {
     time_left_seconds  -= time_left_mnts*60;
 
     return time_left_days + ' days ' +time_left_hrs+' hours '+time_left_mnts+' minutes '+time_left_seconds+' seconds';
+}
+
+function fixSelectsOnMac() {
+    if(is_mac) {
+        $('select').addClass('select-mac-fix');
+    }
+}
+fixSelectsOnMac();
+
+function initPopupEvents(scroll_to_buy_section) {
+    fixButtonsFocus();
+    initTooltips();
+    $('.contract-response-message .close-btn').click(function() {
+        $(this).closest('.contract-response-message').remove();
+    });
+
+    if(scroll_to_buy_section != undefined) {
+        $('.scroll-to-buy-section').click(function() {
+            $('html, body').animate({
+                scrollTop: $('.ready-to-purchase-with-external-api .form-container').offset().top
+            }, {
+                duration: 500
+            });
+        });
+    }
 }

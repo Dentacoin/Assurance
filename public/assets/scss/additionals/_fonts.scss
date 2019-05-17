@@ -119,6 +119,18 @@
 }
 
 @font-face {
+    font-family: "Lato-Thin";
+    src: url("/assets/fonts/Lato-Thin.eot");
+    src: url("/assets/fonts/Lato-Thin.eot?#iefix") format("embedded-opentype"),
+    url("/assets/fonts/Lato-Thin.woff2") format("woff2"),
+    url("/assets/fonts/Lato-Thin.woff") format("woff"),
+    url("/assets/fonts/Lato-Thin.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
     font-family: "Calibri-Regular";
     src: url("/assets/fonts/Calibri.eot");
     src: url("/assets/fonts/Calibri.eot?#iefix") format("embedded-opentype"),
@@ -148,6 +160,10 @@
 
 .lato-bold {
     font-family: "Lato-Bold";
+}
+
+.lato-thin {
+    font-family: "Lato-Thin";
 }
 
 .calibri-bold {

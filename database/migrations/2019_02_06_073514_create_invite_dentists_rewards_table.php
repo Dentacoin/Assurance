@@ -17,7 +17,7 @@ class CreateInviteDentistsRewardsTable extends Migration
             $table->increments('id');
             $table->integer('patient_id');
             $table->string('dentist_email', 100)->unique();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('name');
             $table->string('website', 500);
             $table->string('phone', 50)->nullable();

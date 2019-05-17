@@ -18,42 +18,43 @@
         </div>
         <div class="container single-contract-tile module text-center padding-top-20">
             <div class="row fs-0 flex-xs">
-                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-bottom padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
+                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                        <img alt="Dentist avatar" src="{{$dentist->avatar_url}}" class="max-width-120"/>
+                        <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
                     </figure>
                     <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$dentist->name}}</div>
                     <div class="calibri-light">
                         <a href="mailto:{{$dentist->email}}" class="light-gray-color fs-18 fs-xs-16 word-break">{{$dentist->email}}</a>
                     </div>
                 </div>
-                <div class="col-xs-4 inline-block-bottom blue-green-color-background contract-body" data-time-left-next-transfer="{{strtotime($contract->contract_active_at)}}">
+                <div class="col-xs-4 inline-block contract-body padding-bottom-10 padding-bottom-xs-0" data-time-left-next-transfer="{{strtotime($contract->contract_active_at)}}">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-approval">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING APPROVAL</div>
                     <div class="wrapper">
-                        <div class="lato-bold fs-20 white-color padding-top-25 padding-bottom-15">YOUR NEXT PAYMENT IS DUE IN:</div>
+                        <div class="lato-bold fs-20 padding-top-15 padding-bottom-10">Fund your account in:</div>
                         <div class="clock"></div>
                         <div class="flip-clock-message"></div>
                     </div>
                 </div>
-                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-bottom padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
+                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                        <img alt="Dentist avatar" src="{{$patient->avatar_url}}" class="max-width-120"/>
+                        <img alt="Dentist avatar" src="{{$patient->avatar_url}}"/>
                     </figure>
                     <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">{{$patient->name}}</div>
                     <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$patient->email}}</div>
                 </div>
             </div>
-            <div class="row contract-footer">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 padding-bottom-40 padding-left-50 padding-right-50 text-center white-color blue-green-color-background fs-20 wrapper padding-top-xs-20 padding-bottom-xs-20 padding-left-xs-15 padding-right-xs-15">
-                    @if(isset($mobile) && $mobile)
+            @if(isset($mobile) && $mobile)
+                <div class="row contract-footer">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 padding-bottom-40 padding-left-50 padding-right-50 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-xs-15 padding-right-xs-15">
                         <div class="show-on-xs">
-                            <div class="lato-bold fs-20 white-color padding-bottom-15">YOUR NEXT PAYMENT IS DUE IN:</div>
+                            <div class="lato-bold fs-20 padding-bottom-5">YOUR FIRST PAYMENT IS DUE IN:</div>
                             <div class="clock"></div>
                             <div class="flip-clock-message"></div>
                         </div>
-                    @endif
+                        {{--<div class="timer-text"></div>--}}
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </section>
     <section>

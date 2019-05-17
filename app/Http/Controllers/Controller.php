@@ -33,8 +33,7 @@ class Controller extends BaseController
         if(!empty(Route::getCurrentRoute()) && !Request::isMethod('post'))    {
             View::share('mobile', $this->isMobile());
             View::share('meta_data', $this->getMetaData());
-            View::share('sections', $this->getDbSections());
-            View::share('gas_estimation', $this->getGasEstimationFromEthgasstation());
+            /*View::share('sections', $this->getDbSections());*/
             View::share('client_ip', $this->getClientIp());
         }
     }

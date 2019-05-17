@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <h1 class="lato-bold fs-45 text-center padding-bottom-50 blue-green-color">ASSURANCE CONTRACT SAMPLE</h1>
+                    <h1 class="lato-bold fs-45 text-center padding-bottom-50 blue-green-color">REVIEW ASSURANCE CONTRACT</h1>
                 </div>
             </div>
         </div>

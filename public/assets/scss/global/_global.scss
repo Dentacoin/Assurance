@@ -1441,3 +1441,12 @@ nav.sidenav {
 .word-break {
     word-break: break-all;
 }
+
+select.select-mac-fix {
+    background-image: url('/assets/images/select-arrow.svg');
+    background-position: top 50% right 10px;
+    background-size: 15px;
+    background-repeat: no-repeat;
+    -webkit-appearance: initial;
+    padding-right: 30px;
+}

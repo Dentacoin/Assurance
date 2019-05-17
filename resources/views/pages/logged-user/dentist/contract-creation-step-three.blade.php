@@ -3,7 +3,7 @@
         @php($general_dentistry_arr = unserialize($renew_contract->general_dentistry))
     @endif
     <h2 class="text-center calibri-bold fs-30 padding-bottom-25 padding-bottom-xs-0">CONTRACT CONDITIONS</h2>
-    <h3 class="calibri-light light-gray-color fs-18 padding-top-35 padding-bottom-10 light-gray-bottom-border">Prophylaxis <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Prophylaxis visits are always covered by Dentacoin Assurance."></i></h3>
+    <h3 class="calibri-light light-gray-color fs-16 padding-top-35 padding-bottom-10 light-gray-bottom-border">Prophylaxis <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Prophylaxis visits are always covered by Dentacoin Assurance."></i></h3>
     <div class="step-fields module margin-top-10">
         <div class="single-row flex-row fs-0 no-border">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
@@ -39,7 +39,6 @@
                     </div>
                 </div>
                 <div class="show-category-list">
-                    <a href="javascript:void(0)" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
                     <ul>
                         <li>Fillings</li>
                         <li>Caries infiltration</li>
@@ -48,6 +47,8 @@
                         <li>Periodontal treatment</li>
                         <li>Tooth extraction</li>
                     </ul>
+                    <a href="javascript:void(0)" data-hidden-list="true" data-label-closed="See all services in this category" data-label-opened="Hide all services in this category" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
+
                 </div>
                 <div class="pretty single-checkbox-container margin-bottom-5 p-svg p-curve on-white-background">
                     <input type="checkbox" name="general-dentistry[]" value="param_cd" @if(!empty($renew_contract) && in_array('param_cd', $general_dentistry_arr)) checked @endif/>
@@ -60,7 +61,6 @@
                     </div>
                 </div>
                 <div class="show-category-list">
-                    <a href="javascript:void(0)" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
                     <ul>
                         <li>Composite bonding</li>
                         <li>Porcelain veneers (material & laboratory costs - not covered)</li>
@@ -70,6 +70,8 @@
                         <li>Bridges (material & laboratory costs - not covered)</li>
                         <li>Dentures (material & laboratory costs - not covered)</li>
                     </ul>
+                    <a href="javascript:void(0)" data-hidden-list="true" data-label-closed="See all services in this category" data-label-opened="Hide all services in this category" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
+
                 </div>
                 <div class="pretty single-checkbox-container margin-bottom-5 p-svg p-curve on-white-background">
                     <input type="checkbox" name="general-dentistry[]" value="param_id" @if(!empty($renew_contract) && in_array('param_id', $general_dentistry_arr)) checked @endif/>
@@ -82,7 +84,6 @@
                     </div>
                 </div>
                 <div class="show-category-list">
-                    <a href="javascript:void(0)" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
                     <ul>
                         <li>Implant placement (implants and abutments - not covered)</li>
                         <li>Porcelain veneers (material & laboratory costs - not covered)</li>
@@ -92,12 +93,15 @@
                         <li>Bridges (material & laboratory costs - not covered)</li>
                         <li>Bone augmentation (bone replacement material - not covered)</li>
                     </ul>
+                    <a href="javascript:void(0)" data-hidden-list="true" data-label-closed="See all services in this category" data-label-opened="Hide all services in this category" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
+
                 </div>
             </div>
         </div>
-        <div class="single-row flex-row fs-0">
+        <div class="single-row flex-row fs-0 relative-position">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer" for="monthly-premium">Monthly Premium:</label>
-            <input type="number" name="monthly-premium" id="monthly-premium" maxlength="20" placeholder="The value is in USD" class="right-field calibri-regular fs-18 dark-color inline-block" @if(!empty($renew_contract)) value="{{$renew_contract->monthly_premium}}" @endif/>
+            <input type="number" name="monthly-premium" id="monthly-premium" maxlength="20" placeholder="Please enter a value in USD" class="right-field calibri-regular fs-18 dark-color inline-block" @if(!empty($renew_contract)) value="{{$renew_contract->monthly_premium}}" @endif/>
+            <span class="absolute-currency-label calibri-regular fs-18 dark-color">USD</span>
         </div>
         @if(!empty($renew_contract))
             @if(in_array('param_gd', $general_dentistry_arr) && in_array('param_cd', $general_dentistry_arr) && in_array('param_id', $general_dentistry_arr))

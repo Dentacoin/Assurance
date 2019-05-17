@@ -107,7 +107,7 @@ class UserController extends Controller {
                 $patient_data = $current_logged_user_data;
             }
 
-            $view = view('partials/transaction-recipe-popup', [/*'to' => $request->input('to'), */'current_logged_user' => $current_logged_user_data, 'cached_key' => $request->input('cached_key'), 'show_dcn_bar' => $request->input('show_dcn_bar'), 'recipe_title' => $request->input('recipe_title'), 'recipe_subtitle' => $request->input('recipe_subtitle'), 'recipe_checkbox_text' => $request->input('recipe_checkbox_text')]);
+            $view = view('partials/transaction-recipe-popup', [/*'to' => $request->input('to'), */'current_logged_user' => $current_logged_user_data, 'cached_key' => $request->input('cached_key'), 'show_dcn_bar' => $request->input('show_dcn_bar'), 'recipe_title' => $request->input('recipe_title'), 'recipe_subtitle' => $request->input('recipe_subtitle'), 'recipe_checkbox_text' => $request->input('recipe_checkbox_text'), 'btn_label' => $request->input('btn_label')]);
             $view = $view->render();
             $contract_data = array(
                 'patient' => $patient_data->dcn_address,
@@ -208,6 +208,7 @@ class UserController extends Controller {
 
     protected function userLogout(Request $request) {
         $route = '';
+        $token = $this->encrypt(session('logged_user')['token'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'));
         if($request->session()->has('logged_user'))    {
             if(session('logged_user')['type'] == 'dentist') {
                 $route = 'home';
@@ -216,7 +217,8 @@ class UserController extends Controller {
             }
             $request->session()->forget('logged_user');
         }
-        return redirect()->route($route);
+
+        return redirect()->route($route)->with(['logout_token' => $token]);
     }
 
     protected function updateAccount(Request $request) {
@@ -707,11 +709,8 @@ class UserController extends Controller {
         }
     }
 
-    protected function getUserDataForNodeJSApi(Request $request) {
-        $contract = TemporallyContract::where(array('document_hash' => $request->input('hash')))->get()->first();
-        $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
-        $patient = (new APIRequestsController())->getUserData($contract->patient_id);
-        return response()->json(['success' => true, 'dentist_name' => $dentist->name, 'patient_name' => $patient->name, 'patient_email' => $patient->email, 'dentist_email' => $dentist->email, 'slug' => $contract->slug, 'dentacoins_for_one_usd' => (new PatientController())->getIndacoinPricesInUSD('DCN')]);
+    public function getDentacoinHubApplications() {
+        return json_decode(file_get_contents('https://dentacoin.com/info/applications'));
     }
 
     protected function manageCustomCookie(Request $request) {

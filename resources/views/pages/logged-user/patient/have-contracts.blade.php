@@ -3,7 +3,7 @@
     <section class="padding-top-200 padding-top-xs-70 padding-top-sm-100 padding-bottom-60 padding-bottom-xs-30 contracts-list-section">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+                <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
                     <h1 class="lato-bold fs-45 fs-xs-30 padding-bottom-70 padding-bottom-xs-30 text-center">Thank You for Helping Us Change Dentistry to the Better!</h1>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                                         <div class="contract-info inline-block-top">
                                             <div class="calibri-bold fs-18 title">Dr. {{$dentist->name}}</div>
                                             <time class="display-block fs-14 calibri-light">Sent on: {{$contract->created_at->format('d/m/Y')}}</time>
-                                            <div class="lato-semibold fs-24 padding-top-5 padding-bottom-5">{{$contract->monthly_premium}}$</div>
+                                            <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                             <div class="btn-container">
                                                 <a href="{{$url}}" class="white-blue-green-btn">{{$btn_label}}</a>
                                             </div>

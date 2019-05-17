@@ -47,7 +47,7 @@
                                         <div class="contract-info inline-block-top">
                                             <div class="calibri-bold fs-18 title">{{$patient->name}}</div>
                                             <time class="display-block fs-14 calibri-light">Signed on: {{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
-                                            <div class="lato-semibold fs-24 padding-top-5 padding-bottom-5">{{$contract->monthly_premium}}$</div>
+                                            <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                             <div class="btn-container">
                                                 <a href="{{route('dentist-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">{{$btn_label}}</a>
                                             </div>
@@ -110,7 +110,7 @@
                                             <div class="contract-info inline-block-top">
                                                 <div class="calibri-bold fs-18 title">{{$contract->patient_fname}} {{$contract->patient_lname}}</div>
                                                 <time class="display-block fs-14 calibri-light">Received on: {{$contract->created_at->format('d/m/Y')}}</time>
-                                                <div class="lato-semibold fs-24 padding-top-5 padding-bottom-5">{{$contract->monthly_premium}}$</div>
+                                                <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                                 <div class="btn-container">
                                                     <a href="{{route('dentist-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details</a>
                                                 </div>
@@ -175,7 +175,7 @@
                                                 <div class="calibri-bold fs-18 title">{{$patient_name}}</div>
                                                 <time class="display-block fs-14 calibri-light">Signed on: {{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
                                                 <time class="display-block fs-14 calibri-light">Cancelled on: {{date('d/m/Y', strtotime($contract->cancelled_at))}}</time>
-                                                <div class="lato-semibold fs-24 padding-top-5 padding-bottom-5">{{$contract->monthly_premium}}$</div>
+                                                <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                                 <div class="btn-container">
                                                     <a href="{{route('dentist-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details</a>
                                                 </div>
@@ -248,7 +248,7 @@
                                                 <div class="calibri-bold fs-18 title">{{$contract->patient_fname}} {{$contract->patient_lname}}</div>
                                                 <time class="display-block fs-14 calibri-light">Received on: {{$contract->created_at->format('d/m/Y')}}</time>
                                                 <div class="display-block fs-14 calibri-light hide-this">&nbsp;</div>
-                                                <div class="lato-semibold fs-24 padding-top-5 padding-bottom-5">{{$contract->monthly_premium}}$</div>
+                                                <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                                 <div class="btn-container">
                                                     <a href="{{route('dentist-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details</a>
                                                 </div>
@@ -314,7 +314,7 @@
                                                 <div class="calibri-bold fs-18 title">{{$patient_name}}</div>
                                                 <time class="display-block fs-14 calibri-light">Signed on: {{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
                                                 <time class="display-block fs-14 calibri-light">Cancelled on: {{date('d/m/Y', strtotime($contract->cancelled_at))}}</time>
-                                                <div class="lato-semibold fs-24 padding-top-5 padding-bottom-5">{{$contract->monthly_premium}}$</div>
+                                                <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                                 <div class="btn-container">
                                                     <a href="{{route('dentist-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details</a>
                                                 </div>

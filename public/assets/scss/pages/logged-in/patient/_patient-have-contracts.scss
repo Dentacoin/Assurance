@@ -9,8 +9,19 @@ section.contracts-list-section {
     }
     @include breakpoint($max-lgl) {
         h1 {
+            width: 85%;
+        }
+    }
+    @include breakpoint($md-down) {
+        h1 {
             width: 100%;
         }
+    }
+    @include breakpoint($sm-only) {
+        background-size: 130%;
+    }
+    @include breakpoint($xs) {
+        background-size: 140%;
     }
 }
 

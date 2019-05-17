@@ -14,3 +14,4 @@ define('UPLOADS_FRONT_END', DS . 'assets' . DS . 'uploads' . DS);
 define('MAX_UPL_SIZE', 2097152);
 define('EMAIL_SENDER', 'assurance@dentacoin.com');
 define('DAYS_ACTIVE_CONTRACT_PROPOSAL', 30);
+define('DAYS_CONTRACT_WITHDRAWAL_PERIOD', 30);

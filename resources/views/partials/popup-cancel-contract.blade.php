@@ -8,16 +8,17 @@
 <div class="popup-row">
     <label for="cancel-contract-reason" class="inline-block-top">Cancellation reason</label>
     <select id="cancel-contract-reason" class="inline-block-top">
-        <option>Overdue payments</option>
-        <option>Missed regular check-ups</option>
-        <option>Inappropriate behaviour</option>
-        <option data-open-bonus-field="true">Other</option>
+        <option selected value="">Choose from the list</option>
+        <option value="Overdue payments">Overdue payments</option>
+        <option value="Missed regular check-ups">Missed regular check-ups</option>
+        <option value="Inappropriate behaviour">Inappropriate behaviour</option>
+        <option value="Other" data-open-bonus-field="true">Other</option>
     </select>
 </div>
 <div class="camp-for-row"></div>
 <div class="popup-row">
     <label for="cancel-contract-comments" class="inline-block-top">Comments:</label>
-    <textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background inline-block-top" placeholder="Please enter"></textarea>
+    <textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background inline-block-top" placeholder="Describe the reason for cancelling this contract in more details (optional)"></textarea>
 </div>
 <div class="btn-container text-center padding-top-35 padding-bottom-25">
     <a href="javascript:void(0);" class="red-white-btn cancel-contract-popup-confirmation">CANCEL CONTRACT</a>
