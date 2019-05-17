@@ -379,7 +379,7 @@ class APIRequestsController extends Controller {
     public function sendETHamount($address, $dentist_addr, $usd_amount, $dcn_amount, $time, $hash) {
         $curl = curl_init();
 
-        $json = '{"address":"'.$address.'", "dentist_addr":"'.$dentist_addr.'", "value_usd":"'.$usd_amount.'", "monthly_premium_in_dcn":"'.$dcn_amount.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$hash.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'", "password":"'+getenv('API_REQUESTS_PASSWORD')+'"}';
+        $json = '{"address":"'.$address.'", "dentist_addr":"'.$dentist_addr.'", "value_usd":"'.$usd_amount.'", "monthly_premium_in_dcn":"'.$dcn_amount.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$hash.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'", "password":"'.getenv('API_REQUESTS_PASSWORD').'"}';
 
         var_dump(json_decode($json));
 
