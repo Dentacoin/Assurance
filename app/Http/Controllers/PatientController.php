@@ -363,24 +363,12 @@ class PatientController extends Controller {
         $view_body = view('partials/pdf-contract-body', ['contract' => $contract, 'countries' => (new APIRequestsController())->getAllCountries()]);
         $html_body = $view_body->render();
 
-        var_dump($patient_pub_key->public_key);
-        var_dump($dentist_pub_key->public_key);
-        var_dump($html_body);
-
-        echo '<br>=========================================<br>';
-
         $view_end = view('partials/pdf-contract-layout-end');
         $html_end = $view_end->render();
 
         //sending the pdf html to encryption nodejs api
         $encrypted_html_by_patient = (new \App\Http\Controllers\APIRequestsController())->encryptFile($patient_pub_key->public_key, htmlentities($html_body));
         $encrypted_html_by_dentist = (new \App\Http\Controllers\APIRequestsController())->encryptFile($dentist_pub_key->public_key, htmlentities($html_body));
-
-        echo '<br>=========================================<br>';
-
-        var_dump($encrypted_html_by_patient);
-        var_dump($encrypted_html_by_dentist);
-        die();
 
         //if no errors from the api
         if($encrypted_html_by_patient && !isset($encrypted_html_by_patient->error) && $encrypted_html_by_dentist && !isset($encrypted_html_by_dentist->error)) {
@@ -424,7 +412,7 @@ class PatientController extends Controller {
                         $contract->save();
                         return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
                     } else {
-                        return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "1 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
+                        return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
                     }
                 } else {
                     $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
@@ -441,10 +429,10 @@ class PatientController extends Controller {
                     return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
                 }
             } else {
-                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "2 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
+                return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
             }
         } else {
-            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "3 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
+            return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
         }
     }
 
