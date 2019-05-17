@@ -1502,7 +1502,7 @@ if($('body').hasClass('logged-in')) {
                 }
 
                 create_contract_form.find('.suggested-price').html(suggested_price);
-                create_contract_form.find('.step.three [name="monthly-premium"]').val(suggested_price);
+                create_contract_form.find('.step.three [name="monthly-premium"]').val(suggested_price).closest('.single-row').find('.absolute-currency-label').fadeIn(300).css({'left' : 'calc(40% + ' + (15 + create_contract_form.find('.step.three [name="monthly-premium"]').val().length * 10) + 'px)'});
             } else {
                 $('.show-on-services-pick').fadeOut(500);
             }
