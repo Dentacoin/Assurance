@@ -77,6 +77,9 @@ class PatientController extends Controller {
             'id.required' => 'Email is required.'
         ]);
 
+        var_dump($request->input());
+        die();
+
         $session_arr = [
             'token' => $request->input('token'),
             'id' => $request->input('id'),
