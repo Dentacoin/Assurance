@@ -31,7 +31,7 @@
         var HOME_URL = '{{ route("home") }}';
     </script>
 </head>
-<body data-test="{{(new \App\Http\Controllers\Controller())->getGasEstimationFromEthgasstation()}}" class="@if(!empty(Route::current())) {{Route::current()->getName()}} @else class-404 @endif @if(\App\Http\Controllers\UserController::instance()->checkSession()) logged-in @endif">
+<body data-test="{{(new \App\Http\Controllers\APIRequestsController())->getGasEstimationFromEthgasstation()}}" class="@if(!empty(Route::current())) {{Route::current()->getName()}} @else class-404 @endif @if(\App\Http\Controllers\UserController::instance()->checkSession()) logged-in @endif">
 @if(isset($mobile) && $mobile)
     <nav class="sidenav">
         <div class="wrapper">
