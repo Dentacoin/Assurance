@@ -76589,11 +76589,11 @@ function cancelContractEventInit() {
                                         } else {
                                             if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
                                                 basic.showAlert('Please enter other reason.', '', true);
-                                            } else if($('.popup-cancel-contract #cancel-contract-reason').val().trim() == '') {
+                                            } else if($('.recipe-popup #cancel-contract-reason').val().trim() == '') {
                                                 basic.showAlert('Please select cancellation reason.', '', true);
-                                            } else if ($('.recipe-popup #cancel-contract-comments').val().trim() == '') {
+                                            } else if($('.recipe-popup #cancel-contract-comments').val().trim() == '') {
                                                 basic.showAlert('Please enter comments.', '', true);
-                                            } else if (global_state.account == '' || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                            } else if(global_state.account == '' || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
                                                 basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                                 return false;
                                             } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
@@ -76709,7 +76709,7 @@ function cancelContractEventInit() {
 
                             fixSelectsOnMac();
 
-                            $('.popup-cancel-contract #cancel-contract-reason').on('change', function() {
+                            $('.recipe-popup #cancel-contract-reason').on('change', function() {
                                 if($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
                                     $('.camp-for-row').html('<div class="popup-row"><label for="cancel-contract-other-reason" class="inline-block-top">Other reason:</label><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background inline-block-top" maxlength="255"/></div>');
                                 } else {
@@ -76720,7 +76720,7 @@ function cancelContractEventInit() {
                             $('.popup-cancel-contract .cancel-contract-popup-confirmation').click(function() {
                                 if($('.popup-cancel-contract #cancel-contract-other-reason').length && $('.popup-cancel-contract #cancel-contract-other-reason').val().trim() == '') {
                                     basic.showAlert('Please enter other reason.', '', true);
-                                } else if($('.popup-cancel-contract #cancel-contract-reason').val().trim() == '') {
+                                } else if($('.recipe-popup #cancel-contract-reason').val().trim() == '') {
                                     basic.showAlert('Please select cancellation reason.', '', true);
                                 } else if($('.popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
                                     basic.showAlert('Please enter comments.', '', true);
