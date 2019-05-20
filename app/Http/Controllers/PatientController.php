@@ -104,7 +104,7 @@ class PatientController extends Controller {
             //if rewards forward them to coredb
             if(!empty($rewards)) {
                 foreach($rewards as $reward) {
-                    $invited_dentist_data = (new APIRequestsController())->checkIfUserExist($reward->dentist_email);
+                    $invited_dentist_data = (new APIRequestsController())->getUserByEmailAndType($reward->dentist_email, 'dentist');
                     var_dump($invited_dentist_data);
                     die('asd');
 
