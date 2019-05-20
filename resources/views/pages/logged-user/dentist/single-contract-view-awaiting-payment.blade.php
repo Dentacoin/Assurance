@@ -1,6 +1,5 @@
 @extends('layout')
 @section('content')
-    @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section awaiting-payment" data-created-at="{{strtotime($contract->contract_active_at)}}">
         <section class="container">
@@ -15,10 +14,10 @@
             <div class="row fs-0 flex-xs">
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                        <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
+                        <img alt="Dentist avatar" src="{{$current_logged_dentist->avatar_url}}"/>
                     </figure>
-                    <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$dentist->name}}</div>
-                    <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$dentist->email}}</div>
+                    <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$current_logged_dentist->name}}</div>
+                    <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$current_logged_dentist->email}}</div>
                 </div>
                 <div class="col-xs-3 inline-block-top margin-top-40 margin-top-xs-0 contract-body" data-time-left-next-transfer="{{strtotime($contract->contract_active_at)}}">
                     <div class="contract-header text-center lato-bold fs-20 fs-sm-18 white-color padding-top-15 padding-bottom-15 awaiting-payment">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING PAYMENT</div>
@@ -64,7 +63,7 @@
                 </div>
                 <div class="col-xs-12 col-lg-10 col-lg-offset-1 no-gutter-xs">
                     <div class="contract-details-container module fs-16 text-left padding-top-40 padding-bottom-60">
-                        @include('partials.contract-details', ['type' => 'single-page', 'contract' => $contract, 'dentist' => $dentist, 'patient' => $patient, 'calculator_proposals' => $calculator_proposals])
+                        @include('partials.contract-details', ['type' => 'single-page', 'contract' => $contract, 'dentist' => $current_logged_dentist, 'patient' => $patient, 'calculator_proposals' => $calculator_proposals])
                     </div>
                     <div class="padding-top-40">
                         <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color" data-label-closed="See details" data-label-opened="Hide details" data-hidden-details="true">See details</a>

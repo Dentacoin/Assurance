@@ -11,7 +11,6 @@
         @php($cancelled_timestamp = strtotime($contract->cancelled_at))
     @endif
 
-    @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
     @php($cancellation_reason = unserialize($contract->cancellation_reason))
     @if(!empty($contract->patient_id))
         @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
@@ -36,10 +35,10 @@
             <div class="row fs-0 flex-xs">
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                        <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
+                        <img alt="Dentist avatar" src="{{$current_logged_dentist->avatar_url}}"/>
                     </figure>
-                    <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$dentist->name}}</div>
-                    <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$dentist->email}}</div>
+                    <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$current_logged_dentist->name}}</div>
+                    <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$current_logged_dentist->email}}</div>
                 </div>
                 <div class="col-xs-3 inline-block-top margin-top-40 margin-top-xs-0 contract-body text-center" data-time-left-next-transfer="{{$active_timestamp}}">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-10 padding-bottom-15 cancelled">CANCELLED</div>
@@ -91,7 +90,7 @@
             <div class="row text-center">
                 <div class="col-xs-12 col-lg-10 col-lg-offset-1 no-gutter-xs">
                     <div class="contract-details-container module fs-16 text-left padding-top-40 padding-bottom-60">
-                        @php($contract_details_params = ['type' => 'single-page', 'contract' => $contract, 'dentist' => $dentist, 'calculator_proposals' => $calculator_proposals])
+                        @php($contract_details_params = ['type' => 'single-page', 'contract' => $contract, 'dentist' => $current_logged_dentist, 'calculator_proposals' => $calculator_proposals])
                         @if(!empty($patient))
                             @php($contract_details_params['patient'] = $patient)
                         @endif
