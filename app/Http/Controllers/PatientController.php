@@ -30,7 +30,7 @@ class PatientController extends Controller {
 
     protected function getPatientContractView($slug) {
         $contract = TemporallyContract::where(array('slug' => $slug))->get()->first();
-        if($contract->status == 'pending') {
+        if($contract->status == '`pending') {
             return abort(404);
         } else {
             $params = array('contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'));
@@ -100,10 +100,14 @@ class PatientController extends Controller {
         } else {
             session(['logged_user' => $session_arr]);
 
-            $rewards = InviteDentistsReward::where(array('patient_id' => $request->input('id'), 'dentist_registered_and_approved' => 1, 'sent_to_api' => 0, 'payed_on' => NULL))->get()->all();
+            $rewards = InviteDentistsReward::where(array('patient_id' => $request->input('id'), /*'dentist_registered_and_approved' => 1,*/ 'sent_to_api' => 0, 'payed_on' => NULL))->get()->all();
             //if rewards forward them to coredb
             if(!empty($rewards)) {
                 foreach($rewards as $reward) {
+                    $invited_dentist_data = (new APIRequestsController())->checkIfFreeEmail($reward->dentist_email);
+                    var_dump($invited_dentist_data['data']['status']);
+                    die('asd');
+
                     $data = array(
                         'amount' => self::DCN_REWARD,
                         'type' => 'assurance',

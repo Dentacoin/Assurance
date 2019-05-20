@@ -162,7 +162,7 @@ class DentistController extends Controller
 
         $api_response = (new APIRequestsController())->dentistLogin($data);
         if($api_response['success']) {
-            $approved_statuses = array('approved', 'pending', 'test');
+            $approved_statuses = array('approved', 'test');
             if($api_response['data']['self_deleted'] != NULL) {
                 return response()->json(['error' => true, 'message' => 'This account is deleted, you cannot log in with this account anymore.']);
             } else if(!in_array($api_response['data']['status'], $approved_statuses)) {
@@ -194,21 +194,20 @@ class DentistController extends Controller
 
         //handle the API response
         $api_response = (new APIRequestsController())->dentistLogin($data);
-
         if($api_response['success']) {
-            $approved_statuses = array('approved', 'pending', 'test');
+            $approved_statuses = array('approved', 'test');
             if($api_response['data']['self_deleted'] != NULL) {
                 return redirect()->route('home')->with(['error' => 'This account is deleted, you cannot log in with this account anymore.']);
             } else if(!in_array($api_response['data']['status'], $approved_statuses)) {
                 return redirect()->route('home')->with(['error' => 'This account is not approved by Dentacoin team yet, please try again later.']);
             } else {
-                //check if waiting invite dentist rewards
+                /*//check if waiting invite dentist rewards
                 $reward = InviteDentistsReward::where(array('dentist_email' => $data['email'], 'dentist_registered_and_approved' => 0, 'payed_on' => NULL))->get()->first();
 
                 if(!empty($reward)) {
                     $reward->dentist_registered_and_approved = true;
                     $reward->save();
-                }
+                }*/
 
                 $session_arr = [
                     'token' => $api_response['token'],

@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-xs-3 inline-block-top margin-top-40 margin-top-xs-0 contract-body text-center" data-time-left-next-transfer="{{$active_timestamp}}">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-10 padding-bottom-15 cancelled">CANCELLED</div>
-                    <div class="padding-left-15 padding-right-15 wrapper">
+                    <div class="padding-left-15 padding-right-15 wrapper padding-bottom-15">
                         <div class="cancelled-color fs-20 calibri-bold padding-top-15">Date Cancelled:</div>
                         <time class="display-block calibri-light fs-20">{{date('d/m/Y', $cancelled_timestamp)}}</time>
                         <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Reason:</div>
