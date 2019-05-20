@@ -175,7 +175,7 @@ class Controller extends BaseController
         return $data;
     }
 
-    protected function getGasEstimationFromEthgasstation()  {
+    public function getGasEstimationFromEthgasstation()  {
         //API connection
         $curl = curl_init();
         curl_setopt_array($curl, array(
