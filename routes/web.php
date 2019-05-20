@@ -23,6 +23,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::get('/wallet-instructions', 'WalletInstructionsController@getView')->name('wallet-instructions');
 
+    Route::get('/assurance-demo', 'AssuranceDemoController@getView')->name('assurance-demo');
+
     Route::get('/contract-proposal/{slug}', 'PatientController@getContractProposal')->name('contract-proposal');
 
     Route::get('/forgotten-password', 'UserController@getForgottenPasswordView')->name('forgotten-password');
