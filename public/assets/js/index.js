@@ -539,33 +539,42 @@ async function pagesDataOnContractInit() {
                 var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
                 var ethgasstation_json = await $.getJSON("https://ethgasstation.info/json/ethgasAPI.json");
                 const on_page_load_gwei = ethgasstation_json.safeLow;
+                console.log(on_page_load_gwei, 'on_page_load_gwei');
                 //adding 10% just in case the transaction dont fail
                 const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
+                console.log(on_page_load_gas_price, 'on_page_load_gas_price');
 
                 var approval_given = false;
                 //if approval is given already SOMEHOW ...
                 if(parseInt(await App.dentacoin_token_methods.allowance(checksumAddress($('.patient-contract-single-page-section').attr('data-patient-address')), App.assurance_state_address)) > 0) {
                     approval_given = true;
                 }
-
+                console.log(approval_given, 'approval_given');
 
                 if(!approval_given) {
                     //gas estimation for DentacoinToken approval method
                     var gas_cost_for_approval = await App.dentacoin_token_instance.methods.approve(App.assurance_state_address, App.dentacoins_to_approve).estimateGas({gas: 500000});
                 }
+                console.log(gas_cost_for_approval, 'gas_cost_for_approval');
 
                 //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                 var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress($('.patient-contract-single-page-section').attr('data-dentist-address')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: App.dummy_address, gas: 1000000});
 
+                console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
+
                 var methods_gas_cost;
                 if(!approval_given) {
+                    console.log(1);
                     methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
                 } else {
+                    console.log(2);
                     methods_gas_cost = gas_cost_for_contract_creation;
                 }
+                console.log(methods_gas_cost, 'methods_gas_cost');
 
                 //eth fee for firing blockchain transaction
                 var eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
+                console.log(eth_fee, 'eth_fee');
 
                 if(current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
                     //not enough DCN and ETH balance
