@@ -19,6 +19,10 @@ class DentistController extends Controller
         $contract = TemporallyContract::where(array('slug' => $slug))->get()->first();
         $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
         $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
+        var_dump($current_logged_dentist);
+        var_dump($calculator_proposals);
+        var_dump($contract);
+        die('asd');
         if(!empty($contract)) {
             if($contract->status == 'active') {
                 $check_if_legit_contract = (new APIRequestsController())->cancelIfLatePayment($contract->patient_address, $contract->dentist_address);
@@ -306,7 +310,7 @@ class DentistController extends Controller
 
         //saving the dentist signature in new unique folder for this contract
         $temp_contract_folder_path = CONTRACTS . DS . $random_string;
-        if (!file_exists($temp_contract_folder_path)) {
+        if(!file_exists($temp_contract_folder_path)) {
             mkdir($temp_contract_folder_path, 0777, true);
 
             //create image from the base64 signature
