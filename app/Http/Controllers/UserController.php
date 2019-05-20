@@ -624,7 +624,7 @@ class UserController extends Controller {
         $api_response = (new APIRequestsController())->deleteProfile();
         if($api_response->success) {
             $this->userLogout($request);
-            return redirect()->route('home')->with(['success' => 'Your profile has been deleted successfullym.']);
+            return redirect()->route('home')->with(['success' => 'Your profile has been deleted successfully.']);
         } else {
             return redirect()->route('manage-privacy')->with(['error' => 'Your profile deletion failed. Please try again later.']);
         }
