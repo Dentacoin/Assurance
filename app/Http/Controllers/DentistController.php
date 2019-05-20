@@ -20,7 +20,9 @@ class DentistController extends Controller
         $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
         $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
         var_dump($current_logged_dentist);
+        echo "<br><br>====================================<br><br>";
         var_dump($calculator_proposals);
+        echo "<br><br>====================================<br><br>";
         var_dump($contract);
         die('asd');
         if(!empty($contract)) {
