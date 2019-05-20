@@ -105,7 +105,7 @@ class PatientController extends Controller {
             if(!empty($rewards)) {
                 foreach($rewards as $reward) {
                     $invited_dentist_data = (new APIRequestsController())->checkIfFreeEmail($reward->dentist_email);
-                    var_dump($invited_dentist_data['data']['status']);
+                    var_dump($invited_dentist_data);
                     die('asd');
 
                     $data = array(
