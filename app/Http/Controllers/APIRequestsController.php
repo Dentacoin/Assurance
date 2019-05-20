@@ -149,10 +149,6 @@ class APIRequestsController extends Controller {
             'email' => $email
         );
 
-        var_dump($post_fields_arr);
-
-        echo '<br><br><br>=============================<br><br><br>';
-
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
