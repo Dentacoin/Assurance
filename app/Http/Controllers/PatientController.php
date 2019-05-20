@@ -54,11 +54,13 @@ class PatientController extends Controller {
 
     public function getPatientAccess()    {
         if((new UserController())->checkPatientSession()) {
-            $logged_patient_email = (new APIRequestsController())->getUserData(session('logged_user')['id'])->email;
+            $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
             $clinics = (new APIRequestsController())->getAllClinicsByName();
+            $contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => $logged_patient->email))->get()->sortByDesc('created_at');
 
-            if(TemporallyContract::where(array('patient_email' => $logged_patient_email))->get()->all()) {
-                return view('pages/logged-user/patient/have-contracts', ['contracts' => TemporallyContract::where(array('patient_email' => $logged_patient_email))->get()->sortByDesc('created_at'), 'clinics' => $clinics]);
+            if(!empty($contracts)) {
+                //IF PATIENT HAVE EXISTING CONTRACTS
+                return view('pages/logged-user/patient/have-contracts', ['contracts' => $contracts, 'clinics' => $clinics]);
             } else {
                 //IF PATIENT HAVE NO EXISTING CONTRACTS
                 return view('pages/logged-user/patient/start-first-contract', ['clinics' => $clinics]);
