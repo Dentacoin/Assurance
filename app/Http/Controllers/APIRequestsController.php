@@ -336,7 +336,7 @@ class APIRequestsController extends Controller {
         return $resp;
     }
 
-    public function getGasEstimationFromEthgasstation()  {
+    protected function getGasEstimationFromEthgasstation()  {
         //API connection
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -555,7 +555,7 @@ class APIRequestsController extends Controller {
     public function cancelIfLatePayment($patient_addr, $dentist_addr) {
         $curl = curl_init();
 
-        $json = '{"patient_addr":"'.$patient_addr.'", "dentist_addr":"'.$dentist_addr.'"}';
+        $json = '{"patient_addr":"'.$patient_addr.'", "dentist_addr":"'.$dentist_addr.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'"}';
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
