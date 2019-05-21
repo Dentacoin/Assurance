@@ -555,7 +555,7 @@ class APIRequestsController extends Controller {
     public function cancelIfLatePayment($patient_addr, $dentist_addr) {
         $curl = curl_init();
 
-        $json = '{"patient_addr":"'.$patient_addr.'", "dentist_addr":"'.$dentist_addr.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'"}';
+        $json = '{"patient_addr":"'.$patient_addr.'", "dentist_addr":"'.$dentist_addr.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'", "password":"'.getenv('API_REQUESTS_PASSWORD').'"}';
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
