@@ -21,18 +21,8 @@ class DentistController extends Controller
         $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
         if(!empty($contract)) {
             if($contract->status == 'active') {
-                $check_if_legit_contract = (new APIRequestsController())->cancelIfLatePayment($contract->patient_address, $contract->dentist_address);
-                if($check_if_legit_contract && isset($check_if_legit_contract->success)) {
-                    //IF NORMAL PERIOD AND GRACE PERIOD PASSED CANCEL THIS CONTRACT
-                    $cancellation_reason = array(
-                        'reason' => 'Late payment from patient.'
-                    );
-
-                    $contract->status = 'cancelled';
-                    $contract->cancelled_at = new \DateTime();
-                    $contract->cancellation_reason = serialize($cancellation_reason);
-                    $contract->save();
-                }
+                //checking here if the contract withdraw period and grace period passed and the patient still didnt full in his wallet address
+                (new UserController())->automaticContractCancel($contract);
             }
             return view('pages/logged-user/dentist/single-contract-view-'.$contract->status, ['contract' => $contract, 'calculator_proposals' => $calculator_proposals, 'current_logged_dentist' => $current_logged_dentist]);
         } else {

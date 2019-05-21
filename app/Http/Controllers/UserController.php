@@ -751,4 +751,19 @@ class UserController extends Controller {
             return abort(404);
         }
     }
+
+    public function automaticContractCancel($contract) {
+        $check_if_legit_contract = (new APIRequestsController())->cancelIfLatePayment($contract->patient_address, $contract->dentist_address);
+        if($check_if_legit_contract && isset($check_if_legit_contract->success)) {
+            //IF NORMAL PERIOD AND GRACE PERIOD PASSED CANCEL THIS CONTRACT
+            $cancellation_reason = array(
+                'reason' => 'Late payment from patient.'
+            );
+
+            $contract->status = 'cancelled';
+            $contract->cancelled_at = new \DateTime();
+            $contract->cancellation_reason = serialize($cancellation_reason);
+            $contract->save();
+        }
+    }
 }
