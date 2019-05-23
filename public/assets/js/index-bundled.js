@@ -73756,6 +73756,9 @@ async function pagesDataOnContractInit() {
             var next_payment_timestamp_unix;
             var next_payment_timestamp;
 
+            console.log(time_passed_since_signed, 'time_passed_since_signed');
+            console.log(period_to_withdraw, 'period_to_withdraw');
+
             if(time_passed_since_signed > period_to_withdraw) {
                 var remainder = time_passed_since_signed % period_to_withdraw;
                 console.log(remainder, 'remainder');
