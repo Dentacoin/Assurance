@@ -55,6 +55,7 @@
                     </div>
                 </div>
             @endif
+            <div class="row camping-for-popups"></div>
         </div>
     </section>
     @include('partials.patient-ready-to-purchase-with-external-api')
