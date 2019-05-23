@@ -484,6 +484,7 @@ async function pagesDataOnContractInit() {
                 if($('.contract-header').hasClass('active') && current_patient_dcn_balance > dcn_needed_to_be_payed_to_dentist) {
                     timer_label = 'Your payment will be processed it:';
                     $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Check inside shield" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h1 class="lato-bold fs-20 padding-top-15">ALL SET FOR YOUR NEXT PAYMENT</h1><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">It seems you have the needed amount of DCN and ETH in your wallet so your dentist will be able to successfully process your next monthly payment on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 second-custom-close-btn">SOUNDS GOOD</a></div></div></div>');
+                    initPopupEvents();
                 }
 
                 $('.contract-body .timer-label').html(timer_label);
