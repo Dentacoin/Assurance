@@ -73755,7 +73755,7 @@ async function pagesDataOnContractInit() {
             var next_payment_timestamp_date_obj;
             var next_payment_timestamp_unix;
             var next_payment_timestamp;
-            var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.single-contract-view-section').attr('data-patient-address'), $('.single-contract-view-section').attr('data-dentist-address'));
+            var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient-address'), $('.patient-contract-single-page-section').attr('data-dentist-address'));
 
             console.log(on_load_exiting_contract, 'on_load_exiting_contract');
             console.log(time_passed_since_signed, 'time_passed_since_signed');
