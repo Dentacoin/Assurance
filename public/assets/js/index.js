@@ -3252,7 +3252,7 @@ function cancelContractEventInit() {
                             $('.popup-cancel-contract .cancel-contract-popup-confirmation').click(function() {
                                 if($('.popup-cancel-contract #cancel-contract-other-reason').length && $('.popup-cancel-contract #cancel-contract-other-reason').val().trim() == '') {
                                     basic.showAlert('Please enter other reason.', '', true);
-                                } else if($('.recipe-popup #cancel-contract-reason').val().trim() == '') {
+                                } else if($('.popup-cancel-contract #cancel-contract-reason').val().trim() == '') {
                                     basic.showAlert('Please select cancellation reason.', '', true);
                                 } else if($('.popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
                                     basic.showAlert('Please enter comments.', '', true);
