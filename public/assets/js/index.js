@@ -456,6 +456,10 @@ async function pagesDataOnContractInit() {
                 var months_passed_for_reward = Math.floor(time_passed_since_signed / period_to_withdraw);
                 var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(on_load_exiting_contract[5]);
 
+                console.log(on_load_exiting_contract, 'on_load_exiting_contract');
+                console.log(current_patient_dcn_balance, 'current_patient_dcn_balance');
+                console.log(dcn_needed_to_be_payed_to_dentist, 'dcn_needed_to_be_payed_to_dentist');
+
                 var timer_label = '';
                 if(time_passed_since_signed > period_to_withdraw && months_passed_for_reward == 1 && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
                     next_payment_timestamp = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp) * 1000;
