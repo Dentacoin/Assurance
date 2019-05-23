@@ -454,37 +454,33 @@ async function pagesDataOnContractInit() {
                 var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient-address'), $('.patient-contract-single-page-section').attr('data-dentist-address'));
                 var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address')));
 
-                console.log(on_load_exiting_contract, 'on_load_exiting_contract');
-                console.log(time_passed_since_signed, 'time_passed_since_signed');
-                console.log(period_to_withdraw, 'period_to_withdraw');
-
                 var months_passed_for_reward = Math.floor(time_passed_since_signed / period_to_withdraw);
                 var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(on_load_exiting_contract[5]);
-                console.log(months_passed_for_reward, 'months_passed_for_reward');
-                console.log(dcn_needed_to_be_payed_to_dentist, 'dcn_needed_to_be_payed_to_dentist');
-                console.log(current_patient_dcn_balance, 'current_patient_dcn_balance');
 
+                var timer_label = '';
                 if(time_passed_since_signed > period_to_withdraw && months_passed_for_reward == 1 && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
-                    console.log("SHOW GRACE PERIOD TIMER");
                     next_payment_timestamp = (now_timestamp + dApp.grace_period - time_passed_since_signed % period_to_withdraw) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                    console.log(next_payment_timestamp, 'next_payment_timestamp');
-                    console.log(next_payment_timestamp_date_obj, 'next_payment_timestamp_date_obj');
+                    timer_label = 'Overdue payment. If you doesn\'t fill in '+dcn_needed_to_be_payed_to_dentist+' Dentacoins inside his Wallet Address the contract will be canceled in:';
+                    $('.clock').addClass('red-background');
                 } else if(time_passed_since_signed > period_to_withdraw) {
                     var remainder = time_passed_since_signed % period_to_withdraw;
                     next_payment_timestamp_unix = period_to_withdraw - remainder;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
+                    timer_label = 'Fund your account in:';
                 } else {
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
+                    timer_label = 'Fund your account in:';
                 }
 
                 if($('.converted-date').length > 0 && next_payment_timestamp_date_obj != undefined) {
                     $('.converted-date').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
                 }
 
+                $('.contract-body .timer-label').html(timer_label);
                 initFlipClockTimer(next_payment_timestamp_unix);
 
                 cancelContractEventInit();

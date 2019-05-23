@@ -8449,6 +8449,12 @@ select.select-mac-fix {
         width: 30px; }
         .module.single-contract-tile .clock ul li .inn {
           font-size: 35px; } }
+  .module.single-contract-tile .clock.red-background .flip-clock-label {
+    color: #d64949; }
+  .module.single-contract-tile .clock.red-background .flip-clock-divider .flip-clock-dot {
+    background: #d64949; }
+  .module.single-contract-tile .clock.red-background ul li .inn {
+    color: #d64949; }
 .module.single-contract-tile .contract-footer .wrapper {
   background-color: #ebebeb;
   color: #888888;

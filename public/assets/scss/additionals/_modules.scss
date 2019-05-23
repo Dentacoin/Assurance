@@ -1005,6 +1005,23 @@
                     }
                 }
             }
+            &.red-background {
+                .flip-clock-label {
+                    color: #d64949;
+                }
+                .flip-clock-divider {
+                    .flip-clock-dot {
+                        background: #d64949;
+                    }
+                }
+                ul {
+                    li {
+                        .inn {
+                            color: #d64949;
+                        }
+                    }
+                }
+            }
         }
         .contract-footer {
             .wrapper {
