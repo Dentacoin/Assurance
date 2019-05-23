@@ -30,7 +30,7 @@
                 <div class="col-xs-4 inline-block contract-body padding-bottom-10 padding-bottom-xs-0">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-payment">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING PAYMENT</div>
                     <div class="wrapper">
-                        <div class="lato-bold fs-20 padding-top-15 padding-bottom-10 timer-label"></div>
+                        <div class="lato-bold fs-20 padding-top-15 padding-bottom-10 padding-left-10 padding-right-10 timer-label"></div>
                         <div class="clock"></div>
                         <div class="flip-clock-message"></div>
                     </div>

@@ -461,6 +461,10 @@ async function pagesDataOnContractInit() {
                 if(time_passed_since_signed > period_to_withdraw && months_passed_for_reward == 1 && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
                     next_payment_timestamp = (now_timestamp + dApp.grace_period - time_passed_since_signed % period_to_withdraw) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
+
+                    console.log(next_payment_timestamp, 'next_payment_timestamp');
+                    console.log(next_payment_timestamp_date_obj, 'next_payment_timestamp_date_obj');
+
                     timer_label = 'Overdue payment. If you doesn\'t fill in '+dcn_needed_to_be_payed_to_dentist+' Dentacoins inside his Wallet Address the contract will be canceled in:';
                     $('.clock').addClass('red-background');
                 } else if(time_passed_since_signed > period_to_withdraw) {
@@ -469,11 +473,17 @@ async function pagesDataOnContractInit() {
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     timer_label = 'Fund your account in:';
+
+                    console.log(next_payment_timestamp, 'next_payment_timestamp');
+                    console.log(next_payment_timestamp_date_obj, 'next_payment_timestamp_date_obj');
                 } else {
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     timer_label = 'Fund your account in:';
+
+                    console.log(next_payment_timestamp, 'next_payment_timestamp');
+                    console.log(next_payment_timestamp_date_obj, 'next_payment_timestamp_date_obj');
                 }
 
                 if($('.converted-date').length > 0 && next_payment_timestamp_date_obj != undefined) {
