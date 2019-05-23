@@ -13,7 +13,7 @@
                             <div class="row fs-0">
                                 <div class="col-xs-12 col-sm-6 inline-block">
                                     <div class="single-container text-center">
-                                        <a href="/support-guide" class="display-block">
+                                        <a href="/support-guide" target="_blank" class="display-block">
                                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                 <img alt="" class="max-width-90" itemprop="contentUrl" src="/assets/uploads/support-guide.svg"/>
                                                 <figcaption class="fs-20 padding-top-15">Check Your Support Guide</figcaption>
@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-6 inline-block">
                                     <div class="single-container text-center">
-                                        <a href="" class="display-block">
+                                        <a href="/assurance-demo" target="_blank" class="display-block">
                                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                 <img alt="" class="max-width-90" itemprop="contentUrl" src="/assets/uploads/assurance-demo.svg"/>
                                                 <figcaption class="fs-20 padding-top-15">Go Through Assurance Demo</figcaption>
@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-6 inline-block">
                                     <div class="single-container text-center">
-                                        <a href="/wallet-instructions" class="display-block">
+                                        <a href="/wallet-instructions" target="_blank" class="display-block">
                                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                 <img alt="" class="max-width-90" itemprop="contentUrl" src="/assets/uploads/wallet-instructions.svg"/>
                                                 <figcaption class="fs-20 padding-top-15">Open Your Dentacoin Wallet</figcaption>

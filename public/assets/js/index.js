@@ -440,70 +440,6 @@ var App = {
 };
 
 async function pagesDataOnContractInit() {
-    /*if($('body').hasClass('dentist')) {
-        $('.additional-info .current-account a').html(global_state.account).attr('href', 'https://rinkeby.etherscan.io/address/' + global_state.account);
-        $('.additional-info .assurance-account a').html(App.assurance_address).attr('href', 'https://rinkeby.etherscan.io/address/' + App.assurance_address);
-        $('.additional-info .dentacointoken-account a').html(App.dentacoin_token_address).attr('href', 'https://rinkeby.etherscan.io/address/' + App.dentacoin_token_address);
-        var check_dentist_account = await App.assurance_methods.getDentist(global_state.account);
-        if(check_dentist_account.toLowerCase() == global_state.account.toLowerCase()) {
-            $('.additional-info .is-dentist span').addClass('yes').html('YES');
-        }else {
-            $('.additional-info .is-dentist span').addClass('no').html('NO'); 
-        }
-
-        //show current pending and running contracts
-        buildCurrentDentistContractHistory();
-
-        $('.register-dentist').click(function() {
-            App.assurance_methods.registerDentist();
-        });
-
-        $('.register-contract').click(function()    {
-            App.assurance_methods.registerContract($('.registerContract .patient-address').val().trim(), global_state.account, $('.registerContract .value-usd').val().trim(), $('.registerContract .value-dcn').val().trim(), new Date($('.registerContract .date-start-contract').val().trim()).getTime() / 1000, $('.registerContract .ipfs-hash').val().trim());
-        });
-
-        $('.dentist-approve-contract').click(function() {
-            App.assurance_methods.dentistApproveContract($('.dentistApproveContract .patient-address').val().trim());
-        });
-
-        $('.withdraw-to-dentist').click(function() {
-            App.assurance_methods.withdrawToDentist();
-        });
-
-        $('.break-contract').click(function() {
-            App.assurance_methods.breakContract($('.breakContract .patient-address').val().trim(), global_state.account);
-        });
-    }else if($('body').hasClass('patient')) {
-        $('.additional-info .current-account a').html(global_state.account).attr('href', 'https://rinkeby.etherscan.io/address/' + global_state.account);
-        $('.additional-info .assurance-account a').html(App.assurance_address).attr('href', 'https://rinkeby.etherscan.io/address/' + App.assurance_address);
-        $('.additional-info .dentacointoken-account a').html(App.dentacoin_token_address).attr('href', 'https://rinkeby.etherscan.io/address/' + App.dentacoin_token_address);
-
-        //we check greater than 0 or more?????? ASK JEREMIAS
-        if(parseInt(await App.dentacoin_token_methods.allowance(global_state.account, App.assurance_address)) > 0) {
-            $('.is-allowance-given span').addClass('yes').html('YES');
-        }else {
-            $('.is-allowance-given span').addClass('no').html('NO');
-        }
-
-        //show current pending and running contracts
-        buildCurrentPatientContractHistory();
-
-        $('.approve .approve-dcntoken-contract').click(function() {
-            App.dentacoin_token_methods.approve();
-        });
-
-        $('.register-contract').click(function()    {
-            App.assurance_methods.registerContract(global_state.account, $('.registerContract .dentist-address').val().trim(), $('.registerContract .value-usd').val().trim(), $('.registerContract .value-dcn').val().trim(), new Date($('.registerContract .date-start-contract').val().trim()).getTime() / 1000, $('.registerContract .ipfs-hash').val().trim());
-        });
-
-        $('.patient-approve-contract').click(function() {
-            App.assurance_methods.patientApproveContract($('.patientApproveContract .dentist-address').val().trim());
-        });
-
-        $('.break-contract').click(function() {
-            App.assurance_methods.breakContract(global_state.account, $('.breakContract .dentist-address').val().trim());
-        });
-    } else */
     if($('body').hasClass('logged-in')) {
         if($('body').hasClass('patient-contract-view')) {
             var period_to_withdraw = parseInt(await App.assurance_state_methods.getPeriodToWithdraw());
@@ -560,39 +496,29 @@ async function pagesDataOnContractInit() {
                 //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                 var gas_cost_for_contract_creation = await App.assurance_proxy_instance.methods.registerContract(App.dummy_address, checksumAddress($('.patient-contract-single-page-section').attr('data-dentist-address')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: App.dummy_address, gas: 1000000});
 
-                console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
-
                 var methods_gas_cost;
                 if(!approval_given) {
-                    console.log(1);
                     methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
                 } else {
-                    console.log(2);
                     methods_gas_cost = gas_cost_for_contract_creation;
                 }
-                console.log(methods_gas_cost, 'methods_gas_cost');
 
                 //eth fee for firing blockchain transaction
                 var eth_fee = App.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
-                console.log(eth_fee, 'eth_fee');
 
                 if(current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
                     //not enough DCN and ETH balance
                     $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-20 padding-top-15">WARNING</h1><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
-                    /*$('.timer-text').html('You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.');*/
                     initPopupEvents(true);
                 } else if(current_user_dcn_balance < monthly_premium_in_dcn) {
                     //not enough DCN
-                    /*$('.timer-text').html('You should charge your wallet with <span class="calibri-bold">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> <span class="calibri-bold">until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.');*/
                     $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-20 padding-top-15">WARNING</h1><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
                     initPopupEvents(true);
                 } else if(parseFloat(eth_fee) > current_user_eth_balance) {
                     //not enough ETH balance
-                    /*$('.timer-text').html('You should charge your wallet with <span class="calibri-bold">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.');*/
                     $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h1 class="lato-bold fs-20 padding-top-15">WARNING</h1><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
                     initPopupEvents(true);
                 } else {
-                    /*$('.timer-text').html('It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should pay your monthly premium before or on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.');*/
                     //show CONTINUE TO BLOCKCHAIN BTN
                     $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Check inside shield" src="/assets/images/secure.svg" class="max-width-70"/></figure><h1 class="lato-bold fs-20 padding-top-15">ACTIVATE YOUR AUTOMATIC PAYMENTS <i class="fa fa-info-circle" aria-hidden="true" data-placement="left" data-toggle="tooltip" title="Enabling automatic payments means that your monthly premium amount will be automatically deducted from your wallet balance on the payment due date and you will never have to worry about a missed deadline."></i></h1><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet. You should activate your secure, automatic payments <span class="calibri-bold blue-green-color">before or on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.<br>Ready to do it now?</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">ACTIVATE NOW</a></div></div></div>');
                     initPopupEvents();
@@ -810,76 +736,6 @@ function checksumAddress(address)    {
     return App.web3_1_0.utils.toChecksumAddress(address);
 }
 
-/*async function buildCurrentDentistContractHistory() {
-    var current_patients_for_dentist = await App.assurance_methods.getPatientsArrForDentist(global_state.account);
-    if(current_patients_for_dentist.length > 0) {
-        var pending_approval_from_this_dentist_bool = false;
-        var pending_approval_from_patient = false;
-        var running_contacts_bool = false;
-        for(var i = 0, len = current_patients_for_dentist.length; i < len; i+=1) {
-            var patient = await App.assurance_methods.getPatient(current_patients_for_dentist[i], global_state.account);
-            var single_patient_body = '<div class="single"><div><label>Patient address:</label> <a href="https://rinkeby.etherscan.io/address/'+patient[1]+'" target="_blank" class="etherscan-hash">'+patient[1]+'</a></div><div><label>USD value:</label> '+patient[6]+'</div><div><label>DCN value:</label> '+patient[7]+'</div><div><label>IPFS link: (this is where patient and dentist can see the real contract (pdf) signed between them) <a href="https://gateway.ipfs.io/ipfs/'+patient[8]+'" target="_blank">https://gateway.ipfs.io/ipfs/'+patient[8]+'</a></label></div>';
-            if(patient[3] == true && patient[4] == true) {
-                if(!running_contacts_bool) {
-                    $('.running-contacts .fieldset-body').html('');
-                    running_contacts_bool = true;
-                }
-                single_patient_body+='<div><label>Date and time for next available withdraw:</label> '+new Date(parseInt(patient[2])*1000)+'</div></div>';
-                $('.running-contacts .fieldset-body').append(single_patient_body);
-            }else if(patient[3] == true) {
-                if(!pending_approval_from_patient) {
-                    $('.pending-approval-from-patient .fieldset-body').html('');
-                    pending_approval_from_patient = true;
-                }
-                single_patient_body+='<div><label>Date and time contract start:</label> '+new Date(parseInt(patient[2])*1000)+'</div></div>';
-                $('.pending-approval-from-patient .fieldset-body').append(single_patient_body);
-            }else if(patient[4] == true) {
-                if(!pending_approval_from_this_dentist_bool) {
-                    $('.pending-approval-from-this-dentist .fieldset-body').html('');
-                    pending_approval_from_this_dentist_bool = true;
-                }
-                single_patient_body+='<div><label>Date and time contract start:</label> '+new Date(parseInt(patient[2])*1000)+'</div></div>';
-                $('.pending-approval-from-this-dentist .fieldset-body').append(single_patient_body);
-            }
-        }
-    }
-}
-
-async function buildCurrentPatientContractHistory() {
-    var current_dentists_for_patient = await App.assurance_methods.getWaitingContractsForPatient(global_state.account);
-    if(current_dentists_for_patient.length > 0) {
-        var pending_approval_from_this_dentist_bool = false;
-        var pending_approval_from_patient = false;
-        var running_contacts_bool = false;
-        for(var i = 0, len = current_dentists_for_patient.length; i < len; i+=1) {
-            var patient = await App.assurance_methods.getPatient(global_state.account, current_dentists_for_patient[i]);
-            var single_patient_body = '<div class="single"><div><label>Dentist address:</label> <a href="https://rinkeby.etherscan.io/address/'+patient[0]+'" target="_blank" class="etherscan-hash">'+patient[0]+'</a></div><div><label>USD value:</label> '+patient[6]+'</div><div><label>DCN value:</label> '+patient[7]+'</div><div><label>IPFS link:  (this is where patient and dentist can see the real contract (pdf) signed between them) <a href="https://gateway.ipfs.io/ipfs/'+patient[8]+'" target="_blank">https://gateway.ipfs.io/ipfs/'+patient[8]+'</a></label></div>';
-            if(patient[3] == true && patient[4] == true) {
-                if(!running_contacts_bool) {
-                    $('.running-contacts .fieldset-body').html('');
-                    running_contacts_bool = true;
-                }
-                single_patient_body+='<div><label>Date and time for next available withdraw:</label> '+new Date(parseInt(patient[2])*1000)+'</div></div>';
-                $('.running-contacts .fieldset-body').append(single_patient_body);
-            }else if(patient[3] == true) {
-                if(!pending_approval_from_patient) {
-                    $('.pending-approval-from-this-patient .fieldset-body').html('');
-                    pending_approval_from_patient = true;
-                }
-                single_patient_body+='<div><label>Date and time contract start:</label> '+new Date(parseInt(patient[2])*1000)+'</div></div>';
-                $('.pending-approval-from-this-patient .fieldset-body').append(single_patient_body);
-            }else if(patient[4] == true) {
-                if(!pending_approval_from_this_dentist_bool) {
-                    $('.pending-approval-from-dentist .fieldset-body').html('');
-                    pending_approval_from_this_dentist_bool = true;
-                }
-                single_patient_body+='<div><label>Date and time contract start:</label> '+new Date(parseInt(patient[2])*1000)+'</div></div>';
-                $('.pending-approval-from-dentist .fieldset-body').append(single_patient_body);
-            }
-        }
-    }
-}*/
-
 // ================== PAGES ==================
 async function initPagesLogic() {
     if($('body').hasClass('home')) {
@@ -948,11 +804,6 @@ async function initPagesLogic() {
         if($('section.section-logged-patient-form select.combobox').length) {
             //on change show login popup
             $('section.section-logged-patient-form input[type="text"].combobox').attr('placeholder', 'Find your preferred dentist/s in a snap...');
-
-            //on enter press show login popup
-            $('section.section-logged-patient-form select.combobox').on('change', function() {
-                console.log($(this).val());
-            });
         }
     }else if($('body').hasClass('support-guide')) {
         if($('.support-guide-slider').length) {

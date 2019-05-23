@@ -112,6 +112,7 @@ class PatientController extends Controller {
             if(!empty($rewards)) {
                 foreach($rewards as $reward) {
                     $invited_dentist_data = (new APIRequestsController())->getUserByEmailAndType($reward->dentist_email, 'dentist');
+                    var_dump($invited_dentist_data);die();
                     if($invited_dentist_data[0]->status == 'approved') {
                         $reward_api_method_response = (new APIRequestsController())->registerDCNReward(array('amount' => self::DCN_REWARD, 'type' => 'assurance', 'reference_id' => $reward->id));
                         if($reward_api_method_response->success) {
