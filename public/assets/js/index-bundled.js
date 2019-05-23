@@ -73751,7 +73751,7 @@ async function pagesDataOnContractInit() {
             var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
             var now_timestamp = Math.round((new Date()).getTime() / 1000);
             //var time_passed_since_signed = now_timestamp - parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract'));
-            var time_passed_since_signed = 1550311978 ;
+            var time_passed_since_signed = now_timestamp - 1550311978;
             var next_payment_timestamp_date_obj;
             var next_payment_timestamp_unix;
             var next_payment_timestamp;
