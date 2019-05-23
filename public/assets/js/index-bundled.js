@@ -73762,13 +73762,16 @@ async function pagesDataOnContractInit() {
                 var months_passed_for_reward = Math.floor(time_passed_since_signed / period_to_withdraw);
                 var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(on_load_exiting_contract[5]);
 
+                console.log(period_to_withdraw, 'period_to_withdraw');
+                console.log(dApp.grace_period, 'dApp.grace_period');
+
                 var timer_label = '';
                 if(time_passed_since_signed > period_to_withdraw && months_passed_for_reward == 1 && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
                     //next_payment_timestamp = (now_timestamp + dApp.grace_period - time_passed_since_signed % period_to_withdraw) * 1000;
                     next_payment_timestamp = (1555393590 + period_to_withdraw + dApp.grace_period - now_timestamp) * 1000;
                     //next_payment_timestamp = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                    next_payment_timestamp_unix = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp);
+                    next_payment_timestamp_unix = (1555393590 + period_to_withdraw  + dApp.grace_period - now_timestamp);
 
                     console.log(next_payment_timestamp, 'next_payment_timestamp');
                     console.log(next_payment_timestamp_date_obj, 'next_payment_timestamp_date_obj');
@@ -73793,10 +73796,6 @@ async function pagesDataOnContractInit() {
 
                     console.log(next_payment_timestamp, 'next_payment_timestamp');
                     console.log(next_payment_timestamp_date_obj, 'next_payment_timestamp_date_obj');
-                }
-
-                if($('.converted-date').length > 0 && next_payment_timestamp_date_obj != undefined) {
-                    $('.converted-date').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
                 }
 
                 $('.contract-body .timer-label').html(timer_label);
