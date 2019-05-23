@@ -466,10 +466,10 @@ async function pagesDataOnContractInit() {
 
                 if(time_passed_since_signed > period_to_withdraw && months_passed_for_reward == 1 && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
                     console.log("SHOW GRACE PERIOD TIMER");
-                    next_payment_timestamp = (dApp.grace_period - time_passed_since_signed % period_to_withdraw) * 1000;
+                    next_payment_timestamp = (now_timestamp + dApp.grace_period - time_passed_since_signed % period_to_withdraw) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                    console.log(next_payment_timestamp_date_obj, 'next_payment_timestamp_date_obj');
                     console.log(next_payment_timestamp, 'next_payment_timestamp');
+                    console.log(next_payment_timestamp_date_obj, 'next_payment_timestamp_date_obj');
                 } else if(time_passed_since_signed > period_to_withdraw) {
                     var remainder = time_passed_since_signed % period_to_withdraw;
                     next_payment_timestamp_unix = period_to_withdraw - remainder;
