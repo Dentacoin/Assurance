@@ -3,7 +3,12 @@
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     @php($cancellation_reason = unserialize($contract->cancellation_reason))
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section cancelled" data-created-at="{{strtotime($contract->contract_active_at)}}">
+    @if(is_object($contract->contract_active_at))
+        @php($contract_active_at = $contract->contract_active_at->getTimestamp())
+    @else
+        @php($contract_active_at = strtotime($contract->contract_active_at))
+    @endif
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section cancelled" data-date-start-contract="{{$contract_active_at}}">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
@@ -21,7 +26,7 @@
                     <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$dentist->name}}</div>
                     <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$dentist->email}}</div>
                 </div>
-                <div class="col-xs-4 col-md-3 inline-block-top margin-top-40 margin-top-xs-0 contract-body text-center" data-time-left-next-transfer="{{strtotime($contract->contract_active_at)}}">
+                <div class="col-xs-4 col-md-3 inline-block-top margin-top-40 margin-top-xs-0 contract-body text-center">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-10 padding-bottom-15 cancelled">CANCELLED</div>
                     <div class="padding-left-15 padding-right-15 wrapper padding-bottom-15">
                         <div class="cancelled-color fs-20 calibri-bold padding-top-15">Date Cancelled:</div>

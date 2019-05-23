@@ -2,7 +2,12 @@
 @section("content")
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section" data-monthly-premium="{{$contract->monthly_premium}}">
+    @if(is_object($contract->contract_active_at))
+        @php($contract_active_at = $contract->contract_active_at->getTimestamp())
+    @else
+        @php($contract_active_at = strtotime($contract->contract_active_at))
+    @endif
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section" data-monthly-premium="{{$contract->monthly_premium}}" data-date-start-contract="{{$contract_active_at}}">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
@@ -22,7 +27,7 @@
                         <a href="mailto:{{$dentist->email}}" class="light-gray-color fs-18 fs-xs-16 word-break">{{$dentist->email}}</a>
                     </div>
                 </div>
-                <div class="col-xs-4 inline-block contract-body padding-bottom-10 padding-bottom-xs-0" data-time-left-next-transfer="{{strtotime($contract->contract_active_at)}}">
+                <div class="col-xs-4 inline-block contract-body padding-bottom-10 padding-bottom-xs-0">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 active">ACTIVE</div>
                     <div class="wrapper">
                         <div class="lato-bold fs-20 padding-top-15 padding-bottom-10">Fund your account in:</div>

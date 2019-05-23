@@ -27,7 +27,7 @@
                         <a href="mailto:{{$dentist->email}}" class="light-gray-color fs-18 fs-xs-16 word-break">{{$dentist->email}}</a>
                     </div>
                 </div>
-                <div class="col-xs-4 inline-block contract-body padding-bottom-10 padding-bottom-xs-0" data-time-left-next-transfer="{{$contract_active_at}}">
+                <div class="col-xs-4 inline-block contract-body padding-bottom-10 padding-bottom-xs-0">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-payment">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING PAYMENT</div>
                     <div class="wrapper">
                         <div class="lato-bold fs-20 padding-top-15 padding-bottom-10">Fund your account in:</div>

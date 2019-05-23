@@ -77,8 +77,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
         Route::post('/submit-reconsider-monthly-premium', 'PatientController@submitReconsiderMonthlyPremium')->middleware('HandleUserSession')->name('submit-reconsider-monthly-premium');
 
-        /*Route::get('/congratulations/{slug}', 'PatientController@getCongratulationsView')->name('congratulations');*/
-
         Route::get('/contract/{slug}', 'PatientController@getPatientContractView')->name('patient-contract-view');
 
         Route::post('/on-blockchain-contract-creation', 'PatientController@onBlockchainContractCreation')->name('on-blockchain-contract-creation');
