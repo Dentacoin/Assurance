@@ -8,7 +8,7 @@
 <div class="popup-row">
     <label for="cancel-contract-reason" class="inline-block-top">Cancellation reason</label>
     <select id="cancel-contract-reason" class="inline-block-top">
-        <option selected value="">Choose from the list</option>
+        <option selected value="" disabled>Choose from the list</option>
         @if($type == 'dentist')
             <option value="Overdue payments">Overdue payments</option>
             <option value="Missed regular check-ups">Missed regular check-ups</option>
