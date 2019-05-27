@@ -2310,6 +2310,8 @@ function styleAvatarUploadButton(label_el)    {
                     labelVal = label.innerHTML;
 
                 input.addEventListener('change', function(e) {
+                    console.log(this.files[0].size, 'this.files[0].size');
+                    console.log(bytesToMegabytes(this.files[0].size), bytesToMegabytes(this.files[0].size));
                     readURL(this, label_el);
 
                     var fileName = '';
@@ -4127,4 +4129,8 @@ function makeElementsInContractListWithSameHeight() {
         }
         $('.contract-tile .tile-wrapper').outerHeight(max_height);
     }
+}
+
+function bytesToMegabytes(bytes) {
+    return bytes / Math.pow(1024, 2);
 }
