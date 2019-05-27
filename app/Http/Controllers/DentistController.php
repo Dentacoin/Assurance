@@ -21,19 +21,23 @@ class DentistController extends Controller
         $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
         $params = ['contract' => $contract, 'calculator_proposals' => $calculator_proposals, 'current_logged_dentist' => $current_logged_dentist];
         if(!empty($contract)) {
+            var_dump($contract->status);
             if($contract->status == 'active') {
                 //checking here if the contract withdraw period and grace period passed and the patient still didnt full in his wallet address
                 (new UserController())->automaticContractCancel($contract);
             } else if($contract->status == 'awaiting-approval') {
                 $this_dentist_having_contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->get()->all();
+                var_dump(sizeof($this_dentist_having_contracts));
                 if(sizeof($this_dentist_having_contracts) == 1) {
                     //send ETH to dentist only for his first contract
                     $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendDentistETHamount($contract->patient_address);
+                    var_dump($sending_eth_response);
                     if($sending_eth_response && property_exists($sending_eth_response, 'success')) {
                         $params['sent_eth_to_dentist'] = true;
                     }
                 }
             }
+            die('asd');
             return view('pages/logged-user/dentist/single-contract-view-'.$contract->status, $params);
         } else {
             return abort(404);
