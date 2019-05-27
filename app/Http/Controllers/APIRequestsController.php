@@ -326,8 +326,8 @@ class APIRequestsController extends Controller {
             CURLOPT_POSTFIELDS => $json
         ));
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
-            'Content-Type: application/json',
-            'Content-Length: ' . mb_strlen($json))
+                'Content-Type: application/json',
+                'Content-Length: ' . mb_strlen($json))
         );
 
         $resp = json_decode(curl_exec($curl));
@@ -367,8 +367,8 @@ class APIRequestsController extends Controller {
             CURLOPT_POSTFIELDS => $json
         ));
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
-            'Content-Type: application/json',
-            'Content-Length: ' . mb_strlen($json))
+                'Content-Type: application/json',
+                'Content-Length: ' . mb_strlen($json))
         );
 
         $resp = json_decode(curl_exec($curl));
@@ -390,8 +390,8 @@ class APIRequestsController extends Controller {
             CURLOPT_POSTFIELDS => $json
         ));
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
-            'Content-Type: application/json',
-            'Content-Length: ' . mb_strlen($json))
+                'Content-Type: application/json',
+                'Content-Length: ' . mb_strlen($json))
         );
 
         $resp = json_decode(curl_exec($curl));
@@ -418,8 +418,8 @@ class APIRequestsController extends Controller {
             CURLOPT_POSTFIELDS => $json
         ));
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
-            'Content-Type: application/json',
-            'Content-Length: ' . mb_strlen($json))
+                'Content-Type: application/json',
+                'Content-Length: ' . mb_strlen($json))
         );
 
         $resp = json_decode(curl_exec($curl));
