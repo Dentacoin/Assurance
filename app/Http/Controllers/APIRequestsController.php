@@ -378,10 +378,10 @@ class APIRequestsController extends Controller {
     }
 
     //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
-    public function sendDentistETHamount($patient_address) {
+    public function sendDentistETHamount($patient_address, $dentist_address) {
         $curl = curl_init();
 
-        $json = '{"patient_address":"'.$patient_address.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'", "password":"'.getenv('API_REQUESTS_PASSWORD').'"}';
+        $json = '{"patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'", "password":"'.getenv('API_REQUESTS_PASSWORD').'"}';
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
