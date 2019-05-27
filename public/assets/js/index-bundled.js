@@ -76583,7 +76583,7 @@ function cancelContractEventInit() {
 
                             fixSelectsOnMac();
 
-                            $('.recipe-popup #cancel-contract-reason').on('change', function() {
+                            $('.popup-cancel-contract #cancel-contract-reason').on('change', function() {
                                 if($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
                                     $('.camp-for-row').html('<div class="popup-row"><label for="cancel-contract-other-reason" class="inline-block-top">Other reason:</label><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background inline-block-top" maxlength="255"/></div>');
                                 } else {
