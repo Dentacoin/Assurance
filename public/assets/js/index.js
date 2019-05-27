@@ -2107,7 +2107,7 @@ function bindLoginSigninPopupShow() {
 
         //THIRD STEP INIT LOGIC
         $('.login-signin-popup #dentist-country').on('change', function() {
-            $('.login-signin-popup .step.second .phone .country-code').html('+'+$(this).find('option:selected').attr('data-code'));
+            $('.login-signin-popup .step.third .phone .country-code').html('+'+$(this).find('option:selected').attr('data-code'));
         });
 
         //FOURTH STEP INIT LOGIC
@@ -2230,6 +2230,12 @@ function bindLoginSigninPopupShow() {
                                 errors = true;
                             }
                         }
+                    }
+
+                    var validate_phone = validatePhone($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').val().trim(), $('.login-signin-popup .dentist .form-register .step.third select[name="country-code"]').val());
+                    if(has(validate_phone, 'success') && !validate_phone.success) {
+                        customErrorHandle($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').closest('.field-parent'), 'Please use valid phone.');
+                        errors = true;
                     }
 
                     if(!errors) {
@@ -4013,6 +4019,21 @@ async function checkIfFreeEmail(email) {
         dataType: 'json',
         data: {
             email: email
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+}
+
+async function validatePhone(phone, country_code) {
+    return await $.ajax({
+        type: 'POST',
+        url: 'https://api.dentacoin.com/api/phone/',
+        dataType: 'json',
+        data: {
+            phone: phone,
+            country_code: country_code
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
