@@ -73797,7 +73797,7 @@ async function pagesDataOnContractInit() {
                 var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account));
                 var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                 var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
-                var ethgasstation_json = await $.getJSON("https://ethgasstation.info/json/ethgasAPI.json");
+                var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                 const on_page_load_gwei = ethgasstation_json.safeLow;
                 //adding 10% just in case the transaction dont fail
                 const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
@@ -75615,25 +75615,28 @@ function styleAvatarUploadButton(label_el)    {
                     labelVal = label.innerHTML;
 
                 input.addEventListener('change', function(e) {
-                    console.log(this.files[0].size, 'this.files[0].size');
-                    console.log(bytesToMegabytes(this.files[0].size), bytesToMegabytes(this.files[0].size));
-                    readURL(this, label_el);
+                    if(2 < bytesToMegabytes(this.files[0].size), bytesToMegabytes(this.files[0].size)) {
+                        basic.showAlert('The image you selected is large. Max size: 2MB.', '', true);
+                        $(this).val('');
+                    } else {
+                        readURL(this, label_el);
 
-                    var fileName = '';
-                    if(this.files && this.files.length > 1)
-                        fileName = ( this.getAttribute('data-multiple-caption') || '' ).replace('{count}', this.files.length);
-                    else
-                        fileName = e.target.value.split('\\').pop();
+                        var fileName = '';
+                        if(this.files && this.files.length > 1)
+                            fileName = ( this.getAttribute('data-multiple-caption') || '' ).replace('{count}', this.files.length);
+                        else
+                            fileName = e.target.value.split('\\').pop();
 
-                    /*if(fileName) {
-                        if(load_filename_to_other_el)    {
-                            $(this).closest('.form-row').find('.file-name').html('<i class="fa fa-file-text-o" aria-hidden="true"></i>' + fileName);
-                        }else {
-                            label.querySelector('span').innerHTML = fileName;
-                        }
-                    }else{
-                        label.innerHTML = labelVal;
-                    }*/
+                        /*if(fileName) {
+                            if(load_filename_to_other_el)    {
+                                $(this).closest('.form-row').find('.file-name').html('<i class="fa fa-file-text-o" aria-hidden="true"></i>' + fileName);
+                            }else {
+                                label.querySelector('span').innerHTML = fileName;
+                            }
+                        }else{
+                            label.innerHTML = labelVal;
+                        }*/
+                    }
                 });
                 // Firefox bug fix
                 input.addEventListener('focus', function(){ input.classList.add('has-focus'); });
@@ -75959,7 +75962,7 @@ async function onDocumentReadyPageData() {
 
                                         fixButtonsFocus();
 
-                                        var ethgasstation_json = await $.getJSON("https://ethgasstation.info/json/ethgasAPI.json");
+                                        var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                                         const on_page_load_gwei = ethgasstation_json.safeLow;
                                         //adding 10% just in case the transaction dont fail
                                         const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
@@ -76157,7 +76160,7 @@ async function onDocumentReadyPageData() {
 
                                         fixButtonsFocus();
 
-                                        var ethgasstation_json = await $.getJSON("https://ethgasstation.info/json/ethgasAPI.json");
+                                        var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                                         const on_page_load_gwei = ethgasstation_json.safeLow;
                                         //adding 10% just in case the transaction dont fail
                                         const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10 / 100);
@@ -76337,6 +76340,7 @@ function cancelContractEventInit() {
             if(this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined) {
                 //CHECK FOR CONTRACT ON THE BLOCKCHAIN
                 var exiting_contract = await dApp.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
+                console.log(exiting_contract, 'exiting_contract');
                 if((new Date(parseInt(exiting_contract[0]) * 1000)).getTime() > 0) {
                     if (metamask) {
                         basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
@@ -76379,16 +76383,23 @@ function cancelContractEventInit() {
 
                                     fixButtonsFocus();
 
-                                    var ethgasstation_json = await $.getJSON("https://ethgasstation.info/json/ethgasAPI.json");
+                                    var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
+                                    console.log(ethgasstation_json, 'ethgasstation_json');
                                     const on_page_load_gwei = ethgasstation_json.safeLow;
                                     //adding 10% just in case the transaction dont fail
                                     const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10 / 100);
 
                                     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+                                    console.log(response, 'response');
+                                    console.log(response.contract_data, 'response.contract_data');
+                                    console.log(response.contract_data.patient, 'response.contract_data.patient');
+                                    console.log(response.contract_data.dentist, 'response.contract_data.dentist');
                                     var gas_cost_for_contract_cancellation = await dApp.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).estimateGas({
                                         from: global_state.account,
                                         gas: 500000
                                     });
+
+                                    console.log(gas_cost_for_contract_cancellation, 'gas_cost_for_contract_cancellation');
 
                                     var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_contract_cancellation * on_page_load_gas_price).toString(), 'ether');
                                     $('.recipe-popup .ether-fee .field').html(eth_fee);
