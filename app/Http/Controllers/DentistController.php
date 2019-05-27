@@ -30,7 +30,7 @@ class DentistController extends Controller
                 var_dump(sizeof($this_dentist_having_contracts));
                 if(sizeof($this_dentist_having_contracts) == 1) {
                     //send ETH to dentist only for his first contract
-                    $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendDentistETHamount($contract->patient_address);
+                    $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendDentistETHamount($contract->patient_address, $contract->dentist_address);
                     var_dump($sending_eth_response);
                     if($sending_eth_response && property_exists($sending_eth_response, 'success')) {
                         $params['sent_eth_to_dentist'] = true;
