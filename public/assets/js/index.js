@@ -663,7 +663,7 @@ async function pagesDataOnContractInit() {
                                                             nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
                                                         }
 
-                                                        var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(dApp.web3_1_0.utils.toChecksumAddress(response.contract_data.patient), dApp.web3_1_0.utils.toChecksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
+                                                        var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(checksumAddress(response.contract_data.patient), checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
                                                         var contract_creation_transaction_obj = {
                                                             gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5 / 100))),
@@ -3089,7 +3089,7 @@ function cancelContractEventInit() {
                                     console.log(response.contract_data, 'response.contract_data');
                                     console.log(response.contract_data.patient, 'response.contract_data.patient');
                                     console.log(response.contract_data.dentist, 'response.contract_data.dentist');
-                                    var gas_cost_for_contract_cancellation = await dApp.assurance_proxy_instance.methods.breakContract(toChecksumAddress(response.contract_data.patient), toChecksumAddressresponse.contract_data.dentist).estimateGas({
+                                    var gas_cost_for_contract_cancellation = await dApp.assurance_proxy_instance.methods.breakContract(checksumAddress(response.contract_data.patient), checksumAddress(response.contract_data.dentist)).estimateGas({
                                         from: global_state.account,
                                         gas: 500000
                                     });
