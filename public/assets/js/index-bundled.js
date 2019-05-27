@@ -75537,7 +75537,7 @@ function bindLoginSigninPopupShow() {
                         }
                     }
 
-                    var validate_phone = validatePhone($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').val().trim(), $('.login-signin-popup .dentist .form-register .step.third select[name="country-code"]').val());
+                    var validate_phone = await validatePhone($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').val().trim(), $('.login-signin-popup .dentist .form-register .step.third select[name="country-code"]').val());
                     if(has(validate_phone, 'success') && !validate_phone.success) {
                         customErrorHandle($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').closest('.field-parent'), 'Please use valid phone.');
                         errors = true;
