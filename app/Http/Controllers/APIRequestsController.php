@@ -378,6 +378,29 @@ class APIRequestsController extends Controller {
     }
 
     //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
+    public function sendDentistETHamount($patient_address) {
+        $curl = curl_init();
+
+        $json = '{"patient_address":"'.$patient_address.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'", "password":"'.getenv('API_REQUESTS_PASSWORD').'"}';
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_POST => 1,
+            CURLOPT_URL => 'https://assurance.dentacoin.com/send-eth-to-dentists',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_POSTFIELDS => $json
+        ));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
+            'Content-Type: application/json',
+            'Content-Length: ' . mb_strlen($json))
+        );
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        return $resp;
+    }
+
+    //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
     public function encryptFile($key, $html) {
         $curl = curl_init();
 

@@ -8,7 +8,11 @@
         @if(!empty($contract->document_hash))
             <li class="inline-block">
                 <a href="javascript:void(0);" class="contract-decrypt" data-hash="{{$contract->document_hash}}" @if($patient_session) data-type="patient" @elseif($dentist_session) data-type="dentist" @endif itemprop="url" target="_blank">
-                    <span itemprop="name">Contract sample (pdf)</span>
+                    @if($contract->status != 'pending')
+                        <span itemprop="name">Contract (.pdf)</span>
+                    @else
+                        <span itemprop="name">Contract sample (.pdf)</span>
+                    @endif
                 </a>
                 <i class="fa fa-info-circle popover-el" data-toggle="popover" data-placement="bottom" data-content="Your contract is stored and encrypted in the <a href='https://ipfs.io/' target='_blank'>IPFS</a>. Reading it might take some time, if it takes too long please try again later."></i>
                 <form target="_blank" method="POST" action="{{route('render-pdf')}}" id="render-pdf">

@@ -141,36 +141,42 @@
                                 <div class="single-row fs-0 padding-top-10">
                                     <label class="calibri-light light-gray-color fs-16 padding-right-15 padding-top-0 margin-bottom-0 inline-block">Services Covered:</label>
                                     <div class="right-extra-field checkboxes-right-container calibri-regular fs-18 dark-color inline-block">
-                                        <div class="pretty margin-bottom-5 p-svg p-curve on-white-background">
-                                            <input type="checkbox" disabled @if(in_array('param_gd', $general_dentistry)) checked @endif/>
-                                            <div class="state p-success">
-                                                <!-- svg path -->
-                                                <svg class="svg svg-icon" viewBox="0 0 20 20">
-                                                    <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
-                                                </svg>
-                                                <label class="fs-18 calibri-light">General Dentistry</label>
+                                        @if(in_array('param_gd', $general_dentistry))
+                                            <div class="pretty margin-bottom-5 p-svg p-curve on-white-background">
+                                                <input type="checkbox" disabled checked/>
+                                                <div class="state p-success">
+                                                    <!-- svg path -->
+                                                    <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                                        <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                                    </svg>
+                                                    <label class="fs-18 calibri-light">General Dentistry</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="pretty margin-bottom-5 p-svg p-curve on-white-background">
-                                            <input type="checkbox" disabled @if(in_array('param_cd', $general_dentistry)) checked @endif/>
-                                            <div class="state p-success">
-                                                <!-- svg path -->
-                                                <svg class="svg svg-icon" viewBox="0 0 20 20">
-                                                    <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
-                                                </svg>
-                                                <label class="fs-18 calibri-light">Cosmetic Dentistry</label>
+                                        @endif
+                                        @if(in_array('param_cd', $general_dentistry))
+                                            <div class="pretty margin-bottom-5 p-svg p-curve on-white-background">
+                                                <input type="checkbox" disabled checked/>
+                                                <div class="state p-success">
+                                                    <!-- svg path -->
+                                                    <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                                        <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                                    </svg>
+                                                    <label class="fs-18 calibri-light">Cosmetic Dentistry</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="pretty margin-bottom-5 p-svg p-curve on-white-background">
-                                            <input type="checkbox" disabled @if(in_array('param_id', $general_dentistry)) checked @endif/>
-                                            <div class="state p-success">
-                                                <!-- svg path -->
-                                                <svg class="svg svg-icon" viewBox="0 0 20 20">
-                                                    <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
-                                                </svg>
-                                                <label class="fs-18 calibri-light">Implant Dentistry</label>
+                                        @endif
+                                        @if(in_array('param_id', $general_dentistry))
+                                            <div class="pretty margin-bottom-5 p-svg p-curve on-white-background">
+                                                <input type="checkbox" disabled checked/>
+                                                <div class="state p-success">
+                                                    <!-- svg path -->
+                                                    <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                                        <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                                    </svg>
+                                                    <label class="fs-18 calibri-light">Implant Dentistry</label>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="single-row fs-0">

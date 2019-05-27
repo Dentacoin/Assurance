@@ -69,15 +69,17 @@ class UserController extends Controller {
         $contract = TemporallyContract::where(array('slug' => $request->input('contract')))->get()->first();
         if(!empty($contract)) {
             if($this->checkDentistSession()) {
+                $type = 'dentist';
                 if(!empty($contract->patient_id)) {
                     $receiver_name = (new APIRequestsController())->getUserData($contract->patient_id)->name;
                 } else {
                     $receiver_name = $contract->patient_fname . ' ' . $contract->patient_lname;
                 }
             } else if($this->checkPatientSession()) {
+                $type = 'patient';
                 $receiver_name = (new APIRequestsController())->getUserData($contract->dentist_id)->name;
             }
-            $view = view('partials/popup-cancel-contract', ['receiver_name' => $receiver_name]);
+            $view = view('partials/popup-cancel-contract', ['receiver_name' => $receiver_name, 'type' => $type]);
             $view = $view->render();
             return response()->json(['success' => $view]);
         } else {
@@ -107,7 +109,13 @@ class UserController extends Controller {
                 $patient_data = $current_logged_user_data;
             }
 
-            $view = view('partials/transaction-recipe-popup', [/*'to' => $request->input('to'), */'current_logged_user' => $current_logged_user_data, 'cached_key' => $request->input('cached_key'), 'show_dcn_bar' => $request->input('show_dcn_bar'), 'recipe_title' => $request->input('recipe_title'), 'recipe_subtitle' => $request->input('recipe_subtitle'), 'recipe_checkbox_text' => $request->input('recipe_checkbox_text'), 'btn_label' => $request->input('btn_label')]);
+            $params = ['current_logged_user' => $current_logged_user_data, 'cached_key' => $request->input('cached_key'), 'show_dcn_bar' => $request->input('show_dcn_bar'), 'recipe_title' => $request->input('recipe_title'), 'recipe_subtitle' => $request->input('recipe_subtitle'), 'recipe_checkbox_text' => $request->input('recipe_checkbox_text'), 'btn_label' => $request->input('btn_label')];
+
+            if(!empty($request->input('sent_eth_to_dentist'))) {
+                $params['sent_eth_to_dentist'] = true;
+            }
+
+            $view = view('partials/transaction-recipe-popup', $params);
             $view = $view->render();
             $contract_data = array(
                 'patient' => $patient_data->dcn_address,

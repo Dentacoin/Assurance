@@ -64,7 +64,7 @@
                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                 <img alt="Check inside shield" src="/assets/uploads/shield-check.svg" class="max-width-70"/>
                             </figure>
-                            <h1 class="lato-bold fs-20 padding-top-15">CONGRATULATION!</h1>
+                            <h1 class="lato-bold fs-20 padding-top-15">CONGRATULATIONS!</h1>
                             <div class="fs-18 fs-xs-16 calibri-light padding-top-10">Your .pdf contract was successfully created. <br>You should buy DCN equivalent to <b class="blue-green-color">{{$contract->monthly_premium}} USD</b> until <b class="blue-green-color">{{date('d/m/Y', $until_timestamp)}}</b>.</div>
                         </div>
                     </div>

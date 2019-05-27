@@ -71,7 +71,7 @@
                         <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color" data-label-closed="See details" data-label-opened="Hide details" data-hidden-details="true">See details</a>
                     </div>
                     <div class="padding-top-40">
-                        <a href="javascript:void(0)" class="white-green-btn min-width-300 approve-contract-recipe">APPROVE & ACTIVATE</a>
+                        <a href="javascript:void(0)" class="white-green-btn min-width-300 approve-contract-recipe" @if(isset($sent_eth_to_dentist) && $sent_eth_to_dentist) data-sent-eth-to-dentist="true" @endif>APPROVE & ACTIVATE</a>
                     </div>
                 </div>
             </div>

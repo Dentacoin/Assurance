@@ -225,7 +225,7 @@ class PatientController extends Controller {
         if((new UserController())->checkDentistSession() || empty($contract)) {
             //if dentist trying to access the proposal or if there is no such contract
             return abort(404);
-        } else if((new UserController())->checkPatientSession() && $contract->patient_email == $current_logged_patient->email) {
+        } else if((new UserController())->checkPatientSession()) {
             $params = array(
                 'contract' => $contract,
                 'countries' => (new APIRequestsController())->getAllCountries(),

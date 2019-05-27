@@ -51,10 +51,12 @@
     <label class="inline-block">From:</label>
     <div class="field inline-block">{{$current_logged_user->dcn_address}}</div>
 </div>--}}
-<div class="input-row fs-0 ether-fee">
-    <label class="inline-block">Ether Fee: <i class="fa fa-info-circle" data-toggle="popover" data-placement="bottom" data-content="Ether (ETH) is a currency that is used for covering your transaction costs. Don't have ETH? <a href='//wallet.dentacoin.com/buy' target='_blank'>Buy some with a card here</a>."></i></label>
-    <div class="field inline-block"></div>
-</div>
+@if(!isset($sent_eth_to_dentist))
+    <div class="input-row fs-0 ether-fee">
+        <label class="inline-block">Ether Fee: <i class="fa fa-info-circle" data-toggle="popover" data-placement="bottom" data-content="Ether (ETH) is a currency that is used for covering your transaction costs. Don't have ETH? <a href='//wallet.dentacoin.com/buy' target='_blank'>Buy some with a card here</a>."></i></label>
+        <div class="field inline-block"></div>
+    </div>
+@endif
 <div class="extra-recipe-html"></div>
 @if(filter_var($cached_key, FILTER_VALIDATE_BOOLEAN))
     <div class="margin-top-30">
