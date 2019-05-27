@@ -77339,9 +77339,6 @@ async function validatePhone(phone, country_code) {
         data: {
             phone: phone,
             country_code: country_code
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 }
