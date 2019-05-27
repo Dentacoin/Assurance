@@ -14,9 +14,16 @@
             <option value="Missed regular check-ups">Missed regular check-ups</option>
             <option value="Inappropriate behaviour">Inappropriate behaviour</option>
         @elseif($type == 'patient')
-            <option value="I don't need this contract anymore.">I don't need this contract anymore.</option>
-            <option value="I decided to go to a different dentist.">I decided to go to a different dentist.</option>
-            <option value="Inappropriate behaviour or service.">Inappropriate behaviour or service.</option>
+            @if($contract_status == 'pending')
+                <option value="I don't need this contract.">I don't need this contract.</option>
+                <option value="The monthly premium is too high.">The monthly premium is too high.</option>
+                <option value="I don't like the conditions.">I don't like the conditions.</option>
+                <option value="I think I've received this by mistake.">I think I've received this by mistake.</option>
+            @else
+                <option value="I don't need this contract anymore.">I don't need this contract anymore.</option>
+                <option value="I decided to go to a different dentist.">I decided to go to a different dentist.</option>
+                <option value="Inappropriate behaviour or service.">Inappropriate behaviour or service.</option>
+            @endif
         @endif
         <option value="Other" data-open-bonus-field="true">Other</option>
     </select>

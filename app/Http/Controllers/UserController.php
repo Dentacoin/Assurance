@@ -79,7 +79,7 @@ class UserController extends Controller {
                 $type = 'patient';
                 $receiver_name = (new APIRequestsController())->getUserData($contract->dentist_id)->name;
             }
-            $view = view('partials/popup-cancel-contract', ['receiver_name' => $receiver_name, 'type' => $type]);
+            $view = view('partials/popup-cancel-contract', ['receiver_name' => $receiver_name, 'type' => $type, 'contract_status' => $contract->status]);
             $view = $view->render();
             return response()->json(['success' => $view]);
         } else {
@@ -102,9 +102,11 @@ class UserController extends Controller {
         if($contract) {
             $current_logged_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
             if($this->checkDentistSession()) {
+                $type = 'dentist';
                 $dentist_data = $current_logged_user_data;
                 $patient_data = (new APIRequestsController())->getUserData($contract->patient_id);
             } else if($this->checkPatientSession()) {
+                $type = 'patient';
                 $dentist_data = (new APIRequestsController())->getUserData($contract->dentist_id);
                 $patient_data = $current_logged_user_data;
             }
@@ -121,8 +123,10 @@ class UserController extends Controller {
                 'patient' => $patient_data->dcn_address,
                 'dentist' => $dentist_data->dcn_address,
                 'value_usd' => $contract->monthly_premium,
+                'status' => $contract->status,
                 'date_start_contract' => strtotime($contract->contract_active_at),
-                'contract_ipfs_hash' => $contract->document_hash
+                'contract_ipfs_hash' => $contract->document_hash,
+                'type' => $type
             );
 
             return response()->json(['success' => $view, 'contract_data' => $contract_data, 'dcn_address' => $current_user_data->dcn_address]);

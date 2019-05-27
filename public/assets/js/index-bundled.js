@@ -76373,7 +76373,6 @@ function cancelContractEventInit() {
                             url: '/get-recipe-popup',
                             dataType: 'json',
                             data: {
-                                /*to: dApp.assurance_proxy_address,*/
                                 cached_key: cached_key,
                                 contract: this_btn.attr('data-contract'),
                                 show_dcn_bar: false,
@@ -76390,7 +76389,18 @@ function cancelContractEventInit() {
                                     basic.closeDialog();
                                     basic.showDialog(response.success, 'recipe-popup', null, true);
 
-                                    $('.recipe-popup .extra-recipe-html').html('<div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-reason" class="inline-block">Cancellation reason</label><div class="field inline-block"><select id="cancel-contract-reason"><option selected value="">Choose from the list</option><option value="Overdue payments">Overdue payments</option><option value="Missed regular check-ups">Missed regular check-ups</option><option value="Inappropriate behaviour">Inappropriate behaviour</option><option data-open-bonus-field="true" value="Other">Other</option></select></div></div><div class="camp-for-row"></div><div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-comments" class="inline-block">Comments:</label><div class="field inline-block"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background" placeholder="Describe the reason for cancelling this contract in more details (optional)"></textarea></div></div>');
+                                    var select_options = '';
+                                    if(response.contract_data.type == 'dentist') {
+                                        select_options = '<option value="Overdue payments">Overdue payments</option><option value="Missed regular check-ups">Missed regular check-ups</option><option value="Inappropriate behaviour">Inappropriate behaviour</option>';
+                                    } else if(response.contract_data.type == 'patient') {
+                                        if(response.contract_data.status == 'pending') {
+                                            select_options = '<option value="I don\'t need this contract.">I don\'t need this contract.</option><option value="The monthly premium is too high.">The monthly premium is too high.</option><option value="I don\'t like the conditions.">I don\'t like the conditions.</option><option value="I think I\'ve received this by mistake.">I think I\'ve received this by mistake.</option>';
+                                        } else {
+                                            select_options = '<option value="I don\'t need this contract anymore.">I don\'t need this contract anymore.</option><option value="I decided to go to a different dentist.">I decided to go to a different dentist.</option><option value="Inappropriate behaviour or service.">Inappropriate behaviour or service.</option>';
+                                        }
+                                    }
+
+                                    $('.recipe-popup .extra-recipe-html').html('<div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-reason" class="inline-block">Cancellation reason</label><div class="field inline-block"><select id="cancel-contract-reason"><option selected value="">Choose from the list</option>'+select_options+'<option data-open-bonus-field="true" value="Other">Other</option></select></div></div><div class="camp-for-row"></div><div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-comments" class="inline-block">Comments:</label><div class="field inline-block"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background" placeholder="Describe the reason for cancelling this contract in more details (optional)"></textarea></div></div>');
 
                                     fixSelectsOnMac();
 
