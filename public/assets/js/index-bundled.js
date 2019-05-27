@@ -76394,12 +76394,14 @@ function cancelContractEventInit() {
                                     console.log(response.contract_data, 'response.contract_data');
                                     console.log(response.contract_data.patient, 'response.contract_data.patient');
                                     console.log(response.contract_data.dentist, 'response.contract_data.dentist');
-                                    var gas_cost_for_contract_cancellation = await dApp.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).estimateGas({
+                                    var gas_cost_for_contract_cancellation = await dApp.assurance_proxy_instance.methods.breakContract(toChecksumAddress(response.contract_data.patient), toChecksumAddressresponse.contract_data.dentist).estimateGas({
                                         from: global_state.account,
                                         gas: 500000
                                     });
 
                                     console.log(gas_cost_for_contract_cancellation, 'gas_cost_for_contract_cancellation');
+
+                                    return false;
 
                                     var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_contract_cancellation * on_page_load_gas_price).toString(), 'ether');
                                     $('.recipe-popup .ether-fee .field').html(eth_fee);
