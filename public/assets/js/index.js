@@ -2310,7 +2310,7 @@ function styleAvatarUploadButton(label_el)    {
                     labelVal = label.innerHTML;
 
                 input.addEventListener('change', function(e) {
-                    if(2 < bytesToMegabytes(this.files[0].size), bytesToMegabytes(this.files[0].size)) {
+                    if(2 < bytesToMegabytes(this.files[0].size)) {
                         basic.showAlert('The image you selected is large. Max size: 2MB.', '', true);
                         $(this).val('');
                     } else {
