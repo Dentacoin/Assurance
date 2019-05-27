@@ -26,7 +26,7 @@ class DentistController extends Controller
                 //checking here if the contract withdraw period and grace period passed and the patient still didnt full in his wallet address
                 (new UserController())->automaticContractCancel($contract);
             } else if($contract->status == 'awaiting-approval') {
-                $this_dentist_having_contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->get()->all();
+                $this_dentist_having_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->all();
                 var_dump(sizeof($this_dentist_having_contracts));
                 if(sizeof($this_dentist_having_contracts) == 1) {
                     //send ETH to dentist only for his first contract
