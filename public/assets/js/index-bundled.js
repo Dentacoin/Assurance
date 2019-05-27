@@ -76394,6 +76394,9 @@ function cancelContractEventInit() {
                                     console.log(response.contract_data, 'response.contract_data');
                                     console.log(response.contract_data.patient, 'response.contract_data.patient');
                                     console.log(response.contract_data.dentist, 'response.contract_data.dentist');
+
+                                    console.log(checksumAddress(response.contract_data.patient));
+                                    console.log(checksumAddress(response.contract_data.dentist));
                                     var gas_cost_for_contract_cancellation = await dApp.assurance_proxy_instance.methods.breakContract(checksumAddress(response.contract_data.patient), checksumAddress(response.contract_data.dentist)).estimateGas({
                                         from: global_state.account,
                                         gas: 500000
