@@ -77497,5 +77497,6 @@ function closeTooltipPopupsWhenClickedOutside() {
         });
     });
 }
+closeTooltipPopupsWhenClickedOutside();
 }).call(this,require("buffer").Buffer)
 },{"./helper":545,"buffer":52,"ethereumjs-tx":363}]},{},[546]);

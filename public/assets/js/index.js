@@ -4192,3 +4192,4 @@ function closeTooltipPopupsWhenClickedOutside() {
         });
     });
 }
+closeTooltipPopupsWhenClickedOutside();
