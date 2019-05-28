@@ -74756,6 +74756,7 @@ if($('body').hasClass('logged-in')) {
                                         },
                                         success: function (response) {
                                             basic.closeDialog();
+                                            $('.response-layer').hide();
                                             if(response.success) {
                                                 basic.showDialog(response.success, '', '', true);
                                             } else if(response.error) {
