@@ -470,7 +470,9 @@ class PatientController extends Controller {
     }
 
     protected function submitReconsiderMonthlyPremium(Request $request) {
-        var_dump($request->input());
+        $data = $request->input('serialized');
+        parse_str($data, $postdata);
+        var_dump($postdata);
         die('asd');
         $data = $this->clearPostData($request->input());
         $this->validate($request, [
