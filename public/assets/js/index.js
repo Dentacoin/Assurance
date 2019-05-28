@@ -1431,12 +1431,33 @@ if($('body').hasClass('logged-in')) {
                             $('.bootbox.reconsider-monthly-premium #new-usd-proposal-to-dentist').focus();
 
                             $('.bootbox.reconsider-monthly-premium form#submit-reconsider-monthly-premium').on('submit', function(event) {
+                                event.preventDefault();
+
                                 var this_form = $(this);
                                 if(this_form.find('#new-usd-proposal-to-dentist').val().trim() == '' || parseFloat(this_form.find('#new-usd-proposal-to-dentist').val().trim()) <= 0) {
                                     basic.showAlert('Please enter valid monthly premium proposal', '', true);
-                                    event.preventDefault();
                                 } else {
                                     $('.response-layer').show();
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/patient/submit-reconsider-monthly-premium',
+                                        dataType: 'json',
+                                        data: {
+                                            serialized: this_form.serialize()
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function (response) {
+                                            basic.closeDialog();
+                                            if(response.success) {
+                                                basic.showDialog(response.success, '', '', true);
+                                            } else if(response.error) {
+                                                basic.showAlert(response.error, '', true);
+                                            }
+                                        }
+                                    });
                                 }
                             });
                         } else if (response.error) {

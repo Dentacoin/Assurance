@@ -1,4 +1,4 @@
-<form method="POST" id="submit-reconsider-monthly-premium" action="{{route('submit-reconsider-monthly-premium')}}">
+<form method="POST" id="submit-reconsider-monthly-premium">
     <div class="text-center padding-bottom-50 padding-bottom-xs-10 padding-top-25"><i class="fa fa-envelope fs-40 fs-xs-25 blue-green-color margin-right-10 margin-right-xs-5" aria-hidden="true"></i> <span class="fs-40 fs-xs-24 lato-regular">Contact Your Dentist</span></div>
     <div class="border-bottom calibri-bold fs-20 padding-top-15 padding-bottom-15"><span class="fs-18 light-gray-color">Receiver:</span> Dr. {{$dentist->name}} ({{$dentist->email}})</div>
     <div class="border-bottom fs-20 padding-top-15 padding-bottom-15"><span class="fs-18 light-gray-color calibri-bold">Subject:</span> Reconsider Monthly Premium Proposal</div>
