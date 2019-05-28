@@ -73915,6 +73915,7 @@ async function pagesDataOnContractInit() {
 
                                         $('.recipe-popup .execute-transaction').click(async function() {
                                             console.log(transaction_key, 'transaction_key');
+                                            console.log(cached_key, 'cached_key');
                                             return false;
                                             var this_btn = $(this);
                                             if(parseFloat(eth_fee) > current_user_eth_balance) {
