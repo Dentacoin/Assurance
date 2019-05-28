@@ -470,11 +470,8 @@ class PatientController extends Controller {
     }
 
     protected function submitReconsiderMonthlyPremium(Request $request) {
-        $data = $request->input('serialized');
-        parse_str($data, $postdata);
-        var_dump($postdata);
-        die('asd');
-        $data = $this->clearPostData($request->input());
+        parse_str($request->input('serialized'), $data);
+
         $this->validate($request, [
             'dentist-email' => 'required',
             'dentist-name' => 'required',
