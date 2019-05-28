@@ -288,8 +288,8 @@ class PatientController extends Controller {
         $contract = TemporallyContract::where(array('slug' => $data['contract']))->get()->first();
         $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
 
-        //if user trying to fake the contract slug
-        if(empty($contract) || (!empty($contract) && $contract->patient_email != $logged_patient->email)) {
+        //if empty contract
+        if(empty($contract) /*|| (!empty($contract) && $contract->patient_email != $logged_patient->email)*/) {
             return abort(404);
         }
 
