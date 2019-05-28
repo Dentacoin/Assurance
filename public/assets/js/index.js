@@ -1540,7 +1540,7 @@ if($('body').hasClass('logged-in')) {
     }
     $('body').removeClass('overflow-hidden');
 
-    $('.logged-user-nav > a, .logged-user-nav .hidden-box').hover(function () {
+    $('.logged-user-nav .hidden-box-hover').hover(function () {
         $('.logged-user-nav .hidden-box').addClass('show-this');
         if(add_overflow_hidden_on_hidden_box_show) {
             $('body').addClass('overflow-hidden');
