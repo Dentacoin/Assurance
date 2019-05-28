@@ -233,8 +233,6 @@ class PatientController extends Controller {
             );
 
             $existing_id_number = TemporallyContract::where(array('patient_id' => $current_logged_patient->id))->where('patient_id_number', '!=' , '')->get()->first();
-            var_dump($existing_id_number);
-            die('ad');
 
             $patient_id_number = '';
             if($existing_id_number && $existing_id_number->patient_id_number != '') {

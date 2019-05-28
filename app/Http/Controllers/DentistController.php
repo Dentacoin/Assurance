@@ -49,7 +49,7 @@ class DentistController extends Controller
 
     protected function getCreateContractView()   {
         $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
-        $existing_company_registration_number = TemporallyContract::where(array('dentist_id' => $current_logged_dentist->id))->whereNotNull('professional_company_number')->get()->first();
+        $existing_company_registration_number = TemporallyContract::where(array('dentist_id' => $current_logged_dentist->id))->where('professional_company_number', '!=' , '')->get()->first();
 
         $dentist_registration_number = '';
         if($existing_company_registration_number && $existing_company_registration_number->professional_company_number != '') {
