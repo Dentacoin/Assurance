@@ -8872,14 +8872,14 @@ header {
         header > .container nav ul li.active {
           font-family: 'Lato-Black';
           text-transform: uppercase; }
-    header > .container .logged-user-nav > a {
+    header > .container .logged-user-nav .hidden-box-hover > a {
       font-size: 16px;
       color: black;
       display: inline-block;
       padding: 15px 0; }
-      header > .container .logged-user-nav > a span {
+      header > .container .logged-user-nav .hidden-box-hover > a span {
         vertical-align: middle; }
-      header > .container .logged-user-nav > a figure {
+      header > .container .logged-user-nav .hidden-box-hover > a figure {
         width: 40px;
         margin-left: 10px;
         overflow: hidden;

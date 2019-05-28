@@ -36,19 +36,21 @@ header {
             }
         }
         .logged-user-nav {
-            > a {
-                font-size: 16px;
-                color: black;
-                display: inline-block;
-                padding: 15px 0;
-                span {
-                    vertical-align: middle;
-                }
-                figure {
-                    width: 40px;
-                    margin-left: 10px;
-                    overflow: hidden;
-                    @include rounded(50%);
+            .hidden-box-hover {
+                > a {
+                    font-size: 16px;
+                    color: black;
+                    display: inline-block;
+                    padding: 15px 0;
+                    span {
+                        vertical-align: middle;
+                    }
+                    figure {
+                        width: 40px;
+                        margin-left: 10px;
+                        overflow: hidden;
+                        @include rounded(50%);
+                    }
                 }
             }
             .up-arrow {
