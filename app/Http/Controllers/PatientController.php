@@ -470,19 +470,12 @@ class PatientController extends Controller {
     }
 
     protected function submitReconsiderMonthlyPremium(Request $request) {
-        parse_str($request->input('serialized'), $data);
-
         $this->validate($request, [
-            'dentist-email' => 'required',
-            'dentist-name' => 'required',
-            'contract' => 'required',
-            'new-usd-proposal-to-dentist' => 'required'
+            'serialized' => 'required'
         ], [
-            'dentist-email.required' => 'Dentist email is required.',
-            'dentist-name.required' => 'Dentist name is required.',
-            'contract.required' => 'Contract is required.',
-            'new-usd-proposal-to-dentist.required' => 'Monthly premium proposal is required.',
+            'serialized.required' => 'Data is required.'
         ]);
+        parse_str($request->input('serialized'), $data);
 
         $sender = (new APIRequestsController())->getUserData(session('logged_user')['id']);
 
