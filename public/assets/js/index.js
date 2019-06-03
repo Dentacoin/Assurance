@@ -24,21 +24,17 @@ $(window).on('scroll', function()  {
 
 //on button click next time when you hover the button the color is bugged until you click some other element (until you move out the focus from this button)
 function fixButtonsFocus() {
-    if($('.white-blue-green-btn').length > 0) {
-        $('.white-blue-green-btn').click(function() {
-            $(this).blur();
-        });
-    }
-    if($('.blue-green-white-btn').length > 0) {
-        $('.blue-green-white-btn').click(function() {
-            $(this).blur();
-        });
-    }
-    if($('.white-transparent-btn').length > 0) {
-        $('.white-transparent-btn').click(function() {
-            $(this).blur();
-        });
-    }
+    $(document).on('click', '.white-blue-green-btn', function() {
+        $(this).blur();
+    });
+
+    $(document).on('click', '.blue-green-white-btn', function() {
+        $(this).blur();
+    });
+
+    $(document).on('click', '.white-transparent-btn', function() {
+        $(this).blur();
+    });
 }
 
 function checkIfCookie()    {
@@ -576,8 +572,6 @@ async function pagesDataOnContractInit() {
                                         basic.closeDialog();
                                         basic.showDialog(response.success, 'recipe-popup', null, true);
 
-                                        fixButtonsFocus();
-
                                         $('.recipe-popup .usd_val span').html($('.patient-contract-single-page-section').attr('data-monthly-premium'));
                                         $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
 
@@ -672,7 +666,7 @@ async function pagesDataOnContractInit() {
                                                             nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
                                                         }
 
-                                                        var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(checksumAddress(response.contract_data.patient), checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract/* + period_to_withdraw*/, response.contract_data.contract_ipfs_hash).encodeABI();
+                                                        var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(checksumAddress(response.contract_data.patient), checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
                                                         var contract_creation_transaction_obj = {
                                                             gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5 / 100))),
@@ -788,7 +782,6 @@ async function initPagesLogic() {
                             $('#number-of-patients').focus();
 
                             $('.selectpicker').selectpicker('refresh');
-                            fixButtonsFocus();
 
                             calculateLogic();
                         }
@@ -1426,7 +1419,6 @@ if($('body').hasClass('logged-in')) {
                     success: function (response) {
                         if (response.success) {
                             basic.showDialog(response.success, 'reconsider-monthly-premium', true);
-                            fixButtonsFocus();
 
                             $('.bootbox.reconsider-monthly-premium #new-usd-proposal-to-dentist').focus();
 
@@ -1697,7 +1689,6 @@ if($('body').hasClass('logged-in')) {
                 },
                 success: function (response) {
                     basic.showDialog(response.success, 'before-sending-email-confirmation-popup', null, true);
-                    fixButtonsFocus();
 
                     var custom_form_obj = {
                         clinic_id: this_select.val().trim(),
@@ -1748,7 +1739,6 @@ if($('body').hasClass('logged-in')) {
                             success: function (response) {
                                 basic.closeDialog();
                                 basic.showDialog(response.success, 'keystore-file-password-validation', null, true);
-                                fixButtonsFocus();
                                 $('.keystore-file-password-validation .keystore-password').focus();
 
                                 $('.keystore-file-password-validation .btn-container a').click(async function() {
@@ -1936,8 +1926,6 @@ function calculateLogic() {
                         numberStep: comma_separator_number_step
                     }, 1000);
 
-                    fixButtonsFocus();
-
                     $('.calculate-again').click(function () {
                         $.ajax({
                             type: 'POST',
@@ -1953,7 +1941,6 @@ function calculateLogic() {
                                     basic.showDialog(response.success, 'calculator-popup', null, true);
 
                                     $('.selectpicker').selectpicker('refresh');
-                                    fixButtonsFocus();
 
                                     calculateLogic();
                                 }
@@ -2012,8 +1999,6 @@ function bindLoginSigninPopupShow() {
         basic.showDialog(hidden_popup_content, 'login-signin-popup', null, true);
 
         $('.login-signin-popup .dentist .form-register .address-suggester').removeClass('dont-init');
-
-        fixButtonsFocus();
 
         initAddressSuggesters();
 
@@ -2481,7 +2466,6 @@ if($('form#invite-dentists').length) {
                 },
                 success: function (response) {
                     basic.showDialog(response.success, 'before-sending-email-confirmation-popup', null, true);
-                    fixButtonsFocus();
 
                     var serialized_values = this_form.serializeArray();
                     var custom_form_obj = {};
@@ -2698,8 +2682,6 @@ async function onDocumentReadyPageData() {
                                         basic.closeDialog();
                                         basic.showDialog(response.success, 'recipe-popup', null, true);
 
-                                        fixButtonsFocus();
-
                                         var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                                         const on_page_load_gwei = ethgasstation_json.safeLow;
                                         //adding 10% just in case the transaction dont fail
@@ -2895,8 +2877,6 @@ async function onDocumentReadyPageData() {
                                     if(response.success) {
                                         basic.closeDialog();
                                         basic.showDialog(response.success, 'recipe-popup', null, true);
-
-                                        fixButtonsFocus();
 
                                         var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                                         const on_page_load_gwei = ethgasstation_json.safeLow;
@@ -3127,8 +3107,6 @@ function cancelContractEventInit() {
                                             $('.recipe-popup .camp-for-row').html('');
                                         }
                                     });
-
-                                    fixButtonsFocus();
 
                                     var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                                     const on_page_load_gwei = ethgasstation_json.safeLow;
@@ -3888,7 +3866,6 @@ async function validateUserAddress(user_address, value_element) {
             $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="'+user_address+'"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-8 col-sm-offset-2 inline-block padding-left-xs-15"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18"><span>Enter your Private Key<div class="fs-16">(not recommended)</div></span></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-8 col-sm-offset-2 inline-block padding-right-xs-15"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><div class="btn-wrapper"></div></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
             $('.proof-of-address').addClass('proof-failed');
 
-            fixButtonsFocus();
             bindVerifyAddressLogic();
             error = true;
         } else {
@@ -4170,7 +4147,6 @@ function fixSelectsOnMac() {
 fixSelectsOnMac();
 
 function initPopupEvents(scroll_to_buy_section) {
-    fixButtonsFocus();
     initTooltips();
     $('.contract-response-message .close-btn, .contract-response-message .second-custom-close-btn').click(function() {
         $(this).closest('.contract-response-message').remove();
