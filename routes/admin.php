@@ -29,9 +29,11 @@ Route::group(['prefix' => 'assurance-admin-access', 'middleware' => 'HandleAdmin
 
         Route::get('/delete/{id}', 'Admin\MediaController@deleteMedia')->name('delete-media');
 
-        Route::post('/upload', 'Admin\MediaController@uploadMedia')->name('upload-media');
+        /*Route::post('/upload', 'Admin\MediaController@uploadMedia')->name('upload-media');*/
 
         Route::post('/update-media-alts', 'Admin\MediaController@updateAlts')->name('update-media-alts');
+
+        Route::post('/ajax-upload', 'Admin\MediaController@ajaxUpload')->name('ajax-upload');
     });
 
     Route::group(['prefix' => 'pages'], function()  {

@@ -247,10 +247,10 @@ class UserController extends Controller {
         //if logged user is dentist require the specialisations data
         if($this->checkDentistSession()) {
             $arr_with_required_data['specialisations'] = 'required';
-            $arr_with_required_data['country'] = 'required';
+            $arr_with_required_data['country_code'] = 'required';
             $arr_with_required_data['address'] = 'required';
             $arr_with_required_data_responces['specialisations.required'] = 'Specialisations are required.';
-            $arr_with_required_data_responces['country.required'] = 'Country is required.';
+            $arr_with_required_data_responces['country_code.required'] = 'Country is required.';
             $arr_with_required_data_responces['address.required'] = 'Postal Address is required.';
         }
 

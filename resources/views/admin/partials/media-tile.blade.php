@@ -1,16 +1,31 @@
-@if(count($media) > 0)
-    <table class="table table-without-reorder table-bordered table-striped text-left media-table">
-        <thead>
-            <tr>
-                <th>Image <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="If the selected images you want to add are .svg format it doesn't matter the width or height, they're vectors."></i></th>
-                <th>Name</th>
-                <th>Link</th>
-                <th>Alt <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Text describing the image. Used also for SEO and accessibility standard. When resource is not found this text will appear. Maximum length 125 symbols."></i></th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="upload-media-container">
+    <form method="post" enctype="multipart/form-data" class="text-center" id="upload-media">
+        <div class="single-row">
+            <div class="subtitle"><label>Select images:</label></div>
+            <input type="file" name="images[]" accept=".jpg,.jpeg,.png,.svg,.gif,.pdf,.doc,.docx,.rtf,.zip,.rar" multiple/>
+        </div>
+        @if(Route::current()->getName() != 'media')
+            <input type="hidden" name="ajax_media" value="true">
+        @endif
+        <div class="btn-container">
+            <button class="btn">Add</button>
+        </div>
+    </form>
+</div>
+<table class="table table-without-reorder table-bordered table-striped text-left media-table">
+    <thead>
+        <tr>
+            <th>Image <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="If the selected images you want to add are .svg format it doesn't matter the width or height, they're vectors."></i></th>
+            <th>Name</th>
+            <th>Link</th>
+            <th>Alt <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Text describing the image. Used also for SEO and accessibility standard. When resource is not found this text will appear. Maximum length 125 symbols."></i></th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if(count($media) > 0)
+
         @foreach($media as $single_media)
             @if(in_array($single_media->type, ['jpeg', 'jpg', 'png', 'svg', 'gif']))
                 @php($type = 'image')
@@ -45,13 +60,13 @@
                 </td>
             </tr>
         @endforeach
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="6" class="text-center">
-                    <a href="javascript:void(0);" class="btn save-image-alts">Save image alts</a>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-@endif
+    @endif
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" class="text-center">
+                <a href="javascript:void(0);" class="btn save-image-alts">Save image alts</a>
+            </td>
+        </tr>
+    </tfoot>
+</table>
