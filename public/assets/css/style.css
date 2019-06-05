@@ -8158,13 +8158,13 @@ select.select-mac-fix {
 .module.contract-tile {
   padding-left: 10px;
   padding-right: 10px;
-  cursor: pointer;
-  display: block; }
+  cursor: pointer; }
   .module.contract-tile .tile-wrapper {
     background-color: white;
     padding: 15px 10px;
     max-width: 450px;
     margin: 0 auto;
+    display: block;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     -ms-border-radius: 6px;
