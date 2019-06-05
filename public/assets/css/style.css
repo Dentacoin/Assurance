@@ -8165,6 +8165,7 @@ select.select-mac-fix {
     max-width: 450px;
     margin: 0 auto;
     display: block;
+    color: #212121;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     -ms-border-radius: 6px;
