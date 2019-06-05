@@ -21,7 +21,7 @@
                                 <div class="module contract-tile padding-bottom-10 {{$contract->status}}">
                                     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
                                     @php($url = route('dentist-contract-view', ['slug' => $contract->slug]))
-                                    <div href="{{$url}}" class="tile-wrapper fs-0">
+                                    <a href="{{$url}}" class="tile-wrapper fs-0">
                                         <div class="inline-block-top figure-container">
                                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                 <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
