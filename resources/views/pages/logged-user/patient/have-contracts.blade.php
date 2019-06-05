@@ -51,7 +51,7 @@
                                             <time class="display-block fs-14 calibri-light">Sent on: {{$contract->created_at->format('d/m/Y')}}</time>
                                             <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                             <div class="btn-container">
-                                                <a href="javascript:void(0)" class="white-blue-green-btn">{{$btn_label}}</a>
+                                                <div class="white-blue-green-btn">{{$btn_label}}</div>
                                             </div>
                                         </div>
                                     </div>

@@ -684,7 +684,7 @@
             max-width: 450px;
             margin: 0 auto;
             display: block;
-            color: $dark_color;   
+            color: $dark_color;
             @include rounded(6px);
             @include box-shadow(0 2px 6px 0 rgba(0,0,0,.4));
             .figure-container {
