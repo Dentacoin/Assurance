@@ -8158,7 +8158,8 @@ select.select-mac-fix {
 .module.contract-tile {
   padding-left: 10px;
   padding-right: 10px;
-  cursor: pointer; }
+  cursor: pointer;
+  display: block; }
   .module.contract-tile .tile-wrapper {
     background-color: white;
     padding: 15px 10px;

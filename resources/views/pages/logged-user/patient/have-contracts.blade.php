@@ -19,7 +19,7 @@
                                     @php($url = route('patient-contract-view', ['slug' => $contract->slug]))
                                     @php($btn_label = 'Details')
                                 @endif
-                                <div class="module contract-tile padding-bottom-10 {{$contract->status}}" onclick="location.href='{{$url}}';">
+                                <a href="{{$url}}" class="module contract-tile padding-bottom-10 {{$contract->status}}">
                                     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
                                     <div class="tile-wrapper fs-0">
                                         <div class="inline-block-top figure-container">
@@ -51,11 +51,11 @@
                                             <time class="display-block fs-14 calibri-light">Sent on: {{$contract->created_at->format('d/m/Y')}}</time>
                                             <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                             <div class="btn-container">
-                                                <a href="{{$url}}" class="white-blue-green-btn">{{$btn_label}}</a>
+                                                <a href="javascript:void(0)" class="white-blue-green-btn">{{$btn_label}}</a>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             @endforeach
                         @endif
                     </div>

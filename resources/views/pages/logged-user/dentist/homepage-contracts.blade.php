@@ -21,7 +21,7 @@
                                 <div class="module contract-tile padding-bottom-10 {{$contract->status}}">
                                     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
                                     @php($url = route('dentist-contract-view', ['slug' => $contract->slug]))
-                                    <div class="tile-wrapper fs-0" onclick="location.href='{{$url}}';">
+                                    <a href="{{$url}}" class="tile-wrapper fs-0">
                                         <div class="inline-block-top figure-container">
                                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                 <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
@@ -49,10 +49,10 @@
                                             <time class="display-block fs-14 calibri-light">Signed on: {{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
                                             <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                             <div class="btn-container">
-                                                <a href="{{route('dentist-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">{{$btn_label}}</a>
+                                                <a href="javascript:void(0)" class="white-blue-green-btn">{{$btn_label}}</a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             @endforeach
                         </div>
@@ -82,7 +82,7 @@
                                     @endif
                                     <div class="module contract-tile padding-bottom-10 {{$contract->status}}">
                                         @php($url = route('dentist-contract-view', ['slug' => $contract->slug]))
-                                        <div class="tile-wrapper fs-0" onclick="location.href='{{$url}}';">
+                                        <a href="{{$url}}" class="tile-wrapper fs-0">
                                             <div class="inline-block-top figure-container">
                                                 <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                     <img alt="Patient avatar" src="/assets/images/no-avatar.png"/>
@@ -112,10 +112,10 @@
                                                 <time class="display-block fs-14 calibri-light">Received on: {{$contract->created_at->format('d/m/Y')}}</time>
                                                 <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                                 <div class="btn-container">
-                                                    <a href="{{route('dentist-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details</a>
+                                                    <a href="javascript:void(0)" class="white-blue-green-btn">Details</a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                 @endforeach
                             </div>
@@ -146,7 +146,7 @@
                                     @endif
                                     <div class="module contract-tile padding-bottom-10 {{$contract->status}}">
                                         @php($url = route('dentist-contract-view', ['slug' => $contract->slug]))
-                                        <div class="tile-wrapper fs-0" onclick="location.href='{{$url}}';">
+                                        <a href="{{$url}}" class="tile-wrapper fs-0">
                                             <div class="inline-block-top figure-container">
                                                 <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                     <img alt="Patient avatar" src="{{$avatar_url}}"/>
@@ -177,10 +177,10 @@
                                                 <time class="display-block fs-14 calibri-light">Cancelled on: {{date('d/m/Y', strtotime($contract->cancelled_at))}}</time>
                                                 <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                                 <div class="btn-container">
-                                                    <a href="{{route('dentist-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details</a>
+                                                    <a href="javascript:void(0)" class="white-blue-green-btn">Details</a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                 @endforeach
                             </div>
@@ -219,7 +219,7 @@
                                     <div class="module contract-tile padding-bottom-10 {{$contract->status}}">
                                         @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
                                         @php($url = route('dentist-contract-view', ['slug' => $contract->slug]))
-                                        <div class="tile-wrapper fs-0" onclick="location.href='{{$url}}';">
+                                        <a href="{{$url}}" class="tile-wrapper fs-0">
                                             <div class="inline-block-top figure-container">
                                                 <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                     <img alt="Patient avatar" src="/assets/images/no-avatar.png"/>
@@ -250,10 +250,10 @@
                                                 <div class="display-block fs-14 calibri-light hide-this">&nbsp;</div>
                                                 <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                                 <div class="btn-container">
-                                                    <a href="{{route('dentist-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details</a>
+                                                    <a href="javascript:void(0)" class="white-blue-green-btn">Details</a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                 @endforeach
                             </div>
@@ -285,7 +285,7 @@
                                     @endif
                                     <div class="module contract-tile padding-bottom-10 {{$contract->status}}">
                                         @php($url = route('dentist-contract-view', ['slug' => $contract->slug]))
-                                        <div class="tile-wrapper fs-0" onclick="location.href='{{$url}}';">
+                                        <a href="{{$url}}" class="tile-wrapper fs-0">
                                             <div class="inline-block-top figure-container">
                                                 <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                     <img alt="Patient avatar" src="{{$avatar_url}}"/>
@@ -316,10 +316,10 @@
                                                 <time class="display-block fs-14 calibri-light">Cancelled on: {{date('d/m/Y', strtotime($contract->cancelled_at))}}</time>
                                                 <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                                 <div class="btn-container">
-                                                    <a href="{{route('dentist-contract-view', ['slug' => $contract->slug])}}" class="white-blue-green-btn">Details</a>
+                                                    <a href="javascript:void(0)" class="white-blue-green-btn">Details</a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                 @endforeach
                             </div>
