@@ -79,6 +79,18 @@
             </div>
         </div>
     </section>
+    <section class="container contract-details no-gutter-xs">
+        <div class="row text-center margin-left-xs-0 margin-right-xs-0">
+            <div class="col-xs-12 col-lg-10 col-lg-offset-1 no-gutter-xs">
+                <div class="contract-details-container module fs-16 text-left padding-top-40 padding-bottom-60">
+                    @include('partials.contract-details', ['type' => 'single-page', 'contract' => $contract, 'dentist' => $dentist, 'patient' => $patient, 'calculator_proposals' => $calculator_proposals])
+                </div>
+                <div class="padding-top-40">
+                    <a href="javascript:void(0)" class="open-contract-details fs-20 calibri-bold blue-green-color" data-label-closed="See details" data-label-opened="Hide details" data-hidden-details="true">See details</a>
+                </div>
+            </div>
+        </div>
+    </section>
     @include('partials.patient-ready-to-purchase-with-external-api')
 @endsection
 

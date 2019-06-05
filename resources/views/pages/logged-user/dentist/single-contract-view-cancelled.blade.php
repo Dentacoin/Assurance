@@ -47,8 +47,10 @@
                         <time class="display-block calibri-light fs-20">{{date('d/m/Y', $cancelled_timestamp)}}</time>
                         <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Reason:</div>
                         <div class="calibri-light fs-20">{{$cancellation_reason['reason']}}</div>
-                        <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Comments:</div>
-                        <div class="calibri-light fs-20">{{$cancellation_reason['comments']}}</div>
+                        @if(!empty($cancellation_reason['comments']))
+                            <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Comments:</div>
+                            <div class="calibri-light fs-20">{{$cancellation_reason['comments']}}</div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">

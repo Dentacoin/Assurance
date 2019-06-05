@@ -56,7 +56,7 @@
                     @if(!empty($popup))
                         <a href="javascript:void(0);" class="btn use-media" data-type="{{$type}}">Use</a>
                     @endif
-                    <a href="{{ route('delete-media', ['id' => $single_media->id]) }}" onclick="return confirm('Are you sure you want to delete this resource?')" class="btn">Delete</a>
+                    <a href="javascript:void(0)" onclick="return confirm('Are you sure you want to delete this resource?')" class="btn delete-media">Delete</a>
                 </td>
             </tr>
         @endforeach

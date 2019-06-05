@@ -194,11 +194,31 @@ function useMediaEvent(id, close_btn, editor) {
 //removing image from posts listing pages
 function removeImage()  {
     $(document).on('click', '.remove-image', function()    {
-        $(this).closest('.media').find('.image-visualization').html('');
         $(this).closest('.media').find('.hidden-input-image').val('');
+        $(this).closest('.media').find('.image-visualization').html('');
     });
 }
 removeImage();
+
+function deleteMedia() {
+    $(document).on('click', '.delete-media', function()    {
+        var this_btn = $(this);
+        $.ajax({
+            type: 'POST',
+            url: SITE_URL + '/media/delete/'+this_btn.closest('tr').attr('data-id'),
+            dataType: 'json',
+            success: function (response) {
+                if(response.success)    {
+                    basic.showAlert(response.success, '', true);
+                    this_btn.closest('tr').remove();
+                } else if(response.error) {
+                    basic.showAlert(response.error, '', true);
+                }
+            }
+        });
+    });
+}
+deleteMedia();
 
 //saving image alts on media listing pages
 function saveImageAltsEvent()   {

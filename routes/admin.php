@@ -27,7 +27,7 @@ Route::group(['prefix' => 'assurance-admin-access', 'middleware' => 'HandleAdmin
 
         Route::post('/open', 'Admin\MediaController@openMedia');
 
-        Route::get('/delete/{id}', 'Admin\MediaController@deleteMedia')->name('delete-media');
+        Route::post('/delete/{id}', 'Admin\MediaController@deleteMedia')->name('delete-media');
 
         /*Route::post('/upload', 'Admin\MediaController@uploadMedia')->name('upload-media');*/
 

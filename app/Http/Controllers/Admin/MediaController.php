@@ -85,9 +85,9 @@ class MediaController extends Controller
             unlink(UPLOADS . $media->name);
             //deleting media from DB
             $media->delete();
-            return redirect()->route('media')->with(['success' => 'Image have been deleted successfully.']);
+            return json_encode(array('success' => 'Image have been deleted successfully.'));
         }else {
-            return redirect()->route('media')->with(['error' => 'Wrong parameters passed.']);
+            return json_encode(array('error' => 'Wrong parameters passed.'));
         }
     }
 
@@ -117,7 +117,7 @@ class MediaController extends Controller
 
             $html_with_images = '';
             if(!empty($request->input('ajax_media'))) {
-                $use_btn = '<a href="javascript:void(0);" class="btn use-media" data-type="image">Use</a>';
+                $use_btn = '<a href="javascript:void(0);" class="btn use-media" data-type="image">Use</a>&nbsp;';
             } else {
                 $use_btn = '';
             }

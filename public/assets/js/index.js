@@ -1777,7 +1777,7 @@ if($('body').hasClass('logged-in')) {
         var current_active_currency = 'dcn';
         var dcn_for_one_usd = parseFloat($('section.ready-to-purchase-with-external-api').attr('data-dcn-for-one-usd'));
         var eth_for_one_usd = parseFloat($('section.ready-to-purchase-with-external-api').attr('data-eth-for-one-usd'));
-        $('section.ready-to-purchase-with-external-api #crypto-amount').val(dcn_for_one_usd * parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()));
+        $('section.ready-to-purchase-with-external-api #crypto-amount').val(Math.floor(dcn_for_one_usd * parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim())));
 
         $('section.ready-to-purchase-with-external-api #usd-value').on('input', function() {
             if($(this).val().trim() < 30)   {
@@ -1793,7 +1793,7 @@ if($('body').hasClass('logged-in')) {
             }
 
             if($('section.ready-to-purchase-with-external-api nav ul li a.active').attr('data-currency') == 'dcn') {
-                $('section.ready-to-purchase-with-external-api #crypto-amount').val(dcn_for_one_usd * parseFloat($(this).val().trim()));
+                $('section.ready-to-purchase-with-external-api #crypto-amount').val(Math.floor(dcn_for_one_usd * parseFloat($(this).val().trim())));
             } else if($('section.ready-to-purchase-with-external-api nav ul li a.active').attr('data-currency') == 'eth') {
                 $('section.ready-to-purchase-with-external-api #crypto-amount').val(eth_for_one_usd * parseFloat($(this).val().trim()));
             }
@@ -3159,9 +3159,9 @@ function cancelContractEventInit() {
                                                 basic.showAlert('Please enter other reason.', '', true);
                                             } else if($('.recipe-popup #cancel-contract-reason').val() == null) {
                                                 basic.showAlert('Please select cancellation reason.', '', true);
-                                            } else if($('.recipe-popup #cancel-contract-comments').val().trim() == '') {
+                                            } /*else if($('.recipe-popup #cancel-contract-comments').val().trim() == '') {
                                                 basic.showAlert('Please enter comments.', '', true);
-                                            } else if(global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                            }*/ else if(global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
                                                 basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                                 return false;
                                             } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
@@ -3290,9 +3290,9 @@ function cancelContractEventInit() {
                                     basic.showAlert('Please enter other reason.', '', true);
                                 } else if($('.popup-cancel-contract #cancel-contract-reason').val() == null) {
                                     basic.showAlert('Please select cancellation reason.', '', true);
-                                } else if($('.popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
+                                } /*else if($('.popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
                                     basic.showAlert('Please enter comments.', '', true);
-                                } else {
+                                }*/ else {
                                     var data = {
                                         contract: this_btn.attr('data-contract'),
                                         status: 'cancelled',
