@@ -915,6 +915,8 @@ if($('body').hasClass('logged-in')) {
 
             if(errors) {
                 event.preventDefault();
+            } else {
+                $('.response-layer').show();
             }
         });
     } else if($('body').hasClass('manage-privacy')) {
@@ -1553,6 +1555,10 @@ if($('body').hasClass('logged-in')) {
         add_overflow_hidden_on_hidden_box_show = true;
     }
     $('body').removeClass('overflow-hidden');
+
+    $(document).on('click', '.module.contract-tile', function() {
+        $('.response-layer').show();
+    });
 
     $('.logged-user-nav .hidden-box-hover').hover(function () {
         $('.logged-user-nav .hidden-box').addClass('show-this');
@@ -3391,7 +3397,6 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                 if(render_pdf != null && encrypted_pdf_content != null) {
                                     //if we have to render pdf
                                     $('.proof-of-address .verify-address-btn').click(async function() {
-                                        console.log(1);
                                         //if remember me option is checked
                                         if($('#remember-my-keystore-file').is(':checked')) {
                                             localStorage.setItem('current-account', JSON.stringify({
@@ -3515,7 +3520,6 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
         encrypted_pdf_content = null;
     }
     $('.proof-of-address .verify-address-btn').click(function() {
-        console.log(2);
         if(keystore_file != null) {
             //import with keystore
             if('0x' + JSON.parse(keystore_file).address.toLowerCase() != $('.proof-of-address').attr('data-address').toLowerCase()) {
@@ -3647,7 +3651,6 @@ function bindTransactionAddressVerify(keystore_file) {
         keystore_file = null;
     }
     $('.proof-of-address .verify-address-btn').click(async function() {
-        console.log(3);
         $('.response-layer').show();
         if(keystore_file != null) {
             //import with keystore
@@ -3862,7 +3865,7 @@ async function validateUserAddress(user_address, value_element) {
         error = false;
     } else if (check_public_key_ajax_result.error) {
         if(value_element.is('input')) {
-            $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="'+user_address+'"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-8 col-sm-offset-2 inline-block padding-left-xs-15"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18"><span>Enter your Private Key<div class="fs-16">(not recommended)</div></span></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-8 col-sm-offset-2 inline-block padding-right-xs-15"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><div class="btn-wrapper"></div></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
+            $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="'+user_address+'"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-5 inline-block padding-left-xs-15"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18"><span>Enter your Private Key<div class="fs-16">(not recommended)</div></span></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-5 inline-block padding-right-xs-15"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><div class="btn-wrapper"></div></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
             $('.proof-of-address').addClass('proof-failed');
 
             bindVerifyAddressLogic();
