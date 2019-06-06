@@ -1,7 +1,7 @@
 <div class="upload-media-container">
     <form method="post" enctype="multipart/form-data" class="text-center" id="upload-media">
         <div class="single-row">
-            <div class="subtitle"><label>Select images:</label></div>
+            <div class="subtitle"><label>Select files:</label></div>
             <input type="file" name="images[]" accept=".jpg,.jpeg,.png,.svg,.gif,.pdf,.doc,.docx,.rtf,.zip,.rar" multiple/>
         </div>
         @if(Route::current()->getName() != 'media')
@@ -15,7 +15,7 @@
 <table class="table table-without-reorder table-bordered table-striped text-left media-table">
     <thead>
         <tr>
-            <th>Image <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="If the selected images you want to add are .svg format it doesn't matter the width or height, they're vectors."></i></th>
+            <th>File <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="If the selected images you want to add are .svg format it doesn't matter the width or height, they're vectors."></i></th>
             <th>Name</th>
             <th>Link</th>
             <th>Alt <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Text describing the image. Used also for SEO and accessibility standard. When resource is not found this text will appear. Maximum length 125 symbols."></i></th>

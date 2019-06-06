@@ -12,9 +12,10 @@
                 <figure class="image-visualization">
                     @if(!empty($post) && !empty($post->media))
                         <img class="small-image" src="{{URL::asset('assets/uploads/'.$post->media->name) }}"/>
+                        <span class="inline-block-top remove-image"><i class="fa fa-times" aria-hidden="true"></i></span>
                     @endif
                 </figure>
-                <a href="javascript:openMedia(1, false, 'image')" class="btn">Select image</a>
+                <a href="javascript:openMedia(1, true, 'image')" class="btn">Select image</a>
                 <input type="hidden" class="hidden-input-image" name="image" value="@if(!empty($post->media)) {{$post->media->id}} @endif">
             </div>
             <div class="btn-container">

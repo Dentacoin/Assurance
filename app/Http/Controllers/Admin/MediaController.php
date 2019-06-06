@@ -103,11 +103,11 @@ class MediaController extends Controller
 
     protected function ajaxUpload(Request $request) {
         if(!empty($request->file('images')))    {
-            $allowed = array('jpeg', 'png', 'jpg', 'svg', 'gif', 'pdf', 'doc', 'docx', 'rtf', 'zip', 'rar', 'JPEG', 'PNG', 'JPG', 'SVG', 'GIF', 'DOC', 'DOCX', 'RTF', 'ZIP', 'RAR');
+            $allowed = array('jpeg', 'png', 'jpg', 'svg', 'gif', 'pdf', 'doc', 'docx', 'rtf', 'zip', 'rar', 'JPEG', 'PNG', 'JPG', 'SVG', 'GIF', 'DOC', 'DOCX', 'RTF', 'ZIP', 'RAR', 'mp4', 'avi', 'MP4', 'AVI');
             foreach($request->file('images') as $file)  {
                 //checking for right file format
                 if(!in_array(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION), $allowed)) {
-                    return json_encode(array('error' => 'Files can be only with jpeg, png, jpg, svg, gif, pdf, doc, docx, rtf, zip or rar formats.'));
+                    return json_encode(array('error' => 'Files can be only with jpeg, png, jpg, svg, gif, mp4, avi, pdf, doc, docx, rtf, zip or rar formats.'));
                 }
                 //checking if error in file
                 if($file->getError()) {
@@ -116,11 +116,6 @@ class MediaController extends Controller
             }
 
             $html_with_images = '';
-            if(!empty($request->input('ajax_media'))) {
-                $use_btn = '<a href="javascript:void(0);" class="btn use-media" data-type="image">Use</a>&nbsp;';
-            } else {
-                $use_btn = '';
-            }
 
             foreach($request->file('images') as $file)  {
                 $filename = $this->transliterate($file->getClientOriginalName());
@@ -142,17 +137,24 @@ class MediaController extends Controller
                     $alt = $media->alt;
                     $alt_row = '<input type="text" class="alt-attribute" value="'.$alt.'">';
                     $resource_html = '<img src="'.$media->getLink().'" class="small-image"/>';
-
+                    $type = 'image';
                 } else {
                     $alt = '';
                     $alt_row = 'Document files don\'t need alt.';
                     $resource_html = '<a href="'.$media->getLink().'" download><i class="fa fa-file-text-o fs-50" aria-hidden="true"></i></a>';
+                    $type = 'file';
                 }
 
-                $html_with_images.='<tr data-id="'.$media->id.'" data-src="'.$media->getLink().'" data-alt="'.$alt.'" role="row" class="odd"><td>'.$resource_html.'</td><td>'.$media->name.'</td><td><input type="text" value="'.$media->getLink().'"></td><td>'.$alt_row.'</td><td>'.$media->created_at.'</td><td>'.$use_btn.'<a href="/dcn-admin-access/media/delete/'.$media->id.'" onclick="return confirm(\'Are you sure you want to delete this resource?\')" class="btn">Delete</a></td></tr>';
+                if(!empty($request->input('ajax_media'))) {
+                    $use_btn = '<a href="javascript:void(0);" class="btn use-media" data-type="'.$type.'">Use</a>&nbsp;';
+                } else {
+                    $use_btn = '';
+                }
+
+                $html_with_images.='<tr data-id="'.$media->id.'" data-src="'.$media->getLink().'" data-alt="'.$alt.'" role="row" class="odd"><td>'.$resource_html.'</td><td>'.$media->name.'</td><td><input type="text" value="'.$media->getLink().'"></td><td>'.$alt_row.'</td><td>'.$media->created_at.'</td><td>'.$use_btn.'<a href="javascript:void(0)" onclick="return confirm(\'Are you sure you want to delete this resource?\')" class="btn delete-media">Delete</a></td></tr>';
             }
-            return json_encode(array('success' => 'All images have been uploaded.', 'html_with_images' => $html_with_images));
+            return json_encode(array('success' => 'All files have been uploaded.', 'html_with_images' => $html_with_images));
         }
-        return json_encode(array('error' => 'Please select one or more images to upload.'));
+        return json_encode(array('error' => 'Please select one or more files to upload.'));
     }
 }

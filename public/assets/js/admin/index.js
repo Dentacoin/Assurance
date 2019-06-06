@@ -341,34 +341,40 @@ if($('.add-edit-menu-element select[name="type"]').length > 0) {
 function initUploadMediaLogic() {
     if($('form#upload-media').length) {
         $('form#upload-media').submit(function(event) {
+            $('.response-layer').addClass('show-this');
             event.preventDefault();
             var this_form = this;
 
-            $.ajax({
-                type: 'POST',
-                url: SITE_URL + '/media/ajax-upload',
-                data: new FormData($(this_form)[0]),
-                async: false,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: function (response) {
-                    if(response.success) {
-                        basic.showAlert(response.success, '', true);
+            setTimeout(function() {
+                $.ajax({
+                    type: 'POST',
+                    url: SITE_URL + '/media/ajax-upload',
+                    data: new FormData($(this_form)[0]),
+                    async: false,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function (response) {
+                        if(response.success) {
+                            basic.showAlert(response.success, '', true);
 
-                        if($('.media-table').length) {
-                            $('.media-table tbody').prepend(response.html_with_images);
+                            if($('.media-table').length) {
+                                $('.media-table tbody').prepend(response.html_with_images);
 
-                            if($('table.table.table-without-reorder.media-table').attr('data-id-in-action') != undefined && $('table.table.table-without-reorder.media-table').attr('data-close-btn') != undefined) {
-                                useMediaEvent($('table.table.table-without-reorder.media-table').attr('data-id-in-action'), $('table.table.table-without-reorder.media-table').attr('data-close-btn'), null);
+                                if($('table.table.table-without-reorder.media-table').attr('data-id-in-action') != undefined) {
+                                    useMediaEvent($('table.table.table-without-reorder.media-table').attr('data-id-in-action'), $('table.table.table-without-reorder.media-table').attr('data-close-btn'), null);
+                                }
                             }
+                        } else if(response.error) {
+                            basic.showAlert(response.error, '', true);
                         }
-                    } else if(response.error) {
-                        basic.showAlert(response.error, '', true);
+
+                        $('.response-layer').removeClass('show-this');
+
+                        $(this_form).find('input[name="images[]"]').val('');
                     }
-                    $(this_form).find('input[name="images[]"]').val('');
-                }
-            });
+                });
+            }, 300);
         });
     }
 }

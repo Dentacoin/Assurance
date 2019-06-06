@@ -242,6 +242,7 @@
         <img src="//dentacoin.com/custom-cookie?logout-token={{ urlencode(session('logout_token')) }}" class="hide"/>
         <img src="//dentists.dentacoin.com/custom-cookie?logout-token={{ urlencode(session('logout_token')) }}" class="hide"/>
     @endif
+    @php($api_enums = (new \App\Http\Controllers\APIRequestsController())->getAllEnums())
     <div class="hidden-login-form hide">
         <div class="fs-0 popup-header-action">
             <a href="javascript:void(0)" class="inline-block" data-type="patient">I'm a Patient</a>
@@ -360,7 +361,7 @@
                                 <div class="custom-google-select-style module">
                                     <label>Title:</label>
                                     <select class="form-field required" name="dentist-title">
-                                        @foreach((new \App\Http\Controllers\APIRequestsController())->getAllEnums()->titles as $key => $title)
+                                        @foreach($api_enums->titles as $key => $title)
                                             <option value="{{$key}}">{{$title}}</option>
                                         @endforeach
                                     </select>
@@ -452,7 +453,7 @@
                                 </div>
                                 <div class="inline-block-top specializations">
                                     <h4>Please select your specializations:</h4>
-                                    @foreach((new \App\Http\Controllers\APIRequestsController())->getAllEnums()->specialisations as $key => $specialisation)
+                                    @foreach($api_enums->specialisations as $key => $specialisation)
                                         <div class="pretty p-svg p-curve on-white-background">
                                             <input type="checkbox" name="specializations[]" value="{{$key}}"/>
                                             <div class="state p-success">

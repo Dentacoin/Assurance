@@ -23,14 +23,15 @@
                 <label>Social description <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Social description that appears in facebook when sharing the page. Maximum length 300 symbols."></i>:</label>
                 <input type="text" name="social_description" value="{{$post->social_description}}" />
             </div>
-            <div class="btn-container text-left media padding-bottom-20" @if(!empty($post)) data-id="{{$post->id}}" @endif>
+            <div class="btn-container text-left media padding-bottom-20" data-id="1">
                 <label>Social image <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Social image that appears in facebook when sharing the page. Recommended size is 1200x630px."></i>:</label>
                 <figure class="image-visualization">
                     @if(!empty($post) && !empty($post->media))
                         <img class="small-image" src="{{URL::asset('assets/uploads/'.$post->media->name) }}"/>
+                        <span class="inline-block-top remove-image"><i class="fa fa-times" aria-hidden="true"></i></span>
                     @endif
                 </figure>
-                <a @if(!empty($post)) href="javascript:openMedia({{$post->id}}, false, 'image')" @else  href="javascript:openMedia(null, false, 'image')" @endif class="btn">Select image</a>
+                <a href="javascript:openMedia(1, true, 'image')" class="btn">Select image</a>
                 <input type="hidden" name="image" class="hidden-input-image" value="@if(!empty($post->media)) {{$post->media->id}} @endif">
             </div>
             @if(!empty($html_titles))

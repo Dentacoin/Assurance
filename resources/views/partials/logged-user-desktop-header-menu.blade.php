@@ -1,9 +1,10 @@
 <div class="col-xs-9 inline-block text-right logged-user-nav with-hub @if(!empty($class)) {{$class}} @endif">
+    @php($user_data = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
     <div class="inline-block hidden-box-hover">
         <a href="javascript:void(0)">
-            <span>{{(new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id'])->name}}</span>
+            <span>{{$user_data->name}}</span>
             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
-                @php($avatar_url = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id'])->avatar_url)
+                @php($avatar_url = $user_data->thumbnail_url)
                 @if(!empty($avatar_url))
                     <img alt="" itemprop="contentUrl" src="{{$avatar_url}}"/>
                 @else
