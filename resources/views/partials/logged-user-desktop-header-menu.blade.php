@@ -1,4 +1,5 @@
 <div class="col-xs-9 inline-block text-right logged-user-nav with-hub @if(!empty($class)) {{$class}} @endif">
+    @php($user_data = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
     <div class="inline-block hidden-box-hover">
         <a href="javascript:void(0)">
             <span>{{$user_data->name}}</span>
