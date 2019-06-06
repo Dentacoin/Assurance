@@ -2,9 +2,8 @@
     <div class="wrapper">
         <div class="avatar-and-name padding-bottom-15 fs-0">
             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
-                @php($avatar_url = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id'])->avatar_url)
-                @if(!empty($avatar_url))
-                    <img alt="" itemprop="contentUrl" src="{{$avatar_url}}"/>
+                @if(!empty($user_data->thumbnail_url))
+                    <img alt="" itemprop="contentUrl" src="{{$user_data->thumbnail_url}}"/>
                 @else
                     <img alt="" itemprop="contentUrl" src="/assets/images/avatar-icon.svg"/>
                 @endif

@@ -4,7 +4,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1 fs-0">
-                    @include('partials.my-profile-menu')
+                    @php($user_data = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
+                    @include('partials.my-profile-menu', ['user_data' => $user_data])
                     <div class="my-profile-page-content inline-block-top">
                         <div class="profile-page-title">
                             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
