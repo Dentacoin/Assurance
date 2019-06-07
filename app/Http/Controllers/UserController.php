@@ -222,15 +222,18 @@ class UserController extends Controller {
         $route = '';
         $token = $this->encrypt(session('logged_user')['token'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'));
         if($request->session()->has('logged_user'))    {
-            if(session('logged_user')['type'] == 'dentist') {
-                $route = 'home';
-            }else if(session('logged_user')['type'] == 'patient') {
-                $route = 'patient-access';
+            if(isset(session('logged_user')['type'])) {
+                if(session('logged_user')['type'] == 'dentist') {
+                    $route = 'home';
+                }else if(session('logged_user')['type'] == 'patient') {
+                    $route = 'patient-access';
+                }
+                $request->session()->forget('logged_user');
+                return redirect()->route($route)->with(['logout_token' => $token]);
+            } else {
+                return redirect()->route('home')->with(['logout_token' => $token]);
             }
-            $request->session()->forget('logged_user');
         }
-
-        return redirect()->route($route)->with(['logout_token' => $token]);
     }
 
     protected function updateAccount(Request $request) {
