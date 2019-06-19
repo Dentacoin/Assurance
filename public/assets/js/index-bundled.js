@@ -75857,7 +75857,7 @@ async function onDocumentReadyPageData() {
     if($('body').hasClass('logged-in')) {
         if($('body').hasClass('home') || $('body').hasClass('patient-access')) {
             makeElementsInContractListWithSameHeight();
-        } else if ($('body').hasClass('my-contracts')) {
+        } else if ($('body').hasClass('my-contracts') || $('.my-contracts-container').length) {
             initDataTable();
 
             var table_trs_with_timestamp = $('.table-container table tr[data-timestamp-signed]');
@@ -76771,7 +76771,6 @@ function bindGoogleAlikeButtonsEvents() {
     });
 }
 bindGoogleAlikeButtonsEvents();
-
 
 //check if object has property
 function has(object, key) {
