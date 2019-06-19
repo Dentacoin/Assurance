@@ -10313,6 +10313,9 @@ section.contract-proposal .wrapper .step-fields .singatures-row {
         @media screen and (min-width: 991px) {
           .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn:hover .custom-filter-body, .my-contracts-container .table-container .dataTables_filter .custom-filter .custom-btn:hover .custom-filter-body {
             display: block; } }
+        @media screen and (min-width: 768px) and (max-width: 991px) {
+          .my-contracts .table-container .dataTables_filter .custom-filter .custom-btn:hover .custom-filter-body, .my-contracts-container .table-container .dataTables_filter .custom-filter .custom-btn:hover .custom-filter-body {
+            display: block; } }
       @media screen and (max-width: 767px) {
         .my-contracts .table-container .dataTables_filter .custom-filter, .my-contracts-container .table-container .dataTables_filter .custom-filter {
           width: 100%;

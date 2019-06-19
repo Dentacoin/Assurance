@@ -149,6 +149,13 @@
                             }
                         }
                     }
+                    @include breakpoint($sm-only) {
+                        &:hover {
+                            .custom-filter-body {
+                                display: block;
+                            }
+                        }
+                    }     
                 }
                 @include breakpoint($xs) {
                     width: 100%;
