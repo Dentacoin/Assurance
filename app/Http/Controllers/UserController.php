@@ -633,8 +633,6 @@ class UserController extends Controller {
                     $query->where(array('patient_id' => session('logged_user')['id']))
                         ->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email));
                 })->whereIn('status', $request->input('filter_arr'))->get()->sortByDesc('contract_active_at');
-                var_dump($view_params['contracts']);
-                die('asd');
             } else if($this->checkDentistSession()) {
                 $view_params['contracts'] = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->whereIn('status', $request->input('filter_arr'))->orderBy('contract_active_at', 'desc')->get()->all();
             }
@@ -647,6 +645,9 @@ class UserController extends Controller {
                 $view_params['contracts'] = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->sortByDesc('contract_active_at');
             }
         }
+
+        var_dump($view_params['contracts']);
+        die('asd');
 
         $view = view('partials/table-my-contracts', $view_params);
         $view = $view->render();
