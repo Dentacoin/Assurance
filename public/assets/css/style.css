@@ -9399,17 +9399,17 @@ body.logged-in .my-profile-page-content {
   width: calc(100% - 300px);
   padding: 15px;
   font-size: 16px; }
-  body.logged-in .my-profile-page-content .profile-page-title {
-    font-size: 0; }
-    body.logged-in .my-profile-page-content .profile-page-title > figure img {
-      width: 30px; }
-    body.logged-in .my-profile-page-content .profile-page-title h2 {
-      width: calc(100% - 30px);
-      padding-left: 15px; }
-  @media screen and (max-width: 991px) {
-    body.logged-in .my-profile-page-content {
-      width: 100%;
-      padding: 0; } }
+body.logged-in .profile-page-title {
+  font-size: 0; }
+  body.logged-in .profile-page-title > figure img {
+    width: 30px; }
+  body.logged-in .profile-page-title h2 {
+    width: calc(100% - 30px);
+    padding-left: 15px; }
+@media screen and (max-width: 991px) {
+  body.logged-in {
+    width: 100%;
+    padding: 0; } }
 
 .bootbox.before-sending-email-confirmation-popup .modal-dialog {
   width: 95%;
