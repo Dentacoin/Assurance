@@ -628,6 +628,8 @@ class UserController extends Controller {
         if(!empty($request->input('filter_arr'))) {
             //FILTERING
             $view_params['patient_or_not'] = true;
+            var_dump($request->input('filter_arr'));
+            die('asd');
             if($this->checkPatientSession()) {
                 $view_params['contracts'] = TemporallyContract::where(function ($query) {
                     $query->where(array('patient_id' => session('logged_user')['id']))
