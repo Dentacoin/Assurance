@@ -13,7 +13,7 @@
     </script>
 </head>
 <body class="@if(\App\Http\Controllers\UserController::instance()->checkSession()) logged-in @endif">
-    <div class="my-profile-page-content my-contracts-container inline-block-top">
+    <div class="my-contracts-container">
         <div class="profile-page-title">
             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                 <img alt="Contracts list" src="/assets/uploads/contracts-list.svg"/>
