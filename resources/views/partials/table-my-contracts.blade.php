@@ -88,10 +88,6 @@
                 </td>
             </tr>
         @endforeach
-    @else
-        <tr>
-            <td colspan="6" class="text-center padding-top-20 padding-bottom-20">You don't have any contracts at the moment.</td>
-        </tr>
     @endif
     </tbody>
 </table>

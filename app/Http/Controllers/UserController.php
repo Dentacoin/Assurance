@@ -646,16 +646,10 @@ class UserController extends Controller {
             }
         }
 
-        $response_params = array();
-        if(!sizeof($view_params['contracts'])) {
-            $response_params['have_contracts'] = false;
-        }
-
         $view = view('partials/table-my-contracts', $view_params);
         $view = $view->render();
-        $response_params['success'] = $view;
 
-        return response()->json($response_params);
+        return response()->json(['success' => $view]);
     }
 
     protected function deleteMyProfile(Request $request) {
