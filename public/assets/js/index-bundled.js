@@ -73319,8 +73319,14 @@ $(window).on('load', function() {
 
 });
 
-$(window).on('resize', function(){
+$(window).on('resize', function() {
+    if($('.my-contracts-container').length) {
+        triggerAssuranceContractsIframeEvent($('.my-contracts-container').width(), $('.my-contracts-container').height());
+    }
+});
 
+$(document).on('setAssuranceContractsIframeSize', function(event) {
+    console.log(event.custom_data, 'event.custom_data');
 });
 
 $(window).on('scroll', function()  {
@@ -77188,6 +77194,19 @@ function initTooltips() {
     }
 }
 
+function triggerAssuranceContractsIframeEvent(width, height) {
+    var event_obj = {
+        type: 'setAssuranceContractsIframeSize',
+        time: new Date(),
+        custom_data: {
+            width: width,
+            height: height
+        }
+    };
+
+    $.event.trigger(event_obj);
+}
+
 function initDataTable(filter_param, stop_table_init)    {
     if(filter_param == undefined) {
         filter_param = null;
@@ -77286,6 +77305,8 @@ function initDataTable(filter_param, stop_table_init)    {
                             initDataTable(filter_arr);
 
                             $('.response-layer').hide();
+
+                            triggerAssuranceContractsIframeEvent($('.my-contracts-container').width(), $('.my-contracts-container').height());
                         }
                     }
                 });
