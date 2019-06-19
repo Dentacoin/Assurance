@@ -628,13 +628,11 @@ class UserController extends Controller {
         if(!empty($request->input('filter_arr'))) {
             //FILTERING
             $view_params['patient_or_not'] = true;
-            var_dump($request->input('filter_arr'));
-            die('asd');
             if($this->checkPatientSession()) {
-                $view_params['contracts'] = TemporallyContract::where(function ($query) {
-                    $query->where(array('patient_id' => session('logged_user')['id']))
-                        ->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email));
-                })->whereIn('status', $request->input('filter_arr'));
+                $view_params['contracts'] = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email));
+                var_dump($view_params['contracts']);
+                die('asd');
+                //$request->input('filter_arr')
             } else if($this->checkDentistSession()) {
                 $view_params['contracts'] = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->whereIn('status', $request->input('filter_arr'))->orderBy('contract_active_at', 'desc')->get()->all();
             }
