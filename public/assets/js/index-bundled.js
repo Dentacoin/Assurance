@@ -73325,10 +73325,6 @@ $(window).on('resize', function() {
     }
 });
 
-$(document).on('setAssuranceContractsIframeSize', function(event) {
-    console.log(event.custom_data, 'event.custom_data');
-});
-
 $(window).on('scroll', function()  {
 
 });
@@ -77195,7 +77191,7 @@ function initTooltips() {
 }
 
 function triggerAssuranceContractsIframeEvent(width, height) {
-    var event_obj = {
+    /*var event_obj = {
         type: 'setAssuranceContractsIframeSize',
         time: new Date(),
         custom_data: {
@@ -77204,7 +77200,18 @@ function triggerAssuranceContractsIframeEvent(width, height) {
         }
     };
 
-    $.event.trigger(event_obj);
+    $.event.trigger(event_obj);*/
+
+    window.parent.postMessage(
+        {
+            event_id: 'assurance_contracts_event',
+            data: {
+                width: width,
+                height: height
+            }
+        },
+        "*" //or "www.parentpage.com"
+    );
 }
 
 function initDataTable(filter_param, stop_table_init)    {
