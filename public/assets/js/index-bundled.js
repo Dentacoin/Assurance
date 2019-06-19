@@ -77280,6 +77280,8 @@ function initDataTable(filter_param, stop_table_init)    {
 
             $('.dataTables_filter > label > input').addClass('custom-input green-arrow-background').attr('placeholder', 'Search for contract');
 
+            triggerAssuranceContractsIframeEvent($('.my-contracts-container').width(), $('.my-contracts-container').height());
+
             $('input[type="checkbox"].filter-contracts').on('change', function() {
                 var filter_arr = [];
                 for(var i = 0, len = $('input[type="checkbox"].filter-contracts').length; i < len; i+=1) {
