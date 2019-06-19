@@ -631,7 +631,7 @@ class UserController extends Controller {
             if($this->checkPatientSession()) {
                 $view_params['contracts'] = TemporallyContract::where(function ($query) {
                     $query->where(array('patient_id' => session('logged_user')['id']))
-                        ->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))
+                        ->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email));
                 })->whereIn('status', $request->input('filter_arr'))->get()->sortByDesc('contract_active_at');
                 var_dump($view_params['contracts']);
                 die('asd');
