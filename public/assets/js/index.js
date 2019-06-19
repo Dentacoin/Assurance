@@ -3891,8 +3891,6 @@ function initDataTable(filter_param, stop_table_init)    {
         stop_table_init = null;
     }
 
-    console.log(stop_table_init, 'stop_table_init');
-
     var params = getSearchParameters();
     if(has(params, 'status') && filter_param == null) {
         filter_param = [params.status];

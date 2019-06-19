@@ -77196,8 +77196,6 @@ function initDataTable(filter_param, stop_table_init)    {
         stop_table_init = null;
     }
 
-    console.log(stop_table_init, 'stop_table_init');
-
     var params = getSearchParameters();
     if(has(params, 'status') && filter_param == null) {
         filter_param = [params.status];
@@ -77285,12 +77283,7 @@ function initDataTable(filter_param, stop_table_init)    {
                     success: function(response) {
                         if(response.success) {
                             $('.table-container').html(response.success);
-
-                            console.log(response.have_contracts);
-
-                            if(response.have_contracts == undefined && response.have_contracts != false) {
-                                initDataTable(filter_arr);
-                            }
+                            initDataTable(filter_arr);
 
                             $('.response-layer').hide();
                         }
