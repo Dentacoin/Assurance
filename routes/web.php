@@ -51,7 +51,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/check-captcha', 'UserController@checkCaptcha')->name('check-captcha');
 
-    Route::post('/download-gdpr-data', 'UserController@downloadGDPRData')->name('download-gdpr-data');
+    Route::post('/download-gdpr-data', 'UserController@downloadGDPRData')->middleware('HandleUserSession')->name('download-gdpr-data');
 
     Route::post('/forgotten-password-submit', 'UserController@forgottenPasswordSubmit')->name('forgotten-password-submit');
     //======================================= /AJAX ========================================
@@ -93,6 +93,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
         Route::post('/on-blockchain-contract-approval', 'DentistController@onBlockchainContractApproval')->name('on-blockchain-contract-approval');
     });
+
+    Route::get('/my-contracts-iframe', 'UserController@getMyContractsTemplate')->middleware('HandleUserSession')->name('my-contracts-iframe');
 
     Route::get('/my-profile', 'UserController@getMyProfileView')->middleware('HandleUserSession')->name('my-profile');
 

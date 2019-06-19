@@ -32,14 +32,28 @@ class UserController extends Controller {
     }
 
     protected function getMyContractsView()     {
+        $user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         if($this->checkPatientSession()) {
-            return view('pages/logged-user/my-contracts', ['patient_or_not' => false, 'contracts' => TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email))->get()->sortByDesc('created_at')]);
+            return view('pages/logged-user/my-contracts', ['user_data' => $user_data, 'patient_or_not' => false, 'contracts' => TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => $user_data->email))->get()->sortByDesc('created_at')]);
         } else if($this->checkDentistSession()) {
             if(!empty(Input::get('status'))) {
                 //if get parameter is passed query by status
-                return view('pages/logged-user/my-contracts', ['patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id'], 'status' => Input::get('status')))->get()->sortByDesc('created_at')]);
+                return view('pages/logged-user/my-contracts', ['user_data' => $user_data, 'patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id'], 'status' => Input::get('status')))->get()->sortByDesc('created_at')]);
             }
-            return view('pages/logged-user/my-contracts', ['patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->sortByDesc('contract_active_at')]);
+            return view('pages/logged-user/my-contracts', ['user_data' => $user_data, 'patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->sortByDesc('contract_active_at')]);
+        }
+    }
+
+    protected function getMyContractsTemplate()     {
+        $user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+        if($this->checkPatientSession()) {
+            return view('pages/logged-user/my-contracts-template', ['user_data' => $user_data, 'patient_or_not' => false, 'contracts' => TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => $user_data->email))->get()->sortByDesc('created_at')]);
+        } else if($this->checkDentistSession()) {
+            if(!empty(Input::get('status'))) {
+                //if get parameter is passed query by status
+                return view('pages/logged-user/my-contracts-template', ['user_data' => $user_data, 'patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id'], 'status' => Input::get('status')))->get()->sortByDesc('created_at')]);
+            }
+            return view('pages/logged-user/my-contracts-template', ['user_data' => $user_data, 'patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->sortByDesc('contract_active_at')]);
         }
     }
 
