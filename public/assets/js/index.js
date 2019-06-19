@@ -3978,7 +3978,13 @@ function initDataTable(filter_param, stop_table_init)    {
                     success: function(response) {
                         if(response.success) {
                             $('.table-container').html(response.success);
-                            initDataTable(filter_arr);
+
+                            console.log(response.have_contracts);
+
+                            if(response.have_contracts != undefined && response.have_contracts != false) {
+                                initDataTable(filter_arr);
+                            }
+
                             $('.response-layer').hide();
                         }
                     }

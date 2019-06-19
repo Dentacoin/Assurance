@@ -77188,9 +77188,12 @@ function initTooltips() {
     }
 }
 
-function initDataTable(filter_param)    {
+function initDataTable(filter_param, stop_table_init)    {
     if(filter_param == undefined) {
         filter_param = null;
+    }
+    if(stop_table_init == undefined) {
+        stop_table_init = null;
     }
 
     var params = getSearchParameters();
@@ -77199,15 +77202,17 @@ function initDataTable(filter_param)    {
     }
 
     if($('table.table.table-without-reorder').length > 0) {
-        $('table.table.table-without-reorder').DataTable({
-            ordering: true,
-            order: [],
-            columnDefs: [{
-                orderable: false,
-                targets: 'no-sort'
-            }],
-            aaSorting: []
-        });
+        if(stop_table_init = null) {
+            $('table.table.table-without-reorder').DataTable({
+                ordering: true,
+                order: [],
+                columnDefs: [{
+                    orderable: false,
+                    targets: 'no-sort'
+                }],
+                aaSorting: []
+            });
+        }
 
         var pending_check = 'checked';
         var active_check = 'checked';
@@ -77278,7 +77283,13 @@ function initDataTable(filter_param)    {
                     success: function(response) {
                         if(response.success) {
                             $('.table-container').html(response.success);
-                            initDataTable(filter_arr);
+
+                            console.log(response.have_contracts);
+
+                            if(response.have_contracts != undefined && response.have_contracts != false) {
+                                initDataTable(filter_arr);
+                            }
+
                             $('.response-layer').hide();
                         }
                     }

@@ -646,15 +646,16 @@ class UserController extends Controller {
             }
         }
 
-        var_dump($view_params['contracts']);
-        var_dump(empty($view_params['contracts']));
-        var_dump(sizeof($view_params['contracts']));
-        die('asd');
+        $response_params = array();
+        if(!sizeof($view_params['contracts'])) {
+            $response_params['have_contracts'] = false;
+        }
 
         $view = view('partials/table-my-contracts', $view_params);
         $view = $view->render();
+        $response_params['success'] = $view;
 
-        return response()->json(['success' => $view]);
+        return response()->json($response_params);
     }
 
     protected function deleteMyProfile(Request $request) {
