@@ -3983,7 +3983,7 @@ function initDataTable(filter_param, stop_table_init)    {
 
                             console.log(response.have_contracts);
 
-                            if(response.have_contracts != undefined && response.have_contracts != false) {
+                            if(response.have_contracts == undefined && response.have_contracts != false) {
                                 initDataTable(filter_arr);
                             }
 
