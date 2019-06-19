@@ -1,4 +1,4 @@
-.my-contracts {
+.my-contracts, .my-contracts-container {
     .mobile-slide {
         display: none;
         padding-top: 10px;
@@ -205,7 +205,7 @@
                 width: 90px;
                 display: inline-block;
                 text-align: center;
-                @include rounded(4px);
+                @include rounded(4px); 
                 &.active {
                     background-color: $active;
                 }
