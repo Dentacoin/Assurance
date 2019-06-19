@@ -73321,7 +73321,7 @@ $(window).on('load', function() {
 
 $(window).on('resize', function() {
     if($('.my-contracts-container').length) {
-        triggerAssuranceContractsIframeEvent($('.my-contracts-container').width(), $('.my-contracts-container').height());
+        triggerIframeSizeEventForParent($('.my-contracts-container').width(), $('.my-contracts-container').height());
     }
 });
 
@@ -77190,27 +77190,16 @@ function initTooltips() {
     }
 }
 
-function triggerAssuranceContractsIframeEvent(width, height) {
-    /*var event_obj = {
-        type: 'setAssuranceContractsIframeSize',
-        time: new Date(),
-        custom_data: {
-            width: width,
-            height: height
-        }
-    };
-
-    $.event.trigger(event_obj);*/
-
+function triggerIframeSizeEventForParent(width, height) {
     window.parent.postMessage(
         {
-            event_id: 'assurance_contracts_event',
+            event_id: 'iframe_size_event',
             data: {
                 width: width,
                 height: height
             }
         },
-        "*" //or "www.parentpage.com"
+        "*"
     );
 }
 
@@ -77287,7 +77276,7 @@ function initDataTable(filter_param, stop_table_init)    {
 
             $('.dataTables_filter > label > input').addClass('custom-input green-arrow-background').attr('placeholder', 'Search for contract');
 
-            triggerAssuranceContractsIframeEvent($('.my-contracts-container').width(), $('.my-contracts-container').height());
+            triggerIframeSizeEventForParent($('.my-contracts-container').width(), $('.my-contracts-container').height());
 
             $('input[type="checkbox"].filter-contracts').on('change', function() {
                 var filter_arr = [];
@@ -77315,7 +77304,7 @@ function initDataTable(filter_param, stop_table_init)    {
 
                             $('.response-layer').hide();
 
-                            triggerAssuranceContractsIframeEvent($('.my-contracts-container').width(), $('.my-contracts-container').height());
+                            triggerIframeSizeEventForParent($('.my-contracts-container').width(), $('.my-contracts-container').height());
                         }
                     }
                 });
