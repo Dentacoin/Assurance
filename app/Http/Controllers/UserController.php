@@ -647,6 +647,8 @@ class UserController extends Controller {
         }
 
         var_dump($view_params['contracts']);
+        var_dump(empty($view_params['contracts']));
+        var_dump(sizeof($view_params['contracts']));
         die('asd');
 
         $view = view('partials/table-my-contracts', $view_params);
