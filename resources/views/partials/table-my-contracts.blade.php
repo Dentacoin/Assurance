@@ -46,7 +46,7 @@
                         @php($status = 'Cancelled')
                         @break
                     @endswitch
-                    <a href="{{$url}}" class="{{$contract->status}} alike-btn">{{$status}}</a>
+                    <a href="{{$url}}" target="_top" class="{{$contract->status}} alike-btn">{{$status}}</a>
                 </td>
                 <td class="avatar-and-name">
                     @if($patient_or_not)

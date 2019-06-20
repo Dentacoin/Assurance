@@ -20,6 +20,11 @@
             </figure>
             <h2 class="fs-24 lato-bold inline-block">My contracts</h2>
         </div>
+        @if((new \App\Http\Controllers\UserController())->checkDentistSession())
+            <div class="padding-bottom-15 text-center">
+                <a href="{{ route('create-contract') }}" class="blue-green-white-btn">CREATE CONTRACT</a>
+            </div>
+        @endif
         <div class="table-container fs-16">
             @include('partials.table-my-contracts')
         </div>

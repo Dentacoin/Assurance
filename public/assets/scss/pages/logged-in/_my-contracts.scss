@@ -84,7 +84,7 @@
                     display: block;
                     margin: 0 auto;
                     font-weight: normal;
-                    @include simple_transition(none); 
+                    @include simple_transition(none);
                 }
                 @include breakpoint($xs) {
                     margin: 0 auto;
