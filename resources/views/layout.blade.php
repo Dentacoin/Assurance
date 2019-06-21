@@ -239,13 +239,16 @@
     <img src="//dentists.dentacoin.com/custom-cookie?slug={{ urlencode($slug) }}&type={{ urlencode($type) }}&token={{ urlencode($token) }}" class="hide"/>
     <img src="//reviews.dentacoin.com/custom-cookie?slug={{ urlencode($slug) }}&type={{ urlencode($type) }}&token={{ urlencode($token) }}" class="hide"/>
     <img src="//dentavox.dentacoin.com/custom-cookie?slug={{ urlencode($slug) }}&type={{ urlencode($type) }}&token={{ urlencode($token) }}" class="hide"/>
+    <img src="//account.dentacoin.com/custom-cookie?slug={{ urlencode($slug) }}&type={{ urlencode($type) }}&token={{ urlencode($token) }}" class="hide"/>
 @else
     @if(!empty(session('logout_token')))
         <img src="//dentacoin.com/custom-cookie?logout-token={{ urlencode(session('logout_token')) }}" class="hide"/>
         <img src="//dentists.dentacoin.com/custom-cookie?logout-token={{ urlencode(session('logout_token')) }}" class="hide"/>
         <img src="//reviews.dentacoin.com/custom-cookie?logout-token={{ urlencode(session('logout_token')) }}" class="hide"/>
         <img src="//dentavox.dentacoin.com/custom-cookie?logout-token={{ urlencode(session('logout_token')) }}" class="hide"/>
+        <img src="//account.dentacoin.com/custom-cookie?logout-token={{ urlencode(session('logout_token')) }}" class="hide"/>
     @endif
+    @php($inviter = \Illuminate\Support\Facades\Input::get('inviter'))
     @php($api_enums = (new \App\Http\Controllers\APIRequestsController())->getAllEnums())
     <div class="hidden-login-form hide">
         <div class="fs-0 popup-header-action">
@@ -257,10 +260,10 @@
                 <div class="form-login">
                     <h2>LOG IN</h2>
                     <div class="padding-bottom-10">
-                        <a href="javascript:void(0)" class="facebook-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" data-type="patient">with Facebook</a>
+                        <a href="javascript:void(0)" class="facebook-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" @if(isset($inviter)) data-inviter="{{$inviter}}" @endif data-type="patient">with Facebook</a>
                     </div>
                     <div>
-                        <a href="javascript:void(0)"  class="civic-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" data-type="patient">with Civic</a>
+                        <a href="javascript:void(0)"  class="civic-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" @if(isset($inviter)) data-inviter="{{$inviter}}" @endif data-type="patient">with Civic</a>
                     </div>
                     @if(Route::current()->getName() == 'contract-proposal')
                         <input type="hidden" name="route" value="{{Route::current()->getName()}}"/>
@@ -273,10 +276,10 @@
                 <div class="form-register">
                     <h2>SIGN UP</h2>
                     <div class="padding-bottom-10">
-                        <a href="javascript:void(0)" class="facebook-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" data-type="patient" custom-stopper="true">with Facebook</a>
+                        <a href="javascript:void(0)" class="facebook-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" @if(isset($inviter)) data-inviter="{{$inviter}}" @endif data-type="patient" custom-stopper="true">with Facebook</a>
                     </div>
                     <div>
-                        <a href="javascript:void(0)"  class="civic-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" data-type="patient" custom-stopper="true">with Civic</a>
+                        <a href="javascript:void(0)"  class="civic-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" @if(isset($inviter)) data-inviter="{{$inviter}}" @endif data-type="patient" custom-stopper="true">with Civic</a>
                     </div>
                     <div class="privacy-policy-row padding-top-20">
                         <div class="pretty p-svg p-curve on-blue-green-background">
@@ -496,6 +499,9 @@
                             <div class="inline-block text-right">
                                 <input type="button" value="Next" class="white-blue-green-btn next-step" data-current-step="first"/>
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                @if(isset($inviter))
+                                    <input type="hidden" name="inviter" value="{{\Illuminate\Support\Facades\Input::get('inviter')}}">
+                                @endif
                             </div>
                         </div>
                     </form>
