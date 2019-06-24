@@ -1,7 +1,6 @@
 @extends("layout")
 @section("content")
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
-    @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
     @php($general_dentistry = unserialize($contract->general_dentistry))
     @php($created_at = $contract->created_at->format('d-m-Y'))
     <section class="padding-top-100 padding-top-xs-30 padding-bottom-50 contract-proposal section module" data-created-at-timestamp="{{strtotime($created_at)}}" @if((time() - strtotime($created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) data-expired="true" @endif>
@@ -243,7 +242,7 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-xs-6 padding-left-0 padding-right-5">
-                                                <a href="javascript:void(0)" class="white-red-btn min-width-220 min-width-xs-0 cancel-contract-btn" data-contract="{{$contract->slug}}">REJECT</a>
+                                                <a href="javascript:void(0)" class="white-red-btn min-width-220 min-width-xs-0 cancel-contract-btn track-event-patient-rejecting-pending-contract" data-contract="{{$contract->slug}}">REJECT</a>
                                             </div>
                                             <div class="col-xs-6 padding-right-0 padding-left-5">
                                                 <input type="submit" value="SIGN CONTRACT" class="white-blue-green-btn min-width-220 min-width-xs-0"/>

@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center padding-bottom-120 padding-bottom-xs-50">
                     <h1 class="lato-bold fs-45 fs-xs-32 padding-bottom-50">Deliver Better Care & Get Paid for Prevention</h1>
-                    <a href="/dentist/create-contract" class="white-blue-green-btn min-width-300 min-width-xs-250">CREATE A CONTRACT</a>
+                    <a href="{{BASE_URL}}dentist/create-contract" class="white-blue-green-btn min-width-300 min-width-xs-250 track-event-dentist-create-contract">CREATE A CONTRACT</a>
                 </div>
             </div>
             @if(sizeof($active_contracts) > 0)

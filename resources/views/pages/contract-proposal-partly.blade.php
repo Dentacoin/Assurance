@@ -85,7 +85,7 @@
                                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-40 padding-bottom-40">
                                     <img alt="Blurred contract terms" itemprop="contentUrl" src="/assets/uploads/blurred-contract-terms.png"/>
                                 </figure>
-                                <button class="show-login-signin reload-here white-blue-green-btn" data-route="{{}}" data-slug="">SIGN UP TO SEE DETAILS</button>
+                                <button class="show-login-signin reload-here track-event-sign-up-to-see-details white-blue-green-btn" data-route="{{}}" data-slug="">SIGN UP TO SEE DETAILS</button>
                             </div>
                         </div>
                     </div>

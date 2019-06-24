@@ -1439,6 +1439,8 @@ if($('body').hasClass('logged-in')) {
 
         if($('.contract-proposal.section .contact-your-dentist').length) {
             $('.contact-your-dentist').click(function() {
+                basic.closeDialog();
+
                 var this_btn = $(this);
                 $.ajax({
                     type: 'POST',
@@ -1464,6 +1466,8 @@ if($('body').hasClass('logged-in')) {
                                     basic.showAlert('Please enter valid monthly premium proposal', '', true);
                                 } else {
                                     $('.response-layer').show();
+
+                                    fireGoogleAnalyticsEvent('Contract Patient', 'Suggest', 'Contact New Premium', this_form.find('#new-usd-proposal-to-dentist').val().trim());
 
                                     $.ajax({
                                         type: 'POST',
@@ -1570,6 +1574,8 @@ if($('body').hasClass('logged-in')) {
                     }else if(!this_form.find('input#privacy-policy').is(':checked')) {
                         basic.showAlert('Please accept the Privacy Policy', '', true);
                     }else {
+                        fireGoogleAnalyticsEvent('Contract Patient Accepted', 'Accept', 'Contact Accepted');
+
                         $('.contract-response-success-layer').show();
                         this_form_plain.submit();
                     }
@@ -1740,6 +1746,8 @@ if($('body').hasClass('logged-in')) {
                         $(this).unbind();
 
                         setTimeout(function() {
+                            fireGoogleAnalyticsEvent('Sample Contract', 'Request', 'Contact Request by Patient');
+
                             customJavascriptForm('/patient/submit-contact-clinic', custom_form_obj, 'post');
                         }, 1500);
                     });
@@ -1898,6 +1906,16 @@ if($('body').hasClass('logged-in')) {
             }
         });
     }
+
+    if($('.dentist-no-contracts-section').length) {
+        bindTrackerClickDentistSignFirstContract();
+    }
+
+    if($('.dentist-contracts-section').length) {
+        bindTrackerClickDentistCreateContract();
+    }
+} else {
+    bindTrackerClickSignUpToSeeDetails();
 }
 
 function calculateLogic() {
@@ -2519,6 +2537,8 @@ if($('form#invite-dentists').length) {
         }
 
         if(!errors) {
+            fireGoogleAnalyticsEvent('Invitation by Patient', 'Send', 'Invite Dentist Step 1');
+
             $.ajax({
                 type: 'POST',
                 url: '/patient/get-invite-dentists-popup',
@@ -2545,6 +2565,8 @@ if($('form#invite-dentists').length) {
                         }
 
                         setTimeout(function() {
+                            fireGoogleAnalyticsEvent('Invitation by Patient', 'Send', 'Invite Dentist Complete');
+
                             customJavascriptForm('/patient/submit-invite-dentists', custom_form_obj, 'post');
                         }, 1500);
                     });
@@ -2636,7 +2658,7 @@ async function onDocumentReadyPageData() {
                 var date_obj = new Date((parseInt($('.contract-proposal.section').attr('data-created-at-timestamp')) + parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw())) * 1000);
                 $('.active-until').html(dateObjToFormattedDate(date_obj));
             }
-        }else if($('body').hasClass('my-profile')) {
+        } else if($('body').hasClass('my-profile')) {
             //loading address logic
             await $.getScript('//dentacoin.com/assets/libs/civic-login/civic-kyc.js', function() {});
 
@@ -3368,6 +3390,12 @@ function cancelContractEventInit() {
                                         data.reason = $('.popup-cancel-contract #cancel-contract-other-reason').val().trim();
                                     } else {
                                         data.reason = $('#cancel-contract-reason option:selected').html();
+                                    }
+
+                                    if($('.popup-cancel-contract #cancel-contract-reason').val() != '' && $('.popup-cancel-contract #cancel-contract-reason').val() != 'Other') {
+                                        fireGoogleAnalyticsEvent('Contract Patient Rejected', 'Reject', $('.popup-cancel-contract #cancel-contract-reason').val());
+                                    } else if($('.popup-cancel-contract #cancel-contract-reason').val() == 'Other') {
+                                        fireGoogleAnalyticsEvent('Contract Patient Rejected', 'Reject', $('.popup-cancel-contract #cancel-contract-other-reason').val());
                                     }
 
                                     $.ajax({
@@ -4310,6 +4338,30 @@ function bindTrackerClickDownloadBrochure() {
     });
 }
 bindTrackerClickDownloadBrochure();
+
+function bindTrackerClickSignUpToSeeDetails() {
+    $(document).on('click', '.track-event-sign-up-to-see-details', function() {
+        fireGoogleAnalyticsEvent('PatientRegistration', 'Signup', 'Contact Proposal Signup');
+    });
+}
+
+function bindTrackerClickDentistSignFirstContract() {
+    $(document).on('click', '.track-event-dentist-sign-first-contract', function(event) {
+        event.preventDefault();
+        fireGoogleAnalyticsEvent('Contract Dentist', 'Click', 'First Contract Start');
+
+        window.open($(this).attr('href'));
+    });
+}
+
+function bindTrackerClickDentistCreateContract() {
+    $(document).on('click', '.track-event-dentist-create-contract', function(event) {
+        event.preventDefault();
+        fireGoogleAnalyticsEvent('Contract Dentist', 'Click', 'Contract Start');
+
+        window.open($(this).attr('href'));
+    });
+}
 
 function fireGoogleAnalyticsEvent(category, action, label, value) {
     var event_obj = {

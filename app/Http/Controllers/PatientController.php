@@ -219,11 +219,12 @@ class PatientController extends Controller {
 
     protected function getContractProposal($slug) {
         $contract = TemporallyContract::where(array('slug' => $slug, 'status' => 'pending'))->get()->first();
-        $current_logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         if((new UserController())->checkDentistSession() || empty($contract)) {
             //if dentist trying to access the proposal or if there is no such contract
             return abort(404);
         } else if((new UserController())->checkPatientSession()) {
+            $current_logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+
             $params = array(
                 'contract' => $contract,
                 'countries' => (new APIRequestsController())->getAllCountries(),
@@ -238,6 +239,7 @@ class PatientController extends Controller {
             }
 
             $params['patient_id_number'] = $patient_id_number;
+            $params['patient'] = $current_logged_patient;
 
             if(!empty($contract->patient_id_number)) {
                 $params['shown'] = 'two';

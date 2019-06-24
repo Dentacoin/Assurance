@@ -27,6 +27,17 @@
     </style>
     <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.26">
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.26">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-108398439-4');
+    </script>
+
     <script>
         var HOME_URL = '{{ route("home") }}';
     </script>

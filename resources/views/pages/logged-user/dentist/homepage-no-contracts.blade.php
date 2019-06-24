@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-6 inline-block">
                                     <div class="single-container text-center">
-                                        <a href="/dentist/create-contract" class="display-block">
+                                        <a href="{{BASE_URL}}dentist/create-contract" class="display-block track-event-dentist-sign-first-contract">
                                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                 <img alt="" class="max-width-90" itemprop="contentUrl" src="/assets/uploads/sign-your-first-contract.svg"/>
                                                 <figcaption class="fs-20 padding-top-15">Sign Your First Contract</figcaption>
