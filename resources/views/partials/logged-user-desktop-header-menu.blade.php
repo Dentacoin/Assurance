@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-xs-6 inline-block">{{--
                         <a href="{{ route('my-profile') }}" class="white-blue-green-btn">My account</a>--}}
-                        <a href="//account.dentacoin.com?platform=dentacoin" class="white-blue-green-btn">My account</a>
+                        <a href="//account.dentacoin.com?platform=assurance" class="white-blue-green-btn">My account</a>
                     </div>
                 </div>
             </div>
