@@ -14,7 +14,7 @@
                         </select>
                     </div>
                 @endif
-                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2  col-lg-6 col-lg-offset-3 form padding-top-50">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2  col-lg-6 col-lg-offset-3 form padding-top-50" id="invite-form">
                     <div class="padding-top-50 padding-bottom-50 padding-left-40 padding-right-40 padding-top-xs-30 padding-bottom-xs-30 padding-right-xs-15 padding-left-xs-15 padding-top-sm-30 padding-bottom-sm-30 padding-right-sm-30 padding-left-sm-30 white-color-background form-wrapper">
                         <div class="container-fluid">
                             <div class="row">

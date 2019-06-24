@@ -92,7 +92,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-4">
-                    <div class="form-container">
+                    <div class="form-container" id="invite-form">
                         <h3 class="lato-bold fs-40 fs-xs-30 fs-sm-30">CAN’T FIND YOUR DENTIST? Invite Them and Earn 20K Dentacoin!</h3>
                         <div class="fs-20 fs-xs-18 padding-top-15 padding-bottom-40 subtitle">Help us change dentistry to the better by inviting dentists you believe could be interested. For each accepted invitation, you will receive 20,000 Dentacoin.</div>
                         @include('partials.invite-dentists-form', ['redirect' => 'patient-access'])
