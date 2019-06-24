@@ -113,7 +113,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 padding-top-50 padding-top-xs-20 text-center"><a href="javascript:alert('COMING SOON!');" class="white-blue-green-btn">DOWNLOAD BROCHURE</a></div>
+                <div class="col-xs-12 padding-top-50 padding-top-xs-20 text-center"><a href="//dentacoin.com/assets/uploads/dentacoin-assurance-process.pdf" class="white-blue-green-btn track-event-download-brochure" target="_blank">DOWNLOAD BROCHURE</a></div>
             </div>
         </div>
     </section>

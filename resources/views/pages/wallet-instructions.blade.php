@@ -7,7 +7,7 @@
                     <h1 class="text-center fs-45 fs-xs-30 lato-bold padding-bottom-50">How to Create a Wallet</h1>
                 </div>
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-                    <iframe class="block-with-full-width" height="320" src="https://www.youtube.com/embed/SR5gbFLT8a0"></iframe>
+                    <iframe class="block-with-full-width wallet-instructions-video" height="320" src="https://www.youtube.com/embed/SR5gbFLT8a0"></iframe>
                 </div>
             </div>
         </div>

@@ -74100,6 +74100,8 @@ async function initPagesLogic() {
         //============================== NOT LOGGED ===============================
         if($('.ask-your-dentist-for-assurance').length) {
             $('.ask-your-dentist-for-assurance').click(function() {
+                fireGoogleAnalyticsEvent('Assurance Patient', 'Scroll', 'Assurance Request');
+
                 $('html, body').animate({scrollTop: $('#find-your-dentist').offset().top}, 500);
                 $('#find-your-dentist .search-dentist-input').focus();
                 return false;
@@ -74158,7 +74160,35 @@ async function initPagesLogic() {
                 $(this).closest('li').find('.question-content').toggle(300);
             });
         }
+    }else if($('body').hasClass('assurance-demo')) {
+        var demo_video_time_watched = 0;
+        var demo_video_timer;
+
+        $('video.demo-video').on('play', function() {
+            demo_video_timer = setInterval(function() {
+                demo_video_time_watched+=1;
+            }, 1000);
+        });
+
+        $('video.demo-video').on('pause', function() {
+            clearInterval(demo_video_timer);
+            fireGoogleAnalyticsEvent('Video', 'Play', 'Assurance Demo', demo_video_time_watched);
+        });
     }else if($('body').hasClass('wallet-instructions')) {
+        var wallet_video_time_watched = 0;
+        var wallet_video_timer;
+
+        $('video.wallet-instructions-video').on('play', function() {
+            wallet_video_timer = setInterval(function() {
+                wallet_video_time_watched+=1;
+            }, 1000);
+        });
+
+        $('video.wallet-instructions-video').on('pause', function() {
+            clearInterval(wallet_video_timer);
+            fireGoogleAnalyticsEvent('Video', 'Play', 'Assurance Demo', wallet_video_time_watched);
+        });
+
         if($('.section-wallet-instructions-questions .question').length > 0) {
             $('.section-wallet-instructions-questions .question').click(function()   {
                 $(this).toggleClass('active');
@@ -75239,6 +75269,8 @@ function calculateLogic() {
                         numberStep: comma_separator_number_step
                     }, 1000);
 
+                    fireGoogleAnalyticsEvent('Dentist Income', 'Calculate', 'Income Increase');
+
                     $('.calculate-again').click(function () {
                         $.ajax({
                             type: 'POST',
@@ -75407,6 +75439,7 @@ function bindLoginSigninPopupShow() {
             });
 
             if(submit_form && check_account_response.success) {
+                fireGoogleAnalyticsEvent('DentistLogin', 'Click', 'Dentist Login');
                 this_form_native.submit();
             } else if(check_account_response.error) {
                 customErrorHandle(this_form.find('input[name="password"]').closest('.field-parent'), check_account_response.message);
@@ -75482,6 +75515,8 @@ function bindLoginSigninPopupShow() {
                     }
 
                     if(!errors) {
+                        fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep1');
+
                         $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
                         $('.login-signin-popup .dentist .form-register .step.second').addClass('visible');
                         $('.login-signin-popup .prev-step').show();
@@ -75526,6 +75561,8 @@ function bindLoginSigninPopupShow() {
                     }
 
                     if(!errors) {
+                        fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep2');
+
                         $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
                         $('.login-signin-popup .dentist .form-register .step.third').addClass('visible');
 
@@ -75568,6 +75605,8 @@ function bindLoginSigninPopupShow() {
                     }
 
                     if(!errors) {
+                        fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep3');
+
                         $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
                         $('.login-signin-popup .dentist .form-register .step.fourth').addClass('visible');
 
@@ -75603,6 +75642,8 @@ function bindLoginSigninPopupShow() {
                     }
 
                     if(!errors) {
+                        fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationComplete');
+
                         //submit the form
                         $('.response-layer').show();
                         $('.login-signin-popup form#dentist-register').submit();
@@ -75722,6 +75763,22 @@ function apiEventsListeners() {
                 //if(current_dentists_for_logging_user.length > 0) {
                 //custom_form_obj.have_contracts = true;
                 //}
+            }
+
+            if(event.response_data.new_account) {
+                //REGISTER
+                if(event.platform_type == 'facebook') {
+                    fireGoogleAnalyticsEvent('PatientRegistration', 'ClickFB', 'Patient Registration FB');
+                } else if(event.platform_type == 'civic') {
+                    fireGoogleAnalyticsEvent('PatientRegistration', 'ClickNext', 'Patient Registration Civic');
+                }
+            } else {
+                //LOGIN
+                if(event.platform_type == 'facebook') {
+                    fireGoogleAnalyticsEvent('PatientLogin', 'Click', 'Login FB');
+                } else if(event.platform_type == 'civic') {
+                    fireGoogleAnalyticsEvent('PatientLogin', 'Click', 'Login Civic');
+                }
             }
 
             customJavascriptForm('/patient/authenticate', custom_form_obj, 'post');
@@ -77328,6 +77385,30 @@ function dateObjToFormattedDate(object) {
     return date + '/' + month + '/' + object.getFullYear();
 }
 
+function onEnrichProfileFormSubmit() {
+    $(document).on('submit', '.enrich-profile-container #enrich-profile', function(event) {
+        var errors = false;
+        var this_form = $(this);
+        this_form.find('.error-handle').remove();
+        if(this_form.find('[name="description"]').val().trim() == '') {
+            errors = true;
+            customErrorHandle(this_form.find('[name="description"]').parent(), 'Please enter short description.');
+        }
+
+        if(!errors) {
+            if($('.enrich-profile-container').attr('data-type') == 'dentist') {
+                fireGoogleAnalyticsEvent('DentistRegistration', 'ClickSave', 'DentistDescr');
+            } else if($('.enrich-profile-container').attr('data-type') == 'clinic') {
+                fireGoogleAnalyticsEvent('DentistRegistration', 'ClickSave', 'ClinicDescr');
+            }
+        } else {
+            event.preventDefault();
+        }
+    });
+}
+onEnrichProfileFormSubmit();
+
+
 async function getEncryptedContractPdfContent(hash, type) {
     return await $.ajax({
         type: 'POST',
@@ -77520,6 +77601,36 @@ function closeTooltipPopupsWhenClickedOutside() {
         });
     });
 }
+
 closeTooltipPopupsWhenClickedOutside();
+
+// =================================== GOOGLE ANALYTICS TRACKING LOGIC ======================================
+
+function bindTrackerClickDownloadBrochure() {
+    $(document).on('click', '.track-event-download-brochure', function(event) {
+        event.preventDefault();
+        fireGoogleAnalyticsEvent('Assets', 'Download', 'Assurance Brochure');
+
+        window.open($(this).attr('href'));
+    });
+}
+bindTrackerClickDownloadBrochure();
+
+function fireGoogleAnalyticsEvent(category, action, label, value) {
+    var event_obj = {
+        'event_action' : action,
+        'event_category': category,
+        'event_label': label
+    };
+
+    if(value != undefined) {
+        event_obj.value = value;
+    }
+
+    gtag('event', label, event_obj);
+}
+
+// =================================== /GOOGLE ANALYTICS TRACKING LOGIC ======================================
+
 }).call(this,require("buffer").Buffer)
 },{"./helper":545,"buffer":52,"ethereumjs-tx":363}]},{},[546]);
