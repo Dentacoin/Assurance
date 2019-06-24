@@ -9896,6 +9896,10 @@ section.edit-account .custom-input.bootstrap-select {
       padding: 10px 5px; }
     .contract-creation-steps-container .separator {
       width: 30px; } }
+  @media screen and (min-width: 992px) and (max-width: 1199px) {
+    .contract-creation-steps-container button.passed {
+      background-position: center left 5px;
+      font-size: 14px; } }
   @media screen and (min-width: 768px) and (max-width: 991px) {
     .contract-creation-steps-container button {
       width: calc(25% - 7.5px);

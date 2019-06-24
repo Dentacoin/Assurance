@@ -74388,6 +74388,8 @@ if($('body').hasClass('logged-in')) {
         var signature_pad_inited = false;
         styleAvatarUploadButton('.steps-body .avatar .btn-wrapper label');
 
+        bindTrackerClickDentistCreateWallet();
+
         initTooltips();
 
         if($('.single-row.proof-of-address').length) {
@@ -74575,14 +74577,17 @@ if($('body').hasClass('logged-in')) {
         }
 
         function firstStepPassedSuccessfully(button, next_step) {
+            fireGoogleAnalyticsEvent('Contract Dentist', 'Next', 'Contract 1 Dentist Details');
             onStepValidationSuccess('one', next_step, button);
         }
 
         function secondStepPassedSuccessfully(button, next_step) {
+            fireGoogleAnalyticsEvent('Contract Dentist', 'Next', 'Contract 2 Patient Details');
             onStepValidationSuccess('two', next_step, button);
         }
 
         function thirdStepPassedSuccessfully(button, next_step) {
+            fireGoogleAnalyticsEvent('Contract Dentist', 'Generate', 'Contract 3 Patient Details', $('.step.three [name="monthly-premium"]').val());
             onStepValidationSuccess('three', next_step, button);
 
             //update the fields on the sample contract
@@ -74671,6 +74676,8 @@ if($('body').hasClass('logged-in')) {
                     //delay the form submission so we can init loader animation
                     event.preventDefault();
                     $('.contract-response-success-layer').show();
+
+                    fireGoogleAnalyticsEvent('Contract Dentist', 'Sign', 'Contract 4 Sign');
                     setTimeout(function() {
                         this_form.submit();
                     }, 2000);
@@ -76574,6 +76581,13 @@ function cancelContractEventInit() {
                                                 }
                                                 this_execute_transaction_btn.unbind();
 
+                                                //fire google analytics event
+                                                if($('.recipe-popup #cancel-contract-reason').val() != '' && $('.recipe-popup #cancel-contract-reason').val() != 'Other') {
+                                                    fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
+                                                } else if($('.popup-cancel-contract #cancel-contract-reason').val() == 'Other') {
+                                                    fireGoogleAnalyticsEvent('Contract Patient Rejected', 'Reject', $('.recipe-popup #cancel-contract-other-reason').val().trim());
+                                                }
+
                                                 var cancellation_ajax_data = {
                                                     contract: this_btn.attr('data-contract'),
                                                     status: 'cancelled',
@@ -77667,6 +77681,21 @@ function bindTrackerClickDentistCreateContract() {
         window.open($(this).attr('href'));
     });
 }
+
+function bindTrackerClickDentistCreateWallet() {
+    $(document).on('click', '.track-event-dentist-create-wallet', function(event) {
+        event.preventDefault();
+        fireGoogleAnalyticsEvent('Contract Dentist', 'Click', 'Wallet Link');
+
+        window.open($(this).attr('href'));
+    });
+}
+
+$(document).on('click', '.logged-user-nav .application', function() {
+    var this_btn = $(this);
+
+    fireGoogleAnalyticsEvent('Tools', 'Click', this_btn.attr('data-platform'))
+});
 
 function fireGoogleAnalyticsEvent(category, action, label, value) {
     var event_obj = {

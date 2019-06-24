@@ -78,6 +78,6 @@
             @endif
         </div>
         <div class="fs-14 calibri-light light-gray-color padding-top-10">This is the wallet where you will receive your monthly premiums. Please double-check if everything is correct.</div>
-        <div class="fs-14 calibri-light light-gray-color">You don’t have a wallet? <a href="//wallet.dentacoin.com" target="_blank">Create one here.</a></div>
+        <div class="fs-14 calibri-light light-gray-color">You don’t have a wallet? <a href="https://wallet.dentacoin.com" class="calibri-bold track-event-dentist-create-wallet" target="_blank">Create one here.</a></div>
     </div>
 </div>

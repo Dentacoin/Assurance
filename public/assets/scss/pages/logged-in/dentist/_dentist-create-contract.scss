@@ -56,6 +56,14 @@
             width: 30px;
         }
     }
+    @include breakpoint($md-only) {
+        button {
+            &.passed {
+                background-position: center left 5px;
+                font-size: 14px;
+            }
+        }
+    }
     @include breakpoint($sm-only) {
         button {
             width: calc(25% - 7.5px);
