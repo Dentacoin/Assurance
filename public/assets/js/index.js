@@ -114,7 +114,7 @@ var dApp = {
         return dApp.initContract();
     },
     initContract: async function() {
-        console.log(initContract, 'initContract');
+        console.log('initContract');
 
         //Assurance STATE
         dApp.assurance_state_instance_test = new dApp.web3_1_0.eth.Contract(dApp.assurance_state_abi, dApp.assurance_state_address);
