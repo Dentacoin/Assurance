@@ -18,7 +18,7 @@
             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                 <img alt="Contracts list" src="/assets/uploads/contracts-list.svg"/>
             </figure>
-            <h2 class="fs-24 lato-bold inline-block">My contracts</h2>
+            <h2 class="fs-24 lato-bold inline-block">Dentacoin Assurance</h2>
         </div>
         @if((new \App\Http\Controllers\UserController())->checkDentistSession())
             <div class="padding-top-20 text-center">

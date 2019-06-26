@@ -114,8 +114,15 @@ var dApp = {
         return dApp.initContract();
     },
     initContract: async function() {
+        console.log(initContract, 'initContract');
+
         //Assurance STATE
+        dApp.assurance_state_instance_test = new dApp.web3_1_0.eth.Contract(dApp.assurance_state_abi, dApp.assurance_state_address);
+        console.log(typeof(dApp.assurance_state_instance_test), 'typeof(dApp.assurance_state_instance_test)');
+        console.log(dApp.assurance_state_instance_test, 'dApp.assurance_state_instance_test');
         dApp.assurance_state_instance = await new dApp.web3_1_0.eth.Contract(dApp.assurance_state_abi, dApp.assurance_state_address);
+        console.log(typeof(dApp.assurance_state_instance), 'typeof(dApp.assurance_state_instance)');
+        console.log(dApp.assurance_state_instance, 'dApp.assurance_state_instance');
         //Assurance PROXY
         dApp.assurance_proxy_instance = await new dApp.web3_1_0.eth.Contract(dApp.assurance_proxy_abi, dApp.assurance_proxy_address);
         //DentacoinToken
