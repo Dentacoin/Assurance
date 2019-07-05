@@ -18,7 +18,7 @@
                     <div class="col-xs-12"><a href="javascript:void(0)">Close <span>X</span></a></div>
                 </div>
                 <div class="row">
-                    @foreach((new \App\Http\Controllers\UserController())->getDentacoinHubApplications() as $application)
+                    @foreach((new \App\Http\Controllers\Controller())->getDentacoinHubApplications() as $application)
                         <a @if(!empty($application->link)) href="{{$application->link}}" target="_blank" @else href="javascript:alert('Coming soon!');" @endif class="col-md-3 col-xs-4 inline-block-top application" data-platform="{{$application->title}}">
                             <figure class="text-center" itemtype="http://schema.org/ImageObject">
                                 @if($application->media_name)

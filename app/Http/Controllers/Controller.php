@@ -175,6 +175,10 @@ class Controller extends BaseController
         return $data;
     }
 
+    public function getDentacoinHubApplications() {
+        return json_decode(file_get_contents('https://dentacoin.com/info/applications'));
+    }
+
     protected function getClientIp() {
         $ipaddress = '';
         if (getenv('HTTP_CLIENT_IP'))
@@ -216,6 +220,17 @@ class Controller extends BaseController
 
     protected function getIpfsHashes() {
         return TemporallyContract::whereNotNull('contract_active_at')->get(['document_hash', 'contract_active_at']);
+    }
+
+    protected function handleApiEndpoints($slug) {
+        switch ($slug) {
+            case 'wallets-one-week-behind':
+                return DB::table('public_keys')->where('created_at', '>', date('Y-m-d', strtotime('-7 days')))->count();
+                break;
+            case 'wallets':
+                return DB::table('public_keys')->count();
+                break;
+        }
     }
 }
 

@@ -185,21 +185,21 @@
         </div>
         @if(!empty(Route::current()))
             @php($footer_menu = \App\Http\Controllers\Controller::instance()->getMenu('footer'))
-        @endif
-        @if(!empty($footer_menu) && sizeof($footer_menu) > 0)
-            <div class="row">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-                    <nav class="row fs-0">
-                        <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
-                            @foreach($footer_menu as $menu_el)
-                                @if((isset($mobile) && $mobile && $menu_el->mobile_visible) || (isset($mobile) && !$mobile && $menu_el->desktop_visible))
-                                    <li class="inline-block-top col-xs-4"><a @if($menu_el->new_window) target="_blank" @endif itemprop="url" href="{{$menu_el->url}}"><span itemprop="name">{!! $menu_el->name !!}</span></a></li>
-                                @endif
-                            @endforeach
-                        </ul>
-                    </nav>
+            @if(!empty($footer_menu) && sizeof($footer_menu) > 0)
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+                        <nav class="row fs-0">
+                            <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
+                                @foreach($footer_menu as $menu_el)
+                                    @if((isset($mobile) && $mobile && $menu_el->mobile_visible) || (isset($mobile) && !$mobile && $menu_el->desktop_visible))
+                                        <li class="inline-block-top col-xs-4"><a @if($menu_el->new_window) target="_blank" @endif itemprop="url" href="{{$menu_el->url}}"><span itemprop="name">{!! $menu_el->name !!}</span></a></li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
+            @endif
         @endif
         <div class="row padding-bottom-50 padding-top-50 text-center fs-14 bottom-text">
             <div class="col-xs-12">© 2018 Dentacoin Foundation. All rights reserved.</div>

@@ -741,10 +741,6 @@ class UserController extends Controller {
         }
     }
 
-    public function getDentacoinHubApplications() {
-        return json_decode(file_get_contents('https://dentacoin.com/info/applications'));
-    }
-
     protected function manageCustomCookie(Request $request) {
         if(!empty(Input::get('slug')) && !empty(Input::get('type')) && !empty(Input::get('token'))) {
             //logging

@@ -31,10 +31,13 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/password-recover', 'UserController@getRecoverPassword')->name('password-recover');
 
-    //======================================= TEMPORALLY FOR DAPP TESTING ========================================
-    Route::get('/dentist-test', 'HomeController@getDentistView')->name('dentist-test');
-    Route::get('/patient-test', 'HomeController@getPatientView')->name('patient-test');
-    //======================================= /TEMPORALLY FOR DAPP TESTING ========================================
+    Route::get('/my-profile', 'UserController@getMyProfileView')->middleware('HandleUserSession')->name('my-profile');
+
+    Route::get('/edit-account', 'UserController@getEditAccountView')->middleware('HandleUserSession')->name('edit-account');
+
+    Route::get('/manage-privacy', 'UserController@getManagePrivacyView')->middleware('HandleUserSession')->name('manage-privacy');
+
+    Route::get('/my-contracts', 'UserController@getMyContractsView')->middleware('HandleUserSession')->name('my-contracts');
 
     //======================================= AJAX ========================================
     Route::post('/save-public-key', 'WalletInstructionsController@savePublicKey')->name('save-public-key');
@@ -54,6 +57,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::post('/download-gdpr-data', 'UserController@downloadGDPRData')->middleware('HandleUserSession')->name('download-gdpr-data');
 
     Route::post('/forgotten-password-submit', 'UserController@forgottenPasswordSubmit')->name('forgotten-password-submit');
+
     //======================================= /AJAX ========================================
 
     Route::group(['prefix' => 'patient', 'middleware' => 'HandlePatientSession'], function () {
@@ -95,14 +99,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     });
 
     Route::get('/my-contracts-iframe', 'UserController@getMyContractsTemplate')->middleware('HandleUserSession')->name('my-contracts-iframe');
-
-    Route::get('/my-profile', 'UserController@getMyProfileView')->middleware('HandleUserSession')->name('my-profile');
-
-    Route::get('/edit-account', 'UserController@getEditAccountView')->middleware('HandleUserSession')->name('edit-account');
-
-    Route::get('/manage-privacy', 'UserController@getManagePrivacyView')->middleware('HandleUserSession')->name('manage-privacy');
-
-    Route::get('/my-contracts', 'UserController@getMyContractsView')->middleware('HandleUserSession')->name('my-contracts');
 
     Route::post('/filter-my-contracts', 'UserController@filterMyContracts')->middleware('HandleUserSession')->name('filter-my-contracts');
 
@@ -151,4 +147,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::post('/check-dentist-account', 'DentistController@checkDentistAccount')->name('check-dentist-account');
 
     Route::get('/custom-cookie', 'UserController@manageCustomCookie')->name('custom-cookie');
+
+    Route::get('/info/{slug}', 'Controller@handleApiEndpoints')->name('api-endpoints');
 });

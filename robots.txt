@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /assurance-admin-access/
+Disallow: /info/

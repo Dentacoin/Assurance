@@ -29,14 +29,6 @@ class HomeController extends Controller
         return redirect()->route('home');
     }
 
-    protected function getDentistView()   {
-        return view('pages/dentist-test', []);
-    }
-
-    protected function getPatientView()   {
-        return view('pages/patient-test', []);
-    }
-
     protected function getCalculatorHtml(Request $request) {
         $params = [];
         if(!empty($request->input('patients_number')) && !empty($request->input('params_type') && !empty($request->input('country'))) && !empty($request->input('currency'))) {
