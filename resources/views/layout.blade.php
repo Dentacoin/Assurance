@@ -90,7 +90,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="//account.dentacoin.com/edit-accountmanage-privacy" itemprop="url">
+                    <a href="//account.dentacoin.com/manage-privacy" itemprop="url">
                         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                             <img alt="Privacy icon" src="/assets/uploads/privacy-icon.svg"/>
                         </figure>
