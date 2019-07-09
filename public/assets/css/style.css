@@ -8874,14 +8874,16 @@ header {
         header > .container nav ul li.active {
           font-family: 'Lato-Black';
           text-transform: uppercase; }
-    header > .container .logged-user-nav .hidden-box-hover > a {
-      font-size: 16px;
+    header > .container .logged-user-nav > .hidden-box-parent {
+      font-size: 0;
       color: black;
       display: inline-block;
       padding: 15px 0; }
-      header > .container .logged-user-nav .hidden-box-hover > a span {
-        vertical-align: middle; }
-      header > .container .logged-user-nav .hidden-box-hover > a figure {
+      header > .container .logged-user-nav > .hidden-box-parent > span.user-name {
+        vertical-align: middle;
+        padding-top: 25px;
+        padding-bottom: 25px; }
+      header > .container .logged-user-nav > .hidden-box-parent figure.header-avatar {
         width: 40px;
         margin-left: 10px;
         overflow: hidden;
@@ -8971,9 +8973,9 @@ header {
     @media screen and (max-width: 767px) {
       header > .container .logged-user-nav.with-hub {
         position: static; }
-        header > .container .logged-user-nav.with-hub .up-arrow {
+        header > .container .logged-user-nav.with-hub > .hidden-box-parent .up-arrow {
           display: none; }
-        header > .container .logged-user-nav.with-hub .hidden-box {
+        header > .container .logged-user-nav.with-hub > .hidden-box-parent .hidden-box {
           min-width: 0;
           max-width: none;
           width: 100%;
@@ -8981,7 +8983,7 @@ header {
           height: 100vh;
           background-color: rgba(0, 0, 0, 0.6);
           overflow: auto; }
-          header > .container .logged-user-nav.with-hub .hidden-box .hidden-box-hub {
+          header > .container .logged-user-nav.with-hub > .hidden-box-parent .hidden-box .hidden-box-hub {
             padding: 10px 15px 15px; } }
   header .show-on-mobile {
     display: none; }

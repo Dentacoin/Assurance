@@ -1,16 +1,14 @@
 <div class="col-xs-9 inline-block text-right logged-user-nav with-hub @if(!empty($class)) {{$class}} @endif">
-    @php($user_data = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
-    <div class="inline-block hidden-box-hover">
-        <a href="javascript:void(0)">
-            <span>{{$user_data->name}}</span>
-            <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
-                @if(!empty($user_data->thumbnail_url))
-                    <img alt="" itemprop="contentUrl" src="{{$user_data->thumbnail_url}}"/>
-                @else
-                    <img alt="" itemprop="contentUrl" src="/assets/images/avatar-icon.svg"/>
-                @endif
-            </figure>
-        </a>
+    <div class="hidden-box-parent">
+        @php($user_data = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
+        <span class="fs-14 padding-right-10 user-name">{{$user_data->name}}</span>
+        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block header-avatar">
+            @if(!empty($user_data->thumbnail_url))
+                <img alt="" itemprop="contentUrl" src="{{$user_data->thumbnail_url}}"/>
+            @else
+                <img alt="" itemprop="contentUrl" src="/assets/images/avatar-icon.svg"/>
+            @endif
+        </figure>
         <span class="up-arrow">▲</span>
         <div class="hidden-box">
             <div class="hidden-box-hub container-fluid">
@@ -35,9 +33,9 @@
                     <div class="col-xs-6 inline-block">
                         <a href="{{ route('user-logout') }}" class="logout"><i class="fa fa-power-off" aria-hidden="true"></i> Log out</a>
                     </div>
-                    <div class="col-xs-6 inline-block">{{--
-                        <a href="{{ route('my-profile') }}" class="white-blue-green-btn">My account</a>--}}
-                        <a href="//account.dentacoin.com?platform=assurance" class="white-blue-green-btn">My Account</a>
+                    <div class="col-xs-6 inline-block">
+                        {{--<a href="{{ route('my-profile') }}" class="fs-16 white-dark-blue-btn">My account</a>--}}
+                        <a href="//account.dentacoin.com?platform=assurance" class="fs-16 white-blue-green-btn">My Account</a>
                     </div>
                 </div>
             </div>

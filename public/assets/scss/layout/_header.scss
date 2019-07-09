@@ -36,21 +36,21 @@ header {
             }
         }
         .logged-user-nav {
-            .hidden-box-hover {
-                > a {
-                    font-size: 16px;
-                    color: black;
-                    display: inline-block;
-                    padding: 15px 0;
-                    span {
-                        vertical-align: middle;
-                    }
-                    figure {
-                        width: 40px;
-                        margin-left: 10px;
-                        overflow: hidden;
-                        @include rounded(50%);
-                    }
+            > .hidden-box-parent {
+                font-size: 0;
+                color: black;
+                display: inline-block;
+                padding: 15px 0;
+                > span.user-name {
+                    vertical-align: middle;
+                    padding-top: 25px;
+                    padding-bottom: 25px;
+                }
+                figure.header-avatar {
+                    width: 40px;
+                    margin-left: 10px;
+                    overflow: hidden;
+                    @include rounded(50%);
                 }
             }
             .up-arrow {
@@ -146,19 +146,21 @@ header {
             @include breakpoint($xs) {
                 &.with-hub {
                     position: static;
-                    .up-arrow {
-                        display: none;
-                    }
-                    .hidden-box {
-                        min-width: 0;
-                        max-width: none;
-                        width: 100%;
-                        top: 0;
-                        height: 100vh;
-                        background-color: rgba(0, 0, 0, 0.6);
-                        overflow: auto;
-                        .hidden-box-hub {
-                            padding: 10px 15px 15px;
+                    >.hidden-box-parent {
+                        .up-arrow {
+                            display: none;
+                        }
+                        .hidden-box {
+                            min-width: 0;
+                            max-width: none;
+                            width: 100%;
+                            top: 0;
+                            height: 100vh;
+                            background-color: rgba(0, 0, 0, 0.6);
+                            overflow: auto;
+                            .hidden-box-hub {
+                                padding: 10px 15px 15px;
+                            }
                         }
                     }
                 }
