@@ -41,4 +41,7 @@
             </div>
         </div>
     </div>
+    @if(isset($mobile) && $mobile)
+        <a href="javascript:void(0)" class="logged-user-hamburger inline-block padding-left-10"><i class="fa fa-bars fs-26 dark-color" aria-hidden="true"></i></a>
+    @endif
 </div>
