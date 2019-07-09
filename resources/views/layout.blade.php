@@ -25,8 +25,8 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.28">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.28">
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.29">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.29">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
@@ -146,21 +146,23 @@
                 </a>
             </figure>
             @if(!\App\Http\Controllers\UserController::instance()->checkSession())
-                @if(isset($mobile) && !$mobile)
-                    <nav class="col-xs-9 inline-block">
-                        <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
-                            <li class="inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == "home") active @endif @endif"><a href="{{route('home')}}" itemprop="url"><span itemprop="name">Dentists</span></a></li>
-                            <li class="inline-block">|</li>
-                            <li class="inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == "patient-access") active @endif @endif"><a href="{{route('patient-access')}}" itemprop="url"><span itemprop="name">Patients</span></a></li>
-                            <li class="inline-block">
-                                <a href="javascript:void(0)" itemprop="url" class="blue-green-white-btn show-login-signin @if(!empty(Route::current())) @if(Route::current()->getName() == "home") dentist-side @endif @endif"><span itemprop="name">SIGN IN</span></a>
-                            </li>
-                        </ul>
-                    </nav>
-                @else
-                    <div class="col-xs-9 inline-block text-right">
-                        <a href="javascript:void(0)" class="hamburger"><i class="fa fa-bars fs-32 dark-color" aria-hidden="true"></i></a>
-                    </div>
+                @if(isset($mobile))
+                    @if(!$mobile)
+                        <nav class="col-xs-9 inline-block">
+                            <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
+                                <li class="inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == "home") active @endif @endif"><a href="{{route('home')}}" itemprop="url"><span itemprop="name">Dentists</span></a></li>
+                                <li class="inline-block">|</li>
+                                <li class="inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == "patient-access") active @endif @endif"><a href="{{route('patient-access')}}" itemprop="url"><span itemprop="name">Patients</span></a></li>
+                                <li class="inline-block">
+                                    <a href="javascript:void(0)" itemprop="url" class="blue-green-white-btn show-login-signin @if(!empty(Route::current())) @if(Route::current()->getName() == "home") dentist-side @endif @endif"><span itemprop="name">SIGN IN</span></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    @else
+                        <div class="col-xs-9 inline-block text-right">
+                            <a href="javascript:void(0)" class="hamburger"><i class="fa fa-bars fs-32 dark-color" aria-hidden="true"></i></a>
+                        </div>
+                    @endif
                 @endif
             @else
                 @if(!empty(Route::current()) && in_array(Route::current()->getName(), array('my-profile', 'edit-account', 'manage-privacy', 'my-contracts')))
@@ -276,7 +278,7 @@
                     <div>
                         <a href="javascript:void(0)"  class="civic-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" @if(isset($inviter)) data-inviter="{{$inviter}}" @endif data-type="patient">with Civic</a>
                     </div>
-                    @if(Route::current()->getName() == 'contract-proposal')
+                    @if(!empty(Route::current()) && Route::current()->getName() == 'contract-proposal')
                         <input type="hidden" name="route" value="{{Route::current()->getName()}}"/>
                         <input type="hidden" name="slug" value="{{Route::current()->parameters()['slug']}}"/>
                     @endif
@@ -526,17 +528,17 @@
 @endif
 
 {{--/Show the sticky calculate button only for dentists--}}
-<script src="/assets/js/basic.js?v=1.0.28"></script>
-<script src="/dist/js/front-libs-script.js?v=1.0.28"></script>
+<script src="/assets/js/basic.js?v=1.0.29"></script>
+<script src="/dist/js/front-libs-script.js?v=1.0.29"></script>
 {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-<script src="/assets/js/address.js?v=1.0.28"></script>
-<script src="/assets/js/index-bundled.js?v=1.0.28"></script>
+<script src="/assets/js/address.js?v=1.0.29"></script>
+<script src="/assets/js/index-bundled.js?v=1.0.29"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
 {{--Load social logging scripts only if user is not logged--}}
 @if(!(new \App\Http\Controllers\UserController())->checkSession())
-    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.28"></script>
-    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.28"></script>
+    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.29"></script>
+    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.29"></script>
 @endif
 
 {{--Multiple errors from laravel validation--}}

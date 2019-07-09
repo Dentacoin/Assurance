@@ -75,7 +75,6 @@ class Controller extends BaseController
 
         $sitemap->add(URL::to('/'), '2019-03-20T20:10:00+02:00', '1.0', 'weekly');
         $sitemap->add(URL::to('/patient'), '2019-03-20T20:10:00+02:00', '1.0', 'weekly');
-        $sitemap->add(URL::to('/wallet-instructions'), '2019-03-20T20:10:00+02:00', '0.8', 'weekly');
         $sitemap->add(URL::to('/support-guide'), '2019-03-20T20:10:00+02:00', '0.8', 'weekly');
         $sitemap->add(URL::to('/forgotten-password'), '2019-03-20T20:10:00+02:00', '0.3', 'monthly');
 

@@ -21,8 +21,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::get('/support-guide', 'SupportGuideController@getView')->name('support-guide');
 
-    Route::get('/wallet-instructions', 'WalletInstructionsController@getView')->name('wallet-instructions');
-
     Route::get('/assurance-demo', 'AssuranceDemoController@getView')->name('assurance-demo');
 
     Route::get('/contract-proposal/{slug}', 'PatientController@getContractProposal')->name('contract-proposal');
@@ -30,12 +28,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::get('/forgotten-password', 'UserController@getForgottenPasswordView')->name('forgotten-password');
 
     Route::post('/password-recover', 'UserController@getRecoverPassword')->name('password-recover');
-
-    Route::get('/my-profile', 'UserController@getMyProfileView')->middleware('HandleUserSession')->name('my-profile');
-
-    Route::get('/edit-account', 'UserController@getEditAccountView')->middleware('HandleUserSession')->name('edit-account');
-
-    Route::get('/manage-privacy', 'UserController@getManagePrivacyView')->middleware('HandleUserSession')->name('manage-privacy');
 
     Route::get('/my-contracts', 'UserController@getMyContractsView')->middleware('HandleUserSession')->name('my-contracts');
 
@@ -53,8 +45,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::post('/check-email', 'UserController@checkEmail')->name('check-email');
 
     Route::post('/check-captcha', 'UserController@checkCaptcha')->name('check-captcha');
-
-    Route::post('/download-gdpr-data', 'UserController@downloadGDPRData')->middleware('HandleUserSession')->name('download-gdpr-data');
 
     Route::post('/forgotten-password-submit', 'UserController@forgottenPasswordSubmit')->name('forgotten-password-submit');
 
@@ -104,10 +94,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/get-popup-cancel-contract', 'UserController@getPopupCancelContract')->middleware('HandleUserSession')->name('get-popup-cancel-contract');
 
-    Route::post('/validate-civic-kyc', 'UserController@validateCivicKyc')->middleware('HandleUserSession')->name('validate-civic-kyc');
-
-    Route::post('/delete-my-profile', 'UserController@deleteMyProfile')->middleware('HandleUserSession')->name('delete-my-profile');
-
     Route::post('/get-address-validation-or-remember-me', 'UserController@getAddressValidationOrRememberMe')->middleware('HandleUserSession')->name('get-address-validation-or-remember-me');
 
     Route::post('/get-keystore-file-password-validation', 'UserController@getKeystoreFilePasswordValidation')->middleware('HandleUserSession')->name('get-keystore-file-password-validation');
@@ -124,15 +110,11 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/check-public-key', 'UserController@checkPublicKey')->middleware('HandleUserSession')->name('check-public-key');
 
-    Route::post('/add-dcn-address', 'UserController@addDcnAddress')->middleware('HandleUserSession')->name('add-dcn-address');
-
     Route::get('/user-logout', 'UserController@userLogout')->name('user-logout');
 
     Route::get('/get-current-user-data', 'UserController@getCurrentUserData')->middleware('HandleUserSession')->name('get-current-user-data');
 
     Route::post('/get-recipe-popup', 'UserController@getRecipePopup')->middleware('HandleUserSession')->name('get-recipe-popup');
-
-    Route::post('/withdraw', 'UserController@withdraw')->middleware('HandleUserSession')->name('withdraw');
 
     Route::post('/dentist-register', 'DentistController@register')->name('dentist-register');
 

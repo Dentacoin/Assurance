@@ -14,14 +14,6 @@ class UserController extends Controller {
         return new UserController();
     }
 
-    protected function getEditAccountView()   {
-        return view('pages/logged-user/edit-account', ['countries' => (new APIRequestsController())->getAllCountries()]);
-    }
-
-    protected function getManagePrivacyView()   {
-        return view('pages/logged-user/manage-privacy');
-    }
-
     protected function getRecoverPassword(Request $request) {
         $this->validate($request, [
             'slug' => 'required'
@@ -149,36 +141,6 @@ class UserController extends Controller {
         }
     }
 
-    protected function getMyProfileView()   {
-        $currency_arr = array();
-        foreach(Controller::currencies as $currency) {
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'https://api.coinmarketcap.com/v1/ticker/dentacoin/?convert=' . $currency,
-                CURLOPT_SSL_VERIFYPEER => 0
-            ));
-            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-            $resp = json_decode(curl_exec($curl));
-            curl_close($curl);
-            $currency_arr[strtolower($currency)] = (array)$resp[0];
-        }
-
-        $view_params = array('currency_arr' => $currency_arr);
-
-        $dcn_balance_api_method_response = (new APIRequestsController())->getDCNBalance();
-        if($dcn_balance_api_method_response && $dcn_balance_api_method_response->success) {
-            $view_params['dcn_amount'] = $dcn_balance_api_method_response->data;
-        }
-
-        $dcn_transactions_history_response = (new \App\Http\Controllers\APIRequestsController())->getDCNTransactions();
-        if($dcn_transactions_history_response && $dcn_transactions_history_response->success) {
-            $view_params['transaction_history'] = $dcn_transactions_history_response->success;
-        }
-
-        return view('pages/logged-user/my-profile', $view_params);
-    }
-
     function checkEmail(Request $request) {
         $data = $this->clearPostData($request->input());
         $api_response = (new APIRequestsController())->checkIfFreeEmail($data['email']);
@@ -247,132 +209,6 @@ class UserController extends Controller {
             } else {
                 return redirect()->route('home')->with(['logout_token' => $token]);
             }
-        }
-    }
-
-    protected function updateAccount(Request $request) {
-        $arr_with_required_data = array(
-            'full-name' => 'required|max:250',
-            'email' => 'required|max:100'
-        );
-
-        $arr_with_required_data_responces = array(
-            'full-name.required' => 'Name is required.',
-            'email.required' => 'Email address is required.'
-        );
-
-        //if logged user is dentist require the specialisations data
-        if($this->checkDentistSession()) {
-            $arr_with_required_data['specialisations'] = 'required';
-            $arr_with_required_data['country_code'] = 'required';
-            $arr_with_required_data['address'] = 'required';
-            $arr_with_required_data_responces['specialisations.required'] = 'Specialisations are required.';
-            $arr_with_required_data_responces['country_code.required'] = 'Country is required.';
-            $arr_with_required_data_responces['address.required'] = 'Postal Address is required.';
-        }
-
-        $this->validate($request, $arr_with_required_data, $arr_with_required_data_responces);
-
-        $data = $this->clearPostData($request->input());
-        $files = $request->file();
-
-        //check email validation
-        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL))   {
-            return redirect()->route('edit-account')->with(['error' => 'Your form was not sent. Please try again with valid email.']);
-        }
-
-        if(!empty($files)) {
-            //404 if they're trying to send more than 2 files
-            if(sizeof($files) > 2) {
-                return abort(404);
-            } else {
-                $allowed = array('png', 'jpg', 'jpeg', 'svg', 'bmp', 'PNG', 'JPG', 'JPEG', 'SVG', 'BMP');
-                foreach($files as $file)  {
-                    //checking the file size
-                    if($file->getSize() > MAX_UPL_SIZE) {
-                        return redirect()->route('edit-account', ['slug' => $request->input('post-slug')])->with(['error' => 'Your form was not sent. Files can be only with with maximum size of '.number_format(MAX_UPL_SIZE / 1048576).'MB. Please try again.']);
-                    }
-                    //checking file format
-                    if(!in_array(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION), $allowed)) {
-                        return redirect()->route('edit-account')->with(['error' => 'Your form was not sent. Files can be only with .png, .jpg, .jpeg, .svg, .bmp formats. Please try again.']);
-                    }
-                    //checking if error in file
-                    if($file->getError()) {
-                        return redirect()->route('edit-account')->with(['error' => 'Your form was not sent. There is error with one or more of the files, please try with other files. Please try again.']);
-                    }
-                }
-            }
-        }
-
-        $post_fields_arr = array(
-            'name' => $data['full-name'],
-            'email' => $data['email']
-        );
-
-        if(isset($data['country_code']) && !empty($data['country_code'])) {
-            $post_fields_arr['country_code'] = $data['country_code'];
-        }
-
-        if(isset($data['address']) && !empty($data['address'])) {
-            $post_fields_arr['address'] = $data['address'];
-        }
-
-        if(isset($data['dcn_address']) && !empty($data['dcn_address'])) {
-            $post_fields_arr['dcn_address'] = $data['dcn_address'];
-        }
-
-        if(isset($data['short_description']) && !empty($data['short_description'])) {
-            $post_fields_arr['short_description'] = $data['short_description'];
-        }
-
-        if($this->checkDentistSession()) {
-            $post_fields_arr['specialisations'] = $data['specialisations'];
-        }
-
-        //if the logged user is dentist he must provide website and phone
-        if(isset($data['website']) || isset($data['phone'])) {
-            if(isset($data['website'])) {
-                if(!empty($data['website'])) {
-                    $post_fields_arr['website'] = $data['website'];
-                }else {
-                    return redirect()->route('edit-account')->with(['error' => 'Website is required']);
-                }
-            }
-            if(isset($data['phone'])) {
-                if(!empty($data['phone'])) {
-                    $post_fields_arr['phone'] = $data['phone'];
-                }else {
-                    return redirect()->route('edit-account')->with(['error' => 'Phone is required']);
-                }
-            }
-        }
-
-        //if user selected new avatar submit it to the api
-        if(!empty($files['image'])) {
-            $post_fields_arr['avatar'] = curl_file_create($files['image']->getPathName(), 'image/'.pathinfo($files['image']->getClientOriginalName(), PATHINFO_EXTENSION), $files['image']->getClientOriginalName());
-        }
-
-        //handle the API response
-        $api_response = (new APIRequestsController())->updateUserData($post_fields_arr);
-        if($api_response) {
-            return redirect()->route('edit-account')->with(['success' => 'Your data was updated successfully.']);
-        } else {
-            return redirect()->route('edit-account')->with(['errors_response' => $api_response['errors']]);
-        }
-    }
-
-    protected function addDcnAddress(Request $request) {
-        $data = $this->clearPostData($request->input());
-        $post_fields_arr = array(
-            'dcn_address' => $data['address']
-        );
-
-        //handle the API response
-        $api_response = (new APIRequestsController())->updateUserData($post_fields_arr);
-        if($api_response) {
-            return redirect()->route('my-profile')->with(['success' => 'Your Wallet Address was saved successfully.']);
-        } else {
-            return redirect()->route('my-profile')->with(['errors_response' => $api_response['errors']]);
         }
     }
 
@@ -652,93 +488,13 @@ class UserController extends Controller {
         return response()->json(['success' => $view]);
     }
 
-    protected function deleteMyProfile(Request $request) {
-        $api_response = (new APIRequestsController())->deleteProfile();
-        if($api_response->success) {
-            $this->userLogout($request);
-            return redirect()->route('home')->with(['success' => 'Your profile has been deleted successfully.']);
-        } else {
-            return redirect()->route('manage-privacy')->with(['error' => 'Your profile deletion failed. Please try again later.']);
-        }
-    }
-
     protected function getCurrentUserData() {
         return response()->json(['success' => (new APIRequestsController())->getUserData(session('logged_user')['id'])]);
-    }
-
-    protected function validateCivicKyc(Request $request) {
-        $this->validate($request, [
-            'token' => 'required'
-        ], [
-            'token.required' => 'Token is required.'
-        ]);
-
-        $civic_validation_response = (new APIRequestsController())->validateCivicToken($request->input('token'));
-        if($civic_validation_response->success) {
-            return response()->json(['success' => true]);
-        } else {
-            return response()->json(['error' => $civic_validation_response->errors]);
-        }
-    }
-
-    protected function withdraw(Request $request) {
-        $this->validate($request, [
-            'amount' => 'required',
-            'address' => 'required'
-        ], [
-            'amount.required' => 'Amount is required.',
-            'address.required' => 'Wallet Address is required.'
-        ]);
-
-        $data = $this->clearPostData($request->input());
-
-        $dcn_balance_api_method_response = (new APIRequestsController())->getDCNBalance();
-        $failed_withdraw_error_msg = 'Withdraw failed, please try again later or contact <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a>.';
-        if($dcn_balance_api_method_response->success) {
-            //checking if the withdrawing amount is more than the balance
-            if((int)$data['amount'] > $dcn_balance_api_method_response->data) {
-                return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
-            } else {
-                $current_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
-                if($current_user_data->dcn_address != $data['address']) {
-                    //updating the user address(CoreDB) only if he did type different address than the already saved in the CoreDB
-                    $api_response = (new APIRequestsController())->updateUserData(array('dcn_address' => $data['address']));
-                    if(!$api_response) {
-                        return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
-                    } else {
-                        $withdraw_response = (new APIRequestsController())->withdraw($data['amount']);
-                        if($withdraw_response && $withdraw_response->success && $withdraw_response->data->transaction->success) {
-                            return redirect()->route('my-profile')->with(['success' => "Your transaction was confirmed. Check here  <a href='https://etherscan.io/tx/".$withdraw_response->data->transaction->message."' class='etherscan-link' target='_blank'>Etherscan</a>."]);
-                        } else {
-                            return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
-                        }
-                    }
-                } else {
-                    $withdraw_response = (new APIRequestsController())->withdraw($data['amount']);
-                    if($withdraw_response && $withdraw_response->success && $withdraw_response->data->transaction->success) {
-                        return redirect()->route('my-profile')->with(['success' => "Your transaction was confirmed. Check here  <a href='https://etherscan.io/tx/".$withdraw_response->data->transaction->message."' class='etherscan-link' target='_blank'>Etherscan</a>."]);
-                    } else {
-                        return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
-                    }
-                }
-            }
-        } else {
-            return redirect()->route('my-profile')->with(['error' => $failed_withdraw_error_msg]);
-        }
     }
 
     public function getCountryNameById($id) {
         $countries = (new APIRequestsController())->getAllCountries();
         return $countries[$id - 1]->name;
-    }
-
-    protected function downloadGDPRData() {
-        $api_response = (new APIRequestsController())->getGDPRDownloadLink();
-        if($api_response->success) {
-            return response()->json(['success' => $api_response->data]);
-        } else {
-            return response()->json(['error' => 'Downloading your personal data is not possible at the moment, please try again later.']);
-        }
     }
 
     protected function manageCustomCookie(Request $request) {

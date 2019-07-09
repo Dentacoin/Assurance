@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-6 inline-block">
                                     <div class="single-container text-center">
-                                        <a href="/wallet-instructions" target="_blank" class="display-block">
+                                        <a href="//dentacoin.com/how-to-create-wallet" target="_blank" class="display-block">
                                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                 <img alt="" class="max-width-90" itemprop="contentUrl" src="/assets/uploads/wallet-instructions.svg"/>
                                                 <figcaption class="fs-20 padding-top-15">Open Your Dentacoin Wallet</figcaption>

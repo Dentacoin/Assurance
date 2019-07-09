@@ -7,10 +7,6 @@ use Illuminate\Http\Request;
 
 class WalletInstructionsController extends Controller
 {
-    protected function getView()   {
-        return view('pages/wallet-instructions');
-    }
-
     protected function savePublicKey(Request $request) {
         if($request->input('password') == getenv('CROSS_WEBSITE_PASSWORD')) {
             $check_key = PublicKey::where(array('address' => $request->input('address')))->get()->first();

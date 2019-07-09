@@ -187,7 +187,7 @@
                             <li>
                                 <a href="javascript:void(0);" class="fs-20 fs-xs-18 question"><span class="lato-black fs-20">04</span>I don’t have a Dentacoin wallet yet. How to create one?</a>
                                 <div class="fs-18 fs-xs-16 calibri-light padding-bottom-30 padding-top-10 padding-left-20 padding-right-20 question-content">
-                                    Please follow our <a href="/wallet-instructions" target="_blank">Wallet Instructions</a>.
+                                    Please follow our <a href="//dentacoin.com/how-to-create-wallet" target="_blank">Wallet Instructions</a>.
                                 </div>
                             </li>
                             <li>

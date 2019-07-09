@@ -9338,36 +9338,6 @@ section#find-your-dentist .combobox-container .input-group {
       .container-404 .homepage-link a {
         font-size: 14px; } }
 
-.section-wallet-instructions-questions .question {
-  color: #212121;
-  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2);
-  -ms-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2);
-  -webkit-transition: 0.3s;
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -ms-transition: 0.3s;
-  transition: 0.3s; }
-  .section-wallet-instructions-questions .question .column {
-    background-image: url(/assets/uploads/arrow-down-blue-green.svg);
-    background-repeat: no-repeat;
-    background-size: 15px auto;
-    background-position: center right 15px; }
-  .section-wallet-instructions-questions .question.active {
-    color: white;
-    background-color: #126585; }
-    .section-wallet-instructions-questions .question.active .column {
-      background-image: url(/assets/uploads/arrow-up-white.svg); }
-    .section-wallet-instructions-questions .question.active .blue-green-color {
-      color: white; }
-.section-wallet-instructions-questions .question-content {
-  display: none; }
-  .section-wallet-instructions-questions .question-content ul li {
-    list-style: disc inside none; }
-  .section-wallet-instructions-questions .question-content a {
-    text-decoration: underline; }
-
 body.logged-in .my-profile-menu {
   width: 300px;
   padding: 15px; }
