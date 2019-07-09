@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('my-profile') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'my-profile') class="active" @endif itemprop="url">
+                    <a href="//account.dentacoin.com/" itemprop="url">
                         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                             <img alt="Wallet icon" src="/assets/uploads/wallet-icon.svg"/>
                         </figure>
@@ -82,7 +82,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('edit-account') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'edit-account') class="active" @endif itemprop="url">
+                    <a href="//account.dentacoin.com/edit-account" itemprop="url">
                         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                             <img alt="Edit account icon" src="/assets/uploads/edit-account-icon.svg"/>
                         </figure>
@@ -90,7 +90,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('manage-privacy') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'manage-privacy') class="active" @endif itemprop="url">
+                    <a href="//account.dentacoin.com/edit-accountmanage-privacy" itemprop="url">
                         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                             <img alt="Privacy icon" src="/assets/uploads/privacy-icon.svg"/>
                         </figure>
@@ -98,7 +98,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('my-contracts') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'my-contracts') class="active" @endif itemprop="url">
+                    <a href="//account.dentacoin.com/assurance" itemprop="url">
                         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                             <img alt="Contracts list" src="/assets/uploads/contracts-list.svg"/>
                         </figure>
@@ -165,14 +165,7 @@
                     @endif
                 @endif
             @else
-                @if(!empty(Route::current()) && in_array(Route::current()->getName(), array('my-profile', 'edit-account', 'manage-privacy', 'my-contracts')))
-                    <div class="col-xs-9 inline-block text-right show-on-mobile">
-                        <a href="javascript:void(0)" class="logged-user-hamburger"><i class="fa fa-bars fs-32 dark-color" aria-hidden="true"></i></a>
-                    </div>
-                    @include('partials.logged-user-desktop-header-menu', ['class' => 'hide-on-mobile'])
-                @else
-                    @include('partials.logged-user-desktop-header-menu')
-                @endif
+                @include('partials.logged-user-desktop-header-menu')
             @endif
         </div>
     </div>
