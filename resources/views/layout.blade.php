@@ -124,6 +124,7 @@
                         </a>
                     </li>
                 @endif
+                <li> <a href="https://account.dentacoin.com/dentavox" itemprop="url"> <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"> <img alt="Dentavox logo" src="//account.dentacoin.com/assets/uploads/dentavox--surveys.svg"> </figure> <span itemprop="name">DentaVox Surveys</span> </a> </li> <li> <a href="https://account.dentacoin.com/trusted-reviews" itemprop="url"> <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"> <img alt="Trusted reviews logo" src="//account.dentacoin.com/assets/uploads/trusted-reviews-icon.svg"> </figure> <span itemprop="name">Trusted Reviews</span> </a> </li> <li> <a href="https://account.dentacoin.com/assurance" itemprop="url" class="active"> <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"> <img alt="Assurance logo" src="//account.dentacoin.com/assets/uploads/assurance.svg"> </figure> <span itemprop="name">Dentacoin Assurance</span> </a> </li> <li> <a href="//dentacare.dentacoin.com" target="_blank" itemprop="url"> <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"> <img alt="Dentacare logo" src="//account.dentacoin.com/assets/uploads/dc-icon.svg"> </figure> <span itemprop="name">Dentacare</span> </a> </li>
                 <li>
                     <a href="{{ route('user-logout') }}" itemprop="url">
                         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
