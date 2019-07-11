@@ -210,6 +210,7 @@ class UserController extends Controller {
                 return redirect()->route('home')->with(['logout_token' => $token]);
             }
         }
+        return redirect()->route('home');
     }
 
     protected function updateContractStatus(Request $request) {
