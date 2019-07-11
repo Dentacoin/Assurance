@@ -387,12 +387,12 @@ class DentistController extends Controller
             'contract.required' => 'Contract is required.',
         ]);
 
-        $contract = TemporallyContract::where(array('id' => $request->input('contract'), 'dentist_id' => session('logged_user')['id']))->get()->first();
+        $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'dentist_id' => session('logged_user')['id']))->get()->first();
         if(!empty($contract)) {
             $dentist_name = (new APIRequestsController())->getUserData(session('logged_user')['id'])->name;
             $patient = (new APIRequestsController())->getUserData($contract->patient_id);
 
-            $email_view = view('emails/dentist-approve-contract-on-blockchain', ['dentist_name' => $dentist_name, 'patient_name' => $patient->name, 'transaction_hash' => $request->input('transaction_hash')]);
+            $email_view = view('emails/dentist-successful-withdraw', ['dentist_name' => $dentist_name, 'patient_name' => $patient->name, 'transaction_hash' => $request->input('transaction_hash')]);
             $body = $email_view->render();
 
             Mail::send(array(), array(), function($message) use ($body, $patient, $dentist_name) {
