@@ -12,7 +12,7 @@
         <div class="single-row flex-row fs-0 margin-bottom-40 margin-bottom-xs-10">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer" for="patient-email">Email Address:</label>
             @php($patient_email_from_get_param = \Illuminate\Support\Facades\Input::get('patient-email'))
-            <input type="text" data-type="email" name="email" id="patient-email" maxlength="100" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background" @if(!empty($patient_email)) value="{{$patient_email}}" @elseif(isset($patient_email_from_get_param)) @endif/>
+            <input type="text" data-type="email" name="email" id="patient-email" maxlength="100" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background" @if(!empty($patient_email)) value="{{$patient_email}}" @elseif(isset($patient_email_from_get_param)) value="{{$patient_email_from_get_param}}" @endif/>
         </div>
     </div>
 </div>
