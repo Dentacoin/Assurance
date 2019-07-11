@@ -242,7 +242,7 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-xs-6 padding-left-0 padding-right-5">
-                                                <a href="javascript:void(0)" class="white-red-btn min-width-220 min-width-xs-0 cancel-contract-btn track-event-patient-rejecting-pending-contract" data-contract="{{$contract->slug}}">REJECT</a>
+                                                <a href="javascript:void(0)" class="white-red-btn min-width-220 min-width-xs-0 cancel-contract-btn track-event-patient-rejecting-pending-contract" data-type="patient-rejecting" data-contract="{{$contract->slug}}">REJECT</a>
                                             </div>
                                             <div class="col-xs-6 padding-right-0 padding-left-5">
                                                 <input type="submit" value="SIGN CONTRACT" class="white-blue-green-btn min-width-220 min-width-xs-0"/>

@@ -25,8 +25,8 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.29">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.29">
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.30">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.30">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
@@ -124,7 +124,7 @@
                         </a>
                     </li>
                 @endif
-                <li> <a href="https://account.dentacoin.com/dentavox" itemprop="url"> <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"> <img alt="Dentavox logo" src="//account.dentacoin.com/assets/uploads/dentavox--surveys.svg"> </figure> <span itemprop="name">DentaVox Surveys</span> </a> </li> <li> <a href="https://account.dentacoin.com/trusted-reviews" itemprop="url"> <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"> <img alt="Trusted reviews logo" src="//account.dentacoin.com/assets/uploads/trusted-reviews-icon.svg"> </figure> <span itemprop="name">Trusted Reviews</span> </a> </li> <li> <a href="https://account.dentacoin.com/assurance" itemprop="url" class="active"> <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"> <img alt="Assurance logo" src="//account.dentacoin.com/assets/uploads/assurance.svg"> </figure> <span itemprop="name">Dentacoin Assurance</span> </a> </li> <li> <a href="//dentacare.dentacoin.com" target="_blank" itemprop="url"> <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"> <img alt="Dentacare logo" src="//account.dentacoin.com/assets/uploads/dc-icon.svg"> </figure> <span itemprop="name">Dentacare</span> </a> </li>
+                <li> <a href="https://account.dentacoin.com/dentavox" itemprop="url"> <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"> <img alt="Dentavox logo" src="//account.dentacoin.com/assets/uploads/dentavox--surveys.svg"> </figure> <span itemprop="name">DentaVox Surveys</span> </a> </li> <li> <a href="https://account.dentacoin.com/trusted-reviews" itemprop="url"> <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"> <img alt="Trusted reviews logo" src="//account.dentacoin.com/assets/uploads/trusted-reviews-icon.svg"> </figure> <span itemprop="name">Trusted Reviews</span> </a> </li> <li> <a href="https://account.dentacoin.com/assurance" itemprop="url"> <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"> <img alt="Assurance logo" src="//account.dentacoin.com/assets/uploads/assurance.svg"> </figure> <span itemprop="name">Dentacoin Assurance</span> </a> </li> <li> <a href="//dentacare.dentacoin.com" target="_blank" itemprop="url"> <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"> <img alt="Dentacare logo" src="//account.dentacoin.com/assets/uploads/dc-icon.svg"> </figure> <span itemprop="name">Dentacare</span> </a> </li>
                 <li>
                     <a href="{{ route('user-logout') }}" itemprop="url">
                         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
@@ -522,17 +522,17 @@
 @endif
 
 {{--/Show the sticky calculate button only for dentists--}}
-<script src="/assets/js/basic.js?v=1.0.29"></script>
-<script src="/dist/js/front-libs-script.js?v=1.0.29"></script>
+<script src="/assets/js/basic.js?v=1.0.30"></script>
+<script src="/dist/js/front-libs-script.js?v=1.0.30"></script>
 {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-<script src="/assets/js/address.js?v=1.0.29"></script>
-<script src="/assets/js/index-bundled.js?v=1.0.29"></script>
+<script src="/assets/js/address.js?v=1.0.30"></script>
+<script src="/assets/js/index-bundled.js?v=1.0.30"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
 {{--Load social logging scripts only if user is not logged--}}
 @if(!(new \App\Http\Controllers\UserController())->checkSession())
-    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.29"></script>
-    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.29"></script>
+    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.30"></script>
+    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.30"></script>
 @endif
 
 {{--Multiple errors from laravel validation--}}

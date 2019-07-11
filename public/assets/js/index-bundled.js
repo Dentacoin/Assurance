@@ -74399,7 +74399,7 @@ if($('body').hasClass('logged-in')) {
         }
 
         function thirdStepPassedSuccessfully(button, next_step) {
-            fireGoogleAnalyticsEvent('Contract Dentist', 'Generate', 'Contract 3 Patient Details', $('.step.three [name="monthly-premium"]').val());
+            fireGoogleAnalyticsEvent('Contract Dentist', 'Generate', 'Contract 3 Conditions', $('.step.three [name="monthly-premium"]').val());
             onStepValidationSuccess('three', next_step, button);
 
             //update the fields on the sample contract
@@ -74765,6 +74765,13 @@ if($('body').hasClass('logged-in')) {
         $('.response-layer').show();
     });
 
+    $(document).on('click', '.renew-contract-btn', function(event) {
+        event.preventDefault();
+        fireGoogleAnalyticsEvent('Contract Dentist', 'Renew', 'Contract Renewal');
+
+        window.open($(this).attr('href'));
+    });
+
     if($('.open-mobile-single-page-nav').length) {
         $('.open-mobile-single-page-nav').click(function() {
             $(this).closest('.contract-single-page-nav').find('ul').toggle(300);
@@ -75016,8 +75023,18 @@ if($('body').hasClass('logged-in')) {
             var currency_amount_for_one_usd;
             if(currency == 'dcn') {
                 currency_amount_for_one_usd = dcn_for_one_usd;
+                var event_obj = {
+                    'event_category': 'Purchase',
+                    'value': parseInt($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()),
+                    'event_label': currency
+                };
             } else if(currency == 'eth') {
                 currency_amount_for_one_usd = eth_for_one_usd;
+                var event_obj = {
+                    'event_category': 'Purchase',
+                    'value': parseInt($('section.ready-to-purchase-with-external-api #usd-value').val().trim()),
+                    'event_label': 'USD in ETH'
+                };
             }
 
             if(parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) < 30)  {
@@ -75035,6 +75052,9 @@ if($('body').hasClass('logged-in')) {
             }else if(!$('section.ready-to-purchase-with-external-api #privacy-policy-agree').is(':checked')) {
                 basic.showAlert('Please agree with our Privacy Policy.', '', true);
             }else {
+                //sending GTAG event
+                gtag('event', 'Buy', event_obj);
+
                 window.open('https://indacoin.com/gw/payment_form?partner=dentacoin&cur_from=USD&cur_to='+currency.toUpperCase()+'&amount='+$('section.ready-to-purchase-with-external-api #usd-value').val().trim()+'&address='+$('section.ready-to-purchase-with-external-api input#dcn_address').val().trim()+'&user_id='+$('section.ready-to-purchase-with-external-api input#email').val().trim(), '_blank');
             }
         });
@@ -76150,6 +76170,23 @@ async function onDocumentReadyPageData() {
                                                                     execute_ajax = false;
                                                                     clearInterval(withdraw_interval_check);
 
+                                                                    //SEND EMAIL TO PATIENT
+                                                                    $.ajax({
+                                                                        type: 'POST',
+                                                                        url: '/notify-patient-for-successful-withdraw',
+                                                                        dataType: 'json',
+                                                                        data: {
+                                                                            transaction_hash: transactionHash,
+                                                                            contract: $('.single-contract-view-section').attr('data-contract')
+                                                                        },
+                                                                        headers: {
+                                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                        },
+                                                                        success: async function (response) {
+
+                                                                        }
+                                                                    });
+
                                                                     $('.response-layer').hide();
                                                                     $('.response-layer .transaction-text').remove();
 
@@ -76356,9 +76393,17 @@ function cancelContractEventInit() {
 
                                                 //fire google analytics event
                                                 if($('.recipe-popup #cancel-contract-reason').val() != '' && $('.recipe-popup #cancel-contract-reason').val() != 'Other') {
-                                                    fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
+                                                    if(this_btn.attr('data-type') == 'dentist') {
+                                                        fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
+                                                    } else if(this_btn.attr('data-type') == 'patient') {
+                                                        fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
+                                                    }
                                                 } else if($('.popup-cancel-contract #cancel-contract-reason').val() == 'Other') {
-                                                    fireGoogleAnalyticsEvent('Contract Patient Rejected', 'Reject', $('.recipe-popup #cancel-contract-other-reason').val().trim());
+                                                    if(this_btn.attr('data-type') == 'dentist') {
+                                                        fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-other-reason').val().trim());
+                                                    } else if(this_btn.attr('data-type') == 'patient') {
+                                                        fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.recipe-popup #cancel-contract-other-reason').val().trim());
+                                                    }
                                                 }
 
                                                 var cancellation_ajax_data = {
@@ -76485,9 +76530,22 @@ function cancelContractEventInit() {
                                     }
 
                                     if($('.popup-cancel-contract #cancel-contract-reason').val() != '' && $('.popup-cancel-contract #cancel-contract-reason').val() != 'Other') {
-                                        fireGoogleAnalyticsEvent('Contract Patient Rejected', 'Reject', $('.popup-cancel-contract #cancel-contract-reason').val());
+                                        if(this_btn.attr('data-type') == 'dentist') {
+                                            fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.popup-cancel-contract #cancel-contract-reason').val());
+                                        } else if(this_btn.attr('data-type') == 'patient') {
+                                            fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.popup-cancel-contract #cancel-contract-reason').val());
+                                        } else if(this_btn.attr('data-type') == 'patient-rejecting') {
+                                            fireGoogleAnalyticsEvent('Contract Patient Rejected', 'Reject', $('.popup-cancel-contract #cancel-contract-reason').val());
+                                        }
                                     } else if($('.popup-cancel-contract #cancel-contract-reason').val() == 'Other') {
-                                        fireGoogleAnalyticsEvent('Contract Patient Rejected', 'Reject', $('.popup-cancel-contract #cancel-contract-other-reason').val());
+
+                                        if(this_btn.attr('data-type') == 'dentist') {
+                                            fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.popup-cancel-contract #cancel-contract-other-reason').val());
+                                        } else if(this_btn.attr('data-type') == 'patient') {
+                                            fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.popup-cancel-contract #cancel-contract-other-reason').val());
+                                        } else if(this_btn.attr('data-type') == 'patient-rejecting') {
+                                            fireGoogleAnalyticsEvent('Contract Patient Rejected', 'Reject', $('.popup-cancel-contract #cancel-contract-other-reason').val());
+                                        }
                                     }
 
                                     $.ajax({
