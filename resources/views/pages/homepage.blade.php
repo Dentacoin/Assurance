@@ -200,7 +200,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <a href="javascript:void(0)" class="white-blue-green-btn min-width-220 show-login-signin dentist-side">SIGN UP</a>
+                    <a href="javascript:void(0)" class="white-blue-green-btn min-width-220 show-login-signin show-signing dentist-side">SIGN UP</a>
                 </div>
             </div>
         </div>

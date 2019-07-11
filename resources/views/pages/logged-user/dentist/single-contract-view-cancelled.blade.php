@@ -79,7 +79,7 @@
                     @if(!empty($active_timestamp))
                         <time class="display-block padding-top-10 calibri-light fs-20">{{date('d/m/Y', $active_timestamp)}}</time>
                     @else
-                        <div class="cancelled-color fs-20 calibri-light padding-top-10">Patient cancelled the contract before signing it.</div>
+                        <div class="cancelled-color fs-20 calibri-light padding-top-10">Cancelled before patient signing the contract.</div>
                     @endif
                 </div>
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15">

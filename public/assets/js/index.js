@@ -1900,6 +1900,7 @@ var hidden_popup_content = $('.hidden-login-form').html();
 //call the popup for login/sign for patient and dentist
 function bindLoginSigninPopupShow() {
     $(document).on('click', '.show-login-signin', function() {
+        var this_show_login_btn = $(this);
         basic.closeDialog();
         $('.hidden-login-form').html('');
         basic.showDialog(hidden_popup_content, 'login-signin-popup', null, true);
@@ -1922,6 +1923,10 @@ function bindLoginSigninPopupShow() {
             $('.login-signin-popup .form-login').show();
             $('.login-signin-popup .form-register').hide();
         });
+
+        if(this_show_login_btn.hasClass('show-signing')) {
+            $('.popup-body .dentist .call-sign-up').click();
+        }
 
         // ====================== PATIENT LOGIN/SIGNUP LOGIC ======================
 

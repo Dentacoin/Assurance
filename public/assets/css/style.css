@@ -7488,6 +7488,11 @@ select.select-mac-fix {
   -webkit-appearance: initial;
   padding-right: 30px; }
 
+@media screen and (max-width: 767px) {
+  .anchor-link {
+    display: block;
+    text-align: center; } }
+
 .white-blue-green-btn {
   font-size: 20px;
   color: white;

@@ -1450,3 +1450,10 @@ select.select-mac-fix {
     -webkit-appearance: initial;
     padding-right: 30px;
 }
+
+.anchor-link {
+    @include breakpoint($xs) {
+        display: block;
+        text-align: center;
+    }
+}
