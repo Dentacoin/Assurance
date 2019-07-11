@@ -3581,69 +3581,71 @@ function bindTransactionAddressVerify(keystore_file) {
     if(keystore_file === undefined) {
         keystore_file = null;
     }
-    $('.proof-of-address .verify-address-btn').click(async function() {
+    $('.proof-of-address .verify-address-btn').click(function() {
         $('.response-layer').show();
-        if(keystore_file != null) {
-            //import with keystore
-            if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
-                basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
-            } else {
-                var decrypt_response = decryptKeystore(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
-                if(decrypt_response.success) {
-                    //if remember me option is checked
-                    if($('#remember-my-keystore-file').is(':checked')) {
-                        localStorage.setItem('current-account', JSON.stringify({
-                            address: $('.proof-of-address').attr('data-address'),
-                            type: 'keystore',
-                            keystore: keystore_file
-                        }));
-                    }
-
-                    $.event.trigger({
-                        type: 'on-transaction-recipe-agree',
-                        time: new Date(),
-                        response_data: decrypt_response.to_string
-                    });
-                } else if(decrypt_response.error) {
-                    basic.showAlert(decrypt_response.message, '', true);
-                    $('.response-layer').hide();
-                }
-            }
-        } else {
-            //import with private key
-            if($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
-                basic.showAlert('Please enter valid private key.', '', true);
-            } else {
-                var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
-                if(import_response.success) {
-                    //checking if the private key is related to the public key saved in the coredb
-                    var user_data = await getCurrentUserData();
-                    //checking if fake private key or just miss spell it
-                    if(checksumAddress(user_data.success.dcn_address) != checksumAddress(import_response.address)) {
-                        basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
-                        $('.response-layer').hide();
-                    } else {
+        setTimeout(async function() {
+            if(keystore_file != null) {
+                //import with keystore
+                if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
+                    basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
+                } else {
+                    var decrypt_response = decryptKeystore(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
+                    if(decrypt_response.success) {
                         //if remember me option is checked
-                        if($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                        if($('#remember-my-keystore-file').is(':checked')) {
                             localStorage.setItem('current-account', JSON.stringify({
-                                address: import_response.address,
-                                type: 'key',
-                                key: $('.proof-of-address #your-private-key').val().trim()
+                                address: $('.proof-of-address').attr('data-address'),
+                                type: 'keystore',
+                                keystore: keystore_file
                             }));
                         }
 
                         $.event.trigger({
                             type: 'on-transaction-recipe-agree',
                             time: new Date(),
-                            response_data: $('.proof-of-address #your-private-key').val().trim()
+                            response_data: decrypt_response.to_string
                         });
+                    } else if(decrypt_response.error) {
+                        basic.showAlert(decrypt_response.message, '', true);
+                        $('.response-layer').hide();
                     }
-                } else if(import_response.error) {
-                    basic.showAlert(import_response.message, '', true);
-                    $('.response-layer').hide();
+                }
+            } else {
+                //import with private key
+                if($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
+                    basic.showAlert('Please enter valid private key.', '', true);
+                } else {
+                    var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
+                    if(import_response.success) {
+                        //checking if the private key is related to the public key saved in the coredb
+                        var user_data = await getCurrentUserData();
+                        //checking if fake private key or just miss spell it
+                        if(checksumAddress(user_data.success.dcn_address) != checksumAddress(import_response.address)) {
+                            basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
+                            $('.response-layer').hide();
+                        } else {
+                            //if remember me option is checked
+                            if($('.proof-of-address #remember-my-private-key').is(':checked')) {
+                                localStorage.setItem('current-account', JSON.stringify({
+                                    address: import_response.address,
+                                    type: 'key',
+                                    key: $('.proof-of-address #your-private-key').val().trim()
+                                }));
+                            }
+
+                            $.event.trigger({
+                                type: 'on-transaction-recipe-agree',
+                                time: new Date(),
+                                response_data: $('.proof-of-address #your-private-key').val().trim()
+                            });
+                        }
+                    } else if(import_response.error) {
+                        basic.showAlert(import_response.message, '', true);
+                        $('.response-layer').hide();
+                    }
                 }
             }
-        }
+        }, 500);
     });
 }
 
