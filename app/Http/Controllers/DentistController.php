@@ -400,8 +400,7 @@ class DentistController extends Controller
                 $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
                 $message->setBody($body, 'text/html');
             });
-
-            return true;
+            return response()->json(['success' => true]);
         }
     }
 
