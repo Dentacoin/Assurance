@@ -203,7 +203,6 @@ body {
     }
 }
 
-
 @for $i from 0 through 150 {
     @include breakpoint($xs)    {
         .fs-xs-#{$i} {

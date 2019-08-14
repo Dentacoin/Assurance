@@ -41,10 +41,9 @@ header {
                 color: black;
                 display: inline-block;
                 padding: 15px 0;
-                > span.user-name {
-                    vertical-align: middle;
-                    padding-top: 25px;
-                    padding-bottom: 25px;
+                .color-white-on-hub {
+                    padding-top: 10px;
+                    padding-bottom: 10px;
                 }
                 figure.header-avatar {
                     width: 40px;

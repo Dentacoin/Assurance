@@ -46,6 +46,29 @@ class Controller extends BaseController
         return Page::where(array('slug' => Route::getCurrentRoute()->getName()))->get()->first();
     }
 
+    public function getCurrentDcnUsdRate()  {
+        //API connection
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'https://api.coinmarketcap.com/v1/ticker/dentacoin/?convert=USD',
+            CURLOPT_SSL_VERIFYPEER => 0
+        ));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        if(sizeof($resp) > 0)   {
+            if(property_exists($resp[0], 'price_usd'))  {
+                return (float)$resp[0]->price_usd;
+            }else {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
+    }
+
     public function getMenu($menu_slug) {
         return MenuElement::where(array('menu_id' => Menu::where(array('slug' => $menu_slug))->get()->first()->id))->get()->sortBy('order_id');
     }

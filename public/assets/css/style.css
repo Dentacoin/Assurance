@@ -8885,9 +8885,8 @@ header {
       display: inline-block;
       padding: 15px 0; }
       header > .container .logged-user-nav > .hidden-box-parent > span.user-name {
-        vertical-align: middle;
-        padding-top: 25px;
-        padding-bottom: 25px; }
+        padding-top: 10px;
+        padding-bottom: 10px; }
       header > .container .logged-user-nav > .hidden-box-parent figure.header-avatar {
         width: 40px;
         margin-left: 10px;

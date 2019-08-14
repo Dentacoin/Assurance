@@ -3323,7 +3323,6 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                 $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
                                 bindCacheKeyEvent(keystore_string);
                             } else {
-                                var keystore_string = e.target.result;
                                 var btn_name = 'VERIFY';
                                 if(button_label != null) {
                                     btn_name = button_label;
