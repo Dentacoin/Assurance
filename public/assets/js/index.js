@@ -2171,13 +2171,29 @@ function bindLoginSigninPopupShow() {
                     }
 
                     if(!errors) {
-                        fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep3');
+                        if($('#dentist-country').attr('data-current-user-country-code') != undefined && $('#dentist-country').val() != $('#dentist-country').attr('data-current-user-country-code')) {
+                            var different_country_warning_obj = {};
+                            different_country_warning_obj.callback = function (result) {
+                                if (result) {
+                                    fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep3');
 
-                        $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
-                        $('.login-signin-popup .dentist .form-register .step.fourth').addClass('visible');
+                                    $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
+                                    $('.login-signin-popup .dentist .form-register .step.fourth').addClass('visible');
 
-                        this_btn.attr('data-current-step', 'fourth');
-                        this_btn.val('Create account');
+                                    this_btn.attr('data-current-step', 'fourth');
+                                    this_btn.val('Create account');
+                                }
+                            };
+                            basic.showConfirm('Your IP thinks differently. Sure you\'ve entered the right country?', '', different_country_warning_obj, true);
+                        } else {
+                            fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep3');
+
+                            $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
+                            $('.login-signin-popup .dentist .form-register .step.fourth').addClass('visible');
+
+                            this_btn.attr('data-current-step', 'fourth');
+                            this_btn.val('Create account');
+                        }
                     }
                     break;
                 case 'fourth':

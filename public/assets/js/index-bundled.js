@@ -75476,13 +75476,29 @@ function bindLoginSigninPopupShow() {
                     }
 
                     if(!errors) {
-                        fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep3');
+                        if($('#dentist-country').attr('data-current-user-country-code') != undefined && $('#dentist-country').val() != $('#dentist-country').attr('data-current-user-country-code')) {
+                            var different_country_warning_obj = {};
+                            different_country_warning_obj.callback = function (result) {
+                                if (result) {
+                                    fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep3');
 
-                        $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
-                        $('.login-signin-popup .dentist .form-register .step.fourth').addClass('visible');
+                                    $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
+                                    $('.login-signin-popup .dentist .form-register .step.fourth').addClass('visible');
 
-                        this_btn.attr('data-current-step', 'fourth');
-                        this_btn.val('Create account');
+                                    this_btn.attr('data-current-step', 'fourth');
+                                    this_btn.val('Create account');
+                                }
+                            };
+                            basic.showConfirm('Your IP thinks differently. Sure you\'ve entered the right country?', '', different_country_warning_obj, true);
+                        } else {
+                            fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep3');
+
+                            $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
+                            $('.login-signin-popup .dentist .form-register .step.fourth').addClass('visible');
+
+                            this_btn.attr('data-current-step', 'fourth');
+                            this_btn.val('Create account');
+                        }
                     }
                     break;
                 case 'fourth':
@@ -76628,7 +76644,6 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                 $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
                                 bindCacheKeyEvent(keystore_string);
                             } else {
-                                var keystore_string = e.target.result;
                                 var btn_name = 'VERIFY';
                                 if(button_label != null) {
                                     btn_name = button_label;
