@@ -40,7 +40,8 @@ class APIRequestsController extends Controller {
             'password-repeat' => trim($data['repeat-password']),
             'country_code' => trim($data['country-code']),
             'address' => trim($data['address']),
-            'avatar' => curl_file_create($files['image']->getPathName(), 'image/'.pathinfo($files['image']->getClientOriginalName(), PATHINFO_EXTENSION), $files['image']->getClientOriginalName()),
+            'avatar' => curl_file_create($data['image-path'], 'image/png', $data['image-name']),
+            /*'avatar' => curl_file_create($files['image']->getPathName(), 'image/'.pathinfo($files['image']->getClientOriginalName(), PATHINFO_EXTENSION), $files['image']->getClientOriginalName()),*/
             'phone' => trim($data['phone']),
             'website' => trim($data['website']),
             'specialisations' => json_encode($data['specializations'])

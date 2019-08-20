@@ -75544,14 +75544,40 @@ function bindLoginSigninPopupShow() {
 }
 bindLoginSigninPopupShow();
 
-function readURL(input, label_el) {
+var croppie_instance;
+function readURL(input) {
     if(input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            //SHOW THE IMAGE ON LOAD
-            $(label_el).css({'background-image' : 'url("'+e.target.result+'")'});
-            $(label_el).find('.inner i').addClass('fs-0');
-            $(label_el).find('.inner .inner-label').addClass('fs-0');
+            $('#cropper-container').addClass('width-and-height');
+            if(croppie_instance != undefined) {
+                croppie_instance.croppie('destroy');
+                $('#cropper-container').html('');
+            }
+
+            croppie_instance = $('#cropper-container').croppie({
+                viewport: {
+                    width: 120,
+                    height: 120
+                }
+            });
+
+            $('.avatar.module .btn-wrapper').hide();
+            $('.max-size-label').addClass('active');
+
+            croppie_instance.croppie('bind', {
+                url: e.target.result,
+                points: [77,469,280,739]
+            });
+
+            $('#cropper-container').on('update.croppie', function(ev, cropData) {
+                croppie_instance.croppie('result', {
+                    type: 'canvas',
+                    size: {width: 300, height: 300}
+                }).then(function (src) {
+                    $('#hidden-image').val(src);
+                });
+            });
         };
         reader.readAsDataURL(input.files[0]);
     }

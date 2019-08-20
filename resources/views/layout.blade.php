@@ -25,8 +25,8 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.31">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.31">
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.32">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.32">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
@@ -462,8 +462,10 @@
                             <div class="padding-bottom-20 fs-0">
                                 <div class="inline-block-top avatar module upload-file">
                                     <input type="file" class="visualise-image inputfile" id="custom-upload-avatar" name="image" accept=".jpg,.png,.jpeg,.svg,.bmp"/>
+                                    <input type="hidden" id="hidden-image" name="hidden-image"/>
                                     <div class="btn-wrapper"></div>
-                                    <div class="fs-14 padding-top-5 italic">Max size: 2MB</div>
+                                    <div id="cropper-container"></div>
+                                    <div class="fs-14 padding-top-5 italic max-size-label"><label for="custom-upload-avatar" class="inline-block margin-right-10 max-width-30"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="upload" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="width-100"><path fill="currentColor" d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z" class=""></path></svg></label>Max size: 2MB</div>
                                 </div>
                                 <div class="inline-block-top specializations">
                                     <h4>Please select your specializations:</h4>
@@ -522,17 +524,17 @@
 @endif
 
 {{--/Show the sticky calculate button only for dentists--}}
-<script src="/assets/js/basic.js?v=1.0.31"></script>
-<script src="/dist/js/front-libs-script.js?v=1.0.31"></script>
+<script src="/assets/js/basic.js?v=1.0.32"></script>
+<script src="/dist/js/front-libs-script.js?v=1.0.32"></script>
 {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-<script src="/assets/js/address.js?v=1.0.31"></script>
-<script src="/assets/js/index-bundled.js?v=1.0.31"></script>
+<script src="/assets/js/address.js?v=1.0.32"></script>
+<script src="/assets/js/index-bundled.js?v=1.0.32"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
 {{--Load social logging scripts only if user is not logged--}}
 @if(!(new \App\Http\Controllers\UserController())->checkSession())
-    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.31"></script>
-    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.31"></script>
+    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.32"></script>
+    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.32"></script>
 @endif
 
 {{--Multiple errors from laravel validation--}}

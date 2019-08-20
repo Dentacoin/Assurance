@@ -640,6 +640,16 @@
         @media screen and (max-width: 767px) {
           .module.avatar .btn-wrapper label .inner .inner-label {
             font-size: 16px; } }
+.module.avatar #cropper-container.width-and-height {
+  width: 180px;
+  height: 180px; }
+.module.avatar .max-size-label label {
+  display: none;
+  cursor: pointer; }
+.module.avatar .max-size-label.active {
+  padding-top: 40px !important; }
+  .module.avatar .max-size-label.active label {
+    display: inline-block; }
 .module.step-fields .single-row {
   border-bottom: 1px solid #888888;
   -webkit-transition: 0.3s;

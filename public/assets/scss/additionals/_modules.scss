@@ -459,6 +459,22 @@
                 }
             }
         }
+        #cropper-container.width-and-height {
+            width: 180px;
+            height: 180px;
+        }
+        .max-size-label {
+            label {
+                display: none;
+                cursor: pointer;
+            }
+            &.active {
+                padding-top: 40px !important;
+                label {
+                    display: inline-block;
+                }
+            }
+        }
     }
     &.step-fields {
         .single-row {

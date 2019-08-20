@@ -25,6 +25,7 @@ mix.styles([
     'public/assets/libs/bootstrap-select/dist/css/bootstrap-select.min.css',
     'node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css',
     'public/assets/libs/combobox/combobox.css',
+    'public/assets/libs/croppie/croppie.css',
     'public/assets/libs/FlipClock-master/compiled/flipclock.css',
 ], 'public/dist/css/front-libs-style.css');
 
@@ -42,6 +43,7 @@ mix.scripts([
     'node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
     'node_modules/floating-label/dist/floatingLabel.min.js',
     'public/assets/libs/combobox/combobox.js',
+    'public/assets/libs/croppie/croppie.min.js',
     'public/assets/libs/signature-pad/signature-pad.js',
     'public/assets/libs/jquery-animate-number/jquery.animateNumber.min.js',
     'public/assets/libs/FlipClock-master/compiled/flipclock.min.js',
