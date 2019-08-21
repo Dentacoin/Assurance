@@ -46,7 +46,7 @@ class Controller extends BaseController
         return Page::where(array('slug' => Route::getCurrentRoute()->getName()))->get()->first();
     }
 
-    public function getCurrentDcnUsdRate()  {
+    /*public function getCurrentDcnUsdRate()  {
         //API connection
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -67,7 +67,7 @@ class Controller extends BaseController
         } else {
             return 0;
         }
-    }
+    }*/
 
     public function getMenu($menu_slug) {
         return MenuElement::where(array('menu_id' => Menu::where(array('slug' => $menu_slug))->get()->first()->id))->get()->sortBy('order_id');
