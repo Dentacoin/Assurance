@@ -413,7 +413,7 @@
                                     <label>Select country:</label>
                                     @php($current_phone_code = '+')
                                     @if(isset($client_ip) && $client_ip != '127.0.0.1')
-                                        @php($current_user_country_code = mb_strtolower(trim(file_get_contents('http://ipinfo.io/' . $client_ip . '/country'))))
+                                        @php($current_user_country_code = (new \App\Http\Controllers\APIRequestsController())->getCountry($client_ip))
                                     @endif
                                     <select name="country-code" id="dentist-country" class="form-field required country-select" @if(!empty($current_user_country_code)) data-current-user-country-code="{{$current_user_country_code}}" @endif>
                                         @php($countries = (new \App\Http\Controllers\APIRequestsController())->getAllCountries())
