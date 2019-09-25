@@ -180,8 +180,7 @@ return [
         App\Providers\AgentServiceProvider::class,
         Roumen\Sitemap\SitemapServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
-        Mews\Captcha\CaptchaServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class
     ],
 
     /*
