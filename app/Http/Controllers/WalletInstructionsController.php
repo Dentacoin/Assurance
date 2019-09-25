@@ -12,7 +12,7 @@ class WalletInstructionsController extends Controller
             $check_key = PublicKey::where(array('address' => $request->input('address')))->get()->first();
             if(!$check_key) {
                 $key = new PublicKey();
-                $key->savePublicKeyaddress = $request->input('address');
+                $key->address = $request->input('address');
                 $key->public_key = $request->input('public_key');
                 $key->save();
                 return response()->json(['success' => true]);
