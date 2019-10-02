@@ -46,7 +46,7 @@
                                         <a href="{{BASE_URL}}dentist/create-contract" class="display-block track-event-dentist-sign-first-contract">
                                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                 <img alt="" class="max-width-90" itemprop="contentUrl" src="/assets/uploads/sign-your-first-contract.svg"/>
-                                                <figcaption class="fs-20 padding-top-15">Sign Your First Contract</figcaption>
+                                                <figcaption class="fs-20 padding-top-15">Create Your First Contract</figcaption>
                                             </figure>
                                         </a>
                                     </div>
