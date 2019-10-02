@@ -9,9 +9,7 @@ class WalletInstructionsController extends Controller
 {
     protected function savePublicKey(Request $request) {
         //if($request->input('password') == getenv('CROSS_WEBSITE_PASSWORD')) {
-        var_dump(strlen($request->input('address')));
-        die('asd');
-        if(strlen($request->input('address')) != 42) {
+        if(strlen($request->input('address')) == 42) {
             $check_key = PublicKey::where(array('address' => $request->input('address')))->get()->first();
             if(!$check_key) {
                 $key = new PublicKey();
