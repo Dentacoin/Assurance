@@ -99,8 +99,8 @@ class PatientController extends Controller {
             'type' => 'patient'
         ];
 
-        $current_logging_patient = (new APIRequestsController())->getUserData($request->input('id'));
-        if($current_logging_patient->self_deleted != NULL) {
+        $current_logging_patient = (new APIRequestsController())->getUserData($request->input('id'), true);
+        if(!$current_logging_patient->success || (property_exists($current_logging_patient, 'data') && $current_logging_patient->data->self_deleted != NULL)) {
             return redirect()->route('home')->with(['error' => 'This account is deleted, you cannot log in with this account anymore.']);
         } else {
             session(['logged_user' => $session_arr]);
