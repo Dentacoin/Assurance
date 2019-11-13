@@ -104,7 +104,8 @@ class PatientController extends Controller {
             return redirect()->route('home')->with(['error' => 'This account is deleted, you cannot log in with this account anymore.']);
         } else {
             session(['logged_user' => $session_arr]);
-
+            
+            //send request to API to add this reward to the patient account
             $rewards = InviteDentistsReward::where(array('patient_id' => $request->input('id'), /*'dentist_registered_and_approved' => 1,*/ 'sent_to_api' => 0, 'payed_on' => NULL))->get()->all();
             //if rewards forward them to coredb
             if(!empty($rewards)) {
@@ -120,7 +121,6 @@ class PatientController extends Controller {
                 }
             }
 
-            //send request to API to add this reward to the patient account
             if(!empty($request->input('route')) && !empty($request->input('slug'))) {
                 return redirect()->route($request->input('route'), ['slug' => $request->input('slug')]);
             } else {
