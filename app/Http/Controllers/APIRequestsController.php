@@ -178,7 +178,7 @@ class APIRequestsController extends Controller {
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'https://api.dentacoin.com/api/user/'.$id,
+            CURLOPT_URL => 'https://api.dentacoin.com/api/user/?id='.urlencode($this->encrypt($id, getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'))),
             CURLOPT_SSL_VERIFYPEER => 0,
         ));
 
