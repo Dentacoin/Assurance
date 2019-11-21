@@ -102,8 +102,6 @@ class MediaController extends Controller
     }
 
     protected function ajaxUpload(Request $request) {
-        var_dump($request->file());
-        die('upload');
         if(!empty($request->file('images')))    {
             $allowed = array('jpeg', 'png', 'jpg', 'svg', 'gif', 'pdf', 'doc', 'docx', 'rtf', 'zip', 'rar', 'JPEG', 'PNG', 'JPG', 'SVG', 'GIF', 'DOC', 'DOCX', 'RTF', 'ZIP', 'RAR', 'mp4', 'avi', 'MP4', 'AVI');
             foreach($request->file('images') as $file)  {

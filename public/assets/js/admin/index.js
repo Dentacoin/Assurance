@@ -55,6 +55,9 @@ function initDataTable()    {
                 data: {
                     'order_object' : order_object
                 },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 dataType: 'json',
                 success: function (response) {
                     if(response.success)    {
@@ -207,6 +210,9 @@ function deleteMedia() {
             type: 'POST',
             url: SITE_URL + '/media/delete/'+this_btn.closest('tr').attr('data-id'),
             dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             success: function (response) {
                 if(response.success)    {
                     basic.showAlert(response.success, '', true);
@@ -327,6 +333,9 @@ if($('.add-edit-menu-element select[name="type"]').length > 0) {
             url: SITE_URL + '/menus/change-url-option',
             data: {
                 'type' : type
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             dataType: 'json',
             success: function (response) {
