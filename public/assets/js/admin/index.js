@@ -354,6 +354,9 @@ function initUploadMediaLogic() {
                     processData: false,
                     contentType: false,
                     dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     success: function (response) {
                         if(response.success) {
                             basic.showAlert(response.success, '', true);

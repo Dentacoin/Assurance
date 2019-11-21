@@ -118,9 +118,9 @@
 <script>
     var CKEDITOR_BASEPATH = '/assets/libs/ckeditor-full/';
 </script>
-<script src="/dist/js/admin-libs-script.js?v=1.0.3"></script>
+<script src="/dist/js/admin-libs-script.js?v=1.0.4"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBd5xOHXvqHKf8ulbL8hEhFA4kb7H6u6D4" type="text/javascript"></script>
-<script src="/assets/js/basic.js?v=1.0.3"></script>
-<script src="/assets/js/admin/index.js?v=1.0.3"></script>
+<script src="/assets/js/basic.js?v=1.0.4"></script>
+<script src="/assets/js/admin/index.js?v=1.0.4"></script>
 </body>
 </html>
