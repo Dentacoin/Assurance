@@ -5,20 +5,26 @@ namespace App\Http\Controllers;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 
 class APIRequestsController extends Controller {
-    public function dentistLogin($data) {
+    public function dentistLogin($data, $dontCountLogin = false) {
+        $postData = array(
+            'platform' => 'assurance',
+            'type' => 'dentist',
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'client_ip' => $this->getClientIp()
+        );
+
+        if($dontCountLogin) {
+            $postData['dont_count_login'] = true;
+        }
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
             CURLOPT_URL => 'https://api.dentacoin.com/api/login',
             CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POSTFIELDS => array(
-                'platform' => 'assurance',
-                'type' => 'dentist',
-                'email' => $data['email'],
-                'password' => $data['password'],
-                'client_ip' => $this->getClientIp()
-            )
+            CURLOPT_POSTFIELDS => $postData
         ));
 
         $resp = json_decode(curl_exec($curl), true);
