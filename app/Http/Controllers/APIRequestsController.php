@@ -183,6 +183,7 @@ class APIRequestsController extends Controller {
     }
 
     public function getUserData($id, $logging = false) {
+        var_dump($id);
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -195,9 +196,6 @@ class APIRequestsController extends Controller {
         curl_close($curl);
 
         if(!empty($resp))   {
-            var_dump(getenv('API_ENCRYPTION_METHOD'));
-            var_dump($resp);
-            die('asd');
             if($logging) {
                 return $resp;
             } else {
