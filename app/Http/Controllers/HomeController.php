@@ -112,7 +112,7 @@ class HomeController extends Controller
         }
 
         $avg_premium = CalculatorParameter::where(array('id' => $request->input('country')))->first();
-        $dcn_result = ((($request->input('patients_number') * 240) / 12) * $avg_premium[$request->input('params_type')]) / (float)$resp[0]->price_usd;
+        $dcn_result = ((($request->input('patients_number') * 240) / 12) * $avg_premium[$request->input('params_type')]) / (float)$resp->market_data->current_price->usd;
 
         $view = view('partials/calculator-result', ['result' => $dcn_result*$currency, 'currency_symbol' => $request->input('currency')]);
         $view = $view->render();
