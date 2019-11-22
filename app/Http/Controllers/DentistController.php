@@ -20,16 +20,16 @@ class DentistController extends Controller
         $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
         $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
         $params = ['contract' => $contract, 'calculator_proposals' => $calculator_proposals, 'current_logged_dentist' => $current_logged_dentist];
-        if(!empty($contract)) {
-            if($contract->status == 'active') {
+        if (!empty($contract)) {
+            if ($contract->status == 'active') {
                 //checking here if the contract withdraw period and grace period passed and the patient still didnt full in his wallet address
                 (new UserController())->automaticContractCancel($contract);
-            } else if($contract->status == 'awaiting-approval') {
+            } else if ($contract->status == 'awaiting-approval') {
                 $this_dentist_having_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->all();
-                if(sizeof($this_dentist_having_contracts) == 1) {
+                if (sizeof($this_dentist_having_contracts) == 1) {
                     //send ETH to dentist only for his first contract
                     $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendDentistETHamount($contract->patient_address, $contract->dentist_address);
-                    if($sending_eth_response && property_exists($sending_eth_response, 'success')) {
+                    if ($sending_eth_response && property_exists($sending_eth_response, 'success')) {
                         $params['sent_eth_to_dentist'] = true;
                     }
                 }
@@ -52,15 +52,15 @@ class DentistController extends Controller
         $existing_company_registration_number = TemporallyContract::where(array('dentist_id' => $current_logged_dentist->id))->where('professional_company_number', '!=' , '')->get()->first();
 
         $dentist_registration_number = '';
-        if($existing_company_registration_number && $existing_company_registration_number->professional_company_number != '') {
+        if ($existing_company_registration_number && $existing_company_registration_number->professional_company_number != '') {
             $dentist_registration_number = $existing_company_registration_number->professional_company_number;
         }
 
         $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
         $params = ['countries' => (new APIRequestsController())->getAllCountries(), 'current_logged_dentist' => $current_logged_dentist, 'calculator_proposals' => $calculator_proposals, 'dentist_registration_number' => $dentist_registration_number];
-        if(!empty(Input::get('renew-contract'))) {
+        if (!empty(Input::get('renew-contract'))) {
             $contract = TemporallyContract::where(array('slug' => Input::get('renew-contract'), 'status' => 'cancelled'))->get()->first();
-            if(!empty($contract)) {
+            if (!empty($contract)) {
                 $params['renew_contract'] = $contract;
             } else {
                 return abort(404);
@@ -113,27 +113,27 @@ class DentistController extends Controller
         $files = $request->file();
 
         //check email validation
-        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL))   {
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))   {
             return redirect()->route('home')->with(['error' => 'Your form was not sent. Please try again with valid email.']);
         }
 
-        if(!empty($files)) {
+        if (!empty($files)) {
             //404 if they're trying to send more than 2 files
-            if(sizeof($files) > 2) {
+            if (sizeof($files) > 2) {
                 return abort(404);
             } else {
                 $allowed = array('png', 'jpg', 'jpeg', 'svg', 'bmp', 'PNG', 'JPG', 'JPEG', 'SVG', 'BMP');
                 foreach($files as $file)  {
                     //checking the file size
-                    if($file->getSize() > MAX_UPL_SIZE) {
+                    if ($file->getSize() > MAX_UPL_SIZE) {
                         return redirect()->route('home', ['slug' => $request->input('post-slug')])->with(['error' => 'Your form was not sent. Files can be only with with maximum size of '.number_format(MAX_UPL_SIZE / 1048576).'MB. Please try again.']);
                     }
                     //checking file format
-                    if(!in_array(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION), $allowed)) {
+                    if (!in_array(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION), $allowed)) {
                         return redirect()->route('home')->with(['error' => 'Your form was not sent. Files can be only with .png, .jpg, .jpeg, .svg, .bmp formats. Please try again.']);
                     }
                     //checking if error in file
-                    if($file->getError()) {
+                    if ($file->getError()) {
                         return redirect()->route('home')->with(['error' => 'Your form was not sent. There is error with one or more of the files, please try with other files. Please try again.']);
                     }
                 }
@@ -153,11 +153,11 @@ class DentistController extends Controller
         //deleting the dummy image
         unlink($data['image-path']);
 
-        if($api_response['success']) {
-            if($data['user-type'] == 'dentist') {
+        if ($api_response['success']) {
+            if ($data['user-type'] == 'dentist') {
                 $popup_view = view('partials/popup-dentist-profile-verification', ['user' => $api_response['data']['id']]);
                 return redirect()->route('home')->with(['success' => true, 'popup-html' => $popup_view->render()]);
-            }else if($data['user-type'] == 'clinic') {
+            }else if ($data['user-type'] == 'clinic') {
                 $popup_view = view('partials/popup-clinic-profile-verification', ['user' => $api_response['data']['id']]);
                 return redirect()->route('home')->with(['success' => true, 'popup-html' => $popup_view->render()]);
             }
@@ -179,11 +179,11 @@ class DentistController extends Controller
         $data = $request->input();
 
         $api_response = (new APIRequestsController())->dentistLogin($data, true);
-        if($api_response['success']) {
+        if ($api_response['success']) {
             $approved_statuses = array('approved', 'test');
-            if($api_response['data']['self_deleted'] != NULL) {
+            if ($api_response['data']['self_deleted'] != NULL) {
                 return response()->json(['error' => true, 'message' => 'This account is deleted, you cannot log in with this account anymore.']);
-            } else if(!in_array($api_response['data']['status'], $approved_statuses)) {
+            } else if (!in_array($api_response['data']['status'], $approved_statuses)) {
                 return response()->json(['error' => true, 'message' => 'This account is not approved by Dentacoin team yet, please try again later.']);
             } else {
                 return response()->json(['success' => true]);
@@ -206,23 +206,23 @@ class DentistController extends Controller
         $data = $request->input();
 
         //check email validation
-        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             return redirect()->route('home')->with(['error' => 'Your form was not sent. Please try again with valid email.']);
         }
 
         //handle the API response
         $api_response = (new APIRequestsController())->dentistLogin($data);
-        if($api_response['success']) {
+        if ($api_response['success']) {
             $approved_statuses = array('approved', 'test');
-            if($api_response['data']['self_deleted'] != NULL) {
+            if ($api_response['data']['self_deleted'] != NULL) {
                 return redirect()->route('home')->with(['error' => 'This account is deleted, you cannot log in with this account anymore.']);
-            } else if(!in_array($api_response['data']['status'], $approved_statuses)) {
+            } else if (!in_array($api_response['data']['status'], $approved_statuses)) {
                 return redirect()->route('home')->with(['error' => 'This account is not approved by Dentacoin team yet, please try again later.']);
             } else {
                 /*//check if waiting invite dentist rewards
                 $reward = InviteDentistsReward::where(array('dentist_email' => $data['email'], 'dentist_registered_and_approved' => 0, 'payed_on' => NULL))->get()->first();
 
-                if(!empty($reward)) {
+                if (!empty($reward)) {
                     $reward->dentist_registered_and_approved = true;
                     $reward->save();
                 }*/
@@ -269,27 +269,27 @@ class DentistController extends Controller
         $files = $request->file();
 
         //check email validation
-        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             return redirect()->route('create-contract')->with(['error' => 'Your form was not sent. Please try again with valid email.']);
         }
 
-        if(!empty($files)) {
+        if (!empty($files)) {
             //404 if they're trying to send more than 2 files
-            if(sizeof($files) > 2) {
+            if (sizeof($files) > 2) {
                 return abort(404);
             } else {
                 $allowed = array('png', 'jpg', 'jpeg', 'svg', 'bmp', 'PNG', 'JPG', 'JPEG', 'SVG', 'BMP');
                 foreach($files as $file)  {
                     //checking the file size
-                    if($file->getSize() > MAX_UPL_SIZE) {
+                    if ($file->getSize() > MAX_UPL_SIZE) {
                         return redirect()->route('create-contract')->with(['error' => 'Your form was not sent. Files can be only with with maximum size of '.number_format(MAX_UPL_SIZE / 1048576).'MB. Please try again.']);
                     }
                     //checking file format
-                    if(!in_array(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION), $allowed)) {
+                    if (!in_array(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION), $allowed)) {
                         return redirect()->route('create-contract')->with(['error' => 'Your form was not sent. Files can be only with .png, .jpg, .jpeg, .svg, .bmp formats. Please try again.']);
                     }
                     //checking if error in file
-                    if($file->getError()) {
+                    if ($file->getError()) {
                         return redirect()->route('create-contract')->with(['error' => 'Your form was not sent. There is error with one or more of the files, please try with other files. Please try again.']);
                     }
                 }
@@ -297,18 +297,24 @@ class DentistController extends Controller
         }
 
         //if user selected avatar or entered dcn_address both for first time
-        if(!empty($files['image']) || !empty($data['address'])) {
+        if (!empty($files['image']) || !empty($data['address']) || !empty($data['website'])) {
             $post_fields_arr = array();
-            if(!empty($files['image'])) {
+            if (!empty($files['image'])) {
                 $post_fields_arr['avatar'] = curl_file_create($files['image']->getPathName(), 'image/'.pathinfo($files['image']->getClientOriginalName(), PATHINFO_EXTENSION), $files['image']->getClientOriginalName());
             }
-            if(!empty($data['address'])) {
+            if (!empty($data['address'])) {
                 $post_fields_arr['dcn_address'] = trim($data['address']);
+            }
+            if (!empty($data['website'])) {
+                if (mb_strpos(mb_strtolower($request->input('website')), 'http') !== 0) {
+                    $data['website'] = 'http://' . trim($data['website']);
+                }
+                $post_fields_arr['website'] = $data['website'];
             }
 
             //handle the API response
             $api_response = (new APIRequestsController())->updateUserData($post_fields_arr);
-            if(!$api_response) {
+            if (!$api_response) {
                 return redirect()->route('create-contract')->with(['errors_response' => $api_response['errors']]);
             }
         }
@@ -323,7 +329,7 @@ class DentistController extends Controller
 
         //saving the dentist signature in new unique folder for this contract
         $temp_contract_folder_path = CONTRACTS . DS . $random_string;
-        if(!file_exists($temp_contract_folder_path)) {
+        if (!file_exists($temp_contract_folder_path)) {
             mkdir($temp_contract_folder_path, 0777, true);
 
             //create image from the base64 signature
@@ -349,7 +355,7 @@ class DentistController extends Controller
         $temporally_contract->slug = $random_string;
         $temporally_contract->save();
 
-        if($temporally_contract->id) {
+        if ($temporally_contract->id) {
             //send email
             $body = '<!DOCTYPE html><html><head></head><body style="font-size: 13px;"><div>Dear '.$temporally_contract->patient_fname.' '.$temporally_contract->patient_lname.',<br><br><br>I have created an individualized Assurance Contract for you. It entitles you to prevention-focused dental services against an affordable monthly premium in Dentacoin (DCN) currency*.<br><br>It’s very easy to start: just click on the button below, sign up, check my proposal and follow the instructions if you are interested:<br><br><br><a href="'.route('contract-proposal', ['slug' => $temporally_contract->slug]).'" style="font-size: 14px;color: #126585;background-color: white;padding: 8px 10px;text-decoration: none;font-weight: bold;border-radius: 4px;border: 2px solid #126585;" target="_blank">SEE CONTRACT</a><br><br><br>Looking forward to seeing you onboard!<br><br>Regards,<br><b>'.$sender->name.'</b><br><br><br><i style="font-size: 11px;">* Dentacoin is the first dental cryptocurrency which can be earned through the Dentacoin tools, used as a means of payment for dental services and assurance fees, and exchanged to any other crypto or traditional currency.</i></div></body></html>';
 
@@ -359,7 +365,7 @@ class DentistController extends Controller
                 $message->setBody($body, 'text/html');
             });
 
-            if(count(Mail::failures()) > 0) {
+            if (count(Mail::failures()) > 0) {
                 return redirect()->route('create-contract')->with(['error' => 'Something went wrong with sending contract via email. Please try again later.']);
             } else {
                 return redirect()->route('dentist-contract-view', ['slug' => $temporally_contract->slug])->with(['success' => true, 'popup-html' => '<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">SUCCESSFULLY SENT.</div><div class="padding-top-20 padding-bottom-25 fs-20">Yоur contract sample was successfully sent. You will be notified via email when '.trim($data['fname']).' '.trim($data['lname']).' signs the contract.</div><div class="btn-container padding-bottom-40"><a href="javascript:void(0)" class="white-blue-green-btn min-width-200 close-popup">OK</a></div></div>']);
@@ -406,7 +412,7 @@ class DentistController extends Controller
         ]);
 
         $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'dentist_id' => session('logged_user')['id']))->get()->first();
-        if(!empty($contract)) {
+        if (!empty($contract)) {
             $dentist_name = (new APIRequestsController())->getUserData(session('logged_user')['id'])->name;
             $patient = (new APIRequestsController())->getUserData($contract->patient_id);
 
@@ -438,7 +444,7 @@ class DentistController extends Controller
             'short_description' => $this->encrypt($data['description'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'))
         );
         $update_method_response = (new APIRequestsController())->updateAnonymousUserData($post_api_data);
-        if($update_method_response->success) {
+        if ($update_method_response->success) {
             return redirect()->route('home')->with(['success' => 'Your short description was saved successfully.']);
         } else {
             return redirect()->route('home')->with(['error' => 'Something went wrong, please try again later.']);
