@@ -195,6 +195,7 @@ class APIRequestsController extends Controller {
         curl_close($curl);
 
         if(!empty($resp))   {
+            var_dump(getenv('API_ENCRYPTION_METHOD'));
             var_dump($resp);
             die('asd');
             if($logging) {
