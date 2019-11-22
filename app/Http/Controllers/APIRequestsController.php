@@ -194,6 +194,8 @@ class APIRequestsController extends Controller {
         curl_close($curl);
 
         if(!empty($resp))   {
+            var_dump($resp);
+            die('asd');
             if($logging) {
                 return $resp;
             } else {
