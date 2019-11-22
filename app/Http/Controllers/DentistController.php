@@ -102,16 +102,12 @@ class DentistController extends Controller
             'captcha' => 'required|captcha|max:5'
         ], $customMessages);
 
-        var_dump(request('website'));
-
-        if (request('website') && mb_strpos(mb_strtolower(request('website')), 'http') !== 0) {
+        // if user didn't enter http/ https append it to his website
+        if ($request->input('website') && mb_strpos(mb_strtolower($request->input('website')), 'http') !== 0) {
             request()->merge([
-                'website' => 'http://'.request('website')
+                'website' => 'http://' . $request->input('website')
             ]);
         }
-
-        var_dump(request('website'));
-        die('asd');
 
         $data = $request->input();
         $files = $request->file();
