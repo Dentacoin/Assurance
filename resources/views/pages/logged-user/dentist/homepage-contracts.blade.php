@@ -205,7 +205,7 @@
                                 </div>
                             </div>
                         @endif
-                        {{--<div class="col-xs-12 col-sm-6 padding-bottom-xs-20">
+                        <div class="col-xs-12 col-sm-6 padding-bottom-xs-20">
                             @if((isset($mobile) && $mobile))
                                 <h2 class="text-center lato-bold fs-20 padding-bottom-20">PENDING CONTRACTS</h2>
                             @endif
@@ -217,7 +217,6 @@
                                         @break
                                     @endif
                                     <div class="module contract-tile padding-bottom-10 {{$contract->status}}">
-                                        @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
                                         @php($url = route('dentist-contract-view', ['slug' => $contract->slug]))
                                         <a href="{{$url}}" class="tile-wrapper fs-0">
                                             <div class="inline-block-top figure-container">
@@ -262,7 +261,7 @@
                                     <a href="/my-contracts?status=pending" class="black-light-gray-btn margin-left-10">See all</a>
                                 </div>
                             @endif
-                        </div>--}}
+                        </div>
                         <div class="col-xs-12 col-sm-6 border-delimeter">
                             @if((isset($mobile) && $mobile))
                                 <h2 class="text-center lato-bold fs-20 padding-bottom-20">CANCELLED CONTRACTS</h2>
