@@ -79,7 +79,7 @@ class HomeController extends Controller
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'https://api.coinmarketcap.com/v1/ticker/dentacoin/?convert=' . $request->input('currency'),
+            CURLOPT_URL => 'https://api.coingecko.com/api/v3/coins/dentacoin',
             CURLOPT_SSL_VERIFYPEER => 0
         ));
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
@@ -89,25 +89,25 @@ class HomeController extends Controller
         $currency = 0;
         switch($request->input('currency')) {
             case 'USD':
-                $currency = (float)$resp[0]->price_usd;
+                $currency = $resp->market_data->current_price->usd;
                 break;
             case 'EUR':
-                $currency = (float)$resp[0]->price_eur;
+                $currency = $resp->market_data->current_price->eur;
                 break;
             case 'GBP':
-                $currency = (float)$resp[0]->price_gbp;
+                $currency = $resp->market_data->current_price->gbp;
                 break;
             case 'RUB':
-                $currency = (float)$resp[0]->price_rub;
+                $currency = $resp->market_data->current_price->rub;
                 break;
             case 'INR':
-                $currency = (float)$resp[0]->price_inr;
+                $currency = $resp->market_data->current_price->inr;
                 break;
             case 'CNY':
-                $currency = (float)$resp[0]->price_cny;
+                $currency = $resp->market_data->current_price->cny;
                 break;
             case 'JPY':
-                $currency = (float)$resp[0]->price_jpy;
+                $currency = $resp->market_data->current_price->jpy;
                 break;
         }
 
