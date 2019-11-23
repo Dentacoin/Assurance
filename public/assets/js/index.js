@@ -5,7 +5,7 @@ basic.init();
 var get_params = getGETParameters();
 $(document).ready(async function() {
     //if get parameter is passed show loginform
-    if((basic.objHasKey(get_params, 'show-login') || basic.objHasKey(get_params, 'inviter')) && !$('body').hasClass('logged-in')) {
+    if ((basic.objHasKey(get_params, 'show-login') || basic.objHasKey(get_params, 'inviter')) && !$('body').hasClass('logged-in')) {
         openLoginSigninPopup();
     }
 
@@ -21,7 +21,7 @@ $(window).on('load', function() {
 });
 
 $(window).on('resize', function() {
-    if($('.my-contracts-container').length) {
+    if ($('.my-contracts-container').length) {
         triggerIframeSizeEventForParent($('.my-contracts-container').width(), $('.my-contracts-container').height());
     }
 });
@@ -46,7 +46,7 @@ function fixButtonsFocus() {
 }
 
 function checkIfCookie()    {
-    if($('.privacy-policy-cookie').length > 0)  {
+    if ($('.privacy-policy-cookie').length > 0)  {
         $('.privacy-policy-cookie .accept').click(function()    {
             basic.cookies.set('privacy_policy', 1);
             $('.privacy-policy-cookie').hide();
@@ -83,7 +83,7 @@ var dApp = {
         return dApp.initWeb3();
     },
     initWeb3: async function()    {
-        if(metamask) {
+        if (metamask) {
             //METAMASK
             dApp.web3_0_2 = web3;
             //global_state.account = dApp.web3_0_2.eth.defaultAccount;
@@ -91,9 +91,9 @@ var dApp = {
             web3 = getWeb3(dApp.web3_0_2.currentProvider);
             //dApp.web3_1_0 = web3;
             dApp.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(dApp.infura_node));
-        }else if(typeof(web3) === 'undefined')    {
+        }else if (typeof(web3) === 'undefined')    {
             //CUSTOM
-            /*if(localStorage.getItem('current-account') != null) {
+            /*if (localStorage.getItem('current-account') != null) {
                 global_state.account = JSON.parse(localStorage.getItem('current-account')).address;
             }*/
             dApp.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(dApp.infura_node));
@@ -102,16 +102,16 @@ var dApp = {
             dApp.web3_1_0 = getWeb3();
         }
 
-        if($('body').hasClass('logged-in')) {
+        if ($('body').hasClass('logged-in')) {
             var user_data = await getCurrentUserData();
-            if(user_data.success.dcn_address != null) {
+            if (user_data.success.dcn_address != null) {
                 global_state.account = checksumAddress(user_data.success.dcn_address);
             }
 
             //if some fake or false current-account localstorage variable is set -> delete it
-            if(localStorage.getItem('current-account') != null) {
+            if (localStorage.getItem('current-account') != null) {
                 var current_account_obj = JSON.parse(localStorage.getItem('current-account'));
-                if(!basic.objHasKey(current_account_obj, 'address') || !innerAddressCheck(current_account_obj.address) || global_state.account.toLowerCase() != current_account_obj.address.toLowerCase() || !basic.objHasKey(current_account_obj, 'type') || (basic.objHasKey(current_account_obj, 'type') && current_account_obj.type != 'keystore')) {
+                if (!basic.objHasKey(current_account_obj, 'address') || !innerAddressCheck(current_account_obj.address) || global_state.account.toLowerCase() != current_account_obj.address.toLowerCase() || !basic.objHasKey(current_account_obj, 'type') || (basic.objHasKey(current_account_obj, 'type') && current_account_obj.type != 'keystore')) {
                     localStorage.removeItem('current-account');
                 }
             }
@@ -133,7 +133,7 @@ var dApp = {
     dentacoin_token_methods: {
         allowance: function(owner, spender)  {
             return dApp.dentacoin_token_instance.methods.allowance(owner, spender).call({ from: global_state.account }, function(error, result)   {
-                if(!error)  {
+                if (!error)  {
                     return result;
                 }else {
                     console.error(error);
@@ -152,7 +152,7 @@ var dApp = {
         },
         balanceOf: function(address)  {
             return dApp.dentacoin_token_instance.methods.balanceOf(address).call({}, function(error, result)   {
-                if(!error)  {
+                if (!error)  {
                     return result;
                 }else {
                     console.error(error);
@@ -162,22 +162,22 @@ var dApp = {
     },
     assurance_proxy_methods: {
         registerContract: async function(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash)  {
-            if(!innerAddressCheck(patient_addr) || !innerAddressCheck(dentist_addr)) {
+            if (!innerAddressCheck(patient_addr) || !innerAddressCheck(dentist_addr)) {
                 //check if patient and dentist addresses are valid
                 basic.showAlert('Patient and dentist addresses must be valid.');
                 return false;
-            } else if(parseInt(await dApp.dentacoin_token_methods.allowance(patient_addr, dApp.assurance_state_address)) <= 0) {
+            } else if (parseInt(await dApp.dentacoin_token_methods.allowance(patient_addr, dApp.assurance_state_address)) <= 0) {
                 basic.showAlert('This patient didn\'t give allowance to Assurance contract to manage his Dentacoins.');
                 return false;
-            } else if(parseInt(value_usd) <= 0 || parseInt(value_dcn) <= 0) {
+            } else if (parseInt(value_usd) <= 0 || parseInt(value_dcn) <= 0) {
                 //check if USD and DCN values are valid
                 basic.showAlert('Both USD and DCN values must be greater than 0.');
                 return false;
-            } else if(date_start_contract < 0) {
+            } else if (date_start_contract < 0) {
                 //check if valid timestamp
                 basic.showAlert('Please enter valid date.');
                 return false;
-            } else if(contract_ipfs_hash == '') {
+            } else if (contract_ipfs_hash == '') {
                 //check if ipfs hash is passed
                 basic.showAlert('Please enter valid date.');
                 return false;
@@ -194,7 +194,7 @@ var dApp = {
     assurance_state_methods: {
         getPeriodToWithdraw: function()  {
             return dApp.assurance_state_instance.methods.getPeriodToWithdraw().call({}, function(error, result)   {
-                if(!error)  {
+                if (!error)  {
                     return result;
                 }else {
                     console.error(error);
@@ -203,7 +203,7 @@ var dApp = {
         },
         getPatient: function(_patient_addr, _dentist_addr)  {
             return dApp.assurance_state_instance.methods.getPatient(_patient_addr, _dentist_addr).call({}, function(error, result)   {
-                if(!error)  {
+                if (!error)  {
                     return result;
                 }else {
                     console.error(error);
@@ -212,7 +212,7 @@ var dApp = {
         }
         /*getDentist: function(dentist_addr)  {
             return dApp.assurance_state_instance.methods.getDentist(dentist_addr).call({ from: global_state.account }, function(error, result)   {
-                if(!error)  {
+                if (!error)  {
                     return result;
                 }else {
                     console.error(error);
@@ -221,7 +221,7 @@ var dApp = {
         },
         getPatient: function(patient_addr, dentist_addr)  {
             return dApp.assurance_state_instance.methods.getPatient(patient_addr, dentist_addr).call({ from: global_state.account }, function(error, result)   {
-                if(!error)  {
+                if (!error)  {
                     return result;
                 }else {
                     console.error(error);
@@ -230,7 +230,7 @@ var dApp = {
         },
         getDentistsArr: function()  {
             return dApp.assurance_state_instance.methods.getDentistsArr().call({ from: global_state.account }, function(error, result)   {
-                if(!error)  {
+                if (!error)  {
                     console.log(result);
                 }else {
                     console.error(error);
@@ -239,7 +239,7 @@ var dApp = {
         },
         getPatientsArrForDentist: function(dentist_addr)  {
             return dApp.assurance_state_instance.methods.getPatientsArrForDentist(dentist_addr).call({ from: global_state.account }, function(error, result)   {
-                if(!error)  {
+                if (!error)  {
                     return result;
                 }else {
                     console.error(error);
@@ -248,7 +248,7 @@ var dApp = {
         },
         getWaitingContractsForPatient: function(patient_addr)  {
             return dApp.assurance_state_instance.methods.getWaitingContractsForPatient(patient_addr).call({ from: global_state.account }, function(error, result)   {
-                if(!error)  {
+                if (!error)  {
                     return result;
                 }else {
                     console.error(error);
@@ -257,7 +257,7 @@ var dApp = {
         },
         breakContract: function(patient_addr, dentist_addr)  {
             //check if patient and dentist addresses are valid
-            if(!innerAddressCheck(patient_addr) || !innerAddressCheck(dentist_addr)) {
+            if (!innerAddressCheck(patient_addr) || !innerAddressCheck(dentist_addr)) {
                 basic.showAlert('Patient and dentist addresses must be valid.');
                 return false;
             }
@@ -273,7 +273,7 @@ var dApp = {
         },
         dentistApproveContract: function(patient_addr)  {
             //check if patient address is valid
-            if(!innerAddressCheck(patient_addr)) {
+            if (!innerAddressCheck(patient_addr)) {
                 basic.showAlert('Patient address must be valid.');
                 return false;
             }
@@ -299,27 +299,27 @@ var dApp = {
         registerContract: async function(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash)  {
             var check_if_dentist_registered = await dApp.assurance_methods.getDentist(dentist_addr);
             //check if patient and dentist addresses are valid
-            if(!innerAddressCheck(patient_addr) || !innerAddressCheck(dentist_addr)) {
+            if (!innerAddressCheck(patient_addr) || !innerAddressCheck(dentist_addr)) {
                 basic.showAlert('Patient and dentist addresses must be valid.');
                 return false;
             }
             //check if dentist is registered on Assurance contract
-            if(check_if_dentist_registered.toLowerCase() != dentist_addr.toLowerCase()) {
+            if (check_if_dentist_registered.toLowerCase() != dentist_addr.toLowerCase()) {
                 basic.showAlert('You are not registered dentist on the Assurance contract. In order to init contracts you must first register your self.');
                 return false;
             }
             //(talk with Jeremias about this check) check if patient gave allowance to Assurance contract to manage his Dentacoins
-            if(parseInt(await dApp.dentacoin_token_methods.allowance(patient_addr, dApp.assurance_address)) <= 0) {
+            if (parseInt(await dApp.dentacoin_token_methods.allowance(patient_addr, dApp.assurance_address)) <= 0) {
                 basic.showAlert('This patient didn\'t give allowance to Assurance contract to manage his Dentacoins.');
                 return false;
             }
             //check if USD and DCN values are valid
-            if(parseInt(value_usd) <= 0 || parseInt(value_dcn) <= 0) {
+            if (parseInt(value_usd) <= 0 || parseInt(value_dcn) <= 0) {
                 basic.showAlert('Both USD and DCN values must be greater than 0.');
                 return false;
             }
             //check if valid timestamp
-            if(date_start_contract < 0) {
+            if (date_start_contract < 0) {
                 basic.showAlert('Please enter valid date.');
                 return false;
             }
@@ -345,18 +345,18 @@ var dApp = {
         withdrawToDentist: async function()  {
             var ready_to_withdraw_arr = [];
             var current_patients_for_dentist = await dApp.assurance_methods.getPatientsArrForDentist(global_state.account);
-            if(current_patients_for_dentist.length > 0) {
+            if (current_patients_for_dentist.length > 0) {
                 for (var i = 0, len = current_patients_for_dentist.length; i < len; i += 1) {
                     var patient = await dApp.assurance_methods.getPatient(current_patients_for_dentist[i], global_state.account);
                     //if time passed for next_transfer of contract and if the contract is approved by both patient and dentist and then dentist can withdraw from patient legit
                     console.log(patient);
-                    if(Math.round(new Date().getTime() / 1000) > parseInt(patient[2]) && patient[3] && patient[4]) {
+                    if (Math.round(new Date().getTime() / 1000) > parseInt(patient[2]) && patient[3] && patient[4]) {
                         ready_to_withdraw_arr.push(patient[1]);
                     }
                 }
             }
 
-            if(ready_to_withdraw_arr.length > 0) {
+            if (ready_to_withdraw_arr.length > 0) {
                 return dApp.assurance_state_instance.methods.withdrawToDentist(ready_to_withdraw_arr).send({
                     from: global_state.account,
                     gas: ready_to_withdraw_arr.length * 60000
@@ -399,7 +399,7 @@ var dApp = {
         getBlockNum: function()  {
             return new Promise(function(resolve, reject) {
                 dApp.web3_1_0.eth.getBlockNumber(function(error, result) {
-                    if(!error){
+                    if (!error){
                         global_state.curr_block = result;
                         resolve(global_state.curr_block);
                     }
@@ -409,7 +409,7 @@ var dApp = {
         getAccounts: function()  {
             return new Promise(function(resolve, reject) {
                 dApp.web3_1_0.eth.getAccounts(function(error, result) {
-                    if(!error){
+                    if (!error){
                         resolve(result);
                     }
                 });
@@ -421,7 +421,7 @@ var dApp = {
                     to: address,
                     data: function_abi
                 }, function(error, result) {
-                    if(!error){
+                    if (!error){
                         resolve(result);
                     }
                 });
@@ -430,7 +430,7 @@ var dApp = {
         getGasPrice: function() {
             return new Promise(function(resolve, reject) {
                 dApp.web3_1_0.eth.getGasPrice(function(error, result) {
-                    if(!error){
+                    if (!error){
                         resolve(result);
                     }
                 });
@@ -445,11 +445,11 @@ var dApp = {
 };
 
 async function pagesDataOnContractInit() {
-    if($('body').hasClass('logged-in')) {
-        if($('body').hasClass('patient-contract-view')) {
+    if ($('body').hasClass('logged-in')) {
+        if ($('body').hasClass('patient-contract-view')) {
             var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
             var now_timestamp = Math.round((new Date()).getTime() / 1000);
-            if($('.contract-header').hasClass('active') || $('.contract-header').hasClass('awaiting-payment') || $('.contract-header').hasClass('awaiting-approval')) {
+            if ($('.contract-header').hasClass('active') || $('.contract-header').hasClass('awaiting-payment') || $('.contract-header').hasClass('awaiting-approval')) {
                 var time_passed_since_signed = now_timestamp - parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract'));
                 var next_payment_timestamp_date_obj;
                 var next_payment_timestamp_unix;
@@ -461,14 +461,14 @@ async function pagesDataOnContractInit() {
                 var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(on_load_exiting_contract[5]);
 
                 var timer_label = '';
-                if(time_passed_since_signed > period_to_withdraw && months_passed_for_reward == 1 && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
+                if (time_passed_since_signed > period_to_withdraw && months_passed_for_reward == 1 && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
                     next_payment_timestamp = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     next_payment_timestamp_unix = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp);
 
                     timer_label = 'Overdue payment. If you doesn\'t fill in '+dcn_needed_to_be_payed_to_dentist+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
                     $('.clock').addClass('red-background');
-                } else if(time_passed_since_signed > period_to_withdraw) {
+                } else if (time_passed_since_signed > period_to_withdraw) {
                     var remainder = time_passed_since_signed % period_to_withdraw;
                     next_payment_timestamp_unix = period_to_withdraw - remainder;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
@@ -481,9 +481,9 @@ async function pagesDataOnContractInit() {
                     timer_label = 'Fund your account in:';
                 }
 
-                if($('.contract-header').hasClass('active') && current_patient_dcn_balance > dcn_needed_to_be_payed_to_dentist) {
+                if ($('.contract-header').hasClass('active') && current_patient_dcn_balance > dcn_needed_to_be_payed_to_dentist) {
                     //hiding section where ETH and DCN can be bought because patient has enough of both
-                    if($('.ready-to-purchase-with-external-api').length) {
+                    if ($('.ready-to-purchase-with-external-api').length) {
                         $('.ready-to-purchase-with-external-api').remove();
                     }
 
@@ -497,7 +497,7 @@ async function pagesDataOnContractInit() {
 
                 cancelContractEventInit();
             }
-            if($('.contract-header').hasClass('awaiting-payment')) {
+            if ($('.contract-header').hasClass('awaiting-payment')) {
                 var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account));
                 var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                 var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
@@ -508,11 +508,11 @@ async function pagesDataOnContractInit() {
 
                 var approval_given = false;
                 //if approval is given already SOMEHOW ...
-                if(parseInt(await dApp.dentacoin_token_methods.allowance(checksumAddress($('.patient-contract-single-page-section').attr('data-patient-address')), dApp.assurance_state_address)) > 0) {
+                if (parseInt(await dApp.dentacoin_token_methods.allowance(checksumAddress($('.patient-contract-single-page-section').attr('data-patient-address')), dApp.assurance_state_address)) > 0) {
                     approval_given = true;
                 }
 
-                if(!approval_given) {
+                if (!approval_given) {
                     //gas estimation for DentacoinToken approval method
                     var gas_cost_for_approval = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).estimateGas({gas: 500000});
                 }
@@ -521,7 +521,7 @@ async function pagesDataOnContractInit() {
                 var gas_cost_for_contract_creation = await dApp.assurance_proxy_instance.methods.registerContract(dApp.dummy_address, checksumAddress($('.patient-contract-single-page-section').attr('data-dentist-address')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: dApp.dummy_address, gas: 1000000});
 
                 var methods_gas_cost;
-                if(!approval_given) {
+                if (!approval_given) {
                     methods_gas_cost = gas_cost_for_approval + gas_cost_for_contract_creation;
                 } else {
                     methods_gas_cost = gas_cost_for_contract_creation;
@@ -530,21 +530,21 @@ async function pagesDataOnContractInit() {
                 //eth fee for firing blockchain transaction
                 var eth_fee = dApp.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
 
-                if(current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
+                if (current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
                     //not enough DCN and ETH balance
                     $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h2 class="lato-bold fs-20 padding-top-15">WARNING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
                     initPopupEvents(true);
-                } else if(current_user_dcn_balance < monthly_premium_in_dcn) {
+                } else if (current_user_dcn_balance < monthly_premium_in_dcn) {
                     //not enough DCN
                     $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h2 class="lato-bold fs-20 padding-top-15">WARNING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
                     initPopupEvents(true);
-                } else if(parseFloat(eth_fee) > current_user_eth_balance) {
+                } else if (parseFloat(eth_fee) > current_user_eth_balance) {
                     //not enough ETH balance
                     $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h2 class="lato-bold fs-20 padding-top-15">WARNING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
                     initPopupEvents(true);
                 } else {
                     //hiding section where ETH and DCN can be bought because patient has enough of both
-                    if($('.ready-to-purchase-with-external-api').length) {
+                    if ($('.ready-to-purchase-with-external-api').length) {
                         $('.ready-to-purchase-with-external-api').remove();
                     }
 
@@ -553,7 +553,7 @@ async function pagesDataOnContractInit() {
                     initPopupEvents();
 
                     $('.call-recipe').click(function() {
-                        if(metamask) {
+                        if (metamask) {
                             basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
                         } else {
                             //custom
@@ -576,7 +576,7 @@ async function pagesDataOnContractInit() {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 success: async function (response) {
-                                    if(response.success) {
+                                    if (response.success) {
                                         basic.closeDialog();
                                         basic.showDialog(response.success, 'recipe-popup', null, true);
 
@@ -591,12 +591,12 @@ async function pagesDataOnContractInit() {
                                         });
 
                                         var transaction_key;
-                                        if(cached_key) {
+                                        if (cached_key) {
                                             bindVerifyAddressLogic(true);
                                             $(document).on('on-transaction-recipe-agree', function(event) {
                                                 transaction_key = event.response_data;
                                                 setTimeout(function() {
-                                                    $('.response-layer').hide();
+                                                    hideLoader();
 
                                                     $('.proof-of-address').remove();
                                                     $('.proof-success').fadeIn(1500);
@@ -608,17 +608,17 @@ async function pagesDataOnContractInit() {
 
                                         $('.recipe-popup .execute-transaction').click(async function() {
                                             var this_btn = $(this);
-                                            if(parseFloat(eth_fee) > current_user_eth_balance) {
+                                            if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                 //not enough ETH balance
                                                 basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
                                             } else {
-                                                if(global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                if (global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
                                                     basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                                     return false;
-                                                } else if(!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                                } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
                                                     basic.showAlert('Please enter the secret password for your keystore file.', '', true);
                                                     return false;
-                                                } else if(!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
                                                     basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
                                                     return false;
                                                 } else {
@@ -634,8 +634,7 @@ async function pagesDataOnContractInit() {
 
                                                     this_btn.unbind();
 
-                                                    $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
-                                                    $('.response-layer').show();
+                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it get approved.');
 
                                                     const EthereumTx = require('ethereumjs-tx');
 
@@ -708,8 +707,7 @@ async function pagesDataOnContractInit() {
                                                                             },
                                                                             success: function (inner_response) {
                                                                                 if (inner_response.success) {
-                                                                                    $('.response-layer').hide();
-                                                                                    $('.response-layer .transaction-text').remove();
+                                                                                    hideLoader();
                                                                                     basic.showDialog(inner_response.success, '', null, true);
                                                                                     setTimeout(function () {
                                                                                         window.location.reload();
@@ -741,7 +739,7 @@ async function pagesDataOnContractInit() {
 }
 
 function initDateTimePicker() {
-    if($(".form_datetime").length > 0) {
+    if ($(".form_datetime").length > 0) {
         $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
     }
 }
@@ -759,8 +757,8 @@ function checksumAddress(address)    {
 
 // ================== PAGES ==================
 async function initPagesLogic() {
-    if($('body').hasClass('home')) {
-        if($('.testimonials-slider').length > 0) {
+    if ($('body').hasClass('home')) {
+        if ($('.testimonials-slider').length > 0) {
             $('.testimonials-slider').slick({
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -770,7 +768,7 @@ async function initPagesLogic() {
             });
         }
 
-        if($('.open-calculator').length > 0) {
+        if ($('.open-calculator').length > 0) {
             $('.open-calculator').click(function() {
                 $.ajax({
                     type: 'POST',
@@ -780,7 +778,7 @@ async function initPagesLogic() {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
-                        if(response.success) {
+                        if (response.success) {
                             basic.closeDialog();
                             basic.showDialog(response.success, 'calculator-popup', null, true);
                             $('#number-of-patients').focus();
@@ -793,9 +791,9 @@ async function initPagesLogic() {
                 });
             });
         }
-    }else if($('body').hasClass('patient-access')) {
+    }else if ($('body').hasClass('patient-access')) {
         //============================== NOT LOGGED ===============================
-        if($('.ask-your-dentist-for-assurance').length) {
+        if ($('.ask-your-dentist-for-assurance').length) {
             $('.ask-your-dentist-for-assurance').click(function() {
                 fireGoogleAnalyticsEvent('Assurance Patient', 'Scroll', 'Assurance Request');
 
@@ -808,9 +806,9 @@ async function initPagesLogic() {
         //init select combobox with clinics
         initComboboxes();
 
-        if($('section#find-your-dentist select.combobox').length) {
+        if ($('section#find-your-dentist select.combobox').length) {
             $('section#find-your-dentist select.combobox').on('keydown', function (e) {
-                if(e.which == 13) {
+                if (e.which == 13) {
                     $('.show-login-signin').click();
                 }
             });
@@ -824,12 +822,12 @@ async function initPagesLogic() {
             });
         }
 
-        if($('section.section-logged-patient-form select.combobox').length) {
+        if ($('section.section-logged-patient-form select.combobox').length) {
             //on change show login popup
             $('section.section-logged-patient-form input[type="text"].combobox').attr('placeholder', 'Find your preferred dentist/s in a snap...');
         }
-    }else if($('body').hasClass('support-guide')) {
-        if($('.support-guide-slider').length) {
+    }else if ($('body').hasClass('support-guide')) {
+        if ($('.support-guide-slider').length) {
             $('.support-guide-slider').slick({
                 slidesToShow: 3,
                 slidesToScroll: 3,
@@ -852,12 +850,12 @@ async function initPagesLogic() {
             });
         }
 
-        if($('.section-support-guide-list .question').length > 0) {
+        if ($('.section-support-guide-list .question').length > 0) {
             $('.section-support-guide-list .question').click(function()   {
                 $(this).closest('li').find('.question-content').toggle(300);
             });
         }
-    }else if($('body').hasClass('assurance-demo')) {
+    }else if ($('body').hasClass('assurance-demo')) {
         var demo_video_time_watched = 0;
         var demo_video_timer;
 
@@ -871,18 +869,18 @@ async function initPagesLogic() {
             clearInterval(demo_video_timer);
             fireGoogleAnalyticsEvent('Video', 'Play', 'Assurance Demo', demo_video_time_watched);
         });
-    }else if($('body').hasClass('forgotten-password')) {
+    }else if ($('body').hasClass('forgotten-password')) {
         $('form#forgotten-password').on('submit', function(event) {
             var this_form = $(this);
-            if(this_form.find('input[type="email"]').val().trim() == '' || !basic.validateEmail(this_form.find('input[type="email"]').val().trim())) {
+            if (this_form.find('input[type="email"]').val().trim() == '' || !basic.validateEmail(this_form.find('input[type="email"]').val().trim())) {
                 basic.showAlert('Please try again with valid email.', '', true);
                 event.preventDefault();
             }
         });
-    }else if($('body').hasClass('password-recover')) {
+    }else if ($('body').hasClass('password-recover')) {
         $('form#recover-password').on('submit', function(event) {
             var this_form = $(this);
-            if(this_form.find('input[type="password"]').val().trim() == '' || this_form.find('input[type="password"]').val().trim().length < 8 || this_form.find('input[type="email"]').val().trim().length > 100) {
+            if (this_form.find('input[type="password"]').val().trim() == '' || this_form.find('input[type="password"]').val().trim().length < 8 || this_form.find('input[type="email"]').val().trim().length > 100) {
                 basic.showAlert('Please try again with valid password between 8 and 30 symbols.', '', true);
                 event.preventDefault();
             }
@@ -892,8 +890,8 @@ async function initPagesLogic() {
 initPagesLogic();
 
 //LOGGED USER LOGIC
-if($('body').hasClass('logged-in')) {
-    if($('body').hasClass('create-contract')) {
+if ($('body').hasClass('logged-in')) {
+    if ($('body').hasClass('create-contract')) {
         var signature_pad_inited = false;
         styleAvatarUploadButton('.steps-body .avatar .btn-wrapper label');
 
@@ -901,13 +899,13 @@ if($('body').hasClass('logged-in')) {
 
         initTooltips();
 
-        if($('.single-row.proof-of-address').length) {
+        if ($('.single-row.proof-of-address').length) {
             bindVerifyAddressLogic();
         }
 
         //showing the list for each service category
         $('.show-category-list a').click(function() {
-            if($(this).attr('data-hidden-list') == 'true') {
+            if ($(this).attr('data-hidden-list') == 'true') {
                 $(this).attr('data-hidden-list', 'false').html($(this).attr('data-label-opened'));
             } else {
                 $(this).attr('data-hidden-list', 'true').html($(this).attr('data-label-closed'));
@@ -920,7 +918,7 @@ if($('body').hasClass('logged-in')) {
         create_contract_form.find('.terms-and-conditions-long-list').mCustomScrollbar();
 
         $('.step.three [name="monthly-premium"]').on('input', function() {
-            if(parseInt($(this).val()) < 0) {
+            if (parseInt($(this).val()) < 0) {
                 $(this).val(0);
             } else {
                 $(this).val(Math.floor($(this).val()));
@@ -937,53 +935,53 @@ if($('body').hasClass('logged-in')) {
 
             var inner_error = false;
 
-            if(step == 'three' && $('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
+            if (step == 'three' && $('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
                 $('.step.three .checkboxes-right-container').removeClass('with-error');
 
-                if($('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
+                if ($('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
                     $('.step.three .checkboxes-right-container').prev().find('span').remove();
                     customCreateContractErrorHandle($('.step.three .checkboxes-right-container'), 'Please select at least one service.');
                     inner_error = true;
                 }
-            } else if(step == 'one') {
+            } else if (step == 'one') {
                 var validate_dentist_address = false;
                 var dentist_address;
-                if($('.step.one #dcn_address').is('input')) {
+                if ($('.step.one #dcn_address').is('input')) {
                     dentist_address = $('.step.one #dcn_address').val().trim();
                 } else {
                     dentist_address = $('.step.one #dcn_address').html().trim();
                 }
 
-                if(innerAddressCheck(dentist_address)) {
+                if (innerAddressCheck(dentist_address)) {
                     //method for first step validating the dentist address
                     validate_dentist_address = await validateUserAddress(dentist_address, $('.step.one #dcn_address'));
 
-                    if(validate_dentist_address) {
+                    if (validate_dentist_address) {
                         inner_error = true;
                     }
                 }
             }
 
             for(var i = 0, len = step_fields.length; i < len; i+=1) {
-                if(step_fields.eq(i).val().trim() == '' || step_fields.eq(i).val().trim() == '0') {
+                if (step_fields.eq(i).val().trim() == '' || step_fields.eq(i).val().trim() == '0') {
                     customCreateContractErrorHandle(step_fields.eq(i), 'Required field cannot be left blank.');
                     inner_error = true;
-                } else if(step_fields.eq(i).attr('data-type') == 'email' && !basic.validateEmail(step_fields.eq(i).val().trim())) {
+                } else if (step_fields.eq(i).attr('data-type') == 'email' && !basic.validateEmail(step_fields.eq(i).val().trim())) {
                     customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid email.');
                     inner_error = true;
-                } else if(step_fields.eq(i).attr('data-type') == 'address' && !innerAddressCheck(step_fields.eq(i).val().trim())) {
+                } else if (step_fields.eq(i).attr('data-type') == 'address' && !innerAddressCheck(step_fields.eq(i).val().trim())) {
                     customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid wallet address.');
                     inner_error = true;
-                } else if(step_fields.eq(i).attr('data-type') == 'website' && !basic.validateUrl(step_fields.eq(i).val().trim())) {
+                } else if (step_fields.eq(i).attr('data-type') == 'website' && !basic.validateUrl(step_fields.eq(i).val().trim())) {
                     customCreateContractErrorHandle(step_fields.eq(i), 'Please enter your website URL starting with http:// or https://.');
                     inner_error = true;
-                } else if(step_fields.eq(i).attr('data-type') == 'phone' && !basic.validatePhone(step_fields.eq(i).val().trim())) {
+                } else if (step_fields.eq(i).attr('data-type') == 'phone' && !basic.validatePhone(step_fields.eq(i).val().trim())) {
                     customCreateContractErrorHandle(step_fields.eq(i), 'Please enter valid phone.');
                     inner_error = true;
                 }
             }
 
-            if(inner_error) {
+            if (inner_error) {
                 $('html, body').animate({scrollTop: create_contract_form.offset().top}, 500);
             }
 
@@ -996,32 +994,32 @@ if($('body').hasClass('logged-in')) {
             var this_btn = $(this);
             var this_btn_step = this_btn.attr('data-step');
             //if steping into one of the next buttons, NOT PREVIOUS
-            if(this_btn.index() > $('.contract-creation-steps-container button[data-step="'+create_contract_form.find('.next').attr('data-current-step')+'"]').index()) {
+            if (this_btn.index() > $('.contract-creation-steps-container button[data-step="'+create_contract_form.find('.next').attr('data-current-step')+'"]').index()) {
                 var validate_steps_arr;
-                if(this_btn_step == 'two') {
+                if (this_btn_step == 'two') {
                     validate_steps_arr = ['one'];
-                } else if(this_btn_step == 'three') {
+                } else if (this_btn_step == 'three') {
                     validate_steps_arr = ['one', 'two'];
-                } else if(this_btn_step == 'four') {
+                } else if (this_btn_step == 'four') {
                     validate_steps_arr = ['one', 'two', 'three'];
                 }
 
                 //if validate_steps_arr is defined and if no errors until now
-                if(validate_steps_arr.length && !current_step_error) {
+                if (validate_steps_arr.length && !current_step_error) {
                     for(var y = 0, len = validate_steps_arr.length; y < len; y+=1) {
                         current_step_error = await validateStepFields($('.step.'+validate_steps_arr[y]+' input.right-field'), validate_steps_arr[y]);
                     }
-                } else if(current_step_error) {
+                } else if (current_step_error) {
                     $('html, body').animate({scrollTop: create_contract_form.offset().top}, 500);
                 }
 
-                if(!current_step_error) {
+                if (!current_step_error) {
                     //update the html of the NEXT button
-                    if(this_btn_step == 'one' || this_btn_step == 'two') {
+                    if (this_btn_step == 'one' || this_btn_step == 'two') {
                         create_contract_form.find('.next').html('NEXT');
-                    } else if(this_btn_step == 'three') {
+                    } else if (this_btn_step == 'three') {
                         create_contract_form.find('.next').html('GENERATE SAMPLE CONTRACT');
-                    } else if(this_btn_step == 'four') {
+                    } else if (this_btn_step == 'four') {
                         create_contract_form.find('.next').html('SIGN CONTRACT');
                     }
 
@@ -1039,7 +1037,7 @@ if($('body').hasClass('logged-in')) {
                 }
             } else {
                 //going backwards, no validation is needed here
-                showResponseLayer(500);
+                showLoader(undefined, undefined, 500);
 
                 //update the active class
                 $('.contract-creation-steps-container button').removeClass('active');
@@ -1054,11 +1052,11 @@ if($('body').hasClass('logged-in')) {
                 $('html, body').animate({scrollTop: $('.contract-creation-steps-container').offset().top}, 500);
 
                 //update the html of the NEXT button
-                if(this_btn_step == 'one' || this_btn_step == 'two') {
+                if (this_btn_step == 'one' || this_btn_step == 'two') {
                     create_contract_form.find('.next').html('NEXT');
-                } else if(this_btn_step == 'three') {
+                } else if (this_btn_step == 'three') {
                     create_contract_form.find('.next').html('GENERATE SAMPLE CONTRACT');
-                } else if(this_btn_step == 'four') {
+                } else if (this_btn_step == 'four') {
                     create_contract_form.find('.next').html('SIGN CONTRACT');
                 }
             }
@@ -1066,10 +1064,10 @@ if($('body').hasClass('logged-in')) {
 
         //method
         function onStepValidationSuccess(current_step, next_step, button) {
-            if(next_step == 'four') {
-                showContractResponseLayer(3000);
+            if (next_step == 'four') {
+                showLoader(undefined, 'contract-response-layer', 3000);
             }else {
-                showResponseLayer(500);
+                showLoader(undefined, undefined, 500);
             }
 
             $('.steps-body .step').hide();
@@ -1077,7 +1075,7 @@ if($('body').hasClass('logged-in')) {
             button.attr('data-current-step', next_step);
             window.scrollTo(0, $('.contract-creation-steps-container').offset().top);
 
-            if(next_step == 'four') {
+            if (next_step == 'four') {
                 fourthStepValidation();
             }
 
@@ -1101,9 +1099,9 @@ if($('body').hasClass('logged-in')) {
 
             //update the fields on the sample contract
             for(var i = 0, len = form_props_arr.length; i < len; i+=1) {
-                if(create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('input')) {
+                if (create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('input')) {
                     $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('input[name="'+form_props_arr[i]+'"]').val().trim());
-                } else if(create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('select')) {
+                } else if (create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('select')) {
                     $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('select[name="'+form_props_arr[i]+'"]').val().trim());
                 } else {
                     $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('[name="'+form_props_arr[i]+'"]').html().trim());
@@ -1133,7 +1131,7 @@ if($('body').hasClass('logged-in')) {
             }
 
             //init the signature logic
-            if(!signature_pad_inited) {
+            if (!signature_pad_inited) {
                 initSignaturePad();
                 signature_pad_inited = true;
             }
@@ -1143,9 +1141,9 @@ if($('body').hasClass('logged-in')) {
         function fourthStepValidation() {
             //update fourth step html based on previous steps
             for(var i = 0, len = form_props_arr.length; i < len; i+=1) {
-                if(create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('input')) {
+                if (create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('input')) {
                     $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('input[name="'+form_props_arr[i]+'"]').val().trim());
-                } else if(create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('select')) {
+                } else if (create_contract_form.find('[name="'+form_props_arr[i]+'"]').is('select')) {
                     $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('select[name="'+form_props_arr[i]+'"]').val().trim());
                 } else {
                     $('.step.four #'+form_props_arr[i]).html(create_contract_form.find('[name="'+form_props_arr[i]+'"]').html().trim());
@@ -1164,27 +1162,27 @@ if($('body').hasClass('logged-in')) {
             create_contract_form.unbind().on('submit', function(event) {
                 var this_form = this;
                 var form_errors = false;
-                if(signature_pad.isEmpty()) {
+                if (signature_pad.isEmpty()) {
                     basic.showAlert('Please sign the contract sample. Use your mouse or touch screen to sign.', '', true);
                     event.preventDefault();
                     form_errors = true;
-                }else if(!$('.step.four input#terms').is(':checked')) {
+                }else if (!$('.step.four input#terms').is(':checked')) {
                     basic.showAlert('Please accept the Terms and Conditions', '', true);
                     event.preventDefault();
                     form_errors = true;
-                }else if(!$('.step.four input#privacy-policy').is(':checked')) {
+                }else if (!$('.step.four input#privacy-policy').is(':checked')) {
                     basic.showAlert('Please accept the Privacy Policy', '', true);
                     event.preventDefault();
                     form_errors = true;
                 }
 
-                if(!form_errors) {
+                if (!form_errors) {
                     //save the base64 signature image in hidden value
                     $(this_form).find('input[name="dentist_signature"]').val(signature_pad.toDataURL('image/png'));
 
                     //delay the form submission so we can init loader animation
                     event.preventDefault();
-                    $('.contract-response-success-layer').show();
+                    showLoader('Sending ...', 'contract-response-success-layer');
 
                     fireGoogleAnalyticsEvent('Contract Dentist', 'Sign', 'Contract 4 Sign');
                     setTimeout(function() {
@@ -1198,7 +1196,7 @@ if($('body').hasClass('logged-in')) {
         $('.step.three [name="general-dentistry[]"]').on('change', function() {
             var suggested_price;
             var checked_services = $('.step.three [name="general-dentistry[]"]:checked');
-            if(checked_services.length) {
+            if (checked_services.length) {
                 $('.show-on-services-pick').fadeIn(1000);
 
                 var checked_services_arr = [];
@@ -1206,19 +1204,19 @@ if($('body').hasClass('logged-in')) {
                     checked_services_arr.push(checked_services.eq(i).val());
                 }
 
-                if($.inArray('param_gd', checked_services_arr) != -1 && $.inArray('param_cd', checked_services_arr) != -1 && $.inArray('param_id', checked_services_arr) != -1) {
+                if ($.inArray('param_gd', checked_services_arr) != -1 && $.inArray('param_cd', checked_services_arr) != -1 && $.inArray('param_id', checked_services_arr) != -1) {
                     suggested_price = create_contract_form.attr('data-param-gd-cd-id');
-                } else if($.inArray('param_gd', checked_services_arr) != -1 && $.inArray('param_cd', checked_services_arr) != -1) {
+                } else if ($.inArray('param_gd', checked_services_arr) != -1 && $.inArray('param_cd', checked_services_arr) != -1) {
                     suggested_price = create_contract_form.attr('data-param-gd-cd');
-                } else if($.inArray('param_gd', checked_services_arr) != -1 && $.inArray('param_id', checked_services_arr) != -1) {
+                } else if ($.inArray('param_gd', checked_services_arr) != -1 && $.inArray('param_id', checked_services_arr) != -1) {
                     suggested_price = create_contract_form.attr('data-param-gd-id');
-                } else if($.inArray('param_cd', checked_services_arr) != -1 && $.inArray('param_id', checked_services_arr) != -1) {
+                } else if ($.inArray('param_cd', checked_services_arr) != -1 && $.inArray('param_id', checked_services_arr) != -1) {
                     suggested_price = create_contract_form.attr('data-param-cd-id');
-                } else if($.inArray('param_gd', checked_services_arr) != -1) {
+                } else if ($.inArray('param_gd', checked_services_arr) != -1) {
                     suggested_price = create_contract_form.attr('data-param-gd');
-                } else if($.inArray('param_cd', checked_services_arr) != -1) {
+                } else if ($.inArray('param_cd', checked_services_arr) != -1) {
                     suggested_price = create_contract_form.attr('data-param-cd');
-                } else if($.inArray('param_id', checked_services_arr) != -1) {
+                } else if ($.inArray('param_id', checked_services_arr) != -1) {
                     suggested_price = create_contract_form.attr('data-param-id');
                 }
 
@@ -1247,18 +1245,18 @@ if($('body').hasClass('logged-in')) {
                     break;
             }
         });
-    }else if($('body').hasClass('contract-proposal')) {
-        if($('.terms-and-conditions-long-list').length) {
+    }else if ($('body').hasClass('contract-proposal')) {
+        if ($('.terms-and-conditions-long-list').length) {
             $('.terms-and-conditions-long-list').mCustomScrollbar();
         }
 
-        if($('.single-row.proof-of-address').length) {
+        if ($('.single-row.proof-of-address').length) {
             bindVerifyAddressLogic();
         }
 
         initSignaturePad();
 
-        if($('.contract-proposal.section .contact-your-dentist').length) {
+        if ($('.contract-proposal.section .contact-your-dentist').length) {
             $('.contact-your-dentist').click(function() {
                 basic.closeDialog();
 
@@ -1283,10 +1281,10 @@ if($('body').hasClass('logged-in')) {
                                 event.preventDefault();
 
                                 var this_form = $(this);
-                                if(this_form.find('#new-usd-proposal-to-dentist').val().trim() == '' || parseFloat(this_form.find('#new-usd-proposal-to-dentist').val().trim()) <= 0) {
+                                if (this_form.find('#new-usd-proposal-to-dentist').val().trim() == '' || parseFloat(this_form.find('#new-usd-proposal-to-dentist').val().trim()) <= 0) {
                                     basic.showAlert('Please enter valid monthly premium proposal', '', true);
                                 } else {
-                                    $('.response-layer').show();
+                                    showLoader();
 
                                     fireGoogleAnalyticsEvent('Contract Patient', 'Suggest', 'Contact New Premium', this_form.find('#new-usd-proposal-to-dentist').val().trim());
 
@@ -1302,10 +1300,10 @@ if($('body').hasClass('logged-in')) {
                                         },
                                         success: function (response) {
                                             basic.closeDialog();
-                                            $('.response-layer').hide();
-                                            if(response.success) {
+                                            hideLoader();
+                                            if (response.success) {
                                                 basic.showDialog(response.success, '', '', true);
-                                            } else if(response.error) {
+                                            } else if (response.error) {
                                                 basic.showAlert(response.error, '', true);
                                             }
                                         }
@@ -1320,17 +1318,17 @@ if($('body').hasClass('logged-in')) {
             });
         }
 
-        if($('form#dentist-update-and-sign-contract').length) {
+        if ($('form#patient-update-and-sign-contract').length) {
             cancelContractEventInit();
 
-            $('form#dentist-update-and-sign-contract').on('submit', async function(event) {
+            $('form#patient-update-and-sign-contract').on('submit', async function(event) {
                 event.preventDefault();
                 var this_form_plain = this;
                 var this_form = $(this);
                 var fields = this_form.find('.required-field');
                 var form_errors = false;
 
-                if($('.contract-proposal.section.module').attr('data-expired') != undefined) {
+                if ($('.contract-proposal.section.module').attr('data-expired') != undefined) {
                     basic.showAlert('This contract proposal has expired.', '', true);
                     return false;
                 }
@@ -1342,18 +1340,18 @@ if($('body').hasClass('logged-in')) {
 
                 //checking the validation for the patient fields
                 for(var i = 0, len = fields.length; i < len; i+=1) {
-                    if(fields.eq(i).is('select')) {
-                        if(fields.eq(i).val() == null) {
+                    if (fields.eq(i).is('select')) {
+                        if (fields.eq(i).val() == null) {
                             customCreateContractErrorHandle(fields.eq(i), 'Required field cannot be left blank.');
                             form_errors = true;
                         }
-                    } else if(fields.eq(i).is('input')) {
+                    } else if (fields.eq(i).is('input')) {
                         if (fields.eq(i).val().trim() == '') {
                             customCreateContractErrorHandle(fields.eq(i), 'Required field cannot be left blank.');
                             form_errors = true;
-                        } else if(fields.eq(i).is('[name="dcn_address"]') && !innerAddressCheck(fields.eq(i).val().trim())) {
+                        } else if (fields.eq(i).is('[name="dcn_address"]') && !innerAddressCheck(fields.eq(i).val().trim())) {
                             customCreateContractErrorHandle(fields.eq(i), 'Please enter valid Wallet Address.');
-                            if($('.proof-of-address').length) {
+                            if ($('.proof-of-address').length) {
                                 $('.proof-of-address').remove();
                             }
                             form_errors = true;
@@ -1361,43 +1359,43 @@ if($('body').hasClass('logged-in')) {
                     }
                 }
 
-                if(!form_errors) {
+                if (!form_errors) {
                     var validate_patient_address = false;
                     var patient_address;
-                    if($('.dcn-address-row #dcn_address').is('input')) {
+                    if ($('.dcn-address-row #dcn_address').is('input')) {
                         patient_address = $('.dcn-address-row #dcn_address').val().trim();
                     } else {
                         patient_address = $('.dcn-address-row #dcn_address').html().trim();
                     }
 
-                    if(innerAddressCheck(patient_address)) {
+                    if (innerAddressCheck(patient_address)) {
                         //method for first step validating the patient address
                         validate_patient_address = await validateUserAddress(patient_address, $('.dcn-address-row #dcn_address'));
                     }
 
-                    if(validate_patient_address) {
+                    if (validate_patient_address) {
                         form_errors = true;
                     }
                 }
 
-                if($('.proof-of-address').length && form_errors) {
+                if ($('.proof-of-address').length && form_errors) {
                     $('html, body').animate({scrollTop: $('.proof-of-address').offset().top - 50}, 500);
-                } else if(form_errors) {
+                } else if (form_errors) {
                     $('html, body').animate({scrollTop: $('.required-field.with-error').offset().top - 50}, 500);
                 } else {
                     //check if patient signed if privacy policy and terms checkboxes are checked
                     //save the base64 signature image in hidden value
                     this_form.find('input[name="patient_signature"]').val(signature_pad.toDataURL('image/png'));
-                    if(signature_pad.isEmpty()) {
+                    if (signature_pad.isEmpty()) {
                         basic.showAlert('Please sign the contract sample. Use your mouse or touch screen to sign.', '', true);
-                    }else if(!this_form.find('input#terms').is(':checked')) {
+                    }else if (!this_form.find('input#terms').is(':checked')) {
                         basic.showAlert('Please accept the Terms and Conditions', '', true);
-                    }else if(!this_form.find('input#privacy-policy').is(':checked')) {
+                    }else if (!this_form.find('input#privacy-policy').is(':checked')) {
                         basic.showAlert('Please accept the Privacy Policy', '', true);
                     }else {
                         fireGoogleAnalyticsEvent('Contract Patient Accepted', 'Accept', 'Contact Accepted');
 
-                        $('.contract-response-success-layer').show();
+                        showLoader('Please wait ...<br>This may take a few minutes.', 'contract-response-success-layer');
                         this_form_plain.submit();
                     }
                 }
@@ -1407,31 +1405,31 @@ if($('body').hasClass('logged-in')) {
 }
 
 //THIS IS FUNCTIONALITY ONLY FOR LOGGED IN USERS (MODULES)
-if($('body').hasClass('logged-in')) {
+if ($('body').hasClass('logged-in')) {
     var add_overflow_hidden_on_hidden_box_show = false;
     var sm_screen_width = false;
     $('body').addClass('overflow-hidden');
-    if($(window).width() < 992) {
+    if ($(window).width() < 992) {
         add_overflow_hidden_on_hidden_box_show = true;
-        if($(window).width() > 767) {
+        if ($(window).width() > 767) {
             sm_screen_width = true;
         }
     }
     $('body').removeClass('overflow-hidden');
 
-    if(sm_screen_width) {
+    if (sm_screen_width) {
         $(document).on('click', 'body', function(){
-            if(!$('.hidden-box-parent').find(event.target).length) {
+            if (!$('.hidden-box-parent').find(event.target).length) {
                 $('.logged-user-nav .hidden-box').removeClass('show-this');
                 $('.logged-user-nav .up-arrow').removeClass('show-this');
             }
         });
     }
 
-    if(add_overflow_hidden_on_hidden_box_show) {
+    if (add_overflow_hidden_on_hidden_box_show) {
         $('.logged-user-nav .user-name, .logged-user-nav .header-avatar').click(function() {
             $('.logged-user-nav .hidden-box').toggleClass('show-this');
-            if(sm_screen_width) {
+            if (sm_screen_width) {
                 $('.logged-user-nav .up-arrow').toggleClass('show-this');
             } else {
                 $('body').toggleClass('overflow-hidden');
@@ -1449,17 +1447,17 @@ if($('body').hasClass('logged-in')) {
 
     $('.logged-user-nav .close-btn a').click(function() {
         $('.logged-user-nav .hidden-box').removeClass('show-this');
-        if(add_overflow_hidden_on_hidden_box_show) {
+        if (add_overflow_hidden_on_hidden_box_show) {
             $('body').removeClass('overflow-hidden');
 
-            if(sm_screen_width) {
+            if (sm_screen_width) {
                 $('.logged-user-nav .up-arrow').removeClass('show-this');
             }
         }
     });
 
     $(document).on('click', '.module.contract-tile', function() {
-        $('.response-layer').show();
+        showLoader();
     });
 
     $(document).on('click', '.renew-contract-btn', function(event) {
@@ -1469,13 +1467,13 @@ if($('body').hasClass('logged-in')) {
         window.open($(this).attr('href'));
     });
 
-    if($('.open-mobile-single-page-nav').length) {
+    if ($('.open-mobile-single-page-nav').length) {
         $('.open-mobile-single-page-nav').click(function() {
             $(this).closest('.contract-single-page-nav').find('ul').toggle(300);
         });
     }
 
-    if($('.logged-user-hamburger').length) {
+    if ($('.logged-user-hamburger').length) {
         $('.logged-user-hamburger').click(function() {
             $('.logged-mobile-profile-menu').addClass('active');
         });
@@ -1485,10 +1483,10 @@ if($('body').hasClass('logged-in')) {
         });
     }
 
-    if($('.contracts-list.slider').length) {
+    if ($('.contracts-list.slider').length) {
         var slides_to_show = 3;
         for(var i = 0, len = $('.contracts-list.slider').length; i < len; i+=1) {
-            if($('.contracts-list.slider').eq(i).attr('data-slides-number') != undefined) {
+            if ($('.contracts-list.slider').eq(i).attr('data-slides-number') != undefined) {
                 slides_to_show = parseInt($('.contracts-list.slider').eq(i).attr('data-slides-number'));
             }
 
@@ -1498,7 +1496,7 @@ if($('body').hasClass('logged-in')) {
                 autoplaySpeed: 8000
             };
 
-            if($('.contracts-list.slider').eq(i).hasClass('active-contracts')) {
+            if ($('.contracts-list.slider').eq(i).hasClass('active-contracts')) {
                 slider_params.responsive = [
                     {
                         breakpoint: 1600,
@@ -1522,7 +1520,7 @@ if($('body').hasClass('logged-in')) {
                         }
                     }
                 ];
-            } else if($('.contracts-list.slider').eq(i).hasClass('cancelleds') || $('.contracts-list.slider').eq(i).hasClass('pendings')) {
+            } else if ($('.contracts-list.slider').eq(i).hasClass('cancelleds') || $('.contracts-list.slider').eq(i).hasClass('pendings')) {
                 slider_params.responsive = [
                     {
                         breakpoint: 1400,
@@ -1532,7 +1530,7 @@ if($('body').hasClass('logged-in')) {
                         }
                     }
                 ];
-            } else if($('.contracts-list.slider').eq(i).hasClass('patient-contract-list')) {
+            } else if ($('.contracts-list.slider').eq(i).hasClass('patient-contract-list')) {
                 slider_params.responsive = [
                     {
                         breakpoint: 992,
@@ -1555,7 +1553,7 @@ if($('body').hasClass('logged-in')) {
         }
     }
 
-    if($('select.dropdown-with-clinics').length) {
+    if ($('select.dropdown-with-clinics').length) {
         $('select.dropdown-with-clinics').on('change', function() {
             var this_select = $(this);
             $.ajax({
@@ -1577,7 +1575,7 @@ if($('body').hasClass('logged-in')) {
                         _token: $('meta[name="csrf-token"]').attr('content')
                     };
                     $('.before-sending-email-confirmation-popup .send-mail').click(function() {
-                        $('.response-layer').show();
+                        showLoader();
 
                         //clear spamming
                         $(this).unbind();
@@ -1593,15 +1591,15 @@ if($('body').hasClass('logged-in')) {
         });
     }
 
-    if($('.contract-decrypt').length) {
+    if ($('.contract-decrypt').length) {
         $('.contract-decrypt').click(async function() {
             var this_btn = $(this);
             var encrypted_pdf_content = await getEncryptedContractPdfContent(this_btn.attr('data-hash'), this_btn.attr('data-type'));
             var render_form = $('form#render-pdf');
-            if(encrypted_pdf_content.success) {
-                if(localStorage.getItem('current-account') != null) {
+            if (encrypted_pdf_content.success) {
+                if (localStorage.getItem('current-account') != null) {
                     var cached_key = JSON.parse(localStorage.getItem('current-account'));
-                    if(cached_key.type == 'keystore') {
+                    if (cached_key.type == 'keystore') {
                         // === CACHED KEYSTORE FILE ===
                         $.ajax({
                             type: 'POST',
@@ -1616,15 +1614,15 @@ if($('body').hasClass('logged-in')) {
                                 $('.keystore-file-password-validation .keystore-password').focus();
 
                                 $('.keystore-file-password-validation .btn-container a').click(async function() {
-                                    if($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
+                                    if ($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
                                         basic.showAlert('Please enter your password.', '', true);
                                     }else {
                                         var decrypt_response = await decryptDataByKeystore(encrypted_pdf_content.success, JSON.parse(localStorage.getItem('current-account')).keystore, $('.keystore-file-password-validation .keystore-password').val().trim());
-                                        if(decrypt_response.success) {
+                                        if (decrypt_response.success) {
                                             basic.closeDialog();
                                             render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
                                             render_form.submit();
-                                        } else if(decrypt_response.error) {
+                                        } else if (decrypt_response.error) {
                                             basic.showAlert(decrypt_response.message, '', true);
                                         }
                                     }
@@ -1636,17 +1634,17 @@ if($('body').hasClass('logged-in')) {
                     basic.closeDialog();
                     openCacheKeyPopup(encrypted_pdf_content.success);
                 }
-            } else if(encrypted_pdf_content.error) {
+            } else if (encrypted_pdf_content.error) {
                 basic.showAlert(encrypted_pdf_content.error, '', true);
             }
         });
     }
 
-    if($('section.open-new-assurance-contact-section input[type="text"].combobox').length) {
+    if ($('section.open-new-assurance-contact-section input[type="text"].combobox').length) {
         $('section.open-new-assurance-contact-section input[type="text"].combobox').attr('placeholder', 'Search for a clinic...');
     }
 
-    if($('section.ready-to-purchase-with-external-api').length) {
+    if ($('section.ready-to-purchase-with-external-api').length) {
         //currency conversion logic
         var current_active_currency = 'dcn';
         var dcn_for_one_usd = parseFloat($('section.ready-to-purchase-with-external-api').attr('data-dcn-for-one-usd'));
@@ -1654,21 +1652,21 @@ if($('body').hasClass('logged-in')) {
         $('section.ready-to-purchase-with-external-api #crypto-amount').val(Math.floor(dcn_for_one_usd * parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim())));
 
         $('section.ready-to-purchase-with-external-api #usd-value').on('input', function() {
-            if($(this).val().trim() < 30)   {
+            if ($(this).val().trim() < 30)   {
                 $(this).parent().addClass('error-field');
             }else {
                 $(this).parent().removeClass('error-field');
             }
 
-            if(parseFloat($(this).val().trim()) < 0)    {
+            if (parseFloat($(this).val().trim()) < 0)    {
                 $(this).val(30);
-            }else if(parseFloat($(this).val().trim()) > 6000)    {
+            }else if (parseFloat($(this).val().trim()) > 6000)    {
                 $(this).val(6000);
             }
 
-            if($('section.ready-to-purchase-with-external-api nav ul li a.active').attr('data-currency') == 'dcn') {
+            if ($('section.ready-to-purchase-with-external-api nav ul li a.active').attr('data-currency') == 'dcn') {
                 $('section.ready-to-purchase-with-external-api #crypto-amount').val(Math.floor(dcn_for_one_usd * parseFloat($(this).val().trim())));
-            } else if($('section.ready-to-purchase-with-external-api nav ul li a.active').attr('data-currency') == 'eth') {
+            } else if ($('section.ready-to-purchase-with-external-api nav ul li a.active').attr('data-currency') == 'eth') {
                 $('section.ready-to-purchase-with-external-api #crypto-amount').val(eth_for_one_usd * parseFloat($(this).val().trim()));
             }
         });
@@ -1676,7 +1674,7 @@ if($('body').hasClass('logged-in')) {
         $('section.ready-to-purchase-with-external-api nav ul li a').on('click', function() {
             $('section.ready-to-purchase-with-external-api nav ul li a').removeClass('active');
             $(this).addClass('active');
-            if(current_active_currency != $(this).attr('data-currency')) {
+            if (current_active_currency != $(this).attr('data-currency')) {
                 current_active_currency = $(this).attr('data-currency');
 
                 $('section.ready-to-purchase-with-external-api #usd-value').val(30);
@@ -1684,9 +1682,9 @@ if($('body').hasClass('logged-in')) {
 
                 $('section.ready-to-purchase-with-external-api .crypto-label').html(current_active_currency.toUpperCase());
 
-                if(current_active_currency == 'dcn') {
+                if (current_active_currency == 'dcn') {
                     $('section.ready-to-purchase-with-external-api #crypto-amount').val(dcn_for_one_usd * 30);
-                } else if(current_active_currency == 'eth') {
+                } else if (current_active_currency == 'eth') {
                     $('section.ready-to-purchase-with-external-api #crypto-amount').val(eth_for_one_usd * 30);
                 }
             }
@@ -1694,13 +1692,13 @@ if($('body').hasClass('logged-in')) {
 
         $('section.ready-to-purchase-with-external-api #crypto-amount').on('input', function() {
             var divisor;
-            if($('section.ready-to-purchase-with-external-api nav ul li a.active').attr('data-currency') == 'dcn') {
+            if ($('section.ready-to-purchase-with-external-api nav ul li a.active').attr('data-currency') == 'dcn') {
                 divisor = dcn_for_one_usd;
-            } else if($('section.ready-to-purchase-with-external-api nav ul li a.active').attr('data-currency') == 'eth') {
+            } else if ($('section.ready-to-purchase-with-external-api nav ul li a.active').attr('data-currency') == 'eth') {
                 divisor = eth_for_one_usd;
             }
 
-            if(parseFloat($(this).val().trim()) / divisor > 6000)   {
+            if (parseFloat($(this).val().trim()) / divisor > 6000)   {
                 $(this).val(divisor * 6000);
             }
             $('section.ready-to-purchase-with-external-api #usd-value').val(parseFloat($(this).val().trim()) / divisor);
@@ -1709,14 +1707,14 @@ if($('body').hasClass('logged-in')) {
         $('section.ready-to-purchase-with-external-api .buy-crypto-btn').click(function() {
             var currency = $('section.ready-to-purchase-with-external-api nav ul li a.active').attr('data-currency');
             var currency_amount_for_one_usd;
-            if(currency == 'dcn') {
+            if (currency == 'dcn') {
                 currency_amount_for_one_usd = dcn_for_one_usd;
                 var event_obj = {
                     'event_category': 'Purchase',
                     'value': parseInt($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()),
                     'event_label': currency
                 };
-            } else if(currency == 'eth') {
+            } else if (currency == 'eth') {
                 currency_amount_for_one_usd = eth_for_one_usd;
                 var event_obj = {
                     'event_category': 'Purchase',
@@ -1725,19 +1723,19 @@ if($('body').hasClass('logged-in')) {
                 };
             }
 
-            if(parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) < 30)  {
+            if (parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) < 30)  {
                 basic.showAlert('The minimum transaction limit is 30 USD.', '', true);
-            }else if(parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) > 6000)  {
+            }else if (parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) > 6000)  {
                 basic.showAlert('The maximum transaction limit is 6000 USD.', '', true);
-            }else if(parseFloat($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()) < currency_amount_for_one_usd * 30)  {
+            }else if (parseFloat($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()) < currency_amount_for_one_usd * 30)  {
                 basic.showAlert('The minimum transaction limit is 30 USD in '+currency.toUpperCase()+'.', '', true);
-            }else if(parseFloat($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()) > currency_amount_for_one_usd * 6000)  {
+            }else if (parseFloat($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()) > currency_amount_for_one_usd * 6000)  {
                 basic.showAlert('The maximum transaction limit is 6000 USD in '+currency.toUpperCase()+'.', '', true);
-            }else if(!innerAddressCheck($('section.ready-to-purchase-with-external-api input#dcn_address').val().trim())) {
+            }else if (!innerAddressCheck($('section.ready-to-purchase-with-external-api input#dcn_address').val().trim())) {
                 basic.showAlert('Please enter a valid wallet address. It should start with "0x" and be followed by 40 characters (numbers and letters).', '', true);
-            }else if(!basic.validateEmail($('section.ready-to-purchase-with-external-api input#email').val().trim()))  {
+            }else if (!basic.validateEmail($('section.ready-to-purchase-with-external-api input#email').val().trim()))  {
                 basic.showAlert('Please enter a valid email.', '', true);
-            }else if(!$('section.ready-to-purchase-with-external-api #privacy-policy-agree').is(':checked')) {
+            }else if (!$('section.ready-to-purchase-with-external-api #privacy-policy-agree').is(':checked')) {
                 basic.showAlert('Please agree with our Privacy Policy.', '', true);
             }else {
                 //sending GTAG event
@@ -1748,11 +1746,11 @@ if($('body').hasClass('logged-in')) {
         });
     }
 
-    if($('.dentist-no-contracts-section').length) {
+    if ($('.dentist-no-contracts-section').length) {
         bindTrackerClickDentistSignFirstContract();
     }
 
-    if($('.dentist-contracts-section').length) {
+    if ($('.dentist-contracts-section').length) {
         bindTrackerClickDentistCreateContract();
     }
 } else {
@@ -1763,35 +1761,35 @@ function calculateLogic() {
     $('.calculate').click(function() {
         var patients_number = $('#number-of-patients').val();
         var params_type;
-        if($('#general-dentistry').is(':checked') && $('#cosmetic-dentistry').is(':checked') && $('#implant-dentistry').is(':checked')) {
+        if ($('#general-dentistry').is(':checked') && $('#cosmetic-dentistry').is(':checked') && $('#implant-dentistry').is(':checked')) {
             params_type = 'param_gd_cd_id';
-        } else if($('#general-dentistry').is(':checked') && $('#cosmetic-dentistry').is(':checked')) {
+        } else if ($('#general-dentistry').is(':checked') && $('#cosmetic-dentistry').is(':checked')) {
             params_type = 'param_gd_cd';
-        } else if($('#general-dentistry').is(':checked') && $('#implant-dentistry').is(':checked')) {
+        } else if ($('#general-dentistry').is(':checked') && $('#implant-dentistry').is(':checked')) {
             params_type = 'param_gd_id';
-        } else if($('#cosmetic-dentistry').is(':checked') && $('#implant-dentistry').is(':checked')) {
+        } else if ($('#cosmetic-dentistry').is(':checked') && $('#implant-dentistry').is(':checked')) {
             params_type = 'param_cd_id';
-        } else if($('#general-dentistry').is(':checked')) {
+        } else if ($('#general-dentistry').is(':checked')) {
             params_type = 'param_gd';
-        } else if($('#cosmetic-dentistry').is(':checked')) {
+        } else if ($('#cosmetic-dentistry').is(':checked')) {
             params_type = 'param_cd';
-        } else if($('#implant-dentistry').is(':checked')) {
+        } else if ($('#implant-dentistry').is(':checked')) {
             params_type = 'param_id';
         }
 
         var country = $('#country').val();
         var currency = $('#currency').val();
 
-        if(patients_number == '' || parseInt(patients_number) <= 0) {
+        if (patients_number == '' || parseInt(patients_number) <= 0) {
             basic.showAlert('Please enter valid number of patients per day.', '', true);
             return false;
-        } else if(params_type == undefined) {
+        } else if (params_type == undefined) {
             basic.showAlert('Please select specialties.', '', true);
             return false;
-        } else if(country == undefined) {
+        } else if (country == undefined) {
             basic.showAlert('Please select country.', '', true);
             return false;
-        } else if(currency == undefined) {
+        } else if (currency == undefined) {
             basic.showAlert('Please select currency.', '', true);
             return false;
         }
@@ -1802,7 +1800,7 @@ function calculateLogic() {
             'currency' : currency.trim()
         };
 
-        $('.response-layer').show();
+        showLoader();
         setTimeout(function() {
             $.ajax({
                 type: 'POST',
@@ -1815,7 +1813,7 @@ function calculateLogic() {
                 success: function (response) {
                     basic.closeDialog();
                     basic.showDialog(response.success, 'calculator-result-popup', null, true);
-                    $('.response-layer').hide();
+                    hideLoader();
 
                     var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',');
                     $('.calculator-result-popup .price-container .result .amount').animateNumber({
@@ -1862,7 +1860,7 @@ function customJavascriptForm(path, params, method) {
     form.setAttribute("action", path);
 
     for(var key in params) {
-        if(params.hasOwnProperty(key)) {
+        if (params.hasOwnProperty(key)) {
             var hiddenField = document.createElement("input");
             hiddenField.setAttribute("type", "hidden");
             hiddenField.setAttribute("name", key);
@@ -1922,8 +1920,8 @@ function openLoginSigninPopup(this_show_login_btn) {
         $('.login-signin-popup .form-register').hide();
     });
 
-    if(this_show_login_btn != undefined) {
-        if(this_show_login_btn.hasClass('show-signing')) {
+    if (this_show_login_btn != undefined) {
+        if (this_show_login_btn.hasClass('show-signing')) {
             $('.popup-body .dentist .call-sign-up').click();
         }
     }
@@ -1932,7 +1930,7 @@ function openLoginSigninPopup(this_show_login_btn) {
 
     //login
     $('.login-signin-popup .patient .form-register #privacy-policy-registration-patient').on('change', function() {
-        if($(this).is(':checked')) {
+        if ($(this).is(':checked')) {
             $('.login-signin-popup .patient .form-register .facebook-custom-btn').removeAttr('custom-stopper');
             $('.login-signin-popup .patient .form-register .civic-custom-btn').removeAttr('custom-stopper');
         } else {
@@ -1946,11 +1944,11 @@ function openLoginSigninPopup(this_show_login_btn) {
     });
 
     $(document).on('civicRead', async function (event) {
-        $('.response-layer').show();
+        showLoader();
     });
 
     $(document).on('receivedFacebookToken', async function (event) {
-        $('.response-layer').show();
+        showLoader();
     });
 
     $(document).on('facebookCustomBtnClicked', function (event) {
@@ -1969,22 +1967,22 @@ function openLoginSigninPopup(this_show_login_btn) {
         var this_form = $(this_form_native);
         event.preventDefault();
         //clear prev errors
-        if($('.login-signin-popup form#dentist-login .error-handle').length) {
+        if ($('.login-signin-popup form#dentist-login .error-handle').length) {
             $('.login-signin-popup form#dentist-login .error-handle').remove();
         }
 
         var form_fields = this_form.find('.form-field');
         var submit_form = true;
         for(var i = 0, len = form_fields.length; i < len; i+=1) {
-            if(form_fields.eq(i).attr('type') == 'email' && !basic.validateEmail(form_fields.eq(i).val().trim())) {
+            if (form_fields.eq(i).attr('type') == 'email' && !basic.validateEmail(form_fields.eq(i).val().trim())) {
                 customErrorHandle(form_fields.eq(i).closest('.field-parent'), 'Please use valid email address.');
                 submit_form = false;
-            } else if(form_fields.eq(i).attr('type') == 'password' && form_fields.eq(i).val().length < 6) {
+            } else if (form_fields.eq(i).attr('type') == 'password' && form_fields.eq(i).val().length < 6) {
                 customErrorHandle(form_fields.eq(i).closest('.field-parent'), 'Passwords must be min length 6.');
                 submit_form = false;
             }
 
-            if(form_fields.eq(i).val().trim() == '') {
+            if (form_fields.eq(i).val().trim() == '') {
                 customErrorHandle(form_fields.eq(i).closest('.field-parent'), 'This field is required.');
                 submit_form = false;
             }
@@ -2004,10 +2002,10 @@ function openLoginSigninPopup(this_show_login_btn) {
             }
         });
 
-        if(submit_form && check_account_response.success) {
+        if (submit_form && check_account_response.success) {
             fireGoogleAnalyticsEvent('DentistLogin', 'Click', 'Dentist Login');
             this_form_native.submit();
-        } else if(check_account_response.error) {
+        } else if (check_account_response.error) {
             customErrorHandle(this_form.find('input[name="password"]').closest('.field-parent'), check_account_response.message);
         }
     });
@@ -2017,7 +2015,7 @@ function openLoginSigninPopup(this_show_login_btn) {
         var current_step = $('.login-signin-popup .dentist .form-register .step.visible');
         var current_prev_step = current_step.prev();
         current_step.removeClass('visible');
-        if(current_prev_step.hasClass('first')) {
+        if (current_prev_step.hasClass('first')) {
             $(this).hide();
         }
         current_prev_step.addClass('visible');
@@ -2052,35 +2050,35 @@ function openLoginSigninPopup(this_show_login_btn) {
                 var errors = false;
                 $('.login-signin-popup .dentist .form-register .step.first').parent().find('.error-handle').remove();
                 for(var i = 0, len = first_step_inputs.length; i < len; i+=1) {
-                    if(first_step_inputs.eq(i).attr('type') == 'email' && !basic.validateEmail(first_step_inputs.eq(i).val().trim())) {
+                    if (first_step_inputs.eq(i).attr('type') == 'email' && !basic.validateEmail(first_step_inputs.eq(i).val().trim())) {
                         customErrorHandle(first_step_inputs.eq(i).closest('.field-parent'), 'Please use valid email address.');
                         errors = true;
-                    } else if(first_step_inputs.eq(i).attr('type') == 'email' && basic.validateEmail(first_step_inputs.eq(i).val().trim())) {
+                    } else if (first_step_inputs.eq(i).attr('type') == 'email' && basic.validateEmail(first_step_inputs.eq(i).val().trim())) {
                         //coredb check if email is free
                         var check_email_if_free_response = await checkIfFreeEmail(first_step_inputs.eq(i).val().trim());
-                        if(check_email_if_free_response.error) {
+                        if (check_email_if_free_response.error) {
                             customErrorHandle(first_step_inputs.eq(i).closest('.field-parent'), 'The email has already been taken.');
                             errors = true;
                         }
                     }
 
-                    if(first_step_inputs.eq(i).attr('type') == 'password' && first_step_inputs.eq(i).val().length < 6) {
+                    if (first_step_inputs.eq(i).attr('type') == 'password' && first_step_inputs.eq(i).val().length < 6) {
                         customErrorHandle(first_step_inputs.eq(i).closest('.field-parent'), 'Passwords must be min length 6.');
                         errors = true;
                     }
 
-                    if(first_step_inputs.eq(i).val().trim() == '') {
+                    if (first_step_inputs.eq(i).val().trim() == '') {
                         customErrorHandle(first_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
                         errors = true;
                     }
                 }
 
-                if($('.login-signin-popup .dentist .form-register .step.first .form-field.password').val().trim() != $('.login-signin-popup .step.first .form-field.repeat-password').val().trim()) {
+                if ($('.login-signin-popup .dentist .form-register .step.first .form-field.password').val().trim() != $('.login-signin-popup .step.first .form-field.repeat-password').val().trim()) {
                     customErrorHandle($('.login-signin-popup .step.first .form-field.repeat-password').closest('.field-parent'), 'Both passwords don\'t match.');
                     errors = true;
                 }
 
-                if(!errors) {
+                if (!errors) {
                     fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep1');
 
                     $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
@@ -2098,15 +2096,15 @@ function openLoginSigninPopup(this_show_login_btn) {
 
                 //check form-field fields
                 for(var i = 0, len = second_step_inputs.length; i < len; i+=1) {
-                    if(second_step_inputs.eq(i).is('select')) {
+                    if (second_step_inputs.eq(i).is('select')) {
                         //IF SELECT TAG
-                        if(second_step_inputs.eq(i).val().trim() == '') {
+                        if (second_step_inputs.eq(i).val().trim() == '') {
                             customErrorHandle(second_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
                             errors = true;
                         }
-                    } else if(second_step_inputs.eq(i).is('input')) {
+                    } else if (second_step_inputs.eq(i).is('input')) {
                         //IF INPUT TAG
-                        if(second_step_inputs.eq(i).val().trim() == '') {
+                        if (second_step_inputs.eq(i).val().trim() == '') {
                             customErrorHandle(second_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
                             errors = true;
                         }
@@ -2114,19 +2112,19 @@ function openLoginSigninPopup(this_show_login_btn) {
                 }
 
                 //check if latin name accepts only LATIN characters
-                if(!/^[a-z A-Z]+$/.test($('.login-signin-popup .dentist .form-register .step.second input[name="latin-name"]').val().trim())) {
+                if (!/^[a-z A-Z]+$/.test($('.login-signin-popup .dentist .form-register .step.second input[name="latin-name"]').val().trim())) {
 
                     customErrorHandle($('.login-signin-popup .dentist .form-register .step.second input[name="latin-name"]').closest('.field-parent'), 'This field should contain only latin characters.');
                     errors = true;
                 }
 
                 //check if privacy policy checkbox is checked
-                if(!$('.login-signin-popup .dentist .form-register .step.second #privacy-policy-registration').is(':checked')) {
+                if (!$('.login-signin-popup .dentist .form-register .step.second #privacy-policy-registration').is(':checked')) {
                     customErrorHandle($('.login-signin-popup .dentist .form-register .step.second .privacy-policy-row'), 'Please agree with our <a href="//dentacoin.com/privacy-policy" target="_blank">Privacy policy</a>.');
                     errors = true;
                 }
 
-                if(!errors) {
+                if (!errors) {
                     fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep2');
 
                     $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
@@ -2142,22 +2140,22 @@ function openLoginSigninPopup(this_show_login_btn) {
                 $('.login-signin-popup .dentist .form-register .step.third').find('.error-handle').remove();
 
                 for(var i = 0, len = third_step_inputs.length; i < len; i+=1) {
-                    if(third_step_inputs.eq(i).is('select')) {
+                    if (third_step_inputs.eq(i).is('select')) {
                         //IF SELECT TAG
-                        if(third_step_inputs.eq(i).val().trim() == '') {
+                        if (third_step_inputs.eq(i).val().trim() == '') {
                             customErrorHandle(third_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
                             errors = true;
                         }
-                    } else if(third_step_inputs.eq(i).is('input')) {
+                    } else if (third_step_inputs.eq(i).is('input')) {
                         //IF INPUT TAG
-                        if(third_step_inputs.eq(i).val().trim() == '') {
+                        if (third_step_inputs.eq(i).val().trim() == '') {
                             customErrorHandle(third_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
                             errors = true;
                         }
-                        if(third_step_inputs.eq(i).attr('type') == 'url' && !basic.validateUrl(third_step_inputs.eq(i).val().trim())) {
+                        if (third_step_inputs.eq(i).attr('type') == 'url' && !basic.validateUrl(third_step_inputs.eq(i).val().trim())) {
                             customErrorHandle(third_step_inputs.eq(i).closest('.field-parent'), 'Please enter your website URL starting with http:// or https://.');
                             errors = true;
-                        }else if(third_step_inputs.eq(i).attr('type') == 'number' && !basic.validatePhone(third_step_inputs.eq(i).val().trim())) {
+                        }else if (third_step_inputs.eq(i).attr('type') == 'number' && !basic.validatePhone(third_step_inputs.eq(i).val().trim())) {
                             customErrorHandle(third_step_inputs.eq(i).closest('.field-parent'), 'Please use valid numbers.');
                             errors = true;
                         }
@@ -2165,13 +2163,13 @@ function openLoginSigninPopup(this_show_login_btn) {
                 }
 
                 var validate_phone = await validatePhone($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').val().trim(), $('.login-signin-popup .dentist .form-register .step.third select[name="country-code"]').val());
-                if(basic.objHasKey(validate_phone, 'success') && !validate_phone.success) {
+                if (basic.objHasKey(validate_phone, 'success') && !validate_phone.success) {
                     customErrorHandle($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').closest('.field-parent'), 'Please use valid phone.');
                     errors = true;
                 }
 
-                if(!errors) {
-                    if($('#dentist-country').attr('data-current-user-country-code') != undefined && $('#dentist-country').val() != $('#dentist-country').attr('data-current-user-country-code')) {
+                if (!errors) {
+                    if ($('#dentist-country').attr('data-current-user-country-code') != undefined && $('#dentist-country').val() != $('#dentist-country').attr('data-current-user-country-code')) {
                         var different_country_warning_obj = {};
                         different_country_warning_obj.callback = function (result) {
                             if (result) {
@@ -2200,34 +2198,34 @@ function openLoginSigninPopup(this_show_login_btn) {
                 $('.login-signin-popup .dentist .form-register .step.fourth').find('.error-handle').remove();
                 var errors = false;
                 //checking if empty avatar
-                if($('.dentist .form-register .step.fourth #custom-upload-avatar').val().trim() == '') {
+                if ($('.dentist .form-register .step.fourth #custom-upload-avatar').val().trim() == '') {
                     customErrorHandle($('.step.fourth .step-errors-holder'), 'Please select profile picture.');
                     errors = true;
                 }
 
                 //checking if no specialization checkbox selected
-                if($('.login-signin-popup .dentist .form-register .step.fourth [name="specializations[]"]:checked').val() == undefined) {
+                if ($('.login-signin-popup .dentist .form-register .step.fourth [name="specializations[]"]:checked').val() == undefined) {
                     customErrorHandle($('.login-signin-popup .step.fourth .step-errors-holder'), 'Please select specialization/s.');
                     errors = true;
                 }
 
                 //check captcha
-                if(!$('.login-signin-popup .dentist .form-register .step.fourth .captcha-parent').length || !$('.login-signin-popup .dentist .form-register .step.fourth #register-captcha').length) {
+                if (!$('.login-signin-popup .dentist .form-register .step.fourth .captcha-parent').length || !$('.login-signin-popup .dentist .form-register .step.fourth #register-captcha').length) {
                     errors = true;
                     window.location.reload();
                 } else {
                     var check_captcha_response = await checkCaptcha($('.login-signin-popup .dentist .form-register .step.fourth #register-captcha').val().trim());
-                    if(check_captcha_response.error) {
+                    if (check_captcha_response.error) {
                         customErrorHandle($('.login-signin-popup .step.fourth .step-errors-holder'), 'Please enter correct captcha.');
                         errors = true;
                     }
                 }
 
-                if(!errors) {
+                if (!errors) {
                     fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationComplete');
 
                     //submit the form
-                    $('.response-layer').show();
+                    showLoader();
                     $('.login-signin-popup form#dentist-register').submit();
                 }
                 break;
@@ -2239,11 +2237,11 @@ function openLoginSigninPopup(this_show_login_btn) {
 
 var croppie_instance;
 function readURL(input) {
-    if(input.files && input.files[0]) {
+    if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
             $('#cropper-container').addClass('width-and-height');
-            if(croppie_instance != undefined) {
+            if (croppie_instance != undefined) {
                 croppie_instance.croppie('destroy');
                 $('#cropper-container').html('');
             }
@@ -2277,10 +2275,10 @@ function readURL(input) {
 }
 
 function styleAvatarUploadButton(label_el)    {
-    if(jQuery(".upload-file.avatar").length) {
+    if (jQuery(".upload-file.avatar").length) {
         jQuery(".upload-file.avatar").each(function(key, form){
             var this_file_btn_parent = jQuery(this);
-            if(this_file_btn_parent.attr('data-current-user-avatar')) {
+            if (this_file_btn_parent.attr('data-current-user-avatar')) {
                 this_file_btn_parent.find('.btn-wrapper').append('<label for="custom-upload-avatar" role="button" style="background-image:url('+this_file_btn_parent.attr('data-current-user-avatar')+');"><div class="inner"><i class="fa fa-plus fs-0" aria-hidden="true"></i><div class="inner-label fs-0">Add profile photo</div></div></label>');
             } else {
                 this_file_btn_parent.find('.btn-wrapper').append('<label for="custom-upload-avatar" role="button"><div class="inner"><i class="fa fa-plus" aria-hidden="true"></i><div class="inner-label">Add profile photo</div></div></label>');
@@ -2292,20 +2290,20 @@ function styleAvatarUploadButton(label_el)    {
                     labelVal = label.innerHTML;
 
                 input.addEventListener('change', function(e) {
-                    if(2 < bytesToMegabytes(this.files[0].size)) {
+                    if (2 < bytesToMegabytes(this.files[0].size)) {
                         basic.showAlert('The image you selected is large. Max size: 2MB.', '', true);
                         $(this).val('');
                     } else {
                         readURL(this, label_el);
 
                         var fileName = '';
-                        if(this.files && this.files.length > 1)
+                        if (this.files && this.files.length > 1)
                             fileName = ( this.getAttribute('data-multiple-caption') || '' ).replace('{count}', this.files.length);
                         else
                             fileName = e.target.value.split('\\').pop();
 
-                        /*if(fileName) {
-                            if(load_filename_to_other_el)    {
+                        /*if (fileName) {
+                            if (load_filename_to_other_el)    {
                                 $(this).closest('.form-row').find('.file-name').html('<i class="fa fa-file-text-o" aria-hidden="true"></i>' + fileName);
                             }else {
                                 label.querySelector('span').innerHTML = fileName;
@@ -2330,8 +2328,8 @@ function hidePopupOnBackdropClick() {
 
         classname = classname.replace(/ /g, '.');
 
-        if(classname && !$('.' + classname).parents('.modal-dialog').length) {
-            if($('.bootbox.login-signin-popup').length) {
+        if (classname && !$('.' + classname).parents('.modal-dialog').length) {
+            if ($('.bootbox.login-signin-popup').length) {
                 $('.hidden-login-form').html(hidden_popup_content);
             }
             bootbox.hideAll();
@@ -2350,7 +2348,7 @@ function initComboboxes() {
 function apiEventsListeners() {
     //login
     $(document).on('successResponseCoreDBApi', async function (event) {
-        if(event.response_data.token) {
+        if (event.response_data.token) {
             var custom_form_obj = {
                 token: event.response_data.token,
                 id: event.response_data.data.id,
@@ -2358,31 +2356,31 @@ function apiEventsListeners() {
                 _token: $('meta[name="csrf-token"]').attr('content')
             };
 
-            if($('input[type="hidden"][name="route"]').length && $('input[type="hidden"][name="slug"]').length) {
+            if ($('input[type="hidden"][name="route"]').length && $('input[type="hidden"][name="slug"]').length) {
                 custom_form_obj.route = $('input[type="hidden"][name="route"]').val();
                 custom_form_obj.slug = $('input[type="hidden"][name="slug"]').val();
             }
 
             //check if CoreDB returned address for this user and if its valid one
-            if(basic.objHasKey(custom_form_obj, 'address') != null && innerAddressCheck(custom_form_obj.address)) {
+            if (basic.objHasKey(custom_form_obj, 'address') != null && innerAddressCheck(custom_form_obj.address)) {
                 //var current_dentists_for_logging_user = await dApp.assurance_methods.getWaitingContractsForPatient(custom_form_obj.address);
-                //if(current_dentists_for_logging_user.length > 0) {
+                //if (current_dentists_for_logging_user.length > 0) {
                 //custom_form_obj.have_contracts = true;
                 //}
             }
 
-            if(event.response_data.new_account) {
+            if (event.response_data.new_account) {
                 //REGISTER
-                if(event.platform_type == 'facebook') {
+                if (event.platform_type == 'facebook') {
                     fireGoogleAnalyticsEvent('PatientRegistration', 'ClickFB', 'Patient Registration FB');
-                } else if(event.platform_type == 'civic') {
+                } else if (event.platform_type == 'civic') {
                     fireGoogleAnalyticsEvent('PatientRegistration', 'ClickNext', 'Patient Registration Civic');
                 }
             } else {
                 //LOGIN
-                if(event.platform_type == 'facebook') {
+                if (event.platform_type == 'facebook') {
                     fireGoogleAnalyticsEvent('PatientLogin', 'Click', 'Login FB');
-                } else if(event.platform_type == 'civic') {
+                } else if (event.platform_type == 'civic') {
                     fireGoogleAnalyticsEvent('PatientLogin', 'Click', 'Login Civic');
                 }
             }
@@ -2402,7 +2400,7 @@ function customErrorHandle(el, string) {
     el.append('<div class="error-handle">'+string+'</div>');
 }
 
-if($('form#invite-dentists').length) {
+if ($('form#invite-dentists').length) {
     $('form#invite-dentists').on('submit', function(event) {
         event.preventDefault();
         var this_form = $(this);
@@ -2413,23 +2411,23 @@ if($('form#invite-dentists').length) {
 
         //check custom-input fields
         for(var i = 0, len = form_fields.length; i < len; i+=1) {
-            if(form_fields.eq(i).is('input')) {
+            if (form_fields.eq(i).is('input')) {
                 //IF INPUT TAG
-                if(form_fields.eq(i).val().trim() == '') {
+                if (form_fields.eq(i).val().trim() == '') {
                     customErrorHandle(form_fields.eq(i).parent(), 'This field is required.');
                     errors = true;
                 }
             }
         }
 
-        if(this_form.find('input[name="dcn_address"]').length) {
-            if(this_form.find('input[name="dcn_address"]').val().trim() == '' || !innerAddressCheck(this_form.find('input[name="dcn_address"]').val().trim())) {
+        if (this_form.find('input[name="dcn_address"]').length) {
+            if (this_form.find('input[name="dcn_address"]').val().trim() == '' || !innerAddressCheck(this_form.find('input[name="dcn_address"]').val().trim())) {
                 customErrorHandle(this_form.find('input[name="dcn_address"]').parent(), 'This field is required. Please enter valid Wallet Address.');
                 errors = true;
             }
         }
 
-        if(!errors) {
+        if (!errors) {
             fireGoogleAnalyticsEvent('Invitation by Patient', 'Send', 'Invite Dentist Step 1');
 
             $.ajax({
@@ -2448,7 +2446,7 @@ if($('form#invite-dentists').length) {
                     var serialized_values = this_form.serializeArray();
                     var custom_form_obj = {};
                     $('.before-sending-email-confirmation-popup .send-mail').click(function() {
-                        $('.response-layer').show();
+                        showLoader();
 
                         //clear spamming
                         $(this).unbind();
@@ -2469,23 +2467,40 @@ if($('form#invite-dentists').length) {
     });
 }
 
-function showResponseLayer(time) {
-    $('.response-layer').show();
-    setTimeout(function() {
-        $('.response-layer').hide();
-    }, time);
+//showing front end loader
+function showLoader(message, type, time) {
+    if (message == undefined) {
+        message = 'Loading ...';
+    }
+    if (type === undefined) {
+        $('.camping-loader').html('<div class="response-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/loader.gif" class="max-width-160" alt="Loader"></figure><div class="message text-center fs-24 lato-semibold">'+message+'</div></div></div>');
+        $('.response-layer').show();
+    } else {
+        console.log('type');
+        if (type == 'contract-response-success-layer') {
+            $('.camping-loader').html('<div class="contract-response-success-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/contract-assurance-loading-success.gif" class="max-width-440 min-width-300" alt="Loader"></figure><div class="message text-center fs-24 lato-semibold">'+message+'</div></div></div>');
+            $('.contract-response-success-layer').show();
+        } else if (type == 'contract-response-layer') {
+            $('.camping-loader').html('<div class="contract-response-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/contract-assurance-loading.gif" class="max-width-440 min-width-300" alt="Loader"></figure><div class="message text-center fs-24 lato-semibold">'+message+'</div></div></div>');
+            $('.contract-response-layer').show();
+        }
+    }
+
+    if (time != undefined) {
+        setTimeout(function() {
+            $('.camping-loader').html('');
+        }, time);
+    }
 }
 
-function showContractResponseLayer(time) {
-    $('.contract-response-layer').show();
-    setTimeout(function() {
-        $('.contract-response-layer').hide();
-    }, time);
+//hiding front end loader
+function hideLoader() {
+    $('.camping-loader').html('');
 }
 
 var signature_pad;
 function initSignaturePad() {
-    if($('#signature-pad').length) {
+    if ($('#signature-pad').length) {
         var canvas = document.getElementById('signature-pad');
 
         // Adjust canvas coordinate space taking into account pixel ratio,
@@ -2508,7 +2523,7 @@ function initSignaturePad() {
             backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
         });
 
-        if($('.clear-signature').length) {
+        if ($('.clear-signature').length) {
             $('.clear-signature').click(function() {
                 signature_pad.clear();
             });
@@ -2523,8 +2538,8 @@ function customCreateContractErrorHandle(el, text) {
 }
 
 async function onDocumentReadyPageData() {
-    if($('body').hasClass('logged-in')) {
-        if($('body').hasClass('home') || $('body').hasClass('patient-access')) {
+    if ($('body').hasClass('logged-in')) {
+        if ($('body').hasClass('home') || $('body').hasClass('patient-access')) {
             makeElementsInContractListWithSameHeight();
         } else if ($('body').hasClass('my-contracts') || $('.my-contracts-container').length) {
             initDataTable();
@@ -2535,7 +2550,7 @@ async function onDocumentReadyPageData() {
 
             for(var i = 0, len = table_trs_with_timestamp.length; i < len; i+=1) {
                 var time_passed_since_signed = now_timestamp - parseInt(table_trs_with_timestamp.eq(i).attr('data-timestamp-signed'));
-                if(time_passed_since_signed > smart_contract_withdraw_period) {
+                if (time_passed_since_signed > smart_contract_withdraw_period) {
                     var remainder = time_passed_since_signed % smart_contract_withdraw_period;
                     var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - remainder) * 1000;
                     var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
@@ -2546,12 +2561,12 @@ async function onDocumentReadyPageData() {
 
                 table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">'+next_payment_timestamp+'</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
             }
-        } else if($('body').hasClass('contract-proposal')) {
+        } else if ($('body').hasClass('contract-proposal')) {
             if ($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined) {
                 var date_obj = new Date((parseInt($('.contract-proposal.section').attr('data-created-at-timestamp')) + parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw())) * 1000);
                 $('.active-until').html(dateObjToFormattedDate(date_obj));
             }
-        } else if($('body').hasClass('dentist-contract-view')) {
+        } else if ($('body').hasClass('dentist-contract-view')) {
             cancelContractEventInit();
 
             if ($('.terms-and-conditions-long-list').length) {
@@ -2574,12 +2589,12 @@ async function onDocumentReadyPageData() {
 
             initTooltips();
 
-            if($('.single-contract-view-section').hasClass('pending')) {
+            if ($('.single-contract-view-section').hasClass('pending')) {
                 initPopupEvents();
-            } else if($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval')) {
+            } else if ($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval')) {
                 $('.first-payment').html(dateObjToFormattedDate(new Date((parseInt($('.single-contract-view-section').attr('data-created-at')) + parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw())) * 1000)));
 
-                if($('.single-contract-view-section').hasClass('awaiting-approval')) {
+                if ($('.single-contract-view-section').hasClass('awaiting-approval')) {
                     $('.approve-contract-recipe').click(function() {
                         if (metamask) {
                             basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
@@ -2596,7 +2611,7 @@ async function onDocumentReadyPageData() {
                                 btn_label: 'APPROVE NOW'
                             };
 
-                            if($(this).attr('data-sent-eth-to-dentist') == 'true') {
+                            if ($(this).attr('data-sent-eth-to-dentist') == 'true') {
                                 ajax_data.sent_eth_to_dentist = true;
                                 ajax_data.recipe_checkbox_text = 'To approve this contract and activate it on the blockchain, you need to pay the small fee above only once. We have sent you the needed amount. By clicking on the button below you confirm that from now on every month you will withdraw the monthly premium amount on the payment due date or later.';
                             }
@@ -2610,7 +2625,7 @@ async function onDocumentReadyPageData() {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 success: async function (response) {
-                                    if(response.success) {
+                                    if (response.success) {
                                         basic.closeDialog();
                                         basic.showDialog(response.success, 'recipe-popup', null, true);
 
@@ -2631,12 +2646,12 @@ async function onDocumentReadyPageData() {
                                         });
 
                                         var transaction_key;
-                                        if(cached_key) {
+                                        if (cached_key) {
                                             bindVerifyAddressLogic(true);
                                             $(document).on('on-transaction-recipe-agree', function(event) {
                                                 transaction_key = event.response_data;
                                                 setTimeout(function() {
-                                                    $('.response-layer').hide();
+                                                    hideLoader();
 
                                                     $('.proof-of-address').remove();
                                                     $('.proof-success').fadeIn(1500);
@@ -2649,7 +2664,7 @@ async function onDocumentReadyPageData() {
                                         $('.recipe-popup .execute-transaction').click(async function() {
                                             var this_btn = $(this);
                                             var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                                            if(parseFloat(eth_fee) > current_user_eth_balance) {
+                                            if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                 //not enough ETH balance
                                                 basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
                                             } else {
@@ -2674,8 +2689,7 @@ async function onDocumentReadyPageData() {
                                                     }
                                                     this_btn.unbind();
 
-                                                    $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
-                                                    $('.response-layer').show();
+                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it get approved.');
 
                                                     const EthereumTx = require('ethereumjs-tx');
                                                     var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
@@ -2719,8 +2733,7 @@ async function onDocumentReadyPageData() {
                                                                         },
                                                                         success: function (inner_response) {
                                                                             if (inner_response.success) {
-                                                                                $('.response-layer').hide();
-                                                                                $('.response-layer .transaction-text').remove();
+                                                                                hideLoader();
                                                                                 basic.showDialog(inner_response.success, '', null, true);
                                                                                 setTimeout(function () {
                                                                                     window.location.reload();
@@ -2735,7 +2748,7 @@ async function onDocumentReadyPageData() {
                                                 }
                                             }
                                         });
-                                    } else if(response.error) {
+                                    } else if (response.error) {
                                         basic.showAlert(response.error, '', true);
                                     }
                                 }
@@ -2743,12 +2756,12 @@ async function onDocumentReadyPageData() {
                         }
                     });
                 }
-            } else if($('.single-contract-view-section').hasClass('active')) {
+            } else if ($('.single-contract-view-section').hasClass('active')) {
                 var now_timestamp = Math.round((new Date()).getTime() / 1000);
                 var smart_contract_withdraw_period = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
                 var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-created-at'));
 
-                if(time_passed_since_signed > smart_contract_withdraw_period) {
+                if (time_passed_since_signed > smart_contract_withdraw_period) {
                     var remainder = time_passed_since_signed % smart_contract_withdraw_period;
                     var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - remainder) * 1000;
                     var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
@@ -2764,14 +2777,14 @@ async function onDocumentReadyPageData() {
                 var contract_next_payment = parseInt(on_load_exiting_contract[0]);
                 var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
 
-                if(contract_next_payment > now_timestamp) {
+                if (contract_next_payment > now_timestamp) {
                     $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold ">MAKE YOUR NEXT WITHDRAW IN</h2></div> </div><div class="clock"></div><div class="flip-clock-message"></div></div></div>');
                     initFlipClockTimer(contract_next_payment - now_timestamp);
-                } else if(contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > smart_contract_withdraw_period * 2 && current_patient_dcn_balance < (Math.floor((now_timestamp - contract_next_payment) / smart_contract_withdraw_period) + 1) * contract_dcn_amount) {
+                } else if (contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > smart_contract_withdraw_period * 2 && current_patient_dcn_balance < (Math.floor((now_timestamp - contract_next_payment) / smart_contract_withdraw_period) + 1) * contract_dcn_amount) {
                     var months_dentist_didnt_withdraw = Math.floor((now_timestamp - contract_next_payment) / smart_contract_withdraw_period) + 1;
 
                     basic.showAlert('You haven\'t withdraw from this patient for ' + months_dentist_didnt_withdraw + ' months in a row, but the patient currently have not enough Dentacoins to cover all the months. Contact him and let him know to refill Dentacoins inside his Wallet Address.', '', true);
-                } else if(contract_next_payment < now_timestamp && now_timestamp < contract_next_payment + dApp.grace_period && current_patient_dcn_balance < contract_dcn_amount) {
+                } else if (contract_next_payment < now_timestamp && now_timestamp < contract_next_payment + dApp.grace_period && current_patient_dcn_balance < contract_dcn_amount) {
                     //show red counter (grace period)
                     $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold">Overdue payment. If the patient doesn\'t fill in '+contract_dcn_amount+' Dentacoins inside his Wallet Address the contract will be canceled in:</h2></div> </div><div class="clock red-background"></div><div class="flip-clock-message"></div></div></div>');
                     initFlipClockTimer(contract_next_payment + dApp.grace_period - now_timestamp);
@@ -2802,7 +2815,7 @@ async function onDocumentReadyPageData() {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 success: async function (response) {
-                                    if(response.success) {
+                                    if (response.success) {
                                         basic.closeDialog();
                                         basic.showDialog(response.success, 'recipe-popup', null, true);
 
@@ -2826,12 +2839,12 @@ async function onDocumentReadyPageData() {
                                         });
 
                                         var transaction_key;
-                                        if(cached_key) {
+                                        if (cached_key) {
                                             bindVerifyAddressLogic(true);
                                             $(document).on('on-transaction-recipe-agree', function(event) {
                                                 transaction_key = event.response_data;
                                                 setTimeout(function() {
-                                                    $('.response-layer').hide();
+                                                    hideLoader();
 
                                                     $('.proof-of-address').remove();
                                                     $('.proof-success').fadeIn(1500);
@@ -2844,7 +2857,7 @@ async function onDocumentReadyPageData() {
                                         $('.recipe-popup .execute-transaction').click(async function() {
                                             var this_btn = $(this);
                                             var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                                            if(parseFloat(eth_fee) > current_user_eth_balance) {
+                                            if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                 //not enough ETH balance
                                                 basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
                                             } else {
@@ -2869,8 +2882,7 @@ async function onDocumentReadyPageData() {
                                                     }
                                                     this_btn.unbind();
 
-                                                    $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
-                                                    $('.response-layer').show();
+                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it get approved.');
 
                                                     const EthereumTx = require('ethereumjs-tx');
                                                     var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
@@ -2898,7 +2910,7 @@ async function onDocumentReadyPageData() {
                                                         var withdraw_interval_check = setInterval(async function() {
                                                             var withdraw_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
                                                             if (withdraw_status != null && basic.objHasKey(withdraw_status, 'status')) {
-                                                                if(withdraw_status.status && execute_ajax) {
+                                                                if (withdraw_status.status && execute_ajax) {
                                                                     execute_ajax = false;
                                                                     clearInterval(withdraw_interval_check);
 
@@ -2919,8 +2931,7 @@ async function onDocumentReadyPageData() {
                                                                         }
                                                                     });
 
-                                                                    $('.response-layer').hide();
-                                                                    $('.response-layer .transaction-text').remove();
+                                                                    hideLoader();
 
                                                                     basic.showDialog('<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">SUCCESSFULLY WITHDRAWN</div><div class="padding-top-20 padding-bottom-15 fs-20">You have successfully withdrawn your Dentacoins from this contract. You will be notified via email when next withdraw is possible.</div><div class="btn-container padding-bottom-40"><a href="javascript:void(0)" class="white-blue-green-btn min-width-200 close-popup">OK</a></div></div>', '', null, true);
                                                                     setTimeout(function() {
@@ -2940,14 +2951,14 @@ async function onDocumentReadyPageData() {
                     });
                 }
             }
-        } else if($('body').hasClass('patient-contract-view')) {
-            if($('.terms-and-conditions-long-list').length) {
+        } else if ($('body').hasClass('patient-contract-view')) {
+            if ($('.terms-and-conditions-long-list').length) {
                 $('.terms-and-conditions-long-list').mCustomScrollbar();
             }
 
-            if($('.open-contract-details').length) {
+            if ($('.open-contract-details').length) {
                 $('.open-contract-details').on('click', function() {
-                    if($(this).attr('data-hidden-details') == 'true') {
+                    if ($(this).attr('data-hidden-details') == 'true') {
                         $(this).attr('data-hidden-details', 'false');
                         $(this).html($(this).attr('data-label-opened'));
                     } else {
@@ -2959,7 +2970,7 @@ async function onDocumentReadyPageData() {
                 });
             }
 
-            if($('.contract-response-message').length) {
+            if ($('.contract-response-message').length) {
                 $('.contract-response-message .close-btn').click(function() {
                     $(this).closest('.contract-response-message').remove();
                 });
@@ -2972,7 +2983,7 @@ async function onDocumentReadyPageData() {
 
 function initFlipClockTimer(time_left) {
     var clock;
-    if(time_left > 0) {
+    if (time_left > 0) {
         clock = jQuery('.clock').FlipClock(time_left, {
             clockFace: 'DailyCounter',
             autoStart: false,
@@ -2992,14 +3003,14 @@ function initFlipClockTimer(time_left) {
 
 //if cancel contract button exist add the event for it
 function cancelContractEventInit() {
-    if($('.cancel-contract-btn').length) {
+    if ($('.cancel-contract-btn').length) {
         $('.cancel-contract-btn').click(async function() {
             var this_btn = $(this);
 
-            if(this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined) {
+            if (this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined) {
                 //CHECK FOR CONTRACT ON THE BLOCKCHAIN
                 var exiting_contract = await dApp.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
-                if((new Date(parseInt(exiting_contract[0]) * 1000)).getTime() > 0) {
+                if ((new Date(parseInt(exiting_contract[0]) * 1000)).getTime() > 0) {
                     if (metamask) {
                         basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
                     } else {
@@ -3027,10 +3038,10 @@ function cancelContractEventInit() {
                                     basic.showDialog(response.success, 'recipe-popup', null, true);
 
                                     var select_options = '';
-                                    if(response.contract_data.type == 'dentist') {
+                                    if (response.contract_data.type == 'dentist') {
                                         select_options = '<option value="Overdue payments">Overdue payments</option><option value="Missed regular check-ups">Missed regular check-ups</option><option value="Inappropriate behaviour">Inappropriate behaviour</option>';
-                                    } else if(response.contract_data.type == 'patient') {
-                                        if(response.contract_data.status == 'pending') {
+                                    } else if (response.contract_data.type == 'patient') {
+                                        if (response.contract_data.status == 'pending') {
                                             select_options = '<option value="I don\'t need this contract.">I don\'t need this contract.</option><option value="The monthly premium is too high.">The monthly premium is too high.</option><option value="I don\'t like the conditions.">I don\'t like the conditions.</option><option value="I think I\'ve received this by mistake.">I think I\'ve received this by mistake.</option>';
                                         } else {
                                             select_options = '<option value="I don\'t need this contract anymore.">I don\'t need this contract anymore.</option><option value="I decided to go to a different dentist.">I decided to go to a different dentist.</option><option value="Inappropriate behaviour or service.">Inappropriate behaviour or service.</option>';
@@ -3042,7 +3053,7 @@ function cancelContractEventInit() {
                                     fixSelectsOnMac();
 
                                     $('.recipe-popup #cancel-contract-reason').on('change', function() {
-                                        if($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
+                                        if ($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
                                             $('.recipe-popup .camp-for-row').html('<div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-other-reason" class="inline-block">Other reason:</label><div class="field inline-block"><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background" maxlength="255"/></div></div>');
                                         } else {
                                             $('.recipe-popup .camp-for-row').html('');
@@ -3074,7 +3085,7 @@ function cancelContractEventInit() {
                                         $(document).on('on-transaction-recipe-agree', function (event) {
                                             transaction_key = event.response_data;
                                             setTimeout(function () {
-                                                $('.response-layer').hide();
+                                                hideLoader();
 
                                                 $('.proof-of-address').remove();
                                                 $('.proof-success').fadeIn(1500);
@@ -3088,17 +3099,17 @@ function cancelContractEventInit() {
                                         var this_execute_transaction_btn = $(this);
                                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
 
-                                        if(parseFloat(eth_fee) > current_user_eth_balance) {
+                                        if (parseFloat(eth_fee) > current_user_eth_balance) {
                                             //not enough ETH balance
                                             basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
                                         } else {
                                             if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
                                                 basic.showAlert('Please enter other reason.', '', true);
-                                            } else if($('.recipe-popup #cancel-contract-reason').val() == null) {
+                                            } else if ($('.recipe-popup #cancel-contract-reason').val() == null) {
                                                 basic.showAlert('Please select cancellation reason.', '', true);
-                                            } /*else if($('.recipe-popup #cancel-contract-comments').val().trim() == '') {
+                                            } /*else if ($('.recipe-popup #cancel-contract-comments').val().trim() == '') {
                                                 basic.showAlert('Please enter comments.', '', true);
-                                            }*/ else if(global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                            }*/ else if (global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
                                                 basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                                 return false;
                                             } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
@@ -3120,16 +3131,16 @@ function cancelContractEventInit() {
                                                 this_execute_transaction_btn.unbind();
 
                                                 //fire google analytics event
-                                                if($('.recipe-popup #cancel-contract-reason').val() != '' && $('.recipe-popup #cancel-contract-reason').val() != 'Other') {
-                                                    if(this_btn.attr('data-type') == 'dentist') {
+                                                if ($('.recipe-popup #cancel-contract-reason').val() != '' && $('.recipe-popup #cancel-contract-reason').val() != 'Other') {
+                                                    if (this_btn.attr('data-type') == 'dentist') {
                                                         fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
-                                                    } else if(this_btn.attr('data-type') == 'patient') {
+                                                    } else if (this_btn.attr('data-type') == 'patient') {
                                                         fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
                                                     }
-                                                } else if($('.popup-cancel-contract #cancel-contract-reason').val() == 'Other') {
-                                                    if(this_btn.attr('data-type') == 'dentist') {
+                                                } else if ($('.popup-cancel-contract #cancel-contract-reason').val() == 'Other') {
+                                                    if (this_btn.attr('data-type') == 'dentist') {
                                                         fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-other-reason').val().trim());
-                                                    } else if(this_btn.attr('data-type') == 'patient') {
+                                                    } else if (this_btn.attr('data-type') == 'patient') {
                                                         fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.recipe-popup #cancel-contract-other-reason').val().trim());
                                                     }
                                                 }
@@ -3146,8 +3157,7 @@ function cancelContractEventInit() {
                                                     cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-reason option:selected').html();
                                                 }
 
-                                                $('.response-layer .wrapper').append('<div class="text-center transaction-text padding-top-10 fs-24 lato-semibold">Your transaction is now being sent to the blockchain. It might take some time until it get approved.</div>');
-                                                $('.response-layer').show();
+                                                showLoader('Your transaction is now being sent to the blockchain. It might take some time until it get approved.');
 
                                                 const EthereumTx = require('ethereumjs-tx');
                                                 var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
@@ -3188,11 +3198,11 @@ function cancelContractEventInit() {
                                                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                                     },
                                                                     success: function (inner_response) {
-                                                                        $('.response-layer').show();
+                                                                        showLoader();
                                                                         if (inner_response.success) {
                                                                             window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
                                                                         } else if (inner_response.error) {
-                                                                            $('.response-layer').hide();
+                                                                            hideLoader();
                                                                             basic.showAlert(inner_response.error, '', true);
                                                                         }
                                                                     }
@@ -3223,14 +3233,14 @@ function cancelContractEventInit() {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
-                        if(response.success) {
+                        if (response.success) {
                             basic.closeDialog();
                             basic.showDialog(response.success, 'popup-cancel-contract', null, true);
 
                             fixSelectsOnMac();
 
                             $('.popup-cancel-contract #cancel-contract-reason').on('change', function() {
-                                if($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
+                                if ($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
                                     $('.camp-for-row').html('<div class="popup-row"><label for="cancel-contract-other-reason" class="inline-block-top">Other reason:</label><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background inline-block-top" maxlength="255"/></div>');
                                 } else {
                                     $('.camp-for-row').html('');
@@ -3238,11 +3248,11 @@ function cancelContractEventInit() {
                             });
 
                             $('.popup-cancel-contract .cancel-contract-popup-confirmation').click(function() {
-                                if($('.popup-cancel-contract #cancel-contract-other-reason').length && $('.popup-cancel-contract #cancel-contract-other-reason').val().trim() == '') {
+                                if ($('.popup-cancel-contract #cancel-contract-other-reason').length && $('.popup-cancel-contract #cancel-contract-other-reason').val().trim() == '') {
                                     basic.showAlert('Please enter other reason.', '', true);
-                                } else if($('.popup-cancel-contract #cancel-contract-reason').val() == null) {
+                                } else if ($('.popup-cancel-contract #cancel-contract-reason').val() == null) {
                                     basic.showAlert('Please select cancellation reason.', '', true);
-                                } /*else if($('.popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
+                                } /*else if ($('.popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
                                     basic.showAlert('Please enter comments.', '', true);
                                 }*/ else {
                                     var data = {
@@ -3251,27 +3261,27 @@ function cancelContractEventInit() {
                                         comments: $('.popup-cancel-contract #cancel-contract-comments').val().trim()
                                     };
 
-                                    if($('.popup-cancel-contract #cancel-contract-other-reason').length) {
+                                    if ($('.popup-cancel-contract #cancel-contract-other-reason').length) {
                                         data.reason = $('.popup-cancel-contract #cancel-contract-other-reason').val().trim();
                                     } else {
                                         data.reason = $('#cancel-contract-reason option:selected').html();
                                     }
 
-                                    if($('.popup-cancel-contract #cancel-contract-reason').val() != '' && $('.popup-cancel-contract #cancel-contract-reason').val() != 'Other') {
-                                        if(this_btn.attr('data-type') == 'dentist') {
+                                    if ($('.popup-cancel-contract #cancel-contract-reason').val() != '' && $('.popup-cancel-contract #cancel-contract-reason').val() != 'Other') {
+                                        if (this_btn.attr('data-type') == 'dentist') {
                                             fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.popup-cancel-contract #cancel-contract-reason').val());
-                                        } else if(this_btn.attr('data-type') == 'patient') {
+                                        } else if (this_btn.attr('data-type') == 'patient') {
                                             fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.popup-cancel-contract #cancel-contract-reason').val());
-                                        } else if(this_btn.attr('data-type') == 'patient-rejecting') {
+                                        } else if (this_btn.attr('data-type') == 'patient-rejecting') {
                                             fireGoogleAnalyticsEvent('Contract Patient Rejected', 'Reject', $('.popup-cancel-contract #cancel-contract-reason').val());
                                         }
-                                    } else if($('.popup-cancel-contract #cancel-contract-reason').val() == 'Other') {
+                                    } else if ($('.popup-cancel-contract #cancel-contract-reason').val() == 'Other') {
 
-                                        if(this_btn.attr('data-type') == 'dentist') {
+                                        if (this_btn.attr('data-type') == 'dentist') {
                                             fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.popup-cancel-contract #cancel-contract-other-reason').val());
-                                        } else if(this_btn.attr('data-type') == 'patient') {
+                                        } else if (this_btn.attr('data-type') == 'patient') {
                                             fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.popup-cancel-contract #cancel-contract-other-reason').val());
-                                        } else if(this_btn.attr('data-type') == 'patient-rejecting') {
+                                        } else if (this_btn.attr('data-type') == 'patient-rejecting') {
                                             fireGoogleAnalyticsEvent('Contract Patient Rejected', 'Reject', $('.popup-cancel-contract #cancel-contract-other-reason').val());
                                         }
                                     }
@@ -3285,18 +3295,18 @@ function cancelContractEventInit() {
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                         },
                                         success: function (inner_response) {
-                                            $('.response-layer').show();
+                                            showLoader();
                                             if (inner_response.success) {
                                                 window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
                                             } else if (inner_response.error) {
-                                                $('.response-layer').hide();
+                                                hideLoader();
                                                 basic.showAlert(inner_response.error, '', true);
                                             }
                                         }
                                     });
                                 }
                             });
-                        } else if(response.error) {
+                        } else if (response.error) {
                             basic.showAlert('Wrong contract.', '', true);
                         }
                     }
@@ -3307,23 +3317,23 @@ function cancelContractEventInit() {
 }
 
 function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, for_transactions)    {
-    if(button_label == undefined) {
+    if (button_label == undefined) {
         button_label = null;
     }
-    if(render_pdf == undefined) {
+    if (render_pdf == undefined) {
         render_pdf = null;
     }
-    if(encrypted_pdf_content == undefined) {
+    if (encrypted_pdf_content == undefined) {
         encrypted_pdf_content = null;
     }
-    if(for_transactions == undefined) {
+    if (for_transactions == undefined) {
         for_transactions = null;
     }
 
     $('.custom-upload-file').each(function(key, form){
         var this_btn = $(this);
         var caching = false;
-        if(this_btn.hasClass('caching')) {
+        if (this_btn.hasClass('caching')) {
             caching = true;
         }
 
@@ -3334,34 +3344,34 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
         Array.prototype.forEach.call(inputs, function(input) {
             input.addEventListener('change', function(e) {
                 var fileName = '';
-                if(this.files && this.files.length > 1) {
+                if (this.files && this.files.length > 1) {
                     fileName = ( this.getAttribute('data-multiple-caption') || '' ).replace('{count}', this.files.length);
                 } else {
                     fileName = e.target.value.split('\\').pop();
                 }
 
-                if(this_btn.attr('id') == 'upload-keystore-file') {
+                if (this_btn.attr('id') == 'upload-keystore-file') {
                     var uploaded_file = this.files[0];
                     var reader = new FileReader();
                     reader.addEventListener('load', function (e) {
                         if (isJsonString(e.target.result) && basic.objHasKey(JSON.parse(e.target.result), 'address') && ('0x' + JSON.parse(e.target.result).address) == $('.proof-of-address').attr('data-address')) {
                             var keystore_string = e.target.result;
-                            if(caching) {
+                            if (caching) {
                                 $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
                                 bindCacheKeyEvent(keystore_string);
                             } else {
                                 var btn_name = 'VERIFY';
-                                if(button_label != null) {
+                                if (button_label != null) {
                                     btn_name = button_label;
                                 }
                                 $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-keystore-file" checked/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-keystore-file">Remember my keystore file <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Remembering your keystore file allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">'+btn_name+'</a></div></div>');
                                 initTooltips();
 
-                                if(render_pdf != null && encrypted_pdf_content != null) {
+                                if (render_pdf != null && encrypted_pdf_content != null) {
                                     //if we have to render pdf
                                     $('.proof-of-address .verify-address-btn').click(async function() {
                                         //if remember me option is checked
-                                        if($('#remember-my-keystore-file').is(':checked')) {
+                                        if ($('#remember-my-keystore-file').is(':checked')) {
                                             localStorage.setItem('current-account', JSON.stringify({
                                                 address: '0x' + JSON.parse(e.target.result).address,
                                                 type: 'keystore',
@@ -3370,17 +3380,17 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                         }
 
                                         var decrypt_response = await decryptDataByKeystore(encrypted_pdf_content, keystore_string, $('.proof-of-address #your-secret-key-password').val().trim());
-                                        if(decrypt_response.success) {
+                                        if (decrypt_response.success) {
                                             var render_form = $('form#render-pdf');
                                             basic.closeDialog();
                                             render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
                                             render_form.submit();
-                                        } else if(decrypt_response.error) {
+                                        } else if (decrypt_response.error) {
                                             basic.showAlert(decrypt_response.message, '', true);
                                         }
                                     });
                                 } else {
-                                    if(for_transactions != null) {
+                                    if (for_transactions != null) {
                                         //if we have to validate this address (store it in our local db)
                                         bindTransactionAddressVerify(keystore_string);
                                     } else {
@@ -3408,7 +3418,7 @@ function bindGoogleAlikeButtonsEvents() {
     //google alike style for label/placeholders
     $('body').on('click', '.custom-google-label-style label', function() {
         $(this).addClass('active-label');
-        if($('.custom-google-label-style').attr('data-input-blue-green-border') == 'true') {
+        if ($('.custom-google-label-style').attr('data-input-blue-green-border') == 'true') {
             $(this).parent().find('input').addClass('blue-green-border');
         }
     });
@@ -3417,12 +3427,12 @@ function bindGoogleAlikeButtonsEvents() {
         var value = $(this).val().trim();
         if (value.length) {
             $(this).closest('.custom-google-label-style').find('label').addClass('active-label');
-            if($(this).closest('.custom-google-label-style').attr('data-input-blue-green-border') == 'true') {
+            if ($(this).closest('.custom-google-label-style').attr('data-input-blue-green-border') == 'true') {
                 $(this).addClass('blue-green-border');
             }
         } else {
             $(this).closest('.custom-google-label-style').find('label').removeClass('active-label');
-            if($(this).closest('.custom-google-label-style').attr('data-input-blue-green-border') == 'true') {
+            if ($(this).closest('.custom-google-label-style').attr('data-input-blue-green-border') == 'true') {
                 $(this).removeClass('blue-green-border');
             }
         }
@@ -3442,7 +3452,7 @@ function isJsonString(str) {
 
 //bind the logic when address is not verified
 function bindVerifyAddressLogic(for_transactions) {
-    if(for_transactions === undefined) {
+    if (for_transactions === undefined) {
         for_transactions = null;
         styleUploadFileButton();
     } else {
@@ -3454,7 +3464,7 @@ function bindVerifyAddressLogic(for_transactions) {
         initTooltips();
         $('.proof-of-address #upload-keystore-file').val('');
 
-        if(for_transactions != null) {
+        if (for_transactions != null) {
             bindTransactionAddressVerify();
         } else {
             bindVerifyAddressEvent();
@@ -3467,29 +3477,29 @@ function bindVerifyAddressLogic(for_transactions) {
 }
 
 function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content) {
-    if(keystore_file === undefined) {
+    if (keystore_file === undefined) {
         keystore_file = null;
     }
-    if(render_pdf === undefined) {
+    if (render_pdf === undefined) {
         render_pdf = null;
     }
-    if(encrypted_pdf_content === undefined) {
+    if (encrypted_pdf_content === undefined) {
         encrypted_pdf_content = null;
     }
     $('.proof-of-address .verify-address-btn').click(function() {
-        if(keystore_file != null) {
+        if (keystore_file != null) {
             //import with keystore
-            if('0x' + JSON.parse(keystore_file).address.toLowerCase() != $('.proof-of-address').attr('data-address').toLowerCase()) {
+            if ('0x' + JSON.parse(keystore_file).address.toLowerCase() != $('.proof-of-address').attr('data-address').toLowerCase()) {
                 basic.showAlert('Please enter valid keystore file for your Wallet Address.', '', true);
-            } else if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
+            } else if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
                 basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
             } else {
-                $('.response-layer').show();
+                showLoader();
                 setTimeout(function() {
                     var import_response = importKeystoreFile(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
-                    if(import_response.success) {
+                    if (import_response.success) {
                         //if remember me option is checked
-                        if($('#remember-my-keystore-file').is(':checked')) {
+                        if ($('#remember-my-keystore-file').is(':checked')) {
                             localStorage.setItem('current-account', JSON.stringify({
                                 address: $('.proof-of-address').attr('data-address'),
                                 type: 'keystore',
@@ -3509,8 +3519,8 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function (inner_response) {
-                                $('.response-layer').hide();
-                                if(inner_response.success) {
+                                hideLoader();
+                                if (inner_response.success) {
                                     $('.proof-of-address').remove();
                                     $('.proof-success').fadeIn(1500);
                                 } else {
@@ -3518,24 +3528,24 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                 }
                             }
                         });
-                    } else if(import_response.error) {
-                        $('.response-layer').hide();
+                    } else if (import_response.error) {
+                        hideLoader();
                         basic.showAlert(import_response.message, '', true);
                     }
                 }, 1000);
             }
         } else {
             //import with private key
-            if($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
+            if ($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
                 basic.showAlert('Please enter valid private key.', '', true);
             } else {
-                $('.response-layer').show();
+                showLoader();
                 setTimeout(async function () {
                     if (render_pdf != null) {
                         var render_form = $('form#render-pdf');
                         var decrypted_pdf_response = await decryptDataByPlainKey(encrypted_pdf_content, $('.proof-of-address #your-private-key').val().trim());
 
-                        $('.response-layer').hide();
+                        hideLoader();
                         if (decrypted_pdf_response.success) {
 
                             basic.closeDialog();
@@ -3551,7 +3561,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                             //checking if fake private key or just miss spell it
                             if (checksumAddress($('.proof-of-address').attr('data-address')) != checksumAddress(import_response.address)) {
                                 basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', '', true);
-                                $('.response-layer').hide();
+                                hideLoader();
                             } else {
 
                                 $.ajax({
@@ -3566,7 +3576,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     success: function (inner_response) {
-                                        $('.response-layer').hide();
+                                        hideLoader();
                                         if (inner_response.success) {
                                             $('.proof-of-address').remove();
                                             $('.proof-success').fadeIn(1500);
@@ -3576,8 +3586,8 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                     }
                                 });
                             }
-                        } else if(import_response.error) {
-                            $('.response-layer').hide();
+                        } else if (import_response.error) {
+                            hideLoader();
                             basic.showAlert(import_response.message, '', true);
                         }
                     }
@@ -3588,21 +3598,21 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
 }
 
 function bindTransactionAddressVerify(keystore_file) {
-    if(keystore_file === undefined) {
+    if (keystore_file === undefined) {
         keystore_file = null;
     }
     $('.proof-of-address .verify-address-btn').click(function() {
-        $('.response-layer').show();
+        showLoader();
         setTimeout(async function() {
-            if(keystore_file != null) {
+            if (keystore_file != null) {
                 //import with keystore
-                if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
+                if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
                     basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
                 } else {
                     var decrypt_response = decryptKeystore(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
-                    if(decrypt_response.success) {
+                    if (decrypt_response.success) {
                         //if remember me option is checked
-                        if($('#remember-my-keystore-file').is(':checked')) {
+                        if ($('#remember-my-keystore-file').is(':checked')) {
                             localStorage.setItem('current-account', JSON.stringify({
                                 address: $('.proof-of-address').attr('data-address'),
                                 type: 'keystore',
@@ -3615,24 +3625,24 @@ function bindTransactionAddressVerify(keystore_file) {
                             time: new Date(),
                             response_data: decrypt_response.to_string
                         });
-                    } else if(decrypt_response.error) {
+                    } else if (decrypt_response.error) {
                         basic.showAlert(decrypt_response.message, '', true);
-                        $('.response-layer').hide();
+                        hideLoader();
                     }
                 }
             } else {
                 //import with private key
-                if($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
+                if ($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
                     basic.showAlert('Please enter valid private key.', '', true);
                 } else {
                     var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
-                    if(import_response.success) {
+                    if (import_response.success) {
                         //checking if the private key is related to the public key saved in the coredb
                         var user_data = await getCurrentUserData();
                         //checking if fake private key or just miss spell it
-                        if(checksumAddress(user_data.success.dcn_address) != checksumAddress(import_response.address)) {
+                        if (checksumAddress(user_data.success.dcn_address) != checksumAddress(import_response.address)) {
                             basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
-                            $('.response-layer').hide();
+                            hideLoader();
                         } else {
 
                             $.event.trigger({
@@ -3641,9 +3651,9 @@ function bindTransactionAddressVerify(keystore_file) {
                                 response_data: $('.proof-of-address #your-private-key').val().trim()
                             });
                         }
-                    } else if(import_response.error) {
+                    } else if (import_response.error) {
                         basic.showAlert(import_response.message, '', true);
-                        $('.response-layer').hide();
+                        hideLoader();
                     }
                 }
             }
@@ -3653,15 +3663,15 @@ function bindTransactionAddressVerify(keystore_file) {
 
 function bindCacheKeyEvent(keystore_file) {
     $('.proof-of-address .cache-key-btn').click(function() {
-        if('0x' + JSON.parse(keystore_file).address.toLowerCase() != $('.proof-of-address').attr('data-address').toLowerCase()) {
+        if ('0x' + JSON.parse(keystore_file).address.toLowerCase() != $('.proof-of-address').attr('data-address').toLowerCase()) {
             basic.showAlert('Please enter valid keystore file for your Wallet Address.', '', true);
-        } else if($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
+        } else if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
             basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
         } else {
-            $('.response-layer').show();
+            showLoader();
             setTimeout(function() {
                 var import_response = importKeystoreFile(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
-                if(import_response.success) {
+                if (import_response.success) {
                     //if remember me option is checked
                     localStorage.setItem('current-account', JSON.stringify({
                         address: $('.proof-of-address').attr('data-address'),
@@ -3681,13 +3691,13 @@ function bindCacheKeyEvent(keystore_file) {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function (inner_response) {
-                            $('.response-layer').hide();
+                            hideLoader();
                             $('.remember-my-wallet-camp').remove();
                             basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', '', true);
                         }
                     });
-                } else if(import_response.error) {
-                    $('.response-layer').hide();
+                } else if (import_response.error) {
+                    hideLoader();
                     basic.showAlert(import_response.message, '', true);
                 }
             }, 1000);
@@ -3747,7 +3757,7 @@ async function validateUserAddress(user_address, value_element) {
         $('.proof-of-address').remove();
         error = false;
     } else if (check_public_key_ajax_result.error) {
-        if(value_element.is('input')) {
+        if (value_element.is('input')) {
             $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="'+user_address+'"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-5 inline-block padding-left-xs-15"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18"><span>Enter your Private Key<div class="fs-16">(not recommended)</div></span></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-5 inline-block padding-right-xs-15"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><div class="btn-wrapper"></div></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
             $('.proof-of-address').addClass('proof-failed');
 
@@ -3762,7 +3772,7 @@ async function validateUserAddress(user_address, value_element) {
 }
 
 function initTooltips() {
-    if($('[data-toggle="tooltip"]').length) {
+    if ($('[data-toggle="tooltip"]').length) {
         $('[data-toggle="tooltip"]').tooltip();
     }
 }
@@ -3781,20 +3791,20 @@ function triggerIframeSizeEventForParent(width, height) {
 }
 
 function initDataTable(filter_param, stop_table_init)    {
-    if(filter_param == undefined) {
+    if (filter_param == undefined) {
         filter_param = null;
     }
-    if(stop_table_init == undefined) {
+    if (stop_table_init == undefined) {
         stop_table_init = null;
     }
 
     var params = getGETParameters();
-    if(basic.objHasKey(params, 'status') && filter_param == null) {
+    if (basic.objHasKey(params, 'status') && filter_param == null) {
         filter_param = [params.status];
     }
 
-    if($('table.table.table-without-reorder').length > 0) {
-        if(stop_table_init == null) {
+    if ($('table.table.table-without-reorder').length > 0) {
+        if (stop_table_init == null) {
             $('table.table.table-without-reorder').DataTable({
                 ordering: true,
                 order: [],
@@ -3812,42 +3822,42 @@ function initDataTable(filter_param, stop_table_init)    {
         var awaiting_payment_check = 'checked';
         var cancelled_check = 'checked';
 
-        if(filter_param != null) {
-            if(basic.objHasKey(params, 'status')) {
+        if (filter_param != null) {
+            if (basic.objHasKey(params, 'status')) {
                 filter_param.push(params.status);
             }
-            if($.inArray('pending', filter_param) != -1) {
+            if ($.inArray('pending', filter_param) != -1) {
                 pending_check = 'checked';
             } else {
                 pending_check = '';
             }
 
-            if($.inArray('active', filter_param) != -1) {
+            if ($.inArray('active', filter_param) != -1) {
                 active_check = 'checked';
             } else {
                 active_check = '';
             }
-            if($.inArray('awaiting-approval', filter_param) != -1) {
+            if ($.inArray('awaiting-approval', filter_param) != -1) {
                 awaiting_approval_check = 'checked';
             } else {
                 awaiting_approval_check = '';
             }
-            if($.inArray('awaiting-payment', filter_param) != -1) {
+            if ($.inArray('awaiting-payment', filter_param) != -1) {
                 awaiting_payment_check = 'checked';
             } else {
                 awaiting_payment_check = '';
             }
-            if($.inArray('cancelled', filter_param) != -1) {
+            if ($.inArray('cancelled', filter_param) != -1) {
                 cancelled_check = 'checked';
             } else {
                 cancelled_check = '';
             }
         }
 
-        if($('table.table.table-without-reorder').hasClass('my-contracts')) {
+        if ($('table.table.table-without-reorder').hasClass('my-contracts')) {
             $('.dataTables_filter').append('<div class="custom-filter"><a href="javascript:void(0)" class="custom-btn"><img alt="Filter icon" class="filter-icon" src="/assets/images/filter-icon.svg"/> Filter <img alt="Caret icon" class="caret-down" src="/assets/images/caret-down.svg"/><div class="custom-filter-body"><div class="custom-title">Filter by Status</div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="pending" '+pending_check+'/> <label for="pending">Pending</label></div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="active" '+active_check+'/> <label for="active">Active</label></div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="awaiting-payment" '+awaiting_payment_check+'/> <label for="awaiting-payment">Active - awaiting payment</label></div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="awaiting-approval" '+awaiting_approval_check+'/> <label for="awaiting-approval">Active - awaiting approval</label></div><div class="filter-row"><input type="checkbox" class="filter-contracts" id="cancelled" '+cancelled_check+'/> <label for="cancelled">Cancelled</label></div></div></a></div>');
 
-            if(basic.isMobile()) {
+            if (basic.isMobile()) {
                 $('.my-contracts-container .custom-btn').click(function() { $('.my-contracts-container .custom-filter-body').toggle(300)});
             }
 
@@ -3858,7 +3868,7 @@ function initDataTable(filter_param, stop_table_init)    {
             $('input[type="checkbox"].filter-contracts').on('change', function() {
                 var filter_arr = [];
                 for(var i = 0, len = $('input[type="checkbox"].filter-contracts').length; i < len; i+=1) {
-                    if($('input[type="checkbox"].filter-contracts').eq(i).is(':checked')) {
+                    if ($('input[type="checkbox"].filter-contracts').eq(i).is(':checked')) {
                         filter_arr.push($('input[type="checkbox"].filter-contracts').eq(i).attr('id'));
                     }
                 }
@@ -3875,11 +3885,11 @@ function initDataTable(filter_param, stop_table_init)    {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
-                        if(response.success) {
+                        if (response.success) {
                             $('.table-container').html(response.success);
                             initDataTable(filter_arr);
 
-                            $('.response-layer').hide();
+                            hideLoader();
 
                             triggerIframeSizeEventForParent($('.my-contracts-container').width(), $('.my-contracts-container').height());
                         }
@@ -3891,13 +3901,13 @@ function initDataTable(filter_param, stop_table_init)    {
 }
 
 function dateObjToFormattedDate(object) {
-    if(object.getDate() < 10) {
+    if (object.getDate() < 10) {
         var date = '0' + object.getDate();
     } else {
         var date = object.getDate();
     }
 
-    if(object.getMonth() + 1 < 10) {
+    if (object.getMonth() + 1 < 10) {
         var month = '0' + (object.getMonth() + 1);
     } else {
         var month = object.getMonth() + 1;
@@ -3910,15 +3920,15 @@ function onEnrichProfileFormSubmit() {
         var errors = false;
         var this_form = $(this);
         this_form.find('.error-handle').remove();
-        if(this_form.find('[name="description"]').val().trim() == '') {
+        if (this_form.find('[name="description"]').val().trim() == '') {
             errors = true;
             customErrorHandle(this_form.find('[name="description"]').parent(), 'Please enter short description.');
         }
 
-        if(!errors) {
-            if($('.enrich-profile-container').attr('data-type') == 'dentist') {
+        if (!errors) {
+            if ($('.enrich-profile-container').attr('data-type') == 'dentist') {
                 fireGoogleAnalyticsEvent('DentistRegistration', 'ClickSave', 'DentistDescr');
-            } else if($('.enrich-profile-container').attr('data-type') == 'clinic') {
+            } else if ($('.enrich-profile-container').attr('data-type') == 'clinic') {
                 fireGoogleAnalyticsEvent('DentistRegistration', 'ClickSave', 'ClinicDescr');
             }
         } else {
@@ -4011,7 +4021,7 @@ function transformToAssocArray( prmstr ) {
 }
 
 function convertUsdToDcn(usd_val) {
-    if($("[data-dcn-for-one-usd]").length) {
+    if ($("[data-dcn-for-one-usd]").length) {
         return parseInt($("[data-dcn-for-one-usd]").attr('data-dcn-for-one-usd')) * usd_val;
     } else {
         return false;
@@ -4019,7 +4029,7 @@ function convertUsdToDcn(usd_val) {
 }
 
 function initPopoverTooltips() {
-    if($('.popover-el').length) {
+    if ($('.popover-el').length) {
         $('.popover-el').popover({
             trigger: 'click',
             html: true
@@ -4029,7 +4039,7 @@ function initPopoverTooltips() {
 initPopoverTooltips();
 
 function showWarningTestingVersion() {
-    if(basic.cookies.get('warning-test-version') != '1' && !$('.my-contracts-iframe').length) {
+    if (basic.cookies.get('warning-test-version') != '1' && !$('.my-contracts-iframe').length) {
         basic.showDialog('<div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 inline-block"><img src="/assets/images/warning-pop-up.png"></div><div class="col-xs-12 col-md-5 col-sm-6 text-center inline-block padding-top-20 padding-bottom-20"><div class="warning"><img class="max-width-50" src="/assets/images/attention.svg" alt="attention icon"></div><div class="lato-bold fs-30" style="color: #ff8d8d;">WARNING:</div><div class="black-warning lato-bold fs-30 dark-color">THIS IS A TEST WEBSITE VERSION.</div><div class="additional-text padding-top-20 padding-bottom-20 fs-20">Please do not make any transactions as your funds will be lost.We will notify you via email when the official version is launched.</div><div class="btn-container"><a href="javascript:void(0)" class="white-blue-green-btn min-width-220 understood">I UNDERSTAND</a></div></div></div></div>', 'warning-test-version', true);
         $('.warning-test-version .understood').click(function() {
             basic.cookies.set('warning-test-version', 1);
@@ -4054,7 +4064,7 @@ initMobileMenu();
 
 //binding the refresh captcha event to existing button
 function initCaptchaRefreshEvent()  {
-    if($('.refresh-captcha').length > 0)    {
+    if ($('.refresh-captcha').length > 0)    {
         $('.refresh-captcha').click(function()  {
             $.ajax({
                 type: 'GET',
@@ -4072,7 +4082,7 @@ function initCaptchaRefreshEvent()  {
 }
 
 function fixSelectsOnMac() {
-    if(is_mac) {
+    if (is_mac) {
         $('select').addClass('select-mac-fix');
     }
 }
@@ -4084,7 +4094,7 @@ function initPopupEvents(scroll_to_buy_section) {
         $(this).closest('.contract-response-message').remove();
     });
 
-    if(scroll_to_buy_section != undefined) {
+    if (scroll_to_buy_section != undefined) {
         $('.scroll-to-buy-section').click(function() {
             $('html, body').animate({
                 scrollTop: $('.ready-to-purchase-with-external-api .form-container').offset().top
@@ -4182,7 +4192,7 @@ function fireGoogleAnalyticsEvent(category, action, label, value) {
         'event_label': label
     };
 
-    if(value != undefined) {
+    if (value != undefined) {
         event_obj.value = value;
     }
 

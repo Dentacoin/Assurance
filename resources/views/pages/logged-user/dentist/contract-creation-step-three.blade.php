@@ -99,8 +99,8 @@
             </div>
         </div>
         <div class="single-row flex-row fs-0 relative-position">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer" for="monthly-premium">Monthly Premium:</label>
-            <input type="number" name="monthly-premium" id="monthly-premium" maxlength="20" placeholder="Please enter a value in USD" class="right-field calibri-regular fs-18 dark-color inline-block" @if(!empty($renew_contract)) value="{{$renew_contract->monthly_premium}}" @endif/>
+            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer" for="monthly-premium">Monthly Premium Suggestion:</label>
+            <input type="number" name="monthly-premium" id="monthly-premium" maxlength="20" placeholder="Please enter a value in USD" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background" @if(!empty($renew_contract)) value="{{$renew_contract->monthly_premium}}" @endif/>
             <span class="absolute-currency-label calibri-regular fs-18 dark-color">USD</span>
         </div>
         @if(!empty($renew_contract))

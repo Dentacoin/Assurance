@@ -25,8 +25,8 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.34">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.34">
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.35">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.35">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
@@ -216,29 +216,9 @@
     </figure>
 @endif
 
-<div class="response-layer">
-    <div class="wrapper">
-        <figure itemscope="" itemtype="http://schema.org/ImageObject">
-            <img src="/assets/images/loader.gif" class="max-width-160" alt="Loader">
-        </figure>
-    </div>
-</div>
+<div class="camping-loader"></div>
 
 @if(\App\Http\Controllers\UserController::instance()->checkSession())
-    <div class="contract-response-layer">
-        <div class="wrapper">
-            <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                <img src="/assets/images/contract-assurance-loading.gif" class="max-width-440 min-width-300" alt="Loader">
-            </figure>
-        </div>
-    </div>
-    <div class="contract-response-success-layer">
-        <div class="wrapper">
-            <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                <img src="/assets/images/contract-assurance-loading-success.gif" class="max-width-440 min-width-300" alt="Loader">
-            </figure>
-        </div>
-    </div>
     @php($slug = (new \App\Http\Controllers\Controller())->encrypt(session('logged_user')['id'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY')))
     @php($type = (new \App\Http\Controllers\Controller())->encrypt(session('logged_user')['type'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY')))
     @php($token = (new \App\Http\Controllers\Controller())->encrypt(session('logged_user')['token'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY')))
@@ -524,17 +504,17 @@
 @endif
 
 {{--/Show the sticky calculate button only for dentists--}}
-<script src="/assets/js/basic.js?v=1.0.34"></script>
-<script src="/dist/js/front-libs-script.js?v=1.0.34"></script>
+<script src="/assets/js/basic.js?v=1.0.35"></script>
+<script src="/dist/js/front-libs-script.js?v=1.0.35"></script>
 {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-<script src="/assets/js/address.js?v=1.0.34"></script>
-<script src="/assets/js/index-bundled.js?v=1.0.34"></script>
+<script src="/assets/js/address.js?v=1.0.35"></script>
+<script src="/assets/js/index-bundled.js?v=1.0.35"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
 {{--Load social logging scripts only if user is not logged--}}
 @if(!(new \App\Http\Controllers\UserController())->checkSession())
-    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.34"></script>
-    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.34"></script>
+    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.35"></script>
+    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.35"></script>
 @endif
 
 {{--Multiple errors from laravel validation--}}

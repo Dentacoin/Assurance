@@ -7403,6 +7403,13 @@ input[type='file'].hide-input {
     .response-layer .wrapper img, .contract-response-layer .wrapper img, .contract-response-success-layer .wrapper img {
       width: 95%;
       margin-bottom: 15px; }
+    .response-layer .wrapper .message, .contract-response-layer .wrapper .message, .contract-response-success-layer .wrapper .message {
+      margin: 0 auto;
+      padding-top: 15px;
+      padding-left: 15px;
+      padding-right: 15px;
+      color: #126585;
+      text-align: center; }
 
 .pencil-background {
   background-image: url(/assets/images/pencil.svg);

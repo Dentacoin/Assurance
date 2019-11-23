@@ -1364,6 +1364,14 @@ input[type='file'].hide-input {
             width: 95%;
             margin-bottom: 15px;
         }
+        .message {
+            margin: 0 auto;
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            color: $blue_green_color;
+            text-align: center;
+        }
     }
 }
 

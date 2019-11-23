@@ -23,7 +23,7 @@
                             <div class="calibri-bold fs-14 padding-bottom-50 text-center blue-green-color">( This contract proposal will be active until <span class="active-until">{{date('d/m/Y', strtotime('+'.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days', strtotime($created_at))) . PHP_EOL}}</span>. )</div>
                         @endif
                         <div class="step-fields module padding-top-20">
-                            <form method="POST" enctype="multipart/form-data" action="{{route('update-and-sign-contract')}}" id="dentist-update-and-sign-contract" class="address-suggester-wrapper">
+                            <form method="POST" enctype="multipart/form-data" action="{{route('update-and-sign-contract')}}" id="patient-update-and-sign-contract" class="address-suggester-wrapper">
                                 <h3 class="calibri-bold fs-30 dark-color">DENTIST DETAILS</h3>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Name:</label>
@@ -90,16 +90,12 @@
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0 @if(empty($patient->address)) cursor-pointer @endif" @if(empty($patient->address)) for="address" @endif>Postal Address:</label>
-                                    @if(!empty($patient->address))
-                                        <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$patient->address}}</div>
-                                    @else
-                                        <div class="suggester-parent module inline-block">
-                                            <input type="text" name="address" id="address" maxlength="250" class="address-suggester calibri-regular fs-18 dark-color pencil-background required-field" autocomplete="off">
-                                            <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
-                                            <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
-                                            <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
-                                        </div>
-                                    @endif
+                                    <div class="suggester-parent module inline-block">
+                                        <input type="text" name="address" id="address" maxlength="250" class="address-suggester calibri-regular fs-18 dark-color pencil-background required-field" autocomplete="off" @if(!empty($patient->address)) value="{{$patient->address}}" @endif>
+                                        <div class="suggester-map-div margin-top-10 margin-bottom-10"></div>
+                                        <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
+                                        <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number)</div>
+                                    </div>
                                 </div>
                                 <div class="single-row fs-0 dcn-address-row">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 @if(empty($patient->dcn_address)) cursor-pointer padding-top-0 padding-bottom-0 @endif" @if(empty($patient->dcn_address)) for="dcn_address" @endif>Wallet Address:</label>
