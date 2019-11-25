@@ -25,8 +25,8 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.38">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.38">
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.39">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.39">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
@@ -390,13 +390,13 @@
                         <div class="step third address-suggester-wrapper" data-step="third">
                             <div class="padding-bottom-20 field-parent">
                                 <div class="custom-google-select-style module">
+                                    @php($countries = (new \App\Http\Controllers\APIRequestsController())->getAllCountries())
                                     <label>Select country:</label>
-                                    @php($current_phone_code = '+')
+                                    @php($current_phone_code = '+'.$countries[0]->phone_code)
                                     @if(isset($client_ip) && $client_ip != '127.0.0.1')
                                         @php($current_user_country_code = (new \App\Http\Controllers\APIRequestsController())->getCountry($client_ip))
                                     @endif
                                     <select name="country-code" id="dentist-country" class="form-field required country-select" @if(!empty($current_user_country_code)) data-current-user-country-code="{{$current_user_country_code}}" @endif>
-                                        @php($countries = (new \App\Http\Controllers\APIRequestsController())->getAllCountries())
                                         @if(!empty($countries))
                                             @foreach($countries as $country)
                                                 @php($selected = '')
@@ -504,17 +504,17 @@
 @endif
 
 {{--/Show the sticky calculate button only for dentists--}}
-<script src="/assets/js/basic.js?v=1.0.38"></script>
-<script src="/dist/js/front-libs-script.js?v=1.0.38"></script>
+<script src="/assets/js/basic.js?v=1.0.39"></script>
+<script src="/dist/js/front-libs-script.js?v=1.0.39"></script>
 {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-<script src="/assets/js/address.js?v=1.0.38"></script>
-<script src="/assets/js/index-bundled.js?v=1.0.38"></script>
+<script src="/assets/js/address.js?v=1.0.39"></script>
+<script src="/assets/js/index-bundled.js?v=1.0.39"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
 {{--Load social logging scripts only if user is not logged--}}
 @if(!(new \App\Http\Controllers\UserController())->checkSession())
-    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.38"></script>
-    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.38"></script>
+    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.39"></script>
+    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.39"></script>
 @endif
 
 {{--Multiple errors from laravel validation--}}

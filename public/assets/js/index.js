@@ -716,6 +716,7 @@ async function pagesDataOnContractInit() {
                                                                             }
                                                                         });
                                                                     } else {
+                                                                        hideLoader();
                                                                         basic.showAlert('Your transaction and blockchain contract creation failed. Please try again later when the gas cost is low or contact <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a>. You can see your transaction on <a href="https://rinkeby.etherscan.io/tx/' + transactionHash + '" target="_blank" class="etherscan-hash">Etherscan</a>');
                                                                     }
                                                                 }
@@ -2600,6 +2601,12 @@ async function onDocumentReadyPageData() {
                             basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
                         } else {
                             //custom
+                            if (!$('#read-the-contract-details').is(':checked')) {
+                                basic.showAlert('Please check the checkbox below to continue with the contract approval.', '', true);
+                                return false;
+                            }
+
+
                             var cached_key = localStorage.getItem('current-account') == null;
                             var ajax_data = {
                                 cached_key: cached_key,

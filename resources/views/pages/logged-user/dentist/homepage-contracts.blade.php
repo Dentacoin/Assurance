@@ -38,7 +38,7 @@
                                                         @break
                                                         @case('awaiting-approval')
                                                         Awaiting Approval
-                                                        @php($btn_label = 'Details and approve')
+                                                        @php($btn_label = 'APPROVE NOW')
                                                         @break
                                                     @endswitch
                                                 </figcaption>

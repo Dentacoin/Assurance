@@ -1,6 +1,9 @@
 <div class="contract-details module">
     <div class="top-right-page-alike"></div>
-    <h2 class="text-center lato-bold fs-30 fs-xs-24 padding-bottom-45 padding-bottom-xs-20 blue-green-color">ASSURANCE CONTRACT SAMPLE</h2>
+    <h2 class="text-center lato-bold fs-30 fs-xs-24 padding-bottom-30 padding-bottom-xs-20 blue-green-color">ASSURANCE CONTRACT SAMPLE</h2>
+    @if(!empty($subtitle))
+        <p class="calibri-bold fs-18 fs-xs-16 dark-color padding-top-10 padding-bottom-40 text-center">{{$subtitle}}</p>
+    @endif
     @if(!empty($contract))
         <h3 class="calibri-bold fs-30 fs-xs-22 dark-color">DENTIST DETAILS</h3>
     @else
