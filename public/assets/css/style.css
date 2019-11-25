@@ -7984,7 +7984,7 @@ select.select-mac-fix {
   display: none;
   cursor: pointer; }
 .module.avatar .max-size-label.active {
-  padding-top: 40px !important; }
+  margin-top: 40px !important; }
   .module.avatar .max-size-label.active label {
     display: inline-block; }
 .module.step-fields .single-row {

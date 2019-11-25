@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Country:</label>
-                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" data-country-code="{{$countries[$dentist->country_id - 1]->code}}">{{$countries[$dentist->country_id - 1]->name}}</div>
+                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$countries[$dentist->country_id - 1]->name}}</div>
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Phone:</label>
@@ -78,7 +78,7 @@
                                 <div class="single-row fs-0 country-select">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 @if(empty($patient->country_id)) padding-top-0 padding-bottom-0 cursor-pointer @endif" @if(empty($patient->country_id)) for="country" @endif >Country:</label>
                                     @if(!empty($patient->country_id))
-                                        <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$countries[$patient->country_id - 1]->name}}</div>
+                                        <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" data-country-code="{{$countries[$patient->country_id - 1]->code}}">{{$countries[$patient->country_id - 1]->name}}</div>
                                     @else
                                         <select class="inline-block fs-18 right-field required-field" id="country" name="country">
                                             <option disabled selected>Select country</option>
