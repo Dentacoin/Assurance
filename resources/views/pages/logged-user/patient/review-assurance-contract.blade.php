@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Country:</label>
-                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$countries[$dentist->country_id - 1]->name}}</div>
+                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" data-country-code="{{$countries[$dentist->country_id - 1]->code}}">{{$countries[$dentist->country_id - 1]->name}}</div>
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Phone:</label>
@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Email Address:</label>
-                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">{{$contract->patient_email}}</div>
+                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">{{$current_logged_patient->email}}</div>
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0 cursor-pointer" for="patient-id-number">ID Number:</label>

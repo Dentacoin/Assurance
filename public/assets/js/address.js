@@ -77,7 +77,12 @@ $(document).ready(function($){
                 }
 
                 var input = $(this)[0];
-                var cc = suggester_container.find('.country-select option:selected').val();
+                if($('[data-country-code]').length) {
+                    var cc = $('[data-country-code]').attr('data-country-code');
+                } else {
+                    var cc = suggester_container.find('.country-select option:selected').val();
+                }
+
                 var options = {
                     componentRestrictions: {
                         country: cc

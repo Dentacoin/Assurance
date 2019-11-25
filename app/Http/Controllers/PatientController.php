@@ -227,6 +227,7 @@ class PatientController extends Controller {
 
             $params = array(
                 'contract' => $contract,
+                'current_logged_patient' => $current_logged_patient,
                 'countries' => (new APIRequestsController())->getAllCountries(),
                 'shown' => 'one'
             );
@@ -360,6 +361,7 @@ class PatientController extends Controller {
         $temp_contract_folder_path = CONTRACTS . $data['contract'];
         file_put_contents($temp_contract_folder_path . DS . $signature_filename, $this->base64ToPng($data['patient_signature']));
 
+        $contract->	patient_email = $logged_patient->email;
         $contract->patient_id = $logged_patient->id;
         $contract->patient_address = $logged_patient->dcn_address;
         $contract->patient_id_number = $data['patient-id-number'];
