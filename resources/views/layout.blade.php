@@ -25,8 +25,8 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.39">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.39">
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.40">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.40">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
@@ -402,7 +402,7 @@
                                                 @php($selected = '')
                                                 @if(!empty($current_user_country_code))
                                                     @if($current_user_country_code == $country->code)
-                                                        @php($current_phone_code = $current_phone_code.$country->phone_code)
+                                                        @php($current_phone_code = '+'.$country->phone_code)
                                                         @php($selected = 'selected')
                                                     @endif
                                                 @endif
@@ -504,17 +504,17 @@
 @endif
 
 {{--/Show the sticky calculate button only for dentists--}}
-<script src="/assets/js/basic.js?v=1.0.39"></script>
-<script src="/dist/js/front-libs-script.js?v=1.0.39"></script>
+<script src="/assets/js/basic.js?v=1.0.40"></script>
+<script src="/dist/js/front-libs-script.js?v=1.0.40"></script>
 {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-<script src="/assets/js/address.js?v=1.0.39"></script>
-<script src="/assets/js/index-bundled.js?v=1.0.39"></script>
+<script src="/assets/js/address.js?v=1.0.40"></script>
+<script src="/assets/js/index-bundled.js?v=1.0.40"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
 {{--Load social logging scripts only if user is not logged--}}
 @if(!(new \App\Http\Controllers\UserController())->checkSession())
-    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.39"></script>
-    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.39"></script>
+    <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.40"></script>
+    <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.40"></script>
 @endif
 
 {{--Multiple errors from laravel validation--}}

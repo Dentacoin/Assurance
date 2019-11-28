@@ -189,6 +189,9 @@
     &:focus {
         @include box-shadow(0px 2px 10px 0 #679dca);
     }
+    @include breakpoint($sm-down) {
+        border: 1px solid #E0E0E0;
+    }
 }
 
 .module  {
