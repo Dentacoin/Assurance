@@ -25,8 +25,8 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.42">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.42">
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.43">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.43">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
@@ -502,7 +502,7 @@
                 </a>
             </figure>
         @endif
-        <a href="https://dentacoin.com/holiday-calendar-2019" target="_blank" class="display-block">
+        <a href="https://dentacoin.com/holiday-calendar-2019" target="_blank" class="display-block banner">
             <picture itemscope="" itemtype="http://schema.org/ImageObject">
                 <source media="(max-width: 992px)" srcset="//dentacoin.com/assets/uploads/mobile-christmas-banner-small.gif"/>
                 <img src="//dentacoin.com/assets/uploads/christmas-banner.gif" alt="Holiday calendar banner" class="width-100" itemprop="contentUrl"/>
@@ -523,17 +523,17 @@
     </div>
 
     {{--/Show the sticky calculate button only for dentists--}}
-    <script src="/assets/js/basic.js?v=1.0.42"></script>
-    <script src="/dist/js/front-libs-script.js?v=1.0.42"></script>
+    <script src="/assets/js/basic.js?v=1.0.43"></script>
+    <script src="/dist/js/front-libs-script.js?v=1.0.43"></script>
     {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-    <script src="/assets/js/address.js?v=1.0.42"></script>
-    <script src="/assets/js/index-bundled.js?v=1.0.42"></script>
+    <script src="/assets/js/address.js?v=1.0.43"></script>
+    <script src="/assets/js/index-bundled.js?v=1.0.43"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
     {{--Load social logging scripts only if user is not logged--}}
     @if(!(new \App\Http\Controllers\UserController())->checkSession())
-        <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.42"></script>
-        <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.42"></script>
+        <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.43"></script>
+        <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.43"></script>
     @endif
 
     {{--Multiple errors from laravel validation--}}

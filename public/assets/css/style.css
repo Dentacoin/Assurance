@@ -7397,6 +7397,11 @@ input[type='file'].hide-input {
     @media screen and (max-width: 767px) {
       .bottom-fixed-container .open-calculator img {
         width: 220px; } }
+  .bottom-fixed-container .banner {
+    -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+    -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5); }
   .bottom-fixed-container .privacy-policy-cookie {
     padding-top: 20px;
     padding-bottom: 20px;

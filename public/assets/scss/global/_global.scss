@@ -1366,6 +1366,9 @@ input[type='file'].hide-input {
             }
         }
     }
+    .banner {
+        @include box-shadow(0 2px 6px 0 rgba(0, 0, 0, 0.5));
+    }
     .privacy-policy-cookie {
         padding-top: 20px;
         padding-bottom: 20px;
