@@ -172,7 +172,7 @@
         </div>
     </header>
     <main>@yield("content")</main>
-    <footer class="padding-bottom-70 padding-bottom-sm-250 padding-bottom-xs-200">
+    <footer class="padding-bottom-120 padding-bottom-sm-250 padding-bottom-xs-200">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">
@@ -496,7 +496,7 @@
     <div class="bottom-fixed-container">
         {{--Show the sticky calculate button only for dentists--}}
         @if(!empty(Route::current()) && Route::current()->getName() == 'home')
-            <figure itemscope="" itemtype="http://schema.org/ImageObject">
+            <figure itemscope="" itemtype="http://schema.org/ImageObject" class="text-center">
                 <a href="javascript:void(0);" class="open-calculator">
                     <img alt="Sticky calculator button" itemprop="contentUrl" src="/assets/uploads/sticky-calculator-button.svg"/>
                 </a>

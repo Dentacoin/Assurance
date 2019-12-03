@@ -7392,14 +7392,11 @@ input[type='file'].hide-input {
   bottom: 0;
   left: 0;
   z-index: 1035; }
-  .bottom-fixed-container .open-calculator {
-    text-align: center; }
-    .bottom-fixed-container .open-calculator img {
-      width: 300px;
-      margin: 0 auto; }
-      @media screen and (max-width: 767px) {
-        .bottom-fixed-container .open-calculator img {
-          width: 220px; } }
+  .bottom-fixed-container .open-calculator img {
+    width: 300px; }
+    @media screen and (max-width: 767px) {
+      .bottom-fixed-container .open-calculator img {
+        width: 220px; } }
   .bottom-fixed-container .privacy-policy-cookie {
     padding-top: 20px;
     padding-bottom: 20px;

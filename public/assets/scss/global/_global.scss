@@ -1359,7 +1359,6 @@ input[type='file'].hide-input {
     left: 0;
     z-index: 1035;
     .open-calculator {
-        text-align: center;
         img {
             width: 300px;
             @include breakpoint($xs) {
