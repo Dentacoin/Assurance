@@ -34,6 +34,7 @@ class Controller extends BaseController
             View::share('mobile', $this->isMobile());
             View::share('meta_data', $this->getMetaData());
             /*View::share('sections', $this->getDbSections());*/
+            View::share('privacy_policy_cookie', $this->checkIfPrivacyPolicyCookie());
             View::share('client_ip', $this->getClientIp());
         }
     }
@@ -84,6 +85,15 @@ class Controller extends BaseController
 
     protected function isMobile()   {
         return (new Agent())->isMobile();
+    }
+
+    protected function checkIfPrivacyPolicyCookie()    {
+        $bool = empty($_COOKIE['privacy_policy']);
+        if($bool) {
+            return true;
+        }else {
+            return false;
+        }
     }
 
     protected function getSitemap() {

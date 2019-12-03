@@ -45,14 +45,16 @@ function fixButtonsFocus() {
     });
 }
 
+//init cookie events only if exists
 function checkIfCookie()    {
-    if ($('.privacy-policy-cookie').length > 0)  {
+    if($('.privacy-policy-cookie').length > 0)  {
         $('.privacy-policy-cookie .accept').click(function()    {
             basic.cookies.set('privacy_policy', 1);
             $('.privacy-policy-cookie').hide();
         });
     }
 }
+checkIfCookie();
 
 var is_mac = navigator.platform.indexOf('Mac') > -1;
 var global_state = {};

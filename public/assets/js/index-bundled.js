@@ -73350,14 +73350,16 @@ function fixButtonsFocus() {
     });
 }
 
+//init cookie events only if exists
 function checkIfCookie()    {
-    if ($('.privacy-policy-cookie').length > 0)  {
+    if($('.privacy-policy-cookie').length > 0)  {
         $('.privacy-policy-cookie .accept').click(function()    {
             basic.cookies.set('privacy_policy', 1);
             $('.privacy-policy-cookie').hide();
         });
     }
 }
+checkIfCookie();
 
 var is_mac = navigator.platform.indexOf('Mac') > -1;
 var global_state = {};
@@ -77352,7 +77354,7 @@ initPopoverTooltips();
 
 function showWarningTestingVersion() {
     if (basic.cookies.get('warning-test-version') != '1' && !$('.my-contracts-iframe').length) {
-        basic.showDialog('<div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 inline-block"><img src="/assets/images/warning-pop-up.png"></div><div class="col-xs-12 col-md-5 col-sm-6 text-center inline-block padding-top-20 padding-bottom-20"><div class="warning"><img class="max-width-50" src="/assets/images/attention.svg" alt="attention icon"></div><div class="lato-bold fs-30" style="color: #ff8d8d;">WARNING:</div><div class="black-warning lato-bold fs-30 dark-color">THIS IS A TEST WEBSITE VERSION.</div><div class="additional-text padding-top-20 padding-bottom-20 fs-20">Please do not make any transactions as your funds will be lost.We will notify you via email when the official version is launched.</div><div class="btn-container"><a href="javascript:void(0)" class="white-blue-green-btn min-width-220 understood">I UNDERSTAND</a></div></div></div></div>', 'warning-test-version', true);
+        basic.showDialog('<div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 inline-block"><img src="/assets/images/warning-pop-up.png" class="hide-xs"></div><div class="col-xs-12 col-md-5 col-sm-6 text-center inline-block padding-top-20 padding-bottom-20"><div class="warning"><img class="max-width-50" src="/assets/images/attention.svg" alt="attention icon"></div><div class="lato-bold fs-30" style="color: #ff8d8d;">WARNING:</div><div class="black-warning lato-bold fs-30 dark-color">THIS IS A TEST WEBSITE VERSION.</div><div class="additional-text padding-top-20 padding-bottom-20 fs-20">Please do not make any transactions as your funds will be lost.We will notify you via email when the official version is launched.</div><div class="btn-container"><a href="javascript:void(0)" class="white-blue-green-btn min-width-220 understood">I UNDERSTAND</a></div></div></div></div>', 'warning-test-version', true);
         $('.warning-test-version .understood').click(function() {
             basic.cookies.set('warning-test-version', 1);
             basic.closeDialog();
