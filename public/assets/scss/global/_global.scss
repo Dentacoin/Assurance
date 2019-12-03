@@ -1358,6 +1358,16 @@ input[type='file'].hide-input {
     bottom: 0;
     left: 0;
     z-index: 1035;
+    .calculator {
+        text-align: center;
+        img {
+            width: 300px;
+            margin: 0 auto;
+            @include breakpoint($xs) {
+                width: 220px;
+            }
+        }
+    }
     .privacy-policy-cookie {
         padding-top: 20px;
         padding-bottom: 20px;

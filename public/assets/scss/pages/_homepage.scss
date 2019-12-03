@@ -41,17 +41,6 @@ body.home {
             }
         }
     }
-    .fixed-calculate-button {
-        bottom: 0;
-        z-index: 10000;
-        @include horizontal-align(fixed);
-        img {
-            width: 300px;
-        }
-        @include breakpoint($xs) {
-            width: 220px;
-        }
-    }
 }
 
 .testimonials-section {

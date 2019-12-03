@@ -7392,6 +7392,13 @@ input[type='file'].hide-input {
   bottom: 0;
   left: 0;
   z-index: 1035; }
+  .bottom-fixed-container .calculator {
+    text-align: center; }
+    .bottom-fixed-container .calculator img {
+      width: 300px; }
+      @media screen and (max-width: 767px) {
+        .bottom-fixed-container .calculator img {
+          width: 220px; } }
   .bottom-fixed-container .privacy-policy-cookie {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -9110,19 +9117,6 @@ body.home .dentist-or-patient-section .inline-block-top.left .hidden-container {
         body.home .dentist-or-patient-section .inline-block-top.left .hidden-container .white-transparent-btn:hover {
           background-color: transparent;
           color: white; } }
-body.home .fixed-calculate-button {
-  bottom: 0;
-  z-index: 10000;
-  position: fixed;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%); }
-  body.home .fixed-calculate-button img {
-    width: 300px; }
-  @media screen and (max-width: 767px) {
-    body.home .fixed-calculate-button {
-      width: 220px; } }
 
 .testimonials-section picture:after {
   content: url(/assets/uploads/quote-bg.svg);
