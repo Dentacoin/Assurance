@@ -7,6 +7,8 @@ $(document).ready(async function() {
     //if get parameter is passed show loginform
     if ((basic.objHasKey(get_params, 'show-login') || basic.objHasKey(get_params, 'inviter')) && !$('body').hasClass('logged-in')) {
         openLoginSigninPopup();
+    } else if (basic.objHasKey(get_params, 'show-patient-register')) {
+        openLoginSigninPopup(undefined, 'show-patient-register');
     }
 
     await dApp.init();
@@ -1899,10 +1901,17 @@ function bindLoginSigninPopupShow() {
 }
 bindLoginSigninPopupShow();
 
-function openLoginSigninPopup(this_show_login_btn) {
+function openLoginSigninPopup(this_show_login_btn, type) {
     basic.closeDialog();
     $('.hidden-login-form').html('');
     basic.showDialog(hidden_popup_content, 'login-signin-popup', null, true);
+
+    if (type != undefined) {
+        if (type == 'show-patient-register') {
+            $('.login-signin-popup .popup-body .patient .form-login').hide();
+            $('.login-signin-popup .popup-body .patient .form-register').show();
+        }
+    }
 
     $('.login-signin-popup .dentist .form-register .address-suggester').removeClass('dont-init');
 

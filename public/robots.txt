@@ -1,2 +1,4 @@
 User-agent: *
-Disallow: /google-map-iframe
+Disallow: /assurance-admin-access/
+Disallow: /info/
+Disallow: /my-contracts-iframe
