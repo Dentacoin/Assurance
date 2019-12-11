@@ -7730,7 +7730,7 @@ select.select-mac-fix {
   text-align: left;
   color: black;
   font-size: 20px;
-  padding: 10px 15px 10px 70px;
+  padding: 10px 15px 10px 60px;
   max-width: 350px;
   margin: 0 auto;
   cursor: pointer;
@@ -7744,7 +7744,9 @@ select.select-mac-fix {
   .social-login-btn.civic-custom-btn {
     background-image: url(/assets/uploads/civic.svg); }
   .social-login-btn.facebook-custom-btn {
-    background-image: url(/assets/uploads/facebook.svg); }
+    background-color: #4267B2;
+    color: white;
+    padding: 10px 15px; }
 
 .custom-input {
   width: 100%;
