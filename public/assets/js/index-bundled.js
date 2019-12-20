@@ -73312,6 +73312,8 @@ $(document).ready(async function() {
     //if get parameter is passed show loginform
     if ((basic.objHasKey(get_params, 'show-login') || basic.objHasKey(get_params, 'inviter')) && !$('body').hasClass('logged-in')) {
         openLoginSigninPopup();
+    } else if (basic.objHasKey(get_params, 'show-patient-register')) {
+        openLoginSigninPopup(undefined, 'show-patient-register');
     }
 
     await dApp.init();
@@ -75204,10 +75206,18 @@ function bindLoginSigninPopupShow() {
 }
 bindLoginSigninPopupShow();
 
-function openLoginSigninPopup(this_show_login_btn) {
+function openLoginSigninPopup(this_show_login_btn, type) {
+    console.log(type, 'openLoginSigninPopup');
     basic.closeDialog();
     $('.hidden-login-form').html('');
     basic.showDialog(hidden_popup_content, 'login-signin-popup', null, true);
+
+    if (type != undefined) {
+        if (type == 'show-patient-register') {
+            $('.login-signin-popup .popup-body .patient .form-login').hide();
+            $('.login-signin-popup .popup-body .patient .form-register').show();
+        }
+    }
 
     $('.login-signin-popup .dentist .form-register .address-suggester').removeClass('dont-init');
 
@@ -75698,7 +75708,15 @@ function apiEventsListeners() {
     });
 
     $(document).on('errorResponseCoreDBApi', function (event) {
-        basic.showAlert('Something went wrong with Civic. Please try again later or contact Dentacoin admin.', '', true);
+        var error_popup_html = '';
+        if (event.response_data.errors) {
+            for(var key in event.response_data.errors) {
+                error_popup_html += event.response_data.errors[key]+'<br>';
+            }
+        }
+
+        $('.response-layer').hide();
+        basic.showAlert(error_popup_html, 'style-anchors', true);
     });
 }
 apiEventsListeners();

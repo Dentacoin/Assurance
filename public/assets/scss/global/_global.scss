@@ -602,6 +602,18 @@ fieldset {
             margin-bottom: 50px;
         }
     }
+    &.style-anchors {
+        .modal-dialog {
+            .modal-content {
+                .modal-body {
+                    a {
+                        font-weight: bold;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
     &.popup-html {
         .bootbox-close-button {
             font-size: 45px;

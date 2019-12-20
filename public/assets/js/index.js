@@ -1902,6 +1902,7 @@ function bindLoginSigninPopupShow() {
 bindLoginSigninPopupShow();
 
 function openLoginSigninPopup(this_show_login_btn, type) {
+    console.log(type, 'openLoginSigninPopup');
     basic.closeDialog();
     $('.hidden-login-form').html('');
     basic.showDialog(hidden_popup_content, 'login-signin-popup', null, true);
@@ -2402,7 +2403,15 @@ function apiEventsListeners() {
     });
 
     $(document).on('errorResponseCoreDBApi', function (event) {
-        basic.showAlert('Something went wrong with Civic. Please try again later or contact Dentacoin admin.', '', true);
+        var error_popup_html = '';
+        if (event.response_data.errors) {
+            for(var key in event.response_data.errors) {
+                error_popup_html += event.response_data.errors[key]+'<br>';
+            }
+        }
+
+        $('.response-layer').hide();
+        basic.showAlert(error_popup_html, 'style-anchors', true);
     });
 }
 apiEventsListeners();
