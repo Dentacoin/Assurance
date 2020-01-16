@@ -80955,7 +80955,7 @@ async function pagesDataOnContractInit() {
                 var next_payment_timestamp_date_obj;
                 var next_payment_timestamp_unix;
                 var next_payment_timestamp;
-                var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.single-contract-view-section').attr('data-patient-address'), $('.single-contract-view-section').attr('data-dentist-address'));
+                var contractCreationAndPeriodToWithdraw = parseInt($('.single-contract-view-section').attr('data-date-start-contract')) + period_to_withdraw;
                 var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient-address')));
 
                 var months_passed_for_reward = Math.floor(time_passed_since_signed / period_to_withdraw);
@@ -80963,9 +80963,9 @@ async function pagesDataOnContractInit() {
 
                 var timer_label = '';
                 //if (time_passed_since_signed > period_to_withdraw) {
-                    next_payment_timestamp = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp) * 1000;
+                    next_payment_timestamp = (contractCreationAndPeriodToWithdraw + dApp.grace_period - now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                    next_payment_timestamp_unix = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp);
+                    next_payment_timestamp_unix = (contractCreationAndPeriodToWithdraw + dApp.grace_period - now_timestamp);
 
                     timer_label = 'Overdue payment. Patient first payment in:';
                     $('.clock').addClass('red-background');
@@ -80977,9 +80977,7 @@ async function pagesDataOnContractInit() {
                     timer_label = 'Patient first payment in:';
                 }*/
 
-                console.log(on_load_exiting_contract[0], 'on_load_exiting_contract[0]');
-                console.log(dApp.grace_period, 'dApp.grace_period');
-                console.log(now_timestamp, 'next_payment_timestamp_unix');
+                console.log(contractCreationAndPeriodToWithdraw, 'contractCreationAndPeriodToWithdraw');
                 console.log(next_payment_timestamp_unix, 'next_payment_timestamp_unix');
                 $('.contract-body .timer-label').html(timer_label);
                 initFlipClockTimer(next_payment_timestamp_unix);
