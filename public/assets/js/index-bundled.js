@@ -80951,11 +80951,8 @@ async function pagesDataOnContractInit() {
             if ($('.contract-header').hasClass('awaiting-payment')) {
                 var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
                 var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-date-start-contract'));
-                var next_payment_timestamp_date_obj;
                 var next_payment_timestamp_unix;
-                var next_payment_timestamp;
                 var contractCreationAndPeriodToWithdraw = parseInt($('.single-contract-view-section').attr('data-date-start-contract')) + period_to_withdraw;
-                var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient-address')));
 
                 var months_passed_for_reward = Math.floor(time_passed_since_signed / period_to_withdraw);
                 var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(contractCreationAndPeriodToWithdraw);
@@ -80963,18 +80960,16 @@ async function pagesDataOnContractInit() {
                 var timer_label = '';
                 if (time_passed_since_signed > period_to_withdraw) {
                     // running grace period, because patient failed to execude the first payment in time
-                    next_payment_timestamp = (contractCreationAndPeriodToWithdraw + dApp.grace_period - now_timestamp) * 1000;
                     next_payment_timestamp_unix = contractCreationAndPeriodToWithdraw + dApp.grace_period - now_timestamp;
 
-                    timer_label = 'Overdue payment. Patient first payment in:';
+                    timer_label = 'Withdraw payment after (grace period):';
                     $('.clock').addClass('red-background');
                 }  else {
                     // running the period when patient has to execute the first payment
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
-                    next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
-                    timer_label = 'Patient first payment in:';
+                    timer_label = 'Withdraw payment after:';
                 }
-                
+
                 $('.contract-body .timer-label').html(timer_label);
                 initFlipClockTimer(next_payment_timestamp_unix);
             }
