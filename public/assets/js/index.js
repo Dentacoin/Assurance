@@ -755,7 +755,7 @@ async function pagesDataOnContractInit() {
                 var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient-address')));
 
                 var months_passed_for_reward = Math.floor(time_passed_since_signed / period_to_withdraw);
-                var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(on_load_exiting_contract[5]);
+                var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(contractCreationAndPeriodToWithdraw);
 
                 var timer_label = '';
                 //if (time_passed_since_signed > period_to_withdraw) {
