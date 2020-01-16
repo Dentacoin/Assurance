@@ -6,7 +6,7 @@
     @else
         @php($contract_active_at = strtotime($contract->contract_active_at))
     @endif
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section awaiting-payment" data-created-at="{{strtotime($contract->contract_active_at)}}" data-date-start-contract="{{$contract_active_at}}">
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section awaiting-payment" data-created-at="{{strtotime($contract->contract_active_at)}}" data-date-start-contract="{{$contract_active_at}}" data-patient-address="{{$contract->patient_address}}" data-dentist-address="{{$contract->dentist_address}}">
         <section class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
