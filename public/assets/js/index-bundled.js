@@ -80950,34 +80950,30 @@ async function pagesDataOnContractInit() {
         } else if ($('body').hasClass('dentist-contract-view')) {
             if ($('.contract-header').hasClass('awaiting-payment')) {
                 var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
-                console.log(period_to_withdraw, 'period_to_withdraw');
                 var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-date-start-contract'));
                 var next_payment_timestamp_date_obj;
                 var next_payment_timestamp_unix;
                 var next_payment_timestamp;
-                console.log($('.single-contract-view-section').attr('data-patient-address'), '$(\'.single-contract-view-section\').attr(\'data-patient-address\')');
-                console.log($('.single-contract-view-section').attr('data-dentist-address'), '$(\'.single-contract-view-section\').attr(\'data-dentist-address\')');
                 var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.single-contract-view-section').attr('data-patient-address'), $('.single-contract-view-section').attr('data-dentist-address'));
                 var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient-address')));
-
-                console.log(time_passed_since_signed, 'time_passed_since_signed');
-                console.log(period_to_withdraw, 'period_to_withdraw');
 
                 var months_passed_for_reward = Math.floor(time_passed_since_signed / period_to_withdraw);
                 var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(on_load_exiting_contract[5]);
 
                 var timer_label = '';
                 if (time_passed_since_signed > period_to_withdraw) {
-                    var remainder = time_passed_since_signed % period_to_withdraw;
-                    next_payment_timestamp_unix = period_to_withdraw - remainder;
-                    next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
+                    next_payment_timestamp = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                    timer_label = 'Fund your account in:';
-                } else {
+                    next_payment_timestamp_unix = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp);
+
+                    timer_label = 'Overdue payment. Patient first payment in:';
+                    $('.clock').addClass('red-background');
+                }  else {
+                    // running the period when patient has to execute the first payment
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                    timer_label = 'Fund your account in:';
+                    timer_label = 'Patient first payment in:';
                 }
 
                 $('.contract-body .timer-label').html(timer_label);
