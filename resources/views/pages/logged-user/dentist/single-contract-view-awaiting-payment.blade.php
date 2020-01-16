@@ -1,12 +1,14 @@
 @extends('layout')
 @section('content')
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+    @php($created_at = $contract->created_at->format('d-m-Y'))
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section awaiting-payment" data-created-at="{{strtotime($contract->contract_active_at)}}">
         <section class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
             </div>
             <div class="row">
+                {{--strtotime('+'.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days', strtotime($created_at))--}}
                 @include('partials.contract-single-page-nav')
             </div>
         </section>
@@ -19,7 +21,7 @@
                     <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$current_logged_dentist->name}}</div>
                     <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$current_logged_dentist->email}}</div>
                 </div>
-                <div class="col-xs-3 inline-block-top margin-top-40 margin-top-xs-0 contract-body" data-time-left-next-transfer="{{strtotime($contract->contract_active_at)}}">
+                {{--<div class="col-xs-3 inline-block-top margin-top-40 margin-top-xs-0 contract-body" data-time-left-next-transfer="{{strtotime($contract->contract_active_at)}}">
                     <div class="contract-header text-center lato-bold fs-20 fs-sm-18 white-color padding-top-15 padding-bottom-15 awaiting-payment">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING PAYMENT</div>
                     <div class="wrapper">
                         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="absolute-hands">
@@ -28,6 +30,14 @@
                         <figure class="inline-block rotate-animation" itemscope="" itemtype="http://schema.org/ImageObject">
                             <img src="/assets/uploads/rotating-icon.png" alt="Loading icon" itemprop="contentUrl">
                         </figure>
+                    </div>
+                </div>--}}
+                <div class="col-xs-4 inline-block contract-body padding-bottom-10 padding-bottom-xs-0">
+                    <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-payment">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING PAYMENT</div>
+                    <div class="wrapper">
+                        <div class="lato-bold fs-20 padding-top-15 padding-bottom-10 padding-left-10 padding-right-10 timer-label"></div>
+                        <div class="clock"></div>
+                        <div class="flip-clock-message"></div>
                     </div>
                 </div>
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">

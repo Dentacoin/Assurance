@@ -638,7 +638,7 @@ async function pagesDataOnContractInit() {
 
                                                     this_btn.unbind();
 
-                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it get approved.');
+                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
 
                                                     const EthereumTx = require('ethereumjs-tx');
 
@@ -2716,7 +2716,7 @@ async function onDocumentReadyPageData() {
                                                     }
                                                     this_btn.unbind();
 
-                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it get approved.');
+                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
 
                                                     const EthereumTx = require('ethereumjs-tx');
                                                     var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
@@ -2909,7 +2909,7 @@ async function onDocumentReadyPageData() {
                                                     }
                                                     this_btn.unbind();
 
-                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it get approved.');
+                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
 
                                                     const EthereumTx = require('ethereumjs-tx');
                                                     var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
@@ -3184,7 +3184,7 @@ function cancelContractEventInit() {
                                                     cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-reason option:selected').html();
                                                 }
 
-                                                showLoader('Your transaction is now being sent to the blockchain. It might take some time until it get approved.');
+                                                showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
 
                                                 const EthereumTx = require('ethereumjs-tx');
                                                 var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
