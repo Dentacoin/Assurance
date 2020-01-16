@@ -261,8 +261,6 @@ class PatientController extends Controller {
     }
 
     protected function updateAndSignContract(Request $request) {
-        var_dump(ini_get('max_execution_time') );
-        die('asd');
         $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         $edited_patient_account = false;
 
