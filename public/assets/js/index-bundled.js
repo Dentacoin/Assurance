@@ -80949,7 +80949,8 @@ async function pagesDataOnContractInit() {
             }
         } else if ($('body').hasClass('dentist-contract-view')) {
             if ($('.contract-header').hasClass('awaiting-payment')) {
-                now_timestamp += 2764800;
+                console.log(period_to_withdraw, 'periodtowithrdft');
+                now_timestamp += 2764800;  // +32days
                 var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
                 var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-date-start-contract'));
                 var next_payment_timestamp_date_obj;
@@ -80965,7 +80966,7 @@ async function pagesDataOnContractInit() {
                 //if (time_passed_since_signed > period_to_withdraw) {
                     next_payment_timestamp = (contractCreationAndPeriodToWithdraw + dApp.grace_period - now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                    next_payment_timestamp_unix = (contractCreationAndPeriodToWithdraw + dApp.grace_period - now_timestamp);
+                    next_payment_timestamp_unix = contractCreationAndPeriodToWithdraw + dApp.grace_period - now_timestamp;
 
                     timer_label = 'Overdue payment. Patient first payment in:';
                     $('.clock').addClass('red-background');
