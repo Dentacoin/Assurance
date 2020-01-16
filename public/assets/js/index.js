@@ -757,20 +757,20 @@ async function pagesDataOnContractInit() {
                 var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(on_load_exiting_contract[5]);
 
                 var timer_label = '';
-                if (time_passed_since_signed > period_to_withdraw) {
+                //if (time_passed_since_signed > period_to_withdraw) {
                     next_payment_timestamp = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     next_payment_timestamp_unix = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp);
 
                     timer_label = 'Overdue payment. Patient first payment in:';
                     $('.clock').addClass('red-background');
-                }  else {
+                /*}  else {
                     // running the period when patient has to execute the first payment
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     timer_label = 'Patient first payment in:';
-                }
+                }*/
 
                 $('.contract-body .timer-label').html(timer_label);
                 initFlipClockTimer(next_payment_timestamp_unix);
