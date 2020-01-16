@@ -3411,7 +3411,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                     var uploaded_file = this.files[0];
                     var reader = new FileReader();
                     reader.addEventListener('load', function (e) {
-                        if (isJsonString(e.target.result) && basic.objHasKey(JSON.parse(e.target.result), 'address') && ('0x' + JSON.parse(e.target.result).address) == $('.proof-of-address').attr('data-address')) {
+                        if (isJsonString(e.target.result) && basic.objHasKey(JSON.parse(e.target.result), 'address') && checksumAddress(('0x' + JSON.parse(e.target.result).address)) == checksumAddress($('.proof-of-address').attr('data-address'))) {
                             var keystore_string = e.target.result;
                             if (caching) {
                                 $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
