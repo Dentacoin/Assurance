@@ -1,20 +1,23 @@
 @extends('layout')
 @section('content')
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
-    @php($created_at = $contract->created_at->format('d-m-Y'))
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section awaiting-payment" data-created-at="{{strtotime($contract->contract_active_at)}}">
+    @if(is_object($contract->contract_active_at))
+        @php($contract_active_at = $contract->contract_active_at->getTimestamp())
+    @else
+        @php($contract_active_at = strtotime($contract->contract_active_at))
+    @endif
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section awaiting-payment" data-created-at="{{strtotime($contract->contract_active_at)}}" data-date-start-contract="{{$contract_active_at}}">
         <section class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
             </div>
             <div class="row">
-                {{--strtotime('+'.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days', strtotime($created_at))--}}
                 @include('partials.contract-single-page-nav')
             </div>
         </section>
         <section class="container single-contract-tile module pending text-center padding-top-20">
             <div class="row fs-0 flex-xs">
-                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
+                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
                         <img alt="Dentist avatar" src="{{$current_logged_dentist->avatar_url}}"/>
                     </figure>
@@ -40,7 +43,7 @@
                         <div class="flip-clock-message"></div>
                     </div>
                 </div>
-                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
+                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
                         <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
                     </figure>
