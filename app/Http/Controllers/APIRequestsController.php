@@ -303,6 +303,8 @@ class APIRequestsController extends Controller {
 
     //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
     public function uploadFileToIPFS($file_path) {
+        print_r($file_path);
+
         $curl = curl_init();
         //$json = '{"filename":"/../assurance.dentacoin.com/public/assets/lorem-ipsum.pdf"}';
         $json = '{"filename":"'.$file_path.'"}';
@@ -321,7 +323,7 @@ class APIRequestsController extends Controller {
 
         //$resp = json_decode(curl_exec($curl));
         $resp = curl_exec($curl);
-        var_dump($resp);
+        print_r($resp);
         curl_close($curl);
         die('asd');
 
