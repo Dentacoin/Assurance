@@ -745,9 +745,9 @@ async function pagesDataOnContractInit() {
             }
         } else if ($('body').hasClass('dentist-contract-view')) {
             if ($('.contract-header').hasClass('awaiting-payment')) {
-                console.log(period_to_withdraw, 'periodtowithrdft');
                 now_timestamp += 2764800;  // +32days
                 var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
+                console.log(period_to_withdraw, 'periodtowithrdft');
                 var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-date-start-contract'));
                 var next_payment_timestamp_date_obj;
                 var next_payment_timestamp_unix;
