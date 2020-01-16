@@ -745,9 +745,7 @@ async function pagesDataOnContractInit() {
             }
         } else if ($('body').hasClass('dentist-contract-view')) {
             if ($('.contract-header').hasClass('awaiting-payment')) {
-                now_timestamp += 2764800;  // +32days
                 var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
-                console.log(period_to_withdraw, 'periodtowithrdft');
                 var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-date-start-contract'));
                 var next_payment_timestamp_date_obj;
                 var next_payment_timestamp_unix;
@@ -759,23 +757,20 @@ async function pagesDataOnContractInit() {
                 var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(contractCreationAndPeriodToWithdraw);
 
                 var timer_label = '';
-                //if (time_passed_since_signed > period_to_withdraw) {
+                if (time_passed_since_signed > period_to_withdraw) {
+                    // running grace period, because patient failed to execude the first payment in time
                     next_payment_timestamp = (contractCreationAndPeriodToWithdraw + dApp.grace_period - now_timestamp) * 1000;
-                    next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     next_payment_timestamp_unix = contractCreationAndPeriodToWithdraw + dApp.grace_period - now_timestamp;
 
                     timer_label = 'Overdue payment. Patient first payment in:';
                     $('.clock').addClass('red-background');
-                /*}  else {
+                }  else {
                     // running the period when patient has to execute the first payment
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
-                    next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     timer_label = 'Patient first payment in:';
-                }*/
-
-                console.log(contractCreationAndPeriodToWithdraw, 'contractCreationAndPeriodToWithdraw');
-                console.log(next_payment_timestamp_unix, 'next_payment_timestamp_unix');
+                }
+                
                 $('.contract-body .timer-label').html(timer_label);
                 initFlipClockTimer(next_payment_timestamp_unix);
             }
