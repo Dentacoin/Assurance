@@ -80976,6 +80976,10 @@ async function pagesDataOnContractInit() {
                     timer_label = 'Patient first payment in:';
                 }*/
 
+                console.log(on_load_exiting_contract[0], 'on_load_exiting_contract[0]');
+                console.log(dApp.grace_period, 'dApp.grace_period');
+                console.log(now_timestamp, 'now_timestamp');
+                console.log(next_payment_timestamp_unix, 'next_payment_timestamp_unix');
                 $('.contract-body .timer-label').html(timer_label);
                 initFlipClockTimer(next_payment_timestamp_unix);
             }
