@@ -7,7 +7,7 @@
     <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
         @if(!empty($contract->document_hash))
             <li class="inline-block">
-                <a href="javascript:void(0);" class="contract-decrypt" data-hash="{{$contract->document_hash}}" @if($patient_session) data-type="patient" @elseif($dentist_session) data-type="dentist" @endif itemprop="url" target="_blank">
+                <a href="javascript:void(0);" class="contract-decrypt" data-hash="{{$contract->document_hash}}" @if($patient_session) data-type="patient" @elseif($dentist_session) data-type="dentist" @endif itemprop="url">
                     @if($contract->status != 'pending')
                         <span itemprop="name">Contract (.pdf)</span>
                     @else

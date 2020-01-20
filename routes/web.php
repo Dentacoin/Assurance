@@ -27,7 +27,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::get('/forgotten-password', 'UserController@getForgottenPasswordView')->name('forgotten-password');
 
-    Route::post('/password-recover', 'UserController@getRecoverPassword')->name('password-recover');
+    Route::get('/password-recover', 'UserController@getRecoverPassword')->name('password-recover');
 
     Route::get('/my-contracts', 'UserController@getMyContractsView')->middleware('HandleUserSession')->name('my-contracts');
 

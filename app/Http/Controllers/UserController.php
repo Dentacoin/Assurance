@@ -14,13 +14,75 @@ class UserController extends Controller {
         return new UserController();
     }
 
+    protected function getForgottenPasswordView() {
+        return view('pages/forgotten-password');
+    }
+
     protected function getRecoverPassword(Request $request) {
+        if (!empty(Input::get('token'))) {
+            return view('pages/recover-password');
+        } else {
+            return abort(4040);
+        }
+    }
+
+    protected function forgottenPasswordSubmit(Request $request) {
         $this->validate($request, [
-            'slug' => 'required'
+            'email' => 'required|max:100'
         ], [
-            'slug.required' => 'Slug is required.'
+            'email.required' => 'Email is required.',
         ]);
-        return view('pages/recover-password', ['slug' => $request->input('slug')]);
+
+        $data = $this->clearPostData($request->input());
+
+        //check email validation
+        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            return redirect()->route('forgotten-password')->with(['error' => 'Your form was not sent. Please try again with valid email.']);
+        }
+
+        $api_response = (new APIRequestsController())->generatePasswordRecoveryToken($data['email']);
+        if (property_exists($api_response, 'success') && $api_response->success) {
+            //$body = '<!DOCTYPE html><html><head></head><body><div style="font-size: 13px;">Seems like you forgot your password for Assurance Dentacoin. If this is true, click below to reset your password.<br><br><br><form target="_blank" method="POST" action="'.BASE_URL.'password-recover"><input type="hidden" name="slug" value="'.$api_response->data.'"/><input type="submit" value="PASSWORD RESET" style="font-size: 16px;color: #126585;background-color: white;padding: 10px 20px;text-decoration: none;font-weight: bold;border-radius: 4px;border: 2px solid #126585;cursor: pointer;"/><input type="hidden" name="_token" value="'.csrf_token().'"></form></div></body></html>';
+            $body = '<!DOCTYPE html><html><head></head><body><div style="font-size: 16px;">Seems like you forgot your password for Dentacoin. If this is true, click below to reset your password.<br><br><br><a href="'.BASE_URL.'password-recover?token='.urlencode($api_response->data).'" style="font-size: 20px;color: #126585;background-color: white;padding: 10px 20px;text-decoration: none;font-weight: bold;border-radius: 4px;border: 2px solid #126585;cursor: pointer;">PASSWORD RESET</a></div></body></html>';
+
+            Mail::send(array(), array(), function($message) use ($body, $data) {
+                $message->to($data['email'])->subject('Dentacoin - Request for password change');
+                $message->from(EMAIL_SENDER, 'Dentacoin - Assurance')->replyTo(EMAIL_SENDER, 'Dentacoin - Assurance');
+                $message->setBody($body, 'text/html');
+            });
+
+            if(count(Mail::failures()) > 0) {
+                return redirect()->route('forgotten-password')->with(['error' => 'Your form was not sent. Please try again later.']);
+            } else {
+                return redirect()->route('forgotten-password')->with(['success' => 'You have received an email with a password reset link.']);
+            }
+        } else {
+            return redirect()->route('forgotten-password')->with(['error' => 'Your form was not sent. Please try again later.']);
+        }
+    }
+
+    protected function changePasswordSubmit(Request $request) {
+        $this->validate($request, [
+            'token' => 'required',
+            'password' => 'required|max:100',
+        ], [
+            'token.required' => 'Token is required.',
+            'password.required' => 'Password is required.',
+        ]);
+
+        $data = $this->clearPostData($request->input());
+
+        $post_fields_arr = [
+            'token' => $data['token'],
+            'password' => $data['password']
+        ];
+
+        $recover_method_response = (new APIRequestsController())->recoverPassword($post_fields_arr);
+        if (property_exists($recover_method_response, 'success') && $recover_method_response->success) {
+            return redirect()->route('home')->with(['success' => 'Your password has been changed successfully.']);
+        } else {
+            return redirect()->route('home')->with(['error' => 'Your password change failed, please try again later.']);
+        }
     }
 
     protected function getMyContractsView()     {
@@ -47,10 +109,6 @@ class UserController extends Controller {
             }
             return view('pages/logged-user/my-contracts-template', ['user_data' => $user_data, 'patient_or_not' => true, 'contracts' => TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->sortByDesc('contract_active_at')]);
         }
-    }
-
-    protected function getForgottenPasswordView() {
-        return view('pages/forgotten-password');
     }
 
     protected function getAddressValidationOrRememberMe(Request $request) {
@@ -400,64 +458,6 @@ class UserController extends Controller {
         $dompdf->render();
         $dompdf->stream('contract.pdf', array('Attachment' => false));
         die();
-    }
-
-    protected function forgottenPasswordSubmit(Request $request) {
-        $this->validate($request, [
-            'email' => 'required|max:100'
-        ], [
-            'email.required' => 'Email is required.',
-        ]);
-
-        $data = $this->clearPostData($request->input());
-
-        //check email validation
-        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            return redirect()->route('forgotten-password')->with(['error' => 'Your form was not sent. Please try again with valid email.']);
-        }
-
-        $api_response = (new APIRequestsController())->generatePasswordRecoveryToken($data['email']);
-        if($api_response->success) {
-            $body = '<!DOCTYPE html><html><head></head><body><div style="font-size: 13px;">Seems like you forgot your password for Assurance Dentacoin. If this is true, click below to reset your password.<br><br><br><form target="_blank" method="POST" action="'.BASE_URL.'password-recover"><input type="hidden" name="slug" value="'.$api_response->data.'"/><input type="submit" value="PASSWORD RESET" style="font-size: 16px;color: #126585;background-color: white;padding: 10px 20px;text-decoration: none;font-weight: bold;border-radius: 4px;border: 2px solid #126585;cursor: pointer;"/><input type="hidden" name="_token" value="'.csrf_token().'"></form></div></body></html>';
-
-            Mail::send(array(), array(), function($message) use ($body, $data) {
-                $message->to($data['email'])->subject('Dentacoin - Request for password change');
-                $message->from(EMAIL_SENDER, 'Dentacoin - Assurance')->replyTo(EMAIL_SENDER, 'Dentacoin - Assurance');
-                $message->setBody($body, 'text/html');
-            });
-
-            if(count(Mail::failures()) > 0) {
-                return redirect()->route('forgotten-password')->with(['error' => 'Your form was not sent. Please try again later.']);
-            } else {
-                return redirect()->route('forgotten-password')->with(['success' => 'You have received an email with a password reset link.']);
-            }
-        } else {
-            return redirect()->route('forgotten-password')->with(['error' => 'Your form was not sent. Please try again later.']);
-        }
-    }
-
-    protected function changePasswordSubmit(Request $request) {
-        $this->validate($request, [
-            'token' => 'required',
-            'password' => 'required|max:100',
-        ], [
-            'token.required' => 'Token is required.',
-            'password.required' => 'Password is required.',
-        ]);
-
-        $data = $this->clearPostData($request->input());
-
-        $post_fields_arr = [
-            'token' => $data['token'],
-            'password' => $data['password']
-        ];
-
-        $recover_method_response = (new APIRequestsController())->recoverPassword($post_fields_arr);
-        if($recover_method_response->success) {
-            return redirect()->route('home')->with(['success' => 'Your password has been changed successfully.']);
-        } else {
-            return redirect()->route('home')->with(['error' => 'Your password change failed, please try again later.']);
-        }
     }
 
     protected function filterMyContracts(Request $request) {
