@@ -25,8 +25,8 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.48">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.48">
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.49">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.49">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
@@ -35,7 +35,11 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
+        @if(empty($_COOKIE['marketing_cookies']))
+        gtag('config', 'UA-108398439-4', {'anonymize_ip': true});
+        @else
         gtag('config', 'UA-108398439-4');
+        @endif
     </script>
 
     <script>
@@ -508,13 +512,13 @@
                 <img src="//dentacoin.com/assets/uploads/christmas-banner.gif" alt="Holiday calendar banner" class="width-100" itemprop="contentUrl"/>
             </picture>
         </a>--}}
-        @if(!empty($privacy_policy_cookie))
+        @if(empty($_COOKIE['performance_cookies']) && empty($_COOKIE['functionality_cookies']) && empty($_COOKIE['marketing_cookies']) && empty($_COOKIE['strictly_necessary_policy']))
             <div class="privacy-policy-cookie">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12">
-                            <div class="text inline-block">This site uses cookies. Read more about the use of personal data in our <a href="//dentacoin.com/privacy-policy" class="link" target="_blank">Privacy Policy</a>.</div>
-                            <div class="button inline-block"><a href="javascript:void(0);" class="blue-green-white-btn accept">Accept</a></div>
+                            <div class="text inline-block">This site uses cookies. Find out more on how we use cookies in our <a href="https://dentacoin.com/privacy-policy" class="link" target="_blank">Privacy Policy</a>. | <a href="javascript:void(0);" class="link adjust-cookies">Adjust cookies</a></div>
+                            <div class="button inline-block"><a href="javascript:void(0);" class="white-blue-green-btn  accept-all">Accept all cookies</a></div>
                         </div>
                     </div>
                 </div>
@@ -523,17 +527,17 @@
     </div>
 
     {{--/Show the sticky calculate button only for dentists--}}
-    <script src="/assets/js/basic.js?v=1.0.48"></script>
-    <script src="/dist/js/front-libs-script.js?v=1.0.48"></script>
+    <script src="/assets/js/basic.js?v=1.0.49"></script>
+    <script src="/dist/js/front-libs-script.js?v=1.0.49"></script>
     {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-    <script src="/assets/js/address.js?v=1.0.48"></script>
-    <script src="/assets/js/index-bundled.js?v=1.0.48"></script>
+    <script src="/assets/js/address.js?v=1.0.49"></script>
+    <script src="/assets/js/index-bundled.js?v=1.0.49"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
     {{--Load social logging scripts only if user is not logged--}}
     @if(!(new \App\Http\Controllers\UserController())->checkSession())
-        <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.48"></script>
-        <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.48"></script>
+        <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.49"></script>
+        <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.49"></script>
     @endif
 
     {{--Multiple errors from laravel validation--}}
