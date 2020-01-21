@@ -1369,7 +1369,7 @@ input[type='file'].hide-input {
     width: 100%;
     bottom: 0;
     left: 0;
-    z-index: 1035;
+    z-index: 2000000005!important;
     .open-calculator {
         img {
             width: 300px;
@@ -1404,6 +1404,8 @@ input[type='file'].hide-input {
                 position: absolute;
                 right: 10px;
                 top: 0;
+                background: transparent;
+                border: 0;
             }
             .cookie-icon {
                 width: 40px;
