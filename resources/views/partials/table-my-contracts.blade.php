@@ -52,19 +52,27 @@
                     @if($patient_or_not)
                         @if(!empty($contract->patient_id))
                             @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
-                            <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
-                                <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
-                            </figure>
-                            <span>{{$patient->name}}</span>
+                            @if(!empty($patient))
+                                <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                                    <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
+                                </figure>
+                                <span>{{$patient->name}}</span>
+                            @else
+                                @continue
+                            @endif
                         @else
                             <span>{{$contract->patient_fname}} {{$contract->patient_lname}}</span>
                         @endif
                     @else
                         @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
-                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
-                            <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
-                        </figure>
-                        <span>{{$dentist->name}}</span>
+                        @if(!empty($dentist))
+                            <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
+                                <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
+                            </figure>
+                            <span>{{$dentist->name}}</span>
+                        @else
+                            @continue
+                        @endif
                     @endif
                 </td>
                 <td>
