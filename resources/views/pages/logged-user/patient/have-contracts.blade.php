@@ -19,43 +19,45 @@
                                     @php($url = route('patient-contract-view', ['slug' => $contract->slug]))
                                     @php($btn_label = 'Details')
                                 @endif
-                                <a href="{{$url}}" class="module contract-tile padding-bottom-10 {{$contract->status}}">
-                                    @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
-                                    <div class="tile-wrapper fs-0">
-                                        <div class="inline-block-top figure-container">
-                                            <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                                                <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
-                                                <figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">
-                                                    @switch($contract->status)
-                                                        @case('active')
-                                                            Active
-                                                            @break
-                                                        @case('pending')
-                                                            Pending
-                                                            @break
-                                                        @case('awaiting-payment')
-                                                            Awaiting Payment
-                                                            @break
-                                                        @case('awaiting-approval')
-                                                            Awaiting Approval
-                                                            @break
-                                                        @case('cancelled')
-                                                            Cancelled
-                                                            @break
-                                                    @endswitch
-                                                </figcaption>
-                                            </figure>
-                                        </div>
-                                        <div class="contract-info inline-block-top">
-                                            <div class="calibri-bold fs-18 title">Dr. {{$dentist->name}}</div>
-                                            <time class="display-block fs-14 calibri-light">Sent on: {{$contract->created_at->format('d/m/Y')}}</time>
-                                            <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
-                                            <div class="btn-container">
-                                                <div class="white-blue-green-btn">{{$btn_label}}</div>
+                                @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
+                                @if(!empty($dentist))
+                                        <a href="{{$url}}" class="module contract-tile padding-bottom-10 {{$contract->status}}">
+                                            <div class="tile-wrapper fs-0">
+                                                <div class="inline-block-top figure-container">
+                                                    <figure itemscope="" itemtype="http://schema.org/ImageObject">
+                                                        <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
+                                                        <figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">
+                                                            @switch($contract->status)
+                                                                @case('active')
+                                                                Active
+                                                                @break
+                                                                @case('pending')
+                                                                Pending
+                                                                @break
+                                                                @case('awaiting-payment')
+                                                                Awaiting Payment
+                                                                @break
+                                                                @case('awaiting-approval')
+                                                                Awaiting Approval
+                                                                @break
+                                                                @case('cancelled')
+                                                                Cancelled
+                                                                @break
+                                                            @endswitch
+                                                        </figcaption>
+                                                    </figure>
+                                                </div>
+                                                <div class="contract-info inline-block-top">
+                                                    <div class="calibri-bold fs-18 title">Dr. {{$dentist->name}}</div>
+                                                    <time class="display-block fs-14 calibri-light">Sent on: {{$contract->created_at->format('d/m/Y')}}</time>
+                                                    <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
+                                                    <div class="btn-container">
+                                                        <div class="white-blue-green-btn">{{$btn_label}}</div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </a>
+                                        </a>
+                                @endif
                             @endforeach
                         @endif
                     </div>

@@ -18,42 +18,44 @@
                                 @if ($counter == 6)
                                     @break
                                 @endif
-                                <div class="module contract-tile padding-bottom-10 {{$contract->status}}">
-                                    @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
-                                    @php($url = route('dentist-contract-view', ['slug' => $contract->slug]))
-                                    <a href="{{$url}}" class="tile-wrapper fs-0">
-                                        <div class="inline-block-top figure-container">
-                                            <figure itemscope="" itemtype="http://schema.org/ImageObject">
-                                                <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
-                                                <figcaption class="fs-14 fs-xs-12 calibri-light text-center padding-left-5 padding-right-5">
-                                                    @php($btn_label = '')
-                                                    @switch($contract->status)
-                                                        @case('active')
-                                                        Active
-                                                        @php($btn_label = 'Details')
-                                                        @break
-                                                        @case('awaiting-payment')
-                                                        Awaiting Payment
-                                                        @php($btn_label = 'Details')
-                                                        @break
-                                                        @case('awaiting-approval')
-                                                        Awaiting Approval
-                                                        @php($btn_label = 'APPROVE NOW')
-                                                        @break
-                                                    @endswitch
-                                                </figcaption>
-                                            </figure>
-                                        </div>
-                                        <div class="contract-info inline-block-top">
-                                            <div class="calibri-bold fs-18 title">{{$patient->name}}</div>
-                                            <time class="display-block fs-14 calibri-light">Signed on: {{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
-                                            <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
-                                            <div class="btn-container">
-                                                <div class="white-blue-green-btn">{{$btn_label}}</div>
+                                @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+                                @if(!empty($patient))
+                                    <div class="module contract-tile padding-bottom-10 {{$contract->status}}">
+                                        @php($url = route('dentist-contract-view', ['slug' => $contract->slug]))
+                                        <a href="{{$url}}" class="tile-wrapper fs-0">
+                                            <div class="inline-block-top figure-container">
+                                                <figure itemscope="" itemtype="http://schema.org/ImageObject">
+                                                    <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
+                                                    <figcaption class="fs-14 fs-xs-12 calibri-light text-center padding-left-5 padding-right-5">
+                                                        @php($btn_label = '')
+                                                        @switch($contract->status)
+                                                            @case('active')
+                                                            Active
+                                                            @php($btn_label = 'Details')
+                                                            @break
+                                                            @case('awaiting-payment')
+                                                            Awaiting Payment
+                                                            @php($btn_label = 'Details')
+                                                            @break
+                                                            @case('awaiting-approval')
+                                                            Awaiting Approval
+                                                            @php($btn_label = 'APPROVE NOW')
+                                                            @break
+                                                        @endswitch
+                                                    </figcaption>
+                                                </figure>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div>
+                                            <div class="contract-info inline-block-top">
+                                                <div class="calibri-bold fs-18 title">{{$patient->name}}</div>
+                                                <time class="display-block fs-14 calibri-light">Signed on: {{date('d/m/Y', strtotime($contract->contract_active_at))}}</time>
+                                                <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
+                                                <div class="btn-container">
+                                                    <div class="white-blue-green-btn">{{$btn_label}}</div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                         @if(sizeof($active_contracts) > 6)
@@ -133,8 +135,12 @@
                                 @foreach($cancelled_contracts as $contract)
                                     @if(!empty($contract->patient_id))
                                         @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
-                                        @php($patient_name = $patient->name)
-                                        @php($avatar_url = $patient->avatar_url)
+                                        @if(!empty($patient))
+                                            @php($patient_name = $patient->name)
+                                            @php($avatar_url = $patient->avatar_url)
+                                        @else
+                                            @continue
+                                        @endif
                                     @else
                                         @php($patient_name = $contract->patient_fname . ' ' . $contract->patient_lname)
                                         @php($avatar_url = '/assets/images/no-avatar.png')
@@ -271,8 +277,12 @@
                                 @foreach($cancelled_contracts as $contract)
                                     @if(!empty($contract->patient_id))
                                         @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
-                                        @php($patient_name = $patient->name)
-                                        @php($avatar_url = $patient->avatar_url)
+                                        @if(!empty($patient))
+                                            @php($patient_name = $patient->name)
+                                            @php($avatar_url = $patient->avatar_url)
+                                        @else
+                                            @continue
+                                        @endif
                                     @else
                                         @php($patient_name = $contract->patient_fname . ' ' . $contract->patient_lname)
                                         @php($avatar_url = '/assets/images/no-avatar.png')

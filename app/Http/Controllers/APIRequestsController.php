@@ -193,9 +193,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
-            var_dump($resp);
-            die('asd');
+        if(!empty($resp) && property_exists($resp, 'data') && !empty($resp->data))   {
             if($logging) {
                 return $resp;
             } else {
