@@ -7024,26 +7024,30 @@ fieldset {
         -moz-border-radius: 4px 4px 0 0;
         -ms-border-radius: 4px 4px 0 0;
         border-radius: 4px 4px 0 0; }
+        @media screen and (max-width: 767px) {
+          .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a {
+            font-size: 20px;
+            padding: 10px 5px; } }
         .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a[data-type="patient"] {
           color: white;
-          border-bottom: 1px solid white; }
+          border-bottom: 1px solid white;
+          background-color: #ddd; }
           .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a[data-type="patient"].active {
             background-color: #126585;
             padding: 15px 10px; }
+            @media screen and (max-width: 767px) {
+              .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a[data-type="patient"].active {
+                padding: 15px 5px; } }
         .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a[data-type="dentist"] {
           color: #212121;
-          border-bottom: 1px solid #212121; }
+          border-bottom: 1px solid #212121;
+          background-color: #ddd; }
           .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a[data-type="dentist"].active {
             background-color: white;
             padding: 15px 10px; }
             @media screen and (max-width: 767px) {
               .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a[data-type="dentist"].active {
-                font-size: 20px;
-                padding: 10px 5px; } }
-        @media screen and (max-width: 767px) {
-          .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a {
-            font-size: 20px;
-            padding: 10px 5px; } }
+                padding: 15px 5px; } }
       .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-body {
         display: flex; }
         .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-body .dentist {
