@@ -7026,12 +7026,20 @@ fieldset {
         border-radius: 4px 4px 0 0; }
         .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a[data-type="patient"] {
           color: white;
-          background-color: #126585;
           border-bottom: 1px solid white; }
+          .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a[data-type="patient"].active {
+            background-color: #126585;
+            padding: 15px 10px; }
         .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a[data-type="dentist"] {
           color: #212121;
-          background-color: white;
           border-bottom: 1px solid #212121; }
+          .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a[data-type="dentist"].active {
+            background-color: white;
+            padding: 15px 10px; }
+            @media screen and (max-width: 767px) {
+              .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a[data-type="dentist"].active {
+                font-size: 20px;
+                padding: 10px 5px; } }
         @media screen and (max-width: 767px) {
           .bootbox.login-signin-popup .modal-dialog .modal-content .modal-body .popup-header-action a {
             font-size: 20px;

@@ -1989,6 +1989,9 @@ function openLoginSigninPopup(this_show_login_btn, type) {
     initAddressSuggesters();
 
     $('.login-signin-popup .popup-header-action a').click(function() {
+        $('.login-signin-popup .popup-header-action a').removeClass('active');
+        $(this).addClass('active');
+
         $('.login-signin-popup .popup-body > .inline-block').addClass('custom-hide');
         $('.login-signin-popup .popup-body .'+$(this).attr('data-type')).removeClass('custom-hide');
     });

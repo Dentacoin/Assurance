@@ -26,8 +26,8 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.49">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.49">
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.50">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.50">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
@@ -235,8 +235,8 @@
         @php($api_enums = (new \App\Http\Controllers\APIRequestsController())->getAllEnums())
         <div class="hidden-login-form hide">
             <div class="fs-0 popup-header-action">
-                <a href="javascript:void(0)" class="inline-block" data-type="patient">I'm a Patient</a>
-                <a href="javascript:void(0)" class="inline-block" data-type="dentist">I'm a Dentist</a>
+                <a href="javascript:void(0)" class="inline-block-bottom" data-type="patient">I'm a Patient</a>
+                <a href="javascript:void(0)" class="inline-block-bottom" data-type="dentist">I'm a Dentist</a>
             </div>
             <div class="fs-0 popup-body">
                 <div class="patient inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == 'home') custom-hide @endif @endif">
@@ -528,17 +528,17 @@
     </div>
 
     {{--/Show the sticky calculate button only for dentists--}}
-    <script src="/assets/js/basic.js?v=1.0.49"></script>
-    <script src="/dist/js/front-libs-script.js?v=1.0.49"></script>
+    <script src="/assets/js/basic.js?v=1.0.50"></script>
+    <script src="/dist/js/front-libs-script.js?v=1.0.50"></script>
     {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-    <script src="/assets/js/address.js?v=1.0.49"></script>
-    <script src="/assets/js/index-bundled.js?v=1.0.49"></script>
+    <script src="/assets/js/address.js?v=1.0.50"></script>
+    <script src="/assets/js/index-bundled.js?v=1.0.50"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
     {{--Load social logging scripts only if user is not logged--}}
     @if(!(new \App\Http\Controllers\UserController())->checkSession())
-        <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.49"></script>
-        <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.49"></script>
+        <script src="//dentacoin.com/assets/libs/civic-login/civic.js?v=1.0.50"></script>
+        <script src="//dentacoin.com/assets/libs/facebook-login/facebook.js?v=1.0.50"></script>
     @endif
 
     {{--Multiple errors from laravel validation--}}

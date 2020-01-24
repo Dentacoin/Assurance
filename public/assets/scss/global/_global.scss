@@ -891,13 +891,25 @@ fieldset {
                             @include rounded(4px 4px 0 0);
                             &[data-type="patient"] {
                                 color: white;
-                                background-color: $blue_green_color;
                                 border-bottom: 1px solid white;
+                                &.active {
+                                    background-color: $blue_green_color;
+                                    padding: 15px 10px;
+                                    @include breakpoint($xs) {
+                                        padding: 15px 5px;
+                                    }
+                                }
                             }
                             &[data-type="dentist"] {
                                 color: $dark_color;
-                                background-color: white;
                                 border-bottom: 1px solid $dark_color;
+                                &.active {
+                                    background-color: white;
+                                    padding: 15px 10px;
+                                    @include breakpoint($xs) {
+                                        padding: 15px 5px;
+                                    }
+                                }
                             }
                             @include breakpoint($xs) {
                                 font-size: 20px;
