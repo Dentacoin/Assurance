@@ -235,8 +235,8 @@
         @php($api_enums = (new \App\Http\Controllers\APIRequestsController())->getAllEnums())
         <div class="hidden-login-form hide">
             <div class="fs-0 popup-header-action">
-                <a href="javascript:void(0)" class="inline-block-bottom" data-type="patient">I'm a Patient</a>
-                <a href="javascript:void(0)" class="inline-block-bottom" data-type="dentist">I'm a Dentist</a>
+                <a href="javascript:void(0)" class="@if(!empty(Route::current())) @if(Route::current()->getName() != 'home') active @endif @endif inline-block-bottom" data-type="patient">I'm a Patient</a>
+                <a href="javascript:void(0)" class="@if(!empty(Route::current())) @if(Route::current()->getName() == 'home') active @endif @endif inline-block-bottom" data-type="dentist">I'm a Dentist</a>
             </div>
             <div class="fs-0 popup-body">
                 <div class="patient inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == 'home') custom-hide @endif @endif">

@@ -1972,7 +1972,6 @@ function bindLoginSigninPopupShow() {
 bindLoginSigninPopupShow();
 
 function openLoginSigninPopup(this_show_login_btn, type) {
-    console.log(type, 'openLoginSigninPopup');
     basic.closeDialog();
     $('.hidden-login-form').html('');
     basic.showDialog(hidden_popup_content, 'login-signin-popup', null, true);
