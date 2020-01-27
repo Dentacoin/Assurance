@@ -235,9 +235,11 @@ class UserController extends Controller {
         }
 
         $patientData = (new APIRequestsController())->getUserByEmailAndType($request->input('email'), $request->input('type'));
-
-        var_dump($patientData);
-        die('asd');
+        if(!empty($patientData)) {
+            return response()->json(['success' => true, 'data' => $patientData[0]->name]);
+        } else {
+            return response()->json(['error' => true]);
+        }
     }
 
     function checkCaptcha(Request $request) {
@@ -245,7 +247,7 @@ class UserController extends Controller {
         //saving the session again, because theres bug in the captcha library
 
         if (captcha_check($request->input('captcha'))) {
-            session(['captcha' => $temp_save_captcha_session]);;
+            session(['captcha' => $temp_save_captcha_session]);
             return response()->json(['success' => true]);
         } else {
             session(['captcha' => $temp_save_captcha_session]);

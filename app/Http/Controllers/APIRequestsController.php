@@ -174,10 +174,9 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp->data;
-        }else {
-
+        } else {
             return response()->json(['error' => 'API not working at this moment. Try again later.']);
         }
     }

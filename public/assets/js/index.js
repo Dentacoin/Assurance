@@ -999,7 +999,9 @@ if ($('body').hasClass('logged-in')) {
             checkingPatientInterval = setTimeout(async function(){
                 if (basic.validateEmail($('.step.two #patient-email').val().trim())) {
                     var checkEmail = await checkEmailAndReturnData($('.step.two #patient-email').val().trim(), 'patient');
-                    console.log(checkEmail, 'checkEmail');
+                    if(checkEmail.success) {
+                        console.log(checkEmail.data);
+                    }
                 }
             }, 1000);
         });
