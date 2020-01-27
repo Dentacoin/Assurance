@@ -81198,12 +81198,12 @@ if ($('body').hasClass('logged-in')) {
 
         //on second step of contract creation when entering patient email execute query to check if this patient is already existing in the CoreDB
         var checkingPatientInterval;
-        $('.step.two #patient-email').on('input', function() {
+        $('.step.two #patient-email').on('input paste', function() {
             clearInterval(checkingPatientInterval);
             checkingPatientInterval = setTimeout(async function() {
                 if (basic.validateEmail($('.step.two #patient-email').val().trim())) {
                     $('.step.two #patient-email').addClass('loading-background');
-                    
+
                     var checkEmail = await checkEmailAndReturnData($('.step.two #patient-email').val().trim(), 'patient');
                     if(checkEmail.success) {
                         $('.step.two #fname').val(checkEmail.data.substr(0, checkEmail.data.indexOf(' ')));

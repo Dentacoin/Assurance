@@ -7581,10 +7581,15 @@ input[type='file'].hide-input {
 
 .loading-background {
   background-image: url(/assets/images/loader.gif) !important;
-  background-size: 20px auto;
+  background-size: 30px auto;
   padding-right: 25px !important;
-  background-position: center right;
-  background-repeat: no-repeat; }
+  background-position: center right 5px;
+  background-repeat: no-repeat;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s; }
 
 .popover-el {
   cursor: pointer; }
