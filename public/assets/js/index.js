@@ -998,11 +998,14 @@ if ($('body').hasClass('logged-in')) {
             clearInterval(checkingPatientInterval);
             checkingPatientInterval = setTimeout(async function() {
                 if (basic.validateEmail($('.step.two #patient-email').val().trim())) {
+                    $('.step.two #patient-email').addClass('loading-background');
+                    
                     var checkEmail = await checkEmailAndReturnData($('.step.two #patient-email').val().trim(), 'patient');
                     if(checkEmail.success) {
                         $('.step.two #fname').val(checkEmail.data.substr(0, checkEmail.data.indexOf(' ')));
                         $('.step.two #lname').val(checkEmail.data.substr(checkEmail.data.indexOf(' ')+1));
                     }
+                    $('.step.two #patient-email').removeClass('loading-background');
                 }
             }, 1000);
         });

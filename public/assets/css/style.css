@@ -7579,6 +7579,13 @@ input[type='file'].hide-input {
   -ms-transition: 0.3s;
   transition: 0.3s; }
 
+.loading-background {
+  background-image: url(/assets/images/loader.gif) !important;
+  background-size: 20px auto;
+  padding-right: 25px !important;
+  background-position: center right;
+  background-repeat: no-repeat; }
+
 .popover-el {
   cursor: pointer; }
 
