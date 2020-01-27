@@ -81198,11 +81198,12 @@ if ($('body').hasClass('logged-in')) {
 
         //on second step of contract creation when entering patient email execute query to check if this patient is already existing in the CoreDB
         var checkingPatientInterval;
+        console.log($('.step.two #patient-email').length, '$(\'.step.two #patient-email\')))');
         $('.step.two #patient-email').on('input', function() {
             clearInterval(checkingPatientInterval);
             checkingPatientInterval = setTimeout(function(){
                 console.log('query');
-            }, 2000);
+            }, 1000);
         });
 
         $('.step.three [name="monthly-premium"]').on('input', function() {
