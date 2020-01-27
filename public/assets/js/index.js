@@ -994,11 +994,12 @@ if ($('body').hasClass('logged-in')) {
 
         //on second step of contract creation when entering patient email execute query to check if this patient is already existing in the CoreDB
         var checkingPatientInterval;
-        console.log($('.step.two #patient-email').length, '$(\'.step.two #patient-email\')))');
         $('.step.two #patient-email').on('input', function() {
             clearInterval(checkingPatientInterval);
             checkingPatientInterval = setTimeout(function(){
-                console.log('query');
+                if (basic.validateEmail($('.step.two #patient-email').val().trim())) {
+                    var check_email_if_exist_response = await checkIfFreeEmail(first_step_inputs.eq(i).val().trim());
+                }
             }, 1000);
         });
 
