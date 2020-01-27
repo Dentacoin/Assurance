@@ -81198,11 +81198,13 @@ if ($('body').hasClass('logged-in')) {
 
         //on second step of contract creation when entering patient email execute query to check if this patient is already existing in the CoreDB
         var checkingPatientInterval;
-        console.log($('.step.two #patient-email').length, '$(\'.step.two #patient-email\')))');
         $('.step.two #patient-email').on('input', function() {
             clearInterval(checkingPatientInterval);
-            checkingPatientInterval = setTimeout(function(){
-                console.log('query');
+            checkingPatientInterval = setTimeout(async function(){
+                if (basic.validateEmail($('.step.two #patient-email').val().trim())) {
+                    var checkEmail = await checkEmailAndReturnData($('.step.two #patient-email').val().trim(), 'patient');
+                    console.log(checkEmail, 'checkEmail');
+                }
             }, 1000);
         });
 
@@ -84289,6 +84291,21 @@ async function checkIfFreeEmail(email) {
         dataType: 'json',
         data: {
             email: email
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+}
+
+async function checkEmailAndReturnData(email, type) {
+    return await $.ajax({
+        type: 'POST',
+        url: '/check-email-and-return-data',
+        dataType: 'json',
+        data: {
+            email: email,
+            type: type
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

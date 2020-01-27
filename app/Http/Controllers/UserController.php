@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller {
     public static function instance() {
@@ -210,13 +211,33 @@ class UserController extends Controller {
     function checkEmail(Request $request) {
         $data = $this->clearPostData($request->input());
         $api_response = (new APIRequestsController())->checkIfFreeEmail($data['email']);
-        var_dump($api_response);
-        die('asd');
         if(property_exists($api_response, 'success') && $api_response->success) {
             return response()->json(['success' => true, 'name' => $api_response->data->name]);
         } else if(!$api_response->success) {
             return response()->json(['error' => true]);
         }
+    }
+
+    function checkEmailAndReturnData(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'type' => 'required',
+        ], [
+            'email.required' => 'Email is required.',
+            'email.email' => 'Email must be valid.',
+            'type.email' => 'Type is required.'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $patientData = (new APIRequestsController())->getUserByEmailAndType($request->input('email'), $request->input('type'));
+
+        var_dump($patientData);
+        die('asd');
     }
 
     function checkCaptcha(Request $request) {

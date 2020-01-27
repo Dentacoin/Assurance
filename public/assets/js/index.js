@@ -996,9 +996,10 @@ if ($('body').hasClass('logged-in')) {
         var checkingPatientInterval;
         $('.step.two #patient-email').on('input', function() {
             clearInterval(checkingPatientInterval);
-            checkingPatientInterval = setTimeout(function(){
+            checkingPatientInterval = setTimeout(async function(){
                 if (basic.validateEmail($('.step.two #patient-email').val().trim())) {
-                    var check_email_if_exist_response = await checkIfFreeEmail(first_step_inputs.eq(i).val().trim());
+                    var checkEmail = await checkEmailAndReturnData($('.step.two #patient-email').val().trim(), 'patient');
+                    console.log(checkEmail, 'checkEmail');
                 }
             }, 1000);
         });
@@ -4086,6 +4087,21 @@ async function checkIfFreeEmail(email) {
         dataType: 'json',
         data: {
             email: email
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+}
+
+async function checkEmailAndReturnData(email, type) {
+    return await $.ajax({
+        type: 'POST',
+        url: '/check-email-and-return-data',
+        dataType: 'json',
+        data: {
+            email: email,
+            type: type
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

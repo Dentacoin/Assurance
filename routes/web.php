@@ -116,6 +116,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/check-public-key', 'UserController@checkPublicKey')->middleware('HandleUserSession')->name('check-public-key');
 
+    Route::post('/check-email-and-return-data', 'UserController@checkEmailAndReturnData')->middleware('HandleUserSession')->name('check-email-and-return-data');
+
     Route::get('/user-logout', 'UserController@userLogout')->name('user-logout');
 
     Route::get('/get-current-user-data', 'UserController@getCurrentUserData')->middleware('HandleUserSession')->name('get-current-user-data');
