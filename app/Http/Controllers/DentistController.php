@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CalculatorParameter;
+use App\ContractCheckup;
 use App\InviteDentistsReward;
 use App\TemporallyContract;
 use Illuminate\Http\Request;
@@ -457,6 +458,42 @@ class DentistController extends Controller
 
         var_dump($data);
         die();
+    }
+
+    protected function approveCheckUp($id) {
+        $check_up = ContractCheckup::where(array('id' => $id, 'approved_by_patient' => false))->get()->first();
+        if (!empty($check_up)) {
+            $contract = TemporallyContract::where(array('id' => $check_up->contract_id, 'dentist_id' => session('logged_user')['id']))->get()->first();
+
+            $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+            $dentist = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+
+            if (!empty($contract)) {
+                $check_up->approved_by_patient = true;
+                $check_up->save();
+
+                // email
+                Mail::send(array(), array(), function($message) use ($patient, $dentist) {
+                    $message->to($patient->email)->subject('Approved checkup test');
+                    $message->from($dentist->email, $dentist->name)->replyTo($dentist->email, $dentist->name);
+                    $message->setBody('Test body', 'text/html');
+                });
+
+                if (count(Mail::failures()) > 0) {
+                    $check_up->approved_by_patient = false;
+                    $check_up->save();
+
+                    return response()->json(['error' => 'Something went wrong with sending notification to your patient via email. Please try again later.']);
+                } else {
+                    return response()->json(['success' => 'true']);
+                }
+            } else {
+                return response()->json(['error' => 'Trying to approve contract check-up which is not yours. Please again later.']);
+            }
+
+        } else {
+            return response()->json(['error' => 'Wrong data passed.']);
+        }
     }
 }
 

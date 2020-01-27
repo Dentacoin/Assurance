@@ -80725,12 +80725,12 @@ async function pagesDataOnContractInit() {
                     next_payment_timestamp_unix = period_to_withdraw - remainder;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                    timer_label = 'Fund your account in:';
+                    timer_label = 'Fund your account until:';
                 } else {
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                    timer_label = 'Fund your account in:';
+                    timer_label = 'Fund your account until:';
                 }
 
                 if ($('.contract-header').hasClass('active') && current_patient_dcn_balance > dcn_needed_to_be_payed_to_dentist) {
@@ -81195,6 +81195,15 @@ if ($('body').hasClass('logged-in')) {
         var form_props_arr = ['professional-company-number', 'postal-address', 'country', 'phone', 'website', 'address', 'fname', 'lname', 'email', 'monthly-premium', 'check-ups-per-year', 'teeth-cleaning-per-year'];
         var create_contract_form = $('form#dentist-create-contract');
         create_contract_form.find('.terms-and-conditions-long-list').mCustomScrollbar();
+
+        //on second step of contract creation when entering patient email execute query to check if this patient is already existing in the CoreDB
+        var checkingPatientInterval;
+        $('.step.two #patient-email').on('input', function() {
+            clearInterval(checkingPatientInterval);
+            checkingPatientInterval = setTimeout(function(){
+                console.log('query');
+            }, 2000);
+        });
 
         $('.step.three [name="monthly-premium"]').on('input', function() {
             if (parseInt($(this).val()) < 0) {
@@ -82176,7 +82185,6 @@ function bindLoginSigninPopupShow() {
 bindLoginSigninPopupShow();
 
 function openLoginSigninPopup(this_show_login_btn, type) {
-    console.log(type, 'openLoginSigninPopup');
     basic.closeDialog();
     $('.hidden-login-form').html('');
     basic.showDialog(hidden_popup_content, 'login-signin-popup', null, true);

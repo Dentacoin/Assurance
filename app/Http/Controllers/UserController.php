@@ -22,7 +22,7 @@ class UserController extends Controller {
         }
     }
 
-    protected function getRecoverPassword(Request $request) {
+    protected function getRecoverPassword() {
         if($this->checkSession()) {
             return redirect()->route('home');
         } else {

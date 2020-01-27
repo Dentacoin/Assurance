@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CalculatorParameter;
+use App\ContractCheckup;
 use App\InviteDentistsReward;
 use App\PublicKey;
 use App\TemporallyContract;
@@ -582,5 +583,11 @@ class PatientController extends Controller {
         } else {
             return redirect()->route($data['redirect'])->with(['success' => 'Contract sample request has been sent to your dentist successfully.']);
         }
+    }
+
+    //dentist can add profile description while waiting for approval from Dentacoin admin
+    protected function createCheckUp(Request $request) {
+        var_dump($request->input());
+        die();
     }
 }

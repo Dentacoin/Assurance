@@ -74,6 +74,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
         Route::get('/contract/{slug}', 'PatientController@getPatientContractView')->name('patient-contract-view');
 
         Route::post('/on-blockchain-contract-creation', 'PatientController@onBlockchainContractCreation')->name('on-blockchain-contract-creation');
+
+        Route::post('/create-check-up', 'PatientController@createCheckUp')->name('create-check-up');
     });
 
     Route::group(['prefix' => 'dentist', 'middleware' => 'HandleDentistSession'], function () {
@@ -88,6 +90,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
         Route::post('/on-blockchain-contract-approval', 'DentistController@onBlockchainContractApproval')->name('on-blockchain-contract-approval');
 
         Route::post('/notify-patient-for-successful-withdraw', 'DentistController@notifyPatientForSuccessfulWithdraw')->name('notify-patient-for-successful-withdraw');
+
+        Route::post('/approve-check-up', 'DentistController@approveCheckUp')->name('approve-check-up');
     });
 
     Route::get('/my-contracts-iframe', 'UserController@getMyContractsTemplate')->middleware('HandleUserSession')->name('my-contracts-iframe');
