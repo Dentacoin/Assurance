@@ -81200,11 +81200,12 @@ if ($('body').hasClass('logged-in')) {
         var checkingPatientInterval;
         $('.step.two #patient-email').on('input', function() {
             clearInterval(checkingPatientInterval);
-            checkingPatientInterval = setTimeout(async function(){
+            checkingPatientInterval = setTimeout(async function() {
                 if (basic.validateEmail($('.step.two #patient-email').val().trim())) {
                     var checkEmail = await checkEmailAndReturnData($('.step.two #patient-email').val().trim(), 'patient');
                     if(checkEmail.success) {
-                        console.log(checkEmail.data);
+                        $('.step.two #fname').val(checkEmail.data.substr(0, checkEmail.data.indexOf(' ')));
+                        $('.step.two #lname').val(checkEmail.data.substr(checkEmail.data.indexOf(' ')+1));
                     }
                 }
             }, 1000);
