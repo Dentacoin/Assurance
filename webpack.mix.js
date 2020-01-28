@@ -52,7 +52,7 @@ mix.scripts([
 ], 'public/dist/js/front-libs-script.js');
 
 mix.babel([
-    'https://dentacoin.com/assets/js/basic.js',
+    /*'https://dentacoin.com/assets/js/basic.js',*/
     'public/assets/js/address.js',
     /*'public/assets/js/index.js',*/
 ], 'public/dist/js/front-script.js');
