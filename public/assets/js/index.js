@@ -7,9 +7,9 @@ basic.init();
 var get_params = getGETParameters();
 $(document).ready(async function() {
     //if get parameter is passed show loginform
-    if ((basic.objHasKey(get_params, 'show-login') || basic.objHasKey(get_params, 'inviter')) && !$('body').hasClass('logged-in')) {
+    if ((basic.property_exists(get_params, 'show-login') || basic.property_exists(get_params, 'inviter')) && !$('body').hasClass('logged-in')) {
         openLoginSigninPopup();
-    } else if (basic.objHasKey(get_params, 'show-patient-register')) {
+    } else if (basic.property_exists(get_params, 'show-patient-register')) {
         openLoginSigninPopup(undefined, 'show-patient-register');
     }
 
@@ -155,7 +155,7 @@ var dApp = {
             //if some fake or false current-account localstorage variable is set -> delete it
             if (localStorage.getItem('current-account') != null) {
                 var current_account_obj = JSON.parse(localStorage.getItem('current-account'));
-                if (!basic.objHasKey(current_account_obj, 'address') || !innerAddressCheck(current_account_obj.address) || global_state.account.toLowerCase() != current_account_obj.address.toLowerCase() || !basic.objHasKey(current_account_obj, 'type') || (basic.objHasKey(current_account_obj, 'type') && current_account_obj.type != 'keystore')) {
+                if (!basic.property_exists(current_account_obj, 'address') || !innerAddressCheck(current_account_obj.address) || global_state.account.toLowerCase() != current_account_obj.address.toLowerCase() || !basic.property_exists(current_account_obj, 'type') || (basic.property_exists(current_account_obj, 'type') && current_account_obj.type != 'keystore')) {
                     localStorage.removeItem('current-account');
                 }
             }
@@ -739,7 +739,7 @@ async function pagesDataOnContractInit() {
                                                             //doing setinterval check to check if the smart creation transaction got mined
                                                             var contract_creation_interval_check = setInterval(async function () {
                                                                 var contract_creation_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                                if (contract_creation_status != null && basic.objHasKey(contract_creation_status, 'status')) {
+                                                                if (contract_creation_status != null && basic.property_exists(contract_creation_status, 'status')) {
                                                                     clearInterval(contract_creation_interval_check);
                                                                     if (contract_creation_status.status && execute_ajax) {
                                                                         execute_ajax = false;
@@ -1001,7 +1001,7 @@ if ($('body').hasClass('logged-in')) {
                     $('.step.two #patient-email').addClass('loading-background');
 
                     var checkEmail = await checkEmailAndReturnData($('.step.two #patient-email').val().trim(), 'patient');
-                    if(checkEmail.success) {
+                    if(checkEmail.success && checkEmail.data.indexOf(' ') >= 0) {
                         $('.step.two #fname').val(checkEmail.data.substr(0, checkEmail.data.indexOf(' ')));
                         $('.step.two #lname').val(checkEmail.data.substr(checkEmail.data.indexOf(' ')+1));
                     }
@@ -2270,7 +2270,7 @@ function openLoginSigninPopup(this_show_login_btn, type) {
                 }
 
                 var validate_phone = await validatePhone($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').val().trim(), $('.login-signin-popup .dentist .form-register .step.third select[name="country-code"]').val());
-                if (basic.objHasKey(validate_phone, 'success') && !validate_phone.success) {
+                if (basic.property_exists(validate_phone, 'success') && !validate_phone.success) {
                     customErrorHandle($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').closest('.field-parent'), 'Please use valid phone.');
                     errors = true;
                 }
@@ -2469,7 +2469,7 @@ function apiEventsListeners() {
             }
 
             //check if CoreDB returned address for this user and if its valid one
-            if (basic.objHasKey(custom_form_obj, 'address') != null && innerAddressCheck(custom_form_obj.address)) {
+            if (basic.property_exists(custom_form_obj, 'address') != null && innerAddressCheck(custom_form_obj.address)) {
                 //var current_dentists_for_logging_user = await dApp.assurance_methods.getWaitingContractsForPatient(custom_form_obj.address);
                 //if (current_dentists_for_logging_user.length > 0) {
                 //custom_form_obj.have_contracts = true;
@@ -2837,7 +2837,7 @@ async function onDocumentReadyPageData() {
                                                         //doing setinterval check to check if the smart creation transaction got mined
                                                         var contract_approval_interval_check = setInterval(async function () {
                                                             var contract_approval_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                            if (contract_approval_status != null && basic.objHasKey(contract_approval_status, 'status')) {
+                                                            if (contract_approval_status != null && basic.property_exists(contract_approval_status, 'status')) {
                                                                 if (contract_approval_status.status && execute_ajax) {
                                                                     execute_ajax = false;
 
@@ -3030,7 +3030,7 @@ async function onDocumentReadyPageData() {
                                                         //doing setinterval check to check if the smart creation transaction got mined
                                                         var withdraw_interval_check = setInterval(async function() {
                                                             var withdraw_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                            if (withdraw_status != null && basic.objHasKey(withdraw_status, 'status')) {
+                                                            if (withdraw_status != null && basic.property_exists(withdraw_status, 'status')) {
                                                                 if (withdraw_status.status && execute_ajax) {
                                                                     execute_ajax = false;
                                                                     clearInterval(withdraw_interval_check);
@@ -3305,7 +3305,7 @@ function cancelContractEventInit() {
                                                     //doing setinterval check to check if the smart creation transaction got mined
                                                     var contract_cancellation_interval_check = setInterval(async function () {
                                                         var contract_cancellation_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                        if (contract_cancellation_status != null && basic.objHasKey(contract_cancellation_status, 'status')) {
+                                                        if (contract_cancellation_status != null && basic.property_exists(contract_cancellation_status, 'status')) {
                                                             if (contract_cancellation_status.status && execute_ajax) {
                                                                 execute_ajax = false;
                                                                 clearInterval(contract_cancellation_interval_check);
@@ -3475,7 +3475,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                     var uploaded_file = this.files[0];
                     var reader = new FileReader();
                     reader.addEventListener('load', function (e) {
-                        if (isJsonString(e.target.result) && basic.objHasKey(JSON.parse(e.target.result), 'address') && checksumAddress(('0x' + JSON.parse(e.target.result).address)) == checksumAddress($('.proof-of-address').attr('data-address'))) {
+                        if (isJsonString(e.target.result) && basic.property_exists(JSON.parse(e.target.result), 'address') && checksumAddress(('0x' + JSON.parse(e.target.result).address)) == checksumAddress($('.proof-of-address').attr('data-address'))) {
                             var keystore_string = e.target.result;
                             if (caching) {
                                 $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
@@ -3920,7 +3920,7 @@ function initDataTable(filter_param, stop_table_init)    {
     }
 
     var params = getGETParameters();
-    if (basic.objHasKey(params, 'status') && filter_param == null) {
+    if (basic.property_exists(params, 'status') && filter_param == null) {
         filter_param = [params.status];
     }
 
@@ -3944,7 +3944,7 @@ function initDataTable(filter_param, stop_table_init)    {
         var cancelled_check = 'checked';
 
         if (filter_param != null) {
-            if (basic.objHasKey(params, 'status')) {
+            if (basic.property_exists(params, 'status')) {
                 filter_param.push(params.status);
             }
             if ($.inArray('pending', filter_param) != -1) {

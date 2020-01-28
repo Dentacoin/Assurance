@@ -11,7 +11,6 @@
   },
   "devDependencies": {
     "admin-lte": "2.3.1",
-    "axios": "^0.16.2",
     "bootbox.js": "^4.3.0",
     "ckeditor-full": "^4.7.3",
     "cross-env": "^5.0.1",
@@ -24,16 +23,12 @@
     "jquery": "^3.1.1",
     "keythereum": "^1.0.4",
     "laravel-mix": "^1.0",
-    "lodash": "^4.17.4",
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "pretty-checkbox": "^3.0.3",
     "slick-carousel": "^1.8.1",
     "truffle-contract": "^3.0.6",
-    "vue": "^2.1.10",
     "web3": "^1.0.0-beta.36",
     "webpack-obfuscator": "^0.18.0"
   },
-  "dependencies": {
-    "uglify-es": "github:mishoo/UglifyJS2#harmony"
-  }
+  "dependencies": {}
 }
