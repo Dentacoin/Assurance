@@ -70022,7 +70022,7 @@ module.exports = {
 };
 
 
-},{"underscore":492,"web3-eth-iban":530,"web3-utils":540}],498:[function(require,module,exports){
+},{"underscore":492,"web3-eth-iban":530,"web3-utils":543}],498:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -70665,7 +70665,7 @@ Method.prototype.request = function () {
 
 module.exports = Method;
 
-},{"underscore":492,"web3-core-helpers":498,"web3-core-promievent":501,"web3-core-subscriptions":507,"web3-utils":540}],500:[function(require,module,exports){
+},{"underscore":492,"web3-core-helpers":498,"web3-core-promievent":501,"web3-core-subscriptions":507,"web3-utils":543}],500:[function(require,module,exports){
 'use strict';
 
 //
@@ -71424,7 +71424,7 @@ module.exports = {
     BatchManager: BatchManager
 };
 
-},{"./batch.js":502,"./givenProvider.js":503,"./jsonrpc.js":505,"underscore":492,"web3-core-helpers":498,"web3-providers-http":535,"web3-providers-ipc":536,"web3-providers-ws":537}],505:[function(require,module,exports){
+},{"./batch.js":502,"./givenProvider.js":503,"./jsonrpc.js":505,"underscore":492,"web3-core-helpers":498,"web3-providers-http":535,"web3-providers-ipc":536,"web3-providers-ws":540}],505:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -71974,7 +71974,7 @@ var extend = function (pckg) {
 module.exports = extend;
 
 
-},{"web3-core-helpers":498,"web3-core-method":499,"web3-utils":540}],510:[function(require,module,exports){
+},{"web3-core-helpers":498,"web3-core-method":499,"web3-utils":543}],510:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -72375,7 +72375,7 @@ var coder = new ABICoder();
 
 module.exports = coder;
 
-},{"ethers/utils/abi-coder":383,"underscore":492,"web3-utils":540}],512:[function(require,module,exports){
+},{"ethers/utils/abi-coder":383,"underscore":492,"web3-utils":543}],512:[function(require,module,exports){
 (function (Buffer){
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -73362,7 +73362,7 @@ if (typeof localStorage === 'undefined') {
 module.exports = Accounts;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"any-promise":192,"buffer":52,"crypto":61,"crypto-browserify":301,"eth-lib/lib/account":512,"eth-lib/lib/bytes":514,"eth-lib/lib/hash":515,"eth-lib/lib/nat":516,"eth-lib/lib/rlp":517,"scrypt.js":468,"underscore":492,"uuid":519,"web3-core":510,"web3-core-helpers":498,"web3-core-method":499,"web3-utils":540}],521:[function(require,module,exports){
+},{"any-promise":192,"buffer":52,"crypto":61,"crypto-browserify":301,"eth-lib/lib/account":512,"eth-lib/lib/bytes":514,"eth-lib/lib/hash":515,"eth-lib/lib/nat":516,"eth-lib/lib/rlp":517,"scrypt.js":468,"underscore":492,"uuid":519,"web3-core":510,"web3-core-helpers":498,"web3-core-method":499,"web3-utils":543}],521:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -74269,7 +74269,7 @@ Contract.prototype._executeMethod = function _executeMethod(){
 
 module.exports = Contract;
 
-},{"underscore":492,"web3-core":510,"web3-core-helpers":498,"web3-core-method":499,"web3-core-promievent":501,"web3-core-subscriptions":507,"web3-eth-abi":511,"web3-utils":540}],522:[function(require,module,exports){
+},{"underscore":492,"web3-core":510,"web3-core-helpers":498,"web3-core-method":499,"web3-core-promievent":501,"web3-core-subscriptions":507,"web3-eth-abi":511,"web3-utils":543}],522:[function(require,module,exports){
 /*
     This file is part of web3.js.
     web3.js is free software: you can redistribute it and/or modify
@@ -75629,7 +75629,7 @@ Iban.prototype.toString = function () {
 
 module.exports = Iban;
 
-},{"bn.js":529,"web3-utils":540}],531:[function(require,module,exports){
+},{"bn.js":529,"web3-utils":543}],531:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -75781,7 +75781,7 @@ module.exports = Personal;
 
 
 
-},{"web3-core":510,"web3-core-helpers":498,"web3-core-method":499,"web3-net":534,"web3-utils":540}],532:[function(require,module,exports){
+},{"web3-core":510,"web3-core-helpers":498,"web3-core-method":499,"web3-net":534,"web3-utils":543}],532:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -76329,7 +76329,7 @@ core.addProviders(Eth);
 module.exports = Eth;
 
 
-},{"./getNetworkType.js":532,"underscore":492,"web3-core":510,"web3-core-helpers":498,"web3-core-method":499,"web3-core-subscriptions":507,"web3-eth-abi":511,"web3-eth-accounts":520,"web3-eth-contract":521,"web3-eth-ens":525,"web3-eth-iban":530,"web3-eth-personal":531,"web3-net":534,"web3-utils":540}],534:[function(require,module,exports){
+},{"./getNetworkType.js":532,"underscore":492,"web3-core":510,"web3-core-helpers":498,"web3-core-method":499,"web3-core-subscriptions":507,"web3-eth-abi":511,"web3-eth-accounts":520,"web3-eth-contract":521,"web3-eth-ens":525,"web3-eth-iban":530,"web3-eth-personal":531,"web3-net":534,"web3-utils":543}],534:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -76398,7 +76398,7 @@ module.exports = Net;
 
 
 
-},{"web3-core":510,"web3-core-method":499,"web3-utils":540}],535:[function(require,module,exports){
+},{"web3-core":510,"web3-core-method":499,"web3-utils":543}],535:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -76836,6 +76836,155 @@ module.exports = IpcProvider;
 
 
 },{"oboe":442,"underscore":492,"web3-core-helpers":498}],537:[function(require,module,exports){
+var _global = (function() { return this || {}; })();
+var NativeWebSocket = _global.WebSocket || _global.MozWebSocket;
+var websocket_version = require('./version');
+
+
+/**
+ * Expose a W3C WebSocket class with just one or two arguments.
+ */
+function W3CWebSocket(uri, protocols) {
+	var native_instance;
+
+	if (protocols) {
+		native_instance = new NativeWebSocket(uri, protocols);
+	}
+	else {
+		native_instance = new NativeWebSocket(uri);
+	}
+
+	/**
+	 * 'native_instance' is an instance of nativeWebSocket (the browser's WebSocket
+	 * class). Since it is an Object it will be returned as it is when creating an
+	 * instance of W3CWebSocket via 'new W3CWebSocket()'.
+	 *
+	 * ECMAScript 5: http://bclary.com/2004/11/07/#a-13.2.2
+	 */
+	return native_instance;
+}
+if (NativeWebSocket) {
+	['CONNECTING', 'OPEN', 'CLOSING', 'CLOSED'].forEach(function(prop) {
+		Object.defineProperty(W3CWebSocket, prop, {
+			get: function() { return NativeWebSocket[prop]; }
+		});
+	});
+}
+
+/**
+ * Module exports.
+ */
+module.exports = {
+    'w3cwebsocket' : NativeWebSocket ? W3CWebSocket : null,
+    'version'      : websocket_version
+};
+
+},{"./version":538}],538:[function(require,module,exports){
+module.exports = require('../package.json').version;
+
+},{"../package.json":539}],539:[function(require,module,exports){
+module.exports={
+  "_args": [
+    [
+      "websocket@git://github.com/frozeman/WebSocket-Node.git#6c72925e3f8aaaea8dc8450f97627e85263999f2",
+      "E:\\Programs\\wamp64\\www\\dentacoin\\Assurance"
+    ]
+  ],
+  "_development": true,
+  "_from": "git://github.com/frozeman/WebSocket-Node.git#browserifyCompatible",
+  "_id": "websocket@1.0.26",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/web3-providers-ws/websocket",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "websocket@git://github.com/frozeman/WebSocket-Node.git#browserifyCompatible",
+    "name": "websocket",
+    "escapedName": "websocket",
+    "rawSpec": "git://github.com/frozeman/WebSocket-Node.git#browserifyCompatible",
+    "saveSpec": "git://github.com/frozeman/WebSocket-Node.git#browserifyCompatible",
+    "fetchSpec": "git://github.com/frozeman/WebSocket-Node.git",
+    "gitCommittish": "browserifyCompatible"
+  },
+  "_requiredBy": [
+    "/web3-providers-ws"
+  ],
+  "_resolved": "git://github.com/frozeman/WebSocket-Node.git#6c72925e3f8aaaea8dc8450f97627e85263999f2",
+  "_spec": "websocket@git://github.com/frozeman/WebSocket-Node.git#browserifyCompatible",
+  "_where": "E:\\Programs\\wamp64\\www\\dentacoin\\Assurance\\node_modules\\web3-providers-ws",
+  "author": {
+    "name": "Brian McKelvey",
+    "email": "brian@worlize.com",
+    "url": "https://www.worlize.com/"
+  },
+  "browser": "lib/browser.js",
+  "bugs": {
+    "url": "https://github.com/theturtle32/WebSocket-Node/issues"
+  },
+  "bundleDependencies": false,
+  "config": {
+    "verbose": false
+  },
+  "contributors": [
+    {
+      "name": "Iñaki Baz Castillo",
+      "email": "ibc@aliax.net",
+      "url": "http://dev.sipdoc.net"
+    }
+  ],
+  "dependencies": {
+    "debug": "^2.2.0",
+    "nan": "^2.3.3",
+    "typedarray-to-buffer": "^3.1.2",
+    "yaeti": "^0.0.6"
+  },
+  "deprecated": false,
+  "description": "Websocket Client & Server Library implementing the WebSocket protocol as specified in RFC 6455.",
+  "devDependencies": {
+    "buffer-equal": "^1.0.0",
+    "faucet": "^0.0.1",
+    "gulp": "git+https://github.com/gulpjs/gulp.git#4.0",
+    "gulp-jshint": "^2.0.4",
+    "jshint": "^2.0.0",
+    "jshint-stylish": "^2.2.1",
+    "tape": "^4.0.1"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "homepage": "https://github.com/theturtle32/WebSocket-Node",
+  "keywords": [
+    "websocket",
+    "websockets",
+    "socket",
+    "networking",
+    "comet",
+    "push",
+    "RFC-6455",
+    "realtime",
+    "server",
+    "client"
+  ],
+  "license": "Apache-2.0",
+  "main": "index",
+  "name": "websocket",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theturtle32/WebSocket-Node.git"
+  },
+  "scripts": {
+    "gulp": "gulp",
+    "install": "(node-gyp rebuild 2> builderror.log) || (exit 0)",
+    "test": "faucet test/unit"
+  },
+  "version": "1.0.26"
+}
+
+},{}],540:[function(require,module,exports){
 (function (Buffer){
 /*
  This file is part of web3.js.
@@ -77240,7 +77389,7 @@ WebsocketProvider.prototype.disconnect = function () {
 module.exports = WebsocketProvider;
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":52,"underscore":492,"url":187,"web3-core-helpers":498,"websocket":545}],538:[function(require,module,exports){
+},{"buffer":52,"underscore":492,"url":187,"web3-core-helpers":498,"websocket":537}],541:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -77432,9 +77581,9 @@ module.exports = Shh;
 
 
 
-},{"web3-core":510,"web3-core-method":499,"web3-core-subscriptions":507,"web3-net":534}],539:[function(require,module,exports){
+},{"web3-core":510,"web3-core-method":499,"web3-core-subscriptions":507,"web3-net":534}],542:[function(require,module,exports){
 arguments[4][394][0].apply(exports,arguments)
-},{"dup":394}],540:[function(require,module,exports){
+},{"dup":394}],543:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -77800,7 +77949,7 @@ module.exports = {
 };
 
 
-},{"./soliditySha3.js":541,"./utils.js":542,"ethjs-unit":393,"randomhex":464,"underscore":492}],541:[function(require,module,exports){
+},{"./soliditySha3.js":544,"./utils.js":545,"ethjs-unit":393,"randomhex":464,"underscore":492}],544:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -78047,7 +78196,7 @@ var soliditySha3 = function () {
 
 module.exports = soliditySha3;
 
-},{"./utils.js":542,"bn.js":539,"underscore":492}],542:[function(require,module,exports){
+},{"./utils.js":545,"bn.js":542,"underscore":492}],545:[function(require,module,exports){
 /*
  This file is part of web3.js.
 
@@ -78520,7 +78669,7 @@ module.exports = {
     sha3: sha3
 };
 
-},{"bn.js":539,"eth-lib/lib/hash":378,"number-to-bn":440,"underscore":492,"utf8":494}],543:[function(require,module,exports){
+},{"bn.js":542,"eth-lib/lib/hash":378,"number-to-bn":440,"underscore":492,"utf8":494}],546:[function(require,module,exports){
 module.exports={
   "_args": [
     [
@@ -78609,7 +78758,7 @@ module.exports={
   "version": "1.0.0-beta.37"
 }
 
-},{}],544:[function(require,module,exports){
+},{}],547:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
@@ -78690,156 +78839,7 @@ core.addProviders(Web3);
 module.exports = Web3;
 
 
-},{"../package.json":543,"web3-bzz":495,"web3-core":510,"web3-eth":533,"web3-eth-personal":531,"web3-net":534,"web3-shh":538,"web3-utils":540}],545:[function(require,module,exports){
-var _global = (function() { return this || {}; })();
-var NativeWebSocket = _global.WebSocket || _global.MozWebSocket;
-var websocket_version = require('./version');
-
-
-/**
- * Expose a W3C WebSocket class with just one or two arguments.
- */
-function W3CWebSocket(uri, protocols) {
-	var native_instance;
-
-	if (protocols) {
-		native_instance = new NativeWebSocket(uri, protocols);
-	}
-	else {
-		native_instance = new NativeWebSocket(uri);
-	}
-
-	/**
-	 * 'native_instance' is an instance of nativeWebSocket (the browser's WebSocket
-	 * class). Since it is an Object it will be returned as it is when creating an
-	 * instance of W3CWebSocket via 'new W3CWebSocket()'.
-	 *
-	 * ECMAScript 5: http://bclary.com/2004/11/07/#a-13.2.2
-	 */
-	return native_instance;
-}
-if (NativeWebSocket) {
-	['CONNECTING', 'OPEN', 'CLOSING', 'CLOSED'].forEach(function(prop) {
-		Object.defineProperty(W3CWebSocket, prop, {
-			get: function() { return NativeWebSocket[prop]; }
-		});
-	});
-}
-
-/**
- * Module exports.
- */
-module.exports = {
-    'w3cwebsocket' : NativeWebSocket ? W3CWebSocket : null,
-    'version'      : websocket_version
-};
-
-},{"./version":546}],546:[function(require,module,exports){
-module.exports = require('../package.json').version;
-
-},{"../package.json":547}],547:[function(require,module,exports){
-module.exports={
-  "_args": [
-    [
-      "websocket@git://github.com/frozeman/WebSocket-Node.git#6c72925e3f8aaaea8dc8450f97627e85263999f2",
-      "E:\\Programs\\wamp64\\www\\dentacoin\\Assurance"
-    ]
-  ],
-  "_development": true,
-  "_from": "websocket@git://github.com/frozeman/WebSocket-Node.git#6c72925e3f8aaaea8dc8450f97627e85263999f2",
-  "_id": "websocket@git://github.com/frozeman/WebSocket-Node.git#6c72925e3f8aaaea8dc8450f97627e85263999f2",
-  "_inBundle": false,
-  "_integrity": "",
-  "_location": "/websocket",
-  "_phantomChildren": {
-    "ms": "2.0.0"
-  },
-  "_requested": {
-    "type": "git",
-    "raw": "websocket@git://github.com/frozeman/WebSocket-Node.git#6c72925e3f8aaaea8dc8450f97627e85263999f2",
-    "name": "websocket",
-    "escapedName": "websocket",
-    "rawSpec": "git://github.com/frozeman/WebSocket-Node.git#6c72925e3f8aaaea8dc8450f97627e85263999f2",
-    "saveSpec": "git://github.com/frozeman/WebSocket-Node.git#6c72925e3f8aaaea8dc8450f97627e85263999f2",
-    "fetchSpec": "git://github.com/frozeman/WebSocket-Node.git",
-    "gitCommittish": "6c72925e3f8aaaea8dc8450f97627e85263999f2"
-  },
-  "_requiredBy": [
-    "/web3-providers-ws"
-  ],
-  "_resolved": "git://github.com/frozeman/WebSocket-Node.git#6c72925e3f8aaaea8dc8450f97627e85263999f2",
-  "_spec": "git://github.com/frozeman/WebSocket-Node.git#6c72925e3f8aaaea8dc8450f97627e85263999f2",
-  "_where": "E:\\Programs\\wamp64\\www\\dentacoin\\Assurance",
-  "author": {
-    "name": "Brian McKelvey",
-    "email": "brian@worlize.com",
-    "url": "https://www.worlize.com/"
-  },
-  "browser": "lib/browser.js",
-  "bugs": {
-    "url": "https://github.com/theturtle32/WebSocket-Node/issues"
-  },
-  "config": {
-    "verbose": false
-  },
-  "contributors": [
-    {
-      "name": "Iñaki Baz Castillo",
-      "email": "ibc@aliax.net",
-      "url": "http://dev.sipdoc.net"
-    }
-  ],
-  "dependencies": {
-    "debug": "^2.2.0",
-    "nan": "^2.3.3",
-    "typedarray-to-buffer": "^3.1.2",
-    "yaeti": "^0.0.6"
-  },
-  "description": "Websocket Client & Server Library implementing the WebSocket protocol as specified in RFC 6455.",
-  "devDependencies": {
-    "buffer-equal": "^1.0.0",
-    "faucet": "^0.0.1",
-    "gulp": "git+https://github.com/gulpjs/gulp.git#4.0",
-    "gulp-jshint": "^2.0.4",
-    "jshint": "^2.0.0",
-    "jshint-stylish": "^2.2.1",
-    "tape": "^4.0.1"
-  },
-  "directories": {
-    "lib": "./lib"
-  },
-  "engines": {
-    "node": ">=0.10.0"
-  },
-  "homepage": "https://github.com/theturtle32/WebSocket-Node",
-  "keywords": [
-    "websocket",
-    "websockets",
-    "socket",
-    "networking",
-    "comet",
-    "push",
-    "RFC-6455",
-    "realtime",
-    "server",
-    "client"
-  ],
-  "license": "Apache-2.0",
-  "main": "index",
-  "name": "websocket",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/theturtle32/WebSocket-Node.git"
-  },
-  "scripts": {
-    "gulp": "gulp",
-    "install": "(node-gyp rebuild 2> builderror.log) || (exit 0)",
-    "test": "faucet test/unit"
-  },
-  "version": "1.0.26"
-}
-
-},{}],548:[function(require,module,exports){
+},{"../package.json":546,"web3-bzz":495,"web3-core":510,"web3-eth":533,"web3-eth-personal":531,"web3-net":534,"web3-shh":541,"web3-utils":543}],548:[function(require,module,exports){
 var request = require('xhr-request')
 
 module.exports = function (url, options) {
@@ -80200,20 +80200,20 @@ function importPrivateKey(key) {
 }
 
 module.exports = {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore};
-},{"../../../node_modules/eth-crypto":337,"../../../node_modules/keythereum":425,"../../../node_modules/web3":544}],563:[function(require,module,exports){
+},{"../../../node_modules/eth-crypto":337,"../../../node_modules/keythereum":425,"../../../node_modules/web3":547}],563:[function(require,module,exports){
 (function (Buffer){
+console.log('Don\'t touch the code. Or do ... ¯\\_(ツ)_/¯');
+
 checkIfCookie();
 
 var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore} = require('./helper');
 
-basic.init();
-
 var get_params = getGETParameters();
 $(document).ready(async function() {
     //if get parameter is passed show loginform
-    if ((basic.objHasKey(get_params, 'show-login') || basic.objHasKey(get_params, 'inviter')) && !$('body').hasClass('logged-in')) {
+    if ((basic.property_exists(get_params, 'show-login') || basic.property_exists(get_params, 'inviter')) && !$('body').hasClass('logged-in')) {
         openLoginSigninPopup();
-    } else if (basic.objHasKey(get_params, 'show-patient-register')) {
+    } else if (basic.property_exists(get_params, 'show-patient-register')) {
         openLoginSigninPopup(undefined, 'show-patient-register');
     }
 
@@ -80359,7 +80359,7 @@ var dApp = {
             //if some fake or false current-account localstorage variable is set -> delete it
             if (localStorage.getItem('current-account') != null) {
                 var current_account_obj = JSON.parse(localStorage.getItem('current-account'));
-                if (!basic.objHasKey(current_account_obj, 'address') || !innerAddressCheck(current_account_obj.address) || global_state.account.toLowerCase() != current_account_obj.address.toLowerCase() || !basic.objHasKey(current_account_obj, 'type') || (basic.objHasKey(current_account_obj, 'type') && current_account_obj.type != 'keystore')) {
+                if (!basic.property_exists(current_account_obj, 'address') || !innerAddressCheck(current_account_obj.address) || global_state.account.toLowerCase() != current_account_obj.address.toLowerCase() || !basic.property_exists(current_account_obj, 'type') || (basic.property_exists(current_account_obj, 'type') && current_account_obj.type != 'keystore')) {
                     localStorage.removeItem('current-account');
                 }
             }
@@ -80943,7 +80943,7 @@ async function pagesDataOnContractInit() {
                                                             //doing setinterval check to check if the smart creation transaction got mined
                                                             var contract_creation_interval_check = setInterval(async function () {
                                                                 var contract_creation_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                                if (contract_creation_status != null && basic.objHasKey(contract_creation_status, 'status')) {
+                                                                if (contract_creation_status != null && basic.property_exists(contract_creation_status, 'status')) {
                                                                     clearInterval(contract_creation_interval_check);
                                                                     if (contract_creation_status.status && execute_ajax) {
                                                                         execute_ajax = false;
@@ -81205,7 +81205,7 @@ if ($('body').hasClass('logged-in')) {
                     $('.step.two #patient-email').addClass('loading-background');
 
                     var checkEmail = await checkEmailAndReturnData($('.step.two #patient-email').val().trim(), 'patient');
-                    if(checkEmail.success) {
+                    if(checkEmail.success && checkEmail.data.indexOf(' ') >= 0) {
                         $('.step.two #fname').val(checkEmail.data.substr(0, checkEmail.data.indexOf(' ')));
                         $('.step.two #lname').val(checkEmail.data.substr(checkEmail.data.indexOf(' ')+1));
                     }
@@ -82474,7 +82474,7 @@ function openLoginSigninPopup(this_show_login_btn, type) {
                 }
 
                 var validate_phone = await validatePhone($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').val().trim(), $('.login-signin-popup .dentist .form-register .step.third select[name="country-code"]').val());
-                if (basic.objHasKey(validate_phone, 'success') && !validate_phone.success) {
+                if (basic.property_exists(validate_phone, 'success') && !validate_phone.success) {
                     customErrorHandle($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').closest('.field-parent'), 'Please use valid phone.');
                     errors = true;
                 }
@@ -82673,7 +82673,7 @@ function apiEventsListeners() {
             }
 
             //check if CoreDB returned address for this user and if its valid one
-            if (basic.objHasKey(custom_form_obj, 'address') != null && innerAddressCheck(custom_form_obj.address)) {
+            if (basic.property_exists(custom_form_obj, 'address') != null && innerAddressCheck(custom_form_obj.address)) {
                 //var current_dentists_for_logging_user = await dApp.assurance_methods.getWaitingContractsForPatient(custom_form_obj.address);
                 //if (current_dentists_for_logging_user.length > 0) {
                 //custom_form_obj.have_contracts = true;
@@ -83041,7 +83041,7 @@ async function onDocumentReadyPageData() {
                                                         //doing setinterval check to check if the smart creation transaction got mined
                                                         var contract_approval_interval_check = setInterval(async function () {
                                                             var contract_approval_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                            if (contract_approval_status != null && basic.objHasKey(contract_approval_status, 'status')) {
+                                                            if (contract_approval_status != null && basic.property_exists(contract_approval_status, 'status')) {
                                                                 if (contract_approval_status.status && execute_ajax) {
                                                                     execute_ajax = false;
 
@@ -83234,7 +83234,7 @@ async function onDocumentReadyPageData() {
                                                         //doing setinterval check to check if the smart creation transaction got mined
                                                         var withdraw_interval_check = setInterval(async function() {
                                                             var withdraw_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                            if (withdraw_status != null && basic.objHasKey(withdraw_status, 'status')) {
+                                                            if (withdraw_status != null && basic.property_exists(withdraw_status, 'status')) {
                                                                 if (withdraw_status.status && execute_ajax) {
                                                                     execute_ajax = false;
                                                                     clearInterval(withdraw_interval_check);
@@ -83509,7 +83509,7 @@ function cancelContractEventInit() {
                                                     //doing setinterval check to check if the smart creation transaction got mined
                                                     var contract_cancellation_interval_check = setInterval(async function () {
                                                         var contract_cancellation_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                        if (contract_cancellation_status != null && basic.objHasKey(contract_cancellation_status, 'status')) {
+                                                        if (contract_cancellation_status != null && basic.property_exists(contract_cancellation_status, 'status')) {
                                                             if (contract_cancellation_status.status && execute_ajax) {
                                                                 execute_ajax = false;
                                                                 clearInterval(contract_cancellation_interval_check);
@@ -83679,7 +83679,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                     var uploaded_file = this.files[0];
                     var reader = new FileReader();
                     reader.addEventListener('load', function (e) {
-                        if (isJsonString(e.target.result) && basic.objHasKey(JSON.parse(e.target.result), 'address') && checksumAddress(('0x' + JSON.parse(e.target.result).address)) == checksumAddress($('.proof-of-address').attr('data-address'))) {
+                        if (isJsonString(e.target.result) && basic.property_exists(JSON.parse(e.target.result), 'address') && checksumAddress(('0x' + JSON.parse(e.target.result).address)) == checksumAddress($('.proof-of-address').attr('data-address'))) {
                             var keystore_string = e.target.result;
                             if (caching) {
                                 $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
@@ -84124,7 +84124,7 @@ function initDataTable(filter_param, stop_table_init)    {
     }
 
     var params = getGETParameters();
-    if (basic.objHasKey(params, 'status') && filter_param == null) {
+    if (basic.property_exists(params, 'status') && filter_param == null) {
         filter_param = [params.status];
     }
 
@@ -84148,7 +84148,7 @@ function initDataTable(filter_param, stop_table_init)    {
         var cancelled_check = 'checked';
 
         if (filter_param != null) {
-            if (basic.objHasKey(params, 'status')) {
+            if (basic.property_exists(params, 'status')) {
                 filter_param.push(params.status);
             }
             if ($.inArray('pending', filter_param) != -1) {
