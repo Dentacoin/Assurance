@@ -211,10 +211,8 @@ class UserController extends Controller {
     function checkEmail(Request $request) {
         $data = $this->clearPostData($request->input());
         $api_response = (new APIRequestsController())->checkIfFreeEmail($data['email']);
-        var_dump($api_response);
-        die('asd');
         if(property_exists($api_response, 'success') && $api_response->success) {
-            return response()->json(['success' => true, 'name' => $api_response->data->name]);
+            return response()->json(['success' => true]);
         } else if(!$api_response->success) {
             return response()->json(['error' => true]);
         }
