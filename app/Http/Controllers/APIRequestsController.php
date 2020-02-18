@@ -324,7 +324,7 @@ class APIRequestsController extends Controller {
         return $resp;
     }
 
-    protected function getGasEstimationFromEthgasstation()  {
+    public function getGasEstimationFromEthgasstation()  {
         //API connection
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -341,16 +341,18 @@ class APIRequestsController extends Controller {
     }
 
     //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
-    public function sendETHamount($address, $dentist_addr, $usd_amount, $dcn_amount, $time, $hash) {
+    public function sendEthAmount($hash, $patient_address, $dentist_address, $value_usd, $monthly_premium_in_dcn, $time, $contract_ipfs_hash, $gasPrice) {
         $curl = curl_init();
 
-        $json = '{"address":"'.$address.'", "dentist_addr":"'.$dentist_addr.'", "value_usd":"'.$usd_amount.'", "monthly_premium_in_dcn":"'.$dcn_amount.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$hash.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'", "password":"'.getenv('API_REQUESTS_PASSWORD').'"}';
+        $json = '{"hash":"'.$hash.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "value_usd":"'.$value_usd.'", "monthly_premium_in_dcn":"'.$monthly_premium_in_dcn.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$contract_ipfs_hash.'", "gas_price":"'.$gasPrice.'"}';
 
+        var_dump($json);
+        die('asd');
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://assurance.dentacoin.com/send-eth-to-patients',
+            CURLOPT_URL => 'https://assurance.dentacoin.com/send-eth',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => $json
         ));

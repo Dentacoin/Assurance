@@ -417,7 +417,16 @@ class PatientController extends Controller {
                 //send ETH amount to patient
                 if(sizeof($this_patient_having_contracts) == 0) {
                     //only if no previous contracts, aka sending only for first contract
-                    $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendETHamount($contract->patient_address, $contract->dentist_address, $contract->monthly_premium, $contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'), $contract->contract_active_at->getTimestamp(), $contract->document_hash);
+                    //request to nodejs server, if the transaction fails the nodejs server will recover back the tokens to user balance in DB
+                    $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
+                    $sendEthAmountParams = array(
+                        'patient_address' => $contract->patient_address,
+                        'dentist_address' => $contract->dentist_address,
+                        'type' => 'patient-approval-and-contract-creation',
+                        'gas_price' => $gasPrice
+                    );
+
+                    $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendEthAmount(hash('sha256', getenv('SECRET_PASSWORD').json_encode($sendEthAmountParams)), $contract->patient_address, $contract->dentist_address, $contract->monthly_premium, $contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'), $contract->contract_active_at->getTimestamp(), $contract->document_hash, $gasPrice);
 
                     if($sending_eth_response && property_exists($sending_eth_response, 'success')) {
                         $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
@@ -430,7 +439,7 @@ class PatientController extends Controller {
                         });
 
                         $contract->save();
-                        return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
+                        return redirect()->route('patient-contract-view', ['slug' => $data['contract']])/*->with(['congratulations' => true])*/;
                     } else {
                         return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "1 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
                     }
@@ -446,7 +455,7 @@ class PatientController extends Controller {
 
                     $contract->save();
 
-                    return redirect()->route('patient-contract-view', ['slug' => $data['contract']])->with(['congratulations' => true]);
+                    return redirect()->route('patient-contract-view', ['slug' => $data['contract']])/*->with(['congratulations' => true])*/;
                 }
             } else {
                 return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "2 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);

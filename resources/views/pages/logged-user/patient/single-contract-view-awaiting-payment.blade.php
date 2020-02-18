@@ -56,7 +56,7 @@
             </div>
             @endif
             <div class="row camping-for-popups">
-                @if(session('congratulations'))
+                {{--@if(session('congratulations'))
                     @php($until_timestamp = strtotime('+'.(DAYS_CONTRACT_WITHDRAWAL_PERIOD - 1).' days', strtotime($contract->contract_active_at)))
                     <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module">
                         <div class="wrapper text-center">
@@ -68,7 +68,7 @@
                             <div class="fs-18 fs-xs-16 calibri-light padding-top-10">Your .pdf contract was successfully created. <br>You should buy DCN equivalent to <b class="blue-green-color">{{$contract->monthly_premium}} USD</b> until <b class="blue-green-color">{{date('d/m/Y', $until_timestamp)}}</b>.</div>
                         </div>
                     </div>
-                @endif
+                @endif--}}
             </div>
         </div>
     </section>
