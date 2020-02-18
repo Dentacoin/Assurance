@@ -428,7 +428,7 @@ class PatientController extends Controller {
 
                     $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendEthAmount(hash('sha256', getenv('SECRET_PASSWORD').json_encode($sendEthAmountParams)), 'patient-approval-and-contract-creation', $contract->patient_address, $contract->dentist_address, $contract->monthly_premium, $contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'), $contract->contract_active_at->getTimestamp(), $contract->document_hash, $gasPrice);
 
-                    if($sending_eth_response && property_exists($sending_eth_response, 'success')) {
+                    if(is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
                         $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
                         $body = $email_view->render();
 
