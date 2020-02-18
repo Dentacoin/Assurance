@@ -347,7 +347,6 @@ class APIRequestsController extends Controller {
         $json = '{"hash":"'.$hash.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "value_usd":"'.$value_usd.'", "monthly_premium_in_dcn":"'.$monthly_premium_in_dcn.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$contract_ipfs_hash.'", "gas_price":"'.$gasPrice.'"}';
 
         var_dump($json);
-        die('asd');
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -361,8 +360,12 @@ class APIRequestsController extends Controller {
                 'Content-Length: ' . mb_strlen($json))
         );
 
-        $resp = json_decode(curl_exec($curl));
+        //$resp = json_decode(curl_exec($curl));
+        $resp = curl_exec($curl);
         curl_close($curl);
+
+
+        die('asd');
 
         return $resp;
     }
