@@ -73850,6 +73850,7 @@ async function pagesDataOnContractInit() {
 
                 cancelContractEventInit();
             }
+
             if ($('.contract-header').hasClass('awaiting-payment')) {
                 var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account));
                 var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
@@ -73883,15 +73884,27 @@ async function pagesDataOnContractInit() {
                 //eth fee for firing blockchain transaction
                 var eth_fee = dApp.web3_1_0.utils.fromWei((methods_gas_cost * on_page_load_gas_price).toString(), 'ether');
 
+                // init navigation steps event
+                $('.steps-navigation a').click(function() {
+                    if(!$(this).hasClass()) {
+                        $('.steps-navigation a').removeClass('active');
+                        $(this).addClass('active');
+                    }
+                });
+
                 if (current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
+                    // 1st step
                     //not enough DCN and ETH balance
-                    $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h2 class="lato-bold fs-20 padding-top-15">WARNING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
+                    $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Check inside shield" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-18 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+monthly_premium_in_dcn+' DCN</span>) and <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> before <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
+                    //$('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Check inside shield" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-18 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
                     initPopupEvents(true);
                 } else if (current_user_dcn_balance < monthly_premium_in_dcn) {
+                    // 1st step
                     //not enough DCN
                     $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h2 class="lato-bold fs-20 padding-top-15">WARNING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
                     initPopupEvents(true);
                 } else if (parseFloat(eth_fee) > current_user_eth_balance) {
+                    // 1st step
                     //not enough ETH balance
                     $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h2 class="lato-bold fs-20 padding-top-15">WARNING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
                     initPopupEvents(true);
@@ -73901,6 +73914,7 @@ async function pagesDataOnContractInit() {
                         $('.ready-to-purchase-with-external-api').remove();
                     }
 
+                    // 2nd step
                     //show CONTINUE TO BLOCKCHAIN BTN
                     $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Check inside shield" src="/assets/images/secure.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">ACTIVATE AUTOMATIC PAYMENTS <i class="fa fa-info-circle" aria-hidden="true" data-placement="left" data-toggle="tooltip" title="Enabling automatic payments means that your monthly premium amount will be automatically deducted from your wallet balance on the payment due date and you will never have to worry about a missed deadline."></i></h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet. You should activate your secure, automatic payments <span class="calibri-bold blue-green-color">before or on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.<br>Ready to do it now?</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">ACTIVATE NOW</a></div></div></div>');
                     initPopupEvents();
