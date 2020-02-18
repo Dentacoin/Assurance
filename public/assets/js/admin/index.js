@@ -1,5 +1,3 @@
-basic.init();
-
 jQuery(window).on('load', function()   {
 
 });

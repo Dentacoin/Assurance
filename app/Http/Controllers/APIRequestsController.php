@@ -341,38 +341,19 @@ class APIRequestsController extends Controller {
     }
 
     //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
-    public function sendEthAmount($hash, $type, $patient_address, $dentist_address, $value_usd, $monthly_premium_in_dcn, $time, $contract_ipfs_hash, $gasPrice) {
+    public function sendEthAmount($hash, $type, $patient_address, $dentist_address, $gasPrice, $value_usd = null, $monthly_premium_in_dcn = null, $time = null, $contract_ipfs_hash = null) {
         $curl = curl_init();
 
-        $json = '{"hash":"'.$hash.'", "type":"'.$type.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "value_usd":"'.$value_usd.'", "monthly_premium_in_dcn":"'.$monthly_premium_in_dcn.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$contract_ipfs_hash.'", "gas_price":"'.$gasPrice.'"}';
+        if($type == 'dentist-approval') {
+            $json = '{"hash":"'.$hash.'", "type":"'.$type.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "gas_price":"'.$gasPrice.'"}';
+        } else if($type == 'patient-approval-and-contract-creation') {
+            $json = '{"hash":"'.$hash.'", "type":"'.$type.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "value_usd":"'.$value_usd.'", "monthly_premium_in_dcn":"'.$monthly_premium_in_dcn.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$contract_ipfs_hash.'", "gas_price":"'.$gasPrice.'"}';
+        }
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_POST => 1,
             CURLOPT_URL => 'https://assurance.dentacoin.com/send-eth',
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POSTFIELDS => $json
-        ));
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
-                'Content-Type: application/json',
-                'Content-Length: ' . mb_strlen($json))
-        );
-
-        $resp = json_decode(curl_exec($curl));
-        curl_close($curl);
-
-        return $resp;
-    }
-
-    //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
-    public function sendDentistETHamount($patient_address, $dentist_address) {
-        $curl = curl_init();
-
-        $json = '{"patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'", "password":"'.getenv('API_REQUESTS_PASSWORD').'"}';
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://assurance.dentacoin.com/send-eth-to-dentists',
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_POSTFIELDS => $json
         ));

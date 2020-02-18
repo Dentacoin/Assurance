@@ -8578,6 +8578,17 @@ select.select-mac-fix {
     top: 150%;
     position: absolute;
     left: 46%; }
+  .module.single-contract-tile .contract-body .steps-navigation {
+    border-top: 1.5px solid #d2d2d2; }
+    .module.single-contract-tile .contract-body .steps-navigation a {
+      width: 50%;
+      display: inline-block;
+      text-align: center;
+      color: #888888;
+      padding: 10px 5px; }
+      .module.single-contract-tile .contract-body .steps-navigation a.active {
+        color: white;
+        background-color: #126585; }
 .module.single-contract-tile .clock {
   display: inline-block;
   text-align: center;

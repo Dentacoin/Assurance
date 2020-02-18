@@ -29,8 +29,16 @@ class DentistController extends Controller
                 $this_dentist_having_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->all();
                 if (sizeof($this_dentist_having_contracts) == 1) {
                     //send ETH to dentist only for his first contract
-                    $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendDentistETHamount($contract->patient_address, $contract->dentist_address);
-                    if ($sending_eth_response && property_exists($sending_eth_response, 'success')) {
+                    $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
+                    $sendEthAmountParams = array(
+                        'patient_address' => $contract->patient_address,
+                        'dentist_address' => $contract->dentist_address,
+                        'type' => 'patient-approval-and-contract-creation',
+                        'gas_price' => $gasPrice
+                    );
+
+                    $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendEthAmount(hash('sha256', getenv('SECRET_PASSWORD').json_encode($sendEthAmountParams)), 'dentist-approval', $contract->patient_address, $contract->dentist_address, $gasPrice);
+                    if(is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
                         $params['sent_eth_to_dentist'] = true;
                     }
                 }
