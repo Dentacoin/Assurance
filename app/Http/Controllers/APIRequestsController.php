@@ -341,10 +341,10 @@ class APIRequestsController extends Controller {
     }
 
     //this method is not from the CoreDB, but from the IPFS NODEJS API on the website server
-    public function sendEthAmount($hash, $patient_address, $dentist_address, $value_usd, $monthly_premium_in_dcn, $time, $contract_ipfs_hash, $gasPrice) {
+    public function sendEthAmount($hash, $type, $patient_address, $dentist_address, $value_usd, $monthly_premium_in_dcn, $time, $contract_ipfs_hash, $gasPrice) {
         $curl = curl_init();
 
-        $json = '{"hash":"'.$hash.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "value_usd":"'.$value_usd.'", "monthly_premium_in_dcn":"'.$monthly_premium_in_dcn.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$contract_ipfs_hash.'", "gas_price":"'.$gasPrice.'"}';
+        $json = '{"hash":"'.$hash.'", "type":"'.$type.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "value_usd":"'.$value_usd.'", "monthly_premium_in_dcn":"'.$monthly_premium_in_dcn.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$contract_ipfs_hash.'", "gas_price":"'.$gasPrice.'"}';
 
         var_dump($json);
 
