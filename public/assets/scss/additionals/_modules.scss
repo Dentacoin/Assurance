@@ -1067,6 +1067,9 @@
                 overflow: hidden;
                 @include rounded(0 0 20px 20px);
                 @include box-shadow(0 2px 6px 0 rgba(0,0,0,.4));
+                .timer-label {
+                    text-transform: uppercase;
+                }
             }
         }
         .contract-footer, .contract-body {

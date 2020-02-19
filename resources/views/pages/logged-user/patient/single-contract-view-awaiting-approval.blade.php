@@ -56,7 +56,7 @@
         </div>
     </section>
     <section>
-        <div class="container">
+        <div class="container text-center">
             <div class="row">
                 <div class="col-xs-12">
                     <h2 class="fs-35 fs-xs-30 lato-bold padding-top-50 padding-top-xs-30 padding-bottom-20">Your Account Has Been Successfully Funded.</h2>
