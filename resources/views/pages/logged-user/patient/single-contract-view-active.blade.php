@@ -18,7 +18,7 @@
         </div>
         <div class="container single-contract-tile module text-center padding-top-20 @if(isset($mobile) && $mobile) mobile @endif">
             <div class="row fs-0">
-                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
+                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15 dentist">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
                         <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
                     </figure>
@@ -48,11 +48,9 @@
             @if(isset($mobile) && $mobile)
                 <div class="row contract-footer">
                     <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 padding-bottom-40 padding-left-50 padding-right-50 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-xs-15 padding-right-xs-15">
-                        <div class="show-on-xs">
-                            <div class="lato-bold fs-20 padding-bottom-5 timer-label"></div>
-                            <div class="clock"></div>
-                            <div class="flip-clock-message"></div>
-                        </div>
+                        <div class="lato-bold fs-20 padding-bottom-5 timer-label"></div>
+                        <div class="clock"></div>
+                        <div class="flip-clock-message"></div>
                         {{--<div class="timer-text"></div>--}}
                     </div>
                 </div>
@@ -72,6 +70,6 @@
             </div>
         </div>
     </section>
-    @include('partials.patient-ready-to-purchase-with-external-api')
+    <div class="external-api-crypto-provider hide">@include('partials.patient-ready-to-purchase-with-external-api')</div>
 @endsection
 

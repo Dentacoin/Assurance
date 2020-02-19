@@ -65,7 +65,7 @@
             </div>
             <div class="row fa-0 padding-top-40 padding-top-xs-10 row-with-bottom-squares text-center">
                 @if(isset($mobile) && $mobile)
-                    <div class="col-xs-12 padding-top-15 padding-bottom-15 border-right-light-gray show-on-xs">
+                    <div class="col-xs-12 padding-top-15 padding-bottom-15 border-right-light-gray">
                         <div class="cancelled-color fs-20 calibri-bold padding-top-15">Date Cancelled:</div>
                         <time class="display-block calibri-light fs-18">{{date('d/m/Y', $cancelled_timestamp)}}</time>
                         <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Reason:</div>
