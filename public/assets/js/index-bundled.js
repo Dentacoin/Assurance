@@ -73807,9 +73807,6 @@ async function pagesDataOnContractInit() {
                 var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient-address'), $('.patient-contract-single-page-section').attr('data-dentist-address'));
                 var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address')));
 
-                console.log(on_load_exiting_contract, 'on_load_exiting_contract');
-                console.log(current_patient_dcn_balance, 'on_load_exiting_contract');
-
                 var months_passed_for_reward = Math.floor(time_passed_since_signed / period_to_withdraw);
                 var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(on_load_exiting_contract[5]);
 
@@ -73894,223 +73891,264 @@ async function pagesDataOnContractInit() {
                     }
                 });
 
-                if (current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
-                    // 1st step
-                    //not enough DCN and ETH balance
-                    $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+monthly_premium_in_dcn+' DCN</span>) and <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> before <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
-                    //$('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Check inside shield" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-18 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
-                    initPopupEvents(true);
-                } else if (current_user_dcn_balance < monthly_premium_in_dcn) {
-                    // 1st step
-                    //not enough DCN
-                    $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+monthly_premium_in_dcn+' DCN</span>) before <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+                var type;
+                patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance);
+                function patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance) {
+                    if (current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
+                        // 1st step
+                        if(type != 'no-dcn-eth') {
+                            $('.camping-for-popups').html('');
+                            type = 'no-dcn-eth';
+                        }
 
-                    //$('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h2 class="lato-bold fs-20 padding-top-15">WARNING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
-                    initPopupEvents(true);
-                } else if (parseFloat(eth_fee) > current_user_eth_balance) {
-                    // 1st step
-                    //not enough ETH balance
-                    $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> before <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
-                    //$('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h2 class="lato-bold fs-20 padding-top-15">WARNING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
-                    initPopupEvents(true);
-                } else {
-                    //hiding section where ETH and DCN can be bought because patient has enough of both
-                    if ($('.ready-to-purchase-with-external-api').length) {
-                        $('.ready-to-purchase-with-external-api').remove();
-                    }
+                        // checking every 3 seconds if user deposit eth or dcn
+                        setTimeout(async function() {
+                            patientApprovalAndContractCreationLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account)), arseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account))));
+                        }, 3000);
 
-                    // 2nd step
-                    //show CONTINUE TO BLOCKCHAIN BTN
-                    $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-one"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Shield check" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">is now funded!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should activate your contract before or on <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 proceed-to-second-step">STEP 2 >></a></div></div></div><div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-one"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Automatic payment icon" src="/assets/uploads/automatic-payments-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">MONTHLY AUTOPAYMENTS</h2><h3 class="fs-22 padding-top-5 lato-bold">Get your Assurance contract started!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">Your account is already funded. Last step: Activate your secure, automatic payments now! Due date: <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 call-recipe">ACTIVATE NOW</a></div></div></div>');
+                        //not enough DCN and ETH balance
+                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+monthly_premium_in_dcn+' DCN</span>) and <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> before <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+                        //$('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Check inside shield" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-18 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> and <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
+                        initPopupEvents(true);
+                    } else if (current_user_dcn_balance < monthly_premium_in_dcn) {
+                        // 1st step
+                        if(type != 'no-dcn') {
+                            $('.camping-for-popups').html('');
+                            type = 'no-dcn';
+                        }
 
-                    $('.proceed-to-second-step').click(function() {
-                        $('.popup-step-one').remove();
-                        $('.popup-step-two').fadeIn();
-                    });
-                    /*$('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Check inside shield" src="/assets/images/secure.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">ACTIVATE AUTOMATIC PAYMENTS <i class="fa fa-info-circle" aria-hidden="true" data-placement="left" data-toggle="tooltip" title="Enabling automatic payments means that your monthly premium amount will be automatically deducted from your wallet balance on the payment due date and you will never have to worry about a missed deadline."></i></h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet. You should activate your secure, automatic payments <span class="calibri-bold blue-green-color">before or on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.<br>Ready to do it now?</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">ACTIVATE NOW</a></div></div></div>');*/
-                    initPopupEvents();
+                        // checking every 3 seconds if user deposit eth or dcn
+                        setTimeout(async function() {
+                            patientApprovalAndContractCreationLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account)), arseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account))));
+                        }, 3000);
 
-                    $('.call-recipe').click(function() {
-                        if (metamask) {
-                            basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
-                        } else {
-                            //custom
-                            var cached_key = localStorage.getItem('current-account') == null;
-                            $.ajax({
-                                type: 'POST',
-                                url: '/get-recipe-popup',
-                                dataType: 'json',
-                                data: {
-                                    /*to: dApp.assurance_proxy_address,*/
-                                    cached_key: cached_key,
-                                    contract: $('.init-contract-section').attr('data-contract'),
-                                    show_dcn_bar: true,
-                                    recipe_title: 'ACTIVATE AUTOMATIC PAYMENTS',
-                                    recipe_subtitle: 'to never worry about a missed due date',
-                                    recipe_checkbox_text: 'By clicking on the button below you also agree that from now on your monthly premium amount will be automatically deducted from your wallet balance on the payment due date.',
-                                    btn_label: 'PAY NOW'
-                                },
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success: async function (response) {
-                                    if (response.success) {
-                                        basic.closeDialog();
-                                        basic.showDialog(response.success, 'recipe-popup', null, true);
+                        //not enough DCN
+                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+monthly_premium_in_dcn+' DCN</span>) before <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
 
-                                        $('.recipe-popup .usd_val span').html($('.patient-contract-single-page-section').attr('data-monthly-premium'));
-                                        $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
+                        //$('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h2 class="lato-bold fs-20 padding-top-15">WARNING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD in DCN</span> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
+                        initPopupEvents(true);
+                    } else if (parseFloat(eth_fee) > current_user_eth_balance) {
+                        // 1st step
+                        if(type != 'no-eth') {
+                            $('.camping-for-popups').html('');
+                            type = 'no-eth';
+                        }
 
-                                        $('.recipe-popup .ether-fee .field').html(eth_fee);
+                        // checking every 3 seconds if user deposit eth or dcn
+                        setTimeout(async function() {
+                            patientApprovalAndContractCreationLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account)), arseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account))));
+                        }, 3000);
 
-                                        $('.recipe-popup .ether-fee i').popover({
-                                            trigger: 'click',
-                                            html: true
-                                        });
+                        //not enough ETH balance
+                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> before <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+                        //$('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><div class="fs-90 line-height-90 blue-green-color">!</div><h2 class="lato-bold fs-20 padding-top-15">WARNING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">You should charge your wallet with <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Ether (ETH) is a currency that is used for covering your transaction costs."></i> until <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">BUY</a></div></div></div>');
+                        initPopupEvents(true);
+                    } else {
+                        // 2nd step
 
-                                        var transaction_key;
-                                        if (cached_key) {
-                                            bindVerifyAddressLogic(true);
-                                            $(document).on('on-transaction-recipe-agree', function(event) {
-                                                transaction_key = event.response_data;
-                                                setTimeout(function() {
-                                                    hideLoader();
+                        //hiding section where ETH and DCN can be bought because patient has enough of both
+                        if ($('.ready-to-purchase-with-external-api').length) {
+                            $('.ready-to-purchase-with-external-api').remove();
+                        }
 
-                                                    $('.proof-of-address').remove();
-                                                    $('.proof-success').fadeIn(1500);
-                                                }, 500);
+                        if(type != 'dcn-eth') {
+                            $('.camping-for-popups').html('');
+                            type = 'dcn-eth';
+                        }
+
+                        //show CONTINUE TO BLOCKCHAIN BTN
+                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-one"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Shield check" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">is now funded!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should activate your contract before or on <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 proceed-to-second-step">STEP 2 >></a></div></div></div><div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-two hide"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Automatic payment icon" src="/assets/uploads/automatic-payments-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">MONTHLY AUTOPAYMENTS</h2><h3 class="fs-22 padding-top-5 lato-bold">Get your Assurance contract started!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">Your account is already funded. Last step: Activate your secure, automatic payments now! Due date: <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 call-recipe">ACTIVATE NOW</a></div></div></div>');
+
+                        $('.proceed-to-second-step').click(function() {
+                            $('.popup-step-one').hide();
+                            $('.popup-step-two').fadeIn();
+                        });
+
+                        /*$('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Check inside shield" src="/assets/images/secure.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">ACTIVATE AUTOMATIC PAYMENTS <i class="fa fa-info-circle" aria-hidden="true" data-placement="left" data-toggle="tooltip" title="Enabling automatic payments means that your monthly premium amount will be automatically deducted from your wallet balance on the payment due date and you will never have to worry about a missed deadline."></i></h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet. You should activate your secure, automatic payments <span class="calibri-bold blue-green-color">before or on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.<br>Ready to do it now?</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">ACTIVATE NOW</a></div></div></div>');*/
+                        initPopupEvents();
+
+                        $('.call-recipe').click(function() {
+                            if (metamask) {
+                                basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
+                            } else {
+                                //custom
+                                var cached_key = localStorage.getItem('current-account') == null;
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/get-recipe-popup',
+                                    dataType: 'json',
+                                    data: {
+                                        /*to: dApp.assurance_proxy_address,*/
+                                        cached_key: cached_key,
+                                        contract: $('.init-contract-section').attr('data-contract'),
+                                        show_dcn_bar: true,
+                                        recipe_title: 'ACTIVATE AUTOMATIC PAYMENTS',
+                                        recipe_subtitle: 'to never worry about a missed due date',
+                                        recipe_checkbox_text: 'By clicking on the button below you also agree that from now on your monthly premium amount will be automatically deducted from your wallet balance on the payment due date.',
+                                        btn_label: 'PAY NOW'
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: async function (response) {
+                                        if (response.success) {
+                                            basic.closeDialog();
+                                            basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                            $('.recipe-popup .usd_val span').html($('.patient-contract-single-page-section').attr('data-monthly-premium'));
+                                            $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
+
+                                            $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                            $('.recipe-popup .ether-fee i').popover({
+                                                trigger: 'click',
+                                                html: true
                                             });
-                                        } else {
-                                            $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module  max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
-                                        }
 
-                                        $('.recipe-popup .execute-transaction').click(async function() {
-                                            var this_btn = $(this);
-                                            if (parseFloat(eth_fee) > current_user_eth_balance) {
-                                                //not enough ETH balance
-                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                            var transaction_key;
+                                            if (cached_key) {
+                                                bindVerifyAddressLogic(true);
+                                                $(document).on('on-transaction-recipe-agree', function(event) {
+                                                    transaction_key = event.response_data;
+                                                    setTimeout(function() {
+                                                        hideLoader();
+
+                                                        $('.proof-of-address').remove();
+                                                        $('.proof-success').fadeIn(1500);
+                                                    }, 500);
+                                                });
                                             } else {
-                                                if (global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
-                                                    basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
-                                                    return false;
-                                                } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
-                                                    basic.showAlert('Please enter the secret password for your keystore file.', '', true);
-                                                    return false;
-                                                } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                    basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
-                                                    return false;
+                                                $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module  max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
+                                            }
+
+                                            $('.recipe-popup .execute-transaction').click(async function() {
+                                                var this_btn = $(this);
+                                                if (parseFloat(eth_fee) > current_user_eth_balance) {
+                                                    //not enough ETH balance
+                                                    basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
                                                 } else {
-                                                    if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                        var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
-                                                        if (decrypted_keystore_file_response.success) {
-                                                            transaction_key = decrypted_keystore_file_response.to_string;
-                                                        } else if (decrypted_keystore_file_response.error) {
-                                                            basic.showAlert(decrypted_keystore_file_response.message, '', true);
-                                                            return false;
+                                                    if (global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                        basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                        return false;
+                                                    } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                                        basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                        return false;
+                                                    } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                        basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                        return false;
+                                                    } else {
+                                                        if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                            var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                            if (decrypted_keystore_file_response.success) {
+                                                                transaction_key = decrypted_keystore_file_response.to_string;
+                                                            } else if (decrypted_keystore_file_response.error) {
+                                                                basic.showAlert(decrypted_keystore_file_response.message, '', true);
+                                                                return false;
+                                                            }
                                                         }
-                                                    }
 
-                                                    this_btn.unbind();
+                                                        this_btn.unbind();
 
-                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
+                                                        showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
 
-                                                    const EthereumTx = require('ethereumjs-tx');
+                                                        const EthereumTx = require('ethereumjs-tx');
 
-                                                    if (!approval_given) {
-                                                        var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
-                                                        dApp.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
-                                                            var approval_transaction_obj = {
-                                                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 5 / 100))),
+                                                        if (!approval_given) {
+                                                            var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
+                                                            dApp.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
+                                                                var approval_transaction_obj = {
+                                                                    gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 5 / 100))),
+                                                                    gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                                    from: global_state.account,
+                                                                    nonce: dApp.web3_1_0.utils.toHex(nonce),
+                                                                    chainId: dApp.chain_id,
+                                                                    data: approval_function_abi,
+                                                                    to: dApp.dentacoin_token_address
+                                                                };
+
+                                                                const approval_transaction = new EthereumTx(approval_transaction_obj);
+                                                                //signing the transaction
+                                                                approval_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                                                //sending the transaction
+                                                                dApp.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                                    fireAssuranceContractCreationTransaction(nonce + 1);
+                                                                });
+                                                            });
+                                                        } else {
+                                                            fireAssuranceContractCreationTransaction();
+                                                        }
+
+                                                        async function fireAssuranceContractCreationTransaction(nonce) {
+                                                            if (nonce == undefined) {
+                                                                nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
+                                                            }
+
+                                                            var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(checksumAddress(response.contract_data.patient), checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
+
+                                                            var contract_creation_transaction_obj = {
+                                                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5 / 100))),
                                                                 gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                                 from: global_state.account,
                                                                 nonce: dApp.web3_1_0.utils.toHex(nonce),
                                                                 chainId: dApp.chain_id,
-                                                                data: approval_function_abi,
-                                                                to: dApp.dentacoin_token_address
+                                                                data: contract_creation_function_abi,
+                                                                to: dApp.assurance_proxy_address
                                                             };
 
-                                                            const approval_transaction = new EthereumTx(approval_transaction_obj);
+                                                            const contract_creation_transaction = new EthereumTx(contract_creation_transaction_obj);
                                                             //signing the transaction
-                                                            approval_transaction.sign(new Buffer(transaction_key, 'hex'));
+                                                            contract_creation_transaction.sign(new Buffer(transaction_key, 'hex'));
 
                                                             //sending the transaction
-                                                            dApp.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                                fireAssuranceContractCreationTransaction(nonce + 1);
-                                                            });
-                                                        });
-                                                    } else {
-                                                        fireAssuranceContractCreationTransaction();
-                                                    }
-
-                                                    async function fireAssuranceContractCreationTransaction(nonce) {
-                                                        if (nonce == undefined) {
-                                                            nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
-                                                        }
-
-                                                        var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(checksumAddress(response.contract_data.patient), checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
-
-                                                        var contract_creation_transaction_obj = {
-                                                            gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5 / 100))),
-                                                            gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                            from: global_state.account,
-                                                            nonce: dApp.web3_1_0.utils.toHex(nonce),
-                                                            chainId: dApp.chain_id,
-                                                            data: contract_creation_function_abi,
-                                                            to: dApp.assurance_proxy_address
-                                                        };
-
-                                                        const contract_creation_transaction = new EthereumTx(contract_creation_transaction_obj);
-                                                        //signing the transaction
-                                                        contract_creation_transaction.sign(new Buffer(transaction_key, 'hex'));
-
-                                                        //sending the transaction
-                                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                            var execute_ajax = true;
-                                                            //doing setinterval check to check if the smart creation transaction got mined
-                                                            var contract_creation_interval_check = setInterval(async function () {
-                                                                var contract_creation_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                                if (contract_creation_status != null && basic.property_exists(contract_creation_status, 'status')) {
-                                                                    clearInterval(contract_creation_interval_check);
-                                                                    if (contract_creation_status.status && execute_ajax) {
-                                                                        execute_ajax = false;
-                                                                        $.ajax({
-                                                                            type: 'POST',
-                                                                            url: '/patient/on-blockchain-contract-creation',
-                                                                            dataType: 'json',
-                                                                            data: {
-                                                                                ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                            },
-                                                                            headers: {
-                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                            },
-                                                                            success: function (inner_response) {
-                                                                                if (inner_response.success) {
-                                                                                    hideLoader();
-                                                                                    basic.showDialog(inner_response.success, '', null, true);
-                                                                                    setTimeout(function () {
-                                                                                        window.location.reload();
-                                                                                    }, 3000);
+                                                            dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                                var execute_ajax = true;
+                                                                //doing setinterval check to check if the smart creation transaction got mined
+                                                                var contract_creation_interval_check = setInterval(async function () {
+                                                                    var contract_creation_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
+                                                                    if (contract_creation_status != null && basic.property_exists(contract_creation_status, 'status')) {
+                                                                        clearInterval(contract_creation_interval_check);
+                                                                        if (contract_creation_status.status && execute_ajax) {
+                                                                            execute_ajax = false;
+                                                                            $.ajax({
+                                                                                type: 'POST',
+                                                                                url: '/patient/on-blockchain-contract-creation',
+                                                                                dataType: 'json',
+                                                                                data: {
+                                                                                    ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                                },
+                                                                                headers: {
+                                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                                },
+                                                                                success: function (inner_response) {
+                                                                                    if (inner_response.success) {
+                                                                                        hideLoader();
+                                                                                        basic.showDialog(inner_response.success, '', null, true);
+                                                                                        setTimeout(function () {
+                                                                                            window.location.reload();
+                                                                                        }, 3000);
+                                                                                    }
                                                                                 }
-                                                                            }
-                                                                        });
-                                                                    } else {
-                                                                        hideLoader();
-                                                                        basic.showAlert('Your transaction and blockchain contract creation failed. Please try again later when the gas cost is low or contact <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a>. You can see your transaction on <a href="https://rinkeby.etherscan.io/tx/' + transactionHash + '" target="_blank" class="etherscan-hash">Etherscan</a>');
+                                                                            });
+                                                                        } else {
+                                                                            hideLoader();
+                                                                            basic.showAlert('Your transaction and blockchain contract creation failed. Please try again later when the gas cost is low or contact <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a>. You can see your transaction on <a href="https://rinkeby.etherscan.io/tx/' + transactionHash + '" target="_blank" class="etherscan-hash">Etherscan</a>');
+                                                                        }
                                                                     }
-                                                                }
-                                                            }, 1000);
-                                                        });
+                                                                }, 1000);
+                                                            });
+                                                        }
                                                     }
                                                 }
-                                            }
-                                        });
-                                    } else {
-                                        basic.showAlert(response.error, '', true);
+                                            });
+                                        } else {
+                                            basic.showAlert(response.error, '', true);
+                                        }
                                     }
-                                }
-                            });
-                        }
-                    });
+                                });
+                            }
+                        });
+                    }
                 }
             }
         } else if ($('body').hasClass('dentist-contract-view')) {
@@ -75075,14 +75113,14 @@ if ($('body').hasClass('logged-in')) {
         $('section.ready-to-purchase-with-external-api #crypto-amount').val(Math.floor(dcn_for_one_usd * parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim())));
 
         $('section.ready-to-purchase-with-external-api #usd-value').on('input', function() {
-            if ($(this).val().trim() < 30)   {
+            if ($(this).val().trim() < 10)   {
                 $(this).parent().addClass('error-field');
             }else {
                 $(this).parent().removeClass('error-field');
             }
 
             if (parseFloat($(this).val().trim()) < 0)    {
-                $(this).val(30);
+                $(this).val(10);
             }else if (parseFloat($(this).val().trim()) > 6000)    {
                 $(this).val(6000);
             }
@@ -75100,15 +75138,15 @@ if ($('body').hasClass('logged-in')) {
             if (current_active_currency != $(this).attr('data-currency')) {
                 current_active_currency = $(this).attr('data-currency');
 
-                $('section.ready-to-purchase-with-external-api #usd-value').val(30);
+                $('section.ready-to-purchase-with-external-api #usd-value').val(10);
                 $('section.ready-to-purchase-with-external-api #usd-value').parent().removeClass('error-field');
 
                 $('section.ready-to-purchase-with-external-api .crypto-label').html(current_active_currency.toUpperCase());
 
                 if (current_active_currency == 'dcn') {
-                    $('section.ready-to-purchase-with-external-api #crypto-amount').val(dcn_for_one_usd * 30);
+                    $('section.ready-to-purchase-with-external-api #crypto-amount').val(dcn_for_one_usd * 10);
                 } else if (current_active_currency == 'eth') {
-                    $('section.ready-to-purchase-with-external-api #crypto-amount').val(eth_for_one_usd * 30);
+                    $('section.ready-to-purchase-with-external-api #crypto-amount').val(eth_for_one_usd * 10);
                 }
             }
         });
@@ -75146,12 +75184,12 @@ if ($('body').hasClass('logged-in')) {
                 };
             }
 
-            if (parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) < 30)  {
-                basic.showAlert('The minimum transaction limit is 30 USD.', '', true);
+            if (parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) < 10)  {
+                basic.showAlert('The minimum transaction limit is 10 USD.', '', true);
             }else if (parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) > 6000)  {
                 basic.showAlert('The maximum transaction limit is 6000 USD.', '', true);
             }else if (parseFloat($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()) < currency_amount_for_one_usd * 30)  {
-                basic.showAlert('The minimum transaction limit is 30 USD in '+currency.toUpperCase()+'.', '', true);
+                basic.showAlert('The minimum transaction limit is 10 USD in '+currency.toUpperCase()+'.', '', true);
             }else if (parseFloat($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()) > currency_amount_for_one_usd * 6000)  {
                 basic.showAlert('The maximum transaction limit is 6000 USD in '+currency.toUpperCase()+'.', '', true);
             }else if (!innerAddressCheck($('section.ready-to-purchase-with-external-api input#dcn_address').val().trim())) {

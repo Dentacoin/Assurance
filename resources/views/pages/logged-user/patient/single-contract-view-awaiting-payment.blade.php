@@ -35,8 +35,8 @@
                         <div class="flip-clock-message"></div>
                     </div>
                     <div class="steps-navigation fs-0">
-                        <a href="javascript:void(0);" data-step="" class="fs-14 active">STEP 1: FUND</a>
-                        <a href="javascript:void(0);" data-step="" class="fs-14 disabled">STEP 2: ACTIVATE</a>
+                        <a href="javascript:void(0);" data-step="popup-step-one" class="fs-14 active">STEP 1: FUND</a>
+                        <a href="javascript:void(0);" data-step="popup-step-two" class="fs-14 disabled">STEP 2: ACTIVATE</a>
                     </div>
                 </div>
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-bottom padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">

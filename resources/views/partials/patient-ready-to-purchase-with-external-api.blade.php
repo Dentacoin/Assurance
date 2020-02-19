@@ -24,11 +24,11 @@
                     <div class="custom-google-label-style module fs-0 flex">
                         <div class="inline-block left-side">
                             <label class="active-label" for="usd-value">Pay with:</label>
-                            <input type="number" id="usd-value" value="30"/>
+                            <input type="number" id="usd-value" value="10"/>
                         </div>
                         <span class="inline-block">USD</span>
                     </div>
-                    <div class="fs-16 padding-left-15 padding-left-xs-0 calibri-light light-gray-color">Transaction limit: 30 - 6000 USD</div>
+                    <div class="fs-16 padding-left-15 padding-left-xs-0 calibri-light light-gray-color">First transaction: $10 to $6,000. Daily limit: $20,000</div>
                 </div>
                 <div class="col-xs-12 col-sm-5 col-md-4 padding-left-50 padding-left-xs-15 padding-bottom-xs-20">
                     <div class="custom-google-label-style module fs-0 flex">
