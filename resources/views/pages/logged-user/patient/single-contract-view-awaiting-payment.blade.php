@@ -35,7 +35,7 @@
                         <div class="flip-clock-message"></div>
                     </div>
                     <div class="steps-navigation fs-0">
-                        <a href="javascript:void(0);" data-step="popup-step-one" class="fs-14 active passed-step"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="white-check margin-right-5 width-100 max-width-20 inline-block"><img alt="White check" src="/assets/uploads/white-check.svg"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="gray-check margin-right-5 width-100 max-width-20 inline-block"><img alt="Gray check" src="/assets/uploads/gray-check.svg"/></figure>STEP 1: FUND</a>
+                        <a href="javascript:void(0);" data-step="popup-step-one" class="fs-14 active"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="white-check margin-right-5 width-100 max-width-20 inline-block"><img alt="White check" src="/assets/uploads/white-check.svg"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="gray-check margin-right-5 width-100 max-width-20 inline-block"><img alt="Gray check" src="/assets/uploads/gray-check.svg"/></figure>STEP 1: FUND</a>
                         <a href="javascript:void(0);" data-step="popup-step-two" class="fs-14 disabled">STEP 2: ACTIVATE</a>
                     </div>
                 </div>
