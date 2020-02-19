@@ -17,7 +17,7 @@
         </section>
         <section class="container single-contract-tile module pending text-center padding-top-20 @if(isset($mobile) && $mobile) mobile @endif">
             <div class="row fs-0">
-                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
+                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
                         <img alt="Dentist avatar" src="{{$current_logged_dentist->avatar_url}}"/>
                     </figure>
@@ -37,13 +37,15 @@
                 </div>--}}
                 <div class="col-xs-4 inline-block contract-body padding-bottom-10 padding-bottom-xs-0">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-approval">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING APPROVAL</div>
-                    <div class="wrapper">
-                        <div class="lato-bold fs-20 padding-top-15 padding-bottom-10 padding-left-10 padding-right-10 timer-label"></div>
-                        <div class="clock"></div>
-                        <div class="flip-clock-message"></div>
-                    </div>
+                    @if(isset($mobile) && !$mobile)
+                        <div class="wrapper">
+                            <div class="lato-bold fs-20 padding-top-15 padding-bottom-10 padding-left-10 padding-right-10 timer-label"></div>
+                            <div class="clock"></div>
+                            <div class="flip-clock-message"></div>
+                        </div>
+                    @endif
                 </div>
-                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-top padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
+                <div class="col-xs-4 col-md-3 contract-participant text-center inline-block padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
                         <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
                     </figure>

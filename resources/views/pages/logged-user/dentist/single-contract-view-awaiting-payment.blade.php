@@ -37,11 +37,13 @@
                 </div>--}}
                 <div class="col-xs-4 inline-block contract-body padding-bottom-10 padding-bottom-xs-0">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-payment">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING PAYMENT</div>
-                    <div class="wrapper">
-                        <div class="lato-bold fs-20 padding-top-15 padding-bottom-10 padding-left-10 padding-right-10 timer-label"></div>
-                        <div class="clock"></div>
-                        <div class="flip-clock-message"></div>
-                    </div>
+                    @if(isset($mobile) && !$mobile)
+                        <div class="wrapper">
+                            <div class="lato-bold fs-20 padding-top-15 padding-bottom-10 padding-left-10 padding-right-10 timer-label"></div>
+                            <div class="clock"></div>
+                            <div class="flip-clock-message"></div>
+                        </div>
+                    @endif
                 </div>
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
@@ -53,6 +55,16 @@
                     </div>
                 </div>
             </div>
+            @if(isset($mobile) && $mobile)
+                <div class="row contract-footer">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 padding-bottom-40 padding-left-50 padding-right-50 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-xs-15 padding-right-xs-15">
+                        <div class="lato-bold fs-20 padding-bottom-5 timer-label"></div>
+                        <div class="clock"></div>
+                        <div class="flip-clock-message"></div>
+                        {{--<div class="timer-text"></div>--}}
+                    </div>
+                </div>
+            @endif
             <div class="row fs-0 padding-top-40 row-with-bottom-squares text-center">
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15 border-right-light-gray">
                     <h3 class="fs-20 calibri-bold">Date Signed:</h3>
