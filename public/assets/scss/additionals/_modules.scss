@@ -939,12 +939,26 @@
                     text-align: center;
                     color: #888888;
                     padding: 10px 5px;
-                    .white-check {
+                    .white-check, .gray-check {
                         display: none;
                     }
-                    .gray-check {
-                        display: inline-block;
-                        vertical-align: middle;
+                    &.passed-step {
+                        .white-check {
+                            display: none;
+                        }
+                        .gray-check {
+                            display: inline-block;
+                            vertical-align: middle;
+                        }
+                        &.active {
+                            .white-check {
+                                display: inline-block;
+                                vertical-align: middle;
+                            }
+                            .gray-check {
+                                display: none;
+                            }
+                        }
                     }
                     &.active {
                         color: white;

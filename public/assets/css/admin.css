@@ -1081,11 +1081,18 @@
       text-align: center;
       color: #888888;
       padding: 10px 5px; }
-      .module.single-contract-tile .contract-body .steps-navigation a .white-check {
+      .module.single-contract-tile .contract-body .steps-navigation a .white-check, .module.single-contract-tile .contract-body .steps-navigation a .gray-check {
         display: none; }
-      .module.single-contract-tile .contract-body .steps-navigation a .gray-check {
+      .module.single-contract-tile .contract-body .steps-navigation a.passed-step .white-check {
+        display: none; }
+      .module.single-contract-tile .contract-body .steps-navigation a.passed-step .gray-check {
         display: inline-block;
         vertical-align: middle; }
+      .module.single-contract-tile .contract-body .steps-navigation a.passed-step.active .white-check {
+        display: inline-block;
+        vertical-align: middle; }
+      .module.single-contract-tile .contract-body .steps-navigation a.passed-step.active .gray-check {
+        display: none; }
       .module.single-contract-tile .contract-body .steps-navigation a.active {
         color: white;
         background-color: #126585; }
