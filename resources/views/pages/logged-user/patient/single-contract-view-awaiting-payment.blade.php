@@ -16,8 +16,8 @@
                 @include('partials.contract-single-page-nav')
             </div>
         </div>
-        <div class="container single-contract-tile module text-center padding-top-20">
-            <div class="row fs-0 flex-sm">
+        <div class="container single-contract-tile module text-center padding-top-20 @if(isset($mobile) && $mobile) mobile @endif">
+            <div class="row fs-0">
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-bottom padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
                         <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
@@ -29,15 +29,17 @@
                 </div>
                 <div class="col-xs-4 inline-block-bottom contract-body">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-payment">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING PAYMENT</div>
-                    <div class="wrapper">
-                        <div class="lato-bold fs-20 padding-top-15 padding-bottom-10 padding-left-10 padding-right-10 timer-label"></div>
-                        <div class="clock"></div>
-                        <div class="flip-clock-message"></div>
-                    </div>
-                    <div class="steps-navigation fs-0">
-                        <a href="javascript:void(0);" data-step="popup-step-one" class="fs-14 active"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="white-check margin-right-5 width-100 max-width-20 inline-block"><img alt="White check" src="/assets/uploads/white-check.svg"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="gray-check margin-right-5 width-100 max-width-20 inline-block"><img alt="Gray check" src="/assets/uploads/gray-check.svg"/></figure>STEP 1: FUND</a>
-                        <a href="javascript:void(0);" data-step="popup-step-two" class="fs-14 disabled">STEP 2: ACTIVATE</a>
-                    </div>
+                    @if(isset($mobile) && !$mobile)
+                        <div class="wrapper">
+                            <div class="lato-bold fs-20 padding-top-15 padding-bottom-10 padding-left-10 padding-right-10 timer-label"></div>
+                            <div class="clock"></div>
+                            <div class="flip-clock-message"></div>
+                        </div>
+                        <div class="steps-navigation fs-0">
+                            <a href="javascript:void(0);" data-step="popup-step-one" class="fs-14 active"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="white-check margin-right-5 width-100 max-width-20 inline-block"><img alt="White check" src="/assets/uploads/white-check.svg"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="gray-check margin-right-5 width-100 max-width-20 inline-block"><img alt="Gray check" src="/assets/uploads/gray-check.svg"/></figure>STEP 1: FUND</a>
+                            <a href="javascript:void(0);" data-step="popup-step-two" class="fs-14 disabled">STEP 2: ACTIVATE</a>
+                        </div>
+                    @endif
                 </div>
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-bottom padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
@@ -48,7 +50,7 @@
                 </div>
             </div>
             @if(isset($mobile) && $mobile)
-                <div class="row contract-footer show-on-sm">
+                <div class="row contract-footer">
                     <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-0 padding-right-0">
                         <div class="padding-left-15 padding-right-15">
                             <div class="lato-bold fs-20 padding-bottom-5">YOUR FIRST PAYMENT IS DUE IN:</div>

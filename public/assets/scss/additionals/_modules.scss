@@ -1111,9 +1111,21 @@
                 display: none;
             }
         }
-        @include breakpoint($sm-down) {
+        &.mobile {
+            > .row {
+                display: flex;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+            }
             .contract-participant {
-                width: calc(50% - 15px);
+                width: calc(35% - 15px);
+                @include breakpoint($sm-down) {
+                    width: calc(40% - 15px);
+                }
+                @include breakpoint($xs) {
+                    width: calc(50% - 15px);
+                }
             }
             .contract-body {
                 width: 30px;
