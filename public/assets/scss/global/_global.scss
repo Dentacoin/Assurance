@@ -281,7 +281,7 @@ body {
     }
 }
 
-.show-on-xs-inline-block { 
+.show-on-xs-inline-block {
     display: none;
     @include breakpoint($xs)    {
         display: inline-block !important;
