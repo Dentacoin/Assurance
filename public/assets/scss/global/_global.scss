@@ -274,6 +274,27 @@ body {
     }
 }
 
+.show-on-xs {
+    display: none;
+    @include breakpoint($xs)    {
+        display: block !important;
+    }
+}
+
+.show-on-xs-inline-block { 
+    display: none;
+    @include breakpoint($xs)    {
+        display: inline-block !important;
+        vertical-align: middle;
+    }
+    &.top {
+        vertical-align: top;
+    }
+    &.bottom {
+        vertical-align: bottom;
+    }
+}
+
 .text-left {
     text-align: left !important;
 }

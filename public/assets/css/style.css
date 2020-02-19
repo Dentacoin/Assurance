@@ -6551,6 +6551,23 @@ body {
   .hide-xs {
     display: none !important; } }
 
+.show-on-xs {
+  display: none; }
+  @media screen and (max-width: 767px) {
+    .show-on-xs {
+      display: block !important; } }
+
+.show-on-xs-inline-block {
+  display: none; }
+  @media screen and (max-width: 767px) {
+    .show-on-xs-inline-block {
+      display: inline-block !important;
+      vertical-align: middle; } }
+  .show-on-xs-inline-block.top {
+    vertical-align: top; }
+  .show-on-xs-inline-block.bottom {
+    vertical-align: bottom; }
+
 .text-left {
   text-align: left !important; }
 
