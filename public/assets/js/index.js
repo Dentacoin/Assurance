@@ -589,7 +589,6 @@ async function pagesDataOnContractInit() {
                     }
                 });
 
-                var type;
                 patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance);
                 function patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance) {
                     console.log('patientApprovalAndContractCreationLogic');
@@ -597,10 +596,7 @@ async function pagesDataOnContractInit() {
                     console.log(current_user_eth_balance, 'current_user_eth_balance');
                     if (current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
                         // 1st step
-                        if(type != 'no-dcn-eth') {
-                            $('.camping-for-popups').html('');
-                            type = 'no-dcn-eth';
-                        }
+                        $('.camping-for-popups').html('');
 
                         // checking every 3 seconds if user deposit eth or dcn
                         setTimeout(async function() {
@@ -613,10 +609,7 @@ async function pagesDataOnContractInit() {
                         initPopupEvents(true);
                     } else if (current_user_dcn_balance < monthly_premium_in_dcn) {
                         // 1st step
-                        if(type != 'no-dcn') {
-                            $('.camping-for-popups').html('');
-                            type = 'no-dcn';
-                        }
+                        $('.camping-for-popups').html('');
 
                         // checking every 3 seconds if user deposit eth or dcn
                         setTimeout(async function() {
@@ -630,10 +623,7 @@ async function pagesDataOnContractInit() {
                         initPopupEvents(true);
                     } else if (parseFloat(eth_fee) > current_user_eth_balance) {
                         // 1st step
-                        if(type != 'no-eth') {
-                            $('.camping-for-popups').html('');
-                            type = 'no-eth';
-                        }
+                        $('.camping-for-popups').html('');
 
                         // checking every 3 seconds if user deposit eth or dcn
                         setTimeout(async function() {
@@ -646,15 +636,11 @@ async function pagesDataOnContractInit() {
                         initPopupEvents(true);
                     } else {
                         // 2nd step
+                        $('.camping-for-popups').html('');
 
                         //hiding section where ETH and DCN can be bought because patient has enough of both
                         if ($('.ready-to-purchase-with-external-api').length) {
                             $('.ready-to-purchase-with-external-api').remove();
-                        }
-
-                        if(type != 'dcn-eth') {
-                            $('.camping-for-popups').html('');
-                            type = 'dcn-eth';
                         }
 
                         $('.steps-navigation a[data-step="popup-step-two"]').removeClass('disabled');
