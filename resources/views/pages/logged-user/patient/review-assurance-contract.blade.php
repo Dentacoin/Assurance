@@ -3,7 +3,7 @@
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     @php($general_dentistry = unserialize($contract->general_dentistry))
     @php($created_at = $contract->created_at->format('d-m-Y'))
-    <section class="padding-top-100 padding-top-xs-30 padding-bottom-50 contract-proposal section module" data-created-at-timestamp="{{strtotime($created_at)}}" @if((time() - strtotime($created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) data-expired="true" @endif>
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 padding-bottom-50 contract-proposal section module" data-created-at-timestamp="{{strtotime($created_at)}}" @if((time() - strtotime($created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) data-expired="true" @endif>
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">

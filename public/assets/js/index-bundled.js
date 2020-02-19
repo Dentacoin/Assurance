@@ -73989,10 +73989,10 @@ async function pagesDataOnContractInit() {
                                         cached_key: cached_key,
                                         contract: $('.init-contract-section').attr('data-contract'),
                                         show_dcn_bar: true,
-                                        recipe_title: 'ACTIVATE AUTOMATIC PAYMENTS',
+                                        recipe_title: 'Activate Autopayments',
                                         recipe_subtitle: 'to never worry about a missed due date',
                                         recipe_checkbox_text: 'By clicking on the button below you also agree that from now on your monthly premium amount will be automatically deducted from your wallet balance on the payment due date.',
-                                        btn_label: 'PAY NOW'
+                                        btn_label: 'CONFIRM'
                                     },
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

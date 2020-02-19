@@ -35,7 +35,7 @@
                         </figure>
                     </div>
                 </div>--}}
-                <div class="col-xs-4 inline-block contract-body padding-bottom-10 padding-bottom-xs-0">
+                <div class="col-xs-4 inline-block contract-body">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-approval">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING APPROVAL</div>
                     @if(isset($mobile) && !$mobile)
                         <div class="wrapper">

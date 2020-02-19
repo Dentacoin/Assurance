@@ -27,7 +27,7 @@
                         <a href="mailto:{{$dentist->email}}" class="light-gray-color fs-18 fs-xs-16 word-break">{{$dentist->email}}</a>
                     </div>
                 </div>
-                <div class="col-xs-4 inline-block contract-body padding-bottom-10 padding-bottom-xs-0">
+                <div class="col-xs-4 inline-block contract-body">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 active">ACTIVE</div>
                     @if(isset($mobile) && !$mobile)
                         <div class="wrapper">
