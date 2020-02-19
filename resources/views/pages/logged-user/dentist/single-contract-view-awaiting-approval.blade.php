@@ -83,7 +83,7 @@
         <section class="container contract-details init-contract-section" data-contract="{{$contract->slug}}">
             <div class="row text-center">
                 <div class="col-xs-12">
-                    <h2 class="fs-35 fs-xs-30 lato-bold padding-top-50 padding-top-xs-30 padding-bottom-20">You Have Received Your First Payment.</h2>
+                    <h2 class="fs-35 fs-xs-30 lato-bold padding-top-50 padding-top-xs-40 padding-bottom-20">You Have Received Your First Payment.</h2>
                 </div>
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                     <div class="fs-20 fs-xs-18 calibri-regular">Now you can check all details and give your approval in order to activate your contract on the blockchain as well.</div>

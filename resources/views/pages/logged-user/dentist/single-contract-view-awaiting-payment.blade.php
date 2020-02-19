@@ -83,7 +83,7 @@
         <section class="container contract-details">
             <div class="row text-center">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-                    <h2 class="fs-35 fs-xs-30 lato-bold padding-top-50 padding-top-xs-20 padding-bottom-20">Awaiting first payment.</h2>
+                    <h2 class="fs-35 fs-xs-30 lato-bold padding-top-50 padding-top-xs-40 padding-bottom-20">Awaiting first payment.</h2>
                     <div class="fs-20 fs-xs-18 calibri-regular">You contract is already created in a .pdf file. Once your patient make their first payment, you will be asked to approve it and activate your contract on the blockchain as well.</div>
                 </div>
                 <div class="col-xs-12 col-lg-10 col-lg-offset-1 no-gutter-xs">
