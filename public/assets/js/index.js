@@ -520,6 +520,10 @@ async function pagesDataOnContractInit() {
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     if(current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
                         timer_label = 'Fund your account until:';
+
+                        if($('.contract-header').hasClass('awaiting-approval')) {
+                            $('.hide-on-missing-dentacoins').remove();
+                        }
                     } else {
                         timer_label = 'Next payment processed in:';
                     }
@@ -529,6 +533,10 @@ async function pagesDataOnContractInit() {
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     if(current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
                         timer_label = 'Fund your account until:';
+
+                        if($('.contract-header').hasClass('awaiting-approval')) {
+                            $('.hide-on-missing-dentacoins').remove();
+                        }
                     } else {
                         timer_label = 'Next payment processed in:';
                     }
