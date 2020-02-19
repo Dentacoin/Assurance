@@ -6557,6 +6557,12 @@ body {
     .show-on-xs {
       display: block !important; } }
 
+.show-on-sm {
+  display: none; }
+  @media screen and (max-width: 991px) {
+    .show-on-sm {
+      display: block !important; } }
+
 .show-on-xs-inline-block {
   display: none; }
   @media screen and (max-width: 767px) {
@@ -8717,7 +8723,7 @@ select.select-mac-fix {
       background-color: #126585; }
 .module.single-contract-tile .camping-for-popups .popup-step-two {
   display: none; }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 991px) {
   .module.single-contract-tile .contract-participant {
     width: calc(50% - 15px); }
   .module.single-contract-tile .contract-body {

@@ -1195,7 +1195,7 @@
       background-color: #126585; }
 .module.single-contract-tile .camping-for-popups .popup-step-two {
   display: none; }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 991px) {
   .module.single-contract-tile .contract-participant {
     width: calc(50% - 15px); }
   .module.single-contract-tile .contract-body {

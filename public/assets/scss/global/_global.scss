@@ -281,6 +281,13 @@ body {
     }
 }
 
+.show-on-sm {
+    display: none;
+    @include breakpoint($sm-down)    {
+        display: block !important;
+    }
+}
+
 .show-on-xs-inline-block {
     display: none;
     @include breakpoint($xs)    {

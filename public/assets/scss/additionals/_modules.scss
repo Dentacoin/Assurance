@@ -1111,7 +1111,7 @@
                 display: none;
             }
         }
-        @include breakpoint($xs) {
+        @include breakpoint($sm-down) {
             .contract-participant {
                 width: calc(50% - 15px);
             }
