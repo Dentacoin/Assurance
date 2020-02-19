@@ -176,7 +176,7 @@
         </div>
     </header>
     <main>@yield("content")</main>
-    <footer class="padding-bottom-120 padding-bottom-sm-200 padding-bottom-xs-200">
+    <footer>
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">

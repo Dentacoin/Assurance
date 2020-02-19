@@ -6717,6 +6717,13 @@ input[type='file'].hide-input {
     display: -webkit-flex;
     display: -ms-flexbox; } }
 
+@media screen and (max-width: 767px) {
+  .flex-xs {
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox; } }
+
 .clearfix:after {
   visibility: hidden;
   display: block;

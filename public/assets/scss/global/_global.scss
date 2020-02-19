@@ -480,6 +480,15 @@ input[type='file'].hide-input {
     }
 }
 
+.flex-sm {
+    @include breakpoint($sm-down) {
+        display: flex;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+    }
+}
+
 .clearfix:after {
     visibility: hidden;
     display: block;
