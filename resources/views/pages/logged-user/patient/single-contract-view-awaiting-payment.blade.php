@@ -49,8 +49,8 @@
             </div>
             @if(isset($mobile) && $mobile)
             <div class="row contract-footer">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 padding-bottom-40 padding-left-50 padding-right-50 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-xs-15 padding-right-xs-15">
-                    <div class="show-on-xs">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 padding-bottom-40 padding-left-50 padding-right-50 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-xs-0 padding-right-xs-0">
+                    <div class="show-on-xs padding-left-15 padding-right-15">
                         <div class="lato-bold fs-20 padding-bottom-5">YOUR FIRST PAYMENT IS DUE IN:</div>
                         <div class="clock"></div>
                         <div class="flip-clock-message"></div>
