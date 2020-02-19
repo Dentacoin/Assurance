@@ -583,12 +583,18 @@ async function pagesDataOnContractInit() {
                     if(!$(this).hasClass('disabled')) {
                         $('.steps-navigation a').removeClass('active');
                         $(this).addClass('active');
+
+                        $('.contract-response-message').hide();
+                        $('.contract-response-message.'+$(this).attr('data-step')).fadeIn();
                     }
                 });
 
                 var type;
                 patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance);
                 function patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance) {
+                    console.log('patientApprovalAndContractCreationLogic');
+                    console.log(current_user_dcn_balance, 'current_user_dcn_balance');
+                    console.log(current_user_eth_balance, 'current_user_eth_balance');
                     if (current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
                         // 1st step
                         if(type != 'no-dcn-eth') {
@@ -651,12 +657,14 @@ async function pagesDataOnContractInit() {
                             type = 'dcn-eth';
                         }
 
+                        $('.steps-navigation a[data-step="popup-step-two"]').removeClass('disabled');
+
                         //show CONTINUE TO BLOCKCHAIN BTN
-                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-one"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Shield check" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">is now funded!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should activate your contract before or on <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 proceed-to-second-step">STEP 2 >></a></div></div></div><div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-two hide"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Automatic payment icon" src="/assets/uploads/automatic-payments-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">MONTHLY AUTOPAYMENTS</h2><h3 class="fs-22 padding-top-5 lato-bold">Get your Assurance contract started!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">Your account is already funded. Last step: Activate your secure, automatic payments now! Due date: <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 call-recipe">ACTIVATE NOW</a></div></div></div>');
+                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-one"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Shield check" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">is now funded!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should activate your contract before or on <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 proceed-to-second-step">STEP 2 >></a></div></div></div><div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-two"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Automatic payment icon" src="/assets/uploads/automatic-payments-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">MONTHLY AUTOPAYMENTS</h2><h3 class="fs-22 padding-top-5 lato-bold">Get your Assurance contract started!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">Your account is already funded. Last step: Activate your secure, automatic payments now! Due date: <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 call-recipe">ACTIVATE NOW</a></div></div></div>');
 
                         $('.proceed-to-second-step').click(function() {
-                            $('.popup-step-one').hide();
-                            $('.popup-step-two').fadeIn();
+                            $('.contract-response-message.popup-step-one').hide();
+                            $('.contract-response-message.popup-step-two').fadeIn();
                         });
 
                         /*$('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><div class="close-btn">×</div><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Check inside shield" src="/assets/images/secure.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">ACTIVATE AUTOMATIC PAYMENTS <i class="fa fa-info-circle" aria-hidden="true" data-placement="left" data-toggle="tooltip" title="Enabling automatic payments means that your monthly premium amount will be automatically deducted from your wallet balance on the payment due date and you will never have to worry about a missed deadline."></i></h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet. You should activate your secure, automatic payments <span class="calibri-bold blue-green-color">before or on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.<br>Ready to do it now?</div><div class="text-center"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 call-recipe">ACTIVATE NOW</a></div></div></div>');*/

@@ -1081,9 +1081,19 @@
       text-align: center;
       color: #888888;
       padding: 10px 5px; }
+      .module.single-contract-tile .contract-body .steps-navigation a .white-check {
+        display: none; }
+      .module.single-contract-tile .contract-body .steps-navigation a .gray-check {
+        display: inline-block;
+        vertical-align: middle; }
       .module.single-contract-tile .contract-body .steps-navigation a.active {
         color: white;
         background-color: #126585; }
+        .module.single-contract-tile .contract-body .steps-navigation a.active .white-check {
+          display: inline-block;
+          vertical-align: middle; }
+        .module.single-contract-tile .contract-body .steps-navigation a.active .gray-check {
+          display: none; }
 .module.single-contract-tile .clock {
   display: inline-block;
   text-align: center;
@@ -1172,6 +1182,8 @@
   -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
   -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
+.module.single-contract-tile .camping-for-popups .popup-step-two {
+  display: none; }
 .module.single-contract-tile .contract-header.pending {
   background-color: #29adde; }
 .module.single-contract-tile .contract-header.active {
