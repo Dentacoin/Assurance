@@ -1073,29 +1073,6 @@
     top: 150%;
     position: absolute;
     left: 46%; }
-  .module.single-contract-tile .contract-body .steps-navigation {
-    border-top: 1.5px solid #d2d2d2; }
-    .module.single-contract-tile .contract-body .steps-navigation a {
-      width: 50%;
-      display: inline-block;
-      text-align: center;
-      color: #888888;
-      padding: 10px 5px; }
-      .module.single-contract-tile .contract-body .steps-navigation a .white-check, .module.single-contract-tile .contract-body .steps-navigation a .gray-check {
-        display: none; }
-      .module.single-contract-tile .contract-body .steps-navigation a.passed-step .white-check {
-        display: none; }
-      .module.single-contract-tile .contract-body .steps-navigation a.passed-step .gray-check {
-        display: inline-block;
-        vertical-align: middle; }
-      .module.single-contract-tile .contract-body .steps-navigation a.passed-step.active .white-check {
-        display: inline-block;
-        vertical-align: middle; }
-      .module.single-contract-tile .contract-body .steps-navigation a.passed-step.active .gray-check {
-        display: none; }
-      .module.single-contract-tile .contract-body .steps-navigation a.active {
-        color: white;
-        background-color: #126585; }
 .module.single-contract-tile .clock {
   display: inline-block;
   text-align: center;
@@ -1173,7 +1150,15 @@
     background: #d64949; }
   .module.single-contract-tile .clock.red-background ul li .inn {
     color: #d64949; }
-.module.single-contract-tile .contract-footer .wrapper {
+.module.single-contract-tile .contract-header.pending {
+  background-color: #29adde; }
+.module.single-contract-tile .contract-header.active {
+  background-color: #239234; }
+.module.single-contract-tile .contract-header.awaiting-payment, .module.single-contract-tile .contract-header.awaiting-approval {
+  background-color: #239289; }
+.module.single-contract-tile .contract-header.cancelled {
+  background-color: #e92f30; }
+.module.single-contract-tile .contract-footer .wrapper, .module.single-contract-tile .contract-body .wrapper {
   background-color: #ebebeb;
   color: #888888;
   -webkit-border-radius: 0 0 20px 20px;
@@ -1184,16 +1169,31 @@
   -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
   -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
+.module.single-contract-tile .contract-footer .steps-navigation {
+  border-top: 1.5px solid #d2d2d2; }
+  .module.single-contract-tile .contract-footer .steps-navigation a {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    color: #888888;
+    padding: 10px 5px; }
+    .module.single-contract-tile .contract-footer .steps-navigation a .white-check, .module.single-contract-tile .contract-footer .steps-navigation a .gray-check {
+      display: none; }
+    .module.single-contract-tile .contract-footer .steps-navigation a.passed-step .white-check {
+      display: none; }
+    .module.single-contract-tile .contract-footer .steps-navigation a.passed-step .gray-check {
+      display: inline-block;
+      vertical-align: middle; }
+    .module.single-contract-tile .contract-footer .steps-navigation a.passed-step.active .white-check {
+      display: inline-block;
+      vertical-align: middle; }
+    .module.single-contract-tile .contract-footer .steps-navigation a.passed-step.active .gray-check {
+      display: none; }
+    .module.single-contract-tile .contract-footer .steps-navigation a.active {
+      color: white;
+      background-color: #126585; }
 .module.single-contract-tile .camping-for-popups .popup-step-two {
   display: none; }
-.module.single-contract-tile .contract-header.pending {
-  background-color: #29adde; }
-.module.single-contract-tile .contract-header.active {
-  background-color: #239234; }
-.module.single-contract-tile .contract-header.awaiting-payment, .module.single-contract-tile .contract-header.awaiting-approval {
-  background-color: #239289; }
-.module.single-contract-tile .contract-header.cancelled {
-  background-color: #e92f30; }
 @media screen and (max-width: 767px) {
   .module.single-contract-tile .contract-participant {
     width: calc(50% - 15px); }
@@ -1204,7 +1204,7 @@
     text-orientation: mixed; }
     .module.single-contract-tile .contract-body .contract-header {
       width: 100%; }
-    .module.single-contract-tile .contract-body .wrapper {
+    .module.single-contract-tile .contract-body .wrapper, .module.single-contract-tile .contract-body .steps-navigation {
       display: none; } }
 .module.custom-google-label-style {
   position: relative; }
