@@ -865,7 +865,7 @@
             }
         }
     }
-    &.single-contract-tile { 
+    &.single-contract-tile {
         .contract-participant {
             @include rounded(6px);
             @include box-shadow(0 2px 6px 0 rgba(0,0,0,.4));

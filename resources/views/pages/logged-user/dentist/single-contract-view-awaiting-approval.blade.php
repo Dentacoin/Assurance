@@ -1,7 +1,12 @@
 @extends('layout')
 @section('content')
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section awaiting-approval dentist-contract-single-page-section" data-created-at="{{strtotime($contract->contract_active_at)}}" data-monthly-premium="{{$contract->monthly_premium}}">
+    @if(is_object($contract->contract_active_at))
+        @php($contract_active_at = $contract->contract_active_at->getTimestamp())
+    @else
+        @php($contract_active_at = strtotime($contract->contract_active_at))
+    @endif
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section awaiting-approval dentist-contract-single-page-section" data-created-at="{{strtotime($contract->contract_active_at)}}" data-date-start-contract="{{$contract_active_at}}" data-monthly-premium="{{$contract->monthly_premium}}">
         <section class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>

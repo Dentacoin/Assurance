@@ -74160,7 +74160,7 @@ async function pagesDataOnContractInit() {
                 }
             }
         } else if ($('body').hasClass('dentist-contract-view')) {
-            if ($('.contract-header').hasClass('awaiting-payment')) {
+            if ($('.contract-header').hasClass('awaiting-payment') || $('.contract-header').hasClass('awaiting-approval')) {
                 var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
                 var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-date-start-contract'));
                 var next_payment_timestamp_unix;
