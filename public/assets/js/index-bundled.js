@@ -73909,7 +73909,7 @@ async function pagesDataOnContractInit() {
 
                         // checking every 3 seconds if user deposit eth or dcn
                         setTimeout(async function() {
-                            patientApprovalAndContractCreationLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account)), arseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account))));
+                            patientApprovalAndContractCreationLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account)), parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account))));
                         }, 3000);
 
                         //not enough DCN and ETH balance
@@ -73925,7 +73925,7 @@ async function pagesDataOnContractInit() {
 
                         // checking every 3 seconds if user deposit eth or dcn
                         setTimeout(async function() {
-                            patientApprovalAndContractCreationLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account)), arseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account))));
+                            patientApprovalAndContractCreationLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account)), parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account))));
                         }, 3000);
 
                         //not enough DCN
@@ -73942,7 +73942,7 @@ async function pagesDataOnContractInit() {
 
                         // checking every 3 seconds if user deposit eth or dcn
                         setTimeout(async function() {
-                            patientApprovalAndContractCreationLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account)), arseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account))));
+                            patientApprovalAndContractCreationLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account)), parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account))));
                         }, 3000);
 
                         //not enough ETH balance
