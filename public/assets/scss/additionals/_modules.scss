@@ -963,13 +963,6 @@
                     &.active {
                         color: white;
                         background-color: $blue_green_color;
-                        .white-check {
-                            display: inline-block;
-                            vertical-align: middle;
-                        }
-                        .gray-check {
-                            display: none;
-                        }
                     }
                 }
             }

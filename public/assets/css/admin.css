@@ -1096,11 +1096,6 @@
       .module.single-contract-tile .contract-body .steps-navigation a.active {
         color: white;
         background-color: #126585; }
-        .module.single-contract-tile .contract-body .steps-navigation a.active .white-check {
-          display: inline-block;
-          vertical-align: middle; }
-        .module.single-contract-tile .contract-body .steps-navigation a.active .gray-check {
-          display: none; }
 .module.single-contract-tile .clock {
   display: inline-block;
   text-align: center;
