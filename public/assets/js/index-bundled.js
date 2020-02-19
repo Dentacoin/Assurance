@@ -73823,12 +73823,20 @@ async function pagesDataOnContractInit() {
                     next_payment_timestamp_unix = period_to_withdraw - remainder;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                    timer_label = 'Fund your account until:';
+                    if(current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist) {
+                        timer_label = 'Fund your account until:';
+                    } else {
+                        timer_label = 'Next payment processed in:';
+                    }
                 } else {
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                    timer_label = 'Fund your account until:';
+                    if(current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist) {
+                        timer_label = 'Fund your account until:';
+                    } else {
+                        timer_label = 'Next payment processed in:';
+                    }
                 }
 
                 if ($('.contract-header').hasClass('active') && current_patient_dcn_balance > dcn_needed_to_be_payed_to_dentist) {
@@ -73842,7 +73850,7 @@ async function pagesDataOnContractInit() {
                     initPopupEvents();
                 }
 
-                $('.contract-body .timer-label').html(timer_label);
+                $('.timer-label').html(timer_label);
                 initFlipClockTimer(next_payment_timestamp_unix);
 
                 cancelContractEventInit();
@@ -74166,7 +74174,7 @@ async function pagesDataOnContractInit() {
                     timer_label = 'Withdraw payment after:';
                 }
 
-                $('.contract-body .timer-label').html(timer_label);
+                $('.timer-label').html(timer_label);
                 initFlipClockTimer(next_payment_timestamp_unix);
             }
         }

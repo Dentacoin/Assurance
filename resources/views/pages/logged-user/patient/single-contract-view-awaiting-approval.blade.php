@@ -46,7 +46,7 @@
             @if(isset($mobile) && $mobile)
                 <div class="row contract-footer">
                     <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 padding-bottom-40 padding-left-50 padding-right-50 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-xs-15 padding-right-xs-15">
-                        <div class="lato-bold fs-20 padding-bottom-5">YOUR FIRST PAYMENT IS DUE IN:</div>
+                        <div class="lato-bold fs-20 padding-bottom-5 timer-label"></div>
                         <div class="clock"></div>
                         <div class="flip-clock-message"></div>
                         {{--<div class="timer-text"></div>--}}
@@ -58,7 +58,12 @@
     <section>
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 fs-20 text-center">Your first payment was processed successfully. Once your dentist has approved it, your smart contract will automatically be activated.</div>
+                <div class="col-xs-12">
+                    <h2 class="fs-35 fs-xs-30 lato-bold padding-top-50 padding-top-xs-30 padding-bottom-20">Your Account Has Been Successfully Funded.</h2>
+                </div>
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                    <div class="fs-20 fs-xs-18 calibri-regular">Your dentist has been notified. Once they approve it, your smart contract will be automatically activated.</div>
+                </div>
             </div>
         </div>
     </section>
