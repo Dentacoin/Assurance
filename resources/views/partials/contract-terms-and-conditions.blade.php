@@ -74,12 +74,12 @@
 <div class="padding-bottom-15">Dentacoin B.V. takes the protection of personal data very seriously. Personal data are treated as confidential and in accordance with the statutory data protection regulations and this Privacy Policy: <a href="https://dentacoin.com/privacy-policy" target="_blank">https://dentacoin.com/privacy-policy</a>.</div>
 @if(!empty($contract->contract_active_at) && !isset($dont_show_terms_signatures))
     <div class="container-fluid contract-terms-and-conditions-signatures">
-        <div class="row">
+        <div class="row text-right-xs">
             <div class="col-xs-12 col-sm-6">
                 <img src="/assets/contracts/{{$contract->slug.'/dentist-signature.png'}}"/>
                 <div class="name">/ Dr. {{$dentist->name}} /</div>
             </div>
-            <div class="col-xs-12 col-sm-6 text-right">
+            <div class="col-xs-12 col-sm-6 text-right padding-top-xs-30">
                 <img src="/assets/contracts/{{$contract->slug.'/patient-signature.png'}}"/>
                 <div class="name">/ {{$patient->name}} /</div>
             </div>

@@ -15,8 +15,8 @@
                 @include('partials.contract-single-page-nav')
             </div>
         </section>
-        <section class="container single-contract-tile module pending text-center padding-top-20">
-            <div class="row fs-0 flex-xs">
+        <section class="container single-contract-tile module pending text-center padding-top-20 @if(isset($mobile) && $mobile) mobile @endif">
+            <div class="row fs-0">
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
                         <img alt="Dentist avatar" src="{{$current_logged_dentist->avatar_url}}"/>
