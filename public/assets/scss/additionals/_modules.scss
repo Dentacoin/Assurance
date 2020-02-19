@@ -1120,11 +1120,20 @@
             }
             .contract-participant {
                 width: calc(35% - 15px);
+                &.dentist {
+                    margin-left: 15%;
+                }
                 @include breakpoint($sm-down) {
                     width: calc(40% - 15px);
+                    &.dentist {
+                        margin-left: 10%;
+                    }
                 }
                 @include breakpoint($xs) {
                     width: calc(50% - 15px);
+                    &.dentist {
+                        margin-left: 0; 
+                    }
                 }
             }
             .contract-body {

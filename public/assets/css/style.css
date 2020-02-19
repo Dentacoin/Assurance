@@ -8737,12 +8737,18 @@ select.select-mac-fix {
   display: -ms-flexbox; }
 .module.single-contract-tile.mobile .contract-participant {
   width: calc(35% - 15px); }
+  .module.single-contract-tile.mobile .contract-participant.dentist {
+    margin-left: 15%; }
   @media screen and (max-width: 991px) {
     .module.single-contract-tile.mobile .contract-participant {
-      width: calc(40% - 15px); } }
+      width: calc(40% - 15px); }
+      .module.single-contract-tile.mobile .contract-participant.dentist {
+        margin-left: 10%; } }
   @media screen and (max-width: 767px) {
     .module.single-contract-tile.mobile .contract-participant {
-      width: calc(50% - 15px); } }
+      width: calc(50% - 15px); }
+      .module.single-contract-tile.mobile .contract-participant.dentist {
+        margin-left: 0; } }
 .module.single-contract-tile.mobile .contract-body {
   width: 30px;
   line-height: 30px;
