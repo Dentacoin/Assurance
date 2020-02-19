@@ -520,12 +520,12 @@ async function pagesDataOnContractInit() {
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     if(current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
                         timer_label = 'Fund your account until:';
-
-                        if($('.contract-header').hasClass('awaiting-approval')) {
-                            $('.hide-on-missing-dentacoins').remove();
-                        }
                     } else {
                         timer_label = 'Next payment processed in:';
+
+                        if($('.contract-header').hasClass('awaiting-approval')) {
+                            $('.show-on-having-dentacoins').removeClass('hide');
+                        }
                     }
                 } else {
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
@@ -533,12 +533,12 @@ async function pagesDataOnContractInit() {
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     if(current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
                         timer_label = 'Fund your account until:';
-
-                        if($('.contract-header').hasClass('awaiting-approval')) {
-                            $('.hide-on-missing-dentacoins').remove();
-                        }
                     } else {
                         timer_label = 'Next payment processed in:';
+
+                        if($('.contract-header').hasClass('awaiting-approval')) {
+                            $('.show-on-having-dentacoins').removeClass('hide');
+                        }
                     }
                 }
 

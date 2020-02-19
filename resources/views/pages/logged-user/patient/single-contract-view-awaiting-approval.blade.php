@@ -55,7 +55,7 @@
             @endif
         </div>
     </section>
-    <section class="hide-on-missing-dentacoins">
+    <section class="show-on-having-dentacoins hide">
         <div class="container text-center">
             <div class="row">
                 <div class="col-xs-12">
