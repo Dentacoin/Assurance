@@ -766,7 +766,7 @@ async function pagesDataOnContractInit() {
                                                 $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module  max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                             }
 
-                                            $('.recipe-popup .execute-transaction').click(async function() {
+                                            $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
                                                 var this_btn = $(this);
                                                 if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                     //not enough ETH balance
@@ -2927,7 +2927,7 @@ async function onDocumentReadyPageData() {
                                             $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                         }
 
-                                        $('.recipe-popup .execute-transaction').click(async function() {
+                                        $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
                                             var this_btn = $(this);
                                             var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                             if (parseFloat(eth_fee) > current_user_eth_balance) {
@@ -3118,7 +3118,7 @@ async function onDocumentReadyPageData() {
                                             $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                         }
 
-                                        $('.recipe-popup .execute-transaction').click(async function() {
+                                        $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
                                             var this_btn = $(this);
                                             var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                             if (parseFloat(eth_fee) > current_user_eth_balance) {
@@ -3389,7 +3389,7 @@ function cancelContractEventInit() {
                                     });
 
                                     // continue with assurance blockchain execution
-                                    $('.recipe-popup .execute-transaction').click(async function () {
+                                    $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function () {
                                         var this_execute_transaction_btn = $(this);
                                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
 
