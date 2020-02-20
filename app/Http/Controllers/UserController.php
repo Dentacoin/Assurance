@@ -160,6 +160,31 @@ class UserController extends Controller {
         }
     }
 
+    protected function getContractData(Request $request) {
+        $contract = TemporallyContract::where(array('slug' => $request->input('contract')))->get()->first();
+        if($contract) {
+            //check if user trying to cheat
+            if($contract->patient_id != session('logged_user')['id'] && $contract->dentist_id != session('logged_user')['id']) {
+                return response()->json(['error' => 'Wrong contract.']);
+            }
+
+            $contract_data = array(
+                /*'patient' => $patient_data->patient_address,
+                'dentist' => $dentist_data->dentist_address,*/
+                'patient' => $contract->patient_address,
+                'dentist' => $contract->dentist_address,
+                'value_usd' => $contract->monthly_premium,
+                'status' => $contract->status,
+                'date_start_contract' => strtotime($contract->contract_active_at),
+                'contract_ipfs_hash' => $contract->document_hash
+            );
+
+            return response()->json(['success' => true, 'contract_data' => $contract_data]);
+        } else {
+            return response()->json(['error' => 'Transaction failed, please try again later.']);
+        }
+    }
+
     protected function getRecipePopup(Request $request) {
         $current_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         if(empty($current_user_data->dcn_address)) {
@@ -167,24 +192,26 @@ class UserController extends Controller {
         }
 
         $contract = TemporallyContract::where(array('slug' => $request->input('contract')))->get()->first();
-        //check if user trying to cheat
-        if($contract->patient_id != session('logged_user')['id'] && $contract->dentist_id != session('logged_user')['id']) {
-            return response()->json(['error' => 'Wrong contract.']);
-        }
-
         if($contract) {
-            $current_logged_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
-            if($this->checkDentistSession()) {
-                $type = 'dentist';
-                $dentist_data = $current_logged_user_data;
-                $patient_data = (new APIRequestsController())->getUserData($contract->patient_id);
-            } else if($this->checkPatientSession()) {
-                $type = 'patient';
-                $dentist_data = (new APIRequestsController())->getUserData($contract->dentist_id);
-                $patient_data = $current_logged_user_data;
+            //check if user trying to cheat
+            if($contract->patient_id != session('logged_user')['id'] && $contract->dentist_id != session('logged_user')['id']) {
+                return response()->json(['error' => 'Wrong contract.']);
             }
 
-            $params = ['current_logged_user' => $current_logged_user_data, 'cached_key' => $request->input('cached_key'), 'show_dcn_bar' => $request->input('show_dcn_bar'), 'recipe_title' => $request->input('recipe_title'), 'recipe_subtitle' => $request->input('recipe_subtitle'), 'recipe_checkbox_text' => $request->input('recipe_checkbox_text'), 'btn_label' => $request->input('btn_label')];
+            //$current_logged_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+            if($this->checkDentistSession()) {
+                $type = 'dentist';
+                $currentTransactionInitiatorAddress = $contract->dentist_address;
+                /*$dentist_data = $current_logged_user_data;
+                $patient_data = (new APIRequestsController())->getUserData($contract->patient_id);*/
+            } else if($this->checkPatientSession()) {
+                $type = 'patient';
+                $currentTransactionInitiatorAddress = $contract->patient_address;
+                /*$dentist_data = (new APIRequestsController())->getUserData($contract->dentist_id);
+                $patient_data = $current_logged_user_data;*/
+            }
+
+            $params = [/*'current_logged_user' => $current_logged_user_data, */'current_logged_user' => $currentTransactionInitiatorAddress, 'cached_key' => $request->input('cached_key'), 'show_dcn_bar' => $request->input('show_dcn_bar'), 'recipe_title' => $request->input('recipe_title'), 'recipe_subtitle' => $request->input('recipe_subtitle'), 'recipe_checkbox_text' => $request->input('recipe_checkbox_text'), 'btn_label' => $request->input('btn_label')];
 
             if(!empty($request->input('sent_eth_to_dentist'))) {
                 $params['sent_eth_to_dentist'] = true;
@@ -193,8 +220,10 @@ class UserController extends Controller {
             $view = view('partials/transaction-recipe-popup', $params);
             $view = $view->render();
             $contract_data = array(
-                'patient' => $patient_data->dcn_address,
-                'dentist' => $dentist_data->dcn_address,
+                /*'patient' => $patient_data->patient_address,
+                'dentist' => $dentist_data->dentist_address,*/
+                'patient' => $contract->patient_address,
+                'dentist' => $contract->dentist_address,
                 'value_usd' => $contract->monthly_premium,
                 'status' => $contract->status,
                 'date_start_contract' => strtotime($contract->contract_active_at),

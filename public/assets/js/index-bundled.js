@@ -73911,9 +73911,6 @@ async function pagesDataOnContractInit() {
 
                 patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance);
                 function patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance) {
-                    console.log('patientApprovalAndContractCreationLogic');
-                    console.log(current_user_dcn_balance, 'current_user_dcn_balance');
-                    console.log(current_user_eth_balance, 'current_user_eth_balance');
                     if (current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
                         // 1st step
                         $('.camping-for-popups').html('');
@@ -73963,8 +73960,53 @@ async function pagesDataOnContractInit() {
                         $('.steps-navigation a[data-step="popup-step-two"]').removeClass('disabled');
 
                         //show CONTINUE TO BLOCKCHAIN BTN
-                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-one"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Shield check" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">is now funded!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should activate your contract before or on <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 proceed-to-second-step">STEP 2 >></a></div></div></div><div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-two"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Automatic payment icon" src="/assets/uploads/automatic-payments-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">MONTHLY AUTOPAYMENTS</h2><h3 class="fs-22 padding-top-5 lato-bold">Get your Assurance contract started!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">Your account is already funded. Last step: Activate your secure, automatic payments now! Due date: <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 call-recipe">ACTIVATE NOW</a></div></div></div>');
+                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-one"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Shield check" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">is now funded!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should activate your contract before or on <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 proceed-to-second-step">STEP 2 >></a></div></div></div><div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-two"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Automatic payment icon" src="/assets/uploads/automatic-payments-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">MONTHLY AUTOPAYMENTS</h2><h3 class="fs-22 padding-top-5 lato-bold">Get your Assurance contract started!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">Your account is already funded. Last step: Activate your secure, automatic payments now! Due date: <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="blue-green-white-btn min-width-150 generate-qr-code-for-wallet-scanning"><svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve" class="width-100 inline-block max-width-30"><style type="text/css">.st0{fill:#126585;}</style><metadata><sfw xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds bottomLeftOrigin="true" height="24" width="24" x="0" y="0"></sliceSourceBounds></sfw></metadata><path class="st0" d="M19,2c1.7,0,3,1.3,3,3v14c0,1.7-1.3,3-3,3H5c-1.7,0-3-1.3-3-3V5c0-1.7,1.3-3,3-3H19z M19,0H5C2.2,0,0,2.2,0,5v14c0,2.8,2.2,5,5,5h14c2.8,0,5-2.2,5-5V5C24,2.2,21.8,0,19,0z M11,8h-1V6h1v1h2v1h-1v1h-1V8z M13,20v-1h-1v1H13z M12,5V4h-2v1h1v1h1V5z M20,4v6h-1V9h-4V4H20z M19,8V5h-3v3H19z M5,10H4v1h2v-1H5z M5,13h1v1h1v-3H6v1H4v2h1V13z M10,14v2h1v-2H10z M14,4h-1v3h1V4z M14,9V8h-1v1H14z M17,7h1V6h-1V7z M7,6H6v1h1V6z M9,4v5H4V4H9z M8,5H5v3h3V5z M17,10v1h-1v-1h-2v1h-1v-1h-3V9H9v1H8v1h1v2h1v-1h1v2h1v-2h3v1h-2v1h2v1h1v-3h1v1h1v2h1v-1h1v-1h-1v-1h-1v-1h1v-1H17z M6,18h1v-1H6V18z M4,15h5v5H4V15z M5,19h3v-3H5V19z M17,16v-1h-1v1H17z M17,17h-1v1h-1v-1h-1v-1h1v-1h-2v-1h-1v2h-1v1h-1v3h1v-1h1v-1h2v2h1v-1h1v1h2v-1h1v-1h-2V17z M8,14h1v-1H8V14z M18,16v1h1v1h1v-3h-1v1H18z M20,20v-1h-1v1H20z M20,12v-1h-1v1H20z"/></svg> SCAN QR IN WALLET</a><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 call-recipe">ACTIVATE NOW</a></div></div></div>');
                         initPopupEvents();
+
+                        $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                            if (parseFloat(eth_fee) > current_user_eth_balance) {
+                                //not enough ETH balance
+                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                            } else {
+                                showLoader();
+
+                                var scanObject = {
+                                    'type' : 'patient-approval-and-contract-creation'
+                                };
+                                if (!approval_given) {
+                                    var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
+                                    scanObject['approval'] = {
+                                        gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10 / 100))),
+                                        gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                        from: global_state.account,
+                                        chainId: dApp.chain_id,
+                                        data: approval_function_abi,
+                                        to: dApp.dentacoin_token_address
+                                    };
+                                }
+
+                                getContractData($('.init-contract-section').attr('data-contract'), async function(response) {
+                                    if(response.success) {
+                                        var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(checksumAddress(response.contract_data.patient), checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
+
+                                        scanObject['contractCreation'] = {
+                                            gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 10 / 100))),
+                                            gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                            from: global_state.account,
+                                            chainId: dApp.chain_id,
+                                            data: contract_creation_function_abi,
+                                            to: dApp.assurance_proxy_address
+                                        };
+
+                                        console.log(scanObject, 'scanObject');
+                                        generateQRCodeForDentacoinWalletScan(encodeURIComponent(scanObject));
+                                    } else {
+                                        basic.showAlert('Something went wrong, please try again later.', '', true);
+                                        hideLoader();
+                                    }
+                                });
+                            }
+                        });
 
                         $('.proceed-to-second-step').click(function() {
                             $('.contract-response-message.popup-step-one').hide();
@@ -74062,9 +74104,9 @@ async function pagesDataOnContractInit() {
 
                                                         if (!approval_given) {
                                                             var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
-                                                            dApp.web3_1_0.eth.getTransactionCount(global_state.account, function (err, nonce) {
+                                                            dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending', function (err, nonce) {
                                                                 var approval_transaction_obj = {
-                                                                    gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 5 / 100))),
+                                                                    gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10 / 100))),
                                                                     gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                                     from: global_state.account,
                                                                     nonce: dApp.web3_1_0.utils.toHex(nonce),
@@ -74088,13 +74130,13 @@ async function pagesDataOnContractInit() {
 
                                                         async function fireAssuranceContractCreationTransaction(nonce) {
                                                             if (nonce == undefined) {
-                                                                nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
+                                                                nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
                                                             }
 
                                                             var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(checksumAddress(response.contract_data.patient), checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
                                                             var contract_creation_transaction_obj = {
-                                                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 5 / 100))),
+                                                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 10 / 100))),
                                                                 gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                                 from: global_state.account,
                                                                 nonce: dApp.web3_1_0.utils.toHex(nonce),
@@ -76188,12 +76230,12 @@ async function onDocumentReadyPageData() {
                                                     showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
 
                                                     const EthereumTx = require('ethereumjs-tx');
-                                                    var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
+                                                    var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
 
                                                     var contract_approval_function_abi = await dApp.assurance_proxy_instance.methods.dentistApproveContract(response.contract_data.patient).encodeABI();
 
                                                     var contract_approval_transaction_obj = {
-                                                        gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + (gas_cost_for_contract_approval * 5 / 100))),
+                                                        gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + (gas_cost_for_contract_approval * 10 / 100))),
                                                         gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                         from: global_state.account,
                                                         nonce: dApp.web3_1_0.utils.toHex(nonce),
@@ -76381,7 +76423,7 @@ async function onDocumentReadyPageData() {
                                                     showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
 
                                                     const EthereumTx = require('ethereumjs-tx');
-                                                    var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
+                                                    var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
 
                                                     var withdraw_function_abi = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).encodeABI();
 
@@ -76656,12 +76698,12 @@ function cancelContractEventInit() {
                                                 showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
 
                                                 const EthereumTx = require('ethereumjs-tx');
-                                                var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account);
+                                                var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
 
                                                 var contract_cancellation_function_abi = await dApp.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).encodeABI();
 
                                                 var contract_cancellation_transaction_obj = {
-                                                    gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + (gas_cost_for_contract_cancellation * 5 / 100))),
+                                                    gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + (gas_cost_for_contract_cancellation * 10 / 100))),
                                                     gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                     from: global_state.account,
                                                     nonce: dApp.web3_1_0.utils.toHex(nonce),
@@ -77434,6 +77476,22 @@ function onEnrichProfileFormSubmit() {
 }
 onEnrichProfileFormSubmit();
 
+function getContractData(contract, callback) {
+    $.ajax({
+        type: 'POST',
+        url: '/get-contract-data',
+        dataType: 'json',
+        data: {
+            contract: contract
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            callback(response);
+        }
+    });
+}
 
 async function getEncryptedContractPdfContent(hash, type) {
     return await $.ajax({
@@ -77654,8 +77712,25 @@ function closeTooltipPopupsWhenClickedOutside() {
         });
     });
 }
-
 closeTooltipPopupsWhenClickedOutside();
+
+// generating qr code into popup so users can scan with Dentacoin Wallet and automatically finish the transactions
+function generateQRCodeForDentacoinWalletScan(object) {
+    console.log(object, 'generateQRCodeForDentacoinWalletScan');
+
+    basic.showDialog('<figure itemscope="" itemtype="http://schema.org/ImageObject" id="popup-qrcode"><img src="assets/images/blurred-qr-code.jpg" alt="QR code image" class="width-100 max-width-400" itemprop="contentUrl"/></figure>');
+
+    var qrcode = new QRCode(document.getElementById('popup-qrcode'), {
+        width : 160,
+        height : 160
+    });
+
+    qrcode.makeCode(encodeURIComponent(object));
+
+    setTimeout(function() {
+        hideLoader();
+    }, 1000);
+}
 
 // =================================== GOOGLE ANALYTICS TRACKING LOGIC ======================================
 

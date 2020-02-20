@@ -94,6 +94,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
         Route::post('/approve-check-up', 'DentistController@approveCheckUp')->name('approve-check-up');
     });
 
+    Route::post('/get-contact-data', 'UserController@getContractData')->middleware('HandleUserSession')->name('get-contact-data');
+
     Route::get('/my-contracts-iframe', 'UserController@getMyContractsTemplate')->middleware('HandleUserSession')->name('my-contracts-iframe');
 
     Route::post('/filter-my-contracts', 'UserController@filterMyContracts')->middleware('HandleUserSession')->name('filter-my-contracts');
