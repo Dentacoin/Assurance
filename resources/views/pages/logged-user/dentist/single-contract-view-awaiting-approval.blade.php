@@ -6,7 +6,7 @@
     @else
         @php($contract_active_at = strtotime($contract->contract_active_at))
     @endif
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section awaiting-approval dentist-contract-single-page-section" data-created-at="{{strtotime($contract->contract_active_at)}}" data-date-start-contract="{{$contract_active_at}}" data-monthly-premium="{{$contract->monthly_premium}}">
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section awaiting-approval dentist-contract-single-page-section" data-created-at="{{strtotime($contract->contract_active_at)}}" data-date-start-contract="{{$contract_active_at}}" data-monthly-premium="{{$contract->monthly_premium}}" data-patient-address="{{$contract->patient_address}}">
         <section class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
@@ -92,7 +92,7 @@
                     <div class="contract-details-container show-this module fs-16 text-left padding-top-40 padding-bottom-60">
                         @include('partials.contract-details', ['type' => 'single-page', 'contract' => $contract, 'dentist' => $current_logged_dentist, 'patient' => $patient, 'calculator_proposals' => $calculator_proposals, 'subtitle' => 'Please read carefully, check all details and approve.<br>There is no way to change anything in the contract later.'])
                     </div>
-                    <div class="padding-top-50">
+                    <div class="padding-top-50 padding-left-15 padding-right-15">
                         <div class="checkbox-container text-center padding-bottom-20">
                             <div class="pretty p-svg p-curve on-white-background inline-block-important">
                                 <input type="checkbox" id="read-the-contract-details"/>

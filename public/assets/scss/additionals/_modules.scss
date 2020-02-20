@@ -100,7 +100,9 @@
     &:hover {
         background-color: $active;
         color: white;
-        fill: white;
+        path {
+            fill: white;
+        }
     }
     &:focus {
         color: white;
@@ -125,7 +127,9 @@
     &:hover {
         background-color: $active;
         color: white;
-        fill: white;
+        path {
+            fill: white;
+        }
     }
     &:hover {
         color: white;

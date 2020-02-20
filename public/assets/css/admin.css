@@ -289,8 +289,9 @@
     fill: #239234; }
   .green-white-btn:hover {
     background-color: #239234;
-    color: white;
-    fill: white; }
+    color: white; }
+    .green-white-btn:hover path {
+      fill: white; }
   .green-white-btn:focus {
     color: white; }
 
@@ -317,8 +318,9 @@
     fill: #126585; }
   .blue-green-white-btn:hover {
     background-color: #239234;
-    color: white;
-    fill: white; }
+    color: white; }
+    .blue-green-white-btn:hover path {
+      fill: white; }
   .blue-green-white-btn:hover {
     color: white;
     background-color: #126585; }
