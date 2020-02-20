@@ -10,6 +10,7 @@ use App\TemporallyContract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Dompdf\Dompdf;
+use Endroid\QrCode\QrCode;
 
 class PatientController extends Controller {
     public function getNotLoggedView()   {
@@ -40,6 +41,14 @@ class PatientController extends Controller {
             }
 
             $params = array('contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'));
+            if($contract->status == 'awaiting-payment') {
+                $qr = new QrCode();
+                $qr->setText(json_encode(array('type' => 'awaiting-payment')));
+                $qr->setSize(220);
+
+                $params['qrCode'] = $qr->getDataUri();
+            }
+
             $params['calculator_proposals'] = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[(new APIRequestsController())->getUserData($contract->dentist_id)->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
             return view('pages/logged-user/patient/single-contract-view-'.$contract->status, $params);
         }
