@@ -7602,6 +7602,9 @@ input[type='file'].hide-input {
       padding-right: 15px;
       color: #126585;
       text-align: center; }
+    @media screen and (max-width: 991px) {
+      .response-layer .wrapper, .contract-response-layer .wrapper, .contract-response-success-layer .wrapper {
+        width: 100%; } }
 
 .pencil-background {
   background-image: url(/assets/images/pencil.svg);
@@ -7807,6 +7810,34 @@ select.select-mac-fix {
   .white-green-btn:focus {
     color: white; }
 
+.green-white-btn {
+  font-size: 20px;
+  color: #239234;
+  background-color: white;
+  padding: 10px 20px;
+  font-family: 'Calibri-Bold';
+  border: 2px solid #239234;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none !important;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s; }
+  .green-white-btn path {
+    fill: #239234; }
+  .green-white-btn:hover {
+    background-color: #239234;
+    color: white;
+    fill: white; }
+  .green-white-btn:focus {
+    color: white; }
+
 .blue-green-white-btn {
   font-size: 20px;
   color: #126585;
@@ -7826,6 +7857,12 @@ select.select-mac-fix {
   -o-transition: 0.3s;
   -ms-transition: 0.3s;
   transition: 0.3s; }
+  .blue-green-white-btn path {
+    fill: #126585; }
+  .blue-green-white-btn:hover {
+    background-color: #239234;
+    color: white;
+    fill: white; }
   .blue-green-white-btn:hover {
     color: white;
     background-color: #126585; }

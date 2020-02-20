@@ -1622,6 +1622,9 @@ input[type='file'].hide-input {
             color: $blue_green_color;
             text-align: center;
         }
+        @include breakpoint($sm-down) {
+            width: 100%;
+        }
     }
 }
 

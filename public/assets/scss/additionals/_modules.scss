@@ -82,6 +82,31 @@
     }
 }
 
+.green-white-btn {
+    font-size: 20px;
+    color: $active;
+    background-color: white;
+    padding: 10px 20px;
+    font-family: 'Calibri-Bold';
+    border: 2px solid $active;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none !important;
+    @include rounded(4px);
+    @include simple_transition(.3s);
+    path {
+        fill: $active;
+    }
+    &:hover {
+        background-color: $active;
+        color: white;
+        fill: white;
+    }
+    &:focus {
+        color: white;
+    }
+}
+
 .blue-green-white-btn {
     font-size: 20px;
     color: $blue_green_color;
@@ -94,6 +119,14 @@
     text-decoration: none !important;
     @include rounded(4px);
     @include simple_transition(.3s);
+    path {
+        fill: $blue_green_color;
+    }
+    &:hover {
+        background-color: $active;
+        color: white;
+        fill: white;
+    }
     &:hover {
         color: white;
         background-color: $blue_green_color;
