@@ -73964,14 +73964,15 @@ async function pagesDataOnContractInit() {
                         initPopupEvents();
 
                         $('.generate-qr-code-for-wallet-scanning').click(async function() {
-                            if (parseFloat(eth_fee) > current_user_eth_balance) {
+                            if (parseFloat(eth_fee) > parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)))) {
                                 //not enough ETH balance
                                 basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
                             } else {
                                 showLoader();
 
                                 var scanObject = {
-                                    'type' : 'patient-approval-and-contract-creation'
+                                    'type' : 'patient-approval-and-contract-creation',
+                                    'eth_fee' : eth_fee
                                 };
                                 if (!approval_given) {
                                     var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
@@ -76138,11 +76139,11 @@ async function onDocumentReadyPageData() {
                     var gas_cost_for_contract_approval = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient-address')).estimateGas({from: global_state.account, gas: 500000});
 
                     var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_contract_approval * on_page_load_gas_price).toString(), 'ether');
-                    var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
 
                     var contract_approval_function_abi = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient-address')).encodeABI();
 
                     $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                        var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                         if (parseFloat(eth_fee) > current_user_eth_balance) {
                             //not enough ETH balance
                             basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
@@ -76150,27 +76151,21 @@ async function onDocumentReadyPageData() {
                             showLoader();
 
                             var scanObject = {
-                                'type' : 'dentist-approval'
+                                'type' : 'dentist-approval',
+                                'eth_fee' : eth_fee
                             };
 
-                            getContractData($('.init-contract-section').attr('data-contract'), async function(response) {
-                                if(response.success) {
-                                    scanObject['contractApproval'] = {
-                                        gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + (gas_cost_for_contract_approval * 10 / 100))),
-                                        gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                        from: global_state.account,
-                                        chainId: dApp.chain_id,
-                                        data: contract_approval_function_abi,
-                                        to: dApp.assurance_proxy_address
-                                    };
+                            scanObject['contractApproval'] = {
+                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + (gas_cost_for_contract_approval * 10 / 100))),
+                                gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                from: global_state.account,
+                                chainId: dApp.chain_id,
+                                data: contract_approval_function_abi,
+                                to: dApp.assurance_proxy_address
+                            };
 
-                                    console.log(scanObject, 'scanObject');
-                                    generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
-                                } else {
-                                    basic.showAlert('Something went wrong, please try again later.', '', true);
-                                    hideLoader();
-                                }
-                            });
+                            console.log(scanObject, 'scanObject');
+                            generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
                         }
                     });
 
@@ -76239,6 +76234,7 @@ async function onDocumentReadyPageData() {
 
                                         $('.recipe-popup .execute-transaction').click(async function() {
                                             var this_btn = $(this);
+                                            var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                             if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                 //not enough ETH balance
                                                 basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
@@ -76587,7 +76583,6 @@ function cancelContractEventInit() {
                     if (metamask) {
                         basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
                     } else {
-                        //custom
                         var cached_key = localStorage.getItem('current-account') == null;
                         $.ajax({
                             type: 'POST',
@@ -76609,6 +76604,7 @@ function cancelContractEventInit() {
                                 if (response.success) {
                                     basic.closeDialog();
                                     basic.showDialog(response.success, 'recipe-popup', null, true);
+                                    var contract_cancellation_function_abi = await dApp.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).encodeABI();
 
                                     var select_options = '';
                                     if (response.contract_data.type == 'dentist') {
@@ -76668,6 +76664,35 @@ function cancelContractEventInit() {
                                         $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                     }
 
+                                    // proceed to dentacoin wallet scanning
+                                    $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                                        var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+                                        if (parseFloat(eth_fee) > current_user_eth_balance) {
+                                            //not enough ETH balance
+                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                        } else {
+                                            showLoader();
+
+                                            var scanObject = {
+                                                'type' : 'dentist-cancelation',
+                                                'eth_fee' : eth_fee
+                                            };
+
+                                            scanObject['contractCancelation'] = {
+                                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + (gas_cost_for_contract_cancellation * 10 / 100))),
+                                                gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                from: global_state.account,
+                                                chainId: dApp.chain_id,
+                                                data: contract_cancellation_function_abi,
+                                                to: dApp.assurance_proxy_address
+                                            };
+
+                                            console.log(scanObject, 'scanObject');
+                                            generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
+                                        }
+                                    });
+
+                                    // continue with assurance blockchain execution
                                     $('.recipe-popup .execute-transaction').click(async function () {
                                         var this_execute_transaction_btn = $(this);
                                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
@@ -76734,8 +76759,6 @@ function cancelContractEventInit() {
 
                                                 const EthereumTx = require('ethereumjs-tx');
                                                 var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
-
-                                                var contract_cancellation_function_abi = await dApp.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).encodeABI();
 
                                                 var contract_cancellation_transaction_obj = {
                                                     gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + (gas_cost_for_contract_cancellation * 10 / 100))),
@@ -77763,6 +77786,7 @@ function generateQRCodeForDentacoinWalletScan(object) {
     qrcode.makeCode(encodeURIComponent(object));
 
     setTimeout(function() {
+        $('#popup-qrcode').removeAttr('title');
         hideLoader();
     }, 1000);
 }
