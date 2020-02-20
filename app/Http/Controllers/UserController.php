@@ -213,8 +213,14 @@ class UserController extends Controller {
 
             $params = [/*'current_logged_user' => $current_logged_user_data, */'current_logged_user' => $currentTransactionInitiatorAddress, 'cached_key' => $request->input('cached_key'), 'show_dcn_bar' => $request->input('show_dcn_bar'), 'recipe_title' => $request->input('recipe_title'), 'recipe_subtitle' => $request->input('recipe_subtitle'), 'recipe_checkbox_text' => $request->input('recipe_checkbox_text'), 'btn_label' => $request->input('btn_label')];
 
-            if(!empty($request->input('sent_eth_to_dentist'))) {
+            $sent_eth_to_dentist = $request->input('sent_eth_to_dentist');
+            if(!empty($sent_eth_to_dentist)) {
                 $params['sent_eth_to_dentist'] = true;
+            }
+
+            $cancel_with_blockchain_transaction = $request->input('cancel-with-blockchain-transaction');
+            if(!empty($cancel_with_blockchain_transaction)) {
+                $params['cancel_with_blockchain_transaction'] = true;
             }
 
             $view = view('partials/transaction-recipe-popup', $params);

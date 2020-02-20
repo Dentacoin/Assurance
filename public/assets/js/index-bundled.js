@@ -76595,7 +76595,8 @@ function cancelContractEventInit() {
                                 recipe_title: this_btn.attr('data-recipe-title'),
                                 recipe_subtitle: this_btn.attr('data-recipe-subtitle'),
                                 recipe_checkbox_text: this_btn.attr('data-recipe-checkbox-text'),
-                                btn_label: 'CANCEL NOW'
+                                btn_label: 'CANCEL NOW',
+                                type: 'cancel-with-blockchain-transaction'
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
