@@ -694,7 +694,7 @@ async function pagesDataOnContractInit() {
                                         };
 
                                         console.log(scanObject, 'scanObject');
-                                        generateQRCodeForDentacoinWalletScan(encodeURIComponent(scanObject));
+                                        generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
                                     } else {
                                         basic.showAlert('Something went wrong, please try again later.', '', true);
                                         hideLoader();
