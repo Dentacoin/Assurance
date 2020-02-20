@@ -3118,6 +3118,36 @@ body {
 @media screen and (max-width: 767px) {
   .max-width-xs-300 {
     max-width: 300px !important; } }
+@media screen and (max-width: 767px) {
+  .max-width-xs-310 {
+    max-width: 310px !important; } }
+@media screen and (max-width: 767px) {
+  .max-width-xs-320 {
+    max-width: 320px !important; } }
+@media screen and (max-width: 767px) {
+  .max-width-xs-330 {
+    max-width: 330px !important; } }
+@media screen and (max-width: 767px) {
+  .max-width-xs-340 {
+    max-width: 340px !important; } }
+@media screen and (max-width: 767px) {
+  .max-width-xs-350 {
+    max-width: 350px !important; } }
+@media screen and (max-width: 767px) {
+  .max-width-xs-360 {
+    max-width: 360px !important; } }
+@media screen and (max-width: 767px) {
+  .max-width-xs-370 {
+    max-width: 370px !important; } }
+@media screen and (max-width: 767px) {
+  .max-width-xs-380 {
+    max-width: 380px !important; } }
+@media screen and (max-width: 767px) {
+  .max-width-xs-390 {
+    max-width: 390px !important; } }
+@media screen and (max-width: 767px) {
+  .max-width-xs-400 {
+    max-width: 400px !important; } }
 .min-width-0 {
   min-width: 0px !important; }
 

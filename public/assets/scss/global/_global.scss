@@ -167,8 +167,8 @@ body {
     }
 }
 
-@for $i from 0 through 15 * 2 {
-    @include breakpoint($xs)    {
+@for $i from 0 through 20 * 2 {
+    @include breakpoint($xs) {
         .max-width-xs-#{$i * 10} {
             max-width: 0px + $i * 10!important;
         }
