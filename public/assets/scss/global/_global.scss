@@ -639,6 +639,16 @@ fieldset {
             margin-bottom: 50px;
         }
     }
+    &.qr-code-for-dentacoin-wallet-scan {
+        #popup-qrcode {
+            text-align: center;
+            img {
+                width: 100%;
+                max-width: 450px;
+                margin: 0 auto;
+            }
+        }
+    }
     &.style-anchors {
         .modal-dialog {
             .modal-content {
