@@ -4413,8 +4413,9 @@ closeTooltipPopupsWhenClickedOutside();
 function generateQRCodeForDentacoinWalletScan(object) {
     console.log(object, 'generateQRCodeForDentacoinWalletScan');
 
-    basic.showDialog('<figure itemscope="" itemtype="http://schema.org/ImageObject" id="popup-qrcode"><img src="assets/images/blurred-qr-code.jpg" alt="QR code image" class="width-100 max-width-400" itemprop="contentUrl"/></figure>');
+    basic.showDialog('<figure itemscope="" itemtype="http://schema.org/ImageObject" id="popup-qrcode"><img src="/assets/images/blurred-qr-code.jpg" alt="QR code image" class="width-100 max-width-400" itemprop="contentUrl"/></figure>');
 
+    $('#popup-qrcode').html('');
     var qrcode = new QRCode(document.getElementById('popup-qrcode'), {
         width : 160,
         height : 160
