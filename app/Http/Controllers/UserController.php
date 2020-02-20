@@ -218,8 +218,8 @@ class UserController extends Controller {
                 $params['sent_eth_to_dentist'] = true;
             }
 
-            $cancel_with_blockchain_transaction = $request->input('cancel-with-blockchain-transaction');
-            if(!empty($cancel_with_blockchain_transaction)) {
+            $requestType = $request->input('type');
+            if(!empty($requestType) && $requestType == 'cancel-with-blockchain-transaction') {
                 $params['cancel_with_blockchain_transaction'] = true;
             }
 
