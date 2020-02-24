@@ -2771,15 +2771,15 @@ function showLoader(message, type, time) {
         message = 'Loading ...';
     }
     if (type === undefined) {
-        $('.camping-loader').html('<div class="response-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/loader.gif" class="max-width-160" alt="Loader"></figure><div class="message text-center fs-24 lato-semibold">'+message+'</div></div></div>');
+        $('.camping-loader').html('<div class="response-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/loader.gif" class="max-width-160" alt="Loader"></figure><div class="message text-center fs-24 fs-xs-30 lato-semibold">'+message+'</div></div></div>');
         $('.response-layer').show();
     } else {
         console.log('type');
         if (type == 'contract-response-success-layer') {
-            $('.camping-loader').html('<div class="contract-response-success-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/contract-assurance-loading-success.gif" class="max-width-440 min-width-300" alt="Loader"></figure><div class="message text-center fs-24 lato-semibold">'+message+'</div></div></div>');
+            $('.camping-loader').html('<div class="contract-response-success-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/contract-assurance-loading-success.gif" class="max-width-440 min-width-300" alt="Loader"></figure><div class="message text-center fs-24 fs-xs-30 lato-semibold">'+message+'</div></div></div>');
             $('.contract-response-success-layer').show();
         } else if (type == 'contract-response-layer') {
-            $('.camping-loader').html('<div class="contract-response-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/contract-assurance-loading.gif" class="max-width-440 min-width-300" alt="Loader"></figure><div class="message text-center fs-24 lato-semibold">'+message+'</div></div></div>');
+            $('.camping-loader').html('<div class="contract-response-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/contract-assurance-loading.gif" class="max-width-440 min-width-300" alt="Loader"></figure><div class="message text-center fs-24 fs-xs-30 lato-semibold">'+message+'</div></div></div>');
             $('.contract-response-layer').show();
         }
     }
