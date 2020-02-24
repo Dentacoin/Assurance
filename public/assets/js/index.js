@@ -587,7 +587,11 @@ async function pagesDataOnContractInit() {
                         timer_label = 'Next payment processed in:';
                     }
                 } else {
-                    next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
+                    if(time_passed_since_signed >= 0) {
+                        next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
+                    } else {
+                        next_payment_timestamp_unix = parseInt(on_load_exiting_contract[0]) - now_timestamp;
+                    }
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     if(current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
