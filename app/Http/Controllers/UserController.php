@@ -211,10 +211,7 @@ class UserController extends Controller {
                 $patient_data = $current_logged_user_data;*/
             }
 
-            var_dump($currentTransactionInitiatorAddress);
-            die('asd');
-
-            $params = [/*'current_logged_user' => $current_logged_user_data, */'current_logged_user' => $currentTransactionInitiatorAddress, 'cached_key' => $request->input('cached_key'), 'show_dcn_bar' => $request->input('show_dcn_bar'), 'recipe_title' => $request->input('recipe_title'), 'recipe_subtitle' => $request->input('recipe_subtitle'), 'recipe_checkbox_text' => $request->input('recipe_checkbox_text'), 'btn_label' => $request->input('btn_label')];
+            $params = [/*'current_logged_user' => $current_logged_user_data, */'currentTransactionInitiatorAddress' => $currentTransactionInitiatorAddress, 'cached_key' => $request->input('cached_key'), 'show_dcn_bar' => $request->input('show_dcn_bar'), 'recipe_title' => $request->input('recipe_title'), 'recipe_subtitle' => $request->input('recipe_subtitle'), 'recipe_checkbox_text' => $request->input('recipe_checkbox_text'), 'btn_label' => $request->input('btn_label')];
 
             $sent_eth_to_dentist = $request->input('sent_eth_to_dentist');
             if(!empty($sent_eth_to_dentist)) {
