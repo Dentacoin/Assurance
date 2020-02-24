@@ -533,7 +533,7 @@ class APIRequestsController extends Controller {
         }
     }
 
-    public function getCurrentDcnRateByCoingecko()  {
+    /*public function getCurrentDcnRateByCoingecko()  {
         //API connection
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -559,7 +559,7 @@ class APIRequestsController extends Controller {
                 return 0;
             }
         }
-    }
+    }*/
 
     public function getCountry($client_ip)  {
         try {

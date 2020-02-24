@@ -73868,14 +73868,11 @@ async function pagesDataOnContractInit() {
                 var months_passed_for_reward = 1;
                 var contract_next_payment = parseInt(on_load_exiting_contract[0]);
                 var time_passed_since_signed = now_timestamp - contract_next_payment;
-                console.log(time_passed_since_signed, 'time_passed_since_signed');
 
                 if(Math.floor(time_passed_since_signed / period_to_withdraw) >= 0) {
                     months_passed_for_reward += Math.floor(time_passed_since_signed / period_to_withdraw);
                 }
-                console.log(months_passed_for_reward, 'months_passed_for_reward');
                 var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(on_load_exiting_contract[5]);
-                console.log(dcn_needed_to_be_payed_to_dentist, 'dcn_needed_to_be_payed_to_dentist');
 
                 var timer_label = '';
                 if (time_passed_since_signed > period_to_withdraw && months_passed_for_reward == 1 && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
@@ -73915,17 +73912,25 @@ async function pagesDataOnContractInit() {
 
                 cancelContractEventInit();
 
-                if(current_patient_dcn_balance > dcn_needed_to_be_payed_to_dentist) {
-                    $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">ALL SET FOR YOUR NEXT PAYMENT</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">It seems you have the needed amount of DCN and ETH in your wallet so your dentist will be able to successfully process your next monthly payment on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 second-custom-close-btn">SOUNDS GOOD</a></div></div></div>');
-                    initPopupEvents();
-                } else {
-                    //showing section where ETH and DCN can be bough when doesnt have enough DCN
-                    $('.external-api-crypto-provider').removeClass('hide');
+                patientDcnBalanceLogic(current_patient_dcn_balance);
+                function patientDcnBalanceLogic(current_patient_dcn_balance) {
+                    if(current_patient_dcn_balance > dcn_needed_to_be_payed_to_dentist) {
+                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">ALL SET FOR YOUR NEXT PAYMENT</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">It seems you have the needed amount of DCN and ETH in your wallet so your dentist will be able to successfully process your next monthly payment on '+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 second-custom-close-btn">SOUNDS GOOD</a></div></div></div>');
+                        initPopupEvents();
+                    } else {
+                        //showing section where ETH and DCN can be bough when doesnt have enough DCN
+                        $('.external-api-crypto-provider').removeClass('hide');
 
-                    //not enough DCN
-                    $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+on_load_exiting_contract[4]+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+dcn_needed_to_be_payed_to_dentist+' DCN</span>) before <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+                        //not enough DCN
+                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+(months_passed_for_reward * on_load_exiting_contract[4])+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+dcn_needed_to_be_payed_to_dentist+' DCN</span>) before <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
 
-                    initPopupEvents(true);
+                        initPopupEvents(true);
+
+                        // checking every 3 seconds if user deposited dentacoins
+                        setTimeout(async function() {
+                            patientDcnBalanceLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address'))), dcn_needed_to_be_payed_to_dentist);
+                        }, 3000);
+                    }
                 }
             } else if ($('.contract-header').hasClass('awaiting-payment')) {
                 var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account));
@@ -74151,22 +74156,21 @@ async function pagesDataOnContractInit() {
                                                         basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
                                                         return false;
                                                     } else {
-                                                        if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                            var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
-                                                            if (decrypted_keystore_file_response.success) {
-                                                                transaction_key = decrypted_keystore_file_response.to_string;
-                                                            } else if (decrypted_keystore_file_response.error) {
-                                                                basic.showAlert(decrypted_keystore_file_response.message, '', true);
-                                                                return false;
-                                                            }
-                                                        }
-
-                                                        this_btn.unbind();
-
                                                         showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
-
                                                         const EthereumTx = require('ethereumjs-tx');
                                                         setTimeout(async function() {
+                                                            if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                                var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                                if (decrypted_keystore_file_response.success) {
+                                                                    transaction_key = decrypted_keystore_file_response.to_string;
+                                                                } else if (decrypted_keystore_file_response.error) {
+                                                                    hideLoader();
+                                                                    basic.showAlert(decrypted_keystore_file_response.message, '', true);
+                                                                    return false;
+                                                                }
+                                                            }
+
+                                                            this_btn.unbind();
                                                             if (!approval_given) {
                                                                 var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
                                                                 dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending', function (err, nonce) {
@@ -74192,7 +74196,7 @@ async function pagesDataOnContractInit() {
                                                             } else {
                                                                 fireAssuranceContractCreationTransaction();
                                                             }
-                                                        }, 1000);
+                                                        }, 2000);
 
                                                         async function fireAssuranceContractCreationTransaction(nonce) {
                                                             if (nonce == undefined) {
@@ -76315,20 +76319,20 @@ async function onDocumentReadyPageData() {
                                                     basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
                                                     return false;
                                                 } else {
-                                                    if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                        var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
-                                                        if (decrypted_keystore_file_response.success) {
-                                                            transaction_key = decrypted_keystore_file_response.to_string;
-                                                        } else if (decrypted_keystore_file_response.error) {
-                                                            basic.showAlert(decrypted_keystore_file_response.message, '', true);
-                                                            return false;
-                                                        }
-                                                    }
-                                                    this_btn.unbind();
-
                                                     showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
-
                                                     setTimeout(async function() {
+                                                        if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                            var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                            if (decrypted_keystore_file_response.success) {
+                                                                transaction_key = decrypted_keystore_file_response.to_string;
+                                                            } else if (decrypted_keystore_file_response.error) {
+                                                                hideLoader();
+                                                                basic.showAlert(decrypted_keystore_file_response.message, '', true);
+                                                                return false;
+                                                            }
+                                                        }
+
+                                                        this_btn.unbind();
                                                         const EthereumTx = require('ethereumjs-tx');
                                                         var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
 
@@ -76381,7 +76385,7 @@ async function onDocumentReadyPageData() {
                                                                 }
                                                             }, 1000);
                                                         });
-                                                    }, 1000);
+                                                    }, 2000);
                                                 }
                                             }
                                         });
@@ -76539,19 +76543,19 @@ async function onDocumentReadyPageData() {
                                                     basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
                                                     return false;
                                                 } else {
-                                                    if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                        var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
-                                                        if (decrypted_keystore_file_response.success) {
-                                                            transaction_key = decrypted_keystore_file_response.to_string;
-                                                        } else if (decrypted_keystore_file_response.error) {
-                                                            basic.showAlert(decrypted_keystore_file_response.message, '', true);
-                                                            return false;
-                                                        }
-                                                    }
-                                                    this_btn.unbind();
-
                                                     showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
                                                     setTimeout(async function() {
+                                                        if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                            var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                            if (decrypted_keystore_file_response.success) {
+                                                                transaction_key = decrypted_keystore_file_response.to_string;
+                                                            } else if (decrypted_keystore_file_response.error) {
+                                                                hideLoader();
+                                                                basic.showAlert(decrypted_keystore_file_response.message, '', true);
+                                                                return false;
+                                                            }
+                                                        }
+                                                        this_btn.unbind();
                                                         const EthereumTx = require('ethereumjs-tx');
                                                         var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
 
@@ -76607,7 +76611,7 @@ async function onDocumentReadyPageData() {
                                                                 }
                                                             }, 1000);
                                                         });
-                                                    }, 1000);
+                                                    }, 2000);
                                                 }
                                             }
                                         });
@@ -76815,46 +76819,47 @@ function cancelContractEventInit() {
                                                 basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
                                                 return false;
                                             } else {
-                                                if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                    var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
-                                                    if (decrypted_keystore_file_response.success) {
-                                                        transaction_key = decrypted_keystore_file_response.to_string;
-                                                    } else if (decrypted_keystore_file_response.error) {
-                                                        basic.showAlert(decrypted_keystore_file_response.message, '', true);
-                                                        return false;
-                                                    }
-                                                }
-                                                this_execute_transaction_btn.unbind();
-
-                                                //fire google analytics event
-                                                if ($('.recipe-popup #cancel-contract-reason').val() != '' && $('.recipe-popup #cancel-contract-reason').val() != 'Other') {
-                                                    if (this_btn.attr('data-type') == 'dentist') {
-                                                        fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
-                                                    } else if (this_btn.attr('data-type') == 'patient') {
-                                                        fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
-                                                    }
-                                                } else if ($('.popup-cancel-contract #cancel-contract-reason').val() == 'Other') {
-                                                    if (this_btn.attr('data-type') == 'dentist') {
-                                                        fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-other-reason').val().trim());
-                                                    } else if (this_btn.attr('data-type') == 'patient') {
-                                                        fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.recipe-popup #cancel-contract-other-reason').val().trim());
-                                                    }
-                                                }
-
-                                                var cancellation_ajax_data = {
-                                                    contract: this_btn.attr('data-contract'),
-                                                    status: 'cancelled',
-                                                    comments: $('.recipe-popup #cancel-contract-comments').val().trim()
-                                                };
-
-                                                if ($('.recipe-popup #cancel-contract-other-reason').length) {
-                                                    cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-other-reason').val().trim();
-                                                } else {
-                                                    cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-reason option:selected').html();
-                                                }
-
                                                 showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
                                                 setTimeout(async function() {
+                                                    if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                        var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                        if (decrypted_keystore_file_response.success) {
+                                                            transaction_key = decrypted_keystore_file_response.to_string;
+                                                        } else if (decrypted_keystore_file_response.error) {
+                                                            hideLoader();
+                                                            basic.showAlert(decrypted_keystore_file_response.message, '', true);
+                                                            return false;
+                                                        }
+                                                    }
+                                                    this_execute_transaction_btn.unbind();
+
+                                                    //fire google analytics event
+                                                    if ($('.recipe-popup #cancel-contract-reason').val() != '' && $('.recipe-popup #cancel-contract-reason').val() != 'Other') {
+                                                        if (this_btn.attr('data-type') == 'dentist') {
+                                                            fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
+                                                        } else if (this_btn.attr('data-type') == 'patient') {
+                                                            fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
+                                                        }
+                                                    } else if ($('.popup-cancel-contract #cancel-contract-reason').val() == 'Other') {
+                                                        if (this_btn.attr('data-type') == 'dentist') {
+                                                            fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-other-reason').val().trim());
+                                                        } else if (this_btn.attr('data-type') == 'patient') {
+                                                            fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.recipe-popup #cancel-contract-other-reason').val().trim());
+                                                        }
+                                                    }
+
+                                                    var cancellation_ajax_data = {
+                                                        contract: this_btn.attr('data-contract'),
+                                                        status: 'cancelled',
+                                                        comments: $('.recipe-popup #cancel-contract-comments').val().trim()
+                                                    };
+
+                                                    if ($('.recipe-popup #cancel-contract-other-reason').length) {
+                                                        cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-other-reason').val().trim();
+                                                    } else {
+                                                        cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-reason option:selected').html();
+                                                    }
+
                                                     const EthereumTx = require('ethereumjs-tx');
                                                     var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
 
@@ -76905,7 +76910,7 @@ function cancelContractEventInit() {
                                                             }
                                                         }, 1000);
                                                     });
-                                                }, 1000)
+                                                }, 2000);
                                             }
                                         }
                                     });
