@@ -503,18 +503,23 @@ async function pagesDataOnContractInit() {
                 console.log(on_load_exiting_contract, 'on_load_exiting_contract');
                 var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address')));
 
-                var months_passed_for_reward = Math.floor(time_passed_since_signed / period_to_withdraw);
-                var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(on_load_exiting_contract[5]);
+                if ($('.contract-header').hasClass('awaiting-payment')) {
+                    // reading the monthly premium from DB, because contract is not yet created on the blockchain
+                    var dcn_needed_to_be_payed_to_dentist = parseInt($('.patient-contract-single-page-section').attr('data-monthly-premium'));
+                } else if ($('.contract-header').hasClass('awaiting-approval')) {
+                    // reading the monthly premium from the smart contract
+                    var dcn_needed_to_be_payed_to_dentist = parseInt(on_load_exiting_contract[5]);
+                }
 
                 var timer_label = '';
-                if (time_passed_since_signed > period_to_withdraw && months_passed_for_reward == 1 && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
+                if (time_passed_since_signed > period_to_withdraw && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
                     next_payment_timestamp = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                     next_payment_timestamp_unix = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp);
 
                     timer_label = 'Overdue payment. If you doesn\'t fill in '+dcn_needed_to_be_payed_to_dentist+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
                     $('.clock').addClass('red-background');
-                } else if (time_passed_since_signed > period_to_withdraw) {
+                } /*else if (time_passed_since_signed > period_to_withdraw) {
                     var remainder = time_passed_since_signed % period_to_withdraw;
                     next_payment_timestamp_unix = period_to_withdraw - remainder;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
@@ -528,7 +533,7 @@ async function pagesDataOnContractInit() {
                             $('.show-on-having-dentacoins').removeClass('hide');
                         }
                     }
-                } else {
+                }*/ else {
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
@@ -621,7 +626,7 @@ async function pagesDataOnContractInit() {
             } else if ($('.contract-header').hasClass('awaiting-payment')) {
                 var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account));
                 var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseFloat($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
+                var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseInt($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
                 var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                 const on_page_load_gwei = ethgasstation_json.safeLow;
                 //adding 10% just in case the transaction dont fail
