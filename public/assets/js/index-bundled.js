@@ -73805,7 +73805,6 @@ async function pagesDataOnContractInit() {
                 var next_payment_timestamp_unix;
                 var next_payment_timestamp;
                 var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient-address'), $('.patient-contract-single-page-section').attr('data-dentist-address'));
-                console.log(on_load_exiting_contract, 'on_load_exiting_contract');
                 var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address')));
 
                 if ($('.contract-header').hasClass('awaiting-payment')) {
@@ -74165,9 +74164,9 @@ async function pagesDataOnContractInit() {
                                                         this_btn.unbind();
 
                                                         showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
-                                                        setTimeout(async function() {
-                                                            const EthereumTx = require('ethereumjs-tx');
 
+                                                        const EthereumTx = require('ethereumjs-tx');
+                                                        setTimeout(async function() {
                                                             if (!approval_given) {
                                                                 var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
                                                                 dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending', function (err, nonce) {
