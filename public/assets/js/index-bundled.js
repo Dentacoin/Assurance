@@ -73864,11 +73864,12 @@ async function pagesDataOnContractInit() {
                     //showing section where ETH and DCN can be bough when doesnt have enough DCN
                     $('.external-api-crypto-provider').removeClass('hide');
 
+                    var monthsNum = 1;
                     var contract_next_payment = parseInt(on_load_exiting_contract[0]);
                     var timeRange = now_timestamp - contract_next_payment;
                     console.log(timeRange, 'timeRange');
 
-                    var monthsNum = Math.floor(timeRange / period_to_withdraw);
+                    monthsNum += Math.floor(timeRange / period_to_withdraw);
                     console.log(monthsNum, 'monthsNum');
 
                     var ownedDentacoinsUntilNow = monthsNum * monthly_premium_in_dcn;
