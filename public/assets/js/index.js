@@ -564,7 +564,9 @@ async function pagesDataOnContractInit() {
                     var timeRange = now_timestamp - contract_next_payment;
                     console.log(timeRange, 'timeRange');
 
-                    monthsNum += Math.floor(timeRange / period_to_withdraw);
+                    if(Math.floor(timeRange / period_to_withdraw) >= 0) {
+                        monthsNum += Math.floor(timeRange / period_to_withdraw);
+                    }
                     console.log(monthsNum, 'monthsNum');
 
                     var ownedDentacoinsUntilNow = monthsNum * monthly_premium_in_dcn;
