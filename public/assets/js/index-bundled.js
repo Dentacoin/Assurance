@@ -73823,7 +73823,7 @@ async function pagesDataOnContractInit() {
 
                     timer_label = 'Overdue payment. If you doesn\'t fill in '+dcn_needed_to_be_payed_to_dentist+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
                     $('.clock').addClass('red-background');
-                } /*else if (time_passed_since_signed > period_to_withdraw) {
+                } else if (time_passed_since_signed > period_to_withdraw) {
                     var remainder = time_passed_since_signed % period_to_withdraw;
                     next_payment_timestamp_unix = period_to_withdraw - remainder;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
@@ -73837,7 +73837,7 @@ async function pagesDataOnContractInit() {
                             $('.show-on-having-dentacoins').removeClass('hide');
                         }
                     }
-                }*/ else {
+                } else {
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                     next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                     next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
