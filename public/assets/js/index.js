@@ -3280,6 +3280,9 @@ async function onDocumentReadyPageData() {
                     var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                 }
 
+                console.log(next_payment_timestamp, 'next_payment_timestamp');
+                console.log(next_payment_timestamp, 'next_payment_timestamp');
+                console.log('=============================================================');
                 table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">'+next_payment_timestamp+'</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
             }
         } else if ($('body').hasClass('contract-proposal')) {
