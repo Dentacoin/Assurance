@@ -629,16 +629,20 @@ class UserController extends Controller {
                 // send cancel notification email to dentist and patient
             }
         } else {
-            var_dump($contract->contract_active_at);
+            var_dump(time());
+            var_dump(strtotime($contract->contract_active_at. ' + '.GRACE_PERIOD.' days'));
             die('asd');
-
-            $cancellation_reason = array(
-                'reason' => 'Late payment from patient.'
-            );
-            $contract->status = 'cancelled';
-            $contract->cancelled_at = new \DateTime();
-            $contract->cancellation_reason = serialize($cancellation_reason);
-            $contract->save();
+            
+            // if contract has not been funded for the withdraw period + the grace period => cancel the contract
+            if(time() > strtotime($contract->contract_active_at. ' + '.(DAYS_CONTRACT_WITHDRAWAL_PERIOD + GRACE_PERIOD).' days')) {
+                $cancellation_reason = array(
+                    'reason' => 'Late payment from patient.'
+                );
+                $contract->status = 'cancelled';
+                $contract->cancelled_at = new \DateTime();
+                $contract->cancellation_reason = serialize($cancellation_reason);
+                $contract->save();
+            }
         }
     }
 }
