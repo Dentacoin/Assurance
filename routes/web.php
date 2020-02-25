@@ -29,7 +29,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::get('/password-recover', 'UserController@getRecoverPassword')->name('password-recover');
 
-    Route::get('/my-contracts', 'UserController@getMyContractsView')->middleware('HandleUserSession')->name('my-contracts');
+    /*Route::get('/my-contracts', 'UserController@getMyContractsView')->middleware('HandleUserSession')->name('my-contracts');*/
 
     //======================================= AJAX ========================================
     Route::post('/save-public-key', 'WalletInstructionsController@savePublicKey')->name('save-public-key');
@@ -97,6 +97,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::post('/get-contract-data', 'UserController@getContractData')->middleware('HandleUserSession')->name('get-contract-data');
 
     Route::get('/my-contracts-iframe', 'UserController@getMyContractsTemplate')->middleware('HandleUserSession')->name('my-contracts-iframe');
+
+    Route::get('/get-not-cancelled-contracts', 'UserController@getNotCancelledContracts')->name('get-not-cancelled-contracts');
 
     Route::post('/filter-my-contracts', 'UserController@filterMyContracts')->middleware('HandleUserSession')->name('filter-my-contracts');
 
