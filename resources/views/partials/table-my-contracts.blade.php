@@ -76,7 +76,7 @@
                         @endif
                     @endif
                 </td>
-                <td>{{date('d/m/Y', $contract->created_at->getTimestamp())}}</td>
+                <td><span class="hide-this">{{$contract->created_at->getTimestamp()}}</span>{{date('d/m/Y', $contract->created_at->getTimestamp())}}</td>
                 <td>
                     @if(!empty($contract->contract_active_at))
                         <span class="hide-this">{{strtotime($contract->contract_active_at)}}</span>
