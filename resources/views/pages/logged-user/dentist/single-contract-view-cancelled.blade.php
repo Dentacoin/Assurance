@@ -23,6 +23,10 @@
         @php($avatar_url = '/assets/images/no-avatar.png')
     @endif
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section cancelled" data-created-at="{{strtotime($active_timestamp)}}">
+        {{var_dump($contract->cancelled_at)}}
+        {{var_dump(is_object($contract->cancelled_at))}}
+        {{var_dump($contract->cancelled_at instanceof DateTime)}}
+        {{var_dump(get_class($contract->cancelled_at) == 'DateTime')}}
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
