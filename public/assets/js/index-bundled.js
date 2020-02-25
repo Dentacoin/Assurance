@@ -74278,17 +74278,16 @@ async function pagesDataOnContractInit() {
                 var next_payment_timestamp_unix;
                 var contractCreationAndPeriodToWithdraw = parseInt($('.single-contract-view-section').attr('data-date-start-contract')) + period_to_withdraw;
 
-                var months_passed_for_reward = Math.floor(time_passed_since_signed / period_to_withdraw);
-                var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(contractCreationAndPeriodToWithdraw);
-
                 var timer_label = '';
                 if (time_passed_since_signed > period_to_withdraw) {
+                    console.log(1);
                     // running grace period, because patient failed to execude the first payment in time
                     next_payment_timestamp_unix = contractCreationAndPeriodToWithdraw + dApp.grace_period - now_timestamp;
 
                     timer_label = 'Withdraw payment after (grace period):';
                     $('.clock').addClass('red-background');
                 }  else {
+                    console.log(1);
                     // running the period when patient has to execute the first payment
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                     timer_label = 'Withdraw payment after:';
@@ -74296,6 +74295,431 @@ async function pagesDataOnContractInit() {
 
                 $('.timer-label').html(timer_label);
                 initFlipClockTimer(next_payment_timestamp_unix);
+
+                $('.first-payment').html(dateObjToFormattedDate(new Date((parseInt($('.single-contract-view-section').attr('data-created-at')) + parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw())) * 1000)));
+
+                if ($('.single-contract-view-section').hasClass('awaiting-approval')) {
+                    var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
+                    const on_page_load_gwei = ethgasstation_json.safeLow;
+                    //adding 10% just in case the transaction dont fail
+                    const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
+
+                    //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+                    var gas_cost_for_contract_approval = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient-address')).estimateGas({from: global_state.account, gas: 500000});
+
+                    var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_contract_approval * on_page_load_gas_price).toString(), 'ether');
+
+                    var contract_approval_function_abi = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient-address')).encodeABI();
+
+                    // proceed to dentacoin wallet scanning
+                    $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                        var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+                        if (parseFloat(eth_fee) > current_user_eth_balance) {
+                            //not enough ETH balance
+                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                        } else {
+                            showLoader();
+
+                            var scanObject = {
+                                'type' : 'dentist-approval',
+                                'eth_fee' : eth_fee
+                            };
+
+                            scanObject['contractApproval'] = {
+                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + (gas_cost_for_contract_approval * 10 / 100))),
+                                gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                from: global_state.account,
+                                chainId: dApp.chain_id,
+                                data: contract_approval_function_abi,
+                                to: dApp.assurance_proxy_address
+                            };
+
+                            generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
+                        }
+                    });
+
+                    $('.approve-contract-recipe').click(function() {
+                        if (metamask) {
+                            basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
+                        } else {
+                            //custom
+                            if (!$('#read-the-contract-details').is(':checked')) {
+                                basic.showAlert('Please check the checkbox below to continue with the contract approval.', '', true);
+                                return false;
+                            }
+
+
+                            var cached_key = localStorage.getItem('current-account') == null;
+                            var ajax_data = {
+                                cached_key: cached_key,
+                                contract: $('.init-contract-section').attr('data-contract'),
+                                show_dcn_bar: false,
+                                recipe_title: 'Approve This Contract',
+                                recipe_subtitle: 'and withdraw monthly payments',
+                                recipe_checkbox_text: 'By clicking on the button below you confirm that from now on every month you will withdraw the monthly premium amount on the payment due date or later.',
+                                btn_label: 'APPROVE NOW'
+                            };
+
+                            if ($(this).attr('data-sent-eth-to-dentist') == 'true') {
+                                ajax_data.sent_eth_to_dentist = true;
+                                ajax_data.recipe_checkbox_text = 'To approve this contract and activate it on the blockchain, you need to pay the small fee above only once. We have sent you the needed amount. By clicking on the button below you confirm that from now on every month you will withdraw the monthly premium amount on the payment due date or later.';
+                            }
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/get-recipe-popup',
+                                dataType: 'json',
+                                data: ajax_data,
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: async function (response) {
+                                    if (response.success) {
+                                        basic.closeDialog();
+                                        basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                        $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                        $('.recipe-popup .ether-fee i').popover({
+                                            trigger: 'click',
+                                            html: true
+                                        });
+
+                                        var transaction_key;
+                                        if (cached_key) {
+                                            bindVerifyAddressLogic(true);
+                                            $(document).on('on-transaction-recipe-agree', function(event) {
+                                                transaction_key = event.response_data;
+                                                setTimeout(function() {
+                                                    hideLoader();
+
+                                                    $('.proof-of-address').remove();
+                                                    $('.proof-success').fadeIn(1500);
+                                                }, 500);
+                                            });
+                                        } else {
+                                            $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
+                                        }
+
+                                        $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
+                                            var this_btn = $(this);
+                                            var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+                                            if (parseFloat(eth_fee) > current_user_eth_balance) {
+                                                //not enough ETH balance
+                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                            } else {
+                                                if (global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                    basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                    return false;
+                                                } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                                    basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                    return false;
+                                                } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                    basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                    return false;
+                                                } else {
+                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
+                                                    setTimeout(async function() {
+                                                        if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                            var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                            if (decrypted_keystore_file_response.success) {
+                                                                transaction_key = decrypted_keystore_file_response.to_string;
+                                                            } else if (decrypted_keystore_file_response.error) {
+                                                                hideLoader();
+                                                                basic.showAlert(decrypted_keystore_file_response.message, '', true);
+                                                                return false;
+                                                            }
+                                                        }
+
+                                                        this_btn.unbind();
+                                                        const EthereumTx = require('ethereumjs-tx');
+                                                        var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
+
+                                                        var contract_approval_transaction_obj = {
+                                                            gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + (gas_cost_for_contract_approval * 10 / 100))),
+                                                            gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                            from: global_state.account,
+                                                            nonce: dApp.web3_1_0.utils.toHex(nonce),
+                                                            chainId: dApp.chain_id,
+                                                            data: contract_approval_function_abi,
+                                                            to: dApp.assurance_proxy_address
+                                                        };
+
+                                                        const contract_approval_transaction = new EthereumTx(contract_approval_transaction_obj);
+                                                        //signing the transaction
+                                                        contract_approval_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                                        //sending the transaction
+                                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                            var execute_ajax = true;
+                                                            //doing setinterval check to check if the smart creation transaction got mined
+                                                            var contract_approval_interval_check = setInterval(async function () {
+                                                                var contract_approval_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
+                                                                if (contract_approval_status != null && basic.property_exists(contract_approval_status, 'status')) {
+                                                                    if (contract_approval_status.status && execute_ajax) {
+                                                                        execute_ajax = false;
+
+                                                                        clearInterval(contract_approval_interval_check);
+                                                                        $.ajax({
+                                                                            type: 'POST',
+                                                                            url: '/dentist/on-blockchain-contract-approval',
+                                                                            dataType: 'json',
+                                                                            data: {
+                                                                                ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                            },
+                                                                            headers: {
+                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                            },
+                                                                            success: function (inner_response) {
+                                                                                if (inner_response.success) {
+                                                                                    hideLoader();
+                                                                                    basic.showDialog(inner_response.success, '', null, true);
+                                                                                    setTimeout(function () {
+                                                                                        window.location.reload();
+                                                                                    }, 3000);
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                }
+                                                            }, 1000);
+                                                        });
+                                                    }, 2000);
+                                                }
+                                            }
+                                        });
+                                    } else if (response.error) {
+                                        basic.showAlert(response.error, '', true);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            } else if ($('.contract-header').hasClass('active')) {
+                var now_timestamp = Math.round((new Date()).getTime() / 1000);
+                var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
+                var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-created-at'));
+
+                if (time_passed_since_signed > period_to_withdraw) {
+                    var remainder = time_passed_since_signed % period_to_withdraw;
+                    var next_payment_timestamp = (now_timestamp + period_to_withdraw - remainder) * 1000;
+                    var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
+                } else {
+                    var next_payment_timestamp = (now_timestamp + period_to_withdraw - time_passed_since_signed) * 1000;
+                    var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
+                }
+
+                $('.single-contract-view-section .row-with-bottom-squares .next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
+
+                var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.single-contract-view-section').attr('data-patient'), $('.single-contract-view-section').attr('data-dentist'));
+                var contract_dcn_amount = on_load_exiting_contract[5];
+                var contract_next_payment = parseInt(on_load_exiting_contract[0]);
+                var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
+
+                if (contract_next_payment > now_timestamp) {
+                    $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold ">MAKE YOUR NEXT WITHDRAW IN</h2></div> </div><div class="clock"></div><div class="flip-clock-message"></div></div></div>');
+                    initFlipClockTimer(contract_next_payment - now_timestamp);
+                } else if (contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > period_to_withdraw * 2 && current_patient_dcn_balance < (Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1) * contract_dcn_amount) {
+                    var months_dentist_didnt_withdraw = Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1;
+
+                    basic.showAlert('You haven\'t withdraw from this patient for ' + months_dentist_didnt_withdraw + ' months in a row, but the patient currently have not enough Dentacoins to cover all the months. Contact him and let him know to refill Dentacoins inside his Wallet Address.', '', true);
+                } else if (contract_next_payment < now_timestamp && now_timestamp < contract_next_payment + dApp.grace_period && current_patient_dcn_balance < contract_dcn_amount) {
+                    //show red counter (grace period)
+                    $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold">Overdue payment. If the patient doesn\'t fill in '+contract_dcn_amount+' Dentacoins inside his Wallet Address the contract will be canceled in:</h2></div> </div><div class="clock red-background"></div><div class="flip-clock-message"></div></div></div>');
+                    initFlipClockTimer(contract_next_payment + dApp.grace_period - now_timestamp);
+                } else {
+                    // ready to withdraw
+                    $('.camping-withdraw-section').html('<div class="row"><div class="col-xs-12 text-center padding-top-30 padding-bottom-30"><div class="fs-20">Your money is waiting for you.</div><div class="padding-bottom-20 fs-20">Withdraw the Dentacoin tokens collected by <span class="calibri-bold">'+$('.camping-withdraw-section').attr('data-patient-name')+'</span>.</div><div class="text-center"><a href="javascript:void(0)" class="blue-green-white-btn min-width-250 generate-qr-code-for-wallet-scanning inline-block-top margin-right-10 margin-bottom-10 width-xs-100 max-width-400 margin-right-xs-0"><svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;max-width: 25px;" xml:space="preserve" class="width-100 inline-block margin-right-10"><metadata><sfw xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds bottomLeftOrigin="true" height="24" width="24" x="0" y="0"></sliceSourceBounds></sfw></metadata><path d="M19,2c1.7,0,3,1.3,3,3v14c0,1.7-1.3,3-3,3H5c-1.7,0-3-1.3-3-3V5c0-1.7,1.3-3,3-3H19z M19,0H5C2.2,0,0,2.2,0,5v14c0,2.8,2.2,5,5,5h14c2.8,0,5-2.2,5-5V5C24,2.2,21.8,0,19,0z M11,8h-1V6h1v1h2v1h-1v1h-1V8z M13,20v-1h-1v1H13z M12,5V4h-2v1h1v1h1V5z M20,4v6h-1V9h-4V4H20z M19,8V5h-3v3H19z M5,10H4v1h2v-1H5z M5,13h1v1h1v-3H6v1H4v2h1V13z M10,14v2h1v-2H10z M14,4h-1v3h1V4z M14,9V8h-1v1H14z M17,7h1V6h-1V7z M7,6H6v1h1V6z M9,4v5H4V4H9z M8,5H5v3h3V5z M17,10v1h-1v-1h-2v1h-1v-1h-3V9H9v1H8v1h1v2h1v-1h1v2h1v-2h3v1h-2v1h2v1h1v-3h1v1h1v2h1v-1h1v-1h-1v-1h-1v-1h1v-1H17z M6,18h1v-1H6V18z M4,15h5v5H4V15z M5,19h3v-3H5V19z M17,16v-1h-1v1H17z M17,17h-1v1h-1v-1h-1v-1h1v-1h-2v-1h-1v2h-1v1h-1v3h1v-1h1v-1h2v2h1v-1h1v1h2v-1h1v-1h-2V17z M8,14h1v-1H8V14z M18,16v1h1v1h1v-3h-1v1H18z M20,20v-1h-1v1H20z M20,12v-1h-1v1H20z"/></svg> SCAN QR IN WALLET</a><a href="javascript:void(0)" class="dentist-withdraw white-blue-green-btn inline-block max-width-280 max-width-xs-400 margin-bottom-10 width-100"><svg class="inline-block-top margin-right-5" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 75.7 74.3" style="enable-background:new 0 0 75.7 74.3;max-width: 25px;" xml:space="preserve"><style type="text/css">.st0{fill:#FFFFFF;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds bottomLeftOrigin="true" height="74.3" width="75.7" x="12.2" y="37.8"></sliceSourceBounds></sfw></metadata><path class="st0" d="M29.7,32.2h-7.5l0,0c-0.1,0-0.2,0-0.3,0h-0.1c-0.1,0-0.1,0-0.2,0.1c-0.1,0-0.1,0-0.2,0.1c-0.1,0-0.1,0.1-0.2,0.1c-0.1,0-0.1,0.1-0.2,0.1l-0.1,0.1c-0.1,0-0.1,0.1-0.2,0.2l0,0L20.6,33c0,0.1-0.1,0.1-0.1,0.2s-0.1,0.1-0.1,0.2c0,0.1-0.1,0.1-0.1,0.2s0,0.1-0.1,0.2c0,0.1,0,0.1,0,0.2s0,0.1,0,0.2v0.1l0,0c0,0.1,0,0.2,0,0.2c0,0.1,0,0.1,0,0.2c0,0.1,0,0.1,0.1,0.2c0,0.1,0,0.1,0.1,0.2c0,0.1,0.1,0.1,0.1,0.2s0.1,0.1,0.1,0.2l0.1,0.1c0,0.1,0.1,0.1,0.1,0.2l0,0l15.4,14.5c0.4,0.4,0.9,0.5,1.4,0.5s1-0.2,1.4-0.5l15.4-14.5c0.8-0.8,0.8-2,0.1-2.8c-0.4-0.5-1-0.7-1.6-0.6h-0.1h-7.5v-2.9c0-1.1-0.9-2-2-2s-2,0.9-2,2v4.9c0,1.1,0.9,2,2,2H48l-10.4,9.8l-10.4-9.8h4.4c1.1,0,2-0.9,2-2v-4.9c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2L29.7,32.2L29.7,32.2z"/><path class="st0" d="M29.7,23.3c0,1.1,0.9,2,2,2c1.1,0,2-0.9,2-2v-3.2c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2V23.3z"/><path class="st0" d="M41.3,23.3c0,1.1,0.9,2,2,2s2-0.9,2-2v-3.2c0-1.1-0.9-2-2-2s-2,0.9-2,2V23.3z"/><path class="st0" d="M29.7,12.8c0,1.1,0.9,2,2,2c1.1,0,2-0.9,2-2v-1.4c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2V12.8z"/><path class="st0" d="M41.3,12.8c0,1.1,0.9,2,2,2s2-0.9,2-2v-1.4c0-1.1-0.9-2-2-2s-2,0.9-2,2V12.8z"/><path class="st0" d="M31.7,4.1c1.1,0,2-0.9,2-2V2c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2v0.1C29.7,3.2,30.6,4.1,31.7,4.1z"/><path class="st0" d="M43.3,4.1c1.1,0,2-0.9,2-2V2c0-1.1-0.9-2-2-2s-2,0.9-2,2v0.1C41.3,3.2,42.2,4.1,43.3,4.1z"/><path class="st0" d="M75.7,51.4V37.2c0-9.4-9.2-17.7-23.4-21.2c-1.1-0.3-2.2,0.4-2.4,1.5c-0.3,1.1,0.4,2.2,1.5,2.4c12.4,3,20.4,9.8,20.4,17.3c0,10.2-15.5,18.9-33.9,18.9S4,47.5,4,37.2c0-7.3,7.8-14.1,19.9-17.2c1.1-0.3,1.7-1.4,1.4-2.4c-0.3-1.1-1.4-1.7-2.4-1.4C9,19.8,0,28,0,37.2v14.2c0,12.8,16.6,22.9,37.9,22.9S75.7,64.2,75.7,51.4z M71.7,47.6v3.9c0,2.9-1.2,5.7-3.5,8.1V51C69.5,49.9,70.7,48.8,71.7,47.6z M11.2,53.6c1.4,0.8,2.9,1.6,4.6,2.3v9.7c-1.7-0.8-3.2-1.7-4.6-2.7V53.6zM19.8,57.4c1.8,0.6,3.6,1,5.5,1.4v10.1c-1.9-0.4-3.8-1-5.5-1.6V57.4z M29.3,59.5c2.1,0.3,4.3,0.5,6.5,0.5v10.2c-2.2-0.1-4.4-0.3-6.5-0.6V59.5z M39.8,60c2.2-0.1,4.3-0.2,6.3-0.5v10.2c-2,0.3-4.2,0.5-6.3,0.6V60z M50.1,58.8c1.9-0.4,3.8-0.9,5.5-1.4v9.9c-1.7,0.6-3.6,1.1-5.5,1.6C50.1,68.9,50.1,58.8,50.1,58.8z M59.7,56c1.6-0.7,3.2-1.4,4.6-2.3v9.4c-1.4,1-2.9,1.8-4.6,2.6V56z M3.9,51.4v-3.9c1,1.2,2.1,2.3,3.3,3.3v8.6C5.1,57,3.9,54.3,3.9,51.4z"/></svg> WITHDRAW NOW</a></div></div></div>');
+
+                    var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
+                    const on_page_load_gwei = ethgasstation_json.safeLow;
+                    //adding 10% just in case the transaction dont fail
+                    const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10 / 100);
+
+                    //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+                    var gas_cost_for_withdraw = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).estimateGas({
+                        from: global_state.account,
+                        gas: 500000
+                    });
+
+                    var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_withdraw * on_page_load_gas_price).toString(), 'ether');
+
+                    var withdraw_function_abi = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).encodeABI();
+
+                    // proceed to dentacoin wallet scanning
+                    $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                        var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+                        if (parseFloat(eth_fee) > current_user_eth_balance) {
+                            //not enough ETH balance
+                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                        } else {
+                            showLoader();
+
+                            var scanObject = {
+                                'type' : 'dentist-withdraw',
+                                'eth_fee' : eth_fee
+                            };
+
+                            scanObject['contractWithdraw'] = {
+                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_withdraw + (gas_cost_for_withdraw * 5/100))),
+                                gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                from: global_state.account,
+                                chainId: dApp.chain_id,
+                                data: withdraw_function_abi,
+                                to: dApp.assurance_proxy_address
+                            };
+
+                            generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
+                        }
+                    });
+
+                    $('.dentist-withdraw').click(async function() {
+                        if (metamask) {
+                            basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
+                        } else {
+                            //custom
+                            var cached_key = localStorage.getItem('current-account') == null;
+                            $.ajax({
+                                type: 'POST',
+                                url: '/get-recipe-popup',
+                                dataType: 'json',
+                                data: {
+                                    /*to: dApp.assurance_proxy_address,*/
+                                    cached_key: cached_key,
+                                    contract: $('.single-contract-view-section').attr('data-contract'),
+                                    show_dcn_bar: false,
+                                    recipe_title: 'WITHDRAW NOW',
+                                    recipe_subtitle: '',
+                                    recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.',
+                                    btn_label: 'PAY NOW'
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: async function (response) {
+                                    if (response.success) {
+                                        basic.closeDialog();
+                                        basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                        $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                        $('.recipe-popup .ether-fee i').popover({
+                                            trigger: 'click',
+                                            html: true
+                                        });
+
+                                        var transaction_key;
+                                        if (cached_key) {
+                                            bindVerifyAddressLogic(true);
+                                            $(document).on('on-transaction-recipe-agree', function(event) {
+                                                transaction_key = event.response_data;
+                                                setTimeout(function() {
+                                                    hideLoader();
+
+                                                    $('.proof-of-address').remove();
+                                                    $('.proof-success').fadeIn(1500);
+                                                }, 500);
+                                            });
+                                        } else {
+                                            $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
+                                        }
+
+                                        $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
+                                            var this_btn = $(this);
+                                            var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+                                            if (parseFloat(eth_fee) > current_user_eth_balance) {
+                                                //not enough ETH balance
+                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                            } else {
+                                                if (global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                    basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                    return false;
+                                                } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                                    basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                    return false;
+                                                } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                    basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                    return false;
+                                                } else {
+                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
+                                                    setTimeout(async function() {
+                                                        if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                            var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                            if (decrypted_keystore_file_response.success) {
+                                                                transaction_key = decrypted_keystore_file_response.to_string;
+                                                            } else if (decrypted_keystore_file_response.error) {
+                                                                hideLoader();
+                                                                basic.showAlert(decrypted_keystore_file_response.message, '', true);
+                                                                return false;
+                                                            }
+                                                        }
+                                                        this_btn.unbind();
+                                                        const EthereumTx = require('ethereumjs-tx');
+                                                        var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
+
+                                                        var withdraw_transaction_obj = {
+                                                            gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_withdraw + (gas_cost_for_withdraw * 5/100))),
+                                                            gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                            from: global_state.account,
+                                                            nonce: dApp.web3_1_0.utils.toHex(nonce),
+                                                            chainId: dApp.chain_id,
+                                                            data: withdraw_function_abi,
+                                                            to: dApp.assurance_proxy_address
+                                                        };
+
+                                                        const withdraw_transaction = new EthereumTx(withdraw_transaction_obj);
+                                                        //signing the transaction
+                                                        withdraw_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                                        //sending the transaction
+                                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + withdraw_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                            var execute_ajax = true;
+                                                            //doing setinterval check to check if the smart creation transaction got mined
+                                                            var withdraw_interval_check = setInterval(async function() {
+                                                                var withdraw_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
+                                                                if (withdraw_status != null && basic.property_exists(withdraw_status, 'status')) {
+                                                                    if (withdraw_status.status && execute_ajax) {
+                                                                        execute_ajax = false;
+                                                                        clearInterval(withdraw_interval_check);
+
+                                                                        //SEND EMAIL TO PATIENT
+                                                                        $.ajax({
+                                                                            type: 'POST',
+                                                                            url: '/notify-patient-for-successful-withdraw',
+                                                                            dataType: 'json',
+                                                                            data: {
+                                                                                transaction_hash: transactionHash,
+                                                                                contract: $('.single-contract-view-section').attr('data-contract')
+                                                                            },
+                                                                            headers: {
+                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                            },
+                                                                            success: async function (response) {
+
+                                                                            }
+                                                                        });
+
+                                                                        hideLoader();
+
+                                                                        basic.showDialog('<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">SUCCESSFULLY WITHDRAWN</div><div class="padding-top-20 padding-bottom-15 fs-20">You have successfully withdrawn your Dentacoins from this contract. You will be notified via email when next withdraw is possible.</div><div class="btn-container padding-bottom-40"><a href="javascript:void(0)" class="white-blue-green-btn min-width-200 close-popup">OK</a></div></div>', '', null, true);
+                                                                        setTimeout(function() {
+                                                                            window.location.reload();
+                                                                        }, 3000);
+                                                                    }
+                                                                }
+                                                            }, 1000);
+                                                        });
+                                                    }, 2000);
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
             }
         }
     }
@@ -76076,15 +76500,15 @@ function showLoader(message, type, time) {
         message = 'Loading ...';
     }
     if (type === undefined) {
-        $('.camping-loader').html('<div class="response-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/loader.gif" class="max-width-160" alt="Loader"></figure><div class="message text-center fs-24 lato-semibold">'+message+'</div></div></div>');
+        $('.camping-loader').html('<div class="response-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/loader.gif" class="max-width-160" alt="Loader"></figure><div class="message text-center fs-24 fs-xs-30 lato-semibold">'+message+'</div></div></div>');
         $('.response-layer').show();
     } else {
         console.log('type');
         if (type == 'contract-response-success-layer') {
-            $('.camping-loader').html('<div class="contract-response-success-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/contract-assurance-loading-success.gif" class="max-width-440 min-width-300" alt="Loader"></figure><div class="message text-center fs-24 lato-semibold">'+message+'</div></div></div>');
+            $('.camping-loader').html('<div class="contract-response-success-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/contract-assurance-loading-success.gif" class="max-width-440 min-width-300" alt="Loader"></figure><div class="message text-center fs-24 fs-xs-30 lato-semibold">'+message+'</div></div></div>');
             $('.contract-response-success-layer').show();
         } else if (type == 'contract-response-layer') {
-            $('.camping-loader').html('<div class="contract-response-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/contract-assurance-loading.gif" class="max-width-440 min-width-300" alt="Loader"></figure><div class="message text-center fs-24 lato-semibold">'+message+'</div></div></div>');
+            $('.camping-loader').html('<div class="contract-response-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/contract-assurance-loading.gif" class="max-width-440 min-width-300" alt="Loader"></figure><div class="message text-center fs-24 fs-xs-30 lato-semibold">'+message+'</div></div></div>');
             $('.contract-response-layer').show();
         }
     }
@@ -76149,17 +76573,17 @@ async function onDocumentReadyPageData() {
             initDataTable();
 
             var table_trs_with_timestamp = $('.table-container table tr[data-timestamp-signed]');
-            var smart_contract_withdraw_period = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
+            var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
             var now_timestamp = Math.round((new Date()).getTime() / 1000);
 
             for(var i = 0, len = table_trs_with_timestamp.length; i < len; i+=1) {
                 var time_passed_since_signed = now_timestamp - parseInt(table_trs_with_timestamp.eq(i).attr('data-timestamp-signed'));
-                if (time_passed_since_signed > smart_contract_withdraw_period) {
-                    var remainder = time_passed_since_signed % smart_contract_withdraw_period;
-                    var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - remainder) * 1000;
+                if (time_passed_since_signed > period_to_withdraw) {
+                    var remainder = time_passed_since_signed % period_to_withdraw;
+                    var next_payment_timestamp = (now_timestamp + period_to_withdraw - remainder) * 1000;
                     var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                 } else {
-                    var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - time_passed_since_signed) * 1000;
+                    var next_payment_timestamp = (now_timestamp + period_to_withdraw - time_passed_since_signed) * 1000;
                     var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                 }
 
@@ -76197,431 +76621,6 @@ async function onDocumentReadyPageData() {
 
             if ($('.single-contract-view-section').hasClass('pending')) {
                 initPopupEvents();
-            } else if ($('.single-contract-view-section').hasClass('awaiting-payment') || $('.single-contract-view-section').hasClass('awaiting-approval')) {
-                $('.first-payment').html(dateObjToFormattedDate(new Date((parseInt($('.single-contract-view-section').attr('data-created-at')) + parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw())) * 1000)));
-
-                if ($('.single-contract-view-section').hasClass('awaiting-approval')) {
-                    var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
-                    const on_page_load_gwei = ethgasstation_json.safeLow;
-                    //adding 10% just in case the transaction dont fail
-                    const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
-
-                    //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                    var gas_cost_for_contract_approval = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient-address')).estimateGas({from: global_state.account, gas: 500000});
-
-                    var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_contract_approval * on_page_load_gas_price).toString(), 'ether');
-
-                    var contract_approval_function_abi = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient-address')).encodeABI();
-
-                    // proceed to dentacoin wallet scanning
-                    $('.generate-qr-code-for-wallet-scanning').click(async function() {
-                        var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                        if (parseFloat(eth_fee) > current_user_eth_balance) {
-                            //not enough ETH balance
-                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
-                        } else {
-                            showLoader();
-
-                            var scanObject = {
-                                'type' : 'dentist-approval',
-                                'eth_fee' : eth_fee
-                            };
-
-                            scanObject['contractApproval'] = {
-                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + (gas_cost_for_contract_approval * 10 / 100))),
-                                gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                from: global_state.account,
-                                chainId: dApp.chain_id,
-                                data: contract_approval_function_abi,
-                                to: dApp.assurance_proxy_address
-                            };
-
-                            generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
-                        }
-                    });
-
-                    $('.approve-contract-recipe').click(function() {
-                        if (metamask) {
-                            basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
-                        } else {
-                            //custom
-                            if (!$('#read-the-contract-details').is(':checked')) {
-                                basic.showAlert('Please check the checkbox below to continue with the contract approval.', '', true);
-                                return false;
-                            }
-
-
-                            var cached_key = localStorage.getItem('current-account') == null;
-                            var ajax_data = {
-                                cached_key: cached_key,
-                                contract: $('.init-contract-section').attr('data-contract'),
-                                show_dcn_bar: false,
-                                recipe_title: 'Approve This Contract',
-                                recipe_subtitle: 'and withdraw monthly payments',
-                                recipe_checkbox_text: 'By clicking on the button below you confirm that from now on every month you will withdraw the monthly premium amount on the payment due date or later.',
-                                btn_label: 'APPROVE NOW'
-                            };
-
-                            if ($(this).attr('data-sent-eth-to-dentist') == 'true') {
-                                ajax_data.sent_eth_to_dentist = true;
-                                ajax_data.recipe_checkbox_text = 'To approve this contract and activate it on the blockchain, you need to pay the small fee above only once. We have sent you the needed amount. By clicking on the button below you confirm that from now on every month you will withdraw the monthly premium amount on the payment due date or later.';
-                            }
-
-                            $.ajax({
-                                type: 'POST',
-                                url: '/get-recipe-popup',
-                                dataType: 'json',
-                                data: ajax_data,
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success: async function (response) {
-                                    if (response.success) {
-                                        basic.closeDialog();
-                                        basic.showDialog(response.success, 'recipe-popup', null, true);
-
-                                        $('.recipe-popup .ether-fee .field').html(eth_fee);
-
-                                        $('.recipe-popup .ether-fee i').popover({
-                                            trigger: 'click',
-                                            html: true
-                                        });
-
-                                        var transaction_key;
-                                        if (cached_key) {
-                                            bindVerifyAddressLogic(true);
-                                            $(document).on('on-transaction-recipe-agree', function(event) {
-                                                transaction_key = event.response_data;
-                                                setTimeout(function() {
-                                                    hideLoader();
-
-                                                    $('.proof-of-address').remove();
-                                                    $('.proof-success').fadeIn(1500);
-                                                }, 500);
-                                            });
-                                        } else {
-                                            $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
-                                        }
-
-                                        $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
-                                            var this_btn = $(this);
-                                            var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                                            if (parseFloat(eth_fee) > current_user_eth_balance) {
-                                                //not enough ETH balance
-                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
-                                            } else {
-                                                if (global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
-                                                    basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
-                                                    return false;
-                                                } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
-                                                    basic.showAlert('Please enter the secret password for your keystore file.', '', true);
-                                                    return false;
-                                                } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                    basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
-                                                    return false;
-                                                } else {
-                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
-                                                    setTimeout(async function() {
-                                                        if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                            var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
-                                                            if (decrypted_keystore_file_response.success) {
-                                                                transaction_key = decrypted_keystore_file_response.to_string;
-                                                            } else if (decrypted_keystore_file_response.error) {
-                                                                hideLoader();
-                                                                basic.showAlert(decrypted_keystore_file_response.message, '', true);
-                                                                return false;
-                                                            }
-                                                        }
-
-                                                        this_btn.unbind();
-                                                        const EthereumTx = require('ethereumjs-tx');
-                                                        var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
-
-                                                        var contract_approval_transaction_obj = {
-                                                            gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + (gas_cost_for_contract_approval * 10 / 100))),
-                                                            gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                            from: global_state.account,
-                                                            nonce: dApp.web3_1_0.utils.toHex(nonce),
-                                                            chainId: dApp.chain_id,
-                                                            data: contract_approval_function_abi,
-                                                            to: dApp.assurance_proxy_address
-                                                        };
-
-                                                        const contract_approval_transaction = new EthereumTx(contract_approval_transaction_obj);
-                                                        //signing the transaction
-                                                        contract_approval_transaction.sign(new Buffer(transaction_key, 'hex'));
-
-                                                        //sending the transaction
-                                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                            var execute_ajax = true;
-                                                            //doing setinterval check to check if the smart creation transaction got mined
-                                                            var contract_approval_interval_check = setInterval(async function () {
-                                                                var contract_approval_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                                if (contract_approval_status != null && basic.property_exists(contract_approval_status, 'status')) {
-                                                                    if (contract_approval_status.status && execute_ajax) {
-                                                                        execute_ajax = false;
-
-                                                                        clearInterval(contract_approval_interval_check);
-                                                                        $.ajax({
-                                                                            type: 'POST',
-                                                                            url: '/dentist/on-blockchain-contract-approval',
-                                                                            dataType: 'json',
-                                                                            data: {
-                                                                                ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                            },
-                                                                            headers: {
-                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                            },
-                                                                            success: function (inner_response) {
-                                                                                if (inner_response.success) {
-                                                                                    hideLoader();
-                                                                                    basic.showDialog(inner_response.success, '', null, true);
-                                                                                    setTimeout(function () {
-                                                                                        window.location.reload();
-                                                                                    }, 3000);
-                                                                                }
-                                                                            }
-                                                                        });
-                                                                    }
-                                                                }
-                                                            }, 1000);
-                                                        });
-                                                    }, 2000);
-                                                }
-                                            }
-                                        });
-                                    } else if (response.error) {
-                                        basic.showAlert(response.error, '', true);
-                                    }
-                                }
-                            });
-                        }
-                    });
-                }
-            } else if ($('.single-contract-view-section').hasClass('active')) {
-                var now_timestamp = Math.round((new Date()).getTime() / 1000);
-                var smart_contract_withdraw_period = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
-                var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-created-at'));
-
-                if (time_passed_since_signed > smart_contract_withdraw_period) {
-                    var remainder = time_passed_since_signed % smart_contract_withdraw_period;
-                    var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - remainder) * 1000;
-                    var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                } else {
-                    var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - time_passed_since_signed) * 1000;
-                    var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                }
-
-                $('.single-contract-view-section .row-with-bottom-squares .next-payment').html(dateObjToFormattedDate(next_payment_timestamp_date_obj));
-
-                var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.single-contract-view-section').attr('data-patient'), $('.single-contract-view-section').attr('data-dentist'));
-                var contract_dcn_amount = on_load_exiting_contract[5];
-                var contract_next_payment = parseInt(on_load_exiting_contract[0]);
-                var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
-
-                if (contract_next_payment > now_timestamp) {
-                    $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold ">MAKE YOUR NEXT WITHDRAW IN</h2></div> </div><div class="clock"></div><div class="flip-clock-message"></div></div></div>');
-                    initFlipClockTimer(contract_next_payment - now_timestamp);
-                } else if (contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > smart_contract_withdraw_period * 2 && current_patient_dcn_balance < (Math.floor((now_timestamp - contract_next_payment) / smart_contract_withdraw_period) + 1) * contract_dcn_amount) {
-                    var months_dentist_didnt_withdraw = Math.floor((now_timestamp - contract_next_payment) / smart_contract_withdraw_period) + 1;
-
-                    basic.showAlert('You haven\'t withdraw from this patient for ' + months_dentist_didnt_withdraw + ' months in a row, but the patient currently have not enough Dentacoins to cover all the months. Contact him and let him know to refill Dentacoins inside his Wallet Address.', '', true);
-                } else if (contract_next_payment < now_timestamp && now_timestamp < contract_next_payment + dApp.grace_period && current_patient_dcn_balance < contract_dcn_amount) {
-                    //show red counter (grace period)
-                    $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold">Overdue payment. If the patient doesn\'t fill in '+contract_dcn_amount+' Dentacoins inside his Wallet Address the contract will be canceled in:</h2></div> </div><div class="clock red-background"></div><div class="flip-clock-message"></div></div></div>');
-                    initFlipClockTimer(contract_next_payment + dApp.grace_period - now_timestamp);
-                } else {
-                    // ready to withdraw
-                    $('.camping-withdraw-section').html('<div class="row"><div class="col-xs-12 text-center padding-top-30 padding-bottom-30"><div class="fs-20">Your money is waiting for you.</div><div class="padding-bottom-20 fs-20">Withdraw the Dentacoin tokens collected by <span class="calibri-bold">'+$('.camping-withdraw-section').attr('data-patient-name')+'</span>.</div><div class="text-center"><a href="javascript:void(0)" class="blue-green-white-btn min-width-250 generate-qr-code-for-wallet-scanning inline-block-top margin-right-10 margin-bottom-10 width-xs-100 max-width-400 margin-right-xs-0"><svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;max-width: 25px;" xml:space="preserve" class="width-100 inline-block margin-right-10"><metadata><sfw xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds bottomLeftOrigin="true" height="24" width="24" x="0" y="0"></sliceSourceBounds></sfw></metadata><path d="M19,2c1.7,0,3,1.3,3,3v14c0,1.7-1.3,3-3,3H5c-1.7,0-3-1.3-3-3V5c0-1.7,1.3-3,3-3H19z M19,0H5C2.2,0,0,2.2,0,5v14c0,2.8,2.2,5,5,5h14c2.8,0,5-2.2,5-5V5C24,2.2,21.8,0,19,0z M11,8h-1V6h1v1h2v1h-1v1h-1V8z M13,20v-1h-1v1H13z M12,5V4h-2v1h1v1h1V5z M20,4v6h-1V9h-4V4H20z M19,8V5h-3v3H19z M5,10H4v1h2v-1H5z M5,13h1v1h1v-3H6v1H4v2h1V13z M10,14v2h1v-2H10z M14,4h-1v3h1V4z M14,9V8h-1v1H14z M17,7h1V6h-1V7z M7,6H6v1h1V6z M9,4v5H4V4H9z M8,5H5v3h3V5z M17,10v1h-1v-1h-2v1h-1v-1h-3V9H9v1H8v1h1v2h1v-1h1v2h1v-2h3v1h-2v1h2v1h1v-3h1v1h1v2h1v-1h1v-1h-1v-1h-1v-1h1v-1H17z M6,18h1v-1H6V18z M4,15h5v5H4V15z M5,19h3v-3H5V19z M17,16v-1h-1v1H17z M17,17h-1v1h-1v-1h-1v-1h1v-1h-2v-1h-1v2h-1v1h-1v3h1v-1h1v-1h2v2h1v-1h1v1h2v-1h1v-1h-2V17z M8,14h1v-1H8V14z M18,16v1h1v1h1v-3h-1v1H18z M20,20v-1h-1v1H20z M20,12v-1h-1v1H20z"/></svg> SCAN QR IN WALLET</a><a href="javascript:void(0)" class="dentist-withdraw white-blue-green-btn inline-block max-width-280 max-width-xs-400 margin-bottom-10 width-100"><svg class="inline-block-top margin-right-5" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 75.7 74.3" style="enable-background:new 0 0 75.7 74.3;max-width: 25px;" xml:space="preserve"><style type="text/css">.st0{fill:#FFFFFF;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds bottomLeftOrigin="true" height="74.3" width="75.7" x="12.2" y="37.8"></sliceSourceBounds></sfw></metadata><path class="st0" d="M29.7,32.2h-7.5l0,0c-0.1,0-0.2,0-0.3,0h-0.1c-0.1,0-0.1,0-0.2,0.1c-0.1,0-0.1,0-0.2,0.1c-0.1,0-0.1,0.1-0.2,0.1c-0.1,0-0.1,0.1-0.2,0.1l-0.1,0.1c-0.1,0-0.1,0.1-0.2,0.2l0,0L20.6,33c0,0.1-0.1,0.1-0.1,0.2s-0.1,0.1-0.1,0.2c0,0.1-0.1,0.1-0.1,0.2s0,0.1-0.1,0.2c0,0.1,0,0.1,0,0.2s0,0.1,0,0.2v0.1l0,0c0,0.1,0,0.2,0,0.2c0,0.1,0,0.1,0,0.2c0,0.1,0,0.1,0.1,0.2c0,0.1,0,0.1,0.1,0.2c0,0.1,0.1,0.1,0.1,0.2s0.1,0.1,0.1,0.2l0.1,0.1c0,0.1,0.1,0.1,0.1,0.2l0,0l15.4,14.5c0.4,0.4,0.9,0.5,1.4,0.5s1-0.2,1.4-0.5l15.4-14.5c0.8-0.8,0.8-2,0.1-2.8c-0.4-0.5-1-0.7-1.6-0.6h-0.1h-7.5v-2.9c0-1.1-0.9-2-2-2s-2,0.9-2,2v4.9c0,1.1,0.9,2,2,2H48l-10.4,9.8l-10.4-9.8h4.4c1.1,0,2-0.9,2-2v-4.9c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2L29.7,32.2L29.7,32.2z"/><path class="st0" d="M29.7,23.3c0,1.1,0.9,2,2,2c1.1,0,2-0.9,2-2v-3.2c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2V23.3z"/><path class="st0" d="M41.3,23.3c0,1.1,0.9,2,2,2s2-0.9,2-2v-3.2c0-1.1-0.9-2-2-2s-2,0.9-2,2V23.3z"/><path class="st0" d="M29.7,12.8c0,1.1,0.9,2,2,2c1.1,0,2-0.9,2-2v-1.4c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2V12.8z"/><path class="st0" d="M41.3,12.8c0,1.1,0.9,2,2,2s2-0.9,2-2v-1.4c0-1.1-0.9-2-2-2s-2,0.9-2,2V12.8z"/><path class="st0" d="M31.7,4.1c1.1,0,2-0.9,2-2V2c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2v0.1C29.7,3.2,30.6,4.1,31.7,4.1z"/><path class="st0" d="M43.3,4.1c1.1,0,2-0.9,2-2V2c0-1.1-0.9-2-2-2s-2,0.9-2,2v0.1C41.3,3.2,42.2,4.1,43.3,4.1z"/><path class="st0" d="M75.7,51.4V37.2c0-9.4-9.2-17.7-23.4-21.2c-1.1-0.3-2.2,0.4-2.4,1.5c-0.3,1.1,0.4,2.2,1.5,2.4c12.4,3,20.4,9.8,20.4,17.3c0,10.2-15.5,18.9-33.9,18.9S4,47.5,4,37.2c0-7.3,7.8-14.1,19.9-17.2c1.1-0.3,1.7-1.4,1.4-2.4c-0.3-1.1-1.4-1.7-2.4-1.4C9,19.8,0,28,0,37.2v14.2c0,12.8,16.6,22.9,37.9,22.9S75.7,64.2,75.7,51.4z M71.7,47.6v3.9c0,2.9-1.2,5.7-3.5,8.1V51C69.5,49.9,70.7,48.8,71.7,47.6z M11.2,53.6c1.4,0.8,2.9,1.6,4.6,2.3v9.7c-1.7-0.8-3.2-1.7-4.6-2.7V53.6zM19.8,57.4c1.8,0.6,3.6,1,5.5,1.4v10.1c-1.9-0.4-3.8-1-5.5-1.6V57.4z M29.3,59.5c2.1,0.3,4.3,0.5,6.5,0.5v10.2c-2.2-0.1-4.4-0.3-6.5-0.6V59.5z M39.8,60c2.2-0.1,4.3-0.2,6.3-0.5v10.2c-2,0.3-4.2,0.5-6.3,0.6V60z M50.1,58.8c1.9-0.4,3.8-0.9,5.5-1.4v9.9c-1.7,0.6-3.6,1.1-5.5,1.6C50.1,68.9,50.1,58.8,50.1,58.8z M59.7,56c1.6-0.7,3.2-1.4,4.6-2.3v9.4c-1.4,1-2.9,1.8-4.6,2.6V56z M3.9,51.4v-3.9c1,1.2,2.1,2.3,3.3,3.3v8.6C5.1,57,3.9,54.3,3.9,51.4z"/></svg> WITHDRAW NOW</a></div></div></div>');
-
-                    var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
-                    const on_page_load_gwei = ethgasstation_json.safeLow;
-                    //adding 10% just in case the transaction dont fail
-                    const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10 / 100);
-
-                    //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                    var gas_cost_for_withdraw = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).estimateGas({
-                        from: global_state.account,
-                        gas: 500000
-                    });
-
-                    var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_withdraw * on_page_load_gas_price).toString(), 'ether');
-
-                    var withdraw_function_abi = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).encodeABI();
-
-                    // proceed to dentacoin wallet scanning
-                    $('.generate-qr-code-for-wallet-scanning').click(async function() {
-                        var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                        if (parseFloat(eth_fee) > current_user_eth_balance) {
-                            //not enough ETH balance
-                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
-                        } else {
-                            showLoader();
-
-                            var scanObject = {
-                                'type' : 'dentist-withdraw',
-                                'eth_fee' : eth_fee
-                            };
-
-                            scanObject['contractWithdraw'] = {
-                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_withdraw + (gas_cost_for_withdraw * 5/100))),
-                                gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                from: global_state.account,
-                                chainId: dApp.chain_id,
-                                data: withdraw_function_abi,
-                                to: dApp.assurance_proxy_address
-                            };
-
-                            generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
-                        }
-                    });
-
-                    $('.dentist-withdraw').click(async function() {
-                        if (metamask) {
-                            basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
-                        } else {
-                            //custom
-                            var cached_key = localStorage.getItem('current-account') == null;
-                            $.ajax({
-                                type: 'POST',
-                                url: '/get-recipe-popup',
-                                dataType: 'json',
-                                data: {
-                                    /*to: dApp.assurance_proxy_address,*/
-                                    cached_key: cached_key,
-                                    contract: $('.single-contract-view-section').attr('data-contract'),
-                                    show_dcn_bar: false,
-                                    recipe_title: 'WITHDRAW NOW',
-                                    recipe_subtitle: '',
-                                    recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.',
-                                    btn_label: 'PAY NOW'
-                                },
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success: async function (response) {
-                                    if (response.success) {
-                                        basic.closeDialog();
-                                        basic.showDialog(response.success, 'recipe-popup', null, true);
-
-                                        $('.recipe-popup .ether-fee .field').html(eth_fee);
-
-                                        $('.recipe-popup .ether-fee i').popover({
-                                            trigger: 'click',
-                                            html: true
-                                        });
-
-                                        var transaction_key;
-                                        if (cached_key) {
-                                            bindVerifyAddressLogic(true);
-                                            $(document).on('on-transaction-recipe-agree', function(event) {
-                                                transaction_key = event.response_data;
-                                                setTimeout(function() {
-                                                    hideLoader();
-
-                                                    $('.proof-of-address').remove();
-                                                    $('.proof-success').fadeIn(1500);
-                                                }, 500);
-                                            });
-                                        } else {
-                                            $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
-                                        }
-
-                                        $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
-                                            var this_btn = $(this);
-                                            var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                                            if (parseFloat(eth_fee) > current_user_eth_balance) {
-                                                //not enough ETH balance
-                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
-                                            } else {
-                                                if (global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
-                                                    basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
-                                                    return false;
-                                                } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
-                                                    basic.showAlert('Please enter the secret password for your keystore file.', '', true);
-                                                    return false;
-                                                } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                    basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
-                                                    return false;
-                                                } else {
-                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
-                                                    setTimeout(async function() {
-                                                        if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                            var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
-                                                            if (decrypted_keystore_file_response.success) {
-                                                                transaction_key = decrypted_keystore_file_response.to_string;
-                                                            } else if (decrypted_keystore_file_response.error) {
-                                                                hideLoader();
-                                                                basic.showAlert(decrypted_keystore_file_response.message, '', true);
-                                                                return false;
-                                                            }
-                                                        }
-                                                        this_btn.unbind();
-                                                        const EthereumTx = require('ethereumjs-tx');
-                                                        var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
-
-                                                        var withdraw_transaction_obj = {
-                                                            gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_withdraw + (gas_cost_for_withdraw * 5/100))),
-                                                            gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                            from: global_state.account,
-                                                            nonce: dApp.web3_1_0.utils.toHex(nonce),
-                                                            chainId: dApp.chain_id,
-                                                            data: withdraw_function_abi,
-                                                            to: dApp.assurance_proxy_address
-                                                        };
-
-                                                        const withdraw_transaction = new EthereumTx(withdraw_transaction_obj);
-                                                        //signing the transaction
-                                                        withdraw_transaction.sign(new Buffer(transaction_key, 'hex'));
-
-                                                        //sending the transaction
-                                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + withdraw_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                            var execute_ajax = true;
-                                                            //doing setinterval check to check if the smart creation transaction got mined
-                                                            var withdraw_interval_check = setInterval(async function() {
-                                                                var withdraw_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                                if (withdraw_status != null && basic.property_exists(withdraw_status, 'status')) {
-                                                                    if (withdraw_status.status && execute_ajax) {
-                                                                        execute_ajax = false;
-                                                                        clearInterval(withdraw_interval_check);
-
-                                                                        //SEND EMAIL TO PATIENT
-                                                                        $.ajax({
-                                                                            type: 'POST',
-                                                                            url: '/notify-patient-for-successful-withdraw',
-                                                                            dataType: 'json',
-                                                                            data: {
-                                                                                transaction_hash: transactionHash,
-                                                                                contract: $('.single-contract-view-section').attr('data-contract')
-                                                                            },
-                                                                            headers: {
-                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                            },
-                                                                            success: async function (response) {
-
-                                                                            }
-                                                                        });
-
-                                                                        hideLoader();
-
-                                                                        basic.showDialog('<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">SUCCESSFULLY WITHDRAWN</div><div class="padding-top-20 padding-bottom-15 fs-20">You have successfully withdrawn your Dentacoins from this contract. You will be notified via email when next withdraw is possible.</div><div class="btn-container padding-bottom-40"><a href="javascript:void(0)" class="white-blue-green-btn min-width-200 close-popup">OK</a></div></div>', '', null, true);
-                                                                        setTimeout(function() {
-                                                                            window.location.reload();
-                                                                        }, 3000);
-                                                                    }
-                                                                }
-                                                            }, 1000);
-                                                        });
-                                                    }, 2000);
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                        }
-                    });
-                }
             }
         } else if ($('body').hasClass('patient-contract-view')) {
             if ($('.terms-and-conditions-long-list').length) {
