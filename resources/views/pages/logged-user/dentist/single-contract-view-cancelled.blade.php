@@ -5,7 +5,7 @@
     @else
         @php($active_timestamp = strtotime($contract->contract_active_at))
     @endif
-    @if(is_object($contract->cancelled_at))
+    @if($contract->cancelled_at instanceof DateTime)
         @php($cancelled_timestamp = strtotime($contract->cancelled_at->getTimestamp()))
     @else
         @php($cancelled_timestamp = strtotime($contract->cancelled_at))
@@ -23,7 +23,6 @@
         @php($avatar_url = '/assets/images/no-avatar.png')
     @endif
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section cancelled" data-created-at="{{strtotime($active_timestamp)}}">
-        {{var_dump($contract->cancelled_at)}}
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
