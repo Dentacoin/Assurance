@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CalculatorParameter;
 use App\ContractCheckup;
+use App\FreeETHReceiver;
 use App\InviteDentistsReward;
 use App\PublicKey;
 use App\TemporallyContract;
@@ -416,8 +417,10 @@ class PatientController extends Controller {
                 $contract->status = 'awaiting-payment';
 
                 $this_patient_having_contracts = TemporallyContract::where(array('patient_id' => $logged_patient->id))->get()->all();
+                $alreadySentEthToThisUser = FreeETHReceiver::where(array('walletAddress' => $contract->patient_address))->get()->first();
+
                 //send ETH amount to patient
-                if(sizeof($this_patient_having_contracts) == 0) {
+                if(sizeof($this_patient_having_contracts) == 0 && empty($alreadySentEthToThisUser)) {
                     //only if no previous contracts, aka sending only for first contract
                     //request to nodejs server, if the transaction fails the nodejs server will recover back the tokens to user balance in DB
                     $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
@@ -429,6 +432,11 @@ class PatientController extends Controller {
                     );
 
                     $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendEthAmount(hash('sha256', getenv('SECRET_PASSWORD').json_encode($sendEthAmountParams)), 'patient-approval-and-contract-creation', $contract->patient_address, $contract->dentist_address, $gasPrice, $contract->monthly_premium, $contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'), $contract->contract_active_at->getTimestamp(), $contract->document_hash);
+
+                    // saving record that we sent eth amount to this user
+                    $freeETHReceiver = new FreeETHReceiver();
+                    $freeETHReceiver->walletAddress = $contract->dentist_address;
+                    $freeETHReceiver->save();
 
                     if(is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
                         $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
@@ -443,6 +451,9 @@ class PatientController extends Controller {
                         $contract->save();
                         return redirect()->route('patient-contract-view', ['slug' => $data['contract']])/*->with(['congratulations' => true])*/;
                     } else {
+                        // deleting the record if the transaction fails
+                        $freeETHReceiver->delete();
+
                         return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "1 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
                     }
                 } else {

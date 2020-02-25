@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CalculatorParameter;
 use App\ContractCheckup;
+use App\FreeETHReceiver;
 use App\InviteDentistsReward;
 use App\TemporallyContract;
 use Illuminate\Http\Request;
@@ -21,19 +22,18 @@ class DentistController extends Controller
         $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
         $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
         $params = ['contract' => $contract, 'calculator_proposals' => $calculator_proposals, 'current_logged_dentist' => $current_logged_dentist];
-        var_dump($slug);
         if (!empty($contract)) {
             if ($contract->status == 'active' || $contract->status == 'awaiting-approval') {
                 //checking here if the contract withdraw period and grace period passed and the patient still didnt full in his wallet address
                 (new UserController())->automaticContractCancel($contract);
+            } else if ($contract->status == 'awaiting-payment') {
+                (new UserController())->automaticContractCancel($contract, false);
             }
-
-            var_dump($contract->status);
-            die('asd');
 
             if ($contract->status == 'awaiting-approval') {
                 $this_dentist_having_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->all();
-                if (sizeof($this_dentist_having_contracts) == 1) {
+                $alreadySentEthToThisUser = FreeETHReceiver::where(array('walletAddress' => $contract->dentist_address))->get()->first();
+                if (sizeof($this_dentist_having_contracts) == 1 && empty($alreadySentEthToThisUser)) {
                     //send ETH to dentist only for his first contract
                     $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
                     $sendEthAmountParams = array(
@@ -43,9 +43,17 @@ class DentistController extends Controller
                         'gas_price' => $gasPrice
                     );
 
+                    // saving record that we sent eth amount to this user
+                    $freeETHReceiver = new FreeETHReceiver();
+                    $freeETHReceiver->walletAddress = $contract->dentist_address;
+                    $freeETHReceiver->save();
+
                     $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendEthAmount(hash('sha256', getenv('SECRET_PASSWORD').json_encode($sendEthAmountParams)), 'dentist-approval', $contract->patient_address, $contract->dentist_address, $gasPrice);
                     if(is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
                         $params['sent_eth_to_dentist'] = true;
+                    } else {
+                        // deleting the record if the transaction fails
+                        $freeETHReceiver->delete();
                     }
                 }
             }

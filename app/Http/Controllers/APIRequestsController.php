@@ -490,10 +490,10 @@ class APIRequestsController extends Controller {
     }
 
     //this method is not from the CoreDB
-    public function cancelIfLatePayment($patient_addr, $dentist_addr) {
+    public function cancelIfLatePayment($hash, $patient_address, $dentist_address, $gasPrice) {
         $curl = curl_init();
 
-        $json = '{"patient_addr":"'.$patient_addr.'", "dentist_addr":"'.$dentist_addr.'", "gas_price":"'.$this->getGasEstimationFromEthgasstation().'"}';
+        $json = '{"hash":"'.$hash.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "gas_price":"'.$gasPrice.'"}';
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
