@@ -629,7 +629,7 @@ class UserController extends Controller {
                 // send cancel notification email to dentist and patient
             }
         } else {
-            var_dump($contract->active_at);
+            var_dump($contract->contract_active_at);
             die('asd');
 
             $cancellation_reason = array(
