@@ -10350,7 +10350,8 @@ section.contract-proposal .wrapper .step-fields .singatures-row {
   .my-contracts .table-container, .my-contracts-container .table-container {
     /*.dataTables_wrapper {
         overflow-x: scroll;
-    }*/ }
+    }*/
+    overflow: auto; }
     .my-contracts .table-container .hide-this, .my-contracts-container .table-container .hide-this {
       display: none; }
     .my-contracts .table-container .dataTables_empty, .my-contracts-container .table-container .dataTables_empty {
@@ -10499,7 +10500,7 @@ section.contract-proposal .wrapper .step-fields .singatures-row {
       white-space: nowrap; }
       .my-contracts .table-container .avatar-and-name figure, .my-contracts-container .table-container .avatar-and-name figure {
         width: 45px;
-        padding-right: 5px; }
+        padding-left: 5px; }
     .my-contracts .table-container .status, .my-contracts-container .table-container .status {
       text-align: left; }
       .my-contracts .table-container .status .alike-btn, .my-contracts-container .table-container .status .alike-btn {

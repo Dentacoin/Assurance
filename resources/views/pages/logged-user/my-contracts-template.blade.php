@@ -6,8 +6,8 @@
     <link rel="shortcut icon" href="{{URL::asset('assets/images/favicon.png') }}" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.2">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.2">
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.3">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.3">
     <script>
         var HOME_URL = '{{ route("home") }}';
     </script>
@@ -35,11 +35,11 @@
         @endif
     </div>
     {{--/Show the sticky calculate button only for dentists--}}
-    <script src="https://dentacoin.com/assets/js/basic.js?v=1.0.2"></script>
-    <script src="/dist/js/front-libs-script.js?v=1.0.2"></script>
-    {{--<script src="/dist/js/front-script.js?v=1.0.23"></script>--}}
-    <script src="/assets/js/address.js?v=1.0.2"></script>
-    <script src="/assets/js/index-bundled.js?v=1.0.2"></script>
+    <script src="https://dentacoin.com/assets/js/basic.js?v=1.0.3"></script>
+    <script src="/dist/js/front-libs-script.js?v=1.0.3"></script>
+    {{--<script src="/dist/js/front-script.js?v=1.0.33"></script>--}}
+    <script src="/assets/js/address.js?v=1.0.3"></script>
+    <script src="/assets/js/index-bundled.js?v=1.0.3"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 </body>
 </html>
