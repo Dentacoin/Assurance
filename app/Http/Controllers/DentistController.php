@@ -25,9 +25,9 @@ class DentistController extends Controller
         if (!empty($contract)) {
             if ($contract->status == 'active' || $contract->status == 'awaiting-approval') {
                 //checking here if the contract withdraw period and grace period passed and the patient still didnt full in his wallet address
-                (new UserController())->automaticContractCancel($contract);
+                $contract = (new UserController())->automaticContractCancel($contract);
             } else if ($contract->status == 'awaiting-payment' || $contract->status == 'pending') {
-                (new UserController())->automaticContractCancel($contract, false);
+                $contract = (new UserController())->automaticContractCancel($contract, false);
             }
 
             if ($contract->status == 'awaiting-approval') {
@@ -58,7 +58,6 @@ class DentistController extends Controller
                 }
             }
 
-            
             return view('pages/logged-user/dentist/single-contract-view-'.$contract->status, $params);
         } else {
             return abort(404);

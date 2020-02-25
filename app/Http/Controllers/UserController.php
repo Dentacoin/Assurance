@@ -643,5 +643,7 @@ class UserController extends Controller {
                 }
             }
         }
+
+        return $contract;
     }
 }
