@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="//account.dentacoin.com/my-contracts" itemprop="url">
+                    <a href="//account.dentacoin.com/my-contracts?platform=assurance" itemprop="url">
                         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                             <img alt="Contracts list" src="/assets/uploads/contracts-list.svg"/>
                         </figure>
