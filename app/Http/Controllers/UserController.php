@@ -642,15 +642,15 @@ class UserController extends Controller {
                     $contract->save();
                 }
             } else {
-                $cancellation_reason = array(
-                    'reason' => 'Patient didn\'t sign contract.'
-                );
-                $contract->status = 'cancelled';
-                $contract->cancelled_at = new \DateTime();
-                $contract->cancellation_reason = serialize($cancellation_reason);
-
                 // pending
                 if(time() > strtotime($contract->created_at->toDateTimeString(). ' + '.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days')) {
+                    $cancellation_reason = array(
+                        'reason' => 'Patient didn\'t sign contract.'
+                    );
+                    $contract->status = 'cancelled';
+                    $contract->cancelled_at = new \DateTime();
+                    $contract->cancellation_reason = serialize($cancellation_reason);
+
                     $contract->save();
                 }
             }

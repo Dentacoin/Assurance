@@ -36,9 +36,11 @@ class PatientController extends Controller {
         if($contract->status == '`pending') {
             return abort(404);
         } else {
-            if($contract->status == 'active') {
+            if ($contract->status == 'active' || $contract->status == 'awaiting-approval') {
                 //checking here if the contract withdraw period and grace period passed and the patient still didnt full in his wallet address
-                (new UserController())->automaticContractCancel($contract);
+                $contract = (new UserController())->automaticContractCancel($contract);
+            } else if ($contract->status == 'awaiting-payment' || $contract->status == 'pending') {
+                $contract = (new UserController())->automaticContractCancel($contract, false);
             }
 
             $params = array('contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'));

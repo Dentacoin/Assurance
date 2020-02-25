@@ -972,23 +972,15 @@ async function pagesDataOnContractInit() {
                 var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-date-start-contract'));
                 var next_payment_timestamp_unix;
                 var contractCreationAndPeriodToWithdraw = parseInt($('.single-contract-view-section').attr('data-date-start-contract')) + period_to_withdraw;
-                console.log(parseInt($('.single-contract-view-section').attr('data-date-start-contract')), 'parseInt($(\'.single-contract-view-section\').attr(\'data-date-start-contract\'))');
-                console.log(period_to_withdraw, 'period_to_withdraw');
-                console.log(dApp.grace_period, 'dApp.grace_period');
-                console.log(contractCreationAndPeriodToWithdraw + dApp.grace_period, 'contractCreationAndPeriodToWithdraw + dApp.grace_period');
-                console.log(now_timestamp, 'now_timestamp');
 
                 var timer_label = '';
                 if (time_passed_since_signed > period_to_withdraw) {
-                    console.log(1);
                     // running grace period, because patient failed to execude the first payment in time
                     next_payment_timestamp_unix = contractCreationAndPeriodToWithdraw + dApp.grace_period - now_timestamp;
-                    console.log(next_payment_timestamp_unix, 'next_payment_timestamp_uni');
 
                     timer_label = 'Withdraw payment after (grace period):';
                     $('.clock').addClass('red-background');
                 }  else {
-                    console.log(2);
                     // running the period when patient has to execute the first payment
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                     timer_label = 'Withdraw payment after:';
