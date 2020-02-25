@@ -9,7 +9,8 @@
                 Dentist
             @endif
         </th>
-        <th class="date">Date Signed</th>
+        <th class="date">Date Created</th>
+        <th class="no-sort">Date Signed</th>
         <th class="no-sort">Monthly Premium</th>
         <th class="no-sort">Next Payment/Due date</th>
         <th class="no-sort">Contract Details</th>
@@ -75,6 +76,7 @@
                         @endif
                     @endif
                 </td>
+                <td>{{date('d/m/Y', $contract->created_at->getTimestamp())}}</td>
                 <td>
                     @if(!empty($contract->contract_active_at))
                         <span class="hide-this">{{strtotime($contract->contract_active_at)}}</span>
