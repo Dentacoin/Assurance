@@ -74287,7 +74287,7 @@ async function pagesDataOnContractInit() {
                     timer_label = 'Withdraw payment after (grace period):';
                     $('.clock').addClass('red-background');
                 }  else {
-                    console.log(1);
+                    console.log(2);
                     // running the period when patient has to execute the first payment
                     next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                     timer_label = 'Withdraw payment after:';
