@@ -637,7 +637,7 @@ class UserController extends Controller {
                     $contract->save();
                 }
             } else {
-                var_dump($contract->created_at);
+                var_dump($contract->created_at->timestamp);
                 die('asd');
                 // pending
                 if(time() > strtotime($contract->contract_active_at. ' + '.(DAYS_CONTRACT_WITHDRAWAL_PERIOD + GRACE_PERIOD).' days')) {
