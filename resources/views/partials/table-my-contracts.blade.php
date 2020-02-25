@@ -10,7 +10,7 @@
             @endif
         </th>
         <th class="date">Date Created</th>
-        <th class="no-sort">Date Signed</th>
+        <th class="date">Date Signed</th>
         <th class="no-sort">Monthly Premium</th>
         <th class="no-sort">Next Payment/Due date</th>
         <th class="no-sort">Contract Details</th>
@@ -54,10 +54,10 @@
                         @if(!empty($contract->patient_id))
                             @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
                             @if(!empty($patient))
+                                <span>{{$patient->name}}</span>
                                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                                     <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
                                 </figure>
-                                <span>{{$patient->name}}</span>
                             @else
                                 @continue
                             @endif
@@ -67,10 +67,10 @@
                     @else
                         @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
                         @if(!empty($dentist))
+                            <span>{{$dentist->name}}</span>
                             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                                 <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
                             </figure>
-                            <span>{{$dentist->name}}</span>
                         @else
                             @continue
                         @endif
