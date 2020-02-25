@@ -29,7 +29,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::get('/password-recover', 'UserController@getRecoverPassword')->name('password-recover');
 
-    /*Route::get('/my-contracts', 'UserController@getMyContractsView')->middleware('HandleUserSession')->name('my-contracts');*/
+    Route::get('/my-contracts', 'UserController@getMyContractsView')->middleware('HandleUserSession')->name('my-contracts');
 
     //======================================= AJAX ========================================
     Route::post('/save-public-key', 'WalletInstructionsController@savePublicKey')->name('save-public-key');
