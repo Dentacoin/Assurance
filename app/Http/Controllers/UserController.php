@@ -606,13 +606,6 @@ class UserController extends Controller {
     }
 
     public function automaticContractCancel($contract, $onBlockchain = true) {
-        $cancellation_reason = array(
-            'reason' => 'Late payment from patient.'
-        );
-        $contract->status = 'cancelled';
-        $contract->cancelled_at = new \DateTime();
-        $contract->cancellation_reason = serialize($cancellation_reason);
-
         if($onBlockchain) {
             $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
             $cancelContractParams = array(
@@ -624,6 +617,12 @@ class UserController extends Controller {
             $check_if_legit_contract = (new APIRequestsController())->cancelIfLatePayment(hash('sha256', getenv('SECRET_PASSWORD').json_encode($cancelContractParams)), $contract->patient_address, $contract->dentist_address, $gasPrice);
             if(is_object($check_if_legit_contract) && property_exists($check_if_legit_contract, 'success') && $check_if_legit_contract->success) {
                 //IF NORMAL PERIOD AND GRACE PERIOD PASSED CANCEL THIS CONTRACT
+                $cancellation_reason = array(
+                    'reason' => 'Late payment from patient.'
+                );
+                $contract->status = 'cancelled';
+                $contract->cancelled_at = new \DateTime();
+                $contract->cancellation_reason = serialize($cancellation_reason);
                 $contract->save();
 
                 // send cancel notification email to dentist and patient
@@ -634,12 +633,20 @@ class UserController extends Controller {
 
                 // if contract has not been funded for the withdraw period + the grace period => cancel the contract
                 if(time() > strtotime($contract->contract_active_at. ' + '.(DAYS_CONTRACT_WITHDRAWAL_PERIOD + GRACE_PERIOD).' days')) {
+                    $cancellation_reason = array(
+                        'reason' => 'Late payment from patient.'
+                    );
+                    $contract->status = 'cancelled';
+                    $contract->cancelled_at = new \DateTime();
+                    $contract->cancellation_reason = serialize($cancellation_reason);
                     $contract->save();
                 }
             } else {
                 $cancellation_reason = array(
                     'reason' => 'Patient didn\'t sign contract.'
                 );
+                $contract->status = 'cancelled';
+                $contract->cancelled_at = new \DateTime();
                 $contract->cancellation_reason = serialize($cancellation_reason);
 
                 // pending

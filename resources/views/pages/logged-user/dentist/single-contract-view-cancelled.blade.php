@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
     @if(is_object($contract->contract_active_at))
-        @php($active_timestamp = strtotime($contract->contract_active_at->getTimestamp()))
+        @php($active_timestamp = $contract->contract_active_at->getTimestamp())
     @else
         @php($active_timestamp = strtotime($contract->contract_active_at))
     @endif
