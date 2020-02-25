@@ -13,7 +13,7 @@
         <th class="date">Date Signed</th>
         <th class="no-sort">Monthly Premium</th>
         <th class="no-sort">Next Payment/Due date</th>
-        <th class="no-sort">Contract Details</th>
+        {{--<th class="no-sort">Contract Details</th>--}}
     </tr>
     </thead>
     <tbody>
@@ -88,14 +88,14 @@
                 </td>
                 <td><span class="hide-this">{{round($contract->monthly_premium)}}</span>{{$contract->monthly_premium}} USD</td>
                 <td class="next-payment"><span class="hide-this">0</span>Not signed yet</td>
-                <td class="contract-details">
+                {{--<td class="contract-details">
                     @if(!empty($contract->document_hash))
                         <div><a href="javascript:void(0)" class="contract-decrypt" data-hash="{{$contract->document_hash}}" @if(!$patient_or_not) data-type="patient" @else data-type="dentist" @endif>Full Contract (pdf)</a></div>
                         <div><a href="https://ipfs.io/ipfs/{{$contract->document_hash}}" target="_blank">Public Proof</a></div>
                     @else
                         Not signed yet
                     @endif
-                </td>
+                </td>--}}
             </tr>
         @endforeach
     @endif
