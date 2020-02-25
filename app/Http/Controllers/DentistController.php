@@ -26,7 +26,7 @@ class DentistController extends Controller
             if ($contract->status == 'active' || $contract->status == 'awaiting-approval') {
                 //checking here if the contract withdraw period and grace period passed and the patient still didnt full in his wallet address
                 (new UserController())->automaticContractCancel($contract);
-            } else if ($contract->status == 'awaiting-payment') {
+            } else if ($contract->status == 'awaiting-payment' || $contract->status == 'pending') {
                 (new UserController())->automaticContractCancel($contract, false);
             }
 
