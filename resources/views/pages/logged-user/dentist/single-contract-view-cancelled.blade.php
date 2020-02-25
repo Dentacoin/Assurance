@@ -10,6 +10,7 @@
     @else
         @php($cancelled_timestamp = strtotime($contract->cancelled_at))
     @endif
+    {{var_dump($cancelled_timestamp)}}
 
     @php($cancellation_reason = unserialize($contract->cancellation_reason))
     @if(!empty($contract->patient_id))
