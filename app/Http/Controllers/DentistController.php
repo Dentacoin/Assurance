@@ -22,10 +22,12 @@ class DentistController extends Controller
         $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
         $params = ['contract' => $contract, 'calculator_proposals' => $calculator_proposals, 'current_logged_dentist' => $current_logged_dentist];
         if (!empty($contract)) {
-            if ($contract->status == 'active') {
+            if ($contract->status == 'active' || $contract->status == 'awaiting-approval') {
                 //checking here if the contract withdraw period and grace period passed and the patient still didnt full in his wallet address
                 (new UserController())->automaticContractCancel($contract);
-            } else if ($contract->status == 'awaiting-approval') {
+            }
+
+            if ($contract->status == 'awaiting-approval') {
                 $this_dentist_having_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->all();
                 if (sizeof($this_dentist_having_contracts) == 1) {
                     //send ETH to dentist only for his first contract

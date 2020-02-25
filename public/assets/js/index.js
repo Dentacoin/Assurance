@@ -2844,17 +2844,17 @@ async function onDocumentReadyPageData() {
             initDataTable();
 
             var table_trs_with_timestamp = $('.table-container table tr[data-timestamp-signed]');
-            var smart_contract_withdraw_period = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
+            var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
             var now_timestamp = Math.round((new Date()).getTime() / 1000);
 
             for(var i = 0, len = table_trs_with_timestamp.length; i < len; i+=1) {
                 var time_passed_since_signed = now_timestamp - parseInt(table_trs_with_timestamp.eq(i).attr('data-timestamp-signed'));
-                if (time_passed_since_signed > smart_contract_withdraw_period) {
-                    var remainder = time_passed_since_signed % smart_contract_withdraw_period;
-                    var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - remainder) * 1000;
+                if (time_passed_since_signed > period_to_withdraw) {
+                    var remainder = time_passed_since_signed % period_to_withdraw;
+                    var next_payment_timestamp = (now_timestamp + period_to_withdraw - remainder) * 1000;
                     var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                 } else {
-                    var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - time_passed_since_signed) * 1000;
+                    var next_payment_timestamp = (now_timestamp + period_to_withdraw - time_passed_since_signed) * 1000;
                     var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                 }
 
@@ -3095,15 +3095,15 @@ async function onDocumentReadyPageData() {
                 }
             } else if ($('.single-contract-view-section').hasClass('active')) {
                 var now_timestamp = Math.round((new Date()).getTime() / 1000);
-                var smart_contract_withdraw_period = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
+                var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
                 var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-created-at'));
 
-                if (time_passed_since_signed > smart_contract_withdraw_period) {
-                    var remainder = time_passed_since_signed % smart_contract_withdraw_period;
-                    var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - remainder) * 1000;
+                if (time_passed_since_signed > period_to_withdraw) {
+                    var remainder = time_passed_since_signed % period_to_withdraw;
+                    var next_payment_timestamp = (now_timestamp + period_to_withdraw - remainder) * 1000;
                     var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                 } else {
-                    var next_payment_timestamp = (now_timestamp + smart_contract_withdraw_period - time_passed_since_signed) * 1000;
+                    var next_payment_timestamp = (now_timestamp + period_to_withdraw - time_passed_since_signed) * 1000;
                     var next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                 }
 
@@ -3117,8 +3117,8 @@ async function onDocumentReadyPageData() {
                 if (contract_next_payment > now_timestamp) {
                     $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold ">MAKE YOUR NEXT WITHDRAW IN</h2></div> </div><div class="clock"></div><div class="flip-clock-message"></div></div></div>');
                     initFlipClockTimer(contract_next_payment - now_timestamp);
-                } else if (contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > smart_contract_withdraw_period * 2 && current_patient_dcn_balance < (Math.floor((now_timestamp - contract_next_payment) / smart_contract_withdraw_period) + 1) * contract_dcn_amount) {
-                    var months_dentist_didnt_withdraw = Math.floor((now_timestamp - contract_next_payment) / smart_contract_withdraw_period) + 1;
+                } else if (contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > period_to_withdraw * 2 && current_patient_dcn_balance < (Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1) * contract_dcn_amount) {
+                    var months_dentist_didnt_withdraw = Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1;
 
                     basic.showAlert('You haven\'t withdraw from this patient for ' + months_dentist_didnt_withdraw + ' months in a row, but the patient currently have not enough Dentacoins to cover all the months. Contact him and let him know to refill Dentacoins inside his Wallet Address.', '', true);
                 } else if (contract_next_payment < now_timestamp && now_timestamp < contract_next_payment + dApp.grace_period && current_patient_dcn_balance < contract_dcn_amount) {

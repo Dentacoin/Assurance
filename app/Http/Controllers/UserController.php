@@ -617,6 +617,8 @@ class UserController extends Controller {
             $contract->cancelled_at = new \DateTime();
             $contract->cancellation_reason = serialize($cancellation_reason);
             $contract->save();
+
+            // send cancel notification email to dentist and patient
         }
     }
 }
