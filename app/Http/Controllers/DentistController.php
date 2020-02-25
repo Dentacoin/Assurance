@@ -57,6 +57,8 @@ class DentistController extends Controller
                     }
                 }
             }
+
+            
             return view('pages/logged-user/dentist/single-contract-view-'.$contract->status, $params);
         } else {
             return abort(404);
