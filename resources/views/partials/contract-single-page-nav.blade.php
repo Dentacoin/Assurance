@@ -45,7 +45,7 @@
             <li class="inline-block delimeter">|</li>
         @endif
         <li class="inline-block">
-            <a href="{{route('my-contracts')}}" itemprop="url">
+            <a href="https://account.dentacoin.com/assurance" itemprop="url">
                 <span itemprop="name"><i class="fa fa-bars" aria-hidden="true"></i> View all contracts</span>
             </a>
         </li>

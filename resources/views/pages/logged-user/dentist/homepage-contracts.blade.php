@@ -60,7 +60,7 @@
                         </div>
                         @if(sizeof($active_contracts) > 6)
                             <div class="padding-top-10 text-right">
-                                <a href="/my-contracts" class="black-light-gray-btn margin-right-25">See all</a>
+                                <a href="https://account.dentacoin.com/assurance" class="black-light-gray-btn margin-right-25">See all</a>
                             </div>
                         @endif
                     </div>
@@ -123,7 +123,7 @@
                             </div>
                             @if(sizeof($pending_contracts) > 3)
                                 <div class="padding-top-10">
-                                    <a href="/my-contracts?status=pending" class="black-light-gray-btn margin-left-10">See all</a>
+                                    <a href="https://account.dentacoin.com/assurance?status=pending" class="black-light-gray-btn margin-left-10">See all</a>
                                 </div>
                             @endif
                         </div>
@@ -192,7 +192,7 @@
                             </div>
                             @if(sizeof($cancelled_contracts) > 3)
                                 <div class="padding-top-10 text-right">
-                                    <a href="/my-contracts?status=cancelled" class="black-light-gray-btn margin-right-10">See all</a>
+                                    <a href="https://account.dentacoin.com/assurance?status=cancelled" class="black-light-gray-btn margin-right-10">See all</a>
                                 </div>
                             @endif
                         </div>
@@ -264,7 +264,7 @@
                             </div>
                             @if(sizeof($pending_contracts) > 2)
                                 <div class="padding-top-10">
-                                    <a href="/my-contracts?status=pending" class="black-light-gray-btn margin-left-10">See all</a>
+                                    <a href="https://account.dentacoin.com/assurance?status=pending" class="black-light-gray-btn margin-left-10">See all</a>
                                 </div>
                             @endif
                         </div>
@@ -334,7 +334,7 @@
                             </div>
                             @if(sizeof($cancelled_contracts) > 2)
                                 <div class="padding-top-10 text-right">
-                                    <a href="/my-contracts?status=cancelled" class="black-light-gray-btn margin-right-10">See all</a>
+                                    <a href="https://account.dentacoin.com/assurance?status=cancelled" class="black-light-gray-btn margin-right-10">See all</a>
                                 </div>
                             @endif
                         </div>
