@@ -630,9 +630,9 @@ class UserController extends Controller {
             }
         } else {
             var_dump(time());
-            var_dump(strtotime($contract->contract_active_at. ' + '.GRACE_PERIOD.' days'));
+            var_dump(strtotime($contract->contract_active_at. ' + '.(DAYS_CONTRACT_WITHDRAWAL_PERIOD + GRACE_PERIOD).' days'));
             die('asd');
-            
+
             // if contract has not been funded for the withdraw period + the grace period => cancel the contract
             if(time() > strtotime($contract->contract_active_at. ' + '.(DAYS_CONTRACT_WITHDRAWAL_PERIOD + GRACE_PERIOD).' days')) {
                 $cancellation_reason = array(
