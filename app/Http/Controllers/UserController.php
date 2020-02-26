@@ -672,17 +672,25 @@ class UserController extends Controller {
         $contractsToBeCancelled = $request->input('contractsToBeCancelled');
         if(sizeof($contractsToBeCancelled) > 0) {
             if(hash('sha256', getenv('SECRET_PASSWORD').json_encode($contractsToBeCancelled)) == $request->input('hash')) {
+                $alreadyCancelledContracts = array();
                 foreach($contractsToBeCancelled as $contractSlug) {
                     $contract = TemporallyContract::where(array('slug' => $contractSlug))->get()->first();
                     if(!empty($contract)) {
-                        $contract->status = 'cancelled';
-                        $contract->save();
+                        if($contract->status == 'cancelled') {
+                            array_push($alreadyCancelledContracts, $contract->slug);
+                        } else {
+                            $contract->status = 'cancelled';
+                            $contract->save();
+                        }
                     }
                 }
 
-                return response()->json([
-                    'success' => true
-                ]);
+                $response = ['success' => true];
+                if(sizeof($alreadyCancelledContracts) > 0) {
+                    $response['already-cancelled-contracts'] = $alreadyCancelledContracts;
+                }
+
+                return response()->json($response);
             } else {
                 return response()->json([
                     'error' => true,
