@@ -73934,19 +73934,20 @@ async function pagesDataOnContractInit() {
                     }
                 }
             } else if ($('.contract-header').hasClass('awaiting-approval')) {
-                var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account));
-                var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseInt($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
+                var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address')));
+                var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient-address'), $('.patient-contract-single-page-section').attr('data-dentist-address'));
+                var monthly_premium_in_dcn = parseInt(on_load_exiting_contract[5]);
 
                 patientWaitingForDentistApprovalLogic(current_user_dcn_balance);
                 function patientWaitingForDentistApprovalLogic(current_user_dcn_balance) {
                     console.log(current_user_dcn_balance, 'patientWaitingForDentistApprovalLogic');
                     console.log(monthly_premium_in_dcn, 'monthly_premium_in_dcn');
-                    
+
                     $('.camping-for-popups').html('');
                     if (current_user_dcn_balance < monthly_premium_in_dcn) {
                         // checking every 3 seconds if user deposited BACK dcn
                         setTimeout(async function() {
-                            patientWaitingForDentistApprovalLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account)));
+                            patientWaitingForDentistApprovalLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address'))));
                         }, 3000);
 
                         //not enough DCN
