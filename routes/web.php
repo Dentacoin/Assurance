@@ -98,8 +98,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::get('/my-contracts-iframe', 'UserController@getMyContractsTemplate')->middleware('HandleUserSession')->name('my-contracts-iframe');
 
-    Route::get('/get-not-cancelled-contracts', 'UserController@getNotCancelledContracts')->name('get-not-cancelled-contracts');
-
     Route::post('/filter-my-contracts', 'UserController@filterMyContracts')->middleware('HandleUserSession')->name('filter-my-contracts');
 
     Route::post('/get-popup-cancel-contract', 'UserController@getPopupCancelContract')->middleware('HandleUserSession')->name('get-popup-cancel-contract');
