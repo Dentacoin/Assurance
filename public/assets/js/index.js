@@ -634,6 +634,9 @@ async function pagesDataOnContractInit() {
 
                 patientWaitingForDentistApprovalLogic(current_user_dcn_balance);
                 function patientWaitingForDentistApprovalLogic(current_user_dcn_balance) {
+                    console.log(current_user_dcn_balance, 'patientWaitingForDentistApprovalLogic');
+                    console.log(monthly_premium_in_dcn, 'monthly_premium_in_dcn');
+                    
                     $('.camping-for-popups').html('');
                     if (current_user_dcn_balance < monthly_premium_in_dcn) {
                         // checking every 3 seconds if user deposited BACK dcn
