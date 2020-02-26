@@ -628,6 +628,24 @@ async function pagesDataOnContractInit() {
                         }, 3000);
                     }
                 }
+            } else if ($('.contract-header').hasClass('awaiting-approval')) {
+                var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account));
+                var monthly_premium_in_dcn = Math.floor(convertUsdToDcn(parseInt($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
+
+                patientWaitingForDentistApprovalLogic(current_user_dcn_balance);
+                function patientWaitingForDentistApprovalLogic(current_user_dcn_balance) {
+                    $('.camping-for-popups').html('');
+                    if (current_user_dcn_balance < monthly_premium_in_dcn) {
+                        // checking every 3 seconds if user deposited BACK dcn
+                        setTimeout(async function() {
+                            patientWaitingForDentistApprovalLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account)));
+                        }, 3000);
+
+                        //not enough DCN
+                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+monthly_premium_in_dcn+' DCN</span>) before <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+                        initPopupEvents(true);
+                    }
+                }
             } else if ($('.contract-header').hasClass('awaiting-payment')) {
                 var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account));
                 var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
