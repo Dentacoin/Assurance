@@ -640,6 +640,8 @@ class UserController extends Controller {
                     $contract->cancelled_at = new \DateTime();
                     $contract->cancellation_reason = serialize($cancellation_reason);
                     $contract->save();
+
+                    // send cancel notification email to dentist and patient
                 }
             } else {
                 // pending
@@ -652,6 +654,8 @@ class UserController extends Controller {
                     $contract->cancellation_reason = serialize($cancellation_reason);
 
                     $contract->save();
+
+                    // send cancel notification email to dentist and patient
                 }
             }
         }
@@ -679,8 +683,15 @@ class UserController extends Controller {
                         if($contract->status == 'cancelled') {
                             array_push($alreadyCancelledContracts, $contract->slug);
                         } else {
+                            $cancellation_reason = array(
+                                'reason' => 'Patient didn\'t sign contract.'
+                            );
                             $contract->status = 'cancelled';
+                            $contract->cancelled_at = new \DateTime();
+                            $contract->cancellation_reason = serialize($cancellation_reason);
                             $contract->save();
+
+                            // send cancel notification email to dentist and patient
                         }
                     }
                 }
