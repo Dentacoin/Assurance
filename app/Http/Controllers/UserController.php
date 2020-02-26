@@ -694,6 +694,7 @@ class UserController extends Controller {
             } else {
                 return response()->json([
                     'error' => true,
+                    'data' => json_encode($contractsToBeCancelled),
                     'message' => 'False hash.'
                 ]);
             }
