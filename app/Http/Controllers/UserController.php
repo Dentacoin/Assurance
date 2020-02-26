@@ -658,4 +658,42 @@ class UserController extends Controller {
 
         return $contract;
     }
+
+    protected function cancelContracts(Request $request) {
+        $this->validate($request, [
+            'contractsToBeCancelled' => 'required|array',
+            'hash' => 'required',
+        ], [
+            'contractsToBeCancelled.required' => 'contractsToBeCancelled is required.',
+            'hash.required' => 'Hash is required.',
+            'contractsToBeCancelled.array' => 'contractsToBeCancelled must be array.',
+        ]);
+
+        $contractsToBeCancelled = $request->input('contractsToBeCancelled');
+        if(sizeof($contractsToBeCancelled) > 0) {
+            if(hash('sha256', getenv('SECRET_PASSWORD').json_encode($contractsToBeCancelled)) == $request->input('hash')) {
+                foreach($contractsToBeCancelled as $contractSlug) {
+                    $contract = TemporallyContract::where(array('slug' => $contractSlug))->get()->first();
+                    if(!empty($contract)) {
+                        $contract->status = 'cancelled';
+                        $contract->save();
+                    }
+                }
+
+                return response()->json([
+                    'success' => true
+                ]);
+            } else {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'False hash.'
+                ]);
+            }
+        } else {
+            return response()->json([
+                'error' => true,
+                'message' => '$contractsToBeCancelled has 0 length.'
+            ]);
+        }
+    }
 }
