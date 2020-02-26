@@ -631,6 +631,7 @@ async function pagesDataOnContractInit() {
             } else if ($('.contract-header').hasClass('awaiting-approval')) {
                 var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address')));
                 var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient-address'), $('.patient-contract-single-page-section').attr('data-dentist-address'));
+                var monthly_premium_in_usd = parseInt(on_load_exiting_contract[4]);
                 var monthly_premium_in_dcn = parseInt(on_load_exiting_contract[5]);
 
                 patientWaitingForDentistApprovalLogic(current_user_dcn_balance);
@@ -646,7 +647,7 @@ async function pagesDataOnContractInit() {
                         }, 3000);
 
                         //not enough DCN
-                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+monthly_premium_in_dcn+' DCN</span>) before <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+                        $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+monthly_premium_in_usd+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+monthly_premium_in_dcn+' DCN</span>) before <span class="calibri-bold blue-green-color">'+dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
                         initPopupEvents(true);
                     }
                 }
