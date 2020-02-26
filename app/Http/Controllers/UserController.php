@@ -660,7 +660,7 @@ class UserController extends Controller {
     }
 
     protected function getNotCancelledContracts() {
-        $contracts = TemporallyContract::select('slug', 'patient_address', 'dentist_address', 'contract_active_at', 'created_at')->whereIn('status', array('awaiting-payment', 'awaiting-approval', 'active', 'pending'))->get()->all();
+        $contracts = TemporallyContract::select('slug', 'patient_address', 'dentist_address', 'contract_active_at', 'created_at', 'status')->whereIn('status', array('awaiting-payment', 'awaiting-approval', 'active', 'pending'))->get()->all();
         if(!empty($contracts)) {
             return response()->json([
                 'success' => true,
