@@ -82,6 +82,6 @@
             </div>
         </div>
     </section>
-    {{--@include('partials.patient-ready-to-purchase-with-external-api')--}}
+    @include('partials.patient-ready-to-purchase-with-external-api')
 @endsection
 
