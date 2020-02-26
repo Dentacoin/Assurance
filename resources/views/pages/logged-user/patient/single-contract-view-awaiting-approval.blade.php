@@ -55,6 +55,7 @@
                     </div>
                 </div>
             @endif
+            <div class="row camping-for-popups"></div>
         </div>
     </section>
     <section class="show-on-having-dentacoins hide">
