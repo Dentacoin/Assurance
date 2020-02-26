@@ -48,7 +48,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/forgotten-password-submit', 'UserController@forgottenPasswordSubmit')->name('forgotten-password-submit');
 
-    Route::post('/cancel-contracts', 'Controller@cancelContracts')->name('cancel-contracts');
+    Route::post('/cancel-contracts', 'UserController@cancelContracts')->name('cancel-contracts');
 
     //======================================= /AJAX ========================================
 
