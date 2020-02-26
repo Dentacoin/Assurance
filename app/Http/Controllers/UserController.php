@@ -695,6 +695,8 @@ class UserController extends Controller {
                 return response()->json([
                     'error' => true,
                     'data' => json_encode($contractsToBeCancelled),
+                    'data1' => getenv('SECRET_PASSWORD').json_encode($contractsToBeCancelled),
+                    'data2' => hash('sha256', getenv('SECRET_PASSWORD').json_encode($contractsToBeCancelled)),
                     'message' => 'False hash.'
                 ]);
             }
