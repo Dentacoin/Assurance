@@ -2204,7 +2204,7 @@ if ($('body').hasClass('logged-in')) {
         });
     }
 
-    if ($('.logged-user-hamburger').length) {
+    /*if ($('.logged-user-hamburger').length) {
         $('.logged-user-hamburger').click(function() {
             $('.logged-mobile-profile-menu').addClass('active');
         });
@@ -2212,7 +2212,7 @@ if ($('body').hasClass('logged-in')) {
         $('.close-logged-mobile-profile-menu').click(function() {
             $('.logged-mobile-profile-menu').removeClass('active');
         });
-    }
+    }*/
 
     if ($('.contracts-list.slider').length) {
         var slides_to_show = 3;

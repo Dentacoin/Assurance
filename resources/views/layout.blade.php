@@ -64,7 +64,7 @@
         </nav>
     @endif
 
-    @if(\App\Http\Controllers\UserController::instance()->checkSession())
+    {{--@if(\App\Http\Controllers\UserController::instance()->checkSession())
         <div class="logged-mobile-profile-menu">
             <nav class="profile-menu module">
                 <a href="javascript:void(0)" class="close-logged-mobile-profile-menu"><i class="fa fa-times" aria-hidden="true"></i></a>
@@ -111,7 +111,7 @@
                     </li>
                     @if(session('logged_user')['type'] == 'patient')
                         <li>
-                            <a href="#" @if(!empty(Route::current()) && Route::current()->getName() == 'invite-dentists') class="active" @endif itemprop="url">
+                            <a href="{{ route('patient-access') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'invite-dentists') class="active" @endif itemprop="url">
                                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                                     <img alt="Add dentist" src="/assets/uploads/add-dentist.svg"/>
                                 </figure>
@@ -140,7 +140,7 @@
                 </ul>
             </nav>
         </div>
-    @endif
+    @endif--}}
 
     <header>
         <div class="container">
@@ -163,10 +163,10 @@
                                     </li>
                                 </ul>
                             </nav>
-                        @else
+                        {{--@else
                             <div class="col-xs-9 inline-block text-right">
                                 <a href="javascript:void(0)" class="hamburger"><i class="fa fa-bars fs-32 dark-color" aria-hidden="true"></i></a>
-                            </div>
+                            </div>--}}
                         @endif
                     @endif
                 @else
