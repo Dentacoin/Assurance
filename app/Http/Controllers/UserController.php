@@ -727,11 +727,12 @@ class UserController extends Controller {
             'currentStatus.required' => 'currentStatus is required.'
         ]);
 
-        $contract = TemporallyContract::where(array('patient_id' => session('logged_user')['id'], 'slug' => $request->input('contract')))->orWhere(array('dentist_id' => session('logged_user')['id'], 'slug' => $request->input('contract')))->get()->first();
-        var_dump($contract->slug);
-        var_dump($contract->status);
-        var_dump($request->input('currentStatus'));
-        die('asd');
+        if($this->checkPatientSession()) {
+            $contract = TemporallyContract::where(array('patient_id' => session('logged_user')['id'], 'slug' => $request->input('contract')))->get()->first();
+        } else if($this->checkDentistSession()) {
+            $contract = TemporallyContract::where(array('dentist_id' => session('logged_user')['id'], 'slug' => $request->input('contract')))->get()->first();
+        }
+
         if(!empty($contract)) {
             var_dump($contract->status);
             var_dump($request->input('currentStatus'));
