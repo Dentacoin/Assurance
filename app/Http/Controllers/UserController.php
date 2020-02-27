@@ -730,7 +730,7 @@ class UserController extends Controller {
         $contract = TemporallyContract::where(array('patient_id' => session('logged_user')['id'], 'slug' => $request->input('contract')))->orWhere(array('dentist_id' => session('logged_user')['id'], 'slug' => $request->input('contract')))->get()->first();
 
         if(!empty($contract)) {
-            if($contract->status != $request->input('status')) {
+            if($contract->status != $request->input('currentStatus')) {
                 return response()->json([
                     'success' => true
                 ]);
