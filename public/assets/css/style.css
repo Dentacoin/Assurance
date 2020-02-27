@@ -9303,7 +9303,8 @@ header {
       header > .container .logged-user-nav .hidden-box .hidden-box-footer {
         padding-top: 10px;
         padding-bottom: 10px;
-        background: white; }
+        background: white;
+        margin-bottom: 100px; }
         header > .container .logged-user-nav .hidden-box .hidden-box-footer .white-blue-rounded-btn {
           padding: 7px 15px; }
         header > .container .logged-user-nav .hidden-box .hidden-box-footer .logout {
