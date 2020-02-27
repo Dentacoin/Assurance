@@ -4621,7 +4621,7 @@ function generateQRCodeForDentacoinWalletScan(object) {
 
 // track for $contract status change
 function trackForContractStatusChange(contract, currentStatus) {
-    console.log(contract, currentStatus, 'trackForContractStatusChange');
+    var changeInStatusFound = false;
     setInterval(function() {
         $.ajax({
             type: 'POST',
@@ -4635,7 +4635,8 @@ function trackForContractStatusChange(contract, currentStatus) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: async function (response) {
-                if(response.success) {
+                if(response.success && !changeInStatusFound) {
+                    changeInStatusFound = true;
                     window.location.reload();
                 }
             }
