@@ -717,4 +717,34 @@ class UserController extends Controller {
             ]);
         }
     }
+
+    protected function checkContractStatus(Request $request) {
+        $this->validate($request, [
+            'contract' => 'required',
+            'currentStatus' => 'required',
+        ], [
+            'contract.required' => 'contract is required.',
+            'currentStatus.required' => 'currentStatus is required.'
+        ]);
+
+        $contract = TemporallyContract::where(array('patient_id' => session('logged_user')['id'], 'slug' => $request->input('contract')))->orWhere(array('dentist_id' => session('logged_user')['id'], 'slug' => $request->input('contract')))->get()->first();
+
+        if(!empty($contract)) {
+            if($contract->status != $request->input('status')) {
+                return response()->json([
+                    'success' => true
+                ]);
+            } else {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Contract status not yet changed.'
+                ]);
+            }
+        } else {
+            return response()->json([
+                'error' => true,
+                'message' => 'Not existing contract.'
+            ]);
+        }
+    }
 }

@@ -73813,6 +73813,8 @@ async function pagesDataOnContractInit() {
                 } else if ($('.contract-header').hasClass('awaiting-approval')) {
                     // reading the monthly premium from the smart contract
                     var dcn_needed_to_be_payed_to_dentist = parseInt(on_load_exiting_contract[5]);
+
+                    trackForContractStatusChange($('.patient-contract-single-page-section').attr('data-contract'), 'awaiting-approval');
                 }
 
                 var timer_label = '';
@@ -74297,6 +74299,12 @@ async function pagesDataOnContractInit() {
                 }
             }
         } else if ($('body').hasClass('dentist-contract-view')) {
+            if($('.contract-header').hasClass('awaiting-payment')) {
+                trackForContractStatusChange($('.single-contract-view-section').attr('data-contract'), 'awaiting-payment');
+            } else if($('.contract-header').hasClass('pending')) {
+                trackForContractStatusChange($('.single-contract-view-section').attr('data-contract'), 'pending');
+            }
+
             if ($('.contract-header').hasClass('awaiting-payment') || $('.contract-header').hasClass('awaiting-approval')) {
                 var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
                 var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-date-start-contract'));
@@ -77914,6 +77922,30 @@ function generateQRCodeForDentacoinWalletScan(object) {
         $('#popup-qrcode').removeAttr('title');
         hideLoader();
     }, 1000);
+}
+
+// track for $contract status change
+function trackForContractStatusChange(contract, currentStatus) {
+    console.log(contract, currentStatus, 'trackForContractStatusChange');
+    setInterval(function() {
+        $.ajax({
+            type: 'POST',
+            url: '/check-contract-status',
+            dataType: 'json',
+            data: {
+                contract: contract,
+                currentStatus: currentStatus
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: async function (response) {
+                if(response.success) {
+                    window.location.reload();
+                }
+            }
+        });
+    }, 5000);
 }
 
 // =================================== GOOGLE ANALYTICS TRACKING LOGIC ======================================

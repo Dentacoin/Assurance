@@ -1,6 +1,6 @@
 @extends("layout")
 @section("content")
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section pending">
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section pending" data-contract="{{$contract->slug}}">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
