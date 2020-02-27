@@ -50,7 +50,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/cancel-contracts', 'UserController@cancelContracts')->name('cancel-contracts');
 
-    Route::post('/check-contract-status', 'UserController@checkContractStatus')->name('check-contract-status');
+    Route::post('/check-contract-status', 'UserController@checkContractStatus')->middleware('HandleUserSession')->name('check-contract-status');
 
     //======================================= /AJAX ========================================
 

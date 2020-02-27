@@ -719,6 +719,7 @@ class UserController extends Controller {
     }
 
     protected function checkContractStatus(Request $request) {
+        die('asd');
         $this->validate($request, [
             'contract' => 'required',
             'currentStatus' => 'required',
