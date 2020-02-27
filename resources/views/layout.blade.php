@@ -111,7 +111,7 @@
                     </li>
                     @if(session('logged_user')['type'] == 'patient')
                         <li>
-                            <a href="{{ route('invite-dentists') }}" @if(!empty(Route::current()) && Route::current()->getName() == 'invite-dentists') class="active" @endif itemprop="url">
+                            <a href="#" @if(!empty(Route::current()) && Route::current()->getName() == 'invite-dentists') class="active" @endif itemprop="url">
                                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
                                     <img alt="Add dentist" src="/assets/uploads/add-dentist.svg"/>
                                 </figure>
