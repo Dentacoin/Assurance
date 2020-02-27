@@ -728,7 +728,8 @@ class UserController extends Controller {
         ]);
 
         $contract = TemporallyContract::where(array('patient_id' => session('logged_user')['id'], 'slug' => $request->input('contract')))->orWhere(array('dentist_id' => session('logged_user')['id'], 'slug' => $request->input('contract')))->get()->first();
-        var_dump($contract);
+        var_dump($contract->status);
+        var_dump($request->input('currentStatus'));
         die('asd');
         if(!empty($contract)) {
             var_dump($contract->status);
