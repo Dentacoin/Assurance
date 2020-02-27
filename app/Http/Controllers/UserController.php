@@ -758,7 +758,7 @@ class UserController extends Controller {
     protected function sendNotificationEmailToDentistAndPatientAboutContractCancelling($contract, $cancellation_reason) {
         // sending email to dentist
         $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
-        $email_view = view('emails/dentacoin-cancel-contract', ['user_name' => $dentist->name, 'reason' => $cancellation_reason['reason'], 'contract_slug' => $contract->slug]);
+        $email_view = view('emails/dentacoin-cancel-contract', ['user_name' => $dentist->name, 'user_type' => 'dentist', 'reason' => $cancellation_reason['reason'], 'contract_slug' => $contract->slug]);
         $body = $email_view->render();
 
         Mail::send(array(), array(), function($message) use ($body, $dentist) {
@@ -776,7 +776,7 @@ class UserController extends Controller {
             $patient_name = $contract->patient_fname . ' ' . $contract->patient_lname;
             $patient_email = $contract->patient_email;
         }
-        $email_view = view('emails/dentacoin-cancel-contract', ['user_name' => $patient_name, 'reason' => $cancellation_reason['reason'], 'contract_slug' => $contract->slug]);
+        $email_view = view('emails/dentacoin-cancel-contract', ['user_name' => $patient_name, 'user_type' => 'patient', 'reason' => $cancellation_reason['reason'], 'contract_slug' => $contract->slug]);
         $body = $email_view->render();
 
         Mail::send(array(), array(), function($message) use ($body, $patient_email) {
