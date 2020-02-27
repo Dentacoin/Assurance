@@ -737,6 +737,7 @@ class UserController extends Controller {
         if(!empty($contract)) {
             var_dump($contract->status);
             var_dump($request->input('currentStatus'));
+            die('asd');
             if($contract->status != $request->input('currentStatus')) {
                 return response()->json([
                     'success' => true
