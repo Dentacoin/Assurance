@@ -163,10 +163,10 @@
                                     </li>
                                 </ul>
                             </nav>
-                        {{--@else
+                        @else
                             <div class="col-xs-9 inline-block text-right">
                                 <a href="javascript:void(0)" class="hamburger"><i class="fa fa-bars fs-32 dark-color" aria-hidden="true"></i></a>
-                            </div>--}}
+                            </div>
                         @endif
                     @endif
                 @else
