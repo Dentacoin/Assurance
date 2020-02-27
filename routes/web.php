@@ -65,8 +65,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
         Route::post('/submit-contact-clinic', 'PatientController@submitContactClinic')->name('submit-contact-clinic');
 
-        Route::get('/invite-dentists', 'PatientController@getInviteDentistsView')->name('invite-dentists');
-
         Route::post('/submit-invite-dentists', 'PatientController@inviteDentists')->middleware('HandleUserSession')->name('submit-invite-dentists');
 
         Route::post('/update-and-sign-contract', 'PatientController@updateAndSignContract')->middleware('HandleUserSession')->name('update-and-sign-contract');

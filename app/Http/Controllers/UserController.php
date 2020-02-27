@@ -605,6 +605,7 @@ class UserController extends Controller {
         }
     }
 
+    // method for cancelling contracts on single page contract visiting. This method is built, because we cannot have the cronjob running every seconds and sometimes users might see contract that have to be cancelled as active one
     public function automaticContractCancel($contract, $onBlockchain = true) {
         if($onBlockchain) {
             $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
@@ -625,7 +626,7 @@ class UserController extends Controller {
                 $contract->cancellation_reason = serialize($cancellation_reason);
                 $contract->save();
 
-                // send cancel notification email to dentist and patient
+                $this->sendNotificationEmailToDentistAndPatientAboutContractCancelling($contract, $cancellation_reason);
             }
         } else {
             if(!empty($contract->contract_active_at)) {
@@ -641,7 +642,7 @@ class UserController extends Controller {
                     $contract->cancellation_reason = serialize($cancellation_reason);
                     $contract->save();
 
-                    // send cancel notification email to dentist and patient
+                    $this->sendNotificationEmailToDentistAndPatientAboutContractCancelling($contract, $cancellation_reason);
                 }
             } else {
                 // pending
@@ -652,10 +653,9 @@ class UserController extends Controller {
                     $contract->status = 'cancelled';
                     $contract->cancelled_at = new \DateTime();
                     $contract->cancellation_reason = serialize($cancellation_reason);
-
                     $contract->save();
 
-                    // send cancel notification email to dentist and patient
+                    $this->sendNotificationEmailToDentistAndPatientAboutContractCancelling($contract, $cancellation_reason);
                 }
             }
         }
@@ -663,6 +663,7 @@ class UserController extends Controller {
         return $contract;
     }
 
+    // contracts being cancelled from cronjob which is checking for contracts that have to be cancelled
     protected function cancelContracts(Request $request) {
         $this->validate($request, [
             'contractsToBeCancelled' => 'required|array',
@@ -691,7 +692,7 @@ class UserController extends Controller {
                             $contract->cancellation_reason = serialize($cancellation_reason);
                             $contract->save();
 
-                            // send cancel notification email to dentist and patient
+                            $this->sendNotificationEmailToDentistAndPatientAboutContractCancelling($contract, $cancellation_reason);
                         }
                     }
                 }
@@ -752,5 +753,36 @@ class UserController extends Controller {
                 'message' => 'Not existing contract.'
             ]);
         }
+    }
+
+    protected function sendNotificationEmailToDentistAndPatientAboutContractCancelling($contract, $cancellation_reason) {
+        // sending email to dentist
+        $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
+        $email_view = view('emails/dentacoin-cancel-contract', ['user_name' => $dentist->name, 'reason' => $cancellation_reason['reason'], 'contract_slug' => $contract->slug]);
+        $body = $email_view->render();
+
+        Mail::send(array(), array(), function($message) use ($body, $dentist) {
+            $message->to($dentist->email)->subject('Your Assurance contract has cancelled');
+            $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+            $message->setBody($body, 'text/html');
+        });
+
+        // sending email to patient
+        if(!empty($contract->patient_id)) {
+            $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+            $patient_name = $patient->name;
+            $patient_email = $patient->email;
+        } else {
+            $patient_name = $contract->patient_fname . ' ' . $contract->patient_lname;
+            $patient_email = $contract->patient_email;
+        }
+        $email_view = view('emails/dentacoin-cancel-contract', ['user_name' => $patient_name, 'reason' => $cancellation_reason['reason'], 'contract_slug' => $contract->slug]);
+        $body = $email_view->render();
+
+        Mail::send(array(), array(), function($message) use ($body, $patient_email) {
+            $message->to($patient_email)->subject('Your Assurance contract has cancelled');
+            $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+            $message->setBody($body, 'text/html');
+        });
     }
 }

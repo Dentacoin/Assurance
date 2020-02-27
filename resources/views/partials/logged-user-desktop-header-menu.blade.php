@@ -40,7 +40,6 @@
                         <a href="{{ route('user-logout') }}" class="logout"><i class="fa fa-power-off" aria-hidden="true"></i> Log out</a>
                     </div>
                     <div class="col-xs-6 inline-block">
-                        {{--<a href="{{ route('my-profile') }}" class="fs-16 white-dark-blue-btn">My account</a>--}}
                         <a href="//account.dentacoin.com?platform=assurance" class="fs-16 white-blue-green-btn">My Account</a>
                     </div>
                 </div>
