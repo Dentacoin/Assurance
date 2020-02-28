@@ -29,8 +29,8 @@ class Controller extends BaseController
     const currencies = ['USD', 'EUR', 'GBP', 'RUB', 'INR', 'CNY', 'JPY'];
     const DCN_REWARD = 20000;
 
-    public function __construct() {
-        if(!empty(Route::getCurrentRoute()) && !Request::isMethod('post'))    {
+    public function __construct(Request $request) {
+        if(!empty(Route::getCurrentRoute()) && !$request->isMethod('post'))    {
             View::share('mobile', $this->isMobile());
             View::share('meta_data', $this->getMetaData());
             /*View::share('sections', $this->getDbSections());*/
