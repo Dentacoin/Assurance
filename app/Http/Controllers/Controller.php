@@ -244,7 +244,7 @@ class Controller extends BaseController
         return TemporallyContract::whereNotNull('contract_active_at')->get(['document_hash', 'contract_active_at']);
     }
 
-    protected function handleApiEndpoints($slug, Request $request) {
+    protected function handleApiEndpoints($slug, \Illuminate\Support\Facades\Request $request) {
         switch ($slug) {
             case 'wallets-one-week-behind':
                 return DB::table('public_keys')->where('created_at', '>', date('Y-m-d', strtotime('-7 days')))->count();
