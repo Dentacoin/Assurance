@@ -44,10 +44,24 @@
             </li>
             <li class="inline-block delimeter">|</li>
         @endif
-        <li class="inline-block">
-            <a href="https://account.dentacoin.com/assurance?platform=assurance" itemprop="url">
-                <span itemprop="name"><i class="fa fa-bars" aria-hidden="true"></i> View all contracts</span>
-            </a>
-        </li>
+        @if($contract->status == 'active' && (new \App\Http\Controllers\UserController())->checkPatientSession())
+            <li class="inline-block">
+                <a href="javascript:void(0);" itemprop="url">
+                    <span itemprop="name"><i class="fa fa-bars" aria-hidden="true"></i> Record check-up</span>
+                </a>
+            </li>
+            <li class="inline-block delimeter">|</li>
+            <li class="inline-block">
+                <a href="javascript:void(0);" itemprop="url">
+                    <span itemprop="name"><i class="fa fa-bars" aria-hidden="true"></i> Record tooth cleaning</span>
+                </a>
+            </li>
+            <li class="inline-block delimeter">|</li>
+        @endif
+            <li class="inline-block">
+                <a href="https://account.dentacoin.com/assurance?platform=assurance" itemprop="url">
+                    <span itemprop="name"><i class="fa fa-bars" aria-hidden="true"></i> View all contracts</span>
+                </a>
+            </li>
     </ul>
 </nav>

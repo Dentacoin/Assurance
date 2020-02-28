@@ -244,7 +244,7 @@ class Controller extends BaseController
         return TemporallyContract::whereNotNull('contract_active_at')->get(['document_hash', 'contract_active_at']);
     }
 
-    protected function handleApiEndpoints($slug) {
+    protected function handleApiEndpoints($slug, Request $request) {
         switch ($slug) {
             case 'wallets-one-week-behind':
                 return DB::table('public_keys')->where('created_at', '>', date('Y-m-d', strtotime('-7 days')))->count();
@@ -264,6 +264,36 @@ class Controller extends BaseController
                         'error' => true
                     ]);
                 }
+                break;
+            case 'get-user-data-for-email-reminders':
+                var_dump($request);
+                die('asd');
+
+                break;
+            case 'active-contracts':
+                /*$contracts = TemporallyContract::select('slug', 'contract_active_at', 'check_ups_per_year', 'teeth_cleaning_per_year', 'patient_id', 'dentist_id')->where(array('status' => 'active'))->get()->all();
+                foreach($contracts as $contract) {
+                    if(!empty($contract->patient_id)) {
+                        $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+                        $patient_name = $patient->name;
+                        $patient_email = $patient->email;
+                    } else {
+                        $patient_name = $contract->patient_fname . ' ' . $contract->patient_lname;
+                        $patient_email = $contract->patient_email;
+                        $contract
+                    }
+                }
+
+                if(!empty($contracts)) {
+                    return response()->json([
+                        'success' => true,
+                        'data' => $contracts
+                    ]);
+                } else {
+                    return response()->json([
+                        'error' => true
+                    ]);
+                }*/
                 break;
         }
     }

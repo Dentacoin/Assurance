@@ -553,9 +553,7 @@ async function pagesDataOnContractInit() {
                 initFlipClockTimer(next_payment_timestamp_unix);
 
                 cancelContractEventInit();
-            }
-
-            if ($('.contract-header').hasClass('active')) {
+            } else if ($('.contract-header').hasClass('active')) {
                 var next_payment_timestamp_date_obj;
                 var next_payment_timestamp_unix;
                 var next_payment_timestamp;
@@ -630,6 +628,8 @@ async function pagesDataOnContractInit() {
                         }, 3000);
                     }
                 }
+
+
             } else if ($('.contract-header').hasClass('awaiting-approval')) {
                 var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address')));
                 var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient-address'), $('.patient-contract-single-page-section').attr('data-dentist-address'));
@@ -638,8 +638,6 @@ async function pagesDataOnContractInit() {
 
                 patientWaitingForDentistApprovalLogic(current_user_dcn_balance);
                 function patientWaitingForDentistApprovalLogic(current_user_dcn_balance) {
-                    console.log(current_user_dcn_balance, 'patientWaitingForDentistApprovalLogic');
-                    console.log(monthly_premium_in_dcn, 'monthly_premium_in_dcn');
 
                     $('.camping-for-popups').html('');
                     if (current_user_dcn_balance < monthly_premium_in_dcn) {
