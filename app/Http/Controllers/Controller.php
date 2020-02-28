@@ -266,7 +266,7 @@ class Controller extends BaseController
                 }
                 break;
             case 'get-user-data-for-email-reminders':
-                var_dump($request);
+                var_dump($request->input());
                 die('asd');
 
                 break;
