@@ -142,5 +142,5 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::get('/custom-cookie', 'UserController@manageCustomCookie')->name('custom-cookie');
 
-    Route::any('/info/{slug}', 'Controller@handleApiEndpoints')->name('api-endpoints');
+    Route::any('/info/{slug}', 'UserController@handleApiEndpoints')->name('api-endpoints');
 });

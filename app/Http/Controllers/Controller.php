@@ -11,7 +11,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
+use Request;
 use Jenssegers\Agent\Agent;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\App;
@@ -30,7 +30,7 @@ class Controller extends BaseController
     const DCN_REWARD = 20000;
 
     public function __construct(Request $request) {
-        if(!empty(Route::getCurrentRoute()) && !$request->isMethod('post'))    {
+        if(!empty(Route::getCurrentRoute()) && !Request::isMethod('post'))    {
             View::share('mobile', $this->isMobile());
             View::share('meta_data', $this->getMetaData());
             /*View::share('sections', $this->getDbSections());*/
@@ -242,100 +242,6 @@ class Controller extends BaseController
 
     protected function getIpfsHashes() {
         return TemporallyContract::whereNotNull('contract_active_at')->get(['document_hash', 'contract_active_at']);
-    }
-
-    protected function handleApiEndpoints($slug, Request $request) {
-        switch ($slug) {
-            case 'wallets-one-week-behind':
-                return DB::table('public_keys')->where('created_at', '>', date('Y-m-d', strtotime('-7 days')))->count();
-                break;
-            case 'wallets':
-                return DB::table('public_keys')->count();
-                break;
-            case 'get-not-cancelled-contracts':
-                $contracts = TemporallyContract::select('slug', 'patient_address', 'dentist_address', 'contract_active_at', 'created_at', 'status')->whereIn('status', array('awaiting-payment', 'awaiting-approval', 'active', 'pending'))->get()->all();
-                if(!empty($contracts)) {
-                    return response()->json([
-                        'success' => true,
-                        'data' => $contracts
-                    ]);
-                } else {
-                    return response()->json([
-                        'error' => true
-                    ]);
-                }
-                break;
-            case 'get-user-data-for-email-reminders':
-                $this->validate($request, [
-                    'hash' => 'required',
-                    'ipfsHash' => 'required'
-                ], [
-                    'hash.required' => 'Hash is required.',
-                    'ipfsHash.required' => 'ipfsHash is required.'
-                ]);
-
-                if(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode(array('contract' => $request->input('document_hash')))) == $request->input('hash')) {
-                    $contract = TemporallyContract::where(array('slug' => $request->input('ipfsHash')))->get()->first();
-                    if(!empty($contract)) {
-                        $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
-
-                        if(!empty($contract->patient_id)) {
-                            $patient = (new APIRequestsController())->getUserData($contract->patient_id);
-                            $patient_name = $patient->name;
-                            $patient_email = $patient->email;
-                        } else {
-                            $patient_name = $contract->patient_fname . ' ' . $contract->patient_lname;
-                            $patient_email = $contract->patient_email;
-                        }
-
-                        return response()->json([
-                            'success' => true,
-                            'dentist_name' => $dentist->name,
-                            'dentist_email' => $dentist->email,
-                            'patient_name' => $patient_name,
-                            'patient_email' => $patient_email,
-                            'slug' => $contract->slug
-                        ]);
-                    } else {
-                        return response()->json(['error' => true, 'message' => 'Missing contract.']);
-                    }
-                } else {
-                    return response()->json(['error' => true, 'message' => 'False hash.']);
-                }
-                break;
-            case 'active-contracts':
-                $this->validate($request, [
-                    'hash' => 'required',
-                    'time' => 'required'
-                ], [
-                    'hash.required' => 'Hash is required.',
-                    'time.required' => 'Time is required.'
-                ]);
-
-                if(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode(array('time' => $request->input('time')))) == $request->input('hash')) {
-                    $contracts = TemporallyContract::select('slug', 'contract_active_at', 'check_ups_per_year', 'teeth_cleaning_per_year', 'patient_id')->where(array('status' => 'active'))->get()->all();
-                    if(!empty($contracts)) {
-                        foreach($contracts as $contract) {
-                            $patient = (new APIRequestsController())->getUserData($contract->patient_id);
-
-                            $contract->patient_name = $patient->name;
-                            $contract->patient_email = $patient->email;
-
-                            unset($contract->patient_id);
-                        }
-
-                        return response()->json([
-                            'success' => true,
-                            'data' => $contracts
-                        ]);
-                    } else {
-                        return response()->json(['error' => true, 'message' => 'Missing contracts.']);
-                    }
-                } else {
-                    return response()->json(['error' => true, 'message' => 'False hash.']);
-                }
-                break;
-        }
     }
 }
 
