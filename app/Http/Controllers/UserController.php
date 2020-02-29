@@ -814,8 +814,8 @@ class UserController extends Controller {
                     'ipfsHash.required' => 'ipfsHash is required.'
                 ]);
 
-                if(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode(array('ipfsHash' => $request->input('document_hash')))) == $request->input('hash')) {
-                    $contract = TemporallyContract::where(array('slug' => $request->input('ipfsHash')))->get()->first();
+                if(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode(array('ipfsHash' => $request->input('ipfsHash')))) == $request->input('hash')) {
+                    $contract = TemporallyContract::where(array('document_hash' => $request->input('ipfsHash')))->get()->first();
                     if(!empty($contract)) {
                         $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
 
