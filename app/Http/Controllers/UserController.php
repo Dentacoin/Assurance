@@ -615,7 +615,7 @@ class UserController extends Controller {
                 'gas_price' => $gasPrice
             );
 
-            $check_if_legit_contract = (new APIRequestsController())->cancelIfLatePayment(hash('sha256', getenv('SECRET_PASSWORD').json_encode($cancelContractParams)), $contract->patient_address, $contract->dentist_address, $gasPrice);
+            $check_if_legit_contract = (new APIRequestsController())->cancelIfLatePayment(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode($cancelContractParams)), $contract->patient_address, $contract->dentist_address, $gasPrice);
             if(is_object($check_if_legit_contract) && property_exists($check_if_legit_contract, 'success') && $check_if_legit_contract->success) {
                 //IF NORMAL PERIOD AND GRACE PERIOD PASSED CANCEL THIS CONTRACT
                 $cancellation_reason = array(
@@ -676,7 +676,7 @@ class UserController extends Controller {
 
         $contractsToBeCancelled = $request->input('contractsToBeCancelled');
         if(sizeof($contractsToBeCancelled) > 0) {
-            if(hash('sha256', getenv('SECRET_PASSWORD').json_encode($contractsToBeCancelled)) == $request->input('hash')) {
+            if(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode($contractsToBeCancelled)) == $request->input('hash')) {
                 $alreadyCancelledContracts = array();
                 foreach($contractsToBeCancelled as $contractSlug) {
                     $contract = TemporallyContract::where(array('slug' => $contractSlug))->get()->first();
@@ -706,7 +706,7 @@ class UserController extends Controller {
             } else {
                 return response()->json([
                     'error' => true,
-                    'data' => hash('sha256', getenv('SECRET_PASSWORD').json_encode($contractsToBeCancelled)),
+                    'data' => hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode($contractsToBeCancelled)),
                     'data1' => $request->input('hash'),
                     'message' => 'False hash.'
                 ]);

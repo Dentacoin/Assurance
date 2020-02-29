@@ -433,7 +433,7 @@ class PatientController extends Controller {
                         'gas_price' => $gasPrice
                     );
 
-                    $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendEthAmount(hash('sha256', getenv('SECRET_PASSWORD').json_encode($sendEthAmountParams)), 'patient-approval-and-contract-creation', $contract->patient_address, $contract->dentist_address, $gasPrice, $contract->monthly_premium, $contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'), $contract->contract_active_at->getTimestamp(), $contract->document_hash);
+                    $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendEthAmount(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode($sendEthAmountParams)), 'patient-approval-and-contract-creation', $contract->patient_address, $contract->dentist_address, $gasPrice, $contract->monthly_premium, $contract->monthly_premium * (int)$this->getIndacoinPricesInUSD('DCN'), $contract->contract_active_at->getTimestamp(), $contract->document_hash);
 
                     // saving record that we sent eth amount to this user
                     $freeETHReceiver = new FreeETHReceiver();

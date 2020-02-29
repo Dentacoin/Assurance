@@ -266,34 +266,74 @@ class Controller extends BaseController
                 }
                 break;
             case 'get-user-data-for-email-reminders':
-                var_dump($request->input());
-                die('asd');
+                $this->validate($request, [
+                    'hash' => 'required',
+                    'ipfsHash' => 'required'
+                ], [
+                    'hash.required' => 'Hash is required.',
+                    'ipfsHash.required' => 'ipfsHash is required.'
+                ]);
 
+                if(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode(array('contract' => $request->input('document_hash')))) == $request->input('hash')) {
+                    $contract = TemporallyContract::where(array('slug' => $request->input('ipfsHash')))->get()->first();
+                    if(!empty($contract)) {
+                        $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
+
+                        if(!empty($contract->patient_id)) {
+                            $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+                            $patient_name = $patient->name;
+                            $patient_email = $patient->email;
+                        } else {
+                            $patient_name = $contract->patient_fname . ' ' . $contract->patient_lname;
+                            $patient_email = $contract->patient_email;
+                        }
+
+                        return response()->json([
+                            'success' => true,
+                            'dentist_name' => $dentist->name,
+                            'dentist_email' => $dentist->email,
+                            'patient_name' => $patient_name,
+                            'patient_email' => $patient_email,
+                            'slug' => $contract->slug
+                        ]);
+                    } else {
+                        return response()->json(['error' => true, 'message' => 'Missing contract.']);
+                    }
+                } else {
+                    return response()->json(['error' => true, 'message' => 'False hash.']);
+                }
                 break;
             case 'active-contracts':
-                /*$contracts = TemporallyContract::select('slug', 'contract_active_at', 'check_ups_per_year', 'teeth_cleaning_per_year', 'patient_id', 'dentist_id')->where(array('status' => 'active'))->get()->all();
-                foreach($contracts as $contract) {
-                    if(!empty($contract->patient_id)) {
-                        $patient = (new APIRequestsController())->getUserData($contract->patient_id);
-                        $patient_name = $patient->name;
-                        $patient_email = $patient->email;
-                    } else {
-                        $patient_name = $contract->patient_fname . ' ' . $contract->patient_lname;
-                        $patient_email = $contract->patient_email;
-                        $contract
-                    }
-                }
+                $this->validate($request, [
+                    'hash' => 'required',
+                    'time' => 'required'
+                ], [
+                    'hash.required' => 'Hash is required.',
+                    'time.required' => 'Time is required.'
+                ]);
 
-                if(!empty($contracts)) {
-                    return response()->json([
-                        'success' => true,
-                        'data' => $contracts
-                    ]);
+                if(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode(array('time' => $request->input('time')))) == $request->input('hash')) {
+                    $contracts = TemporallyContract::select('slug', 'contract_active_at', 'check_ups_per_year', 'teeth_cleaning_per_year', 'patient_id')->where(array('status' => 'active'))->get()->all();
+                    if(!empty($contracts)) {
+                        foreach($contracts as $contract) {
+                            $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+
+                            $contract->patient_name = $patient->name;
+                            $contract->patient_email = $patient->email;
+
+                            unset($contract->patient_id);
+                        }
+
+                        return response()->json([
+                            'success' => true,
+                            'data' => $contracts
+                        ]);
+                    } else {
+                        return response()->json(['error' => true, 'message' => 'Missing contracts.']);
+                    }
                 } else {
-                    return response()->json([
-                        'error' => true
-                    ]);
-                }*/
+                    return response()->json(['error' => true, 'message' => 'False hash.']);
+                }
                 break;
         }
     }
