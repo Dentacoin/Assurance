@@ -9,6 +9,7 @@ use App\InviteDentistsReward;
 use App\PublicKey;
 use App\TemporallyContract;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Dompdf\Dompdf;
 use Endroid\QrCode\QrCode;
@@ -609,7 +610,6 @@ class PatientController extends Controller {
         }
     }
 
-    //dentist can add profile description while waiting for approval from Dentacoin admin
     protected function recordCheckUpOrTeethCleaning(Request $request) {
         $this->validate($request, [
             'type' => 'required',
@@ -632,6 +632,15 @@ class PatientController extends Controller {
             return response()->json(['success' => true]);
         } else {
             return response()->json(['error' => true, 'message' => 'Missing contract.']);
+        }
+    }
+
+    public function getCheckUpOrTeethCleaning($type, $slug) {
+        $checkUps = DB::connection('mysql')->table('contract_checkups')->leftJoin('temporally_contracts', 'contract_checkups.contract_id', '=', 'temporally_contracts.id')->select('contract_checkups.*')->white(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->get()->all();
+        if(!empty($checkUps)) {
+            return sizeof($checkUps);
+        } else {
+            return 0;
         }
     }
 }

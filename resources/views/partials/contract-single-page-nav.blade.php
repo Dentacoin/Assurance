@@ -45,20 +45,35 @@
             <li class="inline-block delimeter">|</li>
         @endif
         @if($contract->status == 'active' && (new \App\Http\Controllers\UserController())->checkPatientSession() && !empty($contract_active_at))
-            @php($timeSinceConractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - $contract_active_at))
-            {{var_dump($timeSinceConractSigning)}}
-            <li class="inline-block">
-                <a href="javascript:void(0);" itemprop="url" class="record-check-up">
-                    <span itemprop="name"><i class="fa fa-pencil" aria-hidden="true"></i> Record check-up</span>
-                </a>
-            </li>
-            <li class="inline-block delimeter">|</li>
-            <li class="inline-block">
-                <a href="javascript:void(0);" itemprop="url" class="record-teeth-cleaning">
-                    <span itemprop="name"><i class="fa fa-pencil" aria-hidden="true"></i> Record teeth cleaning</span>
-                </a>
-            </li>
-            <li class="inline-block delimeter">|</li>
+            @php($timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - $contract_active_at))
+            @php($yearsActionsToBeExecuted = 1)
+            @if(array_key_exists('days', $timeSinceContractSigning) && $timeSinceContractSigning['days'] >= 365)
+                @php($yearsActionsToBeExecuted += floor($timeSinceContractSigning['days'] / 365))
+            @endif
+
+            @php($currentCheckups = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('check-up', $contract->slug))
+            @php($currentTeethCleanings = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug))
+
+            {{var_dump($currentCheckups)}}
+            {{var_dump($currentTeethCleanings)}}
+
+            @if($currentCheckups < $contract->check_ups_per_year * $yearsActionsToBeExecuted)
+                <li class="inline-block">
+                    <a href="javascript:void(0);" itemprop="url" class="record-check-up">
+                        <span itemprop="name"><i class="fa fa-pencil" aria-hidden="true"></i> Record check-up</span>
+                    </a>
+                </li>
+                <li class="inline-block delimeter">|</li>
+            @endif
+
+            @if($currentTeethCleanings < $contract->teeth_cleaning_per_year * $yearsActionsToBeExecuted)
+                <li class="inline-block">
+                    <a href="javascript:void(0);" itemprop="url" class="record-teeth-cleaning">
+                        <span itemprop="name"><i class="fa fa-pencil" aria-hidden="true"></i> Record teeth cleaning</span>
+                    </a>
+                </li>
+                <li class="inline-block delimeter">|</li>
+            @endif
         @endif
             <li class="inline-block">
                 <a href="https://account.dentacoin.com/assurance?platform=assurance" itemprop="url">
