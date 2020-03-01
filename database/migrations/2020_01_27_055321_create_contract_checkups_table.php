@@ -16,8 +16,9 @@ class CreateContractCheckupsTable extends Migration
         Schema::create('contract_checkups', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('contract_id');
-            $table->tinyInteger('approved_by_patient')->default(0);
-            $table->enum('status', ['check-up', 'teeth-cleaning']);
+            $table->tinyInteger('approved_by_dentist')->default(0);
+            $table->enum('type', ['check-up', 'teeth-cleaning']);
+            $table->timestamp('date_at');
             $table->timestamps();
         });
 

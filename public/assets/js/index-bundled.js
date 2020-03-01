@@ -73858,9 +73858,7 @@ async function pagesDataOnContractInit() {
                 initFlipClockTimer(next_payment_timestamp_unix);
 
                 cancelContractEventInit();
-            }
-
-            if ($('.contract-header').hasClass('active')) {
+            } else if ($('.contract-header').hasClass('active')) {
                 var next_payment_timestamp_date_obj;
                 var next_payment_timestamp_unix;
                 var next_payment_timestamp;
@@ -73935,6 +73933,24 @@ async function pagesDataOnContractInit() {
                         }, 3000);
                     }
                 }
+
+                if ($('.record-check-up').length) {
+                    $('.record-check-up').click(function() {
+                        $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/check-up.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">TIME FOR DENTAL CHECK-UP</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">Your dentist recommended you to visit them <span class="blue-green-color calibri-bold">'+$('.patient-contract-single-page-section').attr('data-checkups')+' times per year</span> for a check-up. Did you have your teeth examined already?</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-action">YES, I\'VE BEEN THERE</a></div></div></div>');
+                        $('.record-check-up-action').click(function() {
+                            $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/check-up.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR CHECK-UP?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><input type="text" class="custom-input max-width-300 margin-0-auto datepicker"/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
+                        });
+                    });
+                }
+
+                if ($('.record-tooth-cleaning').length) {
+                    $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">TIME FOR TEETH CLEANING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">Your dentist recommended you to visit them <span class="blue-green-color calibri-bold">'+$('.patient-contract-single-page-section').attr('data-teeth-cleanings')+' times per year</span> for teeth cleaning. Did you have your teeth cleaned already?</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-tooth-cleaning-action">YES, I\'VE BEEN THERE</a></div></div></div>');
+                    $('.record-tooth-cleaning').click(function() {
+                        $('.record-tooth-cleaning-action').click(function() {
+                            $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR TEETH CLEANING?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><input type="text" class="custom-input max-width-300 margin-0-auto datepicker"/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
+                        });
+                    });
+                }
             } else if ($('.contract-header').hasClass('awaiting-approval')) {
                 var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address')));
                 var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient-address'), $('.patient-contract-single-page-section').attr('data-dentist-address'));
@@ -73943,8 +73959,6 @@ async function pagesDataOnContractInit() {
 
                 patientWaitingForDentistApprovalLogic(current_user_dcn_balance);
                 function patientWaitingForDentistApprovalLogic(current_user_dcn_balance) {
-                    console.log(current_user_dcn_balance, 'patientWaitingForDentistApprovalLogic');
-                    console.log(monthly_premium_in_dcn, 'monthly_premium_in_dcn');
 
                     $('.camping-for-popups').html('');
                     if (current_user_dcn_balance < monthly_premium_in_dcn) {
@@ -74753,6 +74767,55 @@ async function pagesDataOnContractInit() {
                 }
             }
         }
+
+        if ($('.contract-decrypt').length) {
+            $('.contract-decrypt').click(async function() {
+                var this_btn = $(this);
+                var encrypted_pdf_content = await getEncryptedContractPdfContent(this_btn.attr('data-hash'), this_btn.attr('data-type'));
+                var render_form = $('form#render-pdf');
+                if (encrypted_pdf_content.success) {
+                    if (localStorage.getItem('current-account') != null) {
+                        var cached_key = JSON.parse(localStorage.getItem('current-account'));
+                        if (cached_key.type == 'keystore') {
+                            // === CACHED KEYSTORE FILE ===
+                            $.ajax({
+                                type: 'POST',
+                                url: '/get-keystore-file-password-validation',
+                                dataType: 'json',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function (response) {
+                                    basic.closeDialog();
+                                    basic.showDialog(response.success, 'keystore-file-password-validation', null, true);
+                                    $('.keystore-file-password-validation .keystore-password').focus();
+
+                                    $('.keystore-file-password-validation .btn-container a').click(async function() {
+                                        if ($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
+                                            basic.showAlert('Please enter your password.', '', true);
+                                        }else {
+                                            var decrypt_response = await decryptDataByKeystore(encrypted_pdf_content.success, JSON.parse(localStorage.getItem('current-account')).keystore, $('.keystore-file-password-validation .keystore-password').val().trim());
+                                            if (decrypt_response.success) {
+                                                basic.closeDialog();
+                                                render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
+                                                render_form.submit();
+                                            } else if (decrypt_response.error) {
+                                                basic.showAlert(decrypt_response.message, '', true);
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    } else {
+                        basic.closeDialog();
+                        openCacheKeyPopup(encrypted_pdf_content.success);
+                    }
+                } else if (encrypted_pdf_content.error) {
+                    basic.showAlert(encrypted_pdf_content.error, '', true);
+                }
+            });
+        }
     }
 }
 
@@ -75509,7 +75572,7 @@ if ($('body').hasClass('logged-in')) {
         });
     }
 
-    if ($('.logged-user-hamburger').length) {
+    /*if ($('.logged-user-hamburger').length) {
         $('.logged-user-hamburger').click(function() {
             $('.logged-mobile-profile-menu').addClass('active');
         });
@@ -75517,7 +75580,7 @@ if ($('body').hasClass('logged-in')) {
         $('.close-logged-mobile-profile-menu').click(function() {
             $('.logged-mobile-profile-menu').removeClass('active');
         });
-    }
+    }*/
 
     if ($('.contracts-list.slider').length) {
         var slides_to_show = 3;
@@ -75624,55 +75687,6 @@ if ($('body').hasClass('logged-in')) {
                     });
                 }
             });
-        });
-    }
-
-    if ($('.contract-decrypt').length) {
-        $('.contract-decrypt').click(async function() {
-            var this_btn = $(this);
-            var encrypted_pdf_content = await getEncryptedContractPdfContent(this_btn.attr('data-hash'), this_btn.attr('data-type'));
-            var render_form = $('form#render-pdf');
-            if (encrypted_pdf_content.success) {
-                if (localStorage.getItem('current-account') != null) {
-                    var cached_key = JSON.parse(localStorage.getItem('current-account'));
-                    if (cached_key.type == 'keystore') {
-                        // === CACHED KEYSTORE FILE ===
-                        $.ajax({
-                            type: 'POST',
-                            url: '/get-keystore-file-password-validation',
-                            dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function (response) {
-                                basic.closeDialog();
-                                basic.showDialog(response.success, 'keystore-file-password-validation', null, true);
-                                $('.keystore-file-password-validation .keystore-password').focus();
-
-                                $('.keystore-file-password-validation .btn-container a').click(async function() {
-                                    if ($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
-                                        basic.showAlert('Please enter your password.', '', true);
-                                    }else {
-                                        var decrypt_response = await decryptDataByKeystore(encrypted_pdf_content.success, JSON.parse(localStorage.getItem('current-account')).keystore, $('.keystore-file-password-validation .keystore-password').val().trim());
-                                        if (decrypt_response.success) {
-                                            basic.closeDialog();
-                                            render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
-                                            render_form.submit();
-                                        } else if (decrypt_response.error) {
-                                            basic.showAlert(decrypt_response.message, '', true);
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    }
-                } else {
-                    basic.closeDialog();
-                    openCacheKeyPopup(encrypted_pdf_content.success);
-                }
-            } else if (encrypted_pdf_content.error) {
-                basic.showAlert(encrypted_pdf_content.error, '', true);
-            }
         });
     }
 
@@ -77947,6 +77961,13 @@ function trackForContractStatusChange(contract, currentStatus) {
             }
         });
     }, 5000);
+}
+
+if($('.datepicker').length > 0) {
+    $('.datepicker').datepicker({
+        format: 'dd-mm-yyyy',
+        startDate: '-3d'
+    });
 }
 
 // =================================== GOOGLE ANALYTICS TRACKING LOGIC ======================================

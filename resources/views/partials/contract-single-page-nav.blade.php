@@ -46,13 +46,13 @@
         @endif
         @if($contract->status == 'active' && (new \App\Http\Controllers\UserController())->checkPatientSession())
             <li class="inline-block">
-                <a href="javascript:void(0);" itemprop="url">
+                <a href="javascript:void(0);" itemprop="url" class="record-check-up">
                     <span itemprop="name"><i class="fa fa-bars" aria-hidden="true"></i> Record check-up</span>
                 </a>
             </li>
             <li class="inline-block delimeter">|</li>
             <li class="inline-block">
-                <a href="javascript:void(0);" itemprop="url">
+                <a href="javascript:void(0);" itemprop="url" class="record-tooth-cleaning">
                     <span itemprop="name"><i class="fa fa-bars" aria-hidden="true"></i> Record tooth cleaning</span>
                 </a>
             </li>

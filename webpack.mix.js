@@ -27,6 +27,7 @@ mix.styles([
     'public/assets/libs/combobox/combobox.css',
     'public/assets/libs/croppie/croppie.css',
     'public/assets/libs/FlipClock-master/compiled/flipclock.css',
+    'public/assets/libs/jquery-ui/jquery-ui.css',
 ], 'public/dist/css/front-libs-style.css');
 
 mix.styles([
@@ -50,6 +51,7 @@ mix.scripts([
     'public/assets/libs/qrcode/qrcode.js',
     'node_modules/datatables.net/js/jquery.dataTables.min.js',
     'public/assets/libs/truffle-contract/truffle-contract-compiled.js',
+    'public/assets/libs/jquery-ui/jquery-ui.js',
 ], 'public/dist/js/front-libs-script.js');
 
 mix.babel([
