@@ -77,7 +77,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
         Route::post('/on-blockchain-contract-creation', 'PatientController@onBlockchainContractCreation')->name('on-blockchain-contract-creation');
 
-        Route::post('/create-check-up', 'PatientController@createCheckUp')->name('create-check-up');
+        Route::post('/record-check-up-or-teeth-cleaning', 'PatientController@recordCheckUpOrTeethCleaning')->name('record-check-up-or-teeth-cleaning');
     });
 
     Route::group(['prefix' => 'dentist', 'middleware' => 'HandleDentistSession'], function () {

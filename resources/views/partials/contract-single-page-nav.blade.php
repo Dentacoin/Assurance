@@ -44,7 +44,9 @@
             </li>
             <li class="inline-block delimeter">|</li>
         @endif
-        @if($contract->status == 'active' && (new \App\Http\Controllers\UserController())->checkPatientSession())
+        @if($contract->status == 'active' && (new \App\Http\Controllers\UserController())->checkPatientSession() && !empty($contract_active_at))
+            @php($timeSinceConractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - $contract_active_at))
+            {{var_dump($timeSinceConractSigning)}}
             <li class="inline-block">
                 <a href="javascript:void(0);" itemprop="url" class="record-check-up">
                     <span itemprop="name"><i class="fa fa-pencil" aria-hidden="true"></i> Record check-up</span>

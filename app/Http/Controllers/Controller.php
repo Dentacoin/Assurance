@@ -243,5 +243,25 @@ class Controller extends BaseController
     protected function getIpfsHashes() {
         return TemporallyContract::whereNotNull('contract_active_at')->get(['document_hash', 'contract_active_at']);
     }
+
+    public function convertMS($milliseconds) {
+        $day = 0;
+        $hour = 0;
+        $minute = 0;
+        $seconds = 0;
+        $seconds = floor($milliseconds);
+        $minute = floor($seconds / 60);
+        $seconds = $seconds % 60;
+        $hour = floor($minute / 60);
+        $minute = $minute % 60;
+        $day = floor($hour / 24);
+        $hour = $hour % 24;
+        return array(
+            'day' => $day,
+            'hour' => $hour,
+            'minute' => $minute,
+            'seconds' => $seconds
+        );
+    }
 }
 

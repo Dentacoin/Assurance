@@ -610,8 +610,28 @@ class PatientController extends Controller {
     }
 
     //dentist can add profile description while waiting for approval from Dentacoin admin
-    protected function createCheckUp(Request $request) {
-        var_dump($request->input());
-        die();
+    protected function recordCheckUpOrTeethCleaning(Request $request) {
+        $this->validate($request, [
+            'type' => 'required',
+            'contract' => 'required',
+            'date' => 'required',
+        ], [
+            'type.required' => 'Type is required.',
+            'contract.required' => 'Contract is required.',
+            'date.required' => 'Date is required.',
+        ]);
+
+        $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'patient_id' => session('logged_user')['id'], 'status' => 'active'))->get()->first();
+        if(!empty($contract)) {
+            $checkUp = new ContractCheckup();
+            $checkUp->contract_id = $contract->id;
+            $checkUp->type = $request->input('type');
+            $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
+            $checkUp->save();
+
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => true, 'message' => 'Missing contract.']);
+        }
     }
 }

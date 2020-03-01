@@ -629,6 +629,10 @@ async function pagesDataOnContractInit() {
                     }
                 }
 
+                var timeSinceConractSigning = convertMS((now_timestamp - parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract'))) * 1000);
+                var yearsActionsToBeExecuted = 1;
+                yearsActionsToBeExecuted += Math.floor(timeSinceConractSigning.days / 365);
+
                 if ($('.record-check-up').length) {
                     $('.record-check-up').click(function() {
                         $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/check-up.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">TIME FOR DENTAL CHECK-UP</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">Your dentist recommended you to visit them <span class="blue-green-color calibri-bold">'+$('.patient-contract-single-page-section').attr('data-checkups')+' times per year</span> for a check-up. Did you have your teeth examined already?</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-action">YES, I\'VE BEEN THERE</a></div></div></div>');
@@ -4685,6 +4689,23 @@ function initDatepicker() {
     }
 }
 initDatepicker();
+
+function convertMS(milliseconds) {
+    var day, hour, minute, seconds;
+    seconds = Math.floor(milliseconds / 1000);
+    minute = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    hour = Math.floor(minute / 60);
+    minute = minute % 60;
+    day = Math.floor(hour / 24);
+    hour = hour % 24;
+    return {
+        day: day,
+        hour: hour,
+        minute: minute,
+        seconds: seconds
+    };
+}
 
 // =================================== GOOGLE ANALYTICS TRACKING LOGIC ======================================
 

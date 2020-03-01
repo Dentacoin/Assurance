@@ -13,7 +13,7 @@
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
             </div>
             <div class="row">
-                @include('partials.contract-single-page-nav', ['dentist_data' => $dentist, 'patient_data' => $patient])
+                @include('partials.contract-single-page-nav', ['dentist_data' => $dentist, 'patient_data' => $patient, 'contract_active_at' => $contract_active_at])
             </div>
         </div>
         <div class="container single-contract-tile module text-center padding-top-20 @if(isset($mobile) && $mobile) mobile @endif">
