@@ -73937,18 +73937,30 @@ async function pagesDataOnContractInit() {
                 if ($('.record-check-up').length) {
                     $('.record-check-up').click(function() {
                         $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/check-up.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">TIME FOR DENTAL CHECK-UP</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">Your dentist recommended you to visit them <span class="blue-green-color calibri-bold">'+$('.patient-contract-single-page-section').attr('data-checkups')+' times per year</span> for a check-up. Did you have your teeth examined already?</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-action">YES, I\'VE BEEN THERE</a></div></div></div>');
+
                         $('.record-check-up-action').click(function() {
+                            scrollToPopupsCamper();
                             $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/check-up.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR CHECK-UP?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><input type="text" class="custom-input max-width-300 margin-0-auto datepicker"/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
                         });
                     });
                 }
 
-                if ($('.record-tooth-cleaning').length) {
-                    $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">TIME FOR TEETH CLEANING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">Your dentist recommended you to visit them <span class="blue-green-color calibri-bold">'+$('.patient-contract-single-page-section').attr('data-teeth-cleanings')+' times per year</span> for teeth cleaning. Did you have your teeth cleaned already?</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-tooth-cleaning-action">YES, I\'VE BEEN THERE</a></div></div></div>');
-                    $('.record-tooth-cleaning').click(function() {
-                        $('.record-tooth-cleaning-action').click(function() {
+                if ($('.record-teeth-cleaning').length) {
+                    $('.record-teeth-cleaning').click(function() {
+                        $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">TIME FOR TEETH CLEANING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">Your dentist recommended you to visit them <span class="blue-green-color calibri-bold">'+$('.patient-contract-single-page-section').attr('data-teeth-cleanings')+' times per year</span> for teeth cleaning. Did you have your teeth cleaned already?</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-teeth-cleaning-action">YES, I\'VE BEEN THERE</a></div></div></div>');
+
+                        $('.record-teeth-cleaning-action').click(function() {
+                            scrollToPopupsCamper();
                             $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR TEETH CLEANING?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><input type="text" class="custom-input max-width-300 margin-0-auto datepicker"/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
                         });
+                    });
+                }
+
+                function scrollToPopupsCamper() {
+                    $('html, body').animate({
+                        scrollTop: $('.camping-for-popups').offset().top - 100
+                    }, {
+                        duration: 500
                     });
                 }
             } else if ($('.contract-header').hasClass('awaiting-approval')) {
