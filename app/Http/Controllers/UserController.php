@@ -794,7 +794,7 @@ class UserController extends Controller {
                 return DB::table('public_keys')->count();
                 break;
             case 'get-not-cancelled-contracts':
-                $contracts = TemporallyContract::select('slug', 'patient_address', 'dentist_address', 'contract_active_at', 'created_at', 'status')->whereIn('status', array('awaiting-payment', 'awaiting-approval', 'active', 'pending'))->get()->all();
+                $contracts = TemporallyContract::select('id', 'slug', 'patient_address', 'dentist_address', 'contract_active_at', 'created_at', 'status')->whereIn('status', array('awaiting-payment', 'awaiting-approval', 'active', 'pending'))->get()->all();
                 foreach($contracts as $contract) {
                     if($contract->status == 'active') {
                         $timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - strtotime($contract->contract_active_at));
@@ -806,17 +806,12 @@ class UserController extends Controller {
                         $periodBegin = date('Y-m-d', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', strtotime($contract->contract_active_at)));
                         $periodEnd = date('Y-m-d', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', strtotime($contract->contract_active_at)));
 
-                        var_dump($periodBegin);
-                        var_dump($periodEnd);
-
                         $contract->check_ups = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'check-up', 'approved_by_dentist' => true))->whereBetween('date_at', array($periodBegin, $periodEnd))->get()->all();
 
                         $contract->teeth_cleanings = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'teeth-cleaning', 'approved_by_dentist' => true))->whereBetween('date_at', array($periodBegin, $periodEnd))->get()->all();
-
-                        var_dump($contract->id);
-                        var_dump($contract);
-                        die('asd');
                     }
+
+                    unset($contract->id);
                 }
 
                 if(!empty($contracts)) {
