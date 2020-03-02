@@ -806,9 +806,9 @@ class UserController extends Controller {
                         $periodBegin = date('Y-m-d', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', strtotime($contract->contract_active_at)));
                         $periodEnd = date('Y-m-d', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', strtotime($contract->contract_active_at)));
 
-                        $contract['check-ups'] = ContractCheckup::where(array('contract_checkups.contract_id' => $contract->id, 'contract_checkups.type' => 'check-up', 'contract_checkups.approved_by_dentist' => true))->whereBetween('contract_checkups.date_at', array($periodBegin, $periodEnd))->get()->all();
+                        $contract['check-ups'] = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'check-up', 'approved_by_dentist' => true))->whereBetween('date_at', array($periodBegin, $periodEnd))->get()->all();
 
-                        $contract['teeth-cleanings'] = ContractCheckup::where(array('contract_checkups.contract_id' => $contract->id, 'contract_checkups.type' => 'teeth-cleaning', 'contract_checkups.approved_by_dentist' => true))->whereBetween('contract_checkups.date_at', array($periodBegin, $periodEnd))->get()->all();
+                        $contract['teeth-cleanings'] = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'teeth-cleaning', 'approved_by_dentist' => true))->whereBetween('date_at', array($periodBegin, $periodEnd))->get()->all();
                     }
                 }
 
