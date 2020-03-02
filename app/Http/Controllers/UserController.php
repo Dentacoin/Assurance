@@ -806,6 +806,9 @@ class UserController extends Controller {
                         $periodBegin = date('Y-m-d', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', strtotime($contract->contract_active_at)));
                         $periodEnd = date('Y-m-d', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', strtotime($contract->contract_active_at)));
 
+                        var_dump($periodBegin);
+                        var_dump($periodEnd);
+
                         $contract['check-ups'] = ContractCheckup::leftJoin('temporally_contracts', function($join) {
                             $join->on('contract_checkups.contract_id', '=', 'temporally_contracts.id');
                         })->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => 'check-up', 'contract_checkups.approved_by_dentist' => true))->whereBetween('contract_checkups.date_at', array($periodBegin, $periodEnd))->get()->all();
