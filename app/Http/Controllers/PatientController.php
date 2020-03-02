@@ -621,22 +621,27 @@ class PatientController extends Controller {
             'date.required' => 'Date is required.',
         ]);
 
-        $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'patient_id' => session('logged_user')['id'], 'status' => 'active'))->get()->first();
-        if(!empty($contract)) {
-            $checkUp = new ContractCheckup();
-            $checkUp->contract_id = $contract->id;
-            $checkUp->type = $request->input('type');
-            $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
-            $checkUp->save();
+        if (\DateTime::createFromFormat('Y-m-d H:i:s', $request->input('date')) !== FALSE) {
+            $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'patient_id' => session('logged_user')['id'], 'status' => 'active'))->get()->first();
+            if(!empty($contract)) {
+                $checkUp = new ContractCheckup();
+                $checkUp->contract_id = $contract->id;
+                $checkUp->type = $request->input('type');
+                $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
+                $checkUp->save();
 
-            return response()->json(['success' => true]);
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['error' => true, 'message' => 'Missing contract.']);
+            }
         } else {
-            return response()->json(['error' => true, 'message' => 'Missing contract.']);
+            return response()->json(['error' => true, 'message' => 'Invalid date.']);
         }
     }
 
+    // returning the count of approved by dentist checkups for contract
     public function getCheckUpOrTeethCleaning($type, $slug) {
-        $checkUps = DB::connection('mysql')->table('contract_checkups')->leftJoin('temporally_contracts', 'contract_checkups.contract_id', '=', 'temporally_contracts.id')->select('contract_checkups.*')->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->get()->all();
+        $checkUps = DB::connection('mysql')->table('contract_checkups')->leftJoin('temporally_contracts', 'contract_checkups.contract_id', '=', 'temporally_contracts.id')->select('contract_checkups.*')->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type, 'contract_checkups.	approved_by_dentist' => true))->get()->all();
         if(!empty($checkUps)) {
             return sizeof($checkUps);
         } else {

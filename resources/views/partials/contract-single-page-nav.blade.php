@@ -54,8 +54,10 @@
             @php($currentCheckups = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('check-up', $contract->slug))
             @php($currentTeethCleanings = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug))
 
-            {{var_dump($currentCheckups)}}
-            {{var_dump($currentTeethCleanings)}}
+            @php($periodBegin = date('Y-m-d H:i:s', strtotime($contract_active_at . ' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days')))
+            @php($periodEnd = date('Y-m-d H:i:s', strtotime($contract_active_at . ' + ' . (365 * $yearsActionsToBeExecuted) . ' days')))
+            {{var_dump($periodBegin)}}
+            {{var_dump($periodEnd)}}
 
             @if($currentCheckups < $contract->check_ups_per_year * $yearsActionsToBeExecuted)
                 <li class="inline-block">
