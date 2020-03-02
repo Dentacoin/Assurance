@@ -621,7 +621,7 @@ class PatientController extends Controller {
             'date.required' => 'Date is required.',
         ]);
 
-        if (\DateTime::createFromFormat('Y-m-d H:i:s', $request->input('date')) !== FALSE) {
+        if (\DateTime::createFromFormat('Y-m-d', $request->input('date')) !== FALSE) {
             $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'patient_id' => session('logged_user')['id'], 'status' => 'active'))->get()->first();
             if(!empty($contract)) {
                 $checkUp = new ContractCheckup();
