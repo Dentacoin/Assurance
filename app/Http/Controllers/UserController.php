@@ -809,8 +809,8 @@ class UserController extends Controller {
                         var_dump($periodBegin);
                         var_dump($periodEnd);
 
-                        $previosPeriodBegin = $periodBegin = date('Y-m-d', strtotime($periodBegin . ' - 365 days'));
-                        $previosPeriodEnd = $periodEnd = date('Y-m-d', strtotime($periodEnd . ' - 365 days'));
+                        $previosPeriodBegin = date('Y-m-d', strtotime($periodBegin . ' - 365 days'));
+                        $previosPeriodEnd = date('Y-m-d', strtotime($periodEnd . ' - 365 days'));
 
                         var_dump($previosPeriodBegin);
                         var_dump($previosPeriodEnd);
