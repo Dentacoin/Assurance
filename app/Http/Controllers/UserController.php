@@ -799,10 +799,11 @@ class UserController extends Controller {
                     if($contract->status == 'active') {
                         $timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - strtotime($contract->contract_active_at));
                         var_dump($timeSinceContractSigning);
-                        die('asd');
                         $yearsActionsToBeExecuted = 1;
                         // if 1 year passed since contract signing
                         if(array_key_exists('days', $timeSinceContractSigning) && $timeSinceContractSigning['days'] >= 365) {
+                            var_dump($timeSinceContractSigning['days']);
+                            die('asd');
                             $yearsActionsToBeExecuted += floor($timeSinceContractSigning['days'] / 365);
 
                             $periodBegin = date('Y-m-d H:i:s', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', strtotime($contract->contract_active_at)));
