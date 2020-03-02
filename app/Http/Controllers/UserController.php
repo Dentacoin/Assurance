@@ -799,7 +799,6 @@ class UserController extends Controller {
                     if($contract->status == 'active') {
                         $timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - strtotime($contract->contract_active_at));
                         var_dump($timeSinceContractSigning);
-                        var_dump($timeSinceContractSigning['days']);
                         die('asd');
                         $yearsActionsToBeExecuted = 1;
                         // if 1 year passed since contract signing
