@@ -51,15 +51,14 @@
                 @php($yearsActionsToBeExecuted += floor($timeSinceContractSigning['days'] / 365))
             @endif
 
-            @php($currentCheckups = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('check-up', $contract->slug))
-            @php($currentTeethCleanings = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug))
-
             @php($periodBegin = date('Y-m-d H:i:s', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', $contract_active_at)))
             @php($periodEnd = date('Y-m-d H:i:s', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', $contract_active_at)))
-            {{var_dump($periodBegin)}}
-            {{var_dump($periodEnd)}}
 
-            @if($currentCheckups < $contract->check_ups_per_year * $yearsActionsToBeExecuted)
+            @php($currentCheckups = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd))
+            @php($currentTeethCleanings = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd))
+
+            {{--@if($currentCheckups < $contract->check_ups_per_year * $yearsActionsToBeExecuted)--}}
+            @if($currentCheckups < $contract->check_ups_per_year)
                 <li class="inline-block">
                     <a href="javascript:void(0);" itemprop="url" class="record-check-up">
                         <span itemprop="name"><i class="fa fa-pencil" aria-hidden="true"></i> Record check-up</span>
@@ -68,7 +67,8 @@
                 <li class="inline-block delimeter">|</li>
             @endif
 
-            @if($currentTeethCleanings < $contract->teeth_cleaning_per_year * $yearsActionsToBeExecuted)
+            {{--@if($currentTeethCleanings < $contract->teeth_cleaning_per_year * $yearsActionsToBeExecuted)--}}
+            @if($currentTeethCleanings < $contract->teeth_cleaning_per_year)
                 <li class="inline-block">
                     <a href="javascript:void(0);" itemprop="url" class="record-teeth-cleaning">
                         <span itemprop="name"><i class="fa fa-pencil" aria-hidden="true"></i> Record teeth cleaning</span>

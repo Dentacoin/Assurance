@@ -639,10 +639,12 @@ class PatientController extends Controller {
         }
     }
 
-    // returning the count of approved by dentist checkups for contract
-    public function getCheckUpOrTeethCleaning($type, $slug) {
-        $checkUps = DB::connection('mysql')->table('contract_checkups')->leftJoin('temporally_contracts', 'contract_checkups.contract_id', '=', 'temporally_contracts.id')->select('contract_checkups.*')->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type, 'contract_checkups.approved_by_dentist' => true))->get()->all();
+    // returning the count of approved by dentist checkups for contract for period of time (year)
+    public function getCheckUpOrTeethCleaning($type, $slug, $from, $to) {
+        $checkUps = DB::connection('mysql')->table('contract_checkups')->leftJoin('temporally_contracts', 'contract_checkups.contract_id', '=', 'temporally_contracts.id')->select('contract_checkups.*')->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type, 'contract_checkups.approved_by_dentist' => true))->whereBetween('date_at', array($from, $to))->get()->all();
         if(!empty($checkUps)) {
+            var_dump(sizeof($checkUps));
+            die('asd');
             return sizeof($checkUps);
         } else {
             return 0;
