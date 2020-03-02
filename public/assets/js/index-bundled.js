@@ -73944,6 +73944,39 @@ async function pagesDataOnContractInit() {
                             initDatepicker();
 
                             $('.camping-for-popups .datepicker').focus();
+
+                            $('.record-check-up-submit').click(function() {
+                                if($('.camping-for-popups .datepicker').val() != '') {
+                                    showLoader();
+
+                                    setTimeout(function() {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/patient/record-check-up-or-teeth-cleaning',
+                                            dataType: 'json',
+                                            data: {
+                                                type: 'check-up',
+                                                contract: $('.patient-contract-single-page-section').attr('data-slug'),
+                                                date: $('.camping-for-popups .datepicker').val().trim()
+                                            },
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success: function (response) {
+                                                hideLoader();
+                                                if (response.success) {
+                                                    $('.camping-for-popups').html('');
+                                                    basic.showAlert('Check-up recorded successfully. Now your dentist have to approve it.', '', true);
+                                                } else {
+                                                    basic.showAlert('Something went wrong, please try again later.', '', true);
+                                                }
+                                            }
+                                        });
+                                    }, 2000);
+                                } else {
+                                    basic.showAlert('Please select valid date.', '', true);
+                                }
+                            });
                         });
                     });
                 }
@@ -73958,6 +73991,39 @@ async function pagesDataOnContractInit() {
                             initDatepicker();
 
                             $('.camping-for-popups .datepicker').focus();
+
+                            $('.record-check-up-submit').click(function() {
+                                if($('.camping-for-popups .datepicker').val() != '') {
+                                    showLoader();
+
+                                    setTimeout(function() {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/patient/record-check-up-or-teeth-cleaning',
+                                            dataType: 'json',
+                                            data: {
+                                                type: 'teeth-cleaning',
+                                                contract: $('.patient-contract-single-page-section').attr('data-slug'),
+                                                date: $('.camping-for-popups .datepicker').val().trim()
+                                            },
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success: function (response) {
+                                                hideLoader();
+                                                if (response.success) {
+                                                    $('.camping-for-popups').html('');
+                                                    basic.showAlert('Teeth cleaning recorded successfully. Now your dentist have to approve it.', '', true);
+                                                } else {
+                                                    basic.showAlert('Something went wrong, please try again later.', '', true);
+                                                }
+                                            }
+                                        });
+                                    }, 2000);
+                                } else {
+                                    basic.showAlert('Please select valid date.', '', true);
+                                }
+                            });
                         });
                     });
                 }
@@ -75585,7 +75651,7 @@ if ($('body').hasClass('logged-in')) {
     });
 
     if ($('.open-mobile-single-page-nav').length) {
-        $('.open-mobile-single-page-nav').click(function() {
+        $('.open-mobile-single-page-nav > a').click(function() {
             $(this).closest('.contract-single-page-nav').find('ul').toggle(300);
         });
     }

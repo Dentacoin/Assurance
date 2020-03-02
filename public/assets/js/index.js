@@ -2346,7 +2346,7 @@ if ($('body').hasClass('logged-in')) {
     });
 
     if ($('.open-mobile-single-page-nav').length) {
-        $('.open-mobile-single-page-nav').click(function() {
+        $('.open-mobile-single-page-nav > a').click(function() {
             $(this).closest('.contract-single-page-nav').find('ul').toggle(300);
         });
     }

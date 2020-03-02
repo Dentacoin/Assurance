@@ -8555,7 +8555,7 @@ select.select-mac-fix {
     padding-top: 15px; }
     .module.contract-single-page-nav .open-mobile-single-page-nav .nav-btn {
       font-size: 35px;
-      padding: 5px 12px;
+      padding: 10px 20px;
       border: 2px solid #212121;
       line-height: 14px;
       color: #212121;
@@ -8583,7 +8583,8 @@ select.select-mac-fix {
       display: none;
       z-index: 10;
       background-color: white;
-      width: 230px;
+      font-size: 20px;
+      width: 260px;
       top: 100%;
       position: absolute;
       left: 50%;
@@ -8602,7 +8603,7 @@ select.select-mac-fix {
         display: none; }
       .module.contract-single-page-nav ul li {
         display: block;
-        padding: 7px;
+        padding: 10px;
         border-bottom: 1px solid #888888; } }
 .module.single-contract-tile .contract-participant {
   -webkit-border-radius: 6px;
