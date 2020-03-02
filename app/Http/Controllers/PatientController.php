@@ -645,7 +645,7 @@ class PatientController extends Controller {
         var_dump($from);
         var_dump($to);
         $checkUps = ContractCheckup::leftJoin('temporally_contracts', function($join) {
-            $join->on('contract_checkups.id', '=', 'temporally_contracts.id');
+            $join->on('contract_checkups.contract_id', '=', 'temporally_contracts.id');
         })->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type/*, 'contract_checkups.approved_by_dentist' => true*/))->get()->all();
         //$checkUps = DB::connection('mysql')->table('contract_checkups')->select('contract_checkups.*')/*->leftJoin('temporally_contracts', 'contract_checkups.contract_id', '=', 'temporally_contracts.id')->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type, 'contract_checkups.approved_by_dentist' => true))*/->whereBetween('contract_checkups.date_at', ['2018-02-01', '2222-02-10'])->get()->all();
         var_dump(sizeof($checkUps));
