@@ -55,7 +55,7 @@
             @php($currentTeethCleanings = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug))
 
             @php($periodBegin = date('Y-m-d H:i:s', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', $contract_active_at)))
-            @php($periodEnd = date('Y-m-d H:i:s', strtotime($contract_active_at . ' + ' . (365 * $yearsActionsToBeExecuted) . ' days')))
+            @php($periodEnd = date('Y-m-d H:i:s', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', $contract_active_at)))
             {{var_dump($periodBegin)}}
             {{var_dump($periodEnd)}}
 
