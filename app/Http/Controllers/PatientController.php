@@ -643,7 +643,7 @@ class PatientController extends Controller {
     public function getCheckUpOrTeethCleaning($type, $slug, $from, $to) {
         var_dump($from);
         var_dump($to);
-        $checkUps = DB::connection('mysql')->table('contract_checkups')->leftJoin('temporally_contracts', 'contract_checkups.contract_id', '=', 'temporally_contracts.id')->select('contract_checkups.*')->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type, 'contract_checkups.approved_by_dentist' => true))->where('contract_checkups.date_at', '>=', $from)->where('contract_checkups.date_at', '<=', $to)->get()->all();
+        $checkUps = DB::connection('mysql')->table('contract_checkups')->leftJoin('temporally_contracts', 'contract_checkups.contract_id', '=', 'temporally_contracts.id')->select('contract_checkups.*')->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type, 'contract_checkups.approved_by_dentist' => true))->whereBetween('contract_checkups.date_at', ['2018-02-01', '2222-02-10'])->get()->all();
         var_dump(sizeof($checkUps));
         die('asd');
         if(!empty($checkUps)) {
