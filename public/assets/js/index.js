@@ -4745,7 +4745,7 @@ function trackForContractStatusChange(contract, currentStatus) {
 function initDatepicker() {
     if($('.datepicker').length > 0) {
         $('.datepicker').datepicker({
-            dateFormat: 'yyyy-mm-dd',
+            dateFormat: 'yy-mm-dd',
             startDate: '-3d'
         });
     }

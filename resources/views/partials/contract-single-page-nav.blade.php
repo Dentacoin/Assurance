@@ -51,30 +51,30 @@
                 @php($yearsActionsToBeExecuted += floor($timeSinceContractSigning['days'] / 365))
             @endif
 
-            @php($periodBegin = date('Y-m-d H:i:s', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', $contract_active_at)))
-            @php($periodEnd = date('Y-m-d H:i:s', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', $contract_active_at)))
+            @php($periodBegin = date('Y-m-d', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', $contract_active_at)))
+            @php($periodEnd = date('Y-m-d', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', $contract_active_at)))
 
             @php($currentCheckups = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd))
             @php($currentTeethCleanings = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd))
 
             {{--@if($currentCheckups < $contract->check_ups_per_year * $yearsActionsToBeExecuted)--}}
             @if($currentCheckups < $contract->check_ups_per_year)
-                <li class="inline-block">
+                <li class="inline-block check-up-element">
                     <a href="javascript:void(0);" itemprop="url" class="record-check-up">
                         <span itemprop="name"><i class="fa fa-pencil" aria-hidden="true"></i> Record check-up</span>
                     </a>
                 </li>
-                <li class="inline-block delimeter">|</li>
+                <li class="inline-block delimeter check-up-element">|</li>
             @endif
 
             {{--@if($currentTeethCleanings < $contract->teeth_cleaning_per_year * $yearsActionsToBeExecuted)--}}
             @if($currentTeethCleanings < $contract->teeth_cleaning_per_year)
-                <li class="inline-block">
+                <li class="inline-block teeth-cleaning-element">
                     <a href="javascript:void(0);" itemprop="url" class="record-teeth-cleaning">
                         <span itemprop="name"><i class="fa fa-pencil" aria-hidden="true"></i> Record teeth cleaning</span>
                     </a>
                 </li>
-                <li class="inline-block delimeter">|</li>
+                <li class="inline-block delimeter teeth-cleaning-element">|</li>
             @endif
         @endif
             <li class="inline-block">

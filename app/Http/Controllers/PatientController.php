@@ -624,13 +624,36 @@ class PatientController extends Controller {
         if (\DateTime::createFromFormat('Y-m-d', $request->input('date')) !== FALSE) {
             $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'patient_id' => session('logged_user')['id'], 'status' => 'active'))->get()->first();
             if(!empty($contract)) {
-                $checkUp = new ContractCheckup();
-                $checkUp->contract_id = $contract->id;
-                $checkUp->type = $request->input('type');
-                $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
-                $checkUp->save();
+                $timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - strtotime($contract->contract_active_at));
+                $yearsActionsToBeExecuted = 1;
+                if(array_key_exists('days', $timeSinceContractSigning) && $timeSinceContractSigning['days'] >= 365) {
+                    $yearsActionsToBeExecuted += floor($timeSinceContractSigning['days'] / 365);
+                }
 
-                return response()->json(['success' => true]);
+                $periodBegin = date('Y-m-d', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', strtotime($contract->contract_active_at)));
+                $periodEnd = date('Y-m-d', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', strtotime($contract->contract_active_at)));
+
+                if($request->input('type') == 'check-up') {
+                    $currentRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd);
+                    $aMustRecordsCount = $contract->check_ups_per_year;
+                    $type = 'check-ups';
+                } else if($request->input('type') == 'teeth-cleaning') {
+                    $currentRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd);
+                    $aMustRecordsCount = $contract->teeth_cleaning_per_year;
+                    $type = 'teeth cleanings';
+                }
+
+                if($currentRecordsCount < $aMustRecordsCount) {
+                    $checkUp = new ContractCheckup();
+                    $checkUp->contract_id = $contract->id;
+                    $checkUp->type = $request->input('type');
+                    $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
+                    $checkUp->save();
+
+                    return response()->json(array('success' => true));
+                } else {
+                    return response()->json(['error' => true, 'message' => 'Already have recorded ' . $aMustRecordsCount . ' ' . $type . ' as agreed in the contract terms.']);
+                }
             } else {
                 return response()->json(['error' => true, 'message' => 'Missing contract.']);
             }
