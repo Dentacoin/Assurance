@@ -794,7 +794,7 @@ class UserController extends Controller {
                 return DB::table('public_keys')->count();
                 break;
             case 'get-not-cancelled-contracts':
-                $contracts = TemporallyContract::select('id', 'slug', 'patient_address', 'dentist_address', 'contract_active_at', 'created_at', 'status')->whereIn('status', array('awaiting-payment', 'awaiting-approval', 'active', 'pending'))->get()->all();
+                $contracts = TemporallyContract::select('id', 'slug', 'patient_address', 'dentist_address', 'contract_active_at', 'created_at', 'status', 'check_ups_per_year', 'teeth_cleaning_per_year')->whereIn('status', array('awaiting-payment', 'awaiting-approval', 'active', 'pending'))->get()->all();
                 foreach($contracts as $contract) {
                     if($contract->status == 'active') {
                         $timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - strtotime($contract->contract_active_at));
@@ -805,6 +805,16 @@ class UserController extends Controller {
 
                         $periodBegin = date('Y-m-d', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', strtotime($contract->contract_active_at)));
                         $periodEnd = date('Y-m-d', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', strtotime($contract->contract_active_at)));
+
+                        var_dump($periodBegin);
+                        var_dump($periodEnd);
+
+                        $previosPeriodBegin = $periodBegin = date('Y-m-d', strtotime($periodBegin . ' - 365 days'));
+                        $previosPeriodEnd = $periodEnd = date('Y-m-d', strtotime($periodEnd . ' - 365 days'));
+
+                        var_dump($previosPeriodBegin);
+                        var_dump($previosPeriodEnd);
+                        die('asd');
 
                         $contract->check_ups = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'check-up', 'approved_by_dentist' => true))->whereBetween('date_at', array($periodBegin, $periodEnd))->get()->all();
 
