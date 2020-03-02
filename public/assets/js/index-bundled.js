@@ -78050,7 +78050,7 @@ function trackForContractStatusChange(contract, currentStatus) {
 function initDatepicker() {
     if($('.datepicker').length > 0) {
         $('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
+            dateFormat: 'yyyy-mm-dd',
             startDate: '-3d'
         });
     }
