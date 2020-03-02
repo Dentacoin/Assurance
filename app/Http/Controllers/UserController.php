@@ -811,11 +811,11 @@ class UserController extends Controller {
 
                         $contract->check_ups = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'check-up', 'approved_by_dentist' => true))->whereBetween('date_at', array($periodBegin, $periodEnd))->get()->all();
 
-                        $contract->teeth_cleanings = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'teeth-cleaning', 'approved_by_dentist' => true))->whereBetween('date_at', array($periodBegin, $periodEnd))->get()->all();
+                        //$contract->teeth_cleanings = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'teeth-cleaning', 'approved_by_dentist' => true))->whereBetween('date_at', array($periodBegin, $periodEnd))->get()->all();
 
                         $contract->previos_period_check_ups = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'check-up', 'approved_by_dentist' => true))->whereBetween('date_at', array($previosPeriodBegin, $previosPeriodEnd))->get()->all();
 
-                        $contract->previos_period_teeth_cleanings = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'teeth-cleaning', 'approved_by_dentist' => true))->whereBetween('date_at', array($previosPeriodBegin, $previosPeriodEnd))->get()->all();
+                        //$contract->previos_period_teeth_cleanings = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'teeth-cleaning', 'approved_by_dentist' => true))->whereBetween('date_at', array($previosPeriodBegin, $previosPeriodEnd))->get()->all();
                     }
 
                     unset($contract->id);
