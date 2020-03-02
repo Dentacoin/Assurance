@@ -641,7 +641,7 @@ class PatientController extends Controller {
 
     // returning the count of approved by dentist checkups for contract
     public function getCheckUpOrTeethCleaning($type, $slug) {
-        $checkUps = DB::connection('mysql')->table('contract_checkups')->leftJoin('temporally_contracts', 'contract_checkups.contract_id', '=', 'temporally_contracts.id')->select('contract_checkups.*')->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type/*, 'contract_checkups.	approved_by_dentist' => true*/))->get()->all();
+        $checkUps = DB::connection('mysql')->table('contract_checkups')->leftJoin('temporally_contracts', 'contract_checkups.contract_id', '=', 'temporally_contracts.id')->select('contract_checkups.*')->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type, 'contract_checkups.	approved_by_dentist' => true))->get()->all();
         var_dump($checkUps);
         die('asd');
         if(!empty($checkUps)) {
