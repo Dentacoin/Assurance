@@ -641,13 +641,6 @@ class PatientController extends Controller {
 
     // returning the count of approved by dentist checkups for contract for period of time (year)
     public function getCheckUpOrTeethCleaning($type, $slug, $from, $to) {
-        $view_params['contracts'] = TemporallyContract::where(function ($query) {
-            $query->where(array('patient_id' => session('logged_user')['id']))
-                ->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email));
-        })->whereIn('status', $request->input('filter_arr'))->get()->sortByDesc('contract_active_at');
-
-
-
 
         var_dump($from);
         var_dump($to);
