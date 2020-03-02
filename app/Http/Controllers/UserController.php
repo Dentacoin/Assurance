@@ -798,6 +798,8 @@ class UserController extends Controller {
                 foreach($contracts as $contract) {
                     if($contract->status == 'active') {
                         $timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - strtotime($contract->contract_active_at));
+                        var_dump($timeSinceContractSigning);
+                        die('asd');
                         $yearsActionsToBeExecuted = 1;
                         // if 1 year passed since contract signing
                         if(array_key_exists('days', $timeSinceContractSigning) && $timeSinceContractSigning['days'] >= 365) {
