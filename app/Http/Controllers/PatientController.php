@@ -641,9 +641,20 @@ class PatientController extends Controller {
 
     // returning the count of approved by dentist checkups for contract for period of time (year)
     public function getCheckUpOrTeethCleaning($type, $slug, $from, $to) {
+        $view_params['contracts'] = TemporallyContract::where(function ($query) {
+            $query->where(array('patient_id' => session('logged_user')['id']))
+                ->orWhere(array('patient_email' => (new APIRequestsController())->getUserData(session('logged_user')['id'])->email));
+        })->whereIn('status', $request->input('filter_arr'))->get()->sortByDesc('contract_active_at');
+
+
+
+
         var_dump($from);
         var_dump($to);
-        $checkUps = DB::connection('mysql')->table('contract_checkups')->select('contract_checkups.*')/*->leftJoin('temporally_contracts', 'contract_checkups.contract_id', '=', 'temporally_contracts.id')->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type, 'contract_checkups.approved_by_dentist' => true))*/->whereBetween('contract_checkups.date_at', ['2018-02-01', '2222-02-10'])->get()->all();
+        $checkUps = ContractCheckup::leftJoin('temporally_contracts', function($join) {
+            $join->on('contract_checkups.id', '=', 'temporally_contracts.id');
+        })->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type/*, 'contract_checkups.approved_by_dentist' => true*/))->get()->all();
+        //$checkUps = DB::connection('mysql')->table('contract_checkups')->select('contract_checkups.*')/*->leftJoin('temporally_contracts', 'contract_checkups.contract_id', '=', 'temporally_contracts.id')->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.status' => 'active', 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type, 'contract_checkups.approved_by_dentist' => true))*/->whereBetween('contract_checkups.date_at', ['2018-02-01', '2222-02-10'])->get()->all();
         var_dump(sizeof($checkUps));
         die('asd');
         if(!empty($checkUps)) {
