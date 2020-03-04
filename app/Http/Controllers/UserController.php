@@ -893,6 +893,9 @@ class UserController extends Controller {
                                 $periodBegin = date('Y-m-d H:i:s', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', strtotime($contract->contract_active_at)));
                                 $periodEnd = date('Y-m-d H:i:s', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', strtotime($contract->contract_active_at)));
 
+                                $contract->periodBeginTimestamp = strtotime($periodBegin);
+                                $contract->periodEndTimestamp = strtotime($periodEnd);
+
                                 //$previosPeriodBegin = date('Y-m-d H:i:s', strtotime($periodBegin . ' - 365 days'));
                                 //$previosPeriodEnd = date('Y-m-d H:i:s', strtotime($periodEnd . ' - 365 days'));
 
