@@ -136,7 +136,6 @@
                     @endif
                 @endif
             @endif
-            {{var_dump($show)}}
             <div class="row camping-for-popups @if(!empty($show)) @foreach($show as $showItem) {{$showItem . ' '}} @endforeach @endif"></div>
         </div>
     </section>
