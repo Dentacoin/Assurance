@@ -668,7 +668,7 @@ class PatientController extends Controller {
                     $checkUp = new ContractCheckup();
                     $checkUp->contract_id = $contract->id;
                     $checkUp->type = $request->input('type');
-                    $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
+                    $checkUp->date_at = date('Y-m-d H:i:s', strtotime($date));
 
                     Mail::send(array(), array(), function($message) use ($email_body, $email_subject, $dentistEmail) {
                         $message->to($dentistEmail)->subject($email_subject);
@@ -701,14 +701,14 @@ class PatientController extends Controller {
                         $checkUp = new ContractCheckup();
                         $checkUp->contract_id = $contract->id;
                         $checkUp->type = 'check-up';
-                        $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
+                        $checkUp->date_at = date('Y-m-d H:i:s', strtotime($check_up_date));
                     }
 
                     if($currentTeethCLeaningRecordsCount < $aMustTeethCleaningRecordsCount && !empty($teeth_cleaning_date)) {
                         $teethCleaning = new ContractCheckup();
                         $teethCleaning->contract_id = $contract->id;
                         $teethCleaning->type = 'teeth-cleaning';
-                        $teethCleaning->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
+                        $teethCleaning->date_at = date('Y-m-d H:i:s', strtotime($teeth_cleaning_date));
                     }
 
                     if(isset($checkUp) && isset($teethCleaning)) {
