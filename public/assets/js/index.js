@@ -755,7 +755,7 @@ async function pagesDataOnContractInit() {
 
                         var sentRecord = false;
                         $('.record-check-up-and-teeth-cleaning-submit').click(function() {
-                            if($('.camping-for-popups .check-up-datepicker').val() != '' && $('.camping-for-popups .teeth-cleaning-datepicker').val() != '') {
+                            if($('.camping-for-popups .check-up-datepicker').val() != '' || $('.camping-for-popups .teeth-cleaning-datepicker').val() != '') {
                                 if(!sentRecord) {
                                     sentRecord = true;
                                     showLoader();
