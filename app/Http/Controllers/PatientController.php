@@ -619,7 +619,7 @@ class PatientController extends Controller {
             'contract.required' => 'Contract is required.'
         ]);
 
-        $date = $request->input('type');
+        $date = $request->input('date');
         $check_up_date = $request->input('check_up_date');
         $teeth_cleaning_date = $request->input('teeth_cleaning_date');
 
@@ -663,9 +663,6 @@ class PatientController extends Controller {
                     $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
                     $type = 'teeth cleaning';
                 }
-
-                var_dump($date);
-                die('as');
 
                 if($currentRecordsCount < $aMustRecordsCount) {
                     $checkUp = new ContractCheckup();
