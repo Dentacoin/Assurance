@@ -20,8 +20,8 @@
     @php($currentCheckups = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd, array('sent', 'active')))
     @php($currentTeethCleanings = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd, array('sent', 'active')))
 
-    {{$currentCheckups}}
-    {{$currentTeethCleanings}}
+    {{var_dump($currentCheckups)}}
+    {{var_dump($currentTeethCleanings)}}
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section" data-date-start-contract="{{$contract_active_at}}" data-slug="{{$contract->slug}}" data-patient-address="{{$contract->patient_address}}" data-dentist-address="{{$contract->dentist_address}}" data-checkups="{{$contract->check_ups_per_year}}" data-teeth-cleanings="{{$contract->teeth_cleaning_per_year}}">
         <div class="container">
             <div class="row">
