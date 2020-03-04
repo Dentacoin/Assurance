@@ -71,6 +71,8 @@
             @php($months = ['two_months' => 5184000, 'four_months' => 10368000, 'seven_months' => 18144000, 'eight_months' => 20736000, 'ten_months' => 25920000])
 
             @php($show = array())
+            {{var_dump($currentCheckups)}}
+            {{var_dump($contract->check_ups_per_year)}}
             @if($currentCheckups < $contract->check_ups_per_year)
                 @if($contract->check_ups_per_year == 1)
                     @if(time() > strtotime($periodBegin) + $months['ten_months'])
@@ -134,6 +136,7 @@
                     @endif
                 @endif
             @endif
+            {{var_dump($show)}}
             <div class="row camping-for-popups @if(!empty($show)) @foreach($show as $showItem) {{$showItem . ' '}} @endforeach @endif"></div>
         </div>
     </section>
