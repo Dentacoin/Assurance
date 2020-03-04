@@ -19,11 +19,6 @@
 
     @php($currentCheckups = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved')))
     @php($currentTeethCleanings = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved')))
-
-    {{var_dump($periodBegin)}}
-    {{var_dump($periodEnd)}}
-    {{var_dump($currentCheckups)}}
-    {{var_dump($currentTeethCleanings)}}
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section" data-date-start-contract="{{$contract_active_at}}" data-slug="{{$contract->slug}}" data-patient-address="{{$contract->patient_address}}" data-dentist-address="{{$contract->dentist_address}}" data-checkups="{{$contract->check_ups_per_year}}" data-teeth-cleanings="{{$contract->teeth_cleaning_per_year}}">
         <div class="container">
             <div class="row">
@@ -110,20 +105,16 @@
 
             @if($currentTeethCleanings < $contract->teeth_cleaning_per_year)
                 @if($contract->teeth_cleaning_per_year == 1)
-                    {{var_dump(11111111)}}
                     @if(time() > strtotime($periodBegin) + $months['ten_months'])
                         @php(array_push($show, 'teeth-cleaning'))
                     @endif
                 @elseif($contract->teeth_cleaning_per_year == 2)
-                    {{var_dump(22222222)}}
                     @if(time() > strtotime($periodBegin) + $months['four_months'] && $currentTeethCleanings < 1)
                         @php(array_push($show, 'teeth-cleaning'))
                     @elseif(time() > strtotime($periodBegin) + $months['ten_months'] && $currentTeethCleanings < 2)
                         @php(array_push($show, 'teeth-cleaning'))
                     @endif
                 @elseif($contract->teeth_cleaning_per_year == 3)
-                    {{var_dump(333333)}}
-                    {{var_dump(time() > strtotime($periodBegin) + $months['seven_months'] && $currentTeethCleanings < 2)}}
                     @if(time() > strtotime($periodBegin) + $months['two_months'] && $currentTeethCleanings < 1)
                         @php(array_push($show, 'teeth-cleaning'))
                     @elseif(time() > strtotime($periodBegin) + $months['seven_months'] && $currentTeethCleanings < 2)
@@ -132,7 +123,6 @@
                         @php(array_push($show, 'teeth-cleaning'))
                     @endif
                 @elseif($contract->teeth_cleaning_per_year == 4)
-                    {{var_dump(44444444)}}
                     @if(time() > strtotime($periodBegin) + $months['two_months'] && $currentTeethCleanings < 1)
                         @php(array_push($show, 'teeth-cleaning'))
                     @elseif(time() > strtotime($periodBegin) + $months['four_months'] && $currentTeethCleanings < 2)
