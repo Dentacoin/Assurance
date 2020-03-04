@@ -669,6 +669,12 @@ class PatientController extends Controller {
                         $checkUp->type = $request->input('type');
                         $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
 
+                        var_dump($email_body);
+                        var_dump($email_subject);
+                        var_dump($dentistEmail);
+                        var_dump(EMAIL_SENDER);
+                        die('asd');
+
                         Mail::send(array(), array(), function($message) use ($email_body, $email_subject, $dentistEmail) {
                             $message->to($dentistEmail)->subject($email_subject);
                             $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
