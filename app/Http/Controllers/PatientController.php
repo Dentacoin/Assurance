@@ -613,13 +613,19 @@ class PatientController extends Controller {
     protected function recordCheckUpOrTeethCleaning(Request $request) {
         $this->validate($request, [
             'type' => 'required',
-            'contract' => 'required',
-            'date' => 'required',
+            'contract' => 'required'
         ], [
             'type.required' => 'Type is required.',
-            'contract.required' => 'Contract is required.',
-            'date.required' => 'Date is required.',
+            'contract.required' => 'Contract is required.'
         ]);
+
+        $date = $request->input('type');
+        $check_up_date = $request->input('check_up_date');
+        $teeth_cleaning_date = $request->input('teeth_cleaning_date');
+
+        if(empty($date) && empty($check_up_date) && empty($teeth_cleaning_date)) {
+            return response()->json(['error' => true, 'message' => 'Missing dates.']);
+        }
 
         if (\DateTime::createFromFormat('Y-m-d', $request->input('date')) !== FALSE) {
             $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'patient_id' => session('logged_user')['id'], 'status' => 'active'))->get()->first();
@@ -633,26 +639,139 @@ class PatientController extends Controller {
                 $periodBegin = date('Y-m-d', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', strtotime($contract->contract_active_at)));
                 $periodEnd = date('Y-m-d', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', strtotime($contract->contract_active_at)));
 
-                if($request->input('type') == 'check-up') {
-                    $currentRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd);
-                    $aMustRecordsCount = $contract->check_ups_per_year;
-                    $type = 'check-ups';
-                } else if($request->input('type') == 'teeth-cleaning') {
-                    $currentRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd);
-                    $aMustRecordsCount = $contract->teeth_cleaning_per_year;
-                    $type = 'teeth cleanings';
-                }
+                $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
+                $dentistEmail = $dentist;
+                $patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+                if($request->input('type') == 'check-up' || $request->input('type') == 'teeth-cleaning') {
+                    if(empty($date)) {
+                        return response()->json(['error' => true, 'message' => 'Missing date.']);
+                    }
 
-                if($currentRecordsCount < $aMustRecordsCount) {
-                    $checkUp = new ContractCheckup();
-                    $checkUp->contract_id = $contract->id;
-                    $checkUp->type = $request->input('type');
-                    $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
-                    $checkUp->save();
+                    if($request->input('type') == 'check-up') {
+                        $currentRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd);
+                        $aMustRecordsCount = $contract->check_ups_per_year;
 
-                    return response()->json(array('success' => true));
-                } else {
-                    return response()->json(['error' => true, 'message' => 'Already have recorded ' . $aMustRecordsCount . ' ' . $type . ' as agreed in the contract terms.']);
+                        $email_view = view('emails/patient-recording-check-up', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d H:i:s', strtotime($request->input('date')))]);
+                        $email_body = $email_view->render();
+                        $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
+                    } else if($request->input('type') == 'teeth-cleaning') {
+                        $currentRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd);
+                        $aMustRecordsCount = $contract->teeth_cleaning_per_year;
+
+                        $email_view = view('emails/patient-recording-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d H:i:s', strtotime($request->input('date')))]);
+                        $email_body = $email_view->render();
+                        $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
+                    }
+
+                    if($currentRecordsCount < $aMustRecordsCount) {
+                        $checkUp = new ContractCheckup();
+                        $checkUp->contract_id = $contract->id;
+                        $checkUp->type = $request->input('type');
+                        $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
+
+                        Mail::send(array(), array(), function($message) use ($email_body, $email_subject, $dentistEmail) {
+                            $message->to($dentistEmail)->subject($email_subject);
+                            $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                            $message->setBody($email_body, 'text/html');
+                        });
+
+                        if(count(Mail::failures()) > 0) {
+                            return response()->json(['error' => true, 'message' => 'Record saving and email sending to dentist failed, please try again later or contact <a href="mailto:'.EMAIL_SENDER.'">'.EMAIL_SENDER.'</a>.']);
+                        } else {
+                            $checkUp->save();
+
+                            return response()->json(array('success' => true));
+                        }
+                    } else {
+                        return response()->json(['error' => true, 'message' => 'Already have recorded ' . $aMustRecordsCount . ' ' . $type . ' as agreed in the contract terms.']);
+                    }
+                } else if($request->input('type') == 'check-up-and-teeth-cleaning') {
+                    if(empty($check_up_date) && empty($teeth_cleaning_date)) {
+                        return response()->json(['error' => true, 'message' => 'Missing dates.']);
+                    }
+
+                    if(!empty($check_up_date) || !empty($teeth_cleaning_date)) {
+                        $currentCheckUpRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd);
+                        $currentTeethCLeaningRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd);
+                        $aMustCheckUpRecordsCount = $contract->teeth_cleaning_per_year;
+                        $aMustTeethCleaningRecordsCount = $contract->teeth_cleaning_per_year;
+
+                        if($currentCheckUpRecordsCount < $aMustCheckUpRecordsCount) {
+                            $checkUp = new ContractCheckup();
+                            $checkUp->contract_id = $contract->id;
+                            $checkUp->type = $request->input('type');
+                            $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
+                        }
+
+                        if($currentTeethCLeaningRecordsCount < $aMustTeethCleaningRecordsCount) {
+                            $teethCleaning = new ContractCheckup();
+                            $teethCleaning->contract_id = $contract->id;
+                            $teethCleaning->type = $request->input('type');
+                            $teethCleaning->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
+                        }
+
+                        if(isset($checkUp) && isset($teethCleaning)) {
+                            // CHECK UP AND TEETH CLEANING
+                            $email_view = view('emails/patient-recording-check-up-and-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'check_up_date' => date('Y-m-d H:i:s', strtotime($check_up_date)), 'teeth_cleaning_date' => date('Y-m-d H:i:s', strtotime($teeth_cleaning_date))]);
+                            $email_body = $email_view->render();
+                            $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
+
+                            Mail::send(array(), array(), function($message) use ($email_body, $email_subject, $dentistEmail) {
+                                $message->to($dentistEmail)->subject($email_subject);
+                                $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                                $message->setBody($email_body, 'text/html');
+                            });
+
+                            if(count(Mail::failures()) > 0) {
+                                return response()->json(['error' => true, 'message' => 'Record saving and email sending to dentist failed, please try again later or contact <a href="mailto:'.EMAIL_SENDER.'">'.EMAIL_SENDER.'</a>.']);
+                            } else {
+                                $checkUp->save();
+                                $teethCleaning->save();
+
+                                return response()->json(array('success' => true));
+                            }
+                        } else if(isset($checkUp)) {
+                            // CHECK UP
+                            $email_view = view('emails/patient-recording-check-up', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d H:i:s', strtotime($request->input('date')))]);
+                            $email_body = $email_view->render();
+                            $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
+
+                            Mail::send(array(), array(), function($message) use ($email_body, $email_subject, $dentistEmail) {
+                                $message->to($dentistEmail)->subject($email_subject);
+                                $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                                $message->setBody($email_body, 'text/html');
+                            });
+
+                            if(count(Mail::failures()) > 0) {
+                                return response()->json(['error' => true, 'message' => 'Record saving and email sending to dentist failed, please try again later or contact <a href="mailto:'.EMAIL_SENDER.'">'.EMAIL_SENDER.'</a>.']);
+                            } else {
+                                $checkUp->save();
+
+                                return response()->json(array('success' => true));
+                            }
+                        } else if(isset($teethCleaning)) {
+                            // TEETH CLEANING
+                            $email_view = view('emails/patient-recording-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d H:i:s', strtotime($request->input('date')))]);
+                            $email_body = $email_view->render();
+                            $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
+
+                            Mail::send(array(), array(), function($message) use ($email_body, $email_subject, $dentistEmail) {
+                                $message->to($dentistEmail)->subject($email_subject);
+                                $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                                $message->setBody($email_body, 'text/html');
+                            });
+
+                            if(count(Mail::failures()) > 0) {
+                                return response()->json(['error' => true, 'message' => 'Record saving and email sending to dentist failed, please try again later or contact <a href="mailto:'.EMAIL_SENDER.'">'.EMAIL_SENDER.'</a>.']);
+                            } else {
+                                $teethCleaning->save();
+
+                                return response()->json(array('success' => true));
+                            }
+                        }
+                    } else {
+                        return response()->json(['error' => true, 'message' => 'Missing dates.']);
+                    }
                 }
             } else {
                 return response()->json(['error' => true, 'message' => 'Missing contract.']);

@@ -7,13 +7,25 @@
     @else
         @php($contract_active_at = strtotime($contract->contract_active_at))
     @endif
+
+    @php($timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - $contract_active_at))
+    @php($yearsActionsToBeExecuted = 1)
+    @if(array_key_exists('days', $timeSinceContractSigning) && $timeSinceContractSigning['days'] >= 365)
+        @php($yearsActionsToBeExecuted += floor($timeSinceContractSigning['days'] / 365))
+    @endif
+
+    @php($periodBegin = date('Y-m-d', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', $contract_active_at)))
+    @php($periodEnd = date('Y-m-d', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', $contract_active_at)))
+
+    @php($currentCheckups = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd))
+    @php($currentTeethCleanings = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd))
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section" data-date-start-contract="{{$contract_active_at}}" data-slug="{{$contract->slug}}" data-patient-address="{{$contract->patient_address}}" data-dentist-address="{{$contract->dentist_address}}" data-checkups="{{$contract->check_ups_per_year}}" data-teeth-cleanings="{{$contract->teeth_cleaning_per_year}}">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
             </div>
             <div class="row">
-                @include('partials.contract-single-page-nav', ['dentist_data' => $dentist, 'patient_data' => $patient, 'contract_active_at' => $contract_active_at])
+                @include('partials.contract-single-page-nav', ['dentist_data' => $dentist, 'patient_data' => $patient, 'contract_active_at' => $contract_active_at, 'currentCheckups' => $currentCheckups, 'currentTeethCleanings' => $currentTeethCleanings])
             </div>
         </div>
         <div class="container single-contract-tile module text-center padding-top-20 @if(isset($mobile) && $mobile) mobile @endif">
@@ -55,7 +67,74 @@
                     </div>
                 </div>
             @endif
-            <div class="row camping-for-popups"></div>
+
+            @php($months = ['two_months' => 5184000, 'four_months' => 10368000, 'seven_months' => 18144000, 'eight_months' => 20736000, 'ten_months' => 25920000])
+
+            @php($show = array())
+            @if($currentCheckups < $contract->check_ups_per_year)
+                @if($contract->check_ups_per_year == 1)
+                    @if(time() > strtotime($periodBegin) + $months['ten_months'])
+                        @php(array_push($show, 'check-up'))
+                    @endif
+                @elseif($contract->check_ups_per_year == 2)
+                    @if(time() > strtotime($periodBegin) + $months['four_months'] && $currentCheckups < 1)
+                        @php(array_push($show, 'check-up'))
+                    @elseif(time() > strtotime($periodBegin) + $months['ten_months'] && $currentCheckups < 2)
+                        @php(array_push($show, 'check-up'))
+                    @endif
+                @elseif($contract->check_ups_per_year == 3)
+                    @if(time() > strtotime($periodBegin) + $months['two_months'] && $currentCheckups < 1)
+                        @php(array_push($show, 'check-up'))
+                    @elseif(time() > strtotime($periodBegin) + $months['seven_months'] && $currentCheckups < 2)
+                        @php(array_push($show, 'check-up'))
+                    @elseif(time() > strtotime($periodBegin) + $months['ten_months'] && $currentCheckups < 3)
+                        @php(array_push($show, 'check-up'))
+                    @endif
+                @elseif($contract->check_ups_per_year == 4)
+                    @if(time() > strtotime($periodBegin) + $months['two_months'] && $currentCheckups < 1)
+                        @php(array_push($show, 'check-up'))
+                    @elseif(time() > strtotime($periodBegin) + $months['four_months'] && $currentCheckups < 2)
+                        @php(array_push($show, 'check-up'))
+                    @elseif(time() > strtotime($periodBegin) + $months['eight_months'] && $currentCheckups < 3)
+                        @php(array_push($show, 'check-up'))
+                    @elseif(time() > strtotime($periodBegin) + $months['ten_months'] && $currentCheckups < 4)
+                        @php(array_push($show, 'check-up'))
+                    @endif
+                @endif
+            @endif
+
+            @if($currentTeethCleanings < $contract->teeth_cleaning_per_year)
+                @if($contract->teeth_cleaning_per_year == 1)
+                    @if(time() > strtotime($periodBegin) + $months['ten_months'])
+                        @php(array_push($show, 'teeth-cleaning'))
+                    @endif
+                @elseif($contract->teeth_cleaning_per_year == 2)
+                    @if(time() > strtotime($periodBegin) + $months['four_months'] && $currentTeethCleanings < 1)
+                        @php(array_push($show, 'teeth-cleaning'))
+                    @elseif(time() > strtotime($periodBegin) + $months['ten_months'] && $currentTeethCleanings < 2)
+                        @php(array_push($show, 'teeth-cleaning'))
+                    @endif
+                @elseif($contract->teeth_cleaning_per_year == 3)
+                    @if(time() > strtotime($periodBegin) + $months['two_months'] && $currentTeethCleanings < 1)
+                        @php(array_push($show, 'teeth-cleaning'))
+                    @elseif(time() > strtotime($periodBegin) + $months['seven_months'] && $currentTeethCleanings < 2)
+                        @php(array_push($show, 'teeth-cleaning'))
+                    @elseif(time() > strtotime($periodBegin) + $months['ten_months'] && $currentTeethCleanings < 3)
+                        @php(array_push($show, 'teeth-cleaning'))
+                    @endif
+                @elseif($contract->teeth_cleaning_per_year == 4)
+                    @if(time() > strtotime($periodBegin) + $months['two_months'] && $currentTeethCleanings < 1)
+                        @php(array_push($show, 'teeth-cleaning'))
+                    @elseif(time() > strtotime($periodBegin) + $months['four_months'] && $currentTeethCleanings < 2)
+                        @php(array_push($show, 'teeth-cleaning'))
+                    @elseif(time() > strtotime($periodBegin) + $months['eight_months'] && $currentTeethCleanings < 3)
+                        @php(array_push($show, 'teeth-cleaning'))
+                    @elseif(time() > strtotime($periodBegin) + $months['ten_months'] && $currentTeethCleanings < 4)
+                        @php(array_push($show, 'teeth-cleaning'))
+                    @endif
+                @endif
+            @endif
+            <div class="row camping-for-popups @if(!empty($show)) @foreach($show as $showItem) {{$showItem . ' '}} @endforeach @endif"></div>
         </div>
     </section>
     <section class="container contract-details no-gutter-xs">

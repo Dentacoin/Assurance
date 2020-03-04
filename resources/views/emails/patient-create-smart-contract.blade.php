@@ -2,7 +2,7 @@
 <html>
 <head></head>
 <body>
-<div style="font-size: 13px;">Dear Dr. {{$dentist->name}},
+<div style="font-size: 13px;">Dear {{$dentist->title}} {{$dentist->name}},
     <br><br>
     Your patient {{$patient->name}} has just made their first monthly payment. Please check the contract details and approve it:
     <br><br><br>

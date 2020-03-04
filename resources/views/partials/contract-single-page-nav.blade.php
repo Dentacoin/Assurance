@@ -45,18 +45,6 @@
             <li class="inline-block delimeter">|</li>
         @endif
         @if($contract->status == 'active' && (new \App\Http\Controllers\UserController())->checkPatientSession() && !empty($contract_active_at))
-            @php($timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - $contract_active_at))
-            @php($yearsActionsToBeExecuted = 1)
-            @if(array_key_exists('days', $timeSinceContractSigning) && $timeSinceContractSigning['days'] >= 365)
-                @php($yearsActionsToBeExecuted += floor($timeSinceContractSigning['days'] / 365))
-            @endif
-
-            @php($periodBegin = date('Y-m-d', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', $contract_active_at)))
-            @php($periodEnd = date('Y-m-d', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', $contract_active_at)))
-
-            @php($currentCheckups = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd))
-            @php($currentTeethCleanings = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd))
-
             {{--@if($currentCheckups < $contract->check_ups_per_year * $yearsActionsToBeExecuted)--}}
             @if($currentCheckups < $contract->check_ups_per_year)
                 <li class="inline-block check-up-element">

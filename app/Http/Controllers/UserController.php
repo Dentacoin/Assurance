@@ -384,7 +384,7 @@ class UserController extends Controller {
                     $response['path'] = 'patient';
 
                     $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
-                    $email_view = view('emails/patient-cancel-contract', ['dentist_name' => $dentist->name, 'patient_name' => $current_logged_user->name, 'reason' => $data['reason'], 'contract_slug' => $contract->slug]);
+                    $email_view = view('emails/patient-cancel-contract', ['dentist' => $dentist, 'patient_name' => $current_logged_user->name, 'reason' => $data['reason'], 'contract_slug' => $contract->slug]);
                     $body = $email_view->render();
 
                     Mail::send(array(), array(), function($message) use ($body, $dentist, $current_logged_user) {

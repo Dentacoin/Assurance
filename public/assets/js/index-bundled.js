@@ -73938,96 +73938,158 @@ async function pagesDataOnContractInit() {
 
                 if ($('.record-check-up').length) {
                     $('.record-check-up').click(function() {
-                        $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/check-up.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">TIME FOR DENTAL CHECK-UP</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">Your dentist recommended you to visit them <span class="blue-green-color calibri-bold">'+$('.patient-contract-single-page-section').attr('data-checkups')+' times per year</span> for a check-up. Did you have your teeth examined already?</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-action">YES, I\'VE BEEN THERE</a></div></div></div>');
-                        scrollToPopupsCamper();
+                        initRecordCheckUpLogic();
+                    });
+                }
 
-                        $('.record-check-up-action').click(function() {
-                            $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/check-up.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR CHECK-UP?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><input type="text" class="custom-input max-width-300 margin-0-auto datepicker"/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
-                            initDatepicker();
+                function initRecordCheckUpLogic() {
+                    $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/check-up.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">TIME FOR DENTAL CHECK-UP</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">Your dentist recommended you to visit them <span class="blue-green-color calibri-bold">'+$('.patient-contract-single-page-section').attr('data-checkups')+' times per year</span> for a check-up. Did you have your teeth examined already?</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-action">YES, I\'VE BEEN THERE</a></div></div></div>');
+                    scrollToPopupsCamper();
 
-                            $('.camping-for-popups .datepicker').focus();
+                    $('.record-check-up-action').click(function() {
+                        $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/check-up.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR CHECK-UP?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><input type="text" class="custom-input max-width-300 margin-0-auto datepicker"/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
+                        initDatepicker();
 
-                            $('.record-check-up-submit').click(function() {
-                                if($('.camping-for-popups .datepicker').val() != '') {
-                                    showLoader();
+                        $('.camping-for-popups .datepicker').focus();
 
-                                    setTimeout(function() {
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: '/patient/record-check-up-or-teeth-cleaning',
-                                            dataType: 'json',
-                                            data: {
-                                                type: 'check-up',
-                                                contract: $('.patient-contract-single-page-section').attr('data-slug'),
-                                                date: $('.camping-for-popups .datepicker').val().trim()
-                                            },
-                                            headers: {
-                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                            },
-                                            success: function (response) {
-                                                hideLoader();
-                                                if (response.success) {
-                                                    $('.camping-for-popups').html('');
-                                                    basic.showAlert('Check-up recorded successfully. Now your dentist have to approve it.', '', true);
-                                                } else {
-                                                    basic.showAlert('Something went wrong, please try again later.', '', true);
-                                                }
+                        $('.record-check-up-submit').click(function() {
+                            if($('.camping-for-popups .datepicker').val() != '') {
+                                showLoader();
+
+                                setTimeout(function() {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/patient/record-check-up-or-teeth-cleaning',
+                                        dataType: 'json',
+                                        data: {
+                                            type: 'check-up',
+                                            contract: $('.patient-contract-single-page-section').attr('data-slug'),
+                                            date: $('.camping-for-popups .datepicker').val().trim()
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function (response) {
+                                            hideLoader();
+                                            if (response.success) {
+                                                $('.camping-for-popups').html('');
+                                                basic.showAlert('Check-up recorded successfully. Now your dentist have to approve it.', '', true);
+                                            } else if(response.error) {
+                                                basic.showAlert(response.message, '', true);
                                             }
-                                        });
-                                    }, 2000);
-                                } else {
-                                    basic.showAlert('Please select valid date.', '', true);
-                                }
-                            });
+                                        }
+                                    });
+                                }, 2000);
+                            } else {
+                                basic.showAlert('Please select valid date.', '', true);
+                            }
                         });
                     });
                 }
 
                 if ($('.record-teeth-cleaning').length) {
                     $('.record-teeth-cleaning').click(function() {
-                        $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">TIME FOR TEETH CLEANING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">Your dentist recommended you to visit them <span class="blue-green-color calibri-bold">'+$('.patient-contract-single-page-section').attr('data-teeth-cleanings')+' times per year</span> for teeth cleaning. Did you have your teeth cleaned already?</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-teeth-cleaning-action">YES, I\'VE BEEN THERE</a></div></div></div>');
-                        scrollToPopupsCamper();
+                        initRecordTeethCleaningLogic();
+                    });
+                }
 
-                        $('.record-teeth-cleaning-action').click(function() {
-                            $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR TEETH CLEANING?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><input type="text" class="custom-input max-width-300 margin-0-auto datepicker"/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
-                            initDatepicker();
+                function initRecordTeethCleaningLogic() {
+                    $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">TIME FOR TEETH CLEANING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">Your dentist recommended you to visit them <span class="blue-green-color calibri-bold">'+$('.patient-contract-single-page-section').attr('data-teeth-cleanings')+' times per year</span> for teeth cleaning. Did you have your teeth cleaned already?</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-teeth-cleaning-action">YES, I\'VE BEEN THERE</a></div></div></div>');
+                    scrollToPopupsCamper();
 
-                            $('.camping-for-popups .datepicker').focus();
+                    $('.record-teeth-cleaning-action').click(function() {
+                        $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR TEETH CLEANING?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><input type="text" class="custom-input max-width-300 margin-0-auto datepicker"/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
+                        initDatepicker();
 
-                            $('.record-check-up-submit').click(function() {
-                                if($('.camping-for-popups .datepicker').val() != '') {
-                                    showLoader();
+                        $('.camping-for-popups .datepicker').focus();
 
-                                    setTimeout(function() {
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: '/patient/record-check-up-or-teeth-cleaning',
-                                            dataType: 'json',
-                                            data: {
-                                                type: 'teeth-cleaning',
-                                                contract: $('.patient-contract-single-page-section').attr('data-slug'),
-                                                date: $('.camping-for-popups .datepicker').val().trim()
-                                            },
-                                            headers: {
-                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                            },
-                                            success: function (response) {
-                                                hideLoader();
-                                                if (response.success) {
-                                                    $('.camping-for-popups').html('');
-                                                    basic.showAlert('Teeth cleaning recorded successfully. Now your dentist have to approve it.', '', true);
-                                                } else {
-                                                    basic.showAlert('Something went wrong, please try again later.', '', true);
-                                                }
+                        $('.record-check-up-submit').click(function() {
+                            if($('.camping-for-popups .datepicker').val() != '') {
+                                showLoader();
+
+                                setTimeout(function() {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/patient/record-check-up-or-teeth-cleaning',
+                                        dataType: 'json',
+                                        data: {
+                                            type: 'teeth-cleaning',
+                                            contract: $('.patient-contract-single-page-section').attr('data-slug'),
+                                            date: $('.camping-for-popups .datepicker').val().trim()
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function (response) {
+                                            hideLoader();
+                                            if (response.success) {
+                                                $('.camping-for-popups').html('');
+                                                basic.showAlert('Teeth cleaning recorded successfully. Now your dentist have to approve it.', '', true);
+                                            } else if(response.error) {
+                                                basic.showAlert(response.message, '', true);
                                             }
-                                        });
-                                    }, 2000);
-                                } else {
-                                    basic.showAlert('Please select valid date.', '', true);
-                                }
-                            });
+                                        }
+                                    });
+                                }, 2000);
+                            } else {
+                                basic.showAlert('Please select valid date.', '', true);
+                            }
                         });
                     });
+                }
+
+                function initCheckUpAndRecordTeethCleaningLogic() {
+                    $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20 margin-right-10"><img alt="Check inside shield" src="/assets/uploads/check-up.svg" class="max-width-70"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">TIME FOR CHECK-UP & TEETH CLEANING</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">Your dentist recommended you to visit them '+$('.patient-contract-single-page-section').attr('data-checkups')+' times per year for a check-up and '+$('.patient-contract-single-page-section').attr('data-teeth-cleanings')+' times per year for a teeth cleaning. Did you have your teeth examined and cleaned already?</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-teeth-cleaning-action">YES, I\'VE BEEN THERE</a></div></div></div>');
+                    scrollToPopupsCamper();
+
+                    $('.record-teeth-cleaning-action').click(function() {
+                        $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR CHECK-UP AND TEETH CLEANING?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><label class="display-block fs-14 lato-semibold">Check-up Date:</label><input type="text" class="custom-input max-width-300 margin-0-auto check-up-datepicker"/></div><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><label class="display-block fs-14 lato-semibold">Teeth Cleaning Date:</label><input type="text" class="custom-input max-width-300 margin-0-auto teeth-cleaning-datepicker"/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
+                        initDatepicker();
+
+                        $('.camping-for-popups .check-up-datepicker').focus();
+
+                        $('.record-check-up-submit').click(function() {
+                            if($('.camping-for-popups .check-up-datepicker').val() != '' && $('.camping-for-popups .teeth-cleaning-datepicker').val() != '') {
+                                showLoader();
+
+                                setTimeout(function() {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/patient/record-check-up-or-teeth-cleaning',
+                                        dataType: 'json',
+                                        data: {
+                                            type: 'check-up-and-teeth-cleaning',
+                                            contract: $('.patient-contract-single-page-section').attr('data-slug'),
+                                            check_up_date: $('.camping-for-popups .check-up-datepicker').val().trim(),
+                                            teeth_cleaning_date: $('.camping-for-popups .teeth-cleaning-datepicker').val().trim()
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function (response) {
+                                            hideLoader();
+                                            if (response.success) {
+                                                $('.camping-for-popups').html('');
+                                                basic.showAlert('Record is saved successfully. Now your dentist have to approve it.', '', true);
+                                            } else if(response.error) {
+                                                basic.showAlert(response.message, '', true);
+                                            }
+                                        }
+                                    });
+                                }, 2000);
+                            } else {
+                                basic.showAlert('Please select at least one valid date.', '', true);
+                            }
+                        });
+                    });
+                }
+
+                if($('.camping-for-popups').hasClass('check-up') && $('.camping-for-popups').hasClass('teeth-cleaning')) {
+                    initCheckUpAndRecordTeethCleaningLogic();
+                } else if($('.camping-for-popups').hasClass('check-up')) {
+                    initRecordCheckUpLogic();
+                } else if($('.camping-for-popups').hasClass('teeth-cleaning')) {
+                    initRecordTeethCleaningLogic();
                 }
 
                 function scrollToPopupsCamper() {
