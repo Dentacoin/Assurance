@@ -887,16 +887,20 @@ class UserController extends Controller {
                             $timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - strtotime($contract->contract_active_at));
                             $yearsActionsToBeExecuted = 1;
                             // if 1 year passed since contract signing
-                            if(array_key_exists('day', $timeSinceContractSigning) && $timeSinceContractSigning['day'] >= 365) {
+                            if(array_key_exists('day', $timeSinceContractSigning)/* && $timeSinceContractSigning['day'] >= 365*/) {
                                 $yearsActionsToBeExecuted += floor($timeSinceContractSigning['day'] / 365);
 
                                 $periodBegin = date('Y-m-d H:i:s', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', strtotime($contract->contract_active_at)));
                                 $periodEnd = date('Y-m-d H:i:s', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', strtotime($contract->contract_active_at)));
 
-                                $previosPeriodBegin = date('Y-m-d H:i:s', strtotime($periodBegin . ' - 365 days'));
-                                $previosPeriodEnd = date('Y-m-d H:i:s', strtotime($periodEnd . ' - 365 days'));
+                                //$previosPeriodBegin = date('Y-m-d H:i:s', strtotime($periodBegin . ' - 365 days'));
+                                //$previosPeriodEnd = date('Y-m-d H:i:s', strtotime($periodEnd . ' - 365 days'));
 
-                                $contract->previos_period_check_ups = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'check-up', 'approved_by_dentist' => true))->whereBetween('date_at', array($previosPeriodBegin, $previosPeriodEnd))->get()->all();
+                                $contract->check_ups = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'check-up', 'approved_by_dentist' => true))->whereBetween('date_at', array($periodBegin, $periodEnd))->get()->all();
+
+                                $contract->teeth_cleanings = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'teeth-cleaning', 'approved_by_dentist' => true))->whereBetween('date_at', array($periodBegin, $periodEnd))->get()->all();
+
+                                //$contract->previos_period_check_ups = ContractCheckup::where(array('contract_id' => $contract->id, 'type' => 'check-up', 'approved_by_dentist' => true))->whereBetween('date_at', array($previosPeriodBegin, $previosPeriodEnd))->get()->all();
                             }
 
                             $patient = (new APIRequestsController())->getUserData($contract->patient_id);
