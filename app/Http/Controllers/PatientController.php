@@ -785,7 +785,7 @@ class PatientController extends Controller {
     public function getCheckUpOrTeethCleaning($type, $slug, $from, $to, $statuses = array('approved')) {
         $checkUps = ContractCheckup::leftJoin('temporally_contracts', function($join) {
             $join->on('contract_checkups.contract_id', '=', 'temporally_contracts.id');
-        })->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->whereIn('temporally_contracts.status', $statuses)->whereBetween('contract_checkups.date_at', array($from, $to))->get()->all();
+        })->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))/*->whereIn('temporally_contracts.status', $statuses)*/->whereBetween('contract_checkups.date_at', array($from, $to))->get()->all();
         if(!empty($checkUps)) {
             return sizeof($checkUps);
         } else {
