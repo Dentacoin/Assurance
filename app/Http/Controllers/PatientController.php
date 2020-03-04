@@ -700,14 +700,14 @@ class PatientController extends Controller {
                     if($currentCheckUpRecordsCount < $aMustCheckUpRecordsCount && !empty($check_up_date)) {
                         $checkUp = new ContractCheckup();
                         $checkUp->contract_id = $contract->id;
-                        $checkUp->type = $request->input('type');
+                        $checkUp->type = 'check-up';
                         $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
                     }
 
                     if($currentTeethCLeaningRecordsCount < $aMustTeethCleaningRecordsCount && !empty($teeth_cleaning_date)) {
                         $teethCleaning = new ContractCheckup();
                         $teethCleaning->contract_id = $contract->id;
-                        $teethCleaning->type = $request->input('type');
+                        $teethCleaning->type = 'teeth-cleaning';
                         $teethCleaning->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
                     }
 
