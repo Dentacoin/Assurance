@@ -640,7 +640,7 @@ class PatientController extends Controller {
                 $periodEnd = date('Y-m-d', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', strtotime($contract->contract_active_at)));
 
                 $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
-                $dentistEmail = $dentist;
+                $dentistEmail = $dentist->email;
                 $patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
                 if($request->input('type') == 'check-up' || $request->input('type') == 'teeth-cleaning') {
                     if(empty($date)) {
@@ -668,12 +668,6 @@ class PatientController extends Controller {
                         $checkUp->contract_id = $contract->id;
                         $checkUp->type = $request->input('type');
                         $checkUp->date_at = date('Y-m-d H:i:s', strtotime($request->input('date')));
-
-                        var_dump($email_body);
-                        var_dump($email_subject);
-                        var_dump($dentistEmail);
-                        var_dump(EMAIL_SENDER);
-                        die('asd');
 
                         Mail::send(array(), array(), function($message) use ($email_body, $email_subject, $dentistEmail) {
                             $message->to($dentistEmail)->subject($email_subject);
