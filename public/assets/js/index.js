@@ -553,7 +553,9 @@ async function pagesDataOnContractInit() {
                 initFlipClockTimer(next_payment_timestamp_unix);
 
                 cancelContractEventInit();
-            } else if ($('.contract-header').hasClass('active')) {
+            }
+
+            if ($('.contract-header').hasClass('active')) {
                 var next_payment_timestamp_date_obj;
                 var next_payment_timestamp_unix;
                 var next_payment_timestamp;

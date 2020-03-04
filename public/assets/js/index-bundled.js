@@ -73858,7 +73858,9 @@ async function pagesDataOnContractInit() {
                 initFlipClockTimer(next_payment_timestamp_unix);
 
                 cancelContractEventInit();
-            } else if ($('.contract-header').hasClass('active')) {
+            }
+
+            if ($('.contract-header').hasClass('active')) {
                 var next_payment_timestamp_date_obj;
                 var next_payment_timestamp_unix;
                 var next_payment_timestamp;
@@ -78050,7 +78052,7 @@ function trackForContractStatusChange(contract, currentStatus) {
 function initDatepicker() {
     if($('.datepicker').length > 0) {
         $('.datepicker').datepicker({
-            dateFormat: 'yyyy-mm-dd',
+            dateFormat: 'yy-mm-dd',
             startDate: '-3d'
         });
     }
