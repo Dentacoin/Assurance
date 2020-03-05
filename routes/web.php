@@ -95,7 +95,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
         Route::post('/check-for-pending-contract-records', 'DentistController@checkForPendingContractRecords')->name('check-for-pending-contract-records');
 
-        Route::post('/approve-check-up', 'DentistController@approveCheckUp')->name('approve-check-up');
+        Route::post('/take-action-for-pending-contract-records', 'DentistController@takeActionForPendingContractRecords')->name('take-action-for-pending-contract-records');
     });
 
     Route::post('/get-contract-data', 'UserController@getContractData')->middleware('HandleUserSession')->name('get-contract-data');

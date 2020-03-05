@@ -483,39 +483,55 @@ class DentistController extends Controller
         die();
     }
 
-    protected function approveCheckUp($id) {
-        $check_up = ContractCheckup::where(array('id' => $id, 'approved_by_patient' => false))->get()->first();
-        if (!empty($check_up)) {
-            $contract = TemporallyContract::where(array('id' => $check_up->contract_id, 'dentist_id' => session('logged_user')['id']))->get()->first();
+    protected function takeActionForPendingContractRecords(Request $request) {
+        $this->validate($request, [
+            'record' => 'required',
+            'action' => 'required'
+        ], [
+            'record.required' => 'Record is required.',
+            'action.required' => 'Action is required.'
+        ]);
 
-            $patient = (new APIRequestsController())->getUserData($contract->patient_id);
-            $dentist = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+        $records = @unserialize($request->input('record'));
+        if ($records === false && $request->input('record') !== 'b:0;') {
+            return response()->json(['error' => true, 'message' => 'Something went wrong, please try again later or contact <a href=\'mailto:assurance@dentacoin.com\'>Dentacoin team</a>.']);
+        } else {
+            var_dump($records);
+            die('asd');
 
-            if (!empty($contract)) {
-                $check_up->approved_by_patient = true;
-                $check_up->save();
+            $check_up = ContractCheckup::where(array('id' => $id, 'approved_by_patient' => false))->get()->first();
+            if (!empty($check_up)) {
+                $contract = TemporallyContract::where(array('id' => $check_up->contract_id, 'dentist_id' => session('logged_user')['id']))->get()->first();
 
-                // email
-                Mail::send(array(), array(), function($message) use ($patient, $dentist) {
-                    $message->to($patient->email)->subject('Approved checkup test');
-                    $message->from($dentist->email, $dentist->name)->replyTo($dentist->email, $dentist->name);
-                    $message->setBody('Test body', 'text/html');
-                });
+                $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+                $dentist = (new APIRequestsController())->getUserData(session('logged_user')['id']);
 
-                if (count(Mail::failures()) > 0) {
-                    $check_up->approved_by_patient = false;
+                if (!empty($contract)) {
+                    $check_up->approved_by_patient = true;
                     $check_up->save();
 
-                    return response()->json(['error' => 'Something went wrong with sending notification to your patient via email. Please try again later.']);
-                } else {
-                    return response()->json(['success' => 'true']);
-                }
-            } else {
-                return response()->json(['error' => 'Trying to approve contract check-up which is not yours. Please again later.']);
-            }
+                    // email
+                    Mail::send(array(), array(), function($message) use ($patient, $dentist) {
+                        $message->to($patient->email)->subject('Approved checkup test');
+                        $message->from($dentist->email, $dentist->name)->replyTo($dentist->email, $dentist->name);
+                        $message->setBody('Test body', 'text/html');
+                    });
 
-        } else {
-            return response()->json(['error' => 'Wrong data passed.']);
+                    if (count(Mail::failures()) > 0) {
+                        $check_up->approved_by_patient = false;
+                        $check_up->save();
+
+                        return response()->json(['error' => 'Something went wrong with sending notification to your patient via email. Please try again later.']);
+                    } else {
+                        return response()->json(['success' => 'true']);
+                    }
+                } else {
+                    return response()->json(['error' => 'Trying to approve contract check-up which is not yours. Please again later.']);
+                }
+
+            } else {
+                return response()->json(['error' => 'Wrong data passed.']);
+            }
         }
     }
 

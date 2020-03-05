@@ -1440,11 +1440,59 @@ async function pagesDataOnContractInit() {
                                     basic.showDialog(response.html, 'pending-contract-record', null, true);
 
                                     $('.pending-contract-record .confirm-record').click(function() {
-                                        console.log($(this).attr('data-record'));
+                                        var record = $(this).attr('data-record');
+
+                                        var clickWarningObj = {};
+                                        clickWarningObj.callback = function (result) {
+                                            if (result) {
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: '/dentist/take-action-for-pending-contract-records',
+                                                    dataType: 'json',
+                                                    data: {
+                                                        record: record,
+                                                        action: 'confirm'
+                                                    },
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                    },
+                                                    success: function (response) {
+                                                        if (response.success) {
+                                                            basic.closeDialog();
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        };
+                                        basic.showConfirm('Sure you want to continue with approving your patient record?', '', clickWarningObj, true);
                                     });
 
                                     $('.pending-contract-record .decline-record').click(function() {
-                                        console.log($(this).attr('data-record'));
+                                        var record = $(this).attr('data-record');
+
+                                        var clickWarningObj = {};
+                                        clickWarningObj.callback = function (result) {
+                                            if (result) {
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: '/dentist/take-action-for-pending-contract-records',
+                                                    dataType: 'json',
+                                                    data: {
+                                                        record: record,
+                                                        action: 'decline'
+                                                    },
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                    },
+                                                    success: function (response) {
+                                                        if (response.success) {
+                                                            basic.closeDialog();
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        };
+                                        basic.showConfirm('Sure you want to continue with declining your patient record?', '', clickWarningObj, true);
                                     });
                                 }
                             }
