@@ -538,7 +538,9 @@ class DentistController extends Controller
                 $patient->email = 'miroslav.nedelchev@dentacoin.com';
 
                 $contract_active_at = strtotime($contract->contract_active_at);
+                var_dump($contract_active_at);
                 $timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - $contract_active_at);
+                var_dump($timeSinceContractSigning);
                 $yearsActionsToBeExecuted = 1;
                 if(array_key_exists('days', $timeSinceContractSigning) && $timeSinceContractSigning['days'] >= 365) {
                     $yearsActionsToBeExecuted += floor($timeSinceContractSigning['days'] / 365);
@@ -546,9 +548,16 @@ class DentistController extends Controller
 
                 $periodBegin = date('Y-m-d', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', $contract_active_at));
                 $periodEnd = date('Y-m-d', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', $contract_active_at));
-            
+                var_dump($periodBegin);
+                var_dump($periodEnd);
+
                 $currentCheckups = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
                 $currentTeethCleanings = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
+
+                var_dump($currentCheckups);
+                var_dump($currentTeethCleanings);
+
+                die('asd');
 
                 $approvedRecordRecordsLeft = '';
                 $checkUpsLabel = 'check-up';
