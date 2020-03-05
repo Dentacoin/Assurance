@@ -542,16 +542,10 @@ class DentistController extends Controller
                     }
                 }
 
-                if($checkUp != NULL) {
-var_dump($checkUp->date_at);
-                } else if($teethCleaning != NULL) {
-                    var_dump($teethCleaning->date_at);
-
-                }
-                die('asd');
-
                 if($checkUp != NULL && $teethCleaning != NULL) {
-                    $popupHtml = '<div class="text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-70 width-100"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block padding-left-10 padding-right-10"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-150 width-100"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Teeth cleaning" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70 width-100"/></figure></div><div class="padding-top-15 padding-bottom-25 text-center lato-bold fs-390">'.$patient->name.'</div><div class="text-center fs-22">said they\'ve visited you for a <span class="calibri-bold blue-green-color">check-up</span> on <span class="calibri-bold">'.date('d-m-Y', strtotime($date)).'</span> and <span class="calibri-bold blue-green-color">teeth cleaning</span> on <span class="calibri-bold">12/03/2019</span>.</div>';
+                    $popupHtml = '<div class="text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-70 width-100"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block padding-left-10 padding-right-10"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-150 width-100"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Teeth cleaning" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70 width-100"/></figure></div><div class="padding-top-15 padding-bottom-25 text-center lato-bold fs-390">'.$patient->name.'</div><div class="text-center fs-22">said they\'ve visited you for a <span class="calibri-bold blue-green-color">check-up</span> on <span class="calibri-bold">'.date('d-m-Y', strtotime($checkUp->date_at)).'</span> and <span class="calibri-bold blue-green-color">teeth cleaning</span> on <span class="calibri-bold">'.date('d-m-Y', strtotime($teethCleaning->date_at)).'</span>.</div><div class="text-center"><a href="javascript:void(0);" class="red-white-btn decline-record" data-record="'.serialize(array($checkUp->id, $teethCleaning->id)).'">Decline</a><a href="javascript:void(0);" class="white-green-btn confirm-record" data-record="'.serialize(array($checkUp->id, $teethCleaning->id)).'">CONFIRM</a></div>';
+
+                    return response()->json(['success' => true, 'html' => $popupHtml]);
                 } else if($checkUp != NULL) {
 
                 } else if($teethCleaning != NULL) {
