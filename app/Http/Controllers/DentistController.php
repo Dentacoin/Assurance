@@ -501,6 +501,7 @@ class DentistController extends Controller
                 $recordEmailType = NULL;
                 if(sizeof($recordIds) > 1) {
                     $recordEmailType = 'check-up and teeth cleaning appointments';
+                    $recordGetTypeParam = 'check-up-and-teeth-cleaning';
                 }
 
                 foreach ($recordIds as $recordId) {
@@ -511,8 +512,10 @@ class DentistController extends Controller
                             if($recordEmailType == NULL) {
                                 if($record->type == 'check-up') {
                                     $recordEmailType = 'check-up appointment';
+                                    $recordGetTypeParam = 'check-up';
                                 } else if($record->type == 'teeth-cleaning') {
                                     $recordEmailType = 'teeth cleaning appointment';
+                                    $recordGetTypeParam = 'teeth-cleaning';
                                 }
                             }
 
@@ -579,7 +582,7 @@ class DentistController extends Controller
                 } else if($request->input('action') == 'decline') {
                     $subject = $dentist->title. ' ' . $dentist->name . ' declined your teeth cleaning';
 
-                    $email_view = view('emails/dentist-declining-contract-record', ['dentist' => $dentist, 'patient_name' => $patient->name, 'type' => $recordEmailType, 'slug' => $contract->slug]);
+                    $email_view = view('emails/dentist-declining-contract-record', ['dentist' => $dentist, 'patient_name' => $patient->name, 'recordGetTypeParam' => $recordGetTypeParam, 'slug' => $contract->slug]);
                     $emailBody = $email_view->render();
                 }
 
