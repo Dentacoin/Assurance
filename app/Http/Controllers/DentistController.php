@@ -530,9 +530,33 @@ class DentistController extends Controller
         if(!empty($contract)) {
             $records = ContractCheckup::where(array('status' => 'sent', 'contract_id' => $contract->id))->get()->all();
 
+            $checkUp = NULL;
+            $teethCleaning = NULL;
             if(!empty($records)) {
-                var_dump($records);
+                $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+                foreach ($records as $record) {
+                    if($record->type == 'check-up' && $checkUp == NULL) {
+                        $checkUp = $record;
+                    } else if($record->type == 'teeth-cleaning' && $teethCleaning == NULL) {
+                        $teethCleaning = $record;
+                    }
+                }
+
+                if($checkUp != NULL) {
+var_dump($checkUp);
+                } else if($teethCleaning != NULL) {
+                    var_dump($teethCleaning);
+
+                }
                 die('asd');
+
+                if($checkUp != NULL && $teethCleaning != NULL) {
+                    $popupHtml = '<div class="text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-70 width-100"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block padding-left-10 padding-right-10"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-150 width-100"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Teeth cleaning" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70 width-100"/></figure></div><div class="padding-top-15 padding-bottom-25 text-center lato-bold fs-390">'.$patient->name.'</div><div class="text-center fs-22">said they\'ve visited you for a <span class="calibri-bold blue-green-color">check-up</span> on <span class="calibri-bold">'.date('d-m-Y', strtotime($date)).'</span> and <span class="calibri-bold blue-green-color">teeth cleaning</span> on <span class="calibri-bold">12/03/2019</span>.</div>';
+                } else if($checkUp != NULL) {
+
+                } else if($teethCleaning != NULL) {
+
+                }
             } else {
                 return response()->json(['error' => true, 'message' => 'Missing records.']);
             }
