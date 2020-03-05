@@ -794,6 +794,16 @@ async function pagesDataOnContractInit() {
                     });
                 }
 
+                if(basic.property_exists(get_params, 'type')) {
+                    if(get_params.type == 'check-up') {
+                        $('.camping-for-popups').addClass('check-up');
+                    } else if(get_params.type == 'teeth-cleaning') {
+                        $('.camping-for-popups').addClass('teeth-cleaning');
+                    } else if(get_params.type == 'check-up-and-teeth-cleaning') {
+                        $('.camping-for-popups').addClass('check-up teeth-cleaning');
+                    }
+                }
+
                 if($('.camping-for-popups').hasClass('check-up') && $('.camping-for-popups').hasClass('teeth-cleaning')) {
                     initCheckUpAndRecordTeethCleaningLogic();
                 } else if($('.camping-for-popups').hasClass('check-up')) {

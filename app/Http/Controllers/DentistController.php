@@ -414,7 +414,7 @@ class DentistController extends Controller
         $contract->status = 'active';
         $contract->save();
 
-        $email_view = view('emails/dentist-approve-contract-on-blockchain', ['dentist_name' => $current_logged_user->name, 'patient_name' => $patient->name, 'contract_slug' => $contract->slug, 'amount' => $contract->amount]);
+        $email_view = view('emails/dentist-approve-contract-on-blockchain', ['dentist' => $current_logged_user, 'patient_name' => $patient->name, 'contract_slug' => $contract->slug, 'amount' => $contract->amount]);
         $body = $email_view->render();
 
         Mail::send(array(), array(), function($message) use ($body, $patient, $current_logged_user) {
@@ -497,11 +497,25 @@ class DentistController extends Controller
             return response()->json(['error' => true, 'message' => 'Something went wrong, please try again later or contact <a href=\'mailto:assurance@dentacoin.com\'>Dentacoin team</a>.']);
         } else {
             if(!empty($recordIds)) {
+
+                $recordEmailType = NULL;
+                if(sizeof($recordIds) > 1) {
+                    $recordEmailType = 'check-up and teeth cleaning appointments';
+                }
+
                 foreach ($recordIds as $recordId) {
                     $record = ContractCheckup::where(array('id' => $recordId, 'status' => 'sent'))->get()->first();
                     if(!empty($record)) {
                         $contract = TemporallyContract::where(array('id' => $record->contract_id, 'dentist_id' => session('logged_user')['id']))->get()->first();
                         if(!empty($contract)) {
+                            if($recordEmailType == NULL) {
+                                if($record->type == 'check-up') {
+                                    $recordEmailType = 'check-up appointment';
+                                } else if($record->type == 'teeth-cleaning') {
+                                    $recordEmailType = 'teeth cleaning appointment';
+                                }
+                            }
+
                             if($request->input('action') == 'confirm') {
                                 $record->status = 'approved';
                             } else if($request->input('action') == 'decline') {
@@ -517,25 +531,66 @@ class DentistController extends Controller
                     }
                 }
 
-                return response()->json(['success' => true]);
 
-                /*$patient = (new APIRequestsController())->getUserData($contract->patient_id);
+                $patient = (new APIRequestsController())->getUserData($contract->patient_id);
                 $dentist = (new APIRequestsController())->getUserData(session('logged_user')['id']);
-                if($request->input('action') == 'confirm') {
-                    //$record->status = 'approved';
-                } else if($request->input('action') == 'decline') {
-                    //$record->status = 'rejected';
+
+                $patient->email = 'miroslav.nedelchev@dentacoin.com';
+
+                $contract_active_at = strtotime($contract->contract_active_at);
+                $timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - $contract_active_at);
+                $yearsActionsToBeExecuted = 1;
+                if(array_key_exists('days', $timeSinceContractSigning) && $timeSinceContractSigning['days'] >= 365) {
+                    $yearsActionsToBeExecuted += floor($timeSinceContractSigning['days'] / 365);
                 }
 
-                Mail::send(array(), array(), function($message) use ($patient, $dentist) {
-                    $message->to($patient->email)->subject('Approved checkup test');
-                    $message->from($dentist->email, $dentist->name)->replyTo($dentist->email, $dentist->name);
-                    $message->setBody('Test body', 'text/html');
+                $periodBegin = date('Y-m-d', strtotime(' + ' . (365 * ($yearsActionsToBeExecuted - 1)) . ' days', $contract_active_at));
+                $periodEnd = date('Y-m-d', strtotime(' + ' . (365 * $yearsActionsToBeExecuted) . ' days', $contract_active_at));
+            
+                $currentCheckups = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
+                $currentTeethCleanings = (new \App\Http\Controllers\PatientController())->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
+
+                $approvedRecordRecordsLeft = '';
+                $checkUpsLabel = 'check-up';
+                $teethCleaningsLabel = 'teeth cleaning';
+                if($currentCheckups < $contract->check_ups_per_year && $currentTeethCleanings < $contract->teeth_cleaning_per_year) {
+                    if($contract->check_ups_per_year - $currentCheckups > 1) {
+                        $checkUpsLabel = 'check-ups';
+                        $teethCleaningsLabel = 'teeth cleanings';
+                    }
+                    $approvedRecordRecordsLeft = '<br><br><br>You have ' . ($contract->check_ups_per_year - $currentCheckups) . ' more '.$checkUpsLabel.' and ' . ($contract->teeth_cleaning_per_year - $currentTeethCleanings) . ' more '.$teethCleaningsLabel.' recommended this year.';
+                } else if($currentCheckups < $contract->check_ups_per_year) {
+                    if($contract->check_ups_per_year - $currentCheckups > 1) {
+                        $checkUpsLabel = 'check-ups';
+                    }
+                    $approvedRecordRecordsLeft = '<br><br><br>You have ' . ($contract->check_ups_per_year - $currentCheckups) . ' more '.$checkUpsLabel.' recommended this year.';
+                } else if($currentTeethCleanings < $contract->teeth_cleaning_per_year) {
+                    if($contract->teeth_cleaning_per_year - $currentTeethCleanings > 1) {
+                        $teethCleaningsLabel = 'teeth cleanings';
+                    }
+                    $approvedRecordRecordsLeft = '<br><br><br>You have ' . ($contract->teeth_cleaning_per_year - $currentTeethCleanings) . ' more '.$teethCleaningsLabel.' recommended this year.';
+                }
+
+                if($request->input('action') == 'confirm') {
+                    $subject = $dentist->title. ' ' . $dentist->name . ' confirmed your teeth cleaning ';
+
+                    $email_view = view('emails/dentist-approving-contract-record', ['dentist' => $dentist, 'patient_name' => $patient->name, 'type' => $recordEmailType, 'approvedRecordRecordsLeft' => $approvedRecordRecordsLeft]);
+                    $emailBody = $email_view->render();
+                } else if($request->input('action') == 'decline') {
+                    $subject = $dentist->title. ' ' . $dentist->name . ' declined your teeth cleaning';
+
+                    $email_view = view('emails/dentist-declining-contract-record', ['dentist' => $dentist, 'patient_name' => $patient->name, 'type' => $recordEmailType, 'slug' => $contract->slug]);
+                    $emailBody = $email_view->render();
+                }
+
+                Mail::send(array(), array(), function($message) use ($patient, $subject, $emailBody) {
+                    $message->to($patient->email)->subject($subject);
+                    $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                    $message->setBody($emailBody, 'text/html');
                 });
 
-                if (count(Mail::failures()) > 0) {
+                return response()->json(['success' => true]);
 
-                }*/
             } else {
                 return response()->json(['error' => true, 'message' => 'Something went wrong, please try again later or contact <a href=\'mailto:assurance@dentacoin.com\'>Dentacoin team</a>.']);
             }
