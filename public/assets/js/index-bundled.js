@@ -74728,7 +74728,7 @@ async function pagesDataOnContractInit() {
                 // check for pending patient records - check-up or teeth cleaning
                 $.ajax({
                     type: 'POST',
-                    url: '/dentists/check-for-pending-contract-records',
+                    url: '/dentist/check-for-pending-contract-records',
                     dataType: 'json',
                     data: {
                         contract: $('.single-contract-view-section').attr('data-contract')
