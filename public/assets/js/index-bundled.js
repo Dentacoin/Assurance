@@ -74725,6 +74725,24 @@ async function pagesDataOnContractInit() {
                 var contract_next_payment = parseInt(on_load_exiting_contract[0]);
                 var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
 
+                // check for pending patient records - check-up or teeth cleaning
+                $.ajax({
+                    type: 'POST',
+                    url: '/dentists/check-for-pending-contract-records',
+                    dataType: 'json',
+                    data: {
+                        contract: $('.single-contract-view-section').attr('data-contract')
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (response) {
+                        if (response.success) {
+
+                        }
+                    }
+                });
+
                 if (contract_next_payment > now_timestamp) {
                     $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold ">MAKE YOUR NEXT WITHDRAW IN</h2></div> </div><div class="clock"></div><div class="flip-clock-message"></div></div></div>');
                     initFlipClockTimer(contract_next_payment - now_timestamp);

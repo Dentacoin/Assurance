@@ -518,5 +518,27 @@ class DentistController extends Controller
             return response()->json(['error' => 'Wrong data passed.']);
         }
     }
+
+    protected function checkForPendingContractRecords(Request $request) {
+        $this->validate($request, [
+            'contract' => 'required'
+        ], [
+            'contract.required' => 'Contract is required.'
+        ]);
+
+        $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'dentist_id' => session('logged_user')['id'], 'status' => 'active'))->get()->first();
+        if(!empty($contract)) {
+            $records = ContractCheckup::where(array('status' => 'sent', 'contract_id' => $contract->id))->get()->all();
+
+            if(!empty($records)) {
+                var_dump($records);
+                die('asd');
+            } else {
+                return response()->json(['error' => true, 'message' => 'Missing records.']);
+            }
+        } else {
+            return response()->json(['error' => true, 'message' => 'Missing contract.']);
+        }
+    }
 }
 

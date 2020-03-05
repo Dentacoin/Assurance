@@ -93,6 +93,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
         Route::post('/notify-patient-for-successful-withdraw', 'DentistController@notifyPatientForSuccessfulWithdraw')->name('notify-patient-for-successful-withdraw');
 
+        Route::post('/check-for-pending-contract-records', 'DentistController@checkForPendingContractRecords')->name('check-for-pending-contract-records');
+
         Route::post('/approve-check-up', 'DentistController@approveCheckUp')->name('approve-check-up');
     });
 
