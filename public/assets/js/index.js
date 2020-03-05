@@ -1421,22 +1421,36 @@ async function pagesDataOnContractInit() {
                 var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
 
                 // check for pending patient records - check-up or teeth cleaning
-                $.ajax({
-                    type: 'POST',
-                    url: '/dentist/check-for-pending-contract-records',
-                    dataType: 'json',
-                    data: {
-                        contract: $('.single-contract-view-section').attr('data-contract')
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            basic.showDialog(response.html, 'pending-contract-record', null, true);
-                        }
+                var visibleRecord = false;
+                setInterval(function() {
+                    if(!visibleRecord) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/dentist/check-for-pending-contract-records',
+                            dataType: 'json',
+                            data: {
+                                contract: $('.single-contract-view-section').attr('data-contract')
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (response) {
+                                if (response.success) {
+                                    visibleRecord = true;
+                                    basic.showDialog(response.html, 'pending-contract-record', null, true);
+
+                                    $('.pending-contract-record .confirm-record').click(function() {
+                                        console.log($(this).attr('data-record'));
+                                    });
+
+                                    $('.pending-contract-record .decline-record').click(function() {
+                                        console.log($(this).attr('data-record'));
+                                    });
+                                }
+                            }
+                        });
                     }
-                });
+                }, 5000);
 
                 if (contract_next_payment > now_timestamp) {
                     $('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold ">MAKE YOUR NEXT WITHDRAW IN</h2></div> </div><div class="clock"></div><div class="flip-clock-message"></div></div></div>');
