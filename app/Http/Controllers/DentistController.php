@@ -582,7 +582,7 @@ class DentistController extends Controller
                 } else if($request->input('action') == 'decline') {
                     $subject = $dentist->title. ' ' . $dentist->name . ' declined your teeth cleaning';
 
-                    $email_view = view('emails/dentist-declining-contract-record', ['dentist' => $dentist, 'patient_name' => $patient->name, 'recordGetTypeParam' => $recordGetTypeParam, 'slug' => $contract->slug]);
+                    $email_view = view('emails/dentist-declining-contract-record', ['dentist' => $dentist, 'patient_name' => $patient->name, 'type' => $recordEmailType, 'recordGetTypeParam' => $recordGetTypeParam, 'slug' => $contract->slug]);
                     $emailBody = $email_view->render();
                 }
 
