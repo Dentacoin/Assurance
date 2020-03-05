@@ -492,45 +492,52 @@ class DentistController extends Controller
             'action.required' => 'Action is required.'
         ]);
 
-        $records = @unserialize($request->input('record'));
-        if ($records === false && $request->input('record') !== 'b:0;') {
+        $recordIds = @unserialize($request->input('record'));
+        if ($recordIds === false && $request->input('record') !== 'b:0;') {
             return response()->json(['error' => true, 'message' => 'Something went wrong, please try again later or contact <a href=\'mailto:assurance@dentacoin.com\'>Dentacoin team</a>.']);
         } else {
-            var_dump($records);
-            die('asd');
+            if(!empty($recordIds)) {
+                foreach ($recordIds as $recordId) {
+                    $record = ContractCheckup::where(array('id' => $recordId, 'status' => 'sent'))->get()->first();
+                    if(!empty($record)) {
+                        $contract = TemporallyContract::where(array('id' => $record->contract_id, 'dentist_id' => session('logged_user')['id']))->get()->first();
+                        if(!empty($contract)) {
+                            if($request->input('action') == 'confirm') {
+                                $record->status = 'approved';
+                            } else if($request->input('action') == 'decline') {
+                                $record->status = 'rejected';
+                            }
 
-            $check_up = ContractCheckup::where(array('id' => $id, 'approved_by_patient' => false))->get()->first();
-            if (!empty($check_up)) {
-                $contract = TemporallyContract::where(array('id' => $check_up->contract_id, 'dentist_id' => session('logged_user')['id']))->get()->first();
-
-                $patient = (new APIRequestsController())->getUserData($contract->patient_id);
-                $dentist = (new APIRequestsController())->getUserData(session('logged_user')['id']);
-
-                if (!empty($contract)) {
-                    $check_up->approved_by_patient = true;
-                    $check_up->save();
-
-                    // email
-                    Mail::send(array(), array(), function($message) use ($patient, $dentist) {
-                        $message->to($patient->email)->subject('Approved checkup test');
-                        $message->from($dentist->email, $dentist->name)->replyTo($dentist->email, $dentist->name);
-                        $message->setBody('Test body', 'text/html');
-                    });
-
-                    if (count(Mail::failures()) > 0) {
-                        $check_up->approved_by_patient = false;
-                        $check_up->save();
-
-                        return response()->json(['error' => 'Something went wrong with sending notification to your patient via email. Please try again later.']);
+                            $record->save();
+                        } else {
+                            return response()->json(['error' => true, 'message' => 'Trying to approve contract record which is not yours.']);
+                        }
                     } else {
-                        return response()->json(['success' => 'true']);
+                        return response()->json(['error' => true, 'message' => 'Trying to approve missing contract check-up.']);
                     }
-                } else {
-                    return response()->json(['error' => 'Trying to approve contract check-up which is not yours. Please again later.']);
                 }
 
+                return response()->json(['success' => true]);
+
+                /*$patient = (new APIRequestsController())->getUserData($contract->patient_id);
+                $dentist = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+                if($request->input('action') == 'confirm') {
+                    //$record->status = 'approved';
+                } else if($request->input('action') == 'decline') {
+                    //$record->status = 'rejected';
+                }
+
+                Mail::send(array(), array(), function($message) use ($patient, $dentist) {
+                    $message->to($patient->email)->subject('Approved checkup test');
+                    $message->from($dentist->email, $dentist->name)->replyTo($dentist->email, $dentist->name);
+                    $message->setBody('Test body', 'text/html');
+                });
+
+                if (count(Mail::failures()) > 0) {
+
+                }*/
             } else {
-                return response()->json(['error' => 'Wrong data passed.']);
+                return response()->json(['error' => true, 'message' => 'Something went wrong, please try again later or contact <a href=\'mailto:assurance@dentacoin.com\'>Dentacoin team</a>.']);
             }
         }
     }
