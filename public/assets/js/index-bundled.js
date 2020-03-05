@@ -74764,6 +74764,8 @@ async function pagesDataOnContractInit() {
                                                     success: function (response) {
                                                         if (response.success) {
                                                             basic.closeDialog();
+                                                        } else if (response.error) {
+                                                            basic.showAlert(response.message, '', true);
                                                         }
                                                     }
                                                 });
@@ -74792,6 +74794,8 @@ async function pagesDataOnContractInit() {
                                                     success: function (response) {
                                                         if (response.success) {
                                                             basic.closeDialog();
+                                                        } else if (response.error) {
+                                                            basic.showAlert(response.message, '', true);
                                                         }
                                                     }
                                                 });
