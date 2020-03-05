@@ -534,6 +534,11 @@ class DentistController extends Controller
             $teethCleaning = NULL;
             if(!empty($records)) {
                 $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+                $patientAvatar = '';
+                if(!empty($patient->thumbnail_url)) {
+                    $patientAvatar = '<figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block padding-left-10 padding-right-10"><img alt="Patient avatar" src="'.$patient->thumbnail_url.'" class="max-width-150 width-100"/></figure>';
+                }
+
                 foreach ($records as $record) {
                     if($record->type == 'check-up' && $checkUp == NULL) {
                         $checkUp = $record;
@@ -543,7 +548,8 @@ class DentistController extends Controller
                 }
 
                 if($checkUp != NULL && $teethCleaning != NULL) {
-                    $popupHtml = '<div class="text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-70 width-100"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block padding-left-10 padding-right-10"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-150 width-100"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Teeth cleaning" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70 width-100"/></figure></div><div class="padding-top-15 padding-bottom-25 text-center lato-bold fs-390">'.$patient->name.'</div><div class="text-center fs-22">said they\'ve visited you for a <span class="calibri-bold blue-green-color">check-up</span> on <span class="calibri-bold">'.date('d-m-Y', strtotime($checkUp->date_at)).'</span> and <span class="calibri-bold blue-green-color">teeth cleaning</span> on <span class="calibri-bold">'.date('d-m-Y', strtotime($teethCleaning->date_at)).'</span>.</div><div class="text-center"><a href="javascript:void(0);" class="red-white-btn decline-record" data-record="'.serialize(array($checkUp->id, $teethCleaning->id)).'">Decline</a><a href="javascript:void(0);" class="white-green-btn confirm-record" data-record="'.serialize(array($checkUp->id, $teethCleaning->id)).'">CONFIRM</a></div>';
+
+                    $popupHtml = '<div class="text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-70 width-100"/></figure>'.$patientAvatar.'<figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Teeth cleaning" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70 width-100"/></figure></div><div class="padding-top-15 padding-bottom-10 text-center lato-bold fs-30">'.$patient->name.'</div><div class="text-center fs-22 max-width-500 margin-0-auto">said they\'ve visited you for a <span class="calibri-bold blue-green-color">check-up</span> on <span class="calibri-bold">'.date('d-m-Y', strtotime($checkUp->date_at)).'</span> and <span class="calibri-bold blue-green-color">teeth cleaning</span> on <span class="calibri-bold">'.date('d-m-Y', strtotime($teethCleaning->date_at)).'</span>.</div><div class="text-center padding-bottom-20 padding-top-15"><a href="javascript:void(0);" class="red-white-btn decline-record min-width-150 margin-left-10 margin-right-10" data-record="'.serialize(array($checkUp->id, $teethCleaning->id)).'">Decline</a><a href="javascript:void(0);" class="white-green-btn confirm-record min-width-150 margin-left-10 margin-right-10" data-record="'.serialize(array($checkUp->id, $teethCleaning->id)).'">CONFIRM</a></div>';
 
                     return response()->json(['success' => true, 'html' => $popupHtml]);
                 } else if($checkUp != NULL) {

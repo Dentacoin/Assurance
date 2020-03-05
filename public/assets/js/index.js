@@ -1433,7 +1433,7 @@ async function pagesDataOnContractInit() {
                     },
                     success: function (response) {
                         if (response.success) {
-                            basic.showDialog(response.html, 'pending-contract-record', true);
+                            basic.showDialog(response.html, 'pending-contract-record', null, true);
                         }
                     }
                 });
