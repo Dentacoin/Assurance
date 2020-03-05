@@ -74760,26 +74760,31 @@ async function pagesDataOnContractInit() {
                                         var clickWarningObj = {};
                                         clickWarningObj.callback = function (result) {
                                             if (result) {
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: '/dentist/take-action-for-pending-contract-records',
-                                                    dataType: 'json',
-                                                    data: {
-                                                        record: record,
-                                                        action: 'confirm'
-                                                    },
-                                                    headers: {
-                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                    },
-                                                    success: function (response) {
-                                                        if (response.success) {
-                                                            visibleRecord = false;
-                                                            basic.closeDialog();
-                                                        } else if (response.error) {
-                                                            basic.showAlert(response.message, '', true);
+                                                showLoader();
+                                                setTimeout(function() {
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: '/dentist/take-action-for-pending-contract-records',
+                                                        dataType: 'json',
+                                                        data: {
+                                                            record: record,
+                                                            action: 'confirm'
+                                                        },
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                        },
+                                                        success: function (response) {
+                                                            if (response.success) {
+                                                                visibleRecord = false;
+                                                                basic.closeDialog();
+                                                                hideLoader();
+                                                            } else if (response.error) {
+                                                                hideLoader();
+                                                                basic.showAlert(response.message, '', true);
+                                                            }
                                                         }
-                                                    }
-                                                });
+                                                    });
+                                                }, 2000);
                                             }
                                         };
                                         basic.showConfirm('Sure you want to continue with approving your patient record?', '', clickWarningObj, true);
@@ -74791,26 +74796,31 @@ async function pagesDataOnContractInit() {
                                         var clickWarningObj = {};
                                         clickWarningObj.callback = function (result) {
                                             if (result) {
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: '/dentist/take-action-for-pending-contract-records',
-                                                    dataType: 'json',
-                                                    data: {
-                                                        record: record,
-                                                        action: 'decline'
-                                                    },
-                                                    headers: {
-                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                    },
-                                                    success: function (response) {
-                                                        if (response.success) {
-                                                            visibleRecord = false;
-                                                            basic.closeDialog();
-                                                        } else if (response.error) {
-                                                            basic.showAlert(response.message, '', true);
+                                                showLoader();
+                                                setTimeout(function() {
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: '/dentist/take-action-for-pending-contract-records',
+                                                        dataType: 'json',
+                                                        data: {
+                                                            record: record,
+                                                            action: 'decline'
+                                                        },
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                        },
+                                                        success: function (response) {
+                                                            if (response.success) {
+                                                                visibleRecord = false;
+                                                                basic.closeDialog();
+                                                                hideLoader();
+                                                            } else if (response.error) {
+                                                                hideLoader();
+                                                                basic.showAlert(response.message, '', true);
+                                                            }
                                                         }
-                                                    }
-                                                });
+                                                    });
+                                                }, 2000);
                                             }
                                         };
                                         basic.showConfirm('Sure you want to continue with declining your patient record?', '', clickWarningObj, true);
