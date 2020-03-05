@@ -543,9 +543,9 @@ class DentistController extends Controller
                 }
 
                 if($checkUp != NULL) {
-var_dump($checkUp);
+var_dump($checkUp->date_at);
                 } else if($teethCleaning != NULL) {
-                    var_dump($teethCleaning);
+                    var_dump($teethCleaning->date_at);
 
                 }
                 die('asd');
