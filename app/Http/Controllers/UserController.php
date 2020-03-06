@@ -7,6 +7,7 @@ use App\PublicKey;
 use App\TemporallyContract;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -871,7 +872,7 @@ class UserController extends Controller {
                     return response()->json(['error' => true, 'message' => 'False hash.']);
                 }
                 break;
-            case 'active-contracts':
+            case 'actDBts':
                 $this->validate($request, [
                     'hash' => 'required',
                     'time' => 'required'

@@ -952,6 +952,7 @@ async function pagesDataOnContractInit() {
 
                                 var scanObject = {
                                     'type' : 'patient-approval-and-contract-creation',
+                                    'contract' : $('.patient-contract-single-page-section').attr('data-contract'),
                                     'eth_fee' : eth_fee
                                 };
                                 if (!approval_given) {
@@ -1235,6 +1236,7 @@ async function pagesDataOnContractInit() {
 
                             var scanObject = {
                                 'type' : 'dentist-approval',
+                                'contract' : $('.single-contract-view-section').attr('data-contract'),
                                 'eth_fee' : eth_fee
                             };
 
@@ -1567,6 +1569,7 @@ async function pagesDataOnContractInit() {
 
                             var scanObject = {
                                 'type' : 'dentist-withdraw',
+                                'contract' : $('.single-contract-view-section').attr('data-contract'),
                                 'eth_fee' : eth_fee
                             };
 
@@ -3791,6 +3794,7 @@ function cancelContractEventInit() {
 
                                             var scanObject = {
                                                 'type' : 'dentist-cancelation',
+                                                'contract' : this_btn.attr('data-contract'),
                                                 'eth_fee' : eth_fee
                                             };
 
@@ -4886,7 +4890,6 @@ closeTooltipPopupsWhenClickedOutside();
 
 // generating qr code into popup so users can scan with Dentacoin Wallet and automatically finish the transactions
 function generateQRCodeForDentacoinWalletScan(object) {
-    console.log(object, 'generateQRCodeForDentacoinWalletScan');
     basic.showDialog('<figure itemscope="" itemtype="http://schema.org/ImageObject" id="popup-qrcode"></figure>', 'qr-code-for-dentacoin-wallet-scan', true);
 
     var qrcode = new QRCode(document.getElementById('popup-qrcode'), {
