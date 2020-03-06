@@ -22,7 +22,7 @@
             @if(!empty($contract->patient_id))
                 @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
                 @if(empty($patient))
-
+                    @continue
                 @endif
             @endif
             @if((new \App\Http\Controllers\UserController())->checkDentistSession())
