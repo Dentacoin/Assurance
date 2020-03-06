@@ -19,6 +19,12 @@
     <tbody>
     @if(count($contracts) > 0)
         @foreach($contracts as $contract)
+            @if(!empty($contract->patient_id))
+                @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+                @if(empty($patient))
+
+                @endif
+            @endif
             @if((new \App\Http\Controllers\UserController())->checkDentistSession())
                 @php($url = route('dentist-contract-view', ['slug' => $contract->slug]))
             @elseif((new \App\Http\Controllers\UserController())->checkPatientSession())
@@ -52,7 +58,9 @@
                 <td class="avatar-and-name">
                     @if($patient_or_not)
                         @if(!empty($contract->patient_id))
-                            @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+                            @if(!isset($patient))
+                                @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+                            @endif
                             @if(!empty($patient))
                                 <span>{{$patient->name}}</span>
                                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
