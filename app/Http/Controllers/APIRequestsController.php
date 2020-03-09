@@ -533,7 +533,7 @@ class APIRequestsController extends Controller {
         }
     }
 
-    public function getCurrentDcnRateByCoingecko()  {
+    /*public function getCurrentDcnRateByCoingecko()  {
         //API connection
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -555,9 +555,35 @@ class APIRequestsController extends Controller {
                     'CNY' => $resp->market_data->current_price->cny,
                     'JPY' => $resp->market_data->current_price->jpy
                 );
-            }else {
+            } else {
                 return 0;
             }
+        }
+    }*/
+
+    public function getDentacoinDataByExternalProvider()  {
+        $currencies = array('USD'/*, 'EUR', 'GBP', 'RUB'*/);
+        $tempArray = array();
+        foreach($currencies as $currency) {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_URL => 'https://indacoin.com/api/GetCoinConvertAmount/'.$currency.'/DCN/100/dentacoin',
+                CURLOPT_SSL_VERIFYPEER => 0
+            ));
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            $resp = json_decode(curl_exec($curl));
+            curl_close($curl);
+
+            if(!empty($resp))   {
+                $tempArray[$currency] = 1 / (int)((int)$resp / 100);
+            }
+        }
+
+        if(!empty($tempArray)) {
+            return $tempArray;
+        } else {
+            return 0;
         }
     }
 
