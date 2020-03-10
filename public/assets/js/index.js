@@ -980,6 +980,9 @@ async function pagesDataOnContractInit() {
                                             to: dApp.assurance_proxy_address
                                         };
 
+                                        console.log(scanObject, 'scanObject');
+                                        console.log(JSON.stringify(scanObject), 'JSON.stringify(scanObject)');
+
                                         generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
                                     } else {
                                         basic.showAlert('Something went wrong, please try again later.', '', true);
@@ -4893,8 +4896,8 @@ function generateQRCodeForDentacoinWalletScan(object) {
     basic.showDialog('<figure itemscope="" itemtype="http://schema.org/ImageObject" id="popup-qrcode"></figure>', 'qr-code-for-dentacoin-wallet-scan', true);
 
     var qrcode = new QRCode(document.getElementById('popup-qrcode'), {
-        width : 1000,
-        height : 1000
+        width : 800,
+        height : 800
     });
 
     qrcode.makeCode(encodeURIComponent(object));
