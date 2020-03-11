@@ -51,7 +51,7 @@
 
             @endif--}}
             @php($addresses = (new \App\Http\Controllers\APIRequestsController())->getAddresses())
-            <div class="right-extra-field no-padding break-word position-relative" name="address">
+            <div class="right-extra-field no-padding break-word position-relative" id="search-result-parent">
                 <input autocomplete="off" readonly type="text" data-type="address" id="dcn_address" name="address" maxlength="42" class="right-field width-100 calibri-regular fs-18 dark-color inline-block pencil-background search-input" />
                 <div class="search-result module">
                     <div class="search-body">
@@ -77,7 +77,7 @@
                         @endif
                     </div>
                     <div class="search-footer">
-                        <a href="javascript:void(0)" class="add-to-address-book lato-bold">+ Add to Address Book</a>
+                        <a href="javascript:void(0)" class="add-to-address-book lato-bold fs-18 fs-xs-16">+ Add to Address Book</a>
                     </div>
                 </div>
             </div>
