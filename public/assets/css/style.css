@@ -8331,6 +8331,8 @@ select.select-mac-fix {
     @media screen and (max-width: 991px) {
       .module.step-fields .single-row .right-extra-field.break-word {
         word-break: break-all; } }
+    .module.step-fields .single-row .right-extra-field.no-padding {
+      padding: 0; }
   .module.step-fields .single-row input.right-field {
     cursor: pointer; }
     .module.step-fields .single-row input.right-field:focus {
@@ -9213,34 +9215,38 @@ select.select-mac-fix {
     overflow-y: auto; }
     .module.search-result .search-body ul {
       width: 100%; }
-      .module.search-result .search-body ul li a {
-        padding: 5px 15px;
-        cursor: pointer;
-        -webkit-transition: 0.3s;
-        -moz-transition: 0.3s;
-        -o-transition: 0.3s;
-        -ms-transition: 0.3s;
-        transition: 0.3s; }
-        .module.search-result .search-body ul li a:hover {
-          color: white; }
-      .module.search-result .search-body ul li.removeable-element a {
-        width: calc(100% - 40px);
-        font-size: 16px; }
-        @media screen and (max-width: 767px) {
-          .module.search-result .search-body ul li.removeable-element a {
-            word-wrap: break-word; } }
-      .module.search-result .search-body ul li.removeable-element button {
-        width: 40px;
-        border: 0;
-        padding: 0;
-        background: transparent;
-        font-size: 26px; }
+      .module.search-result .search-body ul li {
+        color: #126585; }
+        .module.search-result .search-body ul li a {
+          padding: 5px 15px;
+          cursor: pointer;
+          -webkit-transition: 0.3s;
+          -moz-transition: 0.3s;
+          -o-transition: 0.3s;
+          -ms-transition: 0.3s;
+          transition: 0.3s; }
+          .module.search-result .search-body ul li a:hover {
+            color: white;
+            background-color: #126585; }
+        .module.search-result .search-body ul li.removeable-element a {
+          width: calc(100% - 40px);
+          font-size: 16px; }
+          @media screen and (max-width: 767px) {
+            .module.search-result .search-body ul li.removeable-element a {
+              word-wrap: break-word; } }
+        .module.search-result .search-body ul li.removeable-element button {
+          width: 40px;
+          border: 0;
+          padding: 0;
+          background: transparent;
+          font-size: 26px; }
   .module.search-result .search-footer {
     margin-top: 10px;
     border-top: 1.5px solid #dddddd; }
     .module.search-result .search-footer a {
       display: block;
-      padding: 10px 15px; }
+      padding: 10px 15px;
+      color: #126585; }
 
 header {
   width: 100%;

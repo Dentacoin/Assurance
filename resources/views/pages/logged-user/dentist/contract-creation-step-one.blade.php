@@ -41,7 +41,7 @@
                 <input type="text" data-type="website" name="website" maxlength="250" class="right-field break-word calibri-regular fs-18 dark-color inline-block pencil-background"/>
             @endif
         </div>
-        <div class="single-row flex-row fs-0 position-relative">
+        <div class="single-row flex-row fs-0">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 ">Wallet Address:</label>
             {{--@if(!empty($current_logged_dentist->dcn_address))
                 <div class="right-field calibri-regular fs-18 dark-color break-word" name="address">
@@ -51,16 +51,16 @@
 
             @endif--}}
             @php($addresses = (new \App\Http\Controllers\APIRequestsController())->getAddresses())
-            <div class="right-field break-word" name="address">
-                <input autocomplete="off" readonly type="text" data-type="address" id="dcn_address" name="address" maxlength="42" class="calibri-regular fs-18 dark-color inline-block pencil-background search-input" />
+            <div class="right-extra-field no-padding break-word position-relative" name="address">
+                <input autocomplete="off" readonly type="text" data-type="address" id="dcn_address" name="address" maxlength="42" class="right-field width-100 calibri-regular fs-18 dark-color inline-block pencil-background search-input" />
                 <div class="search-result module">
                     <div class="search-body">
                         @if(!empty($addresses))
                             @if(!empty($addresses->data))
                                 <ul class="addresses-list" id="addresses-list">
                                     @foreach($addresses->data as $address)
-                                        <li class="platform-color removeable-element fs-0" data-id="{{$address->id}}">
-                                            <a href="javascript:void(0);" class="platform-background-on-hover inline-block" data-value="{{$address->dcn_address}}">
+                                        <li class="removeable-element fs-0" data-id="{{$address->id}}">
+                                            <a href="javascript:void(0);" class="inline-block" data-value="{{$address->dcn_address}}">
                                                 @if(empty($address->dcn_address_label))
                                                     {{$address->dcn_address}}
                                                 @else
@@ -77,7 +77,7 @@
                         @endif
                     </div>
                     <div class="search-footer">
-                        <a href="javascript:void(0)" class="platform-color add-to-address-book lato-bold">+ Add to Address Book</a>
+                        <a href="javascript:void(0)" class="add-to-address-book lato-bold">+ Add to Address Book</a>
                     </div>
                 </div>
             </div>
