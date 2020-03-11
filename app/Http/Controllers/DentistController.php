@@ -276,6 +276,8 @@ class DentistController extends Controller
             'check-ups-per-year.required' => 'Check ups per year are is required.',
             'teeth-cleaning-per-year.required' => 'Teeth cleaning per year are required.',
             'dentist_signature.required' => 'Dentist signature is required.',
+            'address.required' => 'Wallet Address is required.',
+            'address.min' => 'Wallet Address is invalid.',
         ];
         $this->validate($request, [
             'professional-company-number' => 'required|max:100',
@@ -287,13 +289,11 @@ class DentistController extends Controller
             'check-ups-per-year' => 'required',
             'teeth-cleaning-per-year' => 'required',
             'dentist_signature' => 'required',
+            'address' => 'required|min:42'
         ], $customMessages);
 
         $data = $request->input();
         $files = $request->file();
-
-        var_dump($data);
-        die('asd');
 
         //check email validation
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
@@ -370,7 +370,7 @@ class DentistController extends Controller
 
         $temporally_contract = new TemporallyContract();
         $temporally_contract->dentist_id = session('logged_user')['id'];
-        $temporally_contract->dentist_address = $sender->dcn_address;
+        $temporally_contract->dentist_address = trim($data['address']);
         $temporally_contract->patient_fname = trim($data['fname']);
         $temporally_contract->patient_lname = trim($data['lname']);
         $temporally_contract->patient_email = trim($data['email']);
