@@ -5134,7 +5134,7 @@ function multipleUseWalletAddressesLogic() {
                                         } else {
                                             addressLabel = '('+response.addresses[i].dcn_address+')';
                                         }
-                                        addressesHtml += '<li class="removeable-element fs-0" data-id="'+response.addresses[i].id+'"><a href="javascript:void(0);" class="inline-block" data-value="'+response.addresses[i].dcn_address+'">'+addressLabel+'</a><button type="button" class="remove-address-book-element inline-block">×</button></li>'
+                                        addressesHtml += '<li class="removeable-element fs-0" data-id="'+response.addresses[i].id+'"><a href="javascript:void(0);" class="inline-block" data-value="'+response.addresses[i].dcn_address+'">'+addressLabel+'</a><button type="button" class="remove-address-book-element inline-block">×</button></li>';
                                     }
 
                                     $('#addresses-list').html(addressesHtml);

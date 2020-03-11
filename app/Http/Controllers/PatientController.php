@@ -275,27 +275,24 @@ class PatientController extends Controller {
             'patient_signature' => 'required',
             'patient-id-number' => 'required|max:20',
             'contract' => 'required',
+            'dcn_address' => 'required|min:42',
         );
         $required_fields_msgs_arr = array(
             'patient_signature.required' => 'Patient signature is required.',
             'patient-id-number.required' => 'Patient ID number signature is required.',
             'contract.required' => 'Contract slug is required.',
+            'dcn_address.required' => 'Wallet Address is required.',
+            'dcn_address.min' => 'Wallet Address is invalid.',
         );
-
-
-        if(empty($logged_patient->dcn_address)) {
-            $required_fields_arr['dcn_address'] = 'required|max:42';
-            $required_fields_msgs_arr['dcn_address.required'] = 'Wallet Address is required';
-        }
 
         if(empty($logged_patient->country_id)) {
             $required_fields_arr['country'] = 'required';
-            $required_fields_msgs_arr['country.required'] = 'Country is required';
+            $required_fields_msgs_arr['country.required'] = 'Country is required.';
         }
 
         if(empty($logged_patient->address)) {
             $required_fields_arr['address'] = 'required';
-            $required_fields_msgs_arr['address.required'] = 'Postal Address is required';
+            $required_fields_msgs_arr['address.required'] = 'Postal Address is required.';
         }
 
         $this->validate($request, $required_fields_arr, $required_fields_msgs_arr);
@@ -323,7 +320,7 @@ class PatientController extends Controller {
         }
 
         //update CoreDB api data for this patient
-        if(isset($data['country']) || isset($data['dcn_address']) || isset($data['address'])) {
+        if(isset($data['country']) || isset($data['address'])) {
             $edited_patient_account = true;
             $curl_arr = array();
             if(isset($data['country'])) {
@@ -340,13 +337,6 @@ class PatientController extends Controller {
                     return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'Postal Address is required']);
                 }
             }
-            if(isset($data['dcn_address'])) {
-                if(!empty($data['dcn_address'])) {
-                    $curl_arr['dcn_address'] = $data['dcn_address'];
-                }else {
-                    return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'Wallet Address is required']);
-                }
-            }
 
             //handle the API response
             $api_response = (new APIRequestsController())->updateUserData($curl_arr);
@@ -361,8 +351,8 @@ class PatientController extends Controller {
         }
 
         //getting the public key for this address stored in the assurance db (this table is getting updated by wallet.dentacoin.com)
-        $patient_pub_key = PublicKey::where(array('address' => $logged_patient->dcn_address))->get()->first();
-        $dentist_pub_key = PublicKey::where(array('address' => $dentist->dcn_address))->get()->first();
+        $patient_pub_key = PublicKey::where(array('address' => $data['dcn_address']))->get()->first();
+        $dentist_pub_key = PublicKey::where(array('address' => $contract->dentist_address))->get()->first();
 
         if(empty($patient_pub_key) || empty($dentist_pub_key)) {
             return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'No such public keys in the database.']);
@@ -378,7 +368,7 @@ class PatientController extends Controller {
 
         $contract->	patient_email = $logged_patient->email;
         $contract->patient_id = $logged_patient->id;
-        $contract->patient_address = $logged_patient->dcn_address;
+        $contract->patient_address = $data['dcn_address'];
         $contract->patient_id_number = $data['patient-id-number'];
         $contract->contract_active_at = new \DateTime();
 
