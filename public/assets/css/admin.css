@@ -769,6 +769,13 @@
     -o-transition: none;
     -ms-transition: none;
     transition: none; }
+  @media screen and (max-width: 991px) {
+    .module.step-fields .single-row.dcn-address-row {
+      position: relative; }
+      .module.step-fields .single-row.dcn-address-row .position-relative {
+        position: static; }
+      .module.step-fields .single-row.dcn-address-row .search-result {
+        left: 0; } }
 .module.contract-proposal .wrapper {
   padding: 0 15%;
   position: relative;
@@ -802,6 +809,13 @@
     padding-bottom: 10px; }
   .module.contract-proposal .wrapper .single-row label {
     padding-bottom: 15px; }
+  @media screen and (max-width: 991px) {
+    .module.contract-proposal .wrapper .single-row.dcn-address-row {
+      position: relative; }
+      .module.contract-proposal .wrapper .single-row.dcn-address-row .position-relative {
+        position: static; }
+      .module.contract-proposal .wrapper .single-row.dcn-address-row .search-result {
+        left: 0; } }
   .module.contract-proposal .wrapper .pretty input[disabled] ~ * {
     opacity: 1; }
   .module.contract-proposal .wrapper .pretty svg.svg {

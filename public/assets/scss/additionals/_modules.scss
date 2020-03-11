@@ -596,6 +596,17 @@
             &.no-transition {
                 @include simple_transition(none);
             }
+            &.dcn-address-row {
+                @include breakpoint($sm-down) {
+                    position: relative;
+                    .position-relative {
+                        position: static;
+                    }
+                    .search-result {
+                        left: 0;
+                    }
+                }
+            }
         }
     }
     &.contract-proposal {
@@ -629,6 +640,17 @@
             .single-row {
                 label {
                     padding-bottom: 15px;
+                }
+                &.dcn-address-row {
+                    @include breakpoint($sm-down) {
+                        position: relative;
+                        .position-relative {
+                            position: static;
+                        }
+                        .search-result {
+                            left: 0;
+                        }
+                    }
                 }
             }
 

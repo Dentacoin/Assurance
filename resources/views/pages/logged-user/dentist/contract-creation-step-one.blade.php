@@ -41,7 +41,7 @@
                 <input type="text" data-type="website" name="website" maxlength="250" class="right-field break-word calibri-regular fs-18 dark-color inline-block pencil-background"/>
             @endif
         </div>
-        <div class="single-row flex-row fs-0">
+        <div class="single-row flex-row fs-0 dcn-address-row">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 ">Wallet Address:</label>
             {{--@if(!empty($current_logged_dentist->dcn_address))
                 <div class="right-field calibri-regular fs-18 dark-color break-word" name="address">
