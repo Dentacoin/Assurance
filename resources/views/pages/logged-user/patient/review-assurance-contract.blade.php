@@ -100,7 +100,7 @@
                                 <div class="single-row fs-0 dcn-address-row">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer padding-top-0 padding-bottom-0" for="dcn_address">Wallet Address:</label>
                                     @php($addresses = (new \App\Http\Controllers\APIRequestsController())->getAddresses())
-                                    <div class="right-extra-field no-padding inline-block break-word" id="search-result-parent">
+                                    <div class="right-extra-field no-padding position-relative inline-block break-word" id="search-result-parent">
                                         <input autocomplete="off" readonly type="text" maxlength="42" id="dcn_address" name="dcn_address" class="right-field width-100 required-field calibri-regular fs-18 dark-color pencil-background search-input"/>
                                         <div class="search-result module">
                                             <div class="search-body">
@@ -126,7 +126,7 @@
                                                 @endif
                                             </div>
                                             <div class="search-footer">
-                                                <a href="javascript:void(0)" class="platform-color add-to-address-book lato-bold">+ Add to Address Book</a>
+                                                <a href="javascript:void(0)" class="platform-color add-to-address-book lato-bold fs-18 fs-xs-16">+ Add to Address Book</a>
                                             </div>
                                         </div>
                                     </div>
