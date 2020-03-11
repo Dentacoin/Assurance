@@ -78435,9 +78435,9 @@ function multipleUseWalletAddressesLogic() {
                                     for(var i = 0, len = response.addresses.length; i < len; i+=1) {
                                         var addressLabel = '';
                                         if(response.addresses[i].dcn_address_label != '' && response.addresses[i].dcn_address_label != undefined && response.addresses[i].dcn_address_label != null) {
-                                            addressesHtml = response.addresses[i].dcn_address_label+'('+response.addresses[i].dcn_address+')';
+                                            addressLabel = response.addresses[i].dcn_address_label+'('+response.addresses[i].dcn_address+')';
                                         } else {
-                                            addressesHtml = '('+response.addresses[i].dcn_address+')';
+                                            addressLabel = '('+response.addresses[i].dcn_address+')';
                                         }
                                         addressesHtml += '<li class="removeable-element fs-0" data-id="'+response.addresses[i].id+'"><a href="javascript:void(0);" class="inline-block" data-value="'+response.addresses[i].dcn_address+'">'+addressLabel+'</a><button type="button" class="remove-address-book-element inline-block">×</button></li>'
                                     }
