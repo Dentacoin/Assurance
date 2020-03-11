@@ -594,4 +594,80 @@ class APIRequestsController extends Controller {
             return false;
         }
     }
+
+    public function saveAddress($dcnAddress, $dcnAddressLabel) {
+        $header = array();
+        $header[] = 'Accept: */*';
+        $header[] = 'Authorization: Bearer ' . session('logged_user')['token'];
+        $header[] = 'Cache-Control: no-cache';
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_POST => 1,
+            CURLOPT_URL => 'https://api.dentacoin.com/api/add-wallet-address',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_POSTFIELDS => array(
+                'dcn_address' => $dcnAddress,
+                'dcn_address_label' => $dcnAddressLabel,
+                'main' => false
+            ),
+            CURLOPT_HTTPHEADER => $header
+        ));
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        if(!empty($resp))   {
+            return $resp;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteAddress($dcnAddressId) {
+        $header = array();
+        $header[] = 'Accept: */*';
+        $header[] = 'Authorization: Bearer ' . session('logged_user')['token'];
+        $header[] = 'Cache-Control: no-cache';
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_POST => 1,
+            CURLOPT_URL => 'https://api.dentacoin.com/api/delete-wallet-address',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_POSTFIELDS => array(
+                'wallet_id' => $dcnAddressId
+            ),
+            CURLOPT_HTTPHEADER => $header
+        ));
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        if(!empty($resp))   {
+            return $resp;
+        } else {
+            return false;
+        }
+    }
+
+    public function getAddresses() {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'https://api.dentacoin.com/api/wallet-addresses/' . session('logged_user')['id'],
+            CURLOPT_SSL_VERIFYPEER => 0
+        ));
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        if(!empty($resp))   {
+            return $resp;
+        }else {
+            return false;
+        }
+    }
 }

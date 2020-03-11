@@ -46,7 +46,7 @@
         var HOME_URL = '{{ route("home") }}';
     </script>
 </head>
-<body class="@if(!empty(Route::current())) {{Route::current()->getName()}} @else class-404 @endif @if(\App\Http\Controllers\UserController::instance()->checkSession()) logged-in @endif">
+<body class="@if(!empty(Route::current())) {{Route::current()->getName()}} @else class-404 @endif @if(\App\Http\Controllers\UserController::instance()->checkSession()) logged-in @if(\App\Http\Controllers\UserController::instance()->checkPatientSession()) patient-side @elseif(\App\Http\Controllers\UserController::instance()->checkDentistSession()) dentist-side @endif @endif">
     @if(isset($mobile) && $mobile)
         <nav class="sidenav">
             <div class="wrapper">

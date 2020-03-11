@@ -1581,4 +1581,55 @@
             }
         }
     }
+    &.search-result {
+        display: none;
+        background-color: white;
+        position: absolute;
+        width: 100%;
+        z-index: 1000;
+        @include rounded(4px);
+        @include box-shadow(0 1px 5px 1px rgba(0, 0, 0, 0.25));
+        .search-body {
+            max-height: 250px;
+            min-height: 120px;
+            overflow-y: auto;
+            ul {
+                width: 100%;
+                li {
+                    a {
+                        padding: 5px 15px;
+                        cursor: pointer;
+                        @include simple_transition(.3s);
+                        &:hover {
+                            color: white;
+                        }
+                    }
+                    &.removeable-element {
+                        a {
+                            width: calc(100% - 40px);
+                            font-size: 16px;
+                            @include breakpoint($xs) {
+                                word-wrap: break-word;
+                            }
+                        }
+                        button {
+                            width: 40px;
+                            border: 0;
+                            padding: 0;
+                            background: transparent;
+                            font-size: 26px;
+                        }
+                    }
+                }
+            }
+        }
+        .search-footer {
+            margin-top: 10px;
+            border-top: 1.5px solid #dddddd;
+            a {
+                display: block;
+                padding: 10px 15px;
+            }
+        }
+    }
 }

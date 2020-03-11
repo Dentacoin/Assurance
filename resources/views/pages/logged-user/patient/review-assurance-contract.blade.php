@@ -54,7 +54,7 @@
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Wallet Address:</label>
                                     <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">
-                                        <a href="//etherscan.io/address/{{$dentist->dcn_address}}" target="_blank">{{$dentist->dcn_address}}</a>
+                                        <a href="//etherscan.io/address/{{$contract->dentist_address}}" target="_blank">{{$contract->dentist_address}}</a>
                                     </div>
                                 </div>
                                 <div class="fs-14 calibri-light light-gray-color padding-top-5">This is the wallet where you will automatically transfer your monthly premiums to.</div>
@@ -98,18 +98,41 @@
                                     </div>
                                 </div>
                                 <div class="single-row fs-0 dcn-address-row">
-                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 @if(empty($patient->dcn_address)) cursor-pointer padding-top-0 padding-bottom-0 @endif" @if(empty($patient->dcn_address)) for="dcn_address" @endif>Wallet Address:</label>
-                                    @if(empty($patient->dcn_address))
-                                        <input type="text" maxlength="42" id="dcn_address" name="dcn_address" class="right-field required-field calibri-regular fs-18 dark-color inline-block pencil-background break-word"/>
-                                    @else
-                                        <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">
-                                            <a href="//etherscan.io/address/{{$patient->dcn_address}}" target="_blank" id="dcn_address">{{$patient->dcn_address}}</a>
+                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer padding-top-0 padding-bottom-0" for="dcn_address">Wallet Address:</label>
+                                    <div class="right-extra-field inline-block break-word">
+                                        <input autocomplete="off" readonly type="text" maxlength="42" id="dcn_address" name="dcn_address" class="required-field calibri-regular fs-18 dark-color pencil-background search-input"/>
+                                        <div class="search-result module">
+                                            <div class="search-body">
+                                                @if(!empty($addresses))
+                                                    @if(!empty($addresses->data))
+                                                        <ul class="addresses-list" id="addresses-list">
+                                                            @foreach($addresses->data as $address)
+                                                                <li class="platform-color removeable-element fs-0" data-id="{{$address->id}}">
+                                                                    <a href="javascript:void(0);" class="platform-background-on-hover inline-block" data-value="{{$address->dcn_address}}">
+                                                                        @if(empty($address->dcn_address_label))
+                                                                            {{$address->dcn_address}}
+                                                                        @else
+                                                                            {{$address->dcn_address_label}} ({{$address->dcn_address}})
+                                                                        @endif
+                                                                    </a>
+                                                                    <button type="button" class="remove-address-book-element inline-block">×</button>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @else
+                                                        <div class="address-book"><i class="display-block-important padding-top-15 padding-left-15 padding-bottom-15 padding-right-15">Empty Address Book</i></div>
+                                                    @endif
+                                                @endif
+                                            </div>
+                                            <div class="search-footer">
+                                                <a href="javascript:void(0)" class="platform-color add-to-address-book lato-bold">+ Add to Address Book</a>
+                                            </div>
                                         </div>
-                                    @endif
+                                    </div>
                                 </div>
                                 <div class="camping-for-validation module">
                                     {{--RARE CASE - if user have address, but not from wallet.dentacoin.com--}}
-                                    @if(!empty($patient->dcn_address) && !(new \App\Http\Controllers\UserController())->checkIfWeHavePublicKeyOfAddress($patient->dcn_address))
+                                    {{--@if(!empty($patient->dcn_address) && !(new \App\Http\Controllers\UserController())->checkIfWeHavePublicKeyOfAddress($patient->dcn_address))
                                         <div class="single-row proof-of-address padding-bottom-20" data-address="{{$patient->dcn_address}}">
                                             <div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div>
                                             <div class="container-fluid">
@@ -129,7 +152,7 @@
                                             </div>
                                         </div>
                                         <div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>
-                                    @endif
+                                    @endif--}}
                                 </div>
                                 <div class="light-gray-color fs-14 padding-top-5">This is the wallet where you will send your monthly premiums from and collect your rewards from all Dentacoin tools. Please double-check if everything is correct. You don’t have a wallet? <a href="//wallet.dentacoin.com" class="blue-green-color calibri-bold" target="_blank">Create one here.</a></div>
                                 <h3 class="calibri-bold fs-30 dark-color padding-top-70">CONTRACT CONDITIONS</h3>

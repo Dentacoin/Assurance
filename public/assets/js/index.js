@@ -962,8 +962,11 @@ async function pagesDataOnContractInit() {
                                         gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                         from: global_state.account,
                                         chainId: dApp.chain_id,
-                                        data: approval_function_abi,
-                                        to: dApp.dentacoin_token_address
+                                        to: dApp.dentacoin_token_address,
+                                        dataToCreateFunctionAbi: {
+                                            assurance_state_address: dApp.assurance_state_address,
+                                            dentacoins_to_approve: dApp.dentacoins_to_approve
+                                        }
                                     };
                                 }
 
@@ -977,7 +980,15 @@ async function pagesDataOnContractInit() {
                                             from: global_state.account,
                                             chainId: dApp.chain_id,
                                             data: contract_creation_function_abi,
-                                            to: dApp.assurance_proxy_address
+                                            to: dApp.assurance_proxy_address,
+                                            dataToCreateFunctionAbi: {
+                                                patient: checksumAddress(response.contract_data.patient),
+                                                dentist: checksumAddress(response.contract_data.dentist),
+                                                value_usd: Math.floor(response.contract_data.value_usd),
+                                                monthly_premium_in_dcn: monthly_premium_in_dcn,
+                                                next_transfer: response.contract_data.date_start_contract + period_to_withdraw,
+                                                contract_ipfs_hash: response.contract_data.contract_ipfs_hash
+                                            }
                                         };
 
                                         console.log(scanObject, 'scanObject');
@@ -1950,6 +1961,8 @@ if ($('body').hasClass('logged-in')) {
 
         initTooltips();
 
+        multipleUseWalletAddressesLogic();
+
         if ($('.single-row.proof-of-address').length) {
             bindVerifyAddressLogic();
         }
@@ -2314,162 +2327,6 @@ if ($('body').hasClass('logged-in')) {
                     break;
             }
         });
-    }else if ($('body').hasClass('contract-proposal')) {
-        if ($('.terms-and-conditions-long-list').length) {
-            $('.terms-and-conditions-long-list').mCustomScrollbar();
-        }
-
-        if ($('.single-row.proof-of-address').length) {
-            bindVerifyAddressLogic();
-        }
-
-        initSignaturePad();
-
-        if ($('.contract-proposal.section .contact-your-dentist').length) {
-            $('.contact-your-dentist').click(function() {
-                basic.closeDialog();
-
-                var this_btn = $(this);
-                $.ajax({
-                    type: 'POST',
-                    url: '/patient/get-reconsider-monthly-premium',
-                    dataType: 'json',
-                    data: {
-                        contract: this_btn.closest('form').find('input[type="hidden"][name="contract"]').val().trim()
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            basic.showDialog(response.success, 'reconsider-monthly-premium', true);
-
-                            $('.bootbox.reconsider-monthly-premium #new-usd-proposal-to-dentist').focus();
-
-                            $('.bootbox.reconsider-monthly-premium form#submit-reconsider-monthly-premium').on('submit', function(event) {
-                                event.preventDefault();
-
-                                var this_form = $(this);
-                                if (this_form.find('#new-usd-proposal-to-dentist').val().trim() == '' || parseFloat(this_form.find('#new-usd-proposal-to-dentist').val().trim()) <= 0) {
-                                    basic.showAlert('Please enter valid monthly premium proposal', '', true);
-                                } else {
-                                    showLoader();
-
-                                    fireGoogleAnalyticsEvent('Contract Patient', 'Suggest', 'Contact New Premium', this_form.find('#new-usd-proposal-to-dentist').val().trim());
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '/patient/submit-reconsider-monthly-premium',
-                                        dataType: 'json',
-                                        data: {
-                                            serialized: this_form.serialize()
-                                        },
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        },
-                                        success: function (response) {
-                                            basic.closeDialog();
-                                            hideLoader();
-                                            if (response.success) {
-                                                basic.showDialog(response.success, '', '', true);
-                                            } else if (response.error) {
-                                                basic.showAlert(response.error, '', true);
-                                            }
-                                        }
-                                    });
-                                }
-                            });
-                        } else if (response.error) {
-                            basic.showAlert(response.success, '', true);
-                        }
-                    }
-                });
-            });
-        }
-
-        if ($('form#patient-update-and-sign-contract').length) {
-            cancelContractEventInit();
-
-            $('form#patient-update-and-sign-contract').on('submit', async function(event) {
-                event.preventDefault();
-                var this_form_plain = this;
-                var this_form = $(this);
-                var fields = this_form.find('.required-field');
-                var form_errors = false;
-
-                if ($('.contract-proposal.section.module').attr('data-expired') != undefined) {
-                    basic.showAlert('This contract proposal has expired.', '', true);
-                    return false;
-                }
-
-                //clear previous submits errors
-                this_form.find('.error-in-label').remove();
-                this_form.find('.single-row').removeClass('row-with-error');
-                fields.removeClass('with-error');
-
-                //checking the validation for the patient fields
-                for(var i = 0, len = fields.length; i < len; i+=1) {
-                    if (fields.eq(i).is('select')) {
-                        if (fields.eq(i).val() == null) {
-                            customCreateContractErrorHandle(fields.eq(i), 'Required field cannot be left blank.');
-                            form_errors = true;
-                        }
-                    } else if (fields.eq(i).is('input')) {
-                        if (fields.eq(i).val().trim() == '') {
-                            customCreateContractErrorHandle(fields.eq(i), 'Required field cannot be left blank.');
-                            form_errors = true;
-                        } else if (fields.eq(i).is('[name="dcn_address"]') && !innerAddressCheck(fields.eq(i).val().trim())) {
-                            customCreateContractErrorHandle(fields.eq(i), 'Please enter valid Wallet Address.');
-                            if ($('.proof-of-address').length) {
-                                $('.proof-of-address').remove();
-                            }
-                            form_errors = true;
-                        }
-                    }
-                }
-
-                if (!form_errors) {
-                    var validate_patient_address = false;
-                    var patient_address;
-                    if ($('.dcn-address-row #dcn_address').is('input')) {
-                        patient_address = $('.dcn-address-row #dcn_address').val().trim();
-                    } else {
-                        patient_address = $('.dcn-address-row #dcn_address').html().trim();
-                    }
-
-                    if (innerAddressCheck(patient_address)) {
-                        //method for first step validating the patient address
-                        validate_patient_address = await validateUserAddress(patient_address, $('.dcn-address-row #dcn_address'));
-                    }
-
-                    if (validate_patient_address) {
-                        form_errors = true;
-                    }
-                }
-
-                if ($('.proof-of-address').length && form_errors) {
-                    $('html, body').animate({scrollTop: $('.proof-of-address').offset().top - 50}, 500);
-                } else if (form_errors) {
-                    $('html, body').animate({scrollTop: $('.required-field.with-error').offset().top - 50}, 500);
-                } else {
-                    //check if patient signed if privacy policy and terms checkboxes are checked
-                    //save the base64 signature image in hidden value
-                    this_form.find('input[name="patient_signature"]').val(signature_pad.toDataURL('image/png'));
-                    if (signature_pad.isEmpty()) {
-                        basic.showAlert('Please sign the contract sample. Use your mouse or touch screen to sign.', '', true);
-                    }else if (!this_form.find('input#terms').is(':checked')) {
-                        basic.showAlert('Please accept the Terms and Conditions', '', true);
-                    }else if (!this_form.find('input#privacy-policy').is(':checked')) {
-                        basic.showAlert('Please accept the Privacy Policy', '', true);
-                    }else {
-                        fireGoogleAnalyticsEvent('Contract Patient Accepted', 'Accept', 'Contact Accepted');
-
-                        showLoader('Please wait ...<br>This may take a few minutes.', 'contract-response-success-layer');
-                        this_form_plain.submit();
-                    }
-                }
-            });
-        }
     }
 }
 
@@ -3585,6 +3442,7 @@ async function onDocumentReadyPageData() {
             // applied for both dentist and patient sides homepages to make contacts in list (slider) with same hight
             makeElementsInContractListWithSameHeight();
         } else if ($('body').hasClass('my-contracts') || $('.my-contracts-container').length) {
+            // applied for both dentist and patient
             initDataTable();
 
             var table_trs_with_timestamp = $('.table-container table tr[data-timestamp-signed]');
@@ -3608,65 +3466,227 @@ async function onDocumentReadyPageData() {
                     table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">'+next_payment_timestamp+'</span>' + dateObjToFormattedDate(next_payment_timestamp_date_obj));
                 }
             }
-        } else if ($('body').hasClass('contract-proposal')) {
-            // patient side
-            if ($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined) {
-                var date_obj = new Date((parseInt($('.contract-proposal.section').attr('data-created-at-timestamp')) + parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw())) * 1000);
-                $('.active-until').html(dateObjToFormattedDate(date_obj));
+        } else if ($('body').hasClass('dentist-side')) {
+            if ($('body').hasClass('dentist-contract-view')) {
+                // dentist side
+                cancelContractEventInit();
+
+                if ($('.terms-and-conditions-long-list').length) {
+                    $('.terms-and-conditions-long-list').mCustomScrollbar();
+                }
+
+                if ($('.open-contract-details').length) {
+                    $('.open-contract-details').on('click', function () {
+                        if ($(this).attr('data-hidden-details') == 'true') {
+                            $(this).attr('data-hidden-details', 'false');
+                            $(this).html($(this).attr('data-label-opened'));
+                        } else {
+                            $(this).attr('data-hidden-details', 'true');
+                            $(this).html($(this).attr('data-label-closed'));
+                        }
+
+                        $('.contract-details-container').toggle(300);
+                    });
+                }
+
+                initTooltips();
+
+                if ($('.single-contract-view-section').hasClass('pending')) {
+                    initPopupEvents();
+                }
             }
-        } else if ($('body').hasClass('dentist-contract-view')) {
-            // dentist side
-            cancelContractEventInit();
+        } else if ($('body').hasClass('patient-side')) {
+            if ($('body').hasClass('contract-proposal')) {
+                // patient side
+                if ($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined) {
+                    var date_obj = new Date((parseInt($('.contract-proposal.section').attr('data-created-at-timestamp')) + parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw())) * 1000);
+                    $('.active-until').html(dateObjToFormattedDate(date_obj));
+                }
 
-            if ($('.terms-and-conditions-long-list').length) {
-                $('.terms-and-conditions-long-list').mCustomScrollbar();
+                if ($('.terms-and-conditions-long-list').length) {
+                    $('.terms-and-conditions-long-list').mCustomScrollbar();
+                }
+
+                multipleUseWalletAddressesLogic();
+
+                if ($('.single-row.proof-of-address').length) {
+                    bindVerifyAddressLogic();
+                }
+
+                initSignaturePad();
+
+                if ($('.contract-proposal.section .contact-your-dentist').length) {
+                    $('.contact-your-dentist').click(function() {
+                        basic.closeDialog();
+
+                        var this_btn = $(this);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/patient/get-reconsider-monthly-premium',
+                            dataType: 'json',
+                            data: {
+                                contract: this_btn.closest('form').find('input[type="hidden"][name="contract"]').val().trim()
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (response) {
+                                if (response.success) {
+                                    basic.showDialog(response.success, 'reconsider-monthly-premium', true);
+
+                                    $('.bootbox.reconsider-monthly-premium #new-usd-proposal-to-dentist').focus();
+
+                                    $('.bootbox.reconsider-monthly-premium form#submit-reconsider-monthly-premium').on('submit', function(event) {
+                                        event.preventDefault();
+
+                                        var this_form = $(this);
+                                        if (this_form.find('#new-usd-proposal-to-dentist').val().trim() == '' || parseFloat(this_form.find('#new-usd-proposal-to-dentist').val().trim()) <= 0) {
+                                            basic.showAlert('Please enter valid monthly premium proposal', '', true);
+                                        } else {
+                                            showLoader();
+
+                                            fireGoogleAnalyticsEvent('Contract Patient', 'Suggest', 'Contact New Premium', this_form.find('#new-usd-proposal-to-dentist').val().trim());
+
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '/patient/submit-reconsider-monthly-premium',
+                                                dataType: 'json',
+                                                data: {
+                                                    serialized: this_form.serialize()
+                                                },
+                                                headers: {
+                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                },
+                                                success: function (response) {
+                                                    basic.closeDialog();
+                                                    hideLoader();
+                                                    if (response.success) {
+                                                        basic.showDialog(response.success, '', '', true);
+                                                    } else if (response.error) {
+                                                        basic.showAlert(response.error, '', true);
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                } else if (response.error) {
+                                    basic.showAlert(response.success, '', true);
+                                }
+                            }
+                        });
+                    });
+                }
+
+                if ($('form#patient-update-and-sign-contract').length) {
+                    cancelContractEventInit();
+
+                    $('form#patient-update-and-sign-contract').on('submit', async function(event) {
+                        event.preventDefault();
+                        var this_form_plain = this;
+                        var this_form = $(this);
+                        var fields = this_form.find('.required-field');
+                        var form_errors = false;
+
+                        if ($('.contract-proposal.section.module').attr('data-expired') != undefined) {
+                            basic.showAlert('This contract proposal has expired.', '', true);
+                            return false;
+                        }
+
+                        //clear previous submits errors
+                        this_form.find('.error-in-label').remove();
+                        this_form.find('.single-row').removeClass('row-with-error');
+                        fields.removeClass('with-error');
+
+                        //checking the validation for the patient fields
+                        for(var i = 0, len = fields.length; i < len; i+=1) {
+                            if (fields.eq(i).is('select')) {
+                                if (fields.eq(i).val() == null) {
+                                    customCreateContractErrorHandle(fields.eq(i), 'Required field cannot be left blank.');
+                                    form_errors = true;
+                                }
+                            } else if (fields.eq(i).is('input')) {
+                                if (fields.eq(i).val().trim() == '') {
+                                    customCreateContractErrorHandle(fields.eq(i), 'Required field cannot be left blank.');
+                                    form_errors = true;
+                                } else if (fields.eq(i).is('[name="dcn_address"]') && !innerAddressCheck(fields.eq(i).val().trim())) {
+                                    customCreateContractErrorHandle(fields.eq(i), 'Please enter valid Wallet Address.');
+                                    if ($('.proof-of-address').length) {
+                                        $('.proof-of-address').remove();
+                                    }
+                                    form_errors = true;
+                                }
+                            }
+                        }
+
+                        if (!form_errors) {
+                            var validate_patient_address = false;
+                            var patient_address;
+                            if ($('.dcn-address-row #dcn_address').is('input')) {
+                                patient_address = $('.dcn-address-row #dcn_address').val().trim();
+                            } else {
+                                patient_address = $('.dcn-address-row #dcn_address').html().trim();
+                            }
+
+                            if (innerAddressCheck(patient_address)) {
+                                //method for first step validating the patient address
+                                validate_patient_address = await validateUserAddress(patient_address, $('.dcn-address-row #dcn_address'));
+                            }
+
+                            if (validate_patient_address) {
+                                form_errors = true;
+                            }
+                        }
+
+                        if ($('.proof-of-address').length && form_errors) {
+                            $('html, body').animate({scrollTop: $('.proof-of-address').offset().top - 50}, 500);
+                        } else if (form_errors) {
+                            $('html, body').animate({scrollTop: $('.required-field.with-error').offset().top - 50}, 500);
+                        } else {
+                            //check if patient signed if privacy policy and terms checkboxes are checked
+                            //save the base64 signature image in hidden value
+                            this_form.find('input[name="patient_signature"]').val(signature_pad.toDataURL('image/png'));
+                            if (signature_pad.isEmpty()) {
+                                basic.showAlert('Please sign the contract sample. Use your mouse or touch screen to sign.', '', true);
+                            }else if (!this_form.find('input#terms').is(':checked')) {
+                                basic.showAlert('Please accept the Terms and Conditions', '', true);
+                            }else if (!this_form.find('input#privacy-policy').is(':checked')) {
+                                basic.showAlert('Please accept the Privacy Policy', '', true);
+                            }else {
+                                fireGoogleAnalyticsEvent('Contract Patient Accepted', 'Accept', 'Contact Accepted');
+
+                                showLoader('Please wait ...<br>This may take a few minutes.', 'contract-response-success-layer');
+                                this_form_plain.submit();
+                            }
+                        }
+                    });
+                }
+            } else if ($('body').hasClass('patient-contract-view')) {
+                if ($('.terms-and-conditions-long-list').length) {
+                    $('.terms-and-conditions-long-list').mCustomScrollbar();
+                }
+
+                if ($('.open-contract-details').length) {
+                    $('.open-contract-details').on('click', function() {
+                        if ($(this).attr('data-hidden-details') == 'true') {
+                            $(this).attr('data-hidden-details', 'false');
+                            $(this).html($(this).attr('data-label-opened'));
+                        } else {
+                            $(this).attr('data-hidden-details', 'true');
+                            $(this).html($(this).attr('data-label-closed'));
+                        }
+
+                        $('.contract-details-container').toggle(300);
+                    });
+                }
+
+                if ($('.contract-response-message').length) {
+                    $('.contract-response-message .close-btn').click(function() {
+                        $(this).closest('.contract-response-message').remove();
+                    });
+                }
+
+                initTooltips();
             }
-
-            if ($('.open-contract-details').length) {
-                $('.open-contract-details').on('click', function () {
-                    if ($(this).attr('data-hidden-details') == 'true') {
-                        $(this).attr('data-hidden-details', 'false');
-                        $(this).html($(this).attr('data-label-opened'));
-                    } else {
-                        $(this).attr('data-hidden-details', 'true');
-                        $(this).html($(this).attr('data-label-closed'));
-                    }
-
-                    $('.contract-details-container').toggle(300);
-                });
-            }
-
-            initTooltips();
-
-            if ($('.single-contract-view-section').hasClass('pending')) {
-                initPopupEvents();
-            }
-        } else if ($('body').hasClass('patient-contract-view')) {
-            if ($('.terms-and-conditions-long-list').length) {
-                $('.terms-and-conditions-long-list').mCustomScrollbar();
-            }
-
-            if ($('.open-contract-details').length) {
-                $('.open-contract-details').on('click', function() {
-                    if ($(this).attr('data-hidden-details') == 'true') {
-                        $(this).attr('data-hidden-details', 'false');
-                        $(this).html($(this).attr('data-label-opened'));
-                    } else {
-                        $(this).attr('data-hidden-details', 'true');
-                        $(this).html($(this).attr('data-label-closed'));
-                    }
-
-                    $('.contract-details-container').toggle(300);
-                });
-            }
-
-            if ($('.contract-response-message').length) {
-                $('.contract-response-message .close-btn').click(function() {
-                    $(this).closest('.contract-response-message').remove();
-                });
-            }
-
-            initTooltips();
         }
     }
 }
@@ -5009,3 +5029,117 @@ function fireGoogleAnalyticsEvent(category, action, label, value) {
 }
 
 // =================================== /GOOGLE ANALYTICS TRACKING LOGIC ======================================
+
+function checkIfClickedOutsideElement(id, callback) {
+    var specifiedElement = document.getElementById(id);
+
+    //I'm using "click" but it works with any event
+    document.addEventListener('click', function(event) {
+        var isClickInside = specifiedElement.contains(event.target);
+        if (!isClickInside) {
+            callback();
+        }
+    });
+}
+
+function multipleUseWalletAddressesLogic() {
+    if($('.search-input').length) {
+        $('.search-input').on('focus', function() {
+            $('.search-result').show();
+        });
+
+        $(document).on('click', '.search-result .search-body ul li a', function() {
+            $('.search-input').val($(this).attr('data-value')).trigger('change');
+            $('.search-result').hide();
+        });
+
+        checkIfClickedOutsideElement('search-result-parent', function() {
+            $('.search-result').hide();
+        });
+
+        var ajaxSent = false;
+        $(document).on('click', '.search-body ul li button', function() {
+            var this_btn = $(this);
+            var delete_address_book_wallet_address = {};
+            delete_address_book_wallet_address.callback = function (result) {
+                if (result && !ajaxSent) {
+                    ajaxSent = true;
+                    $.ajax({
+                        type: 'POST',
+                        url: '/delete-address',
+                        data: {
+                            id: this_btn.closest('li').attr('data-id')
+                        },
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (response) {
+                            ajaxSent = false;
+                            if (response.success) {
+                                this_btn.closest('li').remove();
+                                $('.search-result').hide();
+                                $('.search-input').val('');
+                                basic.showAlert(response.message, '', true);
+                            } else if (response.error) {
+                                basic.showAlert(response.message, '', true);
+                            }
+                        }
+                    });
+                }
+            };
+            basic.showConfirm('Are you sure you want to remove this Wallet Address from Address Book?', '', delete_address_book_wallet_address, true);
+        });
+
+        $(document).on('click', '.search-result .search-footer .add-to-address-book', function() {
+            basic.closeDialog();
+            basic.showDialog('<h2 class="fs-24 fs-xs-18 padding-bottom-20 text-center">Save to Address Book</h2><div class="max-width-350 margin-0-auto"><label for="contact-name" class="fs-16">Name:</label><input type="text" id="contact-name" maxlength="50" class="custom-input"></div><div class="max-width-350 margin-0-auto padding-top-15"><label for="wallet-address" class="fs-16">Wallet Address:</label><input type="text" id="wallet-address" maxlength="42" class="custom-input"></div><div class="padding-top-20 padding-bottom-15 text-center"><a href="javascript:void(0);" class="platform-custom-button save-to-address-book min-width-160">Save</a></div>', 'popup-save-to-address-book', null, true);
+
+            var ajaxSent = false;
+            $('.save-to-address-book').click(function() {
+                if($('.popup-save-to-address-book #contact-name').val().trim() == '') {
+                    basic.showAlert('Please enter name.', '', true);
+                } else if($('.popup-save-to-address-book #wallet-address').val().trim() == '' || !innerAddressCheck($('.popup-save-to-address-book #wallet-address').val().trim())){
+                    basic.showAlert('Please enter valid Wallet Address.', '', true);
+                } else if(!ajaxSent) {
+                    ajaxSent = true;
+                    var addressName = $('.popup-save-to-address-book #contact-name').val().trim();
+                    var walletAddress = $('.popup-save-to-address-book #wallet-address').val().trim();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/save-address',
+                        data: {
+                            name: addressName,
+                            address: walletAddress
+                        },
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (response) {
+                            ajaxSent = false;
+                            if (response.success) {
+                                basic.closeDialog();
+                                basic.showAlert(response.message, '', true);
+
+
+                                if(response.addresses) {
+                                    var addressesHtml = '';
+
+                                    for(var i = 0, len = response.addresses.length; i < len; i+=1) {
+                                        addressesHtml += '<li class="platform-color removeable-element fs-0" data-id="'+response.addresses[i].id+'"><a href="javascript:void(0);" class="platform-background-on-hover inline-block" data-value="'+response.addresses[i].dcn_address+'">'+response.addresses[i].dcn_address_label+'('+response.addresses[i].dcn_address+')</a><button type="button" class="remove-address-book-element inline-block">×</button></li>'
+                                    }
+
+                                    $('#addresses-list').html(addressesHtml);
+                                }
+                            } else if (response.error) {
+                                basic.showAlert(response.message, '', true);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    }
+}

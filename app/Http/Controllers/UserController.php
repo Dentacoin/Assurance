@@ -928,4 +928,50 @@ class UserController extends Controller {
                 break;
         }
     }
+
+    protected function saveAddress(Request $request) {
+        $this->validate($request, [
+            'name' => 'required|max:50',
+            'address' => 'required|min:42'
+        ], [
+            'name.required' => 'Name is required.',
+            'name.max' => 'Name is can be with maximum 50 length.',
+            'address.min' => 'Wallet Address is not valid.',
+            'address.required' => 'Wallet Address is required.'
+        ]);
+        $data = $this->clearPostData($request->input());
+
+        $saveAddressResponse = (new APIRequestsController())->saveAddress($data['address'], $data['name']);
+        if (is_object($saveAddressResponse) && property_exists($saveAddressResponse, 'success') && $saveAddressResponse->success) {
+            $response = ['success' => true, 'message' => 'New address have been saved successfully.'];
+            $addresses = (new APIRequestsController())->getAddresses();
+            if(!empty($addresses) && is_object($addresses) && property_exists($addresses, 'success') && $addresses->success) {
+                $response['addresses'] = $addresses->data;
+            }
+
+            return response()->json($response);
+        } else if (is_object($saveAddressResponse) && property_exists($saveAddressResponse, 'success') && !$saveAddressResponse->success) {
+            return response()->json(['error' => true, 'message' => $saveAddressResponse->errors->generic]);
+        } else {
+            return response()->json(['error' => true, 'message' => 'Something went wrong, please try again later or email us at <a href=\'mailto:admin@dentacoin.com\'>admin@dentacoin.com</a>.']);
+        }
+    }
+
+    protected function deleteAddress(Request $request) {
+        $this->validate($request, [
+            'id' => 'required'
+        ], [
+            'id.required' => 'Name is required.'
+        ]);
+        $data = $this->clearPostData($request->input());
+
+        $deleteAddressResponse = (new APIRequestsController())->deleteAddress($data['id']);
+        if (is_object($deleteAddressResponse) && property_exists($deleteAddressResponse, 'success') && $deleteAddressResponse->success) {
+            return response()->json(['success' => true, 'message' => 'Address have been deleted successfully.']);
+        } else if (is_object($deleteAddressResponse) && property_exists($deleteAddressResponse, 'success') && !$deleteAddressResponse->success) {
+            return response()->json(['error' => true, 'message' => $deleteAddressResponse->errors->generic]);
+        } else {
+            return response()->json(['error' => true, 'message' => 'Something went wrong, please try again later or email us at <a href=\'mailto:admin@dentacoin.com\'>admin@dentacoin.com</a>.']);
+        }
+    }
 }

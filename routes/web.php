@@ -98,6 +98,10 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
         Route::post('/take-action-for-pending-contract-records', 'DentistController@takeActionForPendingContractRecords')->name('take-action-for-pending-contract-records');
     });
 
+    Route::post('/save-address', 'UserController@saveAddress')->middleware('HandleUserSession')->name('save-address');
+
+    Route::post('/delete-address', 'UserController@deleteAddress')->middleware('HandleUserSession')->name('delete-address');
+
     Route::post('/get-contract-data', 'UserController@getContractData')->middleware('HandleUserSession')->name('get-contract-data');
 
     Route::get('/my-contracts-iframe', 'UserController@getMyContractsTemplate')->middleware('HandleUserSession')->name('my-contracts-iframe');
