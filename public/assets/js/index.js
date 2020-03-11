@@ -5093,7 +5093,7 @@ function multipleUseWalletAddressesLogic() {
 
         $(document).on('click', '.search-result .search-footer .add-to-address-book', function() {
             basic.closeDialog();
-            basic.showDialog('<h2 class="fs-24 fs-xs-18 padding-bottom-20 text-center">Save to Address Book</h2><div class="max-width-350 margin-0-auto"><label for="contact-name" class="fs-16">Name:</label><input type="text" id="contact-name" maxlength="50" class="custom-input"></div><div class="max-width-350 margin-0-auto padding-top-15"><label for="wallet-address" class="fs-16">Wallet Address:</label><input type="text" id="wallet-address" maxlength="42" class="custom-input"></div><div class="padding-top-20 padding-bottom-15 text-center"><a href="javascript:void(0);" class="platform-custom-button save-to-address-book min-width-160">Save</a></div>', 'popup-save-to-address-book', null, true);
+            basic.showDialog('<h2 class="fs-24 fs-xs-18 padding-bottom-20 text-center">Save to Address Book</h2><div class="max-width-350 margin-0-auto"><label for="contact-name" class="fs-16">Name:</label><input type="text" id="contact-name" maxlength="50" class="custom-input"></div><div class="max-width-350 margin-0-auto padding-top-15"><label for="wallet-address" class="fs-16">Wallet Address:</label><input type="text" id="wallet-address" maxlength="42" class="custom-input"></div><div class="padding-top-20 padding-bottom-15 text-center"><a href="javascript:void(0);" class="blue-green-white-btn save-to-address-book min-width-160">Save</a></div>', 'popup-save-to-address-book', null, true);
 
             var ajaxSent = false;
             $('.save-to-address-book').click(function() {
@@ -5128,7 +5128,7 @@ function multipleUseWalletAddressesLogic() {
                                     var addressesHtml = '';
 
                                     for(var i = 0, len = response.addresses.length; i < len; i+=1) {
-                                        addressesHtml += '<li class="platform-color removeable-element fs-0" data-id="'+response.addresses[i].id+'"><a href="javascript:void(0);" class="platform-background-on-hover inline-block" data-value="'+response.addresses[i].dcn_address+'">'+response.addresses[i].dcn_address_label+'('+response.addresses[i].dcn_address+')</a><button type="button" class="remove-address-book-element inline-block">×</button></li>'
+                                        addressesHtml += '<li class="removeable-element fs-0" data-id="'+response.addresses[i].id+'"><a href="javascript:void(0);" class="inline-block" data-value="'+response.addresses[i].dcn_address+'">'+response.addresses[i].dcn_address_label+'('+response.addresses[i].dcn_address+')</a><button type="button" class="remove-address-book-element inline-block">×</button></li>'
                                     }
 
                                     $('#addresses-list').html(addressesHtml);
