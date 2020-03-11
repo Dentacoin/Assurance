@@ -99,8 +99,9 @@
                                 </div>
                                 <div class="single-row fs-0 dcn-address-row">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer padding-top-0 padding-bottom-0" for="dcn_address">Wallet Address:</label>
-                                    <div class="right-extra-field inline-block break-word" id="search-result-parent">
-                                        <input autocomplete="off" readonly type="text" maxlength="42" id="dcn_address" name="dcn_address" class="required-field calibri-regular fs-18 dark-color pencil-background search-input"/>
+                                    @php($addresses = (new \App\Http\Controllers\APIRequestsController())->getAddresses())
+                                    <div class="right-extra-field no-padding inline-block break-word" id="search-result-parent">
+                                        <input autocomplete="off" readonly type="text" maxlength="42" id="dcn_address" name="dcn_address" class="right-field width-100 required-field calibri-regular fs-18 dark-color pencil-background search-input"/>
                                         <div class="search-result module">
                                             <div class="search-body">
                                                 @if(!empty($addresses))
