@@ -805,7 +805,7 @@ class PatientController extends Controller {
             'now_timestamp.required' => 'Time is required.'
         ]);
 
-        $contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id'], 'status' => 'pending'))->where('last_activity', '>=', date('Y-m-d H:i:s', $request->input('now_timestamp')))->get()->all();
+        $contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id'], 'status' => 'pending'))->where('created_at', '>=', date('Y-m-d H:i:s', $request->input('now_timestamp')))->get()->all();
 
         if(!empty($contracts)) {
             $responseContracts = array();
