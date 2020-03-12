@@ -787,4 +787,53 @@ class PatientController extends Controller {
             return 0;
         }
     }
+
+    public function checkContractsCount() {
+        $contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->get()->all();
+
+        if(!empty($contracts)) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
+
+    public function checkForIncomingPendingContracts(Request $request) {
+        $this->validate($request, [
+            'now_timestamp' => 'required'
+        ], [
+            'now_timestamp.required' => 'Time is required.'
+        ]);
+
+        $contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id'], 'status' => 'pending'))->where('last_activity', '>=', date('Y-m-d H:i:s', $request->input('now_timestamp')))->get()->all();
+
+        if(!empty($contracts)) {
+            $responseContracts = array();
+            foreach($contracts as $contract) {
+                $tempContract = array();
+                $dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id);
+
+                $tempContract['dentistAvatar'] = $dentist->avatar_url;
+                $tempContract['dentistName'] = $dentist->name;
+                $tempContract['status'] = $contract->status;
+                $tempContract['monthlyPremium'] = $contract->monthly_premium;
+                $tempContract['createdAt'] = $contract->created_at->format('d/m/Y');
+                $tempContract['slug'] = $contract->slug;
+
+                if($contract->status == 'pending') {
+                    $tempContract['url'] = route('contract-proposal', ['slug' => $contract->slug]);
+                    $tempContract['btnLabel'] = 'Details and Sign';
+                } else {
+                    $tempContract['url'] = route('patient-contract-view', ['slug' => $contract->slug]);
+                    $tempContract['btnLabel'] = 'Details';
+                }
+
+                array_push($responseContracts, $tempContract);
+            }
+
+            return response()->json(array('success' => true, 'data' => $responseContracts));
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
 }

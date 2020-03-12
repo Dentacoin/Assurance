@@ -78,11 +78,13 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
         Route::post('/on-blockchain-contract-creation', 'PatientController@onBlockchainContractCreation')->name('on-blockchain-contract-creation');
 
         Route::post('/record-check-up-or-teeth-cleaning', 'PatientController@recordCheckUpOrTeethCleaning')->name('record-check-up-or-teeth-cleaning');
+
+        Route::post('/check-for-incoming-pending-contracts', 'PatientController@checkForIncomingPendingContracts')->name('check-for-incoming-pending-contracts');
+
+        Route::post('/check-contracts-count', 'PatientController@checkContractsCount')->name('check-contracts-count');
     });
 
     Route::group(['prefix' => 'dentist', 'middleware' => 'HandleDentistSession'], function () {
-        //Route::get('/', 'PatientController@getPatientAccess')->name('patient-access');
-
         Route::get('/create-contract', 'DentistController@getCreateContractView')->name('create-contract');
 
         Route::post('/store-and-submit-temporally-contract', 'DentistController@storeAndSubmitTemporallyContract')->middleware('HandleUserSession')->name('store-and-submit-temporally-contract');

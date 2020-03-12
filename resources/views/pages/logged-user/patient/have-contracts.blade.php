@@ -1,6 +1,6 @@
 @extends("layout")
 @section("content")
-    <section class="padding-top-200 padding-top-xs-70 padding-top-sm-100 padding-bottom-60 padding-bottom-xs-30 contracts-list-section">
+    <section class="padding-top-200 padding-top-xs-70 padding-top-sm-100 padding-bottom-60 padding-bottom-xs-30 contracts-list-section have-contracts">
         <div class="container">
             <div class="row">
                 <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">

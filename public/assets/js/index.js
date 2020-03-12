@@ -753,7 +753,57 @@ var projectData = {
 
                     // if patient homepage set watcher for new incoming pending contracs
                     if ($('body').hasClass('patient-access')) {
+                        if ($('.have-contracts').length) {
+                            var now_timestamp = Math.round((new Date()).getTime() / 1000);
+                            var foundContracts = [];
+                            setInterval(function() {
+                                console.log(foundContracts, 'foundContracts');
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/patient/check-for-incoming-pending-contracts',
+                                    dataType: 'json',
+                                    data: {
+                                        now_timestamp: now_timestamp
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: async function (response) {
+                                        console.log(response, 'response');
+                                        if(response.success) {
+                                            for (var i = 0, len = response.data.length; i < len; i+=1) {
+                                                if(foundContracts.indexOf(response.data[i].slug) != -1) {
+                                                    foundContracts.push(response.data[i].slug);
 
+                                                    $('.contracts-list').slick('slickAdd','<a href="https://assurance.dentacoin.com/patient/contract/'+response.data[i].slug+'" class="module contract-tile padding-bottom-10 pending"><div class="tile-wrapper fs-0"> <div class="inline-block-top figure-container"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Dentist avatar" src="'+response.data[i].dentistAvatar+'"><figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">'+response.data[i].status+'</figcaption></figure></div><div class="contract-info inline-block-top"><div class="calibri-bold fs-18 title">'+response.data[i].dentistName+'</div><time class="display-block fs-14 calibri-light">Sent on: '+response.data[i].createdAt+'</time><div class="lato-semibold fs-24 line-height-24">'+response.data[i].monthlyPremium+'$</div><div class="btn-container"><div class="white-blue-green-btn">'+response.data[i].btnLabel+'</div></div></div></div></a>', 0);
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                            }, 3000);
+                        } else if ($('.start-first-contract').length) {
+                            var contractFound = false;
+                            setInterval(function() {
+                                if (!contractFound) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/patient/check-contracts-count',
+                                        dataType: 'json',
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function (response) {
+                                            console.log(response, 'response');
+                                            if (response.success) {
+                                                contractFound = true;
+                                                window.location.reload();
+                                            }
+                                        }
+                                    });
+                                }
+                            }, 3000);
+                        }
                     }
 
                     $(window).on('resize', function() {

@@ -1,6 +1,6 @@
 @extends("layout")
 @section("content")
-    <section class="section-logged-patient-form">
+    <section class="section-logged-patient-form start-first-contract">
         <h1 class="fs-45 fs-xs-30 lato-bold text-center padding-top-110 padding-top-xs-50">Let's Start with a First Contract!</h1>
         <div class="container">
             <div class="row">
