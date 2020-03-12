@@ -66,7 +66,7 @@ class PatientController extends Controller {
         if((new UserController())->checkPatientSession()) {
             $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
             $clinics = (new APIRequestsController())->getAllClinicsByName();
-            $contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => $logged_patient->email))->get()->sortByDesc('created_at');
+            $contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => $logged_patient->email))->get()->sortByDesc('created_at')->all();
 
             var_dump($contracts);
             die('asd');
