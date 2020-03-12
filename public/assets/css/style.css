@@ -10572,6 +10572,9 @@ section.contract-proposal .wrapper .step-fields .singatures-row {
           -moz-border-radius: 50%;
           -ms-border-radius: 50%;
           border-radius: 50%; }
+          .my-contracts .table-container .dataTables_paginate span a.current, .my-contracts-container .table-container .dataTables_paginate span a.current {
+            color: #fff;
+            background-color: #000; }
       .my-contracts .table-container .dataTables_paginate .disabled, .my-contracts-container .table-container .dataTables_paginate .disabled {
         display: none; }
     .my-contracts .table-container .avatar-and-name, .my-contracts-container .table-container .avatar-and-name {

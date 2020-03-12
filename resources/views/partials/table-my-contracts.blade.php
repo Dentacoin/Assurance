@@ -95,7 +95,7 @@
                     @endif
                 </td>
                 <td><span class="hide-this">{{round($contract->monthly_premium)}}</span>{{$contract->monthly_premium}} USD</td>
-                <td class="next-payment"><span class="hide-this">0</span>Not signed yet</td>
+                <td class="next-payment"><span class="hide-this">0</span>Cancelled before signing.</td>
                 {{--<td class="contract-details">
                     @if(!empty($contract->document_hash))
                         <div><a href="javascript:void(0)" class="contract-decrypt" data-hash="{{$contract->document_hash}}" @if(!$patient_or_not) data-type="patient" @else data-type="dentist" @endif>Full Contract (pdf)</a></div>

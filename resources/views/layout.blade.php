@@ -288,13 +288,13 @@
                             <div class="padding-bottom-10 field-parent">
                                 <div class="custom-google-label-style module" data-input-blue-green-border="true">
                                     <label for="dentist-login-email">Email address:</label>
-                                    <input class="full-rounded form-field" name="email" maxlength="100" type="email" id="dentist-login-email" placeholder=""/>
+                                    <input autocomplete="off" class="full-rounded form-field" name="email" maxlength="100" type="email" id="dentist-login-email" placeholder=""/>
                                 </div>
                             </div>
                             <div class="padding-bottom-20 field-parent">
                                 <div class="custom-google-label-style module" data-input-blue-green-border="true">
                                     <label for="dentist-login-password">Password:</label>
-                                    <input class="full-rounded form-field" name="password" maxlength="50" id="dentist-login-password" type="password"/>
+                                    <input autocomplete="off" class="full-rounded form-field" name="password" maxlength="50" id="dentist-login-password" type="password"/>
                                 </div>
                             </div>
                             <div class="btn-container text-center">
@@ -314,19 +314,19 @@
                                 <div class="padding-bottom-10 field-parent">
                                     <div class="custom-google-label-style module" data-input-blue-green-border="true">
                                         <label for="dentist-register-email">Work Email Address:</label>
-                                        <input class="full-rounded form-field" name="email" maxlength="100" type="email" id="dentist-register-email"/>
+                                        <input autocomplete="off" class="full-rounded form-field" name="email" maxlength="100" type="email" id="dentist-register-email"/>
                                     </div>
                                 </div>
                                 <div class="padding-bottom-10 field-parent">
                                     <div class="custom-google-label-style module" data-input-blue-green-border="true">
                                         <label for="dentist-register-password">Password:</label>
-                                        <input class="full-rounded form-field password" name="password" minlength="6" maxlength="50" type="password" id="dentist-register-password"/>
+                                        <input autocomplete="off" class="full-rounded form-field password" name="password" minlength="6" maxlength="50" type="password" id="dentist-register-password"/>
                                     </div>
                                 </div>
                                 <div class="padding-bottom-20 field-parent">
                                     <div class="custom-google-label-style module" data-input-blue-green-border="true">
                                         <label for="dentist-register-repeat-password">Repeat password:</label>
-                                        <input class="full-rounded form-field repeat-password" name="repeat-password" minlength="6" maxlength="50" type="password" id="dentist-register-repeat-password"/>
+                                        <input autocomplete="off" class="full-rounded form-field repeat-password" name="repeat-password" minlength="6" maxlength="50" type="password" id="dentist-register-repeat-password"/>
                                     </div>
                                 </div>
                             </div>

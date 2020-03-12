@@ -3434,7 +3434,6 @@ function showLoader(message, type, time) {
         $('.camping-loader').html('<div class="response-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/loader.gif" class="max-width-160" alt="Loader"></figure><div class="message text-center fs-24 fs-xs-30 lato-semibold">'+message+'</div></div></div>');
         $('.response-layer').show();
     } else {
-        console.log('type');
         if (type == 'contract-response-success-layer') {
             $('.camping-loader').html('<div class="contract-response-success-layer"><div class="wrapper"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img src="/assets/images/contract-assurance-loading-success.gif" class="max-width-440 min-width-300" alt="Loader"></figure><div class="message text-center fs-24 fs-xs-30 lato-semibold">'+message+'</div></div></div>');
             $('.contract-response-success-layer').show();
@@ -3500,6 +3499,10 @@ async function onDocumentReadyPageData() {
         if ($('body').hasClass('home') || $('body').hasClass('patient-access')) {
             // applied for both dentist and patient sides homepages to make contacts in list (slider) with same hight
             makeElementsInContractListWithSameHeight();
+
+            $(window).on('resize', function() {
+                makeElementsInContractListWithSameHeight();
+            });
         } else if ($('body').hasClass('my-contracts') || $('.my-contracts-container').length) {
             // applied for both dentist and patient
             initDataTable();
@@ -5022,6 +5025,7 @@ function initPopupEvents(scroll_to_buy_section) {
 
 function makeElementsInContractListWithSameHeight() {
     if ($('.contract-tile').length) {
+        $('.contract-tile .tile-wrapper').outerHeight('auto');
         var max_height = 0;
         for (var i = 0, len = $('.contract-tile .tile-wrapper').length; i < len; i += 1) {
             if ($('.contract-tile .tile-wrapper').eq(i).outerHeight() > max_height) {

@@ -191,6 +191,10 @@
                     border: 1px solid #000;
                     font-family: 'Calibri-Regular';
                     @include rounded(50%);
+                    &.current {
+                        color: #fff;
+                        background-color: #000;
+                    }
                 }
             }
             .disabled {
