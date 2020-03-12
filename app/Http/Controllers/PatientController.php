@@ -789,6 +789,7 @@ class PatientController extends Controller {
     }
 
     public function checkContractsCount() {
+        $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         $contracts = TemporallyContract::where(array('patient_email' => $logged_patient->email))->get()->all();
 
         if(!empty($contracts)) {
