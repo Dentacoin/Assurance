@@ -68,9 +68,6 @@ class PatientController extends Controller {
             $clinics = (new APIRequestsController())->getAllClinicsByName();
             $contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => $logged_patient->email))->get()->sortByDesc('created_at')->all();
 
-            var_dump($contracts);
-            die('asd');
-
             if(!empty($contracts)) {
                 //IF PATIENT HAVE EXISTING CONTRACTS
                 return view('pages/logged-user/patient/have-contracts', ['contracts' => $contracts, 'clinics' => $clinics]);
