@@ -74074,8 +74074,9 @@ var projectData = {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     success: async function (response) {
-                                        console.log(response, 'response');
+                                        console.log(response, '================================== response-----------');
                                         if(response.success) {
+                                            console.log(response.data, 'response.data');
                                             console.log(response.data.length, 'response.data.length');
                                             for (var i = 0, len = response.data.length; i < len; i+=1) {
                                                 console.log(response.data[i], 'response.data.length');
