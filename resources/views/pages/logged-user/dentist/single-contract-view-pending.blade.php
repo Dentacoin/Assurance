@@ -42,7 +42,6 @@
             <div class="row camping-for-popups">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module">
                     <div class="wrapper text-center">
-                        <div class="close-btn">×</div>
                         <div class="fs-90 line-height-90 blue-green-color">!</div>
                         <h1 class="lato-bold fs-20 padding-top-15">WARNING</h1>
                         <div class="fs-18 fs-xs-16 calibri-light padding-top-10">Your patient has received their contract but has not yet signed it. Check again later.</div>

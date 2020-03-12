@@ -75,15 +75,15 @@ function checkIfCookie()    {
             $('.custom-cookie-save').click(function() {
                 basic.cookies.set('strictly_necessary_policy', 1);
 
-                if($('#functionality-cookies').is(':checked')) {
+                if ($('#functionality-cookies').is(':checked')) {
                     basic.cookies.set('functionality_cookies', 1);
                 }
 
-                if($('#marketing-cookies').is(':checked')) {
+                if ($('#marketing-cookies').is(':checked')) {
                     basic.cookies.set('marketing_cookies', 1);
                 }
 
-                if($('#performance-cookies').is(':checked')) {
+                if ($('#performance-cookies').is(':checked')) {
                     basic.cookies.set('performance_cookies', 1);
                 }
 
@@ -145,11 +145,11 @@ var dApp = {
 
         if ($('body').hasClass('logged-in')) {
             if ($('body').hasClass('patient-side')) {
-                if($('.patient-contract-single-page-section').length) {
+                if ($('.patient-contract-single-page-section').length) {
                     global_state.account = projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-patient'));
                 }
             } else if ($('body').hasClass('dentist-side')) {
-                if($('.single-contract-view-section').length) {
+                if ($('.single-contract-view-section').length) {
                     global_state.account = projectData.utils.checksumAddress($('.single-contract-view-section').attr('data-dentist'));
                 }
             }
@@ -548,7 +548,7 @@ var projectData = {
     },
     initiators: {
         initDatepicker: function() {
-            if($('.datepicker').length > 0) {
+            if ($('.datepicker').length > 0) {
                 $('.datepicker').datepicker({
                     dateFormat: 'yy-mm-dd',
                     startDate: '-3d'
@@ -684,7 +684,7 @@ var projectData = {
                     //on change show login popup
                     $('section.section-logged-patient-form input[type="text"].combobox').attr('placeholder', 'Find your preferred dentist/s in a snap...');
                 }
-            }else if ($('body').hasClass('support-guide')) {
+            } else if ($('body').hasClass('support-guide')) {
                 if ($('.support-guide-slider').length) {
                     $('.support-guide-slider').slick({
                         slidesToShow: 3,
@@ -751,6 +751,11 @@ var projectData = {
                     // applied for both dentist and patient sides homepages to make contacts in list (slider) with same hight
                     makeElementsInContractListWithSameHeight();
 
+                    // if patient homepage set watcher for new incoming pending contracs
+                    if ($('body').hasClass('patient-access')) {
+
+                    }
+
                     $(window).on('resize', function() {
                         makeElementsInContractListWithSameHeight();
                     });
@@ -775,7 +780,7 @@ var projectData = {
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                         }
 
-                        if(!isNaN(next_payment_timestamp_date_obj)) {
+                        if (!isNaN(next_payment_timestamp_date_obj)) {
                             table_trs_with_timestamp.eq(i).find('.next-payment').html('<span class="hide-this">'+next_payment_timestamp+'</span>' + projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj));
                         }
                     }
@@ -1039,12 +1044,12 @@ var projectData = {
                             next_payment_timestamp_unix = period_to_withdraw - remainder;
                             next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                            if(current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
+                            if (current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
                                 timer_label = 'Fund your account until:';
                             } else {
                                 timer_label = 'Next payment processed in:';
 
-                                if($('.contract-header').hasClass('awaiting-approval')) {
+                                if ($('.contract-header').hasClass('awaiting-approval')) {
                                     $('.show-on-having-dentacoins').removeClass('hide');
                                 }
                             }
@@ -1052,12 +1057,12 @@ var projectData = {
                             next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                             next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                            if(current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
+                            if (current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
                                 timer_label = 'Fund your account until:';
                             } else {
                                 timer_label = 'Next payment processed in:';
 
-                                if($('.contract-header').hasClass('awaiting-approval')) {
+                                if ($('.contract-header').hasClass('awaiting-approval')) {
                                     $('.show-on-having-dentacoins').removeClass('hide');
                                 }
                             }
@@ -1080,7 +1085,7 @@ var projectData = {
                         var contract_next_payment = parseInt(on_load_exiting_contract[0]);
                         var time_passed_since_signed = now_timestamp - contract_next_payment;
 
-                        if(Math.floor(time_passed_since_signed / period_to_withdraw) >= 0) {
+                        if (Math.floor(time_passed_since_signed / period_to_withdraw) >= 0) {
                             months_passed_for_reward += Math.floor(time_passed_since_signed / period_to_withdraw);
                         }
                         var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(on_load_exiting_contract[5]);
@@ -1098,20 +1103,20 @@ var projectData = {
                             next_payment_timestamp_unix = period_to_withdraw - remainder;
                             next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                            if(current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
+                            if (current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
                                 timer_label = 'Fund your account until:';
                             } else {
                                 timer_label = 'Next payment processed in:';
                             }
                         } else {
-                            if(time_passed_since_signed >= 0) {
+                            if (time_passed_since_signed >= 0) {
                                 next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                             } else {
                                 next_payment_timestamp_unix = parseInt(on_load_exiting_contract[0]) - now_timestamp;
                             }
                             next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                            if(current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
+                            if (current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
                                 timer_label = 'Fund your account until:';
                             } else {
                                 timer_label = 'Next payment processed in:';
@@ -1126,7 +1131,7 @@ var projectData = {
                         patientDcnBalanceLogic(current_patient_dcn_balance);
                         function patientDcnBalanceLogic(current_patient_dcn_balance) {
                             $('.camping-for-popups').html('');
-                            if(current_patient_dcn_balance > dcn_needed_to_be_payed_to_dentist) {
+                            if (current_patient_dcn_balance > dcn_needed_to_be_payed_to_dentist) {
                                 $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">ALL SET FOR YOUR NEXT PAYMENT</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-10 padding-bottom-25">It seems you have the needed amount of DCN and ETH in your wallet so your dentist will be able to successfully process your next monthly payment on '+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 second-custom-close-btn">SOUNDS GOOD</a></div></div></div>');
                                 initPopupEvents();
                             } else {
@@ -1163,8 +1168,8 @@ var projectData = {
 
                                 var sentRecord = false;
                                 $('.record-check-up-submit').click(function() {
-                                    if($('.camping-for-popups .datepicker').val() != '') {
-                                        if(!sentRecord) {
+                                    if ($('.camping-for-popups .datepicker').val() != '') {
+                                        if (!sentRecord) {
                                             sentRecord = true;
                                             showLoader();
 
@@ -1186,7 +1191,7 @@ var projectData = {
                                                         if (response.success) {
                                                             $('.camping-for-popups').html('');
                                                             basic.showAlert('Check-up recorded successfully. Now your dentist have to approve it.', '', true);
-                                                        } else if(response.error) {
+                                                        } else if (response.error) {
                                                             sentRecord = false;
                                                             basic.showAlert(response.message, '', true);
                                                         }
@@ -1219,8 +1224,8 @@ var projectData = {
 
                                 var sentRecord = false;
                                 $('.record-check-up-submit').click(function() {
-                                    if($('.camping-for-popups .datepicker').val() != '') {
-                                        if(!sentRecord) {
+                                    if ($('.camping-for-popups .datepicker').val() != '') {
+                                        if (!sentRecord) {
                                             sentRecord = true;
                                             showLoader();
 
@@ -1242,7 +1247,7 @@ var projectData = {
                                                         if (response.success) {
                                                             $('.camping-for-popups').html('');
                                                             basic.showAlert('Teeth cleaning recorded successfully. Now your dentist have to approve it.', '', true);
-                                                        } else if(response.error) {
+                                                        } else if (response.error) {
                                                             sentRecord = false;
                                                             basic.showAlert(response.message, '', true);
                                                         }
@@ -1269,8 +1274,8 @@ var projectData = {
 
                                 var sentRecord = false;
                                 $('.record-check-up-and-teeth-cleaning-submit').click(function() {
-                                    if($('.camping-for-popups .check-up-datepicker').val() != '' || $('.camping-for-popups .teeth-cleaning-datepicker').val() != '') {
-                                        if(!sentRecord) {
+                                    if ($('.camping-for-popups .check-up-datepicker').val() != '' || $('.camping-for-popups .teeth-cleaning-datepicker').val() != '') {
+                                        if (!sentRecord) {
                                             sentRecord = true;
                                             showLoader();
 
@@ -1293,7 +1298,7 @@ var projectData = {
                                                         if (response.success) {
                                                             $('.camping-for-popups').html('');
                                                             basic.showAlert('Record is saved successfully. Now your dentist have to approve it.', '', true);
-                                                        } else if(response.error) {
+                                                        } else if (response.error) {
                                                             sentRecord = false;
                                                             basic.showAlert(response.message, '', true);
                                                         }
@@ -1309,21 +1314,21 @@ var projectData = {
                         }
 
                         var get_params = projectData.utils.getGETParameters();
-                        if(basic.property_exists(get_params, 'type')) {
-                            if(get_params.type == 'check-up') {
+                        if (basic.property_exists(get_params, 'type')) {
+                            if (get_params.type == 'check-up') {
                                 $('.camping-for-popups').addClass('check-up');
-                            } else if(get_params.type == 'teeth-cleaning') {
+                            } else if (get_params.type == 'teeth-cleaning') {
                                 $('.camping-for-popups').addClass('teeth-cleaning');
-                            } else if(get_params.type == 'check-up-and-teeth-cleaning') {
+                            } else if (get_params.type == 'check-up-and-teeth-cleaning') {
                                 $('.camping-for-popups').addClass('check-up teeth-cleaning');
                             }
                         }
 
-                        if($('.camping-for-popups').hasClass('check-up') && $('.camping-for-popups').hasClass('teeth-cleaning')) {
+                        if ($('.camping-for-popups').hasClass('check-up') && $('.camping-for-popups').hasClass('teeth-cleaning')) {
                             initCheckUpAndRecordTeethCleaningLogic();
-                        } else if($('.camping-for-popups').hasClass('check-up')) {
+                        } else if ($('.camping-for-popups').hasClass('check-up')) {
                             initRecordCheckUpLogic();
-                        } else if($('.camping-for-popups').hasClass('teeth-cleaning')) {
+                        } else if ($('.camping-for-popups').hasClass('teeth-cleaning')) {
                             initRecordTeethCleaningLogic();
                         }
 
@@ -1394,7 +1399,7 @@ var projectData = {
 
                         // init navigation steps event
                         $('.steps-navigation a').click(function() {
-                            if(!$(this).hasClass('disabled')) {
+                            if (!$(this).hasClass('disabled')) {
                                 $('.steps-navigation a').removeClass('active');
                                 $(this).addClass('active');
 
@@ -1486,7 +1491,7 @@ var projectData = {
                                         }
 
                                         getContractData($('.init-contract-section').attr('data-contract'), async function(response) {
-                                            if(response.success) {
+                                            if (response.success) {
                                                 var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
                                                 scanObject['contractCreation'] = {
@@ -1533,11 +1538,11 @@ var projectData = {
                                         var existingCachedKey = false;
                                         var existingCachedKeystore = '';
                                         var currentAccountsStorage = localStorage.getItem('current-accounts');
-                                        if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                        if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
                                             var currentAccounts = JSON.parse(currentAccountsStorage);
 
                                             for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
-                                                if(global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
+                                                if (global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
                                                     existingCachedKey = true;
                                                     existingCachedKeystore = currentAccounts[i].keystore;
                                                     break;
@@ -1726,9 +1731,9 @@ var projectData = {
                         }
                     }
                 } else if ($('body').hasClass('dentist-contract-view')) {
-                    if($('.contract-header').hasClass('awaiting-payment')) {
+                    if ($('.contract-header').hasClass('awaiting-payment')) {
                         trackForContractStatusChange($('.single-contract-view-section').attr('data-contract'), 'awaiting-payment');
-                    } else if($('.contract-header').hasClass('pending')) {
+                    } else if ($('.contract-header').hasClass('pending')) {
                         trackForContractStatusChange($('.single-contract-view-section').attr('data-contract'), 'pending');
                     }
 
@@ -1810,11 +1815,11 @@ var projectData = {
                                     var existingCachedKey = false;
                                     var existingCachedKeystore = '';
                                     var currentAccountsStorage = localStorage.getItem('current-accounts');
-                                    if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                    if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
                                         var currentAccounts = JSON.parse(currentAccountsStorage);
 
                                         for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
-                                            if(global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
+                                            if (global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
                                                 existingCachedKey = true;
                                                 existingCachedKeystore = currentAccounts[i].keystore;
                                                 break;
@@ -1992,7 +1997,7 @@ var projectData = {
                         // check for pending patient records - check-up or teeth cleaning
                         var visibleRecord = false;
                         setInterval(function() {
-                            if(!visibleRecord) {
+                            if (!visibleRecord) {
                                 $.ajax({
                                     type: 'POST',
                                     url: '/dentist/check-for-pending-contract-records',
@@ -2150,11 +2155,11 @@ var projectData = {
                                     var existingCachedKey = false;
                                     var existingCachedKeystore = '';
                                     var currentAccountsStorage = localStorage.getItem('current-accounts');
-                                    if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                    if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
                                         var currentAccounts = JSON.parse(currentAccountsStorage);
 
                                         for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
-                                            if(global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
+                                            if (global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
                                                 existingCachedKey = true;
                                                 existingCachedKeystore = currentAccounts[i].keystore;
                                                 break;
@@ -2314,18 +2319,18 @@ var projectData = {
                             var existingCachedKey = false;
                             var existingCachedKeystore = '';
                             var currentAccountsStorage = localStorage.getItem('current-accounts');
-                            if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                            if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
                                 var currentAccounts = JSON.parse(currentAccountsStorage);
 
                                 for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
-                                    if(global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
+                                    if (global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
                                         existingCachedKey = true;
                                         existingCachedKeystore = currentAccounts[i].keystore;
                                         break;
                                     }
                                 }
 
-                                if(existingCachedKey) {
+                                if (existingCachedKey) {
                                     $.ajax({
                                         type: 'POST',
                                         url: '/get-keystore-file-password-validation',
@@ -2424,7 +2429,7 @@ if ($('body').hasClass('logged-in')) {
                     $('.step.two #patient-email').addClass('loading-background');
 
                     var checkEmail = await checkEmailAndReturnData($('.step.two #patient-email').val().trim(), 'patient');
-                    if(checkEmail.success && checkEmail.data.indexOf(' ') >= 0) {
+                    if (checkEmail.success && checkEmail.data.indexOf(' ') >= 0) {
                         $('.step.two #fname').val(checkEmail.data.substr(0, checkEmail.data.indexOf(' ')));
                         $('.step.two #lname').val(checkEmail.data.substr(checkEmail.data.indexOf(' ')+1));
                     }
@@ -2853,6 +2858,7 @@ if ($('body').hasClass('logged-in')) {
             var slider_params = {
                 slidesToShow: slides_to_show,
                 slidesToScroll: 3,
+                infinite: false,
                 autoplaySpeed: 8000
             };
 
@@ -3870,11 +3876,11 @@ function cancelContractEventInit() {
                         var existingCachedKey = false;
                         var existingCachedKeystore = '';
                         var currentAccountsStorage = localStorage.getItem('current-accounts');
-                        if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                        if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
                             var currentAccounts = JSON.parse(currentAccountsStorage);
 
                             for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
-                                if(global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
+                                if (global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
                                     existingCachedKey = true;
                                     existingCachedKeystore = currentAccounts[i].keystore;
                                     break;
@@ -4253,7 +4259,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                     reader.addEventListener('load', async function (e) {
                         // get all multiple user addresses
                         var currentUserAddressesResponse = await getUserAddresses();
-                        if(currentUserAddressesResponse.success) {
+                        if (currentUserAddressesResponse.success) {
                             var currentUserAddresses = [];
                             for (var i = 0, len = currentUserAddressesResponse.data.length; i < len; i += 1) {
                                 currentUserAddresses.push(projectData.utils.checksumAddress(currentUserAddressesResponse.data[i].dcn_address));
@@ -4281,7 +4287,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                                 if ($('#remember-my-keystore-file').is(':checked')) {
                                                     //if remember me option is checked
                                                     var currentAccountsStorage = localStorage.getItem('current-accounts');
-                                                    if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                                    if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
                                                         var currentAccounts = JSON.parse(currentAccountsStorage);
                                                         currentAccounts.push({'address' : keystoreFileAddress, 'keystore' : keystore_string});
 
@@ -4396,7 +4402,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
     $('.proof-of-address .verify-address-btn').click(async function() {
         // get all multiple user addresses
         var currentUserAddressesResponse = await getUserAddresses();
-        if(currentUserAddressesResponse.success) {
+        if (currentUserAddressesResponse.success) {
             var keystoreFileAddress = projectData.utils.checksumAddress('0x' + JSON.parse(keystore_file).address);
             var currentUserAddresses = [];
             for(var i = 0, len = currentUserAddressesResponse.data.length; i< len; i+=1) {
@@ -4420,7 +4426,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                             if ($('#remember-my-keystore-file').is(':checked')) {
                                 //if remember me option is checked
                                 var currentAccountsStorage = localStorage.getItem('current-accounts');
-                                if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
                                     var currentAccounts = JSON.parse(currentAccountsStorage);
                                     currentAccounts.push({'address' : keystoreFileAddress, 'keystore' : import_response.success});
 
@@ -4542,7 +4548,7 @@ function bindTransactionAddressVerify(keystore_file, keystoreFileAddress) {
                         if ($('#remember-my-keystore-file').is(':checked')) {
                             //if remember me option is checked
                             var currentAccountsStorage = localStorage.getItem('current-accounts');
-                            if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                            if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
                                 var currentAccounts = JSON.parse(currentAccountsStorage);
                                 currentAccounts.push({'address' : keystoreFileAddress, 'keystore' : keystore_file});
 
@@ -4593,7 +4599,7 @@ function bindCacheKeyEvent(keystore_file) {
     $('.proof-of-address .cache-key-btn').click(async function() {
         // get all multiple user addresses
         var currentUserAddressesResponse = await getUserAddresses();
-        if(currentUserAddressesResponse.success) {
+        if (currentUserAddressesResponse.success) {
             var currentUserAddresses = [];
             for (var i = 0, len = currentUserAddressesResponse.data.length; i < len; i += 1) {
                 currentUserAddresses.push(projectData.utils.checksumAddress(currentUserAddressesResponse.data[i].dcn_address));
@@ -4610,7 +4616,7 @@ function bindCacheKeyEvent(keystore_file) {
                         if (import_response.success) {
                             //if remember me option is checked
                             var currentAccountsStorage = localStorage.getItem('current-accounts');
-                            if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                            if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
                                 var currentAccounts = JSON.parse(currentAccountsStorage);
                                 currentAccounts.push({'address' : keystoreFileAddress, 'keystore' : import_response.success});
 
@@ -4993,7 +4999,7 @@ function initCaptchaRefreshEvent()  {
 function initPopupEvents(scroll_to_buy_section) {
     projectData.initiators.initTooltips();
 
-    if($('.contract-response-message .second-custom-close-btn')) {
+    if ($('.contract-response-message .second-custom-close-btn')) {
         $('.contract-response-message .second-custom-close-btn').click(function() {
             $(this).closest('.contract-response-message').remove();
         });
@@ -5068,7 +5074,7 @@ function trackForContractStatusChange(contract, currentStatus) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: async function (response) {
-                if(response.success && !changeInStatusFound) {
+                if (response.success && !changeInStatusFound) {
                     changeInStatusFound = true;
                     window.location.reload();
                 }
@@ -5157,7 +5163,7 @@ function checkIfClickedOutsideElement(id, callback) {
 }
 
 function multipleUseWalletAddressesLogic() {
-    if($('.search-input').length) {
+    if ($('.search-input').length) {
         $('.search-input').on('focus', function() {
             $('.search-result').show();
         });
@@ -5211,11 +5217,11 @@ function multipleUseWalletAddressesLogic() {
 
             var ajaxSent = false;
             $('.save-to-address-book').click(function() {
-                if($('.popup-save-to-address-book #contact-name').val().trim() == '') {
+                if ($('.popup-save-to-address-book #contact-name').val().trim() == '') {
                     basic.showAlert('Please enter name.', '', true);
-                } else if($('.popup-save-to-address-book #wallet-address').val().trim() == '' || !projectData.utils.innerAddressCheck($('.popup-save-to-address-book #wallet-address').val().trim())){
+                } else if ($('.popup-save-to-address-book #wallet-address').val().trim() == '' || !projectData.utils.innerAddressCheck($('.popup-save-to-address-book #wallet-address').val().trim())){
                     basic.showAlert('Please enter valid Wallet Address.', '', true);
-                } else if(!ajaxSent) {
+                } else if (!ajaxSent) {
                     ajaxSent = true;
                     var addressName = $('.popup-save-to-address-book #contact-name').val().trim();
                     var walletAddress = $('.popup-save-to-address-book #wallet-address').val().trim();
@@ -5238,12 +5244,12 @@ function multipleUseWalletAddressesLogic() {
                                 basic.showAlert(response.message, '', true);
 
 
-                                if(response.addresses) {
+                                if (response.addresses) {
                                     var addressesHtml = '';
 
                                     for(var i = 0, len = response.addresses.length; i < len; i+=1) {
                                         var addressLabel = '';
-                                        if(response.addresses[i].dcn_address_label != '' && response.addresses[i].dcn_address_label != undefined && response.addresses[i].dcn_address_label != null) {
+                                        if (response.addresses[i].dcn_address_label != '' && response.addresses[i].dcn_address_label != undefined && response.addresses[i].dcn_address_label != null) {
                                             addressLabel = response.addresses[i].dcn_address_label+' ('+response.addresses[i].dcn_address+')';
                                         } else {
                                             addressLabel = '('+response.addresses[i].dcn_address+')';
