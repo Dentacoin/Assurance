@@ -76216,7 +76216,6 @@ if ($('body').hasClass('logged-in')) {
             var slider_params = {
                 slidesToShow: slides_to_show,
                 slidesToScroll: 3,
-                infinite: false,
                 autoplaySpeed: 8000
             };
 
