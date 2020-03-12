@@ -73309,9 +73309,9 @@ checkIfCookie();
 
 var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore} = require('./helper');
 
-var get_params = projectData.utils.getGETParameters();
 $(document).ready(async function() {
     //if get parameter is passed show loginform
+    var get_params = projectData.utils.getGETParameters();
     if ((basic.property_exists(get_params, 'show-login') || basic.property_exists(get_params, 'inviter')) && !$('body').hasClass('logged-in')) {
         openLoginSigninPopup();
     } else if (basic.property_exists(get_params, 'show-patient-register')) {
@@ -74613,6 +74613,7 @@ var projectData = {
                             });
                         }
 
+                        var get_params = projectData.utils.getGETParameters();
                         if(basic.property_exists(get_params, 'type')) {
                             if(get_params.type == 'check-up') {
                                 $('.camping-for-popups').addClass('check-up');
