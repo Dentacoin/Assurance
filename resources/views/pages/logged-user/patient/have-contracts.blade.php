@@ -9,7 +9,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="contracts-list slider patient-contract-list">
+                    <div class="contracts-list slider patient-contract-list fs-0">
                         @if(sizeof($contracts) > 0)
                             @foreach($contracts as $contract)
                                 @if($contract->status == 'pending')
@@ -22,7 +22,7 @@
                                 @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
                                 @if(!empty($dentist))
                                         <a href="{{$url}}" class="module contract-tile padding-bottom-10 {{$contract->status}}">
-                                            <div class="tile-wrapper fs-0">
+                                            <div class="tile-wrapper">
                                                 <div class="inline-block-top figure-container">
                                                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                         <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>

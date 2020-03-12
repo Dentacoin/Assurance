@@ -786,7 +786,7 @@ var projectData = {
                                         }
                                     }
                                 });
-                            }, 3000);
+                            }, 5000);
                         } else if ($('.start-first-contract').length) {
                             var contractFound = false;
                             setInterval(function() {
@@ -807,7 +807,7 @@ var projectData = {
                                         }
                                     });
                                 }
-                            }, 3000);
+                            }, 5000);
                         }
                     }
 
