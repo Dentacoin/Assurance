@@ -553,10 +553,6 @@ class UserController extends Controller {
         return response()->json(['success' => $view]);
     }
 
-    protected function getCurrentUserData() {
-        return response()->json(['success' => (new APIRequestsController())->getUserData(session('logged_user')['id'])]);
-    }
-
     public function getCountryNameById($id) {
         $countries = (new APIRequestsController())->getAllCountries();
         return $countries[$id - 1]->name;
