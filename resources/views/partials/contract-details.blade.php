@@ -14,11 +14,15 @@
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Name:</label>
             <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">{{(new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id'])->name}}</div>
         </div>
-        @if(!empty($dentist))
+        @if(!empty($dentist) || !empty($current_logged_dentist))
             <div class="single-row fs-0">
                 <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Email Address:</label>
                 <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">
-                    <a href="mailto:{{$dentist->email}}">{{$dentist->email}}</a>
+                    @if(!empty($dentist))
+                        <a href="mailto:{{$dentist->email}}">{{$dentist->email}}</a>
+                    @elseif(!empty($current_logged_dentist))
+                        <a href="mailto:{{$current_logged_dentist->email}}">{{$current_logged_dentist->email}}</a>
+                    @endif
                 </div>
             </div>
         @endif
