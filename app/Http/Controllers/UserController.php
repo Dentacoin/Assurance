@@ -123,15 +123,9 @@ class UserController extends Controller {
     }
 
     protected function getAddressValidationOrRememberMe(Request $request) {
-        $current_logged_user_dcn_address = (new APIRequestsController())->getUserData(session('logged_user')['id'])->dcn_address;
-        //only dentists are able to cache their keys
-        if(!empty($current_logged_user_dcn_address)) {
-            $view = view('partials/address-validation-or-remember-me', ['current_logged_user_dcn_address' => $current_logged_user_dcn_address, 'cache' => $request->input('cache')]);
-            $view = $view->render();
-            return response()->json(['success' => $view]);
-        } else {
-            return response()->json(['error' => true]);
-        }
+        $view = view('partials/address-validation-or-remember-me', ['current_logged_user_dcn_address' => $current_logged_user_dcn_address, 'cache' => $request->input('cache')]);
+        $view = $view->render();
+        return response()->json(['success' => $view]);
     }
 
     protected function getKeystoreFilePasswordValidation() {
@@ -943,7 +937,7 @@ class UserController extends Controller {
 
         $saveAddressResponse = (new APIRequestsController())->saveAddress($data['address'], $data['name']);
         if (is_object($saveAddressResponse) && property_exists($saveAddressResponse, 'success') && $saveAddressResponse->success) {
-            $response = ['success' => true, 'message' => 'New address have been saved successfully.'];
+            $response = ['success' => true, 'message' => 'New address has been successfully added.'];
             $addresses = (new APIRequestsController())->getAddresses();
             if(!empty($addresses) && is_object($addresses) && property_exists($addresses, 'success') && $addresses->success) {
                 $response['addresses'] = $addresses->data;

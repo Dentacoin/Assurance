@@ -134,7 +134,7 @@
                                 <div class="camping-for-validation module">
                                     {{--RARE CASE - if user have address, but not from wallet.dentacoin.com--}}
                                     {{--@if(!empty($patient->dcn_address) && !(new \App\Http\Controllers\UserController())->checkIfWeHavePublicKeyOfAddress($patient->dcn_address))
-                                        <div class="single-row proof-of-address padding-bottom-20" data-address="{{$patient->dcn_address}}">
+                                        <div class="single-row proof-of-address padding-bottom-20">
                                             <div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div>
                                             <div class="container-fluid">
                                                 <div class="row fs-0">

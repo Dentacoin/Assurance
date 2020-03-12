@@ -58,7 +58,7 @@
     </div>
 @endif
 <div class="extra-recipe-html"></div>
-@if(filter_var($cached_key, FILTER_VALIDATE_BOOLEAN))
+@if(filter_var($cached_key, FILTER_VALIDATE_BOOLEAN) == false)
     <div class="margin-top-30">
         @include('partials.address-validation-or-remember-me', ['current_logged_user_dcn_address' => $currentTransactionInitiatorAddress, 'cache' => false])
     </div>

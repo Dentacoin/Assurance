@@ -73442,9 +73442,6 @@ var dApp = {
             dApp.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(dApp.infura_node));
         }else if (typeof(web3) === 'undefined')    {
             //CUSTOM
-            /*if (localStorage.getItem('current-account') != null) {
-                global_state.account = JSON.parse(localStorage.getItem('current-account')).address;
-            }*/
             dApp.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(dApp.infura_node));
         }else {
             //NO CUSTOM, NO METAMASK. Doing this final third check so we can use web3_1_0 functions and utils even if there is no metamask or custom imported/created account
@@ -73452,19 +73449,26 @@ var dApp = {
         }
 
         if ($('body').hasClass('logged-in')) {
-            var user_data = await getCurrentUserData();
-            if (user_data.success.dcn_address != null) {
-                global_state.account = checksumAddress(user_data.success.dcn_address);
+            if ($('body').hasClass('patient-side')) {
+                if($('.patient-contract-single-page-section').length) {
+                    global_state.account = checksumAddress($('.patient-contract-single-page-section').attr('data-patient'));
+                }
+            } else if ($('body').hasClass('dentist-side')) {
+                if($('.single-contract-view-section').length) {
+                    global_state.account = checksumAddress($('.single-contract-view-section').attr('data-dentist'));
+                }
             }
 
             //if some fake or false current-account localstorage variable is set -> delete it
-            if (localStorage.getItem('current-account') != null) {
+            /*if (localStorage.getItem('current-account') != null) {
                 var current_account_obj = JSON.parse(localStorage.getItem('current-account'));
                 if (!basic.property_exists(current_account_obj, 'address') || !innerAddressCheck(current_account_obj.address) || global_state.account.toLowerCase() != current_account_obj.address.toLowerCase() || !basic.property_exists(current_account_obj, 'type') || (basic.property_exists(current_account_obj, 'type') && current_account_obj.type != 'keystore')) {
                     localStorage.removeItem('current-account');
                 }
-            }
+            }*/
         }
+
+        console.log(global_state, 'Before dApp.initContract()');
 
         return dApp.initContract();
     },
@@ -73804,8 +73808,8 @@ async function pagesDataOnContractInit() {
                 var next_payment_timestamp_date_obj;
                 var next_payment_timestamp_unix;
                 var next_payment_timestamp;
-                var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient-address'), $('.patient-contract-single-page-section').attr('data-dentist-address'));
-                var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address')));
+                var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient'), $('.patient-contract-single-page-section').attr('data-dentist'));
+                var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient')));
 
                 if ($('.contract-header').hasClass('awaiting-payment')) {
                     // reading the monthly premium from DB, because contract is not yet created on the blockchain
@@ -73864,8 +73868,8 @@ async function pagesDataOnContractInit() {
                 var next_payment_timestamp_date_obj;
                 var next_payment_timestamp_unix;
                 var next_payment_timestamp;
-                var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient-address'), $('.patient-contract-single-page-section').attr('data-dentist-address'));
-                var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address')));
+                var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient'), $('.patient-contract-single-page-section').attr('data-dentist'));
+                var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient')));
 
                 var months_passed_for_reward = 1;
                 var contract_next_payment = parseInt(on_load_exiting_contract[0]);
@@ -73931,7 +73935,7 @@ async function pagesDataOnContractInit() {
 
                         // checking every 3 seconds if user deposited dentacoins
                         setTimeout(async function() {
-                            patientDcnBalanceLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address'))), dcn_needed_to_be_payed_to_dentist);
+                            patientDcnBalanceLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient'))), dcn_needed_to_be_payed_to_dentist);
                         }, 3000);
                     }
                 }
@@ -74125,8 +74129,8 @@ async function pagesDataOnContractInit() {
                     });
                 }
             } else if ($('.contract-header').hasClass('awaiting-approval')) {
-                var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address')));
-                var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient-address'), $('.patient-contract-single-page-section').attr('data-dentist-address'));
+                var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient')));
+                var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient'), $('.patient-contract-single-page-section').attr('data-dentist'));
                 var monthly_premium_in_usd = parseInt(on_load_exiting_contract[4]);
                 var monthly_premium_in_dcn = parseInt(on_load_exiting_contract[5]);
 
@@ -74137,7 +74141,7 @@ async function pagesDataOnContractInit() {
                     if (current_user_dcn_balance < monthly_premium_in_dcn) {
                         // checking every 3 seconds if user deposited BACK dcn
                         setTimeout(async function() {
-                            patientWaitingForDentistApprovalLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient-address'))));
+                            patientWaitingForDentistApprovalLogic(parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient'))));
                         }, 3000);
 
                         //not enough DCN
@@ -74158,7 +74162,7 @@ async function pagesDataOnContractInit() {
 
                 var approval_given = false;
                 //if approval is given already SOMEHOW ...
-                if (parseInt(await dApp.dentacoin_token_methods.allowance(checksumAddress($('.patient-contract-single-page-section').attr('data-patient-address')), dApp.assurance_state_address)) > 0) {
+                if (parseInt(await dApp.dentacoin_token_methods.allowance(checksumAddress($('.patient-contract-single-page-section').attr('data-patient')), dApp.assurance_state_address)) > 0) {
                     approval_given = true;
                 }
 
@@ -74168,7 +74172,7 @@ async function pagesDataOnContractInit() {
                 }
 
                 //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                var gas_cost_for_contract_creation = await dApp.assurance_proxy_instance.methods.registerContract(dApp.dummy_address, checksumAddress($('.patient-contract-single-page-section').attr('data-dentist-address')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: dApp.dummy_address, gas: 1000000});
+                var gas_cost_for_contract_creation = await dApp.assurance_proxy_instance.methods.registerContract(dApp.dummy_address, checksumAddress($('.patient-contract-single-page-section').attr('data-dentist')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: dApp.dummy_address, gas: 1000000});
 
                 var methods_gas_cost;
                 if (!approval_given) {
@@ -74320,15 +74324,28 @@ async function pagesDataOnContractInit() {
                             if (metamask) {
                                 basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
                             } else {
-                                //custom
-                                var cached_key = localStorage.getItem('current-account') == null;
+                                var existingCachedKey = false;
+                                var existingCachedKeystore = '';
+                                var currentAccountsStorage = localStorage.getItem('current-accounts');
+                                if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                    var currentAccounts = JSON.parse(currentAccountsStorage);
+
+                                    for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
+                                        if(global_state.account == checksumAddress(currentAccounts[i].address)) {
+                                            existingCachedKey = true;
+                                            existingCachedKeystore = currentAccounts[i].keystore;
+                                            break;
+                                        }
+                                    }
+                                }
+
                                 $.ajax({
                                     type: 'POST',
                                     url: '/get-recipe-popup',
                                     dataType: 'json',
                                     data: {
                                         /*to: dApp.assurance_proxy_address,*/
-                                        cached_key: cached_key,
+                                        cached_key: existingCachedKey,
                                         contract: $('.init-contract-section').attr('data-contract'),
                                         show_dcn_bar: true,
                                         recipe_title: 'Activate Autopayments',
@@ -74355,7 +74372,8 @@ async function pagesDataOnContractInit() {
                                             });
 
                                             var transaction_key;
-                                            if (cached_key) {
+                                            if (!existingCachedKey) {
+                                                // if the current contract patient address has not been cached
                                                 bindVerifyAddressLogic(true);
                                                 $(document).on('on-transaction-recipe-agree', function(event) {
                                                     transaction_key = event.response_data;
@@ -74367,6 +74385,7 @@ async function pagesDataOnContractInit() {
                                                     }, 500);
                                                 });
                                             } else {
+                                                // if the current contract patient address has been cached
                                                 $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module  max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div></div>');
                                             }
 
@@ -74376,10 +74395,10 @@ async function pagesDataOnContractInit() {
                                                     //not enough ETH balance
                                                     basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
                                                 } else {
-                                                    if (global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                    if (!existingCachedKey && transaction_key == undefined) {
                                                         basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                                         return false;
-                                                    } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                                    } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
                                                         basic.showAlert('Please enter the secret password for your keystore file.', '', true);
                                                         return false;
                                                     } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
@@ -74389,8 +74408,8 @@ async function pagesDataOnContractInit() {
                                                         showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
                                                         const EthereumTx = require('ethereumjs-tx');
                                                         setTimeout(async function() {
-                                                            if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                                var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                            if (existingCachedKey && existingCachedKeystore != '' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                                var decrypted_keystore_file_response = decryptKeystore(existingCachedKeystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
                                                                 if (decrypted_keystore_file_response.success) {
                                                                     transaction_key = decrypted_keystore_file_response.to_string;
                                                                 } else if (decrypted_keystore_file_response.error) {
@@ -74538,11 +74557,11 @@ async function pagesDataOnContractInit() {
                     const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
 
                     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                    var gas_cost_for_contract_approval = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient-address')).estimateGas({from: global_state.account, gas: 500000});
+                    var gas_cost_for_contract_approval = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient')).estimateGas({from: global_state.account, gas: 500000});
 
                     var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_contract_approval * on_page_load_gas_price).toString(), 'ether');
 
-                    var contract_approval_function_abi = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient-address')).encodeABI();
+                    var contract_approval_function_abi = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient')).encodeABI();
 
                     // proceed to dentacoin wallet scanning
                     $('.generate-qr-code-for-wallet-scanning').click(async function() {
@@ -74582,10 +74601,23 @@ async function pagesDataOnContractInit() {
                                 return false;
                             }
 
+                            var existingCachedKey = false;
+                            var existingCachedKeystore = '';
+                            var currentAccountsStorage = localStorage.getItem('current-accounts');
+                            if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                var currentAccounts = JSON.parse(currentAccountsStorage);
 
-                            var cached_key = localStorage.getItem('current-account') == null;
+                                for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
+                                    if(global_state.account == checksumAddress(currentAccounts[i].address)) {
+                                        existingCachedKey = true;
+                                        existingCachedKeystore = currentAccounts[i].keystore;
+                                        break;
+                                    }
+                                }
+                            }
+
                             var ajax_data = {
-                                cached_key: cached_key,
+                                cached_key: existingCachedKey,
                                 contract: $('.init-contract-section').attr('data-contract'),
                                 show_dcn_bar: false,
                                 recipe_title: 'Approve This Contract',
@@ -74620,7 +74652,7 @@ async function pagesDataOnContractInit() {
                                         });
 
                                         var transaction_key;
-                                        if (cached_key) {
+                                        if (!existingCachedKey) {
                                             bindVerifyAddressLogic(true);
                                             $(document).on('on-transaction-recipe-agree', function(event) {
                                                 transaction_key = event.response_data;
@@ -74642,10 +74674,10 @@ async function pagesDataOnContractInit() {
                                                 //not enough ETH balance
                                                 basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
                                             } else {
-                                                if (global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                if (!existingCachedKey && transaction_key == undefined) {
                                                     basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                                     return false;
-                                                } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                                } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
                                                     basic.showAlert('Please enter the secret password for your keystore file.', '', true);
                                                     return false;
                                                 } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
@@ -74654,8 +74686,8 @@ async function pagesDataOnContractInit() {
                                                 } else {
                                                     showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
                                                     setTimeout(async function() {
-                                                        if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                            var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                        if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                            var decrypted_keystore_file_response = decryptKeystore(existingCachedKeystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
                                                             if (decrypted_keystore_file_response.success) {
                                                                 transaction_key = decrypted_keystore_file_response.to_string;
                                                             } else if (decrypted_keystore_file_response.error) {
@@ -74909,15 +74941,28 @@ async function pagesDataOnContractInit() {
                         if (metamask) {
                             basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
                         } else {
-                            //custom
-                            var cached_key = localStorage.getItem('current-account') == null;
+                            var existingCachedKey = false;
+                            var existingCachedKeystore = '';
+                            var currentAccountsStorage = localStorage.getItem('current-accounts');
+                            if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                var currentAccounts = JSON.parse(currentAccountsStorage);
+
+                                for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
+                                    if(global_state.account == checksumAddress(currentAccounts[i].address)) {
+                                        existingCachedKey = true;
+                                        existingCachedKeystore = currentAccounts[i].keystore;
+                                        break;
+                                    }
+                                }
+                            }
+
                             $.ajax({
                                 type: 'POST',
                                 url: '/get-recipe-popup',
                                 dataType: 'json',
                                 data: {
                                     /*to: dApp.assurance_proxy_address,*/
-                                    cached_key: cached_key,
+                                    cached_key: existingCachedKey,
                                     contract: $('.single-contract-view-section').attr('data-contract'),
                                     show_dcn_bar: false,
                                     recipe_title: 'WITHDRAW NOW',
@@ -74941,7 +74986,7 @@ async function pagesDataOnContractInit() {
                                         });
 
                                         var transaction_key;
-                                        if (cached_key) {
+                                        if (!existingCachedKey) {
                                             bindVerifyAddressLogic(true);
                                             $(document).on('on-transaction-recipe-agree', function(event) {
                                                 transaction_key = event.response_data;
@@ -74963,10 +75008,10 @@ async function pagesDataOnContractInit() {
                                                 //not enough ETH balance
                                                 basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
                                             } else {
-                                                if (global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                                if (!existingCachedKey && transaction_key == undefined) {
                                                     basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                                     return false;
-                                                } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                                } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
                                                     basic.showAlert('Please enter the secret password for your keystore file.', '', true);
                                                     return false;
                                                 } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
@@ -74975,8 +75020,8 @@ async function pagesDataOnContractInit() {
                                                 } else {
                                                     showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
                                                     setTimeout(async function() {
-                                                        if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                            var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                        if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                            var decrypted_keystore_file_response = decryptKeystore(existingCachedKeystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
                                                             if (decrypted_keystore_file_response.success) {
                                                                 transaction_key = decrypted_keystore_file_response.to_string;
                                                             } else if (decrypted_keystore_file_response.error) {
@@ -75060,10 +75105,21 @@ async function pagesDataOnContractInit() {
                 var encrypted_pdf_content = await getEncryptedContractPdfContent(this_btn.attr('data-hash'), this_btn.attr('data-type'));
                 var render_form = $('form#render-pdf');
                 if (encrypted_pdf_content.success) {
-                    if (localStorage.getItem('current-account') != null) {
-                        var cached_key = JSON.parse(localStorage.getItem('current-account'));
-                        if (cached_key.type == 'keystore') {
-                            // === CACHED KEYSTORE FILE ===
+                    var existingCachedKey = false;
+                    var existingCachedKeystore = '';
+                    var currentAccountsStorage = localStorage.getItem('current-accounts');
+                    if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                        var currentAccounts = JSON.parse(currentAccountsStorage);
+
+                        for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
+                            if(global_state.account == checksumAddress(currentAccounts[i].address)) {
+                                existingCachedKey = true;
+                                existingCachedKeystore = currentAccounts[i].keystore;
+                                break;
+                            }
+                        }
+
+                        if(existingCachedKey) {
                             $.ajax({
                                 type: 'POST',
                                 url: '/get-keystore-file-password-validation',
@@ -75080,7 +75136,7 @@ async function pagesDataOnContractInit() {
                                         if ($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
                                             basic.showAlert('Please enter your password.', '', true);
                                         }else {
-                                            var decrypt_response = await decryptDataByKeystore(encrypted_pdf_content.success, JSON.parse(localStorage.getItem('current-account')).keystore, $('.keystore-file-password-validation .keystore-password').val().trim());
+                                            var decrypt_response = await decryptDataByKeystore(encrypted_pdf_content.success, existingCachedKeystore, $('.keystore-file-password-validation .keystore-password').val().trim());
                                             if (decrypt_response.success) {
                                                 basic.closeDialog();
                                                 render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
@@ -75092,6 +75148,9 @@ async function pagesDataOnContractInit() {
                                     });
                                 }
                             });
+                        } else {
+                            basic.closeDialog();
+                            openCacheKeyPopup(encrypted_pdf_content.success);
                         }
                     } else {
                         basic.closeDialog();
@@ -77029,13 +77088,27 @@ function cancelContractEventInit() {
                     if (metamask) {
                         basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
                     } else {
-                        var cached_key = localStorage.getItem('current-account') == null;
+                        var existingCachedKey = false;
+                        var existingCachedKeystore = '';
+                        var currentAccountsStorage = localStorage.getItem('current-accounts');
+                        if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                            var currentAccounts = JSON.parse(currentAccountsStorage);
+
+                            for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
+                                if(global_state.account == checksumAddress(currentAccounts[i].address)) {
+                                    existingCachedKey = true;
+                                    existingCachedKeystore = currentAccounts[i].keystore;
+                                    break;
+                                }
+                            }
+                        }
+
                         $.ajax({
                             type: 'POST',
                             url: '/get-recipe-popup',
                             dataType: 'json',
                             data: {
-                                cached_key: cached_key,
+                                cached_key: existingCachedKey,
                                 contract: this_btn.attr('data-contract'),
                                 show_dcn_bar: false,
                                 recipe_title: this_btn.attr('data-recipe-title'),
@@ -77096,7 +77169,7 @@ function cancelContractEventInit() {
                                     });
 
                                     var transaction_key;
-                                    if (cached_key) {
+                                    if (!existingCachedKey) {
                                         bindVerifyAddressLogic(true);
                                         $(document).on('on-transaction-recipe-agree', function (event) {
                                             transaction_key = event.response_data;
@@ -77154,10 +77227,10 @@ function cancelContractEventInit() {
                                                 basic.showAlert('Please select cancellation reason.', '', true);
                                             } /*else if ($('.recipe-popup #cancel-contract-comments').val().trim() == '') {
                                                 basic.showAlert('Please enter comments.', '', true);
-                                            }*/ else if (global_state.account == '' || (cached_key && transaction_key == undefined) || (!cached_key && global_state.account != checksumAddress(JSON.parse(localStorage.getItem('current-account')).address)) || (!cached_key && JSON.parse(localStorage.getItem('current-account')).type != 'keystore' && transaction_key == undefined)) {
+                                            }*/ else if (!existingCachedKey && transaction_key == undefined) {
                                                 basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
                                                 return false;
-                                            } else if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                            } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
                                                 basic.showAlert('Please enter the secret password for your keystore file.', '', true);
                                                 return false;
                                             } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
@@ -77166,8 +77239,8 @@ function cancelContractEventInit() {
                                             } else {
                                                 showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
                                                 setTimeout(async function() {
-                                                    if (!cached_key && JSON.parse(localStorage.getItem('current-account')).type == 'keystore' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                        var decrypted_keystore_file_response = decryptKeystore(JSON.parse(localStorage.getItem('current-account')).keystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                    if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                        var decrypted_keystore_file_response = decryptKeystore(existingCachedKeystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
                                                         if (decrypted_keystore_file_response.success) {
                                                             transaction_key = decrypted_keystore_file_response.to_string;
                                                         } else if (decrypted_keystore_file_response.error) {
@@ -77398,55 +77471,75 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                 if (this_btn.attr('id') == 'upload-keystore-file') {
                     var uploaded_file = this.files[0];
                     var reader = new FileReader();
-                    reader.addEventListener('load', function (e) {
-                        if (isJsonString(e.target.result) && basic.property_exists(JSON.parse(e.target.result), 'address') && checksumAddress(('0x' + JSON.parse(e.target.result).address)) == checksumAddress($('.proof-of-address').attr('data-address'))) {
-                            var keystore_string = e.target.result;
-                            if (caching) {
-                                $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
-                                bindCacheKeyEvent(keystore_string);
-                            } else {
-                                var btn_name = 'VERIFY';
-                                if (button_label != null) {
-                                    btn_name = button_label;
-                                }
-                                $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-keystore-file" checked/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-keystore-file">Remember my keystore file <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Remembering your keystore file allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">'+btn_name+'</a></div></div>');
-                                initTooltips();
+                    reader.addEventListener('load', async function (e) {
+                        // get all multiple user addresses
+                        var currentUserAddressesResponse = await getUserAddresses();
+                        if(currentUserAddressesResponse.success) {
+                            var currentUserAddresses = [];
+                            for (var i = 0, len = currentUserAddressesResponse.data.length; i < len; i += 1) {
+                                currentUserAddresses.push(checksumAddress(currentUserAddressesResponse.data[i].dcn_address));
+                            }
 
-                                if (render_pdf != null && encrypted_pdf_content != null) {
-                                    //if we have to render pdf
-                                    $('.proof-of-address .verify-address-btn').click(async function() {
-                                        //if remember me option is checked
-                                        if ($('#remember-my-keystore-file').is(':checked')) {
-                                            localStorage.setItem('current-account', JSON.stringify({
-                                                address: '0x' + JSON.parse(e.target.result).address,
-                                                type: 'keystore',
-                                                keystore: keystore_string
-                                            }));
-                                        }
-
-                                        var decrypt_response = await decryptDataByKeystore(encrypted_pdf_content, keystore_string, $('.proof-of-address #your-secret-key-password').val().trim());
-                                        if (decrypt_response.success) {
-                                            var render_form = $('form#render-pdf');
-                                            basic.closeDialog();
-                                            render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
-                                            render_form.submit();
-                                        } else if (decrypt_response.error) {
-                                            basic.showAlert(decrypt_response.message, '', true);
-                                        }
-                                    });
-                                } else {
-                                    if (for_transactions != null) {
-                                        //if we have to validate this address (store it in our local db)
-                                        bindTransactionAddressVerify(keystore_string);
+                            if (isJsonString(e.target.result) && basic.property_exists(JSON.parse(e.target.result), 'address')) {
+                                var keystore_string = e.target.result;
+                                var keystoreFileAddress = checksumAddress(('0x' + JSON.parse(e.target.result).address));
+                                if (currentUserAddresses.indexOf(keystoreFileAddress) != -1) {
+                                    if (caching) {
+                                        $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
+                                        bindCacheKeyEvent(keystore_string);
                                     } else {
-                                        //if we have to validate this address (store it in our local db)
-                                        bindVerifyAddressEvent(keystore_string);
+                                        var btn_name = 'VERIFY';
+                                        if (button_label != null) {
+                                            btn_name = button_label;
+                                        }
+                                        $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="checkbox-container"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-keystore-file" checked/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-keystore-file">Remember my keystore file <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Remembering your keystore file allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">'+btn_name+'</a></div></div>');
+                                        initTooltips();
+
+                                        if (render_pdf != null && encrypted_pdf_content != null) {
+                                            //if we have to render pdf
+                                            $('.proof-of-address .verify-address-btn').click(async function() {
+                                                //if remember me option is checked
+                                                if ($('#remember-my-keystore-file').is(':checked')) {
+                                                    //if remember me option is checked
+                                                    var currentAccountsStorage = localStorage.getItem('current-accounts');
+                                                    if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                                        var currentAccounts = JSON.parse(currentAccountsStorage);
+                                                        currentAccounts.push({'address' : keystoreFileAddress, 'keystore' : keystore_string});
+
+                                                        localStorage.setItem('current-accounts', JSON.stringify(currentAccounts));
+                                                    }
+                                                }
+
+                                                var decrypt_response = await decryptDataByKeystore(encrypted_pdf_content, keystore_string, $('.proof-of-address #your-secret-key-password').val().trim());
+                                                if (decrypt_response.success) {
+                                                    var render_form = $('form#render-pdf');
+                                                    basic.closeDialog();
+                                                    render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
+                                                    render_form.submit();
+                                                } else if (decrypt_response.error) {
+                                                    basic.showAlert(decrypt_response.message, '', true);
+                                                }
+                                            });
+                                        } else {
+                                            if (for_transactions != null) {
+                                                //if we have to validate this address (store it in our local db)
+                                                bindTransactionAddressVerify(keystore_string, keystoreFileAddress);
+                                            } else {
+                                                //if we have to validate this address (store it in our local db)
+                                                bindVerifyAddressEvent(keystore_string);
+                                            }
+                                        }
                                     }
+                                } else {
+                                    $('#upload-keystore-file').val('');
+                                    basic.showAlert('Please upload valid keystore file which is related to the Wallet Address saved in your profile.', '', true);
                                 }
+                            } else {
+                                $('#upload-keystore-file').val('');
+                                basic.showAlert('Please upload valid keystore file which is related to the Wallet Address saved in your profile.', '', true);
                             }
                         } else {
-                            $('#upload-keystore-file').val('');
-                            basic.showAlert('Please upload valid keystore file which is related to the Wallet Address saved in your profile.', '', true);
+                            basic.showAlert('You don\'t have any Wallet Address saved in our database.', '', true);
                         }
                     });
                     reader.readAsBinaryString(uploaded_file);
@@ -77531,120 +77624,140 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
     if (encrypted_pdf_content === undefined) {
         encrypted_pdf_content = null;
     }
-    $('.proof-of-address .verify-address-btn').click(function() {
-        if (keystore_file != null) {
-            //import with keystore
-            if ('0x' + JSON.parse(keystore_file).address.toLowerCase() != $('.proof-of-address').attr('data-address').toLowerCase()) {
-                basic.showAlert('Please enter valid keystore file for your Wallet Address.', '', true);
-            } else if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
-                basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
-            } else {
-                showLoader();
-                setTimeout(function() {
-                    var import_response = importKeystoreFile(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
-                    if (import_response.success) {
-                        //if remember me option is checked
-                        if ($('#remember-my-keystore-file').is(':checked')) {
-                            localStorage.setItem('current-account', JSON.stringify({
-                                address: $('.proof-of-address').attr('data-address'),
-                                type: 'keystore',
-                                keystore: import_response.success
-                            }));
-                        }
+    $('.proof-of-address .verify-address-btn').click(async function() {
+        // get all multiple user addresses
+        var currentUserAddressesResponse = await getUserAddresses();
+        if(currentUserAddressesResponse.success) {
+            var keystoreFileAddress = checksumAddress('0x' + JSON.parse(keystore_file).address);
+            var currentUserAddresses = [];
+            for(var i = 0, len = currentUserAddressesResponse.data.length; i< len; i+=1) {
+                currentUserAddresses.push(checksumAddress(currentUserAddressesResponse.data[i].dcn_address));
+            }
 
-                        $.ajax({
-                            type: 'POST',
-                            url: '/update-public-keys',
-                            dataType: 'json',
-                            data: {
-                                address: $('.proof-of-address').attr('data-address'),
-                                public_key: import_response.public_key
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function (inner_response) {
-                                hideLoader();
-                                if (inner_response.success) {
-                                    $('.proof-of-address').remove();
-                                    $('.proof-success').fadeIn(1500);
-                                } else {
-                                    basic.showAlert(inner_response.error, '', true);
+            console.log(currentUserAddresses, 'currentUserAddresses');
+
+            if (keystore_file != null) {
+                //import with keystore
+                if (currentUserAddresses.indexOf(keystoreFileAddress) != -1) {
+                    basic.showAlert('Please enter valid keystore file for your Wallet Address.', '', true);
+                } else if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
+                    basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
+                } else {
+                    showLoader();
+                    setTimeout(function() {
+                        var import_response = importKeystoreFile(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
+                        if (import_response.success) {
+                            //if remember me option is checked
+                            if ($('#remember-my-keystore-file').is(':checked')) {
+                                //if remember me option is checked
+                                var currentAccountsStorage = localStorage.getItem('current-accounts');
+                                if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                    var currentAccounts = JSON.parse(currentAccountsStorage);
+                                    currentAccounts.push({'address' : keystoreFileAddress, 'keystore' : import_response.success});
+
+                                    localStorage.setItem('current-accounts', JSON.stringify(currentAccounts));
                                 }
                             }
-                        });
-                    } else if (import_response.error) {
-                        hideLoader();
-                        basic.showAlert(import_response.message, '', true);
-                    }
-                }, 1000);
-            }
-        } else {
-            //import with private key
-            if ($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
-                basic.showAlert('Please enter valid private key.', '', true);
-            } else {
-                showLoader();
-                setTimeout(async function () {
-                    if (render_pdf != null) {
-                        var render_form = $('form#render-pdf');
-                        var decrypted_pdf_response = await decryptDataByPlainKey(encrypted_pdf_content, $('.proof-of-address #your-private-key').val().trim());
 
-                        hideLoader();
-                        if (decrypted_pdf_response.success) {
-
-                            basic.closeDialog();
-                            render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
-                            render_form.submit();
-                        } else if (decrypted_pdf_response.error) {
-                            basic.showAlert(decrypted_pdf_response.message, '', true);
-                        }
-                    } else {
-                        var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
-                        //now with the address and the public key received from the nodejs api update the db
-                        if (import_response.success) {
-                            //checking if fake private key or just miss spell it
-                            if (checksumAddress($('.proof-of-address').attr('data-address')) != checksumAddress(import_response.address)) {
-                                basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', '', true);
-                                hideLoader();
-                            } else {
-
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/update-public-keys',
-                                    dataType: 'json',
-                                    data: {
-                                        address: import_response.address,
-                                        public_key: import_response.public_key
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function (inner_response) {
-                                        hideLoader();
-                                        if (inner_response.success) {
-                                            $('.proof-of-address').remove();
-                                            $('.proof-success').fadeIn(1500);
-                                        } else {
-                                            basic.showAlert(inner_response.error, '', true);
-                                        }
+                            $.ajax({
+                                type: 'POST',
+                                url: '/update-public-keys',
+                                dataType: 'json',
+                                data: {
+                                    address: keystoreFileAddress,
+                                    public_key: import_response.public_key
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function (inner_response) {
+                                    hideLoader();
+                                    if (inner_response.success) {
+                                        $('.proof-of-address').remove();
+                                        $('.proof-success').fadeIn(1500);
+                                    } else {
+                                        basic.showAlert(inner_response.error, '', true);
                                     }
-                                });
-                            }
+                                }
+                            });
                         } else if (import_response.error) {
                             hideLoader();
                             basic.showAlert(import_response.message, '', true);
                         }
-                    }
-                }, 1000);
+                    }, 1000);
+                }
+            } else {
+                //import with private key
+                if ($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
+                    basic.showAlert('Please enter valid private key.', '', true);
+                } else {
+                    showLoader();
+                    setTimeout(async function () {
+                        if (render_pdf != null) {
+                            var render_form = $('form#render-pdf');
+                            var decrypted_pdf_response = await decryptDataByPlainKey(encrypted_pdf_content, $('.proof-of-address #your-private-key').val().trim());
+
+                            hideLoader();
+                            if (decrypted_pdf_response.success) {
+
+                                basic.closeDialog();
+                                render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
+                                render_form.submit();
+                            } else if (decrypted_pdf_response.error) {
+                                basic.showAlert(decrypted_pdf_response.message, '', true);
+                            }
+                        } else {
+                            var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
+                            //now with the address and the public key received from the nodejs api update the db
+                            if (import_response.success) {
+                                //checking if fake private key or just miss spell it
+                                if (currentUserAddresses.indexOf(checksumAddress(import_response.address)) != -1) {
+                                    basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', '', true);
+                                    hideLoader();
+                                } else {
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/update-public-keys',
+                                        dataType: 'json',
+                                        data: {
+                                            address: checksumAddress(import_response.address),
+                                            public_key: import_response.public_key
+                                        },
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        success: function (inner_response) {
+                                            hideLoader();
+                                            if (inner_response.success) {
+                                                $('.proof-of-address').remove();
+                                                $('.proof-success').fadeIn(1500);
+                                            } else {
+                                                basic.showAlert(inner_response.error, '', true);
+                                            }
+                                        }
+                                    });
+                                }
+                            } else if (import_response.error) {
+                                hideLoader();
+                                basic.showAlert(import_response.message, '', true);
+                            }
+                        }
+                    }, 1000);
+                }
             }
+        } else {
+            basic.showAlert('You don\'t have any Wallet Address saved in our database.', '', true);
         }
     });
 }
 
-function bindTransactionAddressVerify(keystore_file) {
+function bindTransactionAddressVerify(keystore_file, keystoreFileAddress) {
     if (keystore_file === undefined) {
         keystore_file = null;
+    }
+    if (keystoreFileAddress === undefined) {
+        keystoreFileAddress = null;
     }
     $('.proof-of-address .verify-address-btn').click(function() {
         showLoader();
@@ -77658,11 +77771,14 @@ function bindTransactionAddressVerify(keystore_file) {
                     if (decrypt_response.success) {
                         //if remember me option is checked
                         if ($('#remember-my-keystore-file').is(':checked')) {
-                            localStorage.setItem('current-account', JSON.stringify({
-                                address: $('.proof-of-address').attr('data-address'),
-                                type: 'keystore',
-                                keystore: keystore_file
-                            }));
+                            //if remember me option is checked
+                            var currentAccountsStorage = localStorage.getItem('current-accounts');
+                            if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                var currentAccounts = JSON.parse(currentAccountsStorage);
+                                currentAccounts.push({'address' : keystoreFileAddress, 'keystore' : keystore_file});
+
+                                localStorage.setItem('current-accounts', JSON.stringify(currentAccounts));
+                            }
                         }
 
                         $.event.trigger({
@@ -77682,10 +77798,8 @@ function bindTransactionAddressVerify(keystore_file) {
                 } else {
                     var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
                     if (import_response.success) {
-                        //checking if the private key is related to the public key saved in the coredb
-                        var user_data = await getCurrentUserData();
                         //checking if fake private key or just miss spell it
-                        if (checksumAddress(user_data.success.dcn_address) != checksumAddress(import_response.address)) {
+                        if (global_state.account != checksumAddress(import_response.address)) {
                             basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
                             hideLoader();
                         } else {
@@ -77707,47 +77821,62 @@ function bindTransactionAddressVerify(keystore_file) {
 }
 
 function bindCacheKeyEvent(keystore_file) {
-    $('.proof-of-address .cache-key-btn').click(function() {
-        if ('0x' + JSON.parse(keystore_file).address.toLowerCase() != $('.proof-of-address').attr('data-address').toLowerCase()) {
-            basic.showAlert('Please enter valid keystore file for your Wallet Address.', '', true);
-        } else if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
-            basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
-        } else {
-            showLoader();
-            setTimeout(function() {
-                var import_response = importKeystoreFile(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
-                if (import_response.success) {
-                    //if remember me option is checked
-                    localStorage.setItem('current-account', JSON.stringify({
-                        address: $('.proof-of-address').attr('data-address'),
-                        type: 'keystore',
-                        keystore: import_response.success
-                    }));
+    $('.proof-of-address .cache-key-btn').click(async function() {
+        // get all multiple user addresses
+        var currentUserAddressesResponse = await getUserAddresses();
+        if(currentUserAddressesResponse.success) {
+            var currentUserAddresses = [];
+            for (var i = 0, len = currentUserAddressesResponse.data.length; i < len; i += 1) {
+                currentUserAddresses.push(checksumAddress(currentUserAddressesResponse.data[i].dcn_address));
+            }
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '/update-public-keys',
-                        dataType: 'json',
-                        data: {
-                            address: $('.proof-of-address').attr('data-address'),
-                            public_key: import_response.public_key
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function (inner_response) {
+            var keystoreFileAddress = checksumAddress('0x' + JSON.parse(keystore_file).address);
+            if (currentUserAddresses.indexOf(keystoreFileAddress) != -1) {
+                if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
+                    basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
+                } else {
+                    showLoader();
+                    setTimeout(function() {
+                        var import_response = importKeystoreFile(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
+                        if (import_response.success) {
+                            //if remember me option is checked
+                            var currentAccountsStorage = localStorage.getItem('current-accounts');
+                            if(currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                var currentAccounts = JSON.parse(currentAccountsStorage);
+                                currentAccounts.push({'address' : keystoreFileAddress, 'keystore' : import_response.success});
+
+                                localStorage.setItem('current-accounts', JSON.stringify(currentAccounts));
+                            }
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/update-public-keys',
+                                dataType: 'json',
+                                data: {
+                                    address: keystoreFileAddress,
+                                    public_key: import_response.public_key
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function (inner_response) {
+                                    hideLoader();
+                                    $('.remember-my-wallet-camp').remove();
+                                    basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', '', true);
+                                }
+                            });
+                        } else if (import_response.error) {
                             hideLoader();
-                            $('.remember-my-wallet-camp').remove();
-                            basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', '', true);
+                            basic.showAlert(import_response.message, '', true);
                         }
-                    });
-                } else if (import_response.error) {
-                    hideLoader();
-                    basic.showAlert(import_response.message, '', true);
+                    }, 1000);
                 }
-            }, 1000);
+            } else {
+                basic.showAlert('Please enter valid keystore file for your Wallet Address.', '', true);
+            }
+        } else {
+            basic.showAlert('You don\'t have any Wallet Address saved in our database.', '', true);
         }
-
     });
 }
 
@@ -77803,7 +77932,7 @@ async function validateUserAddress(user_address, value_element) {
         error = false;
     } else if (check_public_key_ajax_result.error) {
         if (value_element.is('input')) {
-            $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20" data-address="'+user_address+'"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-5 inline-block padding-left-xs-15"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18"><span>Enter your Private Key<div class="fs-16">(not recommended)</div></span></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-5 inline-block padding-right-xs-15"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><div class="btn-wrapper"></div></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
+            $('.camping-for-validation').html('<div class="single-row proof-of-address padding-bottom-20"><div class="text-center calibri-bold fs-18 padding-top-20 padding-bottom-15">PLEASE VERIFY YOU OWN THIS ADDRESS</div><div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-5 inline-block padding-left-xs-15"><a href="javascript:void(0)" class="blue-green-white-btn text-center enter-private-key display-block-important fs-18 line-height-18"><span>Enter your Private Key<div class="fs-16">(not recommended)</div></span></a></div><div class="col-xs-12 col-sm-2 text-center calibri-bold fs-20 inline-block">or</div><div class="col-xs-12 col-sm-5 inline-block padding-right-xs-15"><div class="upload-file-container" data-id="upload-keystore-file" data-label="Upload your Keystore file"><input type="file" id="upload-keystore-file" class="custom-upload-file hide-input"/><div class="btn-wrapper"></div></div></div></div><div class="row on-change-result"></div></div></div><div class="single-row proof-success no-transition padding-top-20 padding-bottom-20 fs-20 calibri-bold text-center">Successful address verification.</div>');
             $('.proof-of-address').addClass('proof-failed');
 
             bindVerifyAddressLogic();
@@ -78023,6 +78152,14 @@ async function getCurrentUserData() {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
+    });
+}
+
+async function getUserAddresses(id) {
+    return await $.ajax({
+        type: 'GET',
+        url: 'https://api.dentacoin.com/api/wallet-addresses/' + id,
+        dataType: 'json'
     });
 }
 
@@ -78435,11 +78572,11 @@ function multipleUseWalletAddressesLogic() {
                                     for(var i = 0, len = response.addresses.length; i < len; i+=1) {
                                         var addressLabel = '';
                                         if(response.addresses[i].dcn_address_label != '' && response.addresses[i].dcn_address_label != undefined && response.addresses[i].dcn_address_label != null) {
-                                            addressLabel = response.addresses[i].dcn_address_label+'('+response.addresses[i].dcn_address+')';
+                                            addressLabel = response.addresses[i].dcn_address_label+' ('+response.addresses[i].dcn_address+')';
                                         } else {
                                             addressLabel = '('+response.addresses[i].dcn_address+')';
                                         }
-                                        addressesHtml += '<li class="removeable-element fs-0" data-id="'+response.addresses[i].id+'"><a href="javascript:void(0);" class="inline-block" data-value="'+response.addresses[i].dcn_address+'">'+addressLabel+'</a><button type="button" class="remove-address-book-element inline-block">×</button></li>'
+                                        addressesHtml += '<li class="removeable-element fs-0" data-id="'+response.addresses[i].id+'"><a href="javascript:void(0);" class="inline-block" data-value="'+response.addresses[i].dcn_address+'">'+addressLabel+'</a><button type="button" class="remove-address-book-element inline-block">×</button></li>';
                                     }
 
                                     $('#addresses-list').html(addressesHtml);

@@ -8,7 +8,7 @@
     @else
         @php($contract_active_at = strtotime($contract->contract_active_at))
     @endif
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section cancelled" data-date-start-contract="{{$contract_active_at}}">
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section cancelled" data-date-start-contract="{{$contract_active_at}}" data-patient="{{$contract->patient_address}}">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>

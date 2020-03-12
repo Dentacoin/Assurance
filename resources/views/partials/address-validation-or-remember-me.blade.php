@@ -1,5 +1,5 @@
 <div class="camping-for-validation module">
-    <div class="single-row proof-of-address no-background" data-address="{{$current_logged_user_dcn_address}}">
+    <div class="single-row proof-of-address no-background">
         <div class="container-fluid">
             <div class="row fs-0">
                 <div class="col-xs-12 col-sm-5 inline-block padding-left-30 padding-left-xs-15">
