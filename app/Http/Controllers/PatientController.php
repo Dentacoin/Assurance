@@ -789,7 +789,7 @@ class PatientController extends Controller {
     }
 
     public function checkContractsCount() {
-        $contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->get()->all();
+        $contracts = TemporallyContract::where(array('patient_email' => $logged_patient->email))->get()->all();
 
         if(!empty($contracts)) {
             return response()->json(['success' => true]);
