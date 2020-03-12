@@ -74083,7 +74083,9 @@ var projectData = {
                                                 if(foundContracts.indexOf(response.data[i].slug) == -1) {
                                                     foundContracts.push(response.data[i].slug);
 
-                                                    $('.contracts-list').slick('slickAdd','<a href="https://assurance.dentacoin.com/patient/contract/'+response.data[i].slug+'" class="module contract-tile padding-bottom-10 pending"><div class="tile-wrapper fs-0"> <div class="inline-block-top figure-container"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Dentist avatar" src="'+response.data[i].dentistAvatar+'"><figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">'+response.data[i].status+'</figcaption></figure></div><div class="contract-info inline-block-top"><div class="calibri-bold fs-18 title">Dr. '+response.data[i].dentistName+'</div><time class="display-block fs-14 calibri-light">Sent on: '+response.data[i].createdAt+'</time><div class="lato-semibold fs-24 line-height-24">'+response.data[i].monthlyPremium+'$</div><div class="btn-container"><div class="white-blue-green-btn">'+response.data[i].btnLabel+'</div></div></div></div></a>', 0);
+                                                    $('.contracts-list.slider').slick('unslick');
+                                                    $('.contracts-list.slider').prepend('<a href="https://assurance.dentacoin.com/patient/contract/'+response.data[i].slug+'" class="module contract-tile padding-bottom-10 pending"><div class="tile-wrapper fs-0"> <div class="inline-block-top figure-container"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Dentist avatar" src="'+response.data[i].dentistAvatar+'"><figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">'+response.data[i].status+'</figcaption></figure></div><div class="contract-info inline-block-top"><div class="calibri-bold fs-18 title">Dr. '+response.data[i].dentistName+'</div><time class="display-block fs-14 calibri-light">Sent on: '+response.data[i].createdAt+'</time><div class="lato-semibold fs-24 line-height-24">'+response.data[i].monthlyPremium+'$</div><div class="btn-container"><div class="white-blue-green-btn">'+response.data[i].btnLabel+'</div></div></div></div></a>', 0);
+                                                    initSliders();
                                                 }
                                             }
                                         }
@@ -76127,6 +76129,78 @@ if ($('body').hasClass('logged-in')) {
     }
 }
 
+function initSliders() {
+    if ($('.contracts-list.slider').length) {
+        var slides_to_show = 3;
+        for(var i = 0, len = $('.contracts-list.slider').length; i < len; i+=1) {
+            if ($('.contracts-list.slider').eq(i).attr('data-slides-number') != undefined) {
+                slides_to_show = parseInt($('.contracts-list.slider').eq(i).attr('data-slides-number'));
+            }
+
+            var slider_params = {
+                slidesToShow: slides_to_show,
+                slidesToScroll: 3,
+                autoplaySpeed: 8000
+            };
+
+            if ($('.contracts-list.slider').eq(i).hasClass('active-contracts')) {
+                slider_params.responsive = [
+                    {
+                        breakpoint: 1600,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3
+                        }
+                    },
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 650,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ];
+            } else if ($('.contracts-list.slider').eq(i).hasClass('cancelleds') || $('.contracts-list.slider').eq(i).hasClass('pendings')) {
+                slider_params.responsive = [
+                    {
+                        breakpoint: 1400,
+                        settings: {
+                            slidesToShow: 1,
+                            arrows: false
+                        }
+                    }
+                ];
+            } else if ($('.contracts-list.slider').eq(i).hasClass('patient-contract-list')) {
+                slider_params.responsive = [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 650,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ];
+            }
+
+            $('.contracts-list.slider').eq(i).slick(slider_params);
+        }
+    }
+}
+
 //THIS IS FUNCTIONALITY ONLY FOR LOGGED IN USERS (MODULES)
 if ($('body').hasClass('logged-in')) {
     var add_overflow_hidden_on_hidden_box_show = false;
@@ -76206,76 +76280,7 @@ if ($('body').hasClass('logged-in')) {
         });
     }*/
 
-    if ($('.contracts-list.slider').length) {
-        var slides_to_show = 3;
-        for(var i = 0, len = $('.contracts-list.slider').length; i < len; i+=1) {
-            if ($('.contracts-list.slider').eq(i).attr('data-slides-number') != undefined) {
-                slides_to_show = parseInt($('.contracts-list.slider').eq(i).attr('data-slides-number'));
-            }
-
-            var slider_params = {
-                slidesToShow: slides_to_show,
-                slidesToScroll: 3,
-                infinite: false,
-                autoplaySpeed: 8000
-            };
-
-            if ($('.contracts-list.slider').eq(i).hasClass('active-contracts')) {
-                slider_params.responsive = [
-                    {
-                        breakpoint: 1600,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 3
-                        }
-                    },
-                    {
-                        breakpoint: 1200,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2
-                        }
-                    },
-                    {
-                        breakpoint: 650,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                ];
-            } else if ($('.contracts-list.slider').eq(i).hasClass('cancelleds') || $('.contracts-list.slider').eq(i).hasClass('pendings')) {
-                slider_params.responsive = [
-                    {
-                        breakpoint: 1400,
-                        settings: {
-                            slidesToShow: 1,
-                            arrows: false
-                        }
-                    }
-                ];
-            } else if ($('.contracts-list.slider').eq(i).hasClass('patient-contract-list')) {
-                slider_params.responsive = [
-                    {
-                        breakpoint: 992,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2
-                        }
-                    },
-                    {
-                        breakpoint: 650,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                ];
-            }
-
-            $('.contracts-list.slider').eq(i).slick(slider_params);
-        }
-    }
+    initSliders();
 
     if ($('select.dropdown-with-clinics').length) {
         $('select.dropdown-with-clinics').on('change', function() {
