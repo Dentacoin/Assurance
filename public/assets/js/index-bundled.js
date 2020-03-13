@@ -74091,7 +74091,7 @@ var projectData = {
                                         }
                                     }
                                 });
-                            }, 3000);
+                            }, 5000);
                         } else if ($('.start-first-contract').length) {
                             var contractFound = false;
                             setInterval(function() {
@@ -74112,7 +74112,7 @@ var projectData = {
                                         }
                                     });
                                 }
-                            }, 3000);
+                            }, 5000);
                         }
                     }
 
@@ -77621,7 +77621,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                     var reader = new FileReader();
                     reader.addEventListener('load', async function (e) {
                         // get all multiple user addresses
-                        var currentUserAddressesResponse = await getUserAddresses();
+                        var currentUserAddressesResponse = await getUserAddresses($('.proof-of-address').attr('data-id'));
                         if (currentUserAddressesResponse.success) {
                             var currentUserAddresses = [];
                             for (var i = 0, len = currentUserAddressesResponse.data.length; i < len; i += 1) {
@@ -77764,7 +77764,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
     }
     $('.proof-of-address .verify-address-btn').click(async function() {
         // get all multiple user addresses
-        var currentUserAddressesResponse = await getUserAddresses();
+        var currentUserAddressesResponse = await getUserAddresses($('.proof-of-address').attr('data-id'));
         if (currentUserAddressesResponse.success) {
             var keystoreFileAddress = projectData.utils.checksumAddress('0x' + JSON.parse(keystore_file).address);
             var currentUserAddresses = [];
@@ -77961,7 +77961,7 @@ function bindTransactionAddressVerify(keystore_file, keystoreFileAddress) {
 function bindCacheKeyEvent(keystore_file) {
     $('.proof-of-address .cache-key-btn').click(async function() {
         // get all multiple user addresses
-        var currentUserAddressesResponse = await getUserAddresses();
+        var currentUserAddressesResponse = await getUserAddresses($('.proof-of-address').attr('data-id'));
         if (currentUserAddressesResponse.success) {
             var currentUserAddresses = [];
             for (var i = 0, len = currentUserAddressesResponse.data.length; i < len; i += 1) {

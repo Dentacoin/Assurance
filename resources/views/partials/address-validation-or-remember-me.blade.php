@@ -1,5 +1,5 @@
 <div class="camping-for-validation module">
-    <div class="single-row proof-of-address no-background">
+    <div class="single-row proof-of-address no-background" data-id="{{session('logged_user')['id']}}">
         <div class="container-fluid">
             <div class="row fs-0">
                 <div class="col-xs-12 col-sm-5 inline-block padding-left-30 padding-left-xs-15">
