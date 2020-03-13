@@ -123,7 +123,7 @@ class UserController extends Controller {
     }
 
     protected function getAddressValidationOrRememberMe(Request $request) {
-        $view = view('partials/address-validation-or-remember-me', ['current_logged_user_dcn_address' => $current_logged_user_dcn_address, 'cache' => $request->input('cache')]);
+        $view = view('partials/address-validation-or-remember-me', ['cache' => $request->input('cache')]);
         $view = $view->render();
         return response()->json(['success' => $view]);
     }
