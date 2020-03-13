@@ -4350,6 +4350,8 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                                         currentAccounts.push({'address' : keystoreFileAddress, 'keystore' : keystore_string});
 
                                                         localStorage.setItem('current-accounts', JSON.stringify(currentAccounts));
+                                                    } else {
+                                                        localStorage.setItem('current-accounts', JSON.stringify([{'address' : keystoreFileAddress, 'keystore' : keystore_string}]));
                                                     }
                                                 }
 
@@ -4467,7 +4469,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                 currentUserAddresses.push(projectData.utils.checksumAddress(currentUserAddressesResponse.data[i].dcn_address));
             }
 
-            console.log(currentUserAddresses, 'currentUserAddresses');
+            console.log(currentUserAddresses, 'currentUserAddresses1');
 
             if (keystore_file != null) {
                 //import with keystore
@@ -4489,6 +4491,8 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                     currentAccounts.push({'address' : keystoreFileAddress, 'keystore' : import_response.success});
 
                                     localStorage.setItem('current-accounts', JSON.stringify(currentAccounts));
+                                } else {
+                                    localStorage.setItem('current-accounts', JSON.stringify([{'address' : keystoreFileAddress, 'keystore' : import_response.success}]));
                                 }
                             }
 
@@ -4598,6 +4602,7 @@ function bindTransactionAddressVerify(keystore_file, keystoreFileAddress) {
             if (keystore_file != null) {
                 //import with keystore
                 if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
+                    hideLoader();
                     basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
                 } else {
                     var decrypt_response = decryptKeystore(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
@@ -4611,6 +4616,8 @@ function bindTransactionAddressVerify(keystore_file, keystoreFileAddress) {
                                 currentAccounts.push({'address' : keystoreFileAddress, 'keystore' : keystore_file});
 
                                 localStorage.setItem('current-accounts', JSON.stringify(currentAccounts));
+                            } else {
+                                localStorage.setItem('current-accounts', JSON.stringify([{'address' : keystoreFileAddress, 'keystore' : keystore_file}]));
                             }
                         }
 
@@ -4649,7 +4656,7 @@ function bindTransactionAddressVerify(keystore_file, keystoreFileAddress) {
                     }
                 }
             }
-        }, 500);
+        }, 1000);
     });
 }
 
@@ -4662,6 +4669,8 @@ function bindCacheKeyEvent(keystore_file) {
             for (var i = 0, len = currentUserAddressesResponse.data.length; i < len; i += 1) {
                 currentUserAddresses.push(projectData.utils.checksumAddress(currentUserAddressesResponse.data[i].dcn_address));
             }
+
+            console.log(currentUserAddresses, 'currentUserAddresses2');
 
             var keystoreFileAddress = projectData.utils.checksumAddress('0x' + JSON.parse(keystore_file).address);
             if (currentUserAddresses.indexOf(keystoreFileAddress) != -1) {
@@ -4679,6 +4688,8 @@ function bindCacheKeyEvent(keystore_file) {
                                 currentAccounts.push({'address' : keystoreFileAddress, 'keystore' : import_response.success});
 
                                 localStorage.setItem('current-accounts', JSON.stringify(currentAccounts));
+                            } else {
+                                localStorage.setItem('current-accounts', JSON.stringify([{'address' : keystoreFileAddress, 'keystore' : import_response.success}]));
                             }
 
                             $.ajax({
