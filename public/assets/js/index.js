@@ -769,17 +769,13 @@ var projectData = {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     success: async function (response) {
-                                        console.log(response, '================================== response-----------');
                                         if(response.success) {
-                                            console.log(response.data, 'response.data');
-                                            console.log(response.data.length, 'response.data.length');
                                             for (var i = 0, len = response.data.length; i < len; i+=1) {
-                                                console.log(response.data[i], 'response.data.length');
                                                 if(foundContracts.indexOf(response.data[i].slug) == -1) {
                                                     foundContracts.push(response.data[i].slug);
 
                                                     $('.contracts-list.slider').slick('unslick');
-                                                    $('.contracts-list.slider').prepend('<a href="https://assurance.dentacoin.com/patient/contract/'+response.data[i].slug+'" class="module contract-tile padding-bottom-10 pending"><div class="tile-wrapper fs-0"> <div class="inline-block-top figure-container"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Dentist avatar" src="'+response.data[i].dentistAvatar+'"><figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">'+response.data[i].status+'</figcaption></figure></div><div class="contract-info inline-block-top"><div class="calibri-bold fs-18 title">Dr. '+response.data[i].dentistName+'</div><time class="display-block fs-14 calibri-light">Sent on: '+response.data[i].createdAt+'</time><div class="lato-semibold fs-24 line-height-24">'+response.data[i].monthlyPremium+'$</div><div class="btn-container"><div class="white-blue-green-btn">'+response.data[i].btnLabel+'</div></div></div></div></a>', 0);
+                                                    $('.contracts-list.slider').prepend('<a href="'+response.data[i].url+'" class="module contract-tile padding-bottom-10 pending"><div class="tile-wrapper fs-0"> <div class="inline-block-top figure-container"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Dentist avatar" src="'+response.data[i].dentistAvatar+'"><figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">'+response.data[i].status+'</figcaption></figure></div><div class="contract-info inline-block-top"><div class="calibri-bold fs-18 title">Dr. '+response.data[i].dentistName+'</div><time class="display-block fs-14 calibri-light">Sent on: '+response.data[i].createdAt+'</time><div class="lato-semibold fs-24 line-height-24">'+response.data[i].monthlyPremium+'$</div><div class="btn-container"><div class="white-blue-green-btn">'+response.data[i].btnLabel+'</div></div></div></div></a>', 0);
                                                     initSliders();
                                                 }
                                             }
