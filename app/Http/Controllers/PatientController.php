@@ -821,32 +821,9 @@ class PatientController extends Controller {
                 $tempContract['monthlyPremium'] = $contract->monthly_premium;
                 $tempContract['createdAt'] = $contract->created_at->format('d/m/Y');
                 $tempContract['slug'] = $contract->slug;
-
-                switch($contract->status) {
-                    case 'active':
-                        $tempContract['status'] = 'Active';
-                        break;
-                    case 'pending':
-                        $tempContract['status'] = 'Pending';
-                        break;
-                    case 'awaiting-payment':
-                        $tempContract['status'] = 'Awaiting Payment';
-                        break;
-                    case 'awaiting-approval':
-                        $tempContract['status'] = 'Awaiting Approval';
-                        break;
-                    case 'cancelled':
-                        $tempContract['status'] = 'Cancelled';
-                        break;
-                }
-
-                if($contract->status == 'pending') {
-                    $tempContract['url'] = route('contract-proposal', ['slug' => $contract->slug]);
-                    $tempContract['btnLabel'] = 'Details and Sign';
-                } else {
-                    $tempContract['url'] = route('patient-contract-view', ['slug' => $contract->slug]);
-                    $tempContract['btnLabel'] = 'Details';
-                }
+                $tempContract['status'] = 'Pending';
+                $tempContract['url'] = route('contract-proposal', ['slug' => $contract->slug]);
+                $tempContract['btnLabel'] = 'Details and Sign';
 
                 array_push($responseContracts, $tempContract);
             }
