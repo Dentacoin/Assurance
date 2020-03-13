@@ -73897,7 +73897,7 @@ var projectData = {
                     showSeconds: false,
                     callbacks: {
                         stop: function() {
-                            jQuery('.flip-clock-message').html('You are late with payment to your dentist.')
+                            window.location.reload();
                         }
                     }
                 });
