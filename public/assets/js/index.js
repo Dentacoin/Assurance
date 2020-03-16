@@ -5106,8 +5106,8 @@ function generateQRCodeForDentacoinWalletScan(object) {
     basic.showDialog('<figure itemscope="" itemtype="http://schema.org/ImageObject" id="popup-qrcode"></figure>', 'qr-code-for-dentacoin-wallet-scan', true);
 
     var qrcode = new QRCode(document.getElementById('popup-qrcode'), {
-        width : 800,
-        height : 800
+        width : 500,
+        height : 500
     });
 
     qrcode.makeCode(encodeURIComponent(object));
