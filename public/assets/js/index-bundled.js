@@ -73469,7 +73469,7 @@ var dApp = {
         //Assurance PROXY
         dApp.assurance_proxy_instance = await new dApp.web3_1_0.eth.Contract(config_variable.assurance_proxy_abi, config_variable.assurance_proxy_address);
         //DentacoinToken
-        dApp.dentacoin_token_instance = await new dApp.web3_1_0.eth.Contract(config_variable.dentacoin_token_address, config_variable.dentacoin_token_address);
+        dApp.dentacoin_token_instance = await new dApp.web3_1_0.eth.Contract(config_variable.dentacoin_token_abi, config_variable.dentacoin_token_address);
 
         //init pages logic
         projectData.pagesData.onContractInit();
