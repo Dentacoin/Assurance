@@ -1522,8 +1522,8 @@ var projectData = {
                                         showLoader();
 
                                         var scanObject = {
-                                            'type' : 'patient-approval-and-contract-creation',
-                                            'contract' : $('.patient-contract-single-page-section').attr('data-contract'),
+                                            /*'type' : 'patient-approval-and-contract-creation',
+                                            'contract' : $('.patient-contract-single-page-section').attr('data-contract'),*/
                                             'eth_fee' : eth_fee,
                                             'gasPrice': dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                             'from': global_state.account,
@@ -1547,9 +1547,9 @@ var projectData = {
 
                                                 scanObject['contractCreation'] = {
                                                     gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 10 / 100))),
-                                                    to: dApp.assurance_proxy_address,
+                                                    /*to: dApp.assurance_proxy_address,*/
                                                     dataToCreateFunctionAbi: {
-                                                        patient: projectData.utils.checksumAddress(response.contract_data.patient),
+                                                        /*patient: projectData.utils.checksumAddress(response.contract_data.patient),*/
                                                         dentist: projectData.utils.checksumAddress(response.contract_data.dentist),
                                                         value_usd: Math.floor(response.contract_data.value_usd),
                                                         monthly_premium_in_dcn: monthly_premium_in_dcn,
