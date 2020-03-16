@@ -74829,15 +74829,15 @@ var projectData = {
                                         var scanObject = {
                                             'type' : 'patient-approval-and-contract-creation',
                                             'contract' : $('.patient-contract-single-page-section').attr('data-contract'),
-                                            'eth_fee' : eth_fee
+                                            'eth_fee' : eth_fee,
+                                            'gasPrice': dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                            'from': global_state.account,
+                                            'chainId': dApp.chain_id
                                         };
                                         if (!approval_given) {
-                                            var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
+                                            //var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
                                             scanObject['approval'] = {
                                                 gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10 / 100))),
-                                                gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                from: global_state.account,
-                                                chainId: dApp.chain_id,
                                                 to: dApp.dentacoin_token_address,
                                                 dataToCreateFunctionAbi: {
                                                     assurance_state_address: dApp.assurance_state_address,
@@ -74848,14 +74848,10 @@ var projectData = {
 
                                         getContractData($('.init-contract-section').attr('data-contract'), async function(response) {
                                             if (response.success) {
-                                                var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
+                                                //var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
                                                 scanObject['contractCreation'] = {
                                                     gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 10 / 100))),
-                                                    gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                    from: global_state.account,
-                                                    chainId: dApp.chain_id,
-                                                    data: contract_creation_function_abi,
                                                     to: dApp.assurance_proxy_address,
                                                     dataToCreateFunctionAbi: {
                                                         patient: projectData.utils.checksumAddress(response.contract_data.patient),
