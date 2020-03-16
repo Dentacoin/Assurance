@@ -964,4 +964,27 @@ class UserController extends Controller {
             return response()->json(['error' => true, 'message' => 'Something went wrong, please try again later or email us at <a href=\'mailto:admin@dentacoin.com\'>admin@dentacoin.com</a>.']);
         }
     }
+
+    protected function getScanningData(Request $request) {
+        $this->validate($request, [
+            'slug' => 'required'
+        ], [
+            'slug.required' => 'Slug is required.'
+        ]);
+
+        $contract = TemporallyContract::where(array('slug' => $request->input('slug')))->get()->first();
+
+        if(!empty($contract)) {
+            if($contract->status == 'awaiting-payment') {
+                return response()->json([
+                    'success' => true,
+                    'data' => array(
+
+                    )
+                ]);
+            }
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
 }

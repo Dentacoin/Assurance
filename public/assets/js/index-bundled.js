@@ -73304,7 +73304,7 @@ module.exports = {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPla
 },{"../../../node_modules/eth-crypto":320,"../../../node_modules/keythereum":408,"../../../node_modules/web3":527}],546:[function(require,module,exports){
 (function (Buffer){
 console.log('Don\'t touch the code. Or do ... ¯\\_(ツ)_/¯');
-
+console.log(config_variable, 'config_variable');
 checkIfCookie();
 
 var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore} = require('./helper');
@@ -73409,18 +73409,9 @@ var temporally_timestamp = 0;
 var metamask = typeof(web3) !== 'undefined' && web3.currentProvider.isMetaMask === true;
 var dApp = {
     dummy_address: '0x32e4c8584f4357de80812b048734a0c2fe6e31ab',
-    chain_id: 4,
-    infura_node: 'https://rinkeby.infura.io/v3/c3a8017424324e47be615fb4028275bb',
-    assurance_state_address: '0x4439346c1235e68193afb5cf5bf52edfebf38480',
-    assurance_state_abi: [{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"breakContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_api_decimals","type":"uint256"}],"name":"changeApiDecimals","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_api_result_dcn_usd_price","type":"uint256"}],"name":"changeApiResultDcnUsdPrice","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_dentacoin_token_address","type":"address"}],"name":"changeDentacoinTokenAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_min_allowed_amount","type":"uint256"}],"name":"changeMinimumAllowedAmount","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_period_to_withdraw","type":"uint256"}],"name":"changePeriodToWithdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_proxy_contract","type":"address"}],"name":"changeProxyAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_usd_over_dcn","type":"bool"}],"name":"changeUsdOverDcn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"circuitBreaker","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_amount","type":"uint256"}],"name":"dcnTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"dentistApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"insertPatientContractHistory","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"patientApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_date_start_contract","type":"uint256"},{"name":"_approved_by_dentist","type":"bool"},{"name":"_approved_by_patient","type":"bool"},{"name":"_validation_checked","type":"bool"},{"name":"_value_usd","type":"uint256"},{"name":"_value_dcn","type":"uint256"},{"name":"_contract_ipfs_hash","type":"string"}],"name":"registerContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_new_admin","type":"address"}],"name":"transferAdmin","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_new_owner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_next_transfer","type":"uint256"}],"name":"updateNextTransferTime","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"updateValidationCheck","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"admin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"api_decimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"api_result_dcn_usd_price","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"AssuranceContract","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"contract_paused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"dentacoin_token_address","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getApiDecimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getApiResultDcnUsdPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractApprovedByDentist","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractApprovedByPatient","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractDcnValue","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractNextTransfer","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getContractPaused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractUsdValue","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getContractValidationChecked","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_dentist_addr","type":"address"}],"name":"getDentist","outputs":[{"name":"","type":"bool"},{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getDentistsArr","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getMinAllowedAmount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"getPatient","outputs":[{"name":"","type":"uint256"},{"name":"","type":"bool"},{"name":"","type":"bool"},{"name":"","type":"bool"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getPeriodToWithdraw","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getUsdOverDcn","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient_addr","type":"address"}],"name":"getWaitingContractsForPatient","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"min_allowed_amount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"period_to_withdraw","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"proxy_contract","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"usd_over_dcn","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"}],
     assurance_state_instance: null,
-    assurance_proxy_address: '0xf0ea1a6248c19140d4924805a258bd57950a1cea',
-    assurance_proxy_abi: [{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"}],"name":"breakContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"}],"name":"dentistApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_array","type":"address[]"}],"name":"multipleWithdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_dentist_addr","type":"address"}],"name":"patientApproveContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"},{"name":"_dentist_addr","type":"address"},{"name":"_value_usd","type":"uint256"},{"name":"_value_dcn","type":"uint256"},{"name":"_date_start_contract","type":"uint256"},{"name":"_contract_ipfs_hash","type":"string"}],"name":"registerContract","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_patient_addr","type":"address"}],"name":"singleWithdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_assurance_address","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_dentist_addr","type":"address"},{"indexed":true,"name":"_patient_addr","type":"address"},{"indexed":false,"name":"_value","type":"uint256"},{"indexed":false,"name":"_date","type":"uint256"}],"name":"logSuccessfulWithdraw","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_dentist_addr","type":"address"},{"indexed":false,"name":"_date","type":"uint256"}],"name":"logSuccessfulDentistRegistration","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_dentist_addr","type":"address"},{"indexed":true,"name":"_patient_addr","type":"address"},{"indexed":false,"name":"_date","type":"uint256"},{"indexed":false,"name":"_value_usd","type":"uint256"},{"indexed":false,"name":"_value_dcn","type":"uint256"}],"name":"logSuccessfulContractRegistration","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_dentist_addr","type":"address"},{"indexed":true,"name":"_patient_addr","type":"address"},{"indexed":false,"name":"_date","type":"uint256"}],"name":"logSuccessfulContractBreak","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_patient_addr","type":"address"},{"indexed":true,"name":"_dentist_addr","type":"address"}],"name":"logSuccessfulContractApproval","type":"event"},{"constant":true,"inputs":[],"name":"assurance_address","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"dentacoin_token_address","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}],
     assurance_proxy_instance: null,
-    dentacoin_token_address: "0x19f49a24c7cb0ca1cbf38436a86656c2f30ab362",
-    dentacoin_token_abi: [{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"buyDentacoinsAgainstEther","outputs":[{"name":"amount","type":"uint256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"haltDirectTrade","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amountOfEth","type":"uint256"},{"name":"dcn","type":"uint256"}],"name":"refundToOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"sellDentacoinsAgainstEther","outputs":[{"name":"revenue","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newDCNAmount","type":"uint256"}],"name":"setDCNForGas","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newBuyPriceEth","type":"uint256"},{"name":"newSellPriceEth","type":"uint256"}],"name":"setEtherPrices","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newGasAmountInWei","type":"uint256"}],"name":"setGasForDCN","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newGasReserveInWei","type":"uint256"}],"name":"setGasReserve","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"minimumBalanceInWei","type":"uint256"}],"name":"setMinBalance","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"unhaltDirectTrade","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"buyPriceEth","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"DCNForGas","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"DentacoinAddress","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"directTradeAllowed","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"gasForDCN","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"gasReserve","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"minBalanceForAccounts","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"sellPriceEth","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}],
     dentacoin_instance: null,
-    dentacoins_to_approve: 10000000000000,
     grace_period: 1814400,
     web3Provider: null,
     web3_0_2: null,
@@ -73439,10 +73430,10 @@ var dApp = {
             //overwrite web3 0.2 with web 1.0
             web3 = getWeb3(dApp.web3_0_2.currentProvider);
             //dApp.web3_1_0 = web3;
-            dApp.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(dApp.infura_node));
+            dApp.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(config_variable.infura_node));
         }else if (typeof(web3) === 'undefined')    {
             //CUSTOM
-            dApp.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(dApp.infura_node));
+            dApp.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(config_variable.infura_node));
         }else {
             //NO CUSTOM, NO METAMASK. Doing this final third check so we can use web3_1_0 functions and utils even if there is no metamask or custom imported/created account
             dApp.web3_1_0 = getWeb3();
@@ -73474,11 +73465,11 @@ var dApp = {
     },
     initContract: async function() {
         //Assurance STATE
-        dApp.assurance_state_instance = await new dApp.web3_1_0.eth.Contract(dApp.assurance_state_abi, dApp.assurance_state_address);
+        dApp.assurance_state_instance = await new dApp.web3_1_0.eth.Contract(config_variable.assurance_state_abi, config_variable.assurance_state_address);
         //Assurance PROXY
-        dApp.assurance_proxy_instance = await new dApp.web3_1_0.eth.Contract(dApp.assurance_proxy_abi, dApp.assurance_proxy_address);
+        dApp.assurance_proxy_instance = await new dApp.web3_1_0.eth.Contract(config_variable.assurance_proxy_abi, config_variable.assurance_proxy_address);
         //DentacoinToken
-        dApp.dentacoin_token_instance = await new dApp.web3_1_0.eth.Contract(dApp.dentacoin_token_abi, dApp.dentacoin_token_address);
+        dApp.dentacoin_token_instance = await new dApp.web3_1_0.eth.Contract(config_variable.dentacoin_token_address, config_variable.dentacoin_token_address);
 
         //init pages logic
         projectData.pagesData.onContractInit();
@@ -73494,7 +73485,7 @@ var dApp = {
             });
         },
         approve: function()  {
-            return dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).send({
+            return dApp.dentacoin_token_instance.methods.approve(config_variable.assurance_state_address, config_variable.dentacoins_to_approve).send({
                 from: global_state.account,
                 gas: 65000
             }).on('transactionHash', function(hash){
@@ -73519,7 +73510,7 @@ var dApp = {
                 //check if patient and dentist addresses are valid
                 basic.showAlert('Patient and dentist addresses must be valid.');
                 return false;
-            } else if (parseInt(await dApp.dentacoin_token_methods.allowance(patient_addr, dApp.assurance_state_address)) <= 0) {
+            } else if (parseInt(await dApp.dentacoin_token_methods.allowance(patient_addr, config_variable.assurance_state_address)) <= 0) {
                 basic.showAlert('This patient didn\'t give allowance to Assurance contract to manage his Dentacoins.');
                 return false;
             } else if (parseInt(value_usd) <= 0 || parseInt(value_dcn) <= 0) {
@@ -74729,13 +74720,13 @@ var projectData = {
 
                         var approval_given = false;
                         //if approval is given already SOMEHOW ...
-                        if (parseInt(await dApp.dentacoin_token_methods.allowance(projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-patient')), dApp.assurance_state_address)) > 0) {
+                        if (parseInt(await dApp.dentacoin_token_methods.allowance(projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-patient')), config_variable.assurance_state_address)) > 0) {
                             approval_given = true;
                         }
 
                         if (!approval_given) {
                             //gas estimation for DentacoinToken approval method
-                            var gas_cost_for_approval = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).estimateGas({gas: 500000});
+                            var gas_cost_for_approval = await dApp.dentacoin_token_instance.methods.approve(config_variable.assurance_state_address, config_variable.dentacoins_to_approve).estimateGas({gas: 500000});
                         }
 
                         //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
@@ -74835,34 +74826,42 @@ var projectData = {
                                             3 : dApp.chain_id,
                                             4 : $('.patient-contract-single-page-section').attr('data-contract')
                                         };
+                                        var approvalProperty = false;
                                         if (!approval_given) {
-                                            //var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
-                                            scanObject['approval'] = {
+                                            //var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(config_variable.assurance_state_address, config_variable.dentacoins_to_approve).encodeABI();
+                                            /*scanObject['approval'] = {
                                                 0: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10 / 100))),
-                                                1: dApp.dentacoin_token_address,
+                                                1: config_variable.dentacoin_token_address,
                                                 2: {
-                                                    0: dApp.assurance_state_address,
-                                                    1: dApp.dentacoins_to_approve
+                                                    0: config_variable.assurance_state_address,
+                                                    1: config_variable.dentacoins_to_approve
                                                 }
-                                            };
+                                            };*/
+                                            approvalProperty = true;
                                         }
 
                                         getContractData($('.init-contract-section').attr('data-contract'), async function(response) {
                                             if (response.success) {
                                                 //var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
-                                                scanObject['creation'] = {
+                                                /*scanObject['creation'] = {
                                                     0: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 10 / 100))),
-                                                    1: dApp.assurance_proxy_address,
+                                                    1: config_variable.assurance_proxy_address,
                                                     2: {
-                                                        /*patient: projectData.utils.checksumAddress(response.contract_data.patient),*/
+                                                        /!*patient: projectData.utils.checksumAddress(response.contract_data.patient),*!/
                                                         0: projectData.utils.checksumAddress(response.contract_data.dentist),
                                                         1: Math.floor(response.contract_data.value_usd),
                                                         2: monthly_premium_in_dcn,
                                                         3: response.contract_data.date_start_contract + period_to_withdraw,
                                                         4: response.contract_data.contract_ipfs_hash
                                                     }
-                                                };
+                                                };*/
+
+                                                if(approvalProperty) {
+                                                    scanObject[5] = 'approval-creation';
+                                                } else {
+                                                    scanObject[5] = 'creation';
+                                                }
 
                                                 console.log(scanObject, 'scanObject');
                                                 console.log(JSON.stringify(scanObject), 'JSON.stringify(scanObject)');
@@ -74908,7 +74907,7 @@ var projectData = {
                                             url: '/get-recipe-popup',
                                             dataType: 'json',
                                             data: {
-                                                /*to: dApp.assurance_proxy_address,*/
+                                                /*to: config_variable.assurance_proxy_address,*/
                                                 cached_key: existingCachedKey,
                                                 contract: $('.init-contract-section').attr('data-contract'),
                                                 show_dcn_bar: true,
@@ -74985,7 +74984,7 @@ var projectData = {
 
                                                                     this_btn.unbind();
                                                                     if (!approval_given) {
-                                                                        var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
+                                                                        var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(config_variable.assurance_state_address, config_variable.dentacoins_to_approve).encodeABI();
                                                                         dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending', function (err, nonce) {
                                                                             var approval_transaction_obj = {
                                                                                 gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10 / 100))),
@@ -74994,7 +74993,7 @@ var projectData = {
                                                                                 nonce: dApp.web3_1_0.utils.toHex(nonce),
                                                                                 chainId: dApp.chain_id,
                                                                                 data: approval_function_abi,
-                                                                                to: dApp.dentacoin_token_address
+                                                                                to: config_variable.dentacoin_token_address
                                                                             };
 
                                                                             const approval_transaction = new EthereumTx(approval_transaction_obj);
@@ -75025,7 +75024,7 @@ var projectData = {
                                                                         nonce: dApp.web3_1_0.utils.toHex(nonce),
                                                                         chainId: dApp.chain_id,
                                                                         data: contract_creation_function_abi,
-                                                                        to: dApp.assurance_proxy_address
+                                                                        to: config_variable.assurance_proxy_address
                                                                     };
 
                                                                     const contract_creation_transaction = new EthereumTx(contract_creation_transaction_obj);
@@ -75148,7 +75147,7 @@ var projectData = {
                                         from: global_state.account,
                                         chainId: dApp.chain_id,
                                         data: contract_approval_function_abi,
-                                        to: dApp.assurance_proxy_address
+                                        to: config_variable.assurance_proxy_address
                                     };
 
                                     generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
@@ -75272,7 +75271,7 @@ var projectData = {
                                                                     nonce: dApp.web3_1_0.utils.toHex(nonce),
                                                                     chainId: dApp.chain_id,
                                                                     data: contract_approval_function_abi,
-                                                                    to: dApp.assurance_proxy_address
+                                                                    to: config_variable.assurance_proxy_address
                                                                 };
 
                                                                 const contract_approval_transaction = new EthereumTx(contract_approval_transaction_obj);
@@ -75494,7 +75493,7 @@ var projectData = {
                                         from: global_state.account,
                                         chainId: dApp.chain_id,
                                         data: withdraw_function_abi,
-                                        to: dApp.assurance_proxy_address
+                                        to: config_variable.assurance_proxy_address
                                     };
 
                                     generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
@@ -75525,7 +75524,7 @@ var projectData = {
                                         url: '/get-recipe-popup',
                                         dataType: 'json',
                                         data: {
-                                            /*to: dApp.assurance_proxy_address,*/
+                                            /*to: config_variable.assurance_proxy_address,*/
                                             cached_key: existingCachedKey,
                                             contract: $('.single-contract-view-section').attr('data-contract'),
                                             show_dcn_bar: false,
@@ -75605,7 +75604,7 @@ var projectData = {
                                                                     nonce: dApp.web3_1_0.utils.toHex(nonce),
                                                                     chainId: dApp.chain_id,
                                                                     data: withdraw_function_abi,
-                                                                    to: dApp.assurance_proxy_address
+                                                                    to: config_variable.assurance_proxy_address
                                                                 };
 
                                                                 const withdraw_transaction = new EthereumTx(withdraw_transaction_obj);
@@ -77346,7 +77345,7 @@ function cancelContractEventInit() {
                                                 from: global_state.account,
                                                 chainId: dApp.chain_id,
                                                 data: contract_cancellation_function_abi,
-                                                to: dApp.assurance_proxy_address
+                                                to: config_variable.assurance_proxy_address
                                             };
 
                                             generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
@@ -77429,7 +77428,7 @@ function cancelContractEventInit() {
                                                         nonce: dApp.web3_1_0.utils.toHex(nonce),
                                                         chainId: dApp.chain_id,
                                                         data: contract_cancellation_function_abi,
-                                                        to: dApp.assurance_proxy_address
+                                                        to: config_variable.assurance_proxy_address
                                                     };
 
                                                     const contract_cancellation_transaction = new EthereumTx(contract_cancellation_transaction_obj);
