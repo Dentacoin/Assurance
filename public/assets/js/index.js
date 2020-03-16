@@ -1088,7 +1088,7 @@ var projectData = {
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                             next_payment_timestamp_unix = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp);
 
-                            timer_label = 'Overdue payment. If you doesn\'t fill in '+dcn_needed_to_be_payed_to_dentist+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
+                            timer_label = 'Overdue payment. If you doesn\'t fill in '+projectData.utils.convertUsdToDcn(dcn_needed_to_be_payed_to_dentist)+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
                             $('.clock').addClass('red-background');
                         } else if (time_passed_since_signed > period_to_withdraw) {
                             var remainder = time_passed_since_signed % period_to_withdraw;
@@ -1147,7 +1147,7 @@ var projectData = {
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                             next_payment_timestamp_unix = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp);
 
-                            timer_label = 'Overdue payment. If you doesn\'t fill in '+dcn_needed_to_be_payed_to_dentist+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
+                            timer_label = 'Overdue payment. If you doesn\'t fill in '+projectData.utils.convertUsdToDcn(dcn_needed_to_be_payed_to_dentist)+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
                             $('.clock').addClass('red-background');
                         } else if (time_passed_since_signed > period_to_withdraw) {
                             var remainder = time_passed_since_signed % period_to_withdraw;
@@ -1527,7 +1527,8 @@ var projectData = {
                                             0 : eth_fee,
                                             1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                             2 : global_state.account,
-                                            3 : dApp.chain_id
+                                            3 : dApp.chain_id,
+                                            4 : $('.patient-contract-single-page-section').attr('data-contract')
                                         };
                                         if (!approval_given) {
                                             //var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
