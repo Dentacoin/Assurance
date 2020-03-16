@@ -979,7 +979,11 @@ class UserController extends Controller {
                 return response()->json([
                     'success' => true,
                     'data' => array(
-
+                        'dentist' => $contract->dentist_address,
+                        'patient' => $contract->patient_address,
+                        'usd' => $contract->monthly_premium,
+                        'next_transfer' => strtotime($contract->contract_active_at),
+                        'ipfs_hash' => $contract->document_hash
                     )
                 ]);
             }

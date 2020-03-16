@@ -73304,7 +73304,7 @@ module.exports = {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPla
 },{"../../../node_modules/eth-crypto":320,"../../../node_modules/keythereum":408,"../../../node_modules/web3":527}],546:[function(require,module,exports){
 (function (Buffer){
 console.log('Don\'t touch the code. Or do ... ¯\\_(ツ)_/¯');
-console.log(config_variable, 'config_variable');
+console.log(assurance_config, 'assurance_config');
 checkIfCookie();
 
 var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore} = require('./helper');
@@ -73408,7 +73408,6 @@ var global_state = {};
 var temporally_timestamp = 0;
 var metamask = typeof(web3) !== 'undefined' && web3.currentProvider.isMetaMask === true;
 var dApp = {
-    dummy_address: '0x32e4c8584f4357de80812b048734a0c2fe6e31ab',
     assurance_state_instance: null,
     assurance_proxy_instance: null,
     dentacoin_instance: null,
@@ -73430,10 +73429,10 @@ var dApp = {
             //overwrite web3 0.2 with web 1.0
             web3 = getWeb3(dApp.web3_0_2.currentProvider);
             //dApp.web3_1_0 = web3;
-            dApp.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(config_variable.infura_node));
+            dApp.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(assurance_config.infura_node));
         }else if (typeof(web3) === 'undefined')    {
             //CUSTOM
-            dApp.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(config_variable.infura_node));
+            dApp.web3_1_0 = getWeb3(new Web3.providers.HttpProvider(assurance_config.infura_node));
         }else {
             //NO CUSTOM, NO METAMASK. Doing this final third check so we can use web3_1_0 functions and utils even if there is no metamask or custom imported/created account
             dApp.web3_1_0 = getWeb3();
@@ -73465,11 +73464,11 @@ var dApp = {
     },
     initContract: async function() {
         //Assurance STATE
-        dApp.assurance_state_instance = await new dApp.web3_1_0.eth.Contract(config_variable.assurance_state_abi, config_variable.assurance_state_address);
+        dApp.assurance_state_instance = await new dApp.web3_1_0.eth.Contract(assurance_config.assurance_state_abi, assurance_config.assurance_state_address);
         //Assurance PROXY
-        dApp.assurance_proxy_instance = await new dApp.web3_1_0.eth.Contract(config_variable.assurance_proxy_abi, config_variable.assurance_proxy_address);
+        dApp.assurance_proxy_instance = await new dApp.web3_1_0.eth.Contract(assurance_config.assurance_proxy_abi, assurance_config.assurance_proxy_address);
         //DentacoinToken
-        dApp.dentacoin_token_instance = await new dApp.web3_1_0.eth.Contract(config_variable.dentacoin_token_abi, config_variable.dentacoin_token_address);
+        dApp.dentacoin_token_instance = await new dApp.web3_1_0.eth.Contract(assurance_config.dentacoin_token_abi, assurance_config.dentacoin_token_address);
 
         //init pages logic
         projectData.pagesData.onContractInit();
@@ -73485,7 +73484,7 @@ var dApp = {
             });
         },
         approve: function()  {
-            return dApp.dentacoin_token_instance.methods.approve(config_variable.assurance_state_address, config_variable.dentacoins_to_approve).send({
+            return dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).send({
                 from: global_state.account,
                 gas: 65000
             }).on('transactionHash', function(hash){
@@ -73510,7 +73509,7 @@ var dApp = {
                 //check if patient and dentist addresses are valid
                 basic.showAlert('Patient and dentist addresses must be valid.');
                 return false;
-            } else if (parseInt(await dApp.dentacoin_token_methods.allowance(patient_addr, config_variable.assurance_state_address)) <= 0) {
+            } else if (parseInt(await dApp.dentacoin_token_methods.allowance(patient_addr, assurance_config.assurance_state_address)) <= 0) {
                 basic.showAlert('This patient didn\'t give allowance to Assurance contract to manage his Dentacoins.');
                 return false;
             } else if (parseInt(value_usd) <= 0 || parseInt(value_dcn) <= 0) {
@@ -74720,17 +74719,17 @@ var projectData = {
 
                         var approval_given = false;
                         //if approval is given already SOMEHOW ...
-                        if (parseInt(await dApp.dentacoin_token_methods.allowance(projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-patient')), config_variable.assurance_state_address)) > 0) {
+                        if (parseInt(await dApp.dentacoin_token_methods.allowance(projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-patient')), assurance_config.assurance_state_address)) > 0) {
                             approval_given = true;
                         }
 
                         if (!approval_given) {
                             //gas estimation for DentacoinToken approval method
-                            var gas_cost_for_approval = await dApp.dentacoin_token_instance.methods.approve(config_variable.assurance_state_address, config_variable.dentacoins_to_approve).estimateGas({gas: 500000});
+                            var gas_cost_for_approval = await dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).estimateGas({gas: 500000});
                         }
 
                         //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                        var gas_cost_for_contract_creation = await dApp.assurance_proxy_instance.methods.registerContract(dApp.dummy_address, projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-dentist')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: dApp.dummy_address, gas: 1000000});
+                        var gas_cost_for_contract_creation = await dApp.assurance_proxy_instance.methods.registerContract(assurance_config.dummy_address, projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-dentist')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: assurance_config.dummy_address, gas: 1000000});
 
                         var methods_gas_cost;
                         if (!approval_given) {
@@ -74828,13 +74827,13 @@ var projectData = {
                                         };
                                         var approvalProperty = false;
                                         if (!approval_given) {
-                                            //var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(config_variable.assurance_state_address, config_variable.dentacoins_to_approve).encodeABI();
+                                            //var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).encodeABI();
                                             /*scanObject['approval'] = {
                                                 0: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10 / 100))),
-                                                1: config_variable.dentacoin_token_address,
+                                                1: assurance_config.dentacoin_token_address,
                                                 2: {
-                                                    0: config_variable.assurance_state_address,
-                                                    1: config_variable.dentacoins_to_approve
+                                                    0: assurance_config.assurance_state_address,
+                                                    1: assurance_config.dentacoins_to_approve
                                                 }
                                             };*/
                                             approvalProperty = true;
@@ -74846,7 +74845,7 @@ var projectData = {
 
                                                 /*scanObject['creation'] = {
                                                     0: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 10 / 100))),
-                                                    1: config_variable.assurance_proxy_address,
+                                                    1: assurance_config.assurance_proxy_address,
                                                     2: {
                                                         /!*patient: projectData.utils.checksumAddress(response.contract_data.patient),*!/
                                                         0: projectData.utils.checksumAddress(response.contract_data.dentist),
@@ -74907,7 +74906,7 @@ var projectData = {
                                             url: '/get-recipe-popup',
                                             dataType: 'json',
                                             data: {
-                                                /*to: config_variable.assurance_proxy_address,*/
+                                                /*to: assurance_config.assurance_proxy_address,*/
                                                 cached_key: existingCachedKey,
                                                 contract: $('.init-contract-section').attr('data-contract'),
                                                 show_dcn_bar: true,
@@ -74984,7 +74983,7 @@ var projectData = {
 
                                                                     this_btn.unbind();
                                                                     if (!approval_given) {
-                                                                        var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(config_variable.assurance_state_address, config_variable.dentacoins_to_approve).encodeABI();
+                                                                        var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).encodeABI();
                                                                         dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending', function (err, nonce) {
                                                                             var approval_transaction_obj = {
                                                                                 gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10 / 100))),
@@ -74993,7 +74992,7 @@ var projectData = {
                                                                                 nonce: dApp.web3_1_0.utils.toHex(nonce),
                                                                                 chainId: dApp.chain_id,
                                                                                 data: approval_function_abi,
-                                                                                to: config_variable.dentacoin_token_address
+                                                                                to: assurance_config.dentacoin_token_address
                                                                             };
 
                                                                             const approval_transaction = new EthereumTx(approval_transaction_obj);
@@ -75024,7 +75023,7 @@ var projectData = {
                                                                         nonce: dApp.web3_1_0.utils.toHex(nonce),
                                                                         chainId: dApp.chain_id,
                                                                         data: contract_creation_function_abi,
-                                                                        to: config_variable.assurance_proxy_address
+                                                                        to: assurance_config.assurance_proxy_address
                                                                     };
 
                                                                     const contract_creation_transaction = new EthereumTx(contract_creation_transaction_obj);
@@ -75147,7 +75146,7 @@ var projectData = {
                                         from: global_state.account,
                                         chainId: dApp.chain_id,
                                         data: contract_approval_function_abi,
-                                        to: config_variable.assurance_proxy_address
+                                        to: assurance_config.assurance_proxy_address
                                     };
 
                                     generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
@@ -75271,7 +75270,7 @@ var projectData = {
                                                                     nonce: dApp.web3_1_0.utils.toHex(nonce),
                                                                     chainId: dApp.chain_id,
                                                                     data: contract_approval_function_abi,
-                                                                    to: config_variable.assurance_proxy_address
+                                                                    to: assurance_config.assurance_proxy_address
                                                                 };
 
                                                                 const contract_approval_transaction = new EthereumTx(contract_approval_transaction_obj);
@@ -75493,7 +75492,7 @@ var projectData = {
                                         from: global_state.account,
                                         chainId: dApp.chain_id,
                                         data: withdraw_function_abi,
-                                        to: config_variable.assurance_proxy_address
+                                        to: assurance_config.assurance_proxy_address
                                     };
 
                                     generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
@@ -75524,7 +75523,7 @@ var projectData = {
                                         url: '/get-recipe-popup',
                                         dataType: 'json',
                                         data: {
-                                            /*to: config_variable.assurance_proxy_address,*/
+                                            /*to: assurance_config.assurance_proxy_address,*/
                                             cached_key: existingCachedKey,
                                             contract: $('.single-contract-view-section').attr('data-contract'),
                                             show_dcn_bar: false,
@@ -75604,7 +75603,7 @@ var projectData = {
                                                                     nonce: dApp.web3_1_0.utils.toHex(nonce),
                                                                     chainId: dApp.chain_id,
                                                                     data: withdraw_function_abi,
-                                                                    to: config_variable.assurance_proxy_address
+                                                                    to: assurance_config.assurance_proxy_address
                                                                 };
 
                                                                 const withdraw_transaction = new EthereumTx(withdraw_transaction_obj);
@@ -77345,7 +77344,7 @@ function cancelContractEventInit() {
                                                 from: global_state.account,
                                                 chainId: dApp.chain_id,
                                                 data: contract_cancellation_function_abi,
-                                                to: config_variable.assurance_proxy_address
+                                                to: assurance_config.assurance_proxy_address
                                             };
 
                                             generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
@@ -77428,7 +77427,7 @@ function cancelContractEventInit() {
                                                         nonce: dApp.web3_1_0.utils.toHex(nonce),
                                                         chainId: dApp.chain_id,
                                                         data: contract_cancellation_function_abi,
-                                                        to: config_variable.assurance_proxy_address
+                                                        to: assurance_config.assurance_proxy_address
                                                     };
 
                                                     const contract_cancellation_transaction = new EthereumTx(contract_cancellation_transaction_obj);
