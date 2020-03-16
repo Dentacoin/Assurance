@@ -1524,19 +1524,19 @@ var projectData = {
                                         var scanObject = {
                                             /*'type' : 'patient-approval-and-contract-creation',
                                             'contract' : $('.patient-contract-single-page-section').attr('data-contract'),*/
-                                            'eth_fee' : eth_fee,
-                                            'gasPrice': dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                            'from': global_state.account,
-                                            'chainId': dApp.chain_id
+                                            0 : eth_fee,
+                                            1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                            2 : global_state.account,
+                                            3 : dApp.chain_id
                                         };
                                         if (!approval_given) {
                                             //var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(dApp.assurance_state_address, dApp.dentacoins_to_approve).encodeABI();
                                             scanObject['approval'] = {
-                                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10 / 100))),
-                                                to: dApp.dentacoin_token_address,
-                                                dataToCreateFunctionAbi: {
-                                                    assurance_state_address: dApp.assurance_state_address,
-                                                    dentacoins_to_approve: dApp.dentacoins_to_approve
+                                                0: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10 / 100))),
+                                                1: dApp.dentacoin_token_address,
+                                                2: {
+                                                    state: dApp.assurance_state_address,
+                                                    dcn: dApp.dentacoins_to_approve
                                                 }
                                             };
                                         }
@@ -1545,16 +1545,16 @@ var projectData = {
                                             if (response.success) {
                                                 //var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
-                                                scanObject['contractCreation'] = {
-                                                    gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 10 / 100))),
-                                                    /*to: dApp.assurance_proxy_address,*/
-                                                    dataToCreateFunctionAbi: {
+                                                scanObject['creation'] = {
+                                                    0: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 10 / 100))),
+                                                    1: dApp.assurance_proxy_address,
+                                                    2: {
                                                         /*patient: projectData.utils.checksumAddress(response.contract_data.patient),*/
                                                         dentist: projectData.utils.checksumAddress(response.contract_data.dentist),
-                                                        value_usd: Math.floor(response.contract_data.value_usd),
-                                                        monthly_premium_in_dcn: monthly_premium_in_dcn,
+                                                        usd: Math.floor(response.contract_data.value_usd),
+                                                        dcn: monthly_premium_in_dcn,
                                                         next_transfer: response.contract_data.date_start_contract + period_to_withdraw,
-                                                        contract_ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                        ipfs: response.contract_data.contract_ipfs_hash
                                                     }
                                                 };
 
