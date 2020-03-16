@@ -1535,8 +1535,8 @@ var projectData = {
                                                 0: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10 / 100))),
                                                 1: dApp.dentacoin_token_address,
                                                 2: {
-                                                    state: dApp.assurance_state_address,
-                                                    dcn: dApp.dentacoins_to_approve
+                                                    0: dApp.assurance_state_address,
+                                                    1: dApp.dentacoins_to_approve
                                                 }
                                             };
                                         }
@@ -1550,11 +1550,11 @@ var projectData = {
                                                     1: dApp.assurance_proxy_address,
                                                     2: {
                                                         /*patient: projectData.utils.checksumAddress(response.contract_data.patient),*/
-                                                        dentist: projectData.utils.checksumAddress(response.contract_data.dentist),
-                                                        usd: Math.floor(response.contract_data.value_usd),
-                                                        dcn: monthly_premium_in_dcn,
-                                                        next_transfer: response.contract_data.date_start_contract + period_to_withdraw,
-                                                        ipfs: response.contract_data.contract_ipfs_hash
+                                                        0: projectData.utils.checksumAddress(response.contract_data.dentist),
+                                                        1: Math.floor(response.contract_data.value_usd),
+                                                        2: monthly_premium_in_dcn,
+                                                        3: response.contract_data.date_start_contract + period_to_withdraw,
+                                                        4: response.contract_data.contract_ipfs_hash
                                                     }
                                                 };
 
