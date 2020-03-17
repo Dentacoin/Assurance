@@ -1026,7 +1026,8 @@ class UserController extends Controller {
                 } else if($request->input('to_status') == 'cancelled') {
                     // cancelling contract
                     $type = $request->input('type');
-                    if(!isset($type)) {
+                    $reason = $request->input('reason');
+                    if(!isset($type) || !isset($reason)) {
                         return response()->json(['success' => true]);
                     }
 
@@ -1040,7 +1041,7 @@ class UserController extends Controller {
                         }
                     }
 
-                    $this->changeToCancelledStatus($contract, $type, $initiator, $data['reason']);
+                    $this->changeToCancelledStatus($contract, $type, $initiator, $reason);
 
                     return response()->json(['success' => true]);
                 }
