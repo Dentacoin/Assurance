@@ -1,8 +1,8 @@
 console.log('Don\'t touch the code. Or do ... ¯\\_(ツ)_/¯');
-console.log(assurance_config, 'assurance_config');
 checkIfCookie();
 
 var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore} = require('./helper');
+var {assurance_config} = require('./assurance_config');
 
 $(document).ready(async function() {
     //if get parameter is passed show loginform
@@ -1512,49 +1512,22 @@ var projectData = {
                                         showLoader();
 
                                         var scanObject = {
-                                            /*'type' : 'patient-approval-and-contract-creation',
-                                            'contract' : $('.patient-contract-single-page-section').attr('data-contract'),*/
                                             0 : eth_fee,
                                             1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                             2 : global_state.account,
-                                            3 : dApp.chain_id,
-                                            4 : $('.patient-contract-single-page-section').attr('data-contract')
+                                            3 : $('.patient-contract-single-page-section').attr('data-contract')
                                         };
                                         var approvalProperty = false;
                                         if (!approval_given) {
-                                            //var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).encodeABI();
-                                            /*scanObject['approval'] = {
-                                                0: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10 / 100))),
-                                                1: assurance_config.dentacoin_token_address,
-                                                2: {
-                                                    0: assurance_config.assurance_state_address,
-                                                    1: assurance_config.dentacoins_to_approve
-                                                }
-                                            };*/
                                             approvalProperty = true;
                                         }
 
                                         getContractData($('.init-contract-section').attr('data-contract'), async function(response) {
                                             if (response.success) {
-                                                //var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
-
-                                                /*scanObject['creation'] = {
-                                                    0: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 10 / 100))),
-                                                    1: assurance_config.assurance_proxy_address,
-                                                    2: {
-                                                        /!*patient: projectData.utils.checksumAddress(response.contract_data.patient),*!/
-                                                        0: projectData.utils.checksumAddress(response.contract_data.dentist),
-                                                        1: Math.floor(response.contract_data.value_usd),
-                                                        2: monthly_premium_in_dcn,
-                                                        3: response.contract_data.date_start_contract + period_to_withdraw,
-                                                        4: response.contract_data.contract_ipfs_hash
-                                                    }
-                                                };*/
-
                                                 if(approvalProperty) {
-                                                    scanObject[5] = 'approval-creation';
+                                                    scanObject[4] = 'approval-creation';
                                                 } else {
-                                                    scanObject[5] = 'creation';
+                                                    scanObject[4] = 'creation';
                                                 }
 
                                                 console.log(scanObject, 'scanObject');
@@ -1830,18 +1803,11 @@ var projectData = {
                                     showLoader();
 
                                     var scanObject = {
-                                        'type' : 'dentist-approval',
-                                        'contract' : $('.single-contract-view-section').attr('data-contract'),
-                                        'eth_fee' : eth_fee
-                                    };
-
-                                    scanObject['contractApproval'] = {
-                                        gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + (gas_cost_for_contract_approval * 10 / 100))),
-                                        gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                        from: global_state.account,
-                                        chainId: dApp.chain_id,
-                                        data: contract_approval_function_abi,
-                                        to: assurance_config.assurance_proxy_address
+                                        0 : eth_fee,
+                                        1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                        2 : global_state.account,
+                                        3 : $('.patient-contract-single-page-section').attr('data-contract'),
+                                        4 : 'dentist-approval'
                                     };
 
                                     generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
