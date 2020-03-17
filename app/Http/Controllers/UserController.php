@@ -1003,8 +1003,6 @@ class UserController extends Controller {
         $contract = TemporallyContract::where(array('slug' => $request->input('slug')))->get()->first();
         if(!empty($contract)) {
             $approveContractStatusChange = (new APIRequestsController())->approveContractStatusChange($contract->patient_address, $contract->dentist_address, $request->input('to_status'));
-            var_dump($approveContractStatusChange);
-            die('asd');
             if(is_object($approveContractStatusChange) && property_exists($approveContractStatusChange, 'success') && $approveContractStatusChange->success) {
                 (new PatientController())->changeToAwaitingApprovalStatus($contract);
 
