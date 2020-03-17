@@ -991,7 +991,7 @@ class UserController extends Controller {
         }
     }
 
-    protected function contractStatusChange(Request $request) {
+    protected function requestContractStatusChange(Request $request) {
         $this->validate($request, [
             'slug' => 'required',
             'hash' => 'required',
@@ -1004,12 +1004,11 @@ class UserController extends Controller {
 
         $contract = TemporallyContract::where(array('slug' => $request->input('slug')))->get()->first();
         if(!empty($contract)) {
-            if(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode(array('to_status' => $request->input('to_status'), 'slug' => $request->input('slug'), 'patient_address' => $contract->patient_address, 'dentist_address' => $contract->dentist_address))) == $request->input('hash')) {
-                if($request->input('to_status') == 'awaiting-approval') {
-                    (new PatientController())->changeToAwaitingApprovalStatus($contract);
+            $approveContractStatusChange = (new APIRequestsController())->approveContractStatusChange($contract->patient_address, $contract->dentist_address, $request->input('to_status'));
+            if(is_object($approveContractStatusChange) && property_exists($approveContractStatusChange, 'success') && $approveContractStatusChange->success) {
+                (new PatientController())->changeToAwaitingApprovalStatus($contract);
 
-                    return response()->json(['success' => true]);
-                }
+                return response()->json(['success' => true]);
             } else {
                 return response()->json(['error' => true]);
             }

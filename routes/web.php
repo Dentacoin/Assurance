@@ -108,7 +108,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/get-scanning-data', 'UserController@getScanningData')->name('get-scanning-data');
 
-    Route::post('/contract-status-change', 'UserController@contractStatusChange')->name('contract-status-change');
+    Route::post('/request-contract-status-change', 'UserController@requestContractStatusChange')->name('request-contract-status-change');
 
     Route::get('/my-contracts-iframe', 'UserController@getMyContractsTemplate')->middleware('HandleUserSession')->name('my-contracts-iframe');
 

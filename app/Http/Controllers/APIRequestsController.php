@@ -513,6 +513,30 @@ class APIRequestsController extends Controller {
         return $resp;
     }
 
+    //this method is not from the CoreDB
+    public function approveContractStatusChange($patient_address, $dentist_address, $to_status) {
+        $curl = curl_init();
+
+        $json = '{"patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "to_status":"'.$to_status.'"}';
+
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_POST => 1,
+            CURLOPT_URL => 'https://assurance.dentacoin.com/approve-contract-status-change',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_POSTFIELDS => $json
+        ));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(    //<--- Added this code block
+                'Content-Type: application/json',
+                'Content-Length: ' . mb_strlen($json))
+        );
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        return $resp;
+    }
+
     public function updateAnonymousUserData($data) {
         $curl = curl_init();
         curl_setopt_array($curl, array(
