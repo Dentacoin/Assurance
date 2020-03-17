@@ -1004,9 +1004,11 @@ class UserController extends Controller {
         if(!empty($contract)) {
             $approveContractStatusChange = (new APIRequestsController())->approveContractStatusChange($contract->patient_address, $contract->dentist_address, $request->input('to_status'));
             if(is_object($approveContractStatusChange) && property_exists($approveContractStatusChange, 'success') && $approveContractStatusChange->success) {
-                (new PatientController())->changeToAwaitingApprovalStatus($contract);
+                if($request->input('to_status') == 'awaiting-approval' && $contract->status == 'awaiting-payment') {
+                    (new PatientController())->changeToAwaitingApprovalStatus($contract);
 
-                return response()->json(['success' => true]);
+                    return response()->json(['success' => true]);
+                }
             } else {
                 return response()->json(['error' => true]);
             }

@@ -538,7 +538,12 @@ class PatientController extends Controller {
         $contract->save();
 
         $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
-        $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+        if((new UserController())->checkPatientSession()) {
+            $patientId = session('logged_user')['id'];
+        } else {
+            $patientId = $contract->patient_id;
+        }
+        $logged_patient = (new APIRequestsController())->getUserData($patientId);
 
         $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
         $body = $email_view->render();
