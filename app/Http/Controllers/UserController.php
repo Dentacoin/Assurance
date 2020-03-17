@@ -980,12 +980,38 @@ class UserController extends Controller {
                     'success' => true,
                     'data' => array(
                         'dentist' => $contract->dentist_address,
-                        'patient' => $contract->patient_address,
                         'usd' => $contract->monthly_premium,
                         'next_transfer' => strtotime($contract->contract_active_at),
                         'ipfs_hash' => $contract->document_hash
                     )
                 ]);
+            }
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
+
+    protected function contractStatusChange(Request $request) {
+        $this->validate($request, [
+            'slug' => 'required',
+            'hash' => 'required',
+            'to_status' => 'required'
+        ], [
+            'slug.required' => 'Slug is required.',
+            'hash.required' => 'Hash is required.',
+            'to_status.required' => 'Status is required.'
+        ]);
+
+        $contract = TemporallyContract::where(array('slug' => $request->input('slug')))->get()->first();
+        if(!empty($contract)) {
+            if(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode(array('to_status' => $request->input('to_status'), 'slug' => $request->input('slug'), 'patient_address' => $contract->patient_address, 'dentist_address' => $contract->dentist_address))) == $request->input('hash')) {
+                if($request->input('to_status') == 'awaiting-approval') {
+                    (new PatientController())->changeToAwaitingApprovalStatus($contract);
+
+                    return response()->json(['success' => true]);
+                }
+            } else {
+                return response()->json(['error' => true]);
             }
         } else {
             return response()->json(['error' => true]);

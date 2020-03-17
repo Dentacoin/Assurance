@@ -108,6 +108,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/get-scanning-data', 'UserController@getScanningData')->name('get-scanning-data');
 
+    Route::post('/contract-status-change', 'UserController@contractStatusChange')->name('contract-status-change');
+
     Route::get('/my-contracts-iframe', 'UserController@getMyContractsTemplate')->middleware('HandleUserSession')->name('my-contracts-iframe');
 
     Route::post('/filter-my-contracts', 'UserController@filterMyContracts')->middleware('HandleUserSession')->name('filter-my-contracts');
