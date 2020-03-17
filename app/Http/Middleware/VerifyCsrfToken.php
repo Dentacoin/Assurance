@@ -14,7 +14,7 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        'save-public-key', 'cancel-contracts', 'info/*'
+        'save-public-key', 'cancel-contracts', 'get-scanning-data', 'info/*'
     ];
 
     protected function addCookieToResponse($request, $response) {

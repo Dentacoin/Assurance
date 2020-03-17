@@ -6875,7 +6875,7 @@ fieldset {
     text-align: center; }
     .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog #popup-qrcode img {
       width: 100%;
-      max-width: 600px;
+      max-width: 500px;
       margin: 0 auto; }
 .bootbox.style-anchors .modal-dialog .modal-content .modal-body a {
   font-weight: bold;
