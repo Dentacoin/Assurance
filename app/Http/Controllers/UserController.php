@@ -340,65 +340,67 @@ class UserController extends Controller {
         $response = array();
         $contract = TemporallyContract::where(array('slug' => $data['contract']))->get()->first();
         if($contract) {
-            $current_logged_user = (new APIRequestsController())->getUserData(session('logged_user')['id']);
-            if(session('logged_user')['id'] == $contract->patient_id || session('logged_user')['id'] == $contract->dentist_id || $current_logged_user->email == $contract->patient_email) {
-                //CURL check if contract is still on the blockchain ???
-
-                $cancellation_reason = array(
-                    'reason' => $data['reason'],
-                    'comments' => $data['comments']
-                );
-
-                $contract->status = $data['status'];
-                $contract->cancelled_at = new \DateTime();
-                $contract->cancellation_reason = serialize($cancellation_reason);
-                $contract->save();
-
-                $response['success'] = true;
-                if($this->checkDentistSession()) {
-                    $response['path'] = 'dentist';
-
-                    if(!empty($contract->patient_id)) {
-                        $patient = (new APIRequestsController())->getUserData($contract->patient_id);
-                        $patient_name = $patient->name;
-                        $patient_email = $patient->email;
-                    } else {
-                        $patient_name = $contract->patient_fname . ' ' . $contract->patient_lname;
-                        $patient_email = $contract->patient_email;
-                    }
-
-                    $email_view = view('emails/dentist-cancel-contract', ['dentist_name' => $current_logged_user->name, 'patient_name' => $patient_name, 'reason' => $data['reason'], 'contract_slug' => $contract->slug]);
-                    $body = $email_view->render();
-
-                    Mail::send(array(), array(), function($message) use ($body, $patient_email, $current_logged_user) {
-                        $message->to($patient_email)->subject($current_logged_user->name . ' Has Cancelled Your Contract');
-                        $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
-                        $message->setBody($body, 'text/html');
-                    });
-                } else if($this->checkPatientSession()) {
-                    $response['path'] = 'patient';
-
-                    $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
-                    $email_view = view('emails/patient-cancel-contract', ['dentist' => $dentist, 'patient_name' => $current_logged_user->name, 'reason' => $data['reason'], 'contract_slug' => $contract->slug]);
-                    $body = $email_view->render();
-
-                    Mail::send(array(), array(), function($message) use ($body, $dentist, $current_logged_user) {
-                        $message->to($dentist->email)->subject($current_logged_user->name . ' Has Cancelled Their Contract');
-                        $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
-                        $message->setBody($body, 'text/html');
-                    });
-                }
-                echo json_encode($response);
-                die();
-            } else {
-                $response['error'] = 'Cancellation failed, wrong contract.';
-                echo json_encode($response);
-                die();
+            $response['success'] = true;
+            if($this->checkDentistSession()) {
+                $response['path'] = 'dentist';
+                $type = 'dentist';
+            } else if($this->checkPatientSession()) {
+                $response['path'] = 'patient';
+                $type = 'patient';
             }
+
+            $initiator = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+
+            $cancellation_reason = array(
+                'reason' => $data['reason'],
+                'comments' => $data['comments']
+            );
+
+            $contract->status = $data['status'];
+            $contract->cancelled_at = new \DateTime();
+            $contract->cancellation_reason = serialize($cancellation_reason);
+            $contract->save();
+
+            $this->changeToCancelledStatus($contract, $type, $initiator, $data['reason']);
+
+            echo json_encode($response);
+            die();
         } else {
             $response['error'] = 'Cancellation failed, wrong contract.';
             echo json_encode($response);
             die();
+        }
+    }
+
+    public function changeToCancelledStatus($contract, $type, $initiator, $reason) {
+        if($type == 'dentist') {
+            if(!empty($contract->patient_id)) {
+                $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+                $patient_name = $patient->name;
+                $patient_email = $patient->email;
+            } else {
+                $patient_name = $contract->patient_fname . ' ' . $contract->patient_lname;
+                $patient_email = $contract->patient_email;
+            }
+
+            $email_view = view('emails/dentist-cancel-contract', ['dentist_name' => $initiator->name, 'patient_name' => $patient_name, 'reason' => $reason, 'contract_slug' => $contract->slug]);
+            $body = $email_view->render();
+
+            Mail::send(array(), array(), function($message) use ($body, $patient_email, $initiator) {
+                $message->to($patient_email)->subject($initiator->name . ' Has Cancelled Your Contract');
+                $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                $message->setBody($body, 'text/html');
+            });
+        } else if($type == 'patient') {
+            $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
+            $email_view = view('emails/patient-cancel-contract', ['dentist' => $dentist, 'patient_name' => $initiator->name, 'reason' => $reason, 'contract_slug' => $contract->slug]);
+            $body = $email_view->render();
+
+            Mail::send(array(), array(), function($message) use ($body, $dentist, $initiator) {
+                $message->to($dentist->email)->subject($initiator->name . ' Has Cancelled Their Contract');
+                $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                $message->setBody($body, 'text/html');
+            });
         }
     }
 
@@ -975,17 +977,16 @@ class UserController extends Controller {
         $contract = TemporallyContract::where(array('slug' => $request->input('slug')))->get()->first();
 
         if(!empty($contract)) {
-            if($contract->status == 'awaiting-payment') {
-                return response()->json([
-                    'success' => true,
-                    'data' => array(
-                        'dentist' => $contract->dentist_address,
-                        'usd' => $contract->monthly_premium,
-                        'next_transfer' => strtotime($contract->contract_active_at),
-                        'ipfs_hash' => $contract->document_hash
-                    )
-                ]);
-            }
+            return response()->json([
+                'success' => true,
+                'data' => array(
+                    'patient' => $contract->patient_address,
+                    'dentist' => $contract->dentist_address,
+                    'usd' => $contract->monthly_premium,
+                    'next_transfer' => strtotime($contract->contract_active_at),
+                    'ipfs_hash' => $contract->document_hash
+                )
+            ]);
         } else {
             return response()->json(['error' => true]);
         }
@@ -994,9 +995,11 @@ class UserController extends Controller {
     protected function requestContractStatusChange(Request $request) {
         $this->validate($request, [
             'slug' => 'required',
+            'transactionHash' => 'required',
             'to_status' => 'required'
         ], [
             'slug.required' => 'Slug is required.',
+            'transactionHash.required' => 'Transaction hash is required.',
             'to_status.required' => 'Status is required.'
         ]);
 
@@ -1005,7 +1008,39 @@ class UserController extends Controller {
             $approveContractStatusChange = (new APIRequestsController())->approveContractStatusChange($contract->patient_address, $contract->dentist_address, $request->input('to_status'));
             if(is_object($approveContractStatusChange) && property_exists($approveContractStatusChange, 'success') && $approveContractStatusChange->success) {
                 if($request->input('to_status') == 'awaiting-approval' && $contract->status == 'awaiting-payment') {
+                    // creating contract
                     (new PatientController())->changeToAwaitingApprovalStatus($contract);
+
+                    return response()->json(['success' => true]);
+                } else if($request->input('to_status') == 'active' && $contract->status == 'awaiting-approval') {
+                    // approving contract
+                    $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+                    (new DentistController())->changeToActiveStatus($contract, $patient);
+
+                    return response()->json(['success' => true]);
+                } else if($request->input('to_status') == 'active-withdraw' && $contract->status == 'active') {
+                    // withdrawing from contract
+                    (new DentistController())->successfulBlockchainWithdraw($contract, $request->input('transactionHash'));
+
+                    return response()->json(['success' => true]);
+                } else if($request->input('to_status') == 'cancelled') {
+                    // cancelling contract
+                    $type = $request->input('type');
+                    if(!isset($type)) {
+                        return response()->json(['success' => true]);
+                    }
+
+                    if($type == 'dentist') {
+                        $initiator = (new APIRequestsController())->getUserData($contract->dentist_id);
+                    } else if($type == 'patient') {
+                        if(!empty($contract->patient_id)) {
+                            $initiator = (new APIRequestsController())->getUserData($contract->patient_id);
+                        } else {
+                            $initiator = (new APIRequestsController())->getUserByEmailAndType($contract->patient_email, 'patient');
+                        }
+                    }
+
+                    $this->changeToCancelledStatus($contract, $type, $initiator, $data['reason']);
 
                     return response()->json(['success' => true]);
                 }

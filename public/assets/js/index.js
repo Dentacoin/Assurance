@@ -737,6 +737,7 @@ var projectData = {
             }
         },
         onDocumentReady: async function() {
+            console.log('onDocumentReady');
             if ($('body').hasClass('logged-in')) {
                 if ($('body').hasClass('home') || $('body').hasClass('patient-access')) {
                     // applied for both dentist and patient sides homepages to make contacts in list (slider) with same hight
@@ -1807,7 +1808,7 @@ var projectData = {
                                         0 : eth_fee,
                                         1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                         2 : global_state.account,
-                                        3 : $('.patient-contract-single-page-section').attr('data-contract'),
+                                        3 : $('.single-contract-view-section').attr('data-contract'),
                                         4 : 'dentist-approval'
                                     };
 
@@ -2143,18 +2144,11 @@ var projectData = {
                                     showLoader();
 
                                     var scanObject = {
-                                        'type' : 'dentist-withdraw',
-                                        'contract' : $('.single-contract-view-section').attr('data-contract'),
-                                        'eth_fee' : eth_fee
-                                    };
-
-                                    scanObject['contractWithdraw'] = {
-                                        gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_withdraw + (gas_cost_for_withdraw * 5/100))),
-                                        gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                        from: global_state.account,
-                                        chainId: dApp.chain_id,
-                                        data: withdraw_function_abi,
-                                        to: assurance_config.assurance_proxy_address
+                                        0 : eth_fee,
+                                        1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                        2 : global_state.account,
+                                        3 : $('.single-contract-view-section').attr('data-contract'),
+                                        4 : 'active-withdraw'
                                     };
 
                                     generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
@@ -3878,8 +3872,11 @@ function customCreateContractErrorHandle(el, text) {
 
 //if cancel contract button exist add the event for it
 function cancelContractEventInit() {
+    console.log('cancelContractEventInit');
     if ($('.cancel-contract-btn').length) {
+        console.log($('.cancel-contract-btn').length, '$(\'.cancel-contract-btn\').length');
         $('.cancel-contract-btn').click(async function() {
+            console.log('click');
             var this_btn = $(this);
 
             if (this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined) {
@@ -3925,7 +3922,7 @@ function cancelContractEventInit() {
                                 if (response.success) {
                                     basic.closeDialog();
                                     basic.showDialog(response.success, 'recipe-popup', null, true);
-                                    var contract_cancellation_function_abi = await dApp.assurance_proxy_instance.methods.breakContract(response.contract_data.patient, response.contract_data.dentist).encodeABI();
+                                    var contract_cancellation_function_abi = await dApp.assurance_proxy_instance.methods.breakContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist)).encodeABI();
 
                                     var select_options = '';
                                     if (response.contract_data.type == 'dentist') {
@@ -3995,18 +3992,12 @@ function cancelContractEventInit() {
                                             showLoader();
 
                                             var scanObject = {
-                                                'type' : 'dentist-cancelation',
-                                                'contract' : this_btn.attr('data-contract'),
-                                                'eth_fee' : eth_fee
-                                            };
-
-                                            scanObject['contractCancelation'] = {
-                                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + (gas_cost_for_contract_cancellation * 10 / 100))),
-                                                gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                from: global_state.account,
-                                                chainId: dApp.chain_id,
-                                                data: contract_cancellation_function_abi,
-                                                to: assurance_config.assurance_proxy_address
+                                                0 : eth_fee,
+                                                1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                2 : global_state.account,
+                                                3 : this_btn.attr('data-contract'),
+                                                4 : 'cancel',
+                                                5 : response.contract_data.type
                                             };
 
                                             generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
