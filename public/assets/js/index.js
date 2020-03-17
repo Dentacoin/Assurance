@@ -3882,6 +3882,7 @@ function cancelContractEventInit() {
             if (this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined) {
                 //CHECK FOR CONTRACT ON THE BLOCKCHAIN
                 var exiting_contract = await dApp.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
+                console.log(exiting_contract, 'exiting_contract');
                 if ((new Date(parseInt(exiting_contract[0]) * 1000)).getTime() > 0) {
                     if (metamask) {
                         basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
