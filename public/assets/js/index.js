@@ -1,4 +1,5 @@
 console.log('Don\'t touch the code. Or do ... ¯\\_(ツ)_/¯');
+
 checkIfCookie();
 
 var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore} = require('./helper');

@@ -73317,6 +73317,7 @@ module.exports = {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPla
 },{"../../../node_modules/eth-crypto":320,"../../../node_modules/keythereum":408,"../../../node_modules/web3":527}],547:[function(require,module,exports){
 (function (Buffer){
 console.log('Don\'t touch the code. Or do ... ¯\\_(ツ)_/¯');
+
 checkIfCookie();
 
 var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore} = require('./helper');
