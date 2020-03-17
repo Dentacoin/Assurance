@@ -994,11 +994,9 @@ class UserController extends Controller {
     protected function requestContractStatusChange(Request $request) {
         $this->validate($request, [
             'slug' => 'required',
-            'hash' => 'required',
             'to_status' => 'required'
         ], [
             'slug.required' => 'Slug is required.',
-            'hash.required' => 'Hash is required.',
             'to_status.required' => 'Status is required.'
         ]);
 
