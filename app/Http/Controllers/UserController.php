@@ -353,17 +353,7 @@ class UserController extends Controller {
 
             $initiator = (new APIRequestsController())->getUserData(session('logged_user')['id']);
 
-            $cancellation_reason = array(
-                'reason' => $data['reason'],
-                'comments' => $data['comments']
-            );
-
-            $contract->status = $data['status'];
-            $contract->cancelled_at = new \DateTime();
-            $contract->cancellation_reason = serialize($cancellation_reason);
-            $contract->save();
-
-            $this->changeToCancelledStatus($contract, $type, $initiator, $data['reason']);
+            $this->changeToCancelledStatus($contract, $type, $initiator, $data['reason'], $data['comments']);
 
             echo json_encode($response);
             die();
@@ -374,8 +364,21 @@ class UserController extends Controller {
         }
     }
 
-    public function changeToCancelledStatus($contract, $type, $initiator, $reason) {
+    public function changeToCancelledStatus($contract, $type, $initiator, $reason, $comments = null) {
         if($type == 'dentist') {
+            $cancellation_reason = array(
+                'reason' => $reason
+            );
+
+            if(!empty($comments)) {
+                $cancellation_reason['comments'] = $comments;
+            }
+
+            $contract->status = 'cancelled';
+            $contract->cancelled_at = new \DateTime();
+            $contract->cancellation_reason = serialize($cancellation_reason);
+            $contract->save();
+
             if(!empty($contract->patient_id)) {
                 $patient = (new APIRequestsController())->getUserData($contract->patient_id);
                 $patient_name = $patient->name;
@@ -394,6 +397,19 @@ class UserController extends Controller {
                 $message->setBody($body, 'text/html');
             });
         } else if($type == 'patient') {
+            $cancellation_reason = array(
+                'reason' => $reason
+            );
+
+            if(!empty($comments)) {
+                $cancellation_reason['comments'] = $comments;
+            }
+
+            $contract->status = 'cancelled';
+            $contract->cancelled_at = new \DateTime();
+            $contract->cancellation_reason = serialize($cancellation_reason);
+            $contract->save();
+
             $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
             $email_view = view('emails/patient-cancel-contract', ['dentist' => $dentist, 'patient_name' => $initiator->name, 'reason' => $reason, 'contract_slug' => $contract->slug]);
             $body = $email_view->render();
