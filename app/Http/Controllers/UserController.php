@@ -1028,7 +1028,7 @@ class UserController extends Controller {
                     $type = $request->input('type');
                     $reason = $request->input('reason');
                     if(!isset($type) || !isset($reason)) {
-                        return response()->json(['success' => true]);
+                        return response()->json(['error' => true]);
                     }
 
                     if($type == 'dentist') {
