@@ -1739,7 +1739,7 @@ var projectData = {
                                                                                     basic.showAlert('Your transaction and blockchain contract creation failed. Please try again later when the gas cost is low or contact <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a>. You can see your transaction on <a href="https://rinkeby.etherscan.io/tx/' + transactionHash + '" target="_blank" class="etherscan-hash">Etherscan</a>');
                                                                                 }
                                                                             }
-                                                                        }, 1000);
+                                                                        }, 3000);
                                                                     });
                                                                 }
                                                             }
@@ -1984,7 +1984,7 @@ var projectData = {
                                                                                 });
                                                                             }
                                                                         }
-                                                                    }, 1000);
+                                                                    }, 3000);
                                                                 });
                                                             }, 2000);
                                                         }
@@ -2316,7 +2316,7 @@ var projectData = {
                                                                                 }, 3000);
                                                                             }
                                                                         }
-                                                                    }, 1000);
+                                                                    }, 3000);
                                                                 });
                                                             }, 2000);
                                                         }
@@ -4143,7 +4143,7 @@ function cancelContractEventInit() {
                                                                     });
                                                                 }
                                                             }
-                                                        }, 1000);
+                                                        }, 3000);
                                                     });
                                                 }, 2000);
                                             }
