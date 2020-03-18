@@ -8,9 +8,13 @@
         .checkbox-container {
             .pretty {
                 white-space: normal;
+                label {
+                    text-indent: 30px !important;  
+                    cursor: pointer;
+                }
             }
             .pretty .state label:after, .pretty .state label:before {
-                top: 0 !important;  
+                top: 0 !important;
             }
         }
     }

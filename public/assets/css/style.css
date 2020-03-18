@@ -10731,6 +10731,9 @@ section.contract-proposal .wrapper .step-fields .singatures-row {
   background-color: #ebebeb; }
 .single-contract-view-section.awaiting-approval .checkbox-container .pretty {
   white-space: normal; }
+  .single-contract-view-section.awaiting-approval .checkbox-container .pretty label {
+    text-indent: 30px !important;
+    cursor: pointer; }
 .single-contract-view-section.awaiting-approval .checkbox-container .pretty .state label:after, .single-contract-view-section.awaiting-approval .checkbox-container .pretty .state label:before {
   top: 0 !important; }
 .single-contract-view-section .camping-withdraw-section .dentist-withdraw:hover .st0 {
