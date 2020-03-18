@@ -3983,6 +3983,9 @@ function cancelContractEventInit() {
 
                                     // proceed to dentacoin wallet scanning
                                     $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                                        console.log($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '', '$(\'.recipe-popup #cancel-contract-other-reason\').length && $(\'.recipe-popup #cancel-contract-other-reason\').val().trim() == \'\'');
+                                        console.log($('.recipe-popup #cancel-contract-reason').val() == null, '$(\'.recipe-popup #cancel-contract-reason\').val() == null');
+
                                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                         if (parseFloat(eth_fee) > current_user_eth_balance) {
                                             //not enough ETH balance
@@ -4008,6 +4011,8 @@ function cancelContractEventInit() {
                                             } else {
                                                 scanObject[6] = $('.recipe-popup #cancel-contract-reason option:selected').html();
                                             }
+
+                                            console.log(scanObject, 'scanObject');
 
                                             generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
                                         }

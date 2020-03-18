@@ -77196,13 +77196,11 @@ function cancelContractEventInit() {
     if ($('.cancel-contract-btn').length) {
         console.log($('.cancel-contract-btn').length, '$(\'.cancel-contract-btn\').length');
         $('.cancel-contract-btn').click(async function() {
-            console.log('click');
             var this_btn = $(this);
 
             if (this_btn.attr('data-patient') != undefined && this_btn.attr('data-dentist') != undefined) {
                 //CHECK FOR CONTRACT ON THE BLOCKCHAIN
                 var exiting_contract = await dApp.assurance_state_methods.getPatient(this_btn.attr('data-patient'), this_btn.attr('data-dentist'));
-                console.log(exiting_contract, 'exiting_contract');
                 if ((new Date(parseInt(exiting_contract[0]) * 1000)).getTime() > 0) {
                     if (metamask) {
                         basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
@@ -77305,10 +77303,17 @@ function cancelContractEventInit() {
 
                                     // proceed to dentacoin wallet scanning
                                     $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                                        console.log($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '', '$(\'.recipe-popup #cancel-contract-other-reason\').length && $(\'.recipe-popup #cancel-contract-other-reason\').val().trim() == \'\'');
+                                        console.log($('.recipe-popup #cancel-contract-reason').val() == null, '$(\'.recipe-popup #cancel-contract-reason\').val() == null');
+
                                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                         if (parseFloat(eth_fee) > current_user_eth_balance) {
                                             //not enough ETH balance
                                             basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                        } else if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
+                                            basic.showAlert('Please enter other reason.', '', true);
+                                        } else if ($('.recipe-popup #cancel-contract-reason').val() == null) {
+                                            basic.showAlert('Please select cancellation reason.', '', true);
                                         } else {
                                             showLoader();
 
@@ -77320,6 +77325,14 @@ function cancelContractEventInit() {
                                                 4 : 'cancel',
                                                 5 : response.contract_data.type
                                             };
+
+                                            if ($('.recipe-popup #cancel-contract-other-reason').length) {
+                                                scanObject[6] = $('.recipe-popup #cancel-contract-other-reason').val().trim();
+                                            } else {
+                                                scanObject[6] = $('.recipe-popup #cancel-contract-reason option:selected').html();
+                                            }
+
+                                            console.log(scanObject, 'scanObject');
 
                                             generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
                                         }
