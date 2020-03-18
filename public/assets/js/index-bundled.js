@@ -74822,47 +74822,8 @@ var projectData = {
                                 $('.steps-navigation a[data-step="popup-step-two"]').removeClass('disabled');
 
                                 //show CONTINUE TO BLOCKCHAIN BTN
-                                $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-one"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Shield check" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">is now funded!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should activate your contract before or on <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 proceed-to-second-step">STEP 2 >></a></div></div></div><div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-two"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Automatic payment icon" src="/assets/uploads/automatic-payments-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">MONTHLY AUTOPAYMENTS</h2><h3 class="fs-22 padding-top-5 lato-bold">Get your Assurance contract started!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">Your account is already funded. Last step: Activate your secure, automatic payments now! Due date: <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="blue-green-white-btn min-width-150 generate-qr-code-for-wallet-scanning margin-right-10 margin-bottom-10 width-xs-100 max-width-400 margin-right-xs-0"><svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;max-width: 25px;" xml:space="preserve" class="width-100 inline-block margin-right-10"><metadata><sfw xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds bottomLeftOrigin="true" height="24" width="24" x="0" y="0"></sliceSourceBounds></sfw></metadata><path d="M19,2c1.7,0,3,1.3,3,3v14c0,1.7-1.3,3-3,3H5c-1.7,0-3-1.3-3-3V5c0-1.7,1.3-3,3-3H19z M19,0H5C2.2,0,0,2.2,0,5v14c0,2.8,2.2,5,5,5h14c2.8,0,5-2.2,5-5V5C24,2.2,21.8,0,19,0z M11,8h-1V6h1v1h2v1h-1v1h-1V8z M13,20v-1h-1v1H13z M12,5V4h-2v1h1v1h1V5z M20,4v6h-1V9h-4V4H20z M19,8V5h-3v3H19z M5,10H4v1h2v-1H5z M5,13h1v1h1v-3H6v1H4v2h1V13z M10,14v2h1v-2H10z M14,4h-1v3h1V4z M14,9V8h-1v1H14z M17,7h1V6h-1V7z M7,6H6v1h1V6z M9,4v5H4V4H9z M8,5H5v3h3V5z M17,10v1h-1v-1h-2v1h-1v-1h-3V9H9v1H8v1h1v2h1v-1h1v2h1v-2h3v1h-2v1h2v1h1v-3h1v1h1v2h1v-1h1v-1h-1v-1h-1v-1h1v-1H17z M6,18h1v-1H6V18z M4,15h5v5H4V15z M5,19h3v-3H5V19z M17,16v-1h-1v1H17z M17,17h-1v1h-1v-1h-1v-1h1v-1h-2v-1h-1v2h-1v1h-1v3h1v-1h1v-1h2v2h1v-1h1v1h2v-1h1v-1h-2V17z M8,14h1v-1H8V14z M18,16v1h1v1h1v-3h-1v1H18z M20,20v-1h-1v1H20z M20,12v-1h-1v1H20z"/></svg> SCAN QR IN WALLET</a><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 call-recipe margin-bottom-10 width-xs-100 max-width-400">ACTIVATE NOW</a></div></div></div>');
+                                $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-one"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Shield check" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">is now funded!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should activate your contract before or on <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 proceed-to-second-step">STEP 2 >></a></div></div></div><div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-two"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Automatic payment icon" src="/assets/uploads/automatic-payments-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">MONTHLY AUTOPAYMENTS</h2><h3 class="fs-22 padding-top-5 lato-bold">Get your Assurance contract started!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">Your account is already funded. Last step: Activate your secure, automatic payments now! Due date: <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 call-recipe margin-bottom-10 width-xs-100 max-width-400">ACTIVATE NOW</a></div></div></div>');
                                 initPopupEvents();
-
-                                // proceed to dentacoin wallet scanning
-                                $('.generate-qr-code-for-wallet-scanning').click(async function() {
-                                    if (parseFloat(eth_fee) > parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)))) {
-                                        //not enough ETH balance
-                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
-                                    } else {
-                                        showLoader();
-
-                                        var scanObject = {
-                                            0 : eth_fee,
-                                            1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                            2 : global_state.account,
-                                            3 : $('.patient-contract-single-page-section').attr('data-contract')
-                                        };
-                                        var approvalProperty = false;
-                                        if (!approval_given) {
-                                            approvalProperty = true;
-                                        }
-
-                                        getContractData($('.init-contract-section').attr('data-contract'), async function(response) {
-                                            if (response.success) {
-                                                if(approvalProperty) {
-                                                    scanObject[4] = 'approval-creation';
-                                                } else {
-                                                    scanObject[4] = 'creation';
-                                                }
-
-                                                console.log(scanObject, 'scanObject');
-                                                console.log(JSON.stringify(scanObject), 'JSON.stringify(scanObject)');
-
-                                                generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
-                                            } else {
-                                                basic.showAlert('Something went wrong, please try again later.', '', true);
-                                                hideLoader();
-                                            }
-                                        });
-                                    }
-                                });
 
                                 $('.proceed-to-second-step').click(function() {
                                     $('.contract-response-message.popup-step-one').hide();
@@ -74903,7 +74864,8 @@ var projectData = {
                                                 recipe_title: 'Activate Autopayments',
                                                 recipe_subtitle: 'to never worry about a missed due date',
                                                 recipe_checkbox_text: 'By clicking on the button below you also agree that from now on your monthly premium amount will be automatically deducted from your wallet balance on the payment due date.',
-                                                btn_label: 'CONFIRM'
+                                                btn_label: 'CONFIRM',
+                                                type: 'qr-scan'
                                             },
                                             headers: {
                                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -74912,6 +74874,44 @@ var projectData = {
                                                 if (response.success) {
                                                     basic.closeDialog();
                                                     basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                                    // proceed to dentacoin wallet scanning
+                                                    $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                                                        if (parseFloat(eth_fee) > parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)))) {
+                                                            //not enough ETH balance
+                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                                        } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                            basic.showAlert('Please check the checkbox below to continue with the QR code generation.', '', true);
+                                                        } else {
+                                                            showLoader();
+
+                                                            var scanObject = {
+                                                                0 : eth_fee,
+                                                                1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                                2 : global_state.account,
+                                                                3 : $('.patient-contract-single-page-section').attr('data-contract')
+                                                            };
+                                                            var approvalProperty = false;
+                                                            if (!approval_given) {
+                                                                approvalProperty = true;
+                                                            }
+
+                                                            getContractData($('.init-contract-section').attr('data-contract'), async function(response) {
+                                                                if (response.success) {
+                                                                    if(approvalProperty) {
+                                                                        scanObject[4] = 'approval-creation';
+                                                                    } else {
+                                                                        scanObject[4] = 'creation';
+                                                                    }
+
+                                                                    generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
+                                                                } else {
+                                                                    basic.showAlert('Something went wrong, please try again later.', '', true);
+                                                                    hideLoader();
+                                                                }
+                                                            });
+                                                        }
+                                                    });
 
                                                     $('.recipe-popup .usd_val span').html($('.patient-contract-single-page-section').attr('data-monthly-premium'));
                                                     $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
@@ -75115,29 +75115,6 @@ var projectData = {
 
                             var contract_approval_function_abi = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient')).encodeABI();
 
-                            // proceed to dentacoin wallet scanning
-                            $('.generate-qr-code-for-wallet-scanning').click(async function() {
-                                var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                                if (parseFloat(eth_fee) > current_user_eth_balance) {
-                                    //not enough ETH balance
-                                    basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
-                                } else if (!$('input#read-the-contract-details').is(':checked')) {
-                                    basic.showAlert('Please check the checkbox below to continue with the QR code generation.', '', true);
-                                } else {
-                                    showLoader();
-
-                                    var scanObject = {
-                                        0 : eth_fee,
-                                        1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                        2 : global_state.account,
-                                        3 : $('.single-contract-view-section').attr('data-contract'),
-                                        4 : 'dentist-approval'
-                                    };
-
-                                    generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
-                                }
-                            });
-
                             $('.approve-contract-recipe').click(function() {
                                 if (metamask) {
                                     basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
@@ -75170,7 +75147,8 @@ var projectData = {
                                         recipe_title: 'Approve This Contract',
                                         recipe_subtitle: 'and withdraw monthly payments',
                                         recipe_checkbox_text: 'By clicking on the button below you confirm that from now on every month you will withdraw the monthly premium amount on the payment due date or later.',
-                                        btn_label: 'APPROVE NOW'
+                                        btn_label: 'APPROVE NOW',
+                                        type: 'qr-scan'
                                     };
 
                                     if ($(this).attr('data-sent-eth-to-dentist') == 'true') {
@@ -75190,6 +75168,29 @@ var projectData = {
                                             if (response.success) {
                                                 basic.closeDialog();
                                                 basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                                // proceed to dentacoin wallet scanning
+                                                $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                                                    var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+                                                    if (parseFloat(eth_fee) > current_user_eth_balance) {
+                                                        //not enough ETH balance
+                                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                                    } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                        basic.showAlert('Please check the checkbox below to continue with the QR code generation.', '', true);
+                                                    } else {
+                                                        showLoader();
+
+                                                        var scanObject = {
+                                                            0 : eth_fee,
+                                                            1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                            2 : global_state.account,
+                                                            3 : $('.single-contract-view-section').attr('data-contract'),
+                                                            4 : 'dentist-approval'
+                                                        };
+
+                                                        generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
+                                                    }
+                                                });
 
                                                 $('.recipe-popup .ether-fee .field').html(eth_fee);
 
@@ -75439,7 +75440,7 @@ var projectData = {
                             projectData.initiators.initFlipClockTimer(contract_next_payment + dApp.grace_period - now_timestamp);
                         } else {
                             // ready to withdraw
-                            $('.camping-withdraw-section').html('<div class="row"><div class="col-xs-12 text-center padding-top-30 padding-bottom-30"><div class="fs-20">Your money is waiting for you.</div><div class="padding-bottom-20 fs-20">Withdraw the Dentacoin tokens collected by <span class="calibri-bold">'+$('.camping-withdraw-section').attr('data-patient-name')+'</span>.</div><div class="text-center"><a href="javascript:void(0)" class="blue-green-white-btn min-width-250 generate-qr-code-for-wallet-scanning inline-block-top margin-right-10 margin-bottom-10 width-xs-100 max-width-400 margin-right-xs-0"><svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;max-width: 25px;" xml:space="preserve" class="width-100 inline-block margin-right-10"><metadata><sfw xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds bottomLeftOrigin="true" height="24" width="24" x="0" y="0"></sliceSourceBounds></sfw></metadata><path d="M19,2c1.7,0,3,1.3,3,3v14c0,1.7-1.3,3-3,3H5c-1.7,0-3-1.3-3-3V5c0-1.7,1.3-3,3-3H19z M19,0H5C2.2,0,0,2.2,0,5v14c0,2.8,2.2,5,5,5h14c2.8,0,5-2.2,5-5V5C24,2.2,21.8,0,19,0z M11,8h-1V6h1v1h2v1h-1v1h-1V8z M13,20v-1h-1v1H13z M12,5V4h-2v1h1v1h1V5z M20,4v6h-1V9h-4V4H20z M19,8V5h-3v3H19z M5,10H4v1h2v-1H5z M5,13h1v1h1v-3H6v1H4v2h1V13z M10,14v2h1v-2H10z M14,4h-1v3h1V4z M14,9V8h-1v1H14z M17,7h1V6h-1V7z M7,6H6v1h1V6z M9,4v5H4V4H9z M8,5H5v3h3V5z M17,10v1h-1v-1h-2v1h-1v-1h-3V9H9v1H8v1h1v2h1v-1h1v2h1v-2h3v1h-2v1h2v1h1v-3h1v1h1v2h1v-1h1v-1h-1v-1h-1v-1h1v-1H17z M6,18h1v-1H6V18z M4,15h5v5H4V15z M5,19h3v-3H5V19z M17,16v-1h-1v1H17z M17,17h-1v1h-1v-1h-1v-1h1v-1h-2v-1h-1v2h-1v1h-1v3h1v-1h1v-1h2v2h1v-1h1v1h2v-1h1v-1h-2V17z M8,14h1v-1H8V14z M18,16v1h1v1h1v-3h-1v1H18z M20,20v-1h-1v1H20z M20,12v-1h-1v1H20z"/></svg> SCAN QR IN WALLET</a><a href="javascript:void(0)" class="dentist-withdraw white-blue-green-btn inline-block max-width-280 max-width-xs-400 margin-bottom-10 width-100"><svg class="inline-block-top margin-right-5" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 75.7 74.3" style="enable-background:new 0 0 75.7 74.3;max-width: 25px;" xml:space="preserve"><style type="text/css">.st0{fill:#FFFFFF;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds bottomLeftOrigin="true" height="74.3" width="75.7" x="12.2" y="37.8"></sliceSourceBounds></sfw></metadata><path class="st0" d="M29.7,32.2h-7.5l0,0c-0.1,0-0.2,0-0.3,0h-0.1c-0.1,0-0.1,0-0.2,0.1c-0.1,0-0.1,0-0.2,0.1c-0.1,0-0.1,0.1-0.2,0.1c-0.1,0-0.1,0.1-0.2,0.1l-0.1,0.1c-0.1,0-0.1,0.1-0.2,0.2l0,0L20.6,33c0,0.1-0.1,0.1-0.1,0.2s-0.1,0.1-0.1,0.2c0,0.1-0.1,0.1-0.1,0.2s0,0.1-0.1,0.2c0,0.1,0,0.1,0,0.2s0,0.1,0,0.2v0.1l0,0c0,0.1,0,0.2,0,0.2c0,0.1,0,0.1,0,0.2c0,0.1,0,0.1,0.1,0.2c0,0.1,0,0.1,0.1,0.2c0,0.1,0.1,0.1,0.1,0.2s0.1,0.1,0.1,0.2l0.1,0.1c0,0.1,0.1,0.1,0.1,0.2l0,0l15.4,14.5c0.4,0.4,0.9,0.5,1.4,0.5s1-0.2,1.4-0.5l15.4-14.5c0.8-0.8,0.8-2,0.1-2.8c-0.4-0.5-1-0.7-1.6-0.6h-0.1h-7.5v-2.9c0-1.1-0.9-2-2-2s-2,0.9-2,2v4.9c0,1.1,0.9,2,2,2H48l-10.4,9.8l-10.4-9.8h4.4c1.1,0,2-0.9,2-2v-4.9c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2L29.7,32.2L29.7,32.2z"/><path class="st0" d="M29.7,23.3c0,1.1,0.9,2,2,2c1.1,0,2-0.9,2-2v-3.2c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2V23.3z"/><path class="st0" d="M41.3,23.3c0,1.1,0.9,2,2,2s2-0.9,2-2v-3.2c0-1.1-0.9-2-2-2s-2,0.9-2,2V23.3z"/><path class="st0" d="M29.7,12.8c0,1.1,0.9,2,2,2c1.1,0,2-0.9,2-2v-1.4c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2V12.8z"/><path class="st0" d="M41.3,12.8c0,1.1,0.9,2,2,2s2-0.9,2-2v-1.4c0-1.1-0.9-2-2-2s-2,0.9-2,2V12.8z"/><path class="st0" d="M31.7,4.1c1.1,0,2-0.9,2-2V2c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2v0.1C29.7,3.2,30.6,4.1,31.7,4.1z"/><path class="st0" d="M43.3,4.1c1.1,0,2-0.9,2-2V2c0-1.1-0.9-2-2-2s-2,0.9-2,2v0.1C41.3,3.2,42.2,4.1,43.3,4.1z"/><path class="st0" d="M75.7,51.4V37.2c0-9.4-9.2-17.7-23.4-21.2c-1.1-0.3-2.2,0.4-2.4,1.5c-0.3,1.1,0.4,2.2,1.5,2.4c12.4,3,20.4,9.8,20.4,17.3c0,10.2-15.5,18.9-33.9,18.9S4,47.5,4,37.2c0-7.3,7.8-14.1,19.9-17.2c1.1-0.3,1.7-1.4,1.4-2.4c-0.3-1.1-1.4-1.7-2.4-1.4C9,19.8,0,28,0,37.2v14.2c0,12.8,16.6,22.9,37.9,22.9S75.7,64.2,75.7,51.4z M71.7,47.6v3.9c0,2.9-1.2,5.7-3.5,8.1V51C69.5,49.9,70.7,48.8,71.7,47.6z M11.2,53.6c1.4,0.8,2.9,1.6,4.6,2.3v9.7c-1.7-0.8-3.2-1.7-4.6-2.7V53.6zM19.8,57.4c1.8,0.6,3.6,1,5.5,1.4v10.1c-1.9-0.4-3.8-1-5.5-1.6V57.4z M29.3,59.5c2.1,0.3,4.3,0.5,6.5,0.5v10.2c-2.2-0.1-4.4-0.3-6.5-0.6V59.5z M39.8,60c2.2-0.1,4.3-0.2,6.3-0.5v10.2c-2,0.3-4.2,0.5-6.3,0.6V60z M50.1,58.8c1.9-0.4,3.8-0.9,5.5-1.4v9.9c-1.7,0.6-3.6,1.1-5.5,1.6C50.1,68.9,50.1,58.8,50.1,58.8z M59.7,56c1.6-0.7,3.2-1.4,4.6-2.3v9.4c-1.4,1-2.9,1.8-4.6,2.6V56z M3.9,51.4v-3.9c1,1.2,2.1,2.3,3.3,3.3v8.6C5.1,57,3.9,54.3,3.9,51.4z"/></svg> WITHDRAW NOW</a></div></div></div>');
+                            $('.camping-withdraw-section').html('<div class="row"><div class="col-xs-12 text-center padding-top-30 padding-bottom-30"><div class="fs-20">Your money is waiting for you.</div><div class="padding-bottom-20 fs-20">Withdraw the Dentacoin tokens collected by <span class="calibri-bold">'+$('.camping-withdraw-section').attr('data-patient-name')+'</span>.</div><div class="text-center"><a href="javascript:void(0)" class="dentist-withdraw white-blue-green-btn inline-block max-width-280 max-width-xs-400 margin-bottom-10 width-100"><svg class="inline-block-top margin-right-5" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 75.7 74.3" style="enable-background:new 0 0 75.7 74.3;max-width: 25px;" xml:space="preserve"><style type="text/css">.st0{fill:#FFFFFF;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds bottomLeftOrigin="true" height="74.3" width="75.7" x="12.2" y="37.8"></sliceSourceBounds></sfw></metadata><path class="st0" d="M29.7,32.2h-7.5l0,0c-0.1,0-0.2,0-0.3,0h-0.1c-0.1,0-0.1,0-0.2,0.1c-0.1,0-0.1,0-0.2,0.1c-0.1,0-0.1,0.1-0.2,0.1c-0.1,0-0.1,0.1-0.2,0.1l-0.1,0.1c-0.1,0-0.1,0.1-0.2,0.2l0,0L20.6,33c0,0.1-0.1,0.1-0.1,0.2s-0.1,0.1-0.1,0.2c0,0.1-0.1,0.1-0.1,0.2s0,0.1-0.1,0.2c0,0.1,0,0.1,0,0.2s0,0.1,0,0.2v0.1l0,0c0,0.1,0,0.2,0,0.2c0,0.1,0,0.1,0,0.2c0,0.1,0,0.1,0.1,0.2c0,0.1,0,0.1,0.1,0.2c0,0.1,0.1,0.1,0.1,0.2s0.1,0.1,0.1,0.2l0.1,0.1c0,0.1,0.1,0.1,0.1,0.2l0,0l15.4,14.5c0.4,0.4,0.9,0.5,1.4,0.5s1-0.2,1.4-0.5l15.4-14.5c0.8-0.8,0.8-2,0.1-2.8c-0.4-0.5-1-0.7-1.6-0.6h-0.1h-7.5v-2.9c0-1.1-0.9-2-2-2s-2,0.9-2,2v4.9c0,1.1,0.9,2,2,2H48l-10.4,9.8l-10.4-9.8h4.4c1.1,0,2-0.9,2-2v-4.9c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2L29.7,32.2L29.7,32.2z"/><path class="st0" d="M29.7,23.3c0,1.1,0.9,2,2,2c1.1,0,2-0.9,2-2v-3.2c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2V23.3z"/><path class="st0" d="M41.3,23.3c0,1.1,0.9,2,2,2s2-0.9,2-2v-3.2c0-1.1-0.9-2-2-2s-2,0.9-2,2V23.3z"/><path class="st0" d="M29.7,12.8c0,1.1,0.9,2,2,2c1.1,0,2-0.9,2-2v-1.4c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2V12.8z"/><path class="st0" d="M41.3,12.8c0,1.1,0.9,2,2,2s2-0.9,2-2v-1.4c0-1.1-0.9-2-2-2s-2,0.9-2,2V12.8z"/><path class="st0" d="M31.7,4.1c1.1,0,2-0.9,2-2V2c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2v0.1C29.7,3.2,30.6,4.1,31.7,4.1z"/><path class="st0" d="M43.3,4.1c1.1,0,2-0.9,2-2V2c0-1.1-0.9-2-2-2s-2,0.9-2,2v0.1C41.3,3.2,42.2,4.1,43.3,4.1z"/><path class="st0" d="M75.7,51.4V37.2c0-9.4-9.2-17.7-23.4-21.2c-1.1-0.3-2.2,0.4-2.4,1.5c-0.3,1.1,0.4,2.2,1.5,2.4c12.4,3,20.4,9.8,20.4,17.3c0,10.2-15.5,18.9-33.9,18.9S4,47.5,4,37.2c0-7.3,7.8-14.1,19.9-17.2c1.1-0.3,1.7-1.4,1.4-2.4c-0.3-1.1-1.4-1.7-2.4-1.4C9,19.8,0,28,0,37.2v14.2c0,12.8,16.6,22.9,37.9,22.9S75.7,64.2,75.7,51.4z M71.7,47.6v3.9c0,2.9-1.2,5.7-3.5,8.1V51C69.5,49.9,70.7,48.8,71.7,47.6z M11.2,53.6c1.4,0.8,2.9,1.6,4.6,2.3v9.7c-1.7-0.8-3.2-1.7-4.6-2.7V53.6zM19.8,57.4c1.8,0.6,3.6,1,5.5,1.4v10.1c-1.9-0.4-3.8-1-5.5-1.6V57.4z M29.3,59.5c2.1,0.3,4.3,0.5,6.5,0.5v10.2c-2.2-0.1-4.4-0.3-6.5-0.6V59.5z M39.8,60c2.2-0.1,4.3-0.2,6.3-0.5v10.2c-2,0.3-4.2,0.5-6.3,0.6V60z M50.1,58.8c1.9-0.4,3.8-0.9,5.5-1.4v9.9c-1.7,0.6-3.6,1.1-5.5,1.6C50.1,68.9,50.1,58.8,50.1,58.8z M59.7,56c1.6-0.7,3.2-1.4,4.6-2.3v9.4c-1.4,1-2.9,1.8-4.6,2.6V56z M3.9,51.4v-3.9c1,1.2,2.1,2.3,3.3,3.3v8.6C5.1,57,3.9,54.3,3.9,51.4z"/></svg> WITHDRAW NOW</a></div></div></div>');
 
                             var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                             const on_page_load_gwei = ethgasstation_json.safeLow;
@@ -75455,27 +75456,6 @@ var projectData = {
                             var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_withdraw * on_page_load_gas_price).toString(), 'ether');
 
                             var withdraw_function_abi = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).encodeABI();
-
-                            // proceed to dentacoin wallet scanning
-                            $('.generate-qr-code-for-wallet-scanning').click(async function() {
-                                var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                                if (parseFloat(eth_fee) > current_user_eth_balance) {
-                                    //not enough ETH balance
-                                    basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
-                                } else {
-                                    showLoader();
-
-                                    var scanObject = {
-                                        0 : eth_fee,
-                                        1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                        2 : global_state.account,
-                                        3 : $('.single-contract-view-section').attr('data-contract'),
-                                        4 : 'active-withdraw'
-                                    };
-
-                                    generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
-                                }
-                            });
 
                             $('.dentist-withdraw').click(async function() {
                                 if (metamask) {
@@ -75508,7 +75488,8 @@ var projectData = {
                                             recipe_title: 'WITHDRAW NOW',
                                             recipe_subtitle: '',
                                             recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.',
-                                            btn_label: 'PAY NOW'
+                                            btn_label: 'PAY NOW',
+                                            type: 'qr-scan'
                                         },
                                         headers: {
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -75517,6 +75498,29 @@ var projectData = {
                                             if (response.success) {
                                                 basic.closeDialog();
                                                 basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                                                // proceed to dentacoin wallet scanning
+                                                $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                                                    var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+                                                    if (parseFloat(eth_fee) > current_user_eth_balance) {
+                                                        //not enough ETH balance
+                                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                                    } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                        basic.showAlert('Please check the checkbox below to continue with the QR code generation.', '', true);
+                                                    } else {
+                                                        showLoader();
+
+                                                        var scanObject = {
+                                                            0 : eth_fee,
+                                                            1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                            2 : global_state.account,
+                                                            3 : $('.single-contract-view-section').attr('data-contract'),
+                                                            4 : 'active-withdraw'
+                                                        };
+
+                                                        generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
+                                                    }
+                                                });
 
                                                 $('.recipe-popup .ether-fee .field').html(eth_fee);
 
@@ -77234,7 +77238,7 @@ function cancelContractEventInit() {
                                 recipe_subtitle: this_btn.attr('data-recipe-subtitle'),
                                 recipe_checkbox_text: this_btn.attr('data-recipe-checkbox-text'),
                                 btn_label: 'CANCEL NOW',
-                                type: 'cancel-with-blockchain-transaction'
+                                type: 'qr-scan'
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

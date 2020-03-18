@@ -215,8 +215,10 @@ class UserController extends Controller {
             }
 
             $requestType = $request->input('type');
-            if(!empty($requestType) && $requestType == 'cancel-with-blockchain-transaction') {
-                $params['cancel_with_blockchain_transaction'] = true;
+            if(!empty($requestType)) {
+                if($requestType == 'qr-scan') {
+                    $params['qr_scan'] = true;
+                }
             }
 
             $view = view('partials/transaction-recipe-popup', $params);
