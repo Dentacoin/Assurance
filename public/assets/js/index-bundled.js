@@ -74387,6 +74387,8 @@ var projectData = {
                         if ($('.contract-header').hasClass('awaiting-payment')) {
                             // reading the monthly premium from DB, because contract is not yet created on the blockchain
                             var dcn_needed_to_be_payed_to_dentist = parseInt($('.patient-contract-single-page-section').attr('data-monthly-premium'));
+
+                            trackForContractStatusChange($('.patient-contract-single-page-section').attr('data-contract'), 'awaiting-payment');
                         } else if ($('.contract-header').hasClass('awaiting-approval')) {
                             // reading the monthly premium from the smart contract
                             var dcn_needed_to_be_payed_to_dentist = parseInt(on_load_exiting_contract[5]);
@@ -74438,6 +74440,8 @@ var projectData = {
                     }
 
                     if ($('.contract-header').hasClass('active')) {
+                        trackForContractStatusChange($('.patient-contract-single-page-section').attr('data-contract'), 'active');
+
                         var next_payment_timestamp_date_obj;
                         var next_payment_timestamp_unix;
                         var next_payment_timestamp;
@@ -75076,6 +75080,10 @@ var projectData = {
                         trackForContractStatusChange($('.single-contract-view-section').attr('data-contract'), 'awaiting-payment');
                     } else if ($('.contract-header').hasClass('pending')) {
                         trackForContractStatusChange($('.single-contract-view-section').attr('data-contract'), 'pending');
+                    } else if ($('.contract-header').hasClass('active')) {
+                        trackForContractStatusChange($('.single-contract-view-section').attr('data-contract'), 'active');
+                    } else if ($('.contract-header').hasClass('awaiting-approval')) {
+                        trackForContractStatusChange($('.single-contract-view-section').attr('data-contract'), 'awaiting-approval');
                     }
 
                     if ($('.contract-header').hasClass('awaiting-payment') || $('.contract-header').hasClass('awaiting-approval')) {
