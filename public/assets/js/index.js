@@ -1227,7 +1227,7 @@ var projectData = {
                                                     dataType: 'json',
                                                     data: {
                                                         type: 'check-up',
-                                                        contract: $('.patient-contract-single-page-section').attr('data-slug'),
+                                                        contract: $('.patient-contract-single-page-section').attr('data-contract'),
                                                         date: $('.camping-for-popups .datepicker').val().trim()
                                                     },
                                                     headers: {
@@ -1283,7 +1283,7 @@ var projectData = {
                                                     dataType: 'json',
                                                     data: {
                                                         type: 'teeth-cleaning',
-                                                        contract: $('.patient-contract-single-page-section').attr('data-slug'),
+                                                        contract: $('.patient-contract-single-page-section').attr('data-contract'),
                                                         date: $('.camping-for-popups .datepicker').val().trim()
                                                     },
                                                     headers: {
@@ -1333,7 +1333,7 @@ var projectData = {
                                                     dataType: 'json',
                                                     data: {
                                                         type: 'check-up-and-teeth-cleaning',
-                                                        contract: $('.patient-contract-single-page-section').attr('data-slug'),
+                                                        contract: $('.patient-contract-single-page-section').attr('data-contract'),
                                                         check_up_date: $('.camping-for-popups .check-up-datepicker').val().trim(),
                                                         teeth_cleaning_date: $('.camping-for-popups .teeth-cleaning-datepicker').val().trim()
                                                     },
@@ -5103,6 +5103,7 @@ function generateQRCodeForDentacoinWalletScan(object) {
 
 // track for $contract status change
 function trackForContractStatusChange(contract, currentStatus) {
+    console.log(contract, currentStatus, 'trackForContractStatusChange');
     var changeInStatusFound = false;
     setInterval(function() {
         $.ajax({
