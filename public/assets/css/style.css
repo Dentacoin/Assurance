@@ -10729,6 +10729,10 @@ section.contract-proposal .wrapper .step-fields .singatures-row {
 
 .single-contract-view-section.cancelled .contract-participant {
   background-color: #ebebeb; }
+.single-contract-view-section.awaiting-approval .checkbox-container .pretty {
+  white-space: normal; }
+.single-contract-view-section.awaiting-approval .checkbox-container .pretty .state label:after, .single-contract-view-section.awaiting-approval .checkbox-container .pretty .state label:before {
+  top: 0 !important; }
 .single-contract-view-section .camping-withdraw-section .dentist-withdraw:hover .st0 {
   fill: #126585; }
 .single-contract-view-section .camping-withdraw-time-left-section h2 {

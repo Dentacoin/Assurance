@@ -4,6 +4,16 @@
             background-color: #ebebeb;
         }
     }
+    &.awaiting-approval {
+        .checkbox-container {
+            .pretty {
+                white-space: normal;
+            }
+            .pretty .state label:after, .pretty .state label:before {
+                top: 0 !important;  
+            }
+        }
+    }
     .camping-withdraw-section {
         .dentist-withdraw {
             &:hover {
