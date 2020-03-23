@@ -182,10 +182,10 @@ class UserController extends Controller {
     }
 
     protected function getRecipePopup(Request $request) {
-        $current_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+        /*$current_user_data = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         if(empty($current_user_data->dcn_address)) {
             return response()->json(['error' => 'You cannot execute blockchain transactions without having your Wallet Address saved in your profile. Please save your Wallet Address in your profile and try again.']);
-        }
+        }*/
 
         $contract = TemporallyContract::where(array('slug' => $request->input('contract')))->get()->first();
         if($contract) {
@@ -235,7 +235,7 @@ class UserController extends Controller {
                 'type' => $type
             );
 
-            return response()->json(['success' => $view, 'contract_data' => $contract_data, 'dcn_address' => $current_user_data->dcn_address]);
+            return response()->json(['success' => $view, 'contract_data' => $contract_data/*, 'dcn_address' => $current_user_data->dcn_address*/]);
         } else {
             return response()->json(['error' => 'Transaction failed, please try again later.']);
         }
