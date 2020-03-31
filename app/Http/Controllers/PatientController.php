@@ -649,7 +649,7 @@ class PatientController extends Controller {
                     $currentRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd);
                     $aMustRecordsCount = $contract->check_ups_per_year;
 
-                    $email_view = view('emails/patient-recording-check-up', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d H:i:s', strtotime($request->input('date')))]);
+                    $email_view = view('emails/patient-recording-check-up', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d', strtotime($request->input('date')))]);
                     $email_body = $email_view->render();
                     $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
                     $type = 'check-ups';
@@ -657,7 +657,7 @@ class PatientController extends Controller {
                     $currentRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd);
                     $aMustRecordsCount = $contract->teeth_cleaning_per_year;
 
-                    $email_view = view('emails/patient-recording-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d H:i:s', strtotime($request->input('date')))]);
+                    $email_view = view('emails/patient-recording-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d', strtotime($request->input('date')))]);
                     $email_body = $email_view->render();
                     $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
                     $type = 'teeth cleaning';
@@ -683,7 +683,7 @@ class PatientController extends Controller {
                         return response()->json(array('success' => true));
                     }
                 } else {
-                    return response()->json(['error' => true, 'message' => 'Already have recorded ' . $aMustRecordsCount . ' ' . $type . ' as agreed in the contract terms.']);
+                    return response()->json(['error' => true, 'message' => 'You already have ' . $aMustRecordsCount . ' ' . $type . ' recorded, as agreed in the contract terms.']);
                 }
             } else if($request->input('type') == 'check-up-and-teeth-cleaning') {
                 if(empty($check_up_date) && empty($teeth_cleaning_date)) {
@@ -712,7 +712,7 @@ class PatientController extends Controller {
 
                     if(isset($checkUp) && isset($teethCleaning)) {
                         // CHECK UP AND TEETH CLEANING
-                        $email_view = view('emails/patient-recording-check-up-and-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'check_up_date' => date('Y-m-d H:i:s', strtotime($check_up_date)), 'teeth_cleaning_date' => date('Y-m-d H:i:s', strtotime($teeth_cleaning_date))]);
+                        $email_view = view('emails/patient-recording-check-up-and-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'check_up_date' => date('Y-m-d', strtotime($check_up_date)), 'teeth_cleaning_date' => date('Y-m-d H:i:s', strtotime($teeth_cleaning_date))]);
                         $email_body = $email_view->render();
                         $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
 
