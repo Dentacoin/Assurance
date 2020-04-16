@@ -25,9 +25,9 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.54">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.54">
-    <link rel="stylesheet" type="text/css" href="https://dentacoin.com/assets/libs/dentacoin-login-gateway/css/dentacoin-login-gateway-style.css?v=1.0.54"/>
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.55">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.55">
+    <link rel="stylesheet" type="text/css" href="https://dentacoin.com/assets/libs/dentacoin-login-gateway/css/dentacoin-login-gateway-style.css?v=1.0.55"/>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
@@ -262,11 +262,11 @@
     </div>
 
     {{--/Show the sticky calculate button only for dentists--}}
-    <script src="https://dentacoin.com/assets/js/basic.js?v=1.0.54"></script>
-    <script src="/dist/js/front-libs-script.js?v=1.0.54"></script>
+    <script src="https://dentacoin.com/assets/js/basic.js?v=1.0.55"></script>
+    <script src="/dist/js/front-libs-script.js?v=1.0.55"></script>
     {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-    <script src="https://dentacoin.com/assets/libs/dentacoin-login-gateway/js/init.js?v=1.0.54"></script>
-    <script src="/assets/js/index-bundled.js?v=1.0.54"></script>
+    <script src="https://dentacoin.com/assets/libs/dentacoin-login-gateway/js/init.js?v=1.0.55"></script>
+    <script src="/assets/js/index-bundled.js?v=1.0.55"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
     {{--Multiple errors from laravel validation--}}

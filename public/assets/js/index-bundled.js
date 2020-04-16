@@ -73327,12 +73327,12 @@ var {assurance_config} = require('./assurance_config');
 
 $(document).ready(async function() {
     //if get parameter is passed show loginform
-    var get_params = projectData.utils.getGETParameters();
+    /*var get_params = projectData.utils.getGETParameters();
     if ((basic.property_exists(get_params, 'show-login') || basic.property_exists(get_params, 'inviter')) && !$('body').hasClass('logged-in')) {
         openLoginSigninPopup();
     } else if (basic.property_exists(get_params, 'show-patient-register')) {
         openLoginSigninPopup(undefined, 'show-patient-register');
-    }
+    }*/
 
     await dApp.init();
 
@@ -73836,10 +73836,6 @@ var projectData = {
             }
             return true;
         },
-        getGETParameters: function() {
-            var prmstr = window.location.search.substr(1);
-            return prmstr != null && prmstr != "" ? projectData.utils.transformToAssocArray(prmstr) : {};
-        },
         convertUsdToDcn: function(usd_val) {
             if ($("[data-dcn-for-one-usd]").length) {
                 return parseInt($("[data-dcn-for-one-usd]").attr('data-dcn-for-one-usd')) * usd_val;
@@ -73847,10 +73843,14 @@ var projectData = {
                 return false;
             }
         },
+        getGETParameters: function() {
+            var prmstr = window.location.search.substr(1);
+            return prmstr != null && prmstr != "" ? projectData.utils.transformToAssocArray(prmstr) : {};
+        },
         transformToAssocArray: function(prmstr) {
             var params = {};
             var prmarr = prmstr.split("&");
-            for ( var i = 0; i < prmarr.length; i++) {
+            for (var i = 0, len = prmarr.length; i < len; i+=1) {
                 var tmparr = prmarr[i].split("=");
                 params[tmparr[0]] = tmparr[1];
             }
@@ -73978,7 +73978,7 @@ var projectData = {
                 if ($('section#find-your-dentist select.combobox').length) {
                     $('section#find-your-dentist select.combobox').on('keydown', function (e) {
                         if (e.which == 13) {
-                            $('.show-login-signin').click();
+                            $('.open-dentacoin-gateway').click();
                         }
                     });
 
@@ -73987,7 +73987,7 @@ var projectData = {
 
                     //on enter press show login popup
                     $('section#find-your-dentist select.combobox').on('change', function() {
-                        $('.show-login-signin').click();
+                        $('.open-dentacoin-gateway').click();
                     });
                 }
 
@@ -74557,7 +74557,7 @@ var projectData = {
                                                         hideLoader();
                                                         if (response.success) {
                                                             $('.camping-for-popups').html('');
-                                                            basic.showAlert('Check-up recorded successfully. Now your dentist have to approve it.', '', true);
+                                                            basic.showAlert('Check-up recorded successfully. Now your dentist has to approve it.', '', true);
                                                         } else if (response.error) {
                                                             sentRecord = false;
                                                             basic.showAlert(response.message, '', true);
@@ -75129,7 +75129,7 @@ var projectData = {
                                 } else {
                                     //custom
                                     if (!$('#read-the-contract-details').is(':checked')) {
-                                        basic.showAlert('Please check the checkbox below to continue with the contract approval.', '', true);
+                                        basic.showAlert('Please check the checkbox above to continue with the contract approval.', '', true);
                                         return false;
                                     }
 
@@ -75496,7 +75496,7 @@ var projectData = {
                                             recipe_title: 'WITHDRAW NOW',
                                             recipe_subtitle: '',
                                             recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.',
-                                            btn_label: 'PAY NOW',
+                                            btn_label: 'WITHDRAW NOW',
                                             type: 'qr-scan'
                                         },
                                         headers: {
@@ -76540,14 +76540,23 @@ $(document).on('click', '.close-popup', function() {
     basic.closeDialog();
 });
 
-var hidden_popup_content = $('.hidden-login-form').html();
+/*var hidden_popup_content = $('.hidden-login-form').html();
 //call the popup for login/sign for patient and dentist
 function bindLoginSigninPopupShow() {
     $(document).on('click', '.show-login-signin', function() {
         openLoginSigninPopup($(this));
     });
 }
-bindLoginSigninPopupShow();
+bindLoginSigninPopupShow();*/
+
+if (!$('body').hasClass('logged-in')) {
+    dcnGateway.init({
+        'platform' : 'assurance',
+        /*'environment' : 'staging',*/
+        'forgotten_password_link' : 'https://assurance.dentacoin.com/forgotten-password'
+    });
+}
+
 
 function openLoginSigninPopup(this_show_login_btn, type) {
     basic.closeDialog();
