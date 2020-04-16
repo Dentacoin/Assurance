@@ -57,7 +57,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::group(['prefix' => 'patient', 'middleware' => 'HandlePatientSession'], function () {
         Route::get('/', 'PatientController@getPatientAccess')->name('patient-access');
 
-        Route::post('/authenticate', 'PatientController@authenticate')->name('authenticate-patient');
+        /*Route::post('/authenticate', 'PatientController@authenticate')->name('authenticate-patient');*/
 
         Route::post('/get-invite-dentists-popup', 'PatientController@getInviteDentistsPopup')->name('get-invite-dentists-popup');
 
@@ -138,9 +138,11 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/get-recipe-popup', 'UserController@getRecipePopup')->middleware('HandleUserSession')->name('get-recipe-popup');
 
-    Route::post('/dentist-register', 'DentistController@register')->name('dentist-register');
+    /*Route::post('/dentist-register', 'DentistController@register')->name('dentist-register');
 
-    Route::post('/dentist-login', 'DentistController@login')->name('dentist-login');
+    Route::post('/dentist-login', 'DentistController@login')->name('dentist-login');*/
+
+    Route::post('/authenticate-user', 'UserController@authenticateUser')->name('authenticate-user');
 
     Route::get('/ipfs-hashes', 'Controller@getIpfsHashes')->name('ipfs-hashes');
 

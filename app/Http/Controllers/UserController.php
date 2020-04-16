@@ -1070,4 +1070,31 @@ class UserController extends Controller {
             return response()->json(['error' => true]);
         }
     }
+
+    protected function authenticateUser(Request $request) {
+        $this->validate($request, [
+            'token' => 'required',
+            'type' => 'required|in:patient,dentist',
+            'id' => 'required'
+        ], [
+            'token.required' => 'Token is required.',
+            'type.required' => 'Type is required.',
+            'id.required' => 'ID is required.'
+        ]);
+
+        $checkToken = (new APIRequestsController())->checkUserIdAndToken($request->input('id'), $request->input('token'));
+        if(is_object($checkToken) && property_exists($checkToken, 'success') && $checkToken->success) {
+            $session_arr = [
+                'token' => $request->input('token'),
+                'id' => $request->input('id'),
+                'type' => $request->input('type')
+            ];
+
+            session(['logged_user' => $session_arr]);
+
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
 }

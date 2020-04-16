@@ -11,7 +11,7 @@
     </div>
 @else
     <div class="text-center">
-        <a href="javascript:void(0)" class="white-blue-green-btn min-width-250 show-login-signin dentist-side">ENROLL DENTACOIN ASSURANCE</a>
+        <a href="javascript:void(0)" class="white-blue-green-btn min-width-250 open-dentacoin-gateway dentist-login">ENROLL DENTACOIN ASSURANCE</a>
     </div>
     <div class="text-center padding-top-30 padding-bottom-40">
         <a href="javascript:void(0)" class="fs-20 lato-regular blue-green-color calculate-again">or calculate again</a>

@@ -7,12 +7,12 @@ var {assurance_config} = require('./assurance_config');
 
 $(document).ready(async function() {
     //if get parameter is passed show loginform
-    var get_params = projectData.utils.getGETParameters();
+    /*var get_params = projectData.utils.getGETParameters();
     if ((basic.property_exists(get_params, 'show-login') || basic.property_exists(get_params, 'inviter')) && !$('body').hasClass('logged-in')) {
         openLoginSigninPopup();
     } else if (basic.property_exists(get_params, 'show-patient-register')) {
         openLoginSigninPopup(undefined, 'show-patient-register');
-    }
+    }*/
 
     await dApp.init();
 
@@ -658,7 +658,7 @@ var projectData = {
                 if ($('section#find-your-dentist select.combobox').length) {
                     $('section#find-your-dentist select.combobox').on('keydown', function (e) {
                         if (e.which == 13) {
-                            $('.show-login-signin').click();
+                            $('.open-dentacoin-gateway').click();
                         }
                     });
 
@@ -667,7 +667,7 @@ var projectData = {
 
                     //on enter press show login popup
                     $('section#find-your-dentist select.combobox').on('change', function() {
-                        $('.show-login-signin').click();
+                        $('.open-dentacoin-gateway').click();
                     });
                 }
 
@@ -3220,14 +3220,23 @@ $(document).on('click', '.close-popup', function() {
     basic.closeDialog();
 });
 
-var hidden_popup_content = $('.hidden-login-form').html();
+/*var hidden_popup_content = $('.hidden-login-form').html();
 //call the popup for login/sign for patient and dentist
 function bindLoginSigninPopupShow() {
     $(document).on('click', '.show-login-signin', function() {
         openLoginSigninPopup($(this));
     });
 }
-bindLoginSigninPopupShow();
+bindLoginSigninPopupShow();*/
+
+if (!$('body').hasClass('logged-in')) {
+    dcnGateway.init({
+        'platform' : 'assurance',
+        /*'environment' : 'staging',*/
+        'forgotten_password_link' : 'https://assurance.dentacoin.com/forgotten-password'
+    });
+}
+
 
 function openLoginSigninPopup(this_show_login_btn, type) {
     basic.closeDialog();

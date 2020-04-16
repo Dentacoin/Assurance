@@ -694,4 +694,32 @@ class APIRequestsController extends Controller {
             return false;
         }
     }
+
+    public function checkUserIdAndToken($id, $token)  {
+        $header = array();
+        $header[] = 'Accept: */*';
+        $header[] = 'Authorization: Bearer ' . $token;
+        $header[] = 'Cache-Control: no-cache';
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_POST => 1,
+            CURLOPT_URL => 'https://api.dentacoin.com/api/check-user-info/',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_HTTPHEADER => $header,
+            CURLOPT_POSTFIELDS => array(
+                'user_id' => $id
+            )
+        ));
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        if(!empty($resp))   {
+            return $resp;
+        }else {
+            return false;
+        }
+    }
 }
