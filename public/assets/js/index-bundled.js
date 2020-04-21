@@ -76553,7 +76553,7 @@ if (!$('body').hasClass('logged-in')) {
     dcnGateway.init({
         'platform' : 'assurance',
         /*'environment' : 'staging',*/
-        'forgotten_password_link' : 'https://assurance.dentacoin.com/forgotten-password'
+        'forgotten_password_link' : 'https://account.dentacoin.com/forgotten-password?platform=assurance'
     });
 }
 
