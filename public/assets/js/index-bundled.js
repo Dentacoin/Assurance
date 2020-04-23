@@ -74186,6 +74186,11 @@ var projectData = {
                             $('.active-until').html(projectData.utils.dateObjToFormattedDate(date_obj));
                         }
 
+                        if ($('.init-address-suggester').length) {
+                            console.log('load address-combined-login');
+                            await $.getScript('https://dentacoin.com/assets/js/address-combined-login.js?v='+new Date().getTime(), function() {});
+                        }
+
                         if ($('.terms-and-conditions-long-list').length) {
                             $('.terms-and-conditions-long-list').mCustomScrollbar();
                         }
