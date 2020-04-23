@@ -25,9 +25,9 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.58">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.58">
-    <link rel="stylesheet" type="text/css" href="https://dentacoin.com/assets/libs/dentacoin-login-gateway/css/dentacoin-login-gateway-style.css?v=1.0.58"/>
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.59">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.59">
+    <link rel="stylesheet" type="text/css" href="https://dentacoin.com/assets/libs/dentacoin-login-gateway/css/dentacoin-login-gateway-style.css?v=1.0.59"/>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
@@ -232,15 +232,15 @@
             <img src="//account.dentacoin.com/custom-cookie?logout-token={{ urlencode(session('logout_token')) }}" class="hide"/>
         @endif
     @endif
+    @if(!empty(Route::current()) && Route::current()->getName() == 'home')
+        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="text-center sticky-open-calculator-container">
+            <a href="javascript:void(0);" class="open-calculator">
+                <img alt="Sticky calculator button" itemprop="contentUrl" src="/assets/uploads/sticky-calculator-button.svg"/>
+            </a>
+        </figure>
+    @endif
     <div class="bottom-fixed-container">
         {{--Show the sticky calculate button only for dentists--}}
-        @if(!empty(Route::current()) && Route::current()->getName() == 'home')
-            <figure itemscope="" itemtype="http://schema.org/ImageObject" class="text-center">
-                <a href="javascript:void(0);" class="open-calculator">
-                    <img alt="Sticky calculator button" itemprop="contentUrl" src="/assets/uploads/sticky-calculator-button.svg"/>
-                </a>
-            </figure>
-        @endif
         {{--<a href="https://dentacoin.com/holiday-calendar-2019" target="_blank" class="display-block banner">
             <picture itemscope="" itemtype="http://schema.org/ImageObject">
                 <source media="(max-width: 992px)" srcset="//dentacoin.com/assets/uploads/mobile-christmas-banner-small.gif"/>
@@ -262,11 +262,12 @@
     </div>
 
     {{--/Show the sticky calculate button only for dentists--}}
-    <script src="https://dentacoin.com/assets/js/basic.js?v=1.0.58"></script>
-    <script src="/dist/js/front-libs-script.js?v=1.0.58"></script>
+    <script src="https://dentacoin.com/assets/js/basic.js?v=1.0.59"></script>
+    <script src="/dist/js/front-libs-script.js?v=1.0.59"></script>
     {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-    <script src="https://dentacoin.com/assets/libs/dentacoin-login-gateway/js/init.js?v=1.0.58"></script>
-    <script src="/assets/js/index-bundled.js?v=1.0.58"></script>
+    <script src="https://dentacoin.com/assets/libs/dentacoin-login-gateway/js/init.js?v=1.0.59"></script>
+    <script src="https://dentacoin.com/assets/js/address-combined-login.js?v=1.0.59"></script>
+    <script src="/assets/js/index-bundled.js?v=1.0.59"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
     {{--Multiple errors from laravel validation--}}

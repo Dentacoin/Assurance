@@ -1433,12 +1433,12 @@ input[type='file'].hide-input {
     display: block !important;
 }
 
-.bottom-fixed-container {
+.sticky-open-calculator-container {
     position: fixed;
     width: 100%;
     bottom: 0;
     left: 0;
-    z-index: 2000000005!important;
+    z-index: 5000!important;
     .open-calculator {
         img {
             width: 300px;
@@ -1447,6 +1447,14 @@ input[type='file'].hide-input {
             }
         }
     }
+}
+
+.bottom-fixed-container {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 2000000005!important;
     .banner {
         @include box-shadow(0 2px 6px 0 rgba(0, 0, 0, 0.5));
     }

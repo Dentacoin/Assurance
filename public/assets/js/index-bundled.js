@@ -74178,6 +74178,8 @@ var projectData = {
                     }
                 } else if ($('body').hasClass('patient-side')) {
                     if ($('body').hasClass('contract-proposal')) {
+                        console.log('patient -side');
+
                         // patient side
                         if ($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined) {
                             var date_obj = new Date((parseInt($('.contract-proposal.section').attr('data-created-at-timestamp')) + parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw())) * 1000);
