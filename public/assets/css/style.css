@@ -7475,15 +7475,18 @@ input[type='file'].hide-input {
 
 .sticky-open-calculator-container {
   position: fixed;
-  width: 100%;
   bottom: 0;
-  left: 0;
-  z-index: 5000 !important; }
+  z-index: 1000;
+  width: 300px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%); }
   .sticky-open-calculator-container .open-calculator img {
-    width: 300px; }
-    @media screen and (max-width: 767px) {
-      .sticky-open-calculator-container .open-calculator img {
-        width: 220px; } }
+    width: 100%; }
+  @media screen and (max-width: 767px) {
+    .sticky-open-calculator-container {
+      width: 220px; } }
 
 .bottom-fixed-container {
   position: fixed;
