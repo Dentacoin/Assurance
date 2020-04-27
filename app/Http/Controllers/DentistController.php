@@ -427,7 +427,7 @@ class DentistController extends Controller
         $contract->status = 'active';
         $contract->save();
 
-        $email_view = view('emails/dentist-approve-contract-on-blockchain', ['dentist' => $dentist, 'patient_name' => $patient->name, 'contract_slug' => $contract->slug, 'amount' => $contract->amount]);
+        $email_view = view('emails/dentist-approve-contract-on-blockchain', ['dentist' => $dentist, 'patient_name' => $patient->name, 'contract_slug' => $contract->slug, 'amount' => $contract->monthly_premium]);
         $body = $email_view->render();
 
         Mail::send(array(), array(), function($message) use ($body, $patient, $dentist) {

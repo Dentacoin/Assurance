@@ -31,7 +31,7 @@
         <div class="row">
             <label class="inline-block">Wallet Address:</label>
             <div class="right-field inline-block">
-                <a href="http://etherscan.io/address/{{$dentist->dcn_address}}" target="_blank">{{$dentist->dcn_address}}</a>
+                <a href="http://etherscan.io/address/{{$contract->dentist_address}}" target="_blank">{{$contract->dentist_address}}</a>
             </div>
         </div>
         <div class="section-title">PATIENT DETAILS</div>
@@ -58,7 +58,7 @@
         <div class="row">
             <label class="inline-block">Wallet Address:</label>
             <div class="right-field inline-block">
-                <a href="http://etherscan.io/address/{{$patient->dcn_address}}" target="_blank">{{$patient->dcn_address}}</a>
+                <a href="http://etherscan.io/address/{{$contract->patient_address}}" target="_blank">{{$contract->patient_address}}</a>
             </div>
         </div>
         <div class="section-title">CONTRACT CONDITIONS</div>

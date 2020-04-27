@@ -20,7 +20,7 @@
                         @if((time() - strtotime($created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL)
                             <div class="calibri-bold fs-14 padding-bottom-50 padding-bottom-xs-20 text-center cancelled-color">This contract proposal has expired.</div>
                         @else
-                            <div class="calibri-bold fs-14 padding-bottom-50 text-center blue-green-color">( This contract proposal will be active until <span class="active-until">{{date('d/m/Y', strtotime('+'.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days', strtotime($created_at)))}}</span>. )</div>
+                            <div class="calibri-bold fs-14 padding-bottom-50 text-center blue-green-color">( This contract proposal will be active until <span class="active-until">{{date('d/m/Y', strtotime('+'.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days', strtotime($created_at))) . PHP_EOL}}</span>. )</div>
                         @endif
                         <div class="step-fields module padding-top-20">
                             <form method="POST" enctype="multipart/form-data" action="{{route('update-and-sign-contract')}}" id="patient-update-and-sign-contract" class="address-suggester-wrapper">
