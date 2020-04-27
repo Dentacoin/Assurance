@@ -20,7 +20,7 @@
                         @if((time() - strtotime($created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL)
                             <div class="calibri-bold fs-14 padding-bottom-50 padding-bottom-xs-20 text-center cancelled-color">This contract proposal has expired.</div>
                         @else
-                            <div class="calibri-bold fs-14 padding-bottom-50 text-center blue-green-color">( This contract proposal will be active until <span class="active-until">{{date('d/m/Y', strtotime('+'.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days', strtotime($created_at))) . PHP_EOL}}</span>. )</div>
+                            <div class="calibri-bold fs-14 padding-bottom-50 text-center blue-green-color">( This contract proposal will be active until <span class="active-until">{{date('d/m/Y', strtotime('+'.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days', strtotime($created_at)))}}</span>. )</div>
                         @endif
                         <div class="step-fields module padding-top-20">
                             <form method="POST" enctype="multipart/form-data" action="{{route('update-and-sign-contract')}}" id="patient-update-and-sign-contract" class="address-suggester-wrapper">
@@ -106,26 +106,22 @@
                                         <input autocomplete="off" readonly type="text" maxlength="42" id="dcn_address" name="dcn_address" class="right-field width-100 required-field calibri-regular fs-18 dark-color pencil-background search-input"/>
                                         <div class="search-result module">
                                             <div class="search-body">
-                                                @if(!empty($addresses))
-                                                    @if(!empty($addresses->data))
-                                                        <ul class="addresses-list" id="addresses-list">
-                                                            @foreach($addresses->data as $address)
-                                                                <li class="platform-color removeable-element fs-0" data-id="{{$address->id}}">
-                                                                    <a href="javascript:void(0);" class="platform-background-on-hover inline-block" data-value="{{$address->dcn_address}}">
-                                                                        @if(empty($address->dcn_address_label))
-                                                                            {{$address->dcn_address}}
-                                                                        @else
-                                                                            {{$address->dcn_address_label}} ({{$address->dcn_address}})
-                                                                        @endif
-                                                                    </a>
-                                                                    <button type="button" class="remove-address-book-element inline-block">×</button>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    @else
-                                                        <div class="address-book"><i class="display-block-important padding-top-15 padding-left-15 padding-bottom-15 padding-right-15">Empty Address Book</i></div>
+                                                <ul class="addresses-list" id="addresses-list">
+                                                    @if(!empty($addresses) && !empty($addresses->data))
+                                                        @foreach($addresses->data as $address)
+                                                            <li class="platform-color removeable-element fs-0" data-id="{{$address->id}}">
+                                                                <a href="javascript:void(0);" class="platform-background-on-hover inline-block" data-value="{{$address->dcn_address}}">
+                                                                    @if(empty($address->dcn_address_label))
+                                                                        {{$address->dcn_address}}
+                                                                    @else
+                                                                        {{$address->dcn_address_label}} ({{$address->dcn_address}})
+                                                                    @endif
+                                                                </a>
+                                                                <button type="button" class="remove-address-book-element inline-block">×</button>
+                                                            </li>
+                                                        @endforeach
                                                     @endif
-                                                @endif
+                                                </ul>
                                             </div>
                                             <div class="search-footer">
                                                 <a href="javascript:void(0)" class="platform-color add-to-address-book lato-bold fs-18 fs-xs-16">+ Add to Address Book</a>

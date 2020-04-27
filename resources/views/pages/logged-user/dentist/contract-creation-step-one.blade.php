@@ -55,26 +55,22 @@
                 <input autocomplete="off" readonly type="text" data-type="address" id="dcn_address" name="address" maxlength="42" class="right-field width-100 calibri-regular fs-18 dark-color inline-block pencil-background search-input" />
                 <div class="search-result module">
                     <div class="search-body">
-                        @if(!empty($addresses))
-                            @if(!empty($addresses->data))
-                                <ul class="addresses-list" id="addresses-list">
-                                    @foreach($addresses->data as $address)
-                                        <li class="removeable-element fs-0" data-id="{{$address->id}}">
-                                            <a href="javascript:void(0);" class="inline-block" data-value="{{$address->dcn_address}}">
-                                                @if(empty($address->dcn_address_label))
-                                                    {{$address->dcn_address}}
-                                                @else
-                                                    {{$address->dcn_address_label}} ({{$address->dcn_address}})
-                                                @endif
-                                            </a>
-                                            <button type="button" class="remove-address-book-element inline-block">×</button>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @else
-                                <div class="address-book"><i class="display-block-important padding-top-15 padding-left-15 padding-bottom-15 padding-right-15">Empty Address Book</i></div>
+                        <ul class="addresses-list" id="addresses-list">
+                            @if(!empty($addresses) && !empty($addresses->data))
+                                @foreach($addresses->data as $address)
+                                    <li class="removeable-element fs-0" data-id="{{$address->id}}">
+                                        <a href="javascript:void(0);" class="inline-block" data-value="{{$address->dcn_address}}">
+                                            @if(empty($address->dcn_address_label))
+                                                {{$address->dcn_address}}
+                                            @else
+                                                {{$address->dcn_address_label}} ({{$address->dcn_address}})
+                                            @endif
+                                        </a>
+                                        <button type="button" class="remove-address-book-element inline-block">×</button>
+                                    </li>
+                                @endforeach
                             @endif
-                        @endif
+                        </ul>
                     </div>
                     <div class="search-footer">
                         <a href="javascript:void(0)" class="add-to-address-book lato-bold fs-18 fs-xs-16">+ Add to Address Book</a>
