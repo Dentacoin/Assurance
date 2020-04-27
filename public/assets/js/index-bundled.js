@@ -73326,14 +73326,6 @@ var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, import
 var {assurance_config} = require('./assurance_config');
 
 $(document).ready(async function() {
-    //if get parameter is passed show loginform
-    /*var get_params = projectData.utils.getGETParameters();
-    if ((basic.property_exists(get_params, 'show-login') || basic.property_exists(get_params, 'inviter')) && !$('body').hasClass('logged-in')) {
-        openLoginSigninPopup();
-    } else if (basic.property_exists(get_params, 'show-patient-register')) {
-        openLoginSigninPopup(undefined, 'show-patient-register');
-    }*/
-
     await dApp.init();
 
     projectData.pagesData.onDocumentReady();
@@ -73801,6 +73793,9 @@ var dApp = {
 };
 
 var projectData = {
+    variables: {
+        bonusPercentagesToGasEstimations: 15
+    },
     utils: {
         innerAddressCheck: function(address)    {
             //checking if passed address is valid
@@ -74178,13 +74173,11 @@ var projectData = {
                     }
                 } else if ($('body').hasClass('patient-side')) {
                     if ($('body').hasClass('contract-proposal')) {
-                        console.log('patient -side');
-
                         // patient side
-                        if ($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined) {
+                        /*if ($('.contract-proposal.section').length && $('.contract-proposal.section').attr('data-created-at-timestamp') != undefined) {
                             var date_obj = new Date((parseInt($('.contract-proposal.section').attr('data-created-at-timestamp')) + parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw())) * 1000);
                             $('.active-until').html(projectData.utils.dateObjToFormattedDate(date_obj));
-                        }
+                        }*/
 
                         if ($('.init-address-suggester').length) {
                             console.log('load address-combined-login');
@@ -74743,7 +74736,7 @@ var projectData = {
                         var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                         const on_page_load_gwei = ethgasstation_json.safeLow;
                         //adding 10% just in case the transaction dont fail
-                        const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
+                        const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
                         var approval_given = false;
                         //if approval is given already SOMEHOW ...
@@ -74987,7 +74980,7 @@ var projectData = {
                                                                         var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).encodeABI();
                                                                         dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending', function (err, nonce) {
                                                                             var approval_transaction_obj = {
-                                                                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * 10 / 100))),
+                                                                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * projectData.variables.bonusPercentagesToGasEstimations / 100))),
                                                                                 gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                                                 from: global_state.account,
                                                                                 nonce: dApp.web3_1_0.utils.toHex(nonce),
@@ -75018,7 +75011,7 @@ var projectData = {
                                                                     var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
                                                                     var contract_creation_transaction_obj = {
-                                                                        gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * 10 / 100))),
+                                                                        gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * projectData.variables.bonusPercentagesToGasEstimations / 100))),
                                                                         gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                                         from: global_state.account,
                                                                         nonce: dApp.web3_1_0.utils.toHex(nonce),
@@ -75121,7 +75114,7 @@ var projectData = {
                             var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                             const on_page_load_gwei = ethgasstation_json.safeLow;
                             //adding 10% just in case the transaction dont fail
-                            const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10/100);
+                            const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
                             //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                             var gas_cost_for_contract_approval = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient')).estimateGas({from: global_state.account, gas: 500000});
@@ -75265,7 +75258,7 @@ var projectData = {
                                                                 var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
 
                                                                 var contract_approval_transaction_obj = {
-                                                                    gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + (gas_cost_for_contract_approval * 10 / 100))),
+                                                                    gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_approval + (gas_cost_for_contract_approval * projectData.variables.bonusPercentagesToGasEstimations / 100))),
                                                                     gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                                     from: global_state.account,
                                                                     nonce: dApp.web3_1_0.utils.toHex(nonce),
@@ -75460,7 +75453,7 @@ var projectData = {
                             var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                             const on_page_load_gwei = ethgasstation_json.safeLow;
                             //adding 10% just in case the transaction dont fail
-                            const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10 / 100);
+                            const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
                             //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                             var gas_cost_for_withdraw = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).estimateGas({
@@ -76547,15 +76540,6 @@ $(document).on('click', '.close-popup', function() {
     basic.closeDialog();
 });
 
-/*var hidden_popup_content = $('.hidden-login-form').html();
-//call the popup for login/sign for patient and dentist
-function bindLoginSigninPopupShow() {
-    $(document).on('click', '.show-login-signin', function() {
-        openLoginSigninPopup($(this));
-    });
-}
-bindLoginSigninPopupShow();*/
-
 if (!$('body').hasClass('logged-in')) {
     dcnGateway.init({
         'platform' : 'assurance',
@@ -76572,360 +76556,6 @@ if (!$('body').hasClass('logged-in')) {
         console.log('patientAuthSuccessResponse');
         window.location.reload();
     });
-}
-
-
-function openLoginSigninPopup(this_show_login_btn, type) {
-    basic.closeDialog();
-    $('.hidden-login-form').html('');
-    basic.showDialog(hidden_popup_content, 'login-signin-popup', null, true);
-
-    if (type != undefined) {
-        if (type == 'show-patient-register') {
-            $('.login-signin-popup .popup-body .patient .form-login').hide();
-            $('.login-signin-popup .popup-body .patient .form-register').show();
-        }
-    }
-
-    $('.login-signin-popup .dentist .form-register .address-suggester').removeClass('dont-init');
-
-    initAddressSuggesters();
-
-    $('.login-signin-popup .popup-header-action a').click(function() {
-        $('.login-signin-popup .popup-header-action a').removeClass('active');
-        $(this).addClass('active');
-
-        $('.login-signin-popup .popup-body > .inline-block').addClass('custom-hide');
-        $('.login-signin-popup .popup-body .'+$(this).attr('data-type')).removeClass('custom-hide');
-    });
-
-    $('.login-signin-popup .call-sign-up').click(function() {
-        $('.login-signin-popup .form-login').hide();
-        $('.login-signin-popup .form-register').show();
-    });
-
-    $('.login-signin-popup .call-log-in').click(function() {
-        $('.login-signin-popup .form-login').show();
-        $('.login-signin-popup .form-register').hide();
-    });
-
-    if (this_show_login_btn != undefined) {
-        if (this_show_login_btn.hasClass('show-signing')) {
-            $('.popup-body .dentist .call-sign-up').click();
-        }
-    }
-
-    // ====================== PATIENT LOGIN/SIGNUP LOGIC ======================
-
-    //login
-    $('.login-signin-popup .patient .form-register #privacy-policy-registration-patient').on('change', function() {
-        if ($(this).is(':checked')) {
-            $('.login-signin-popup .patient .form-register .facebook-custom-btn').removeAttr('custom-stopper');
-            $('.login-signin-popup .patient .form-register .civic-custom-btn').removeAttr('custom-stopper');
-        } else {
-            $('.login-signin-popup .patient .form-register .facebook-custom-btn').attr('custom-stopper', 'true');
-            $('.login-signin-popup .patient .form-register .civic-custom-btn').attr('custom-stopper', 'true');
-        }
-    });
-
-    $(document).on('civicCustomBtnClicked', function (event) {
-        $('.login-signin-popup .patient .form-register .step-errors-holder').html('');
-    });
-
-    $(document).on('civicRead', async function (event) {
-        showLoader();
-    });
-
-    $(document).on('receivedFacebookToken', async function (event) {
-        showLoader();
-    });
-
-    $(document).on('facebookCustomBtnClicked', function (event) {
-        $('.login-signin-popup .patient .form-register .step-errors-holder').html('');
-    });
-
-    $(document).on('customCivicFbStopperTriggered', function (event) {
-        customErrorHandle($('.login-signin-popup .patient .form-register .step-errors-holder'), 'Please agree with our privacy policy.');
-    });
-    // ====================== /PATIENT LOGIN/SIGNUP LOGIC ======================
-
-    // ====================== DENTIST LOGIN/SIGNUP LOGIC ======================
-    //DENTIST LOGIN
-    $('.login-signin-popup form#dentist-login').on('submit', async function(event) {
-        var this_form_native = this;
-        var this_form = $(this_form_native);
-        event.preventDefault();
-        if (basic.cookies.get('strictly_necessary_policy') != '1') {
-            basic.showAlert('Please accept the strictly necessary cookies in order to continue with logging in.', '', true);
-        } else {
-            //clear prev errors
-            if ($('.login-signin-popup form#dentist-login .error-handle').length) {
-                $('.login-signin-popup form#dentist-login .error-handle').remove();
-            }
-
-            var form_fields = this_form.find('.form-field');
-            var submit_form = true;
-            for(var i = 0, len = form_fields.length; i < len; i+=1) {
-                if (form_fields.eq(i).attr('type') == 'email' && !basic.validateEmail(form_fields.eq(i).val().trim())) {
-                    customErrorHandle(form_fields.eq(i).closest('.field-parent'), 'Please use valid email address.');
-                    submit_form = false;
-                } else if (form_fields.eq(i).attr('type') == 'password' && form_fields.eq(i).val().length < 6) {
-                    customErrorHandle(form_fields.eq(i).closest('.field-parent'), 'Passwords must be min length 6.');
-                    submit_form = false;
-                }
-
-                if (form_fields.eq(i).val().trim() == '') {
-                    customErrorHandle(form_fields.eq(i).closest('.field-parent'), 'This field is required.');
-                    submit_form = false;
-                }
-            }
-
-            //check if existing account
-            var check_account_response = await $.ajax({
-                type: 'POST',
-                url: '/check-dentist-account',
-                dataType: 'json',
-                data: {
-                    email: $('.login-signin-popup form#dentist-login input[name="email"]').val().trim(),
-                    password: $('.login-signin-popup form#dentist-login input[name="password"]').val().trim()
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            if (submit_form && check_account_response.success) {
-                fireGoogleAnalyticsEvent('DentistLogin', 'Click', 'Dentist Login');
-                this_form_native.submit();
-            } else if (check_account_response.error) {
-                customErrorHandle(this_form.find('input[name="password"]').closest('.field-parent'), check_account_response.message);
-            }
-        }
-    });
-
-    //DENTIST REGISTER
-    $('.login-signin-popup .dentist .form-register .prev-step').click(function() {
-        var current_step = $('.login-signin-popup .dentist .form-register .step.visible');
-        var current_prev_step = current_step.prev();
-        current_step.removeClass('visible');
-        if (current_prev_step.hasClass('first')) {
-            $(this).hide();
-        }
-        current_prev_step.addClass('visible');
-
-        $('.login-signin-popup .dentist .form-register .next-step').val('Next');
-        $('.login-signin-popup .dentist .form-register .next-step').attr('data-current-step', current_prev_step.attr('data-step'));
-    });
-
-    //SECOND STEP INIT LOGIC
-    $('.login-signin-popup .step.second .user-type-container .user-type').click(function() {
-        $('.login-signin-popup .step.second .user-type-container .user-type').removeClass('active');
-        $(this).addClass('active');
-        $('.login-signin-popup .step.second .user-type-container [name="user-type"]').val($(this).attr('data-type'));
-    });
-
-    //THIRD STEP INIT LOGIC
-    $('.login-signin-popup #dentist-country').on('change', function() {
-        $('.login-signin-popup .step.third .phone .country-code').html('+'+$(this).find('option:selected').attr('data-code'));
-    });
-
-    //FOURTH STEP INIT LOGIC
-    styleAvatarUploadButton('.bootbox.login-signin-popup .dentist .form-register .step.fourth .avatar .btn-wrapper label');
-    initCaptchaRefreshEvent();
-
-    //DENTIST REGISTERING FORM
-    $('.login-signin-popup .dentist .form-register .next-step').click(async function() {
-        var this_btn = $(this);
-
-        switch(this_btn.attr('data-current-step')) {
-            case 'first':
-                var first_step_inputs = $('.login-signin-popup .dentist .form-register .step.first .form-field');
-                var errors = false;
-                $('.login-signin-popup .dentist .form-register .step.first').parent().find('.error-handle').remove();
-                for(var i = 0, len = first_step_inputs.length; i < len; i+=1) {
-                    if (first_step_inputs.eq(i).attr('type') == 'email' && !basic.validateEmail(first_step_inputs.eq(i).val().trim())) {
-                        customErrorHandle(first_step_inputs.eq(i).closest('.field-parent'), 'Please use valid email address.');
-                        errors = true;
-                    } else if (first_step_inputs.eq(i).attr('type') == 'email' && basic.validateEmail(first_step_inputs.eq(i).val().trim())) {
-                        //coredb check if email is free
-                        var check_email_if_free_response = await checkIfFreeEmail(first_step_inputs.eq(i).val().trim());
-                        if (check_email_if_free_response.error) {
-                            customErrorHandle(first_step_inputs.eq(i).closest('.field-parent'), 'The email has already been taken.');
-                            errors = true;
-                        }
-                    }
-
-                    if (first_step_inputs.eq(i).attr('type') == 'password' && first_step_inputs.eq(i).val().length < 6) {
-                        customErrorHandle(first_step_inputs.eq(i).closest('.field-parent'), 'Passwords must be min length 6.');
-                        errors = true;
-                    }
-
-                    if (first_step_inputs.eq(i).val().trim() == '') {
-                        customErrorHandle(first_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
-                        errors = true;
-                    }
-                }
-
-                if ($('.login-signin-popup .dentist .form-register .step.first .form-field.password').val().trim() != $('.login-signin-popup .step.first .form-field.repeat-password').val().trim()) {
-                    customErrorHandle($('.login-signin-popup .step.first .form-field.repeat-password').closest('.field-parent'), 'Both passwords don\'t match.');
-                    errors = true;
-                }
-
-                if (!errors) {
-                    fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep1');
-
-                    $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
-                    $('.login-signin-popup .dentist .form-register .step.second').addClass('visible');
-                    $('.login-signin-popup .prev-step').show();
-
-                    this_btn.attr('data-current-step', 'second');
-                    this_btn.val('Next');
-                }
-                break;
-            case 'second':
-                var second_step_inputs = $('.login-signin-popup .dentist .form-register .step.second .form-field.required');
-                var errors = false;
-                $('.login-signin-popup .dentist .form-register .step.second').find('.error-handle').remove();
-
-                //check form-field fields
-                for(var i = 0, len = second_step_inputs.length; i < len; i+=1) {
-                    if (second_step_inputs.eq(i).is('select')) {
-                        //IF SELECT TAG
-                        if (second_step_inputs.eq(i).val().trim() == '') {
-                            customErrorHandle(second_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
-                            errors = true;
-                        }
-                    } else if (second_step_inputs.eq(i).is('input')) {
-                        //IF INPUT TAG
-                        if (second_step_inputs.eq(i).val().trim() == '') {
-                            customErrorHandle(second_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
-                            errors = true;
-                        }
-                    }
-                }
-
-                //check if latin name accepts only LATIN characters
-                if (!/^[a-z A-Z]+$/.test($('.login-signin-popup .dentist .form-register .step.second input[name="latin-name"]').val().trim())) {
-
-                    customErrorHandle($('.login-signin-popup .dentist .form-register .step.second input[name="latin-name"]').closest('.field-parent'), 'This field should contain only latin characters.');
-                    errors = true;
-                }
-
-                //check if privacy policy checkbox is checked
-                if (!$('.login-signin-popup .dentist .form-register .step.second #privacy-policy-registration').is(':checked')) {
-                    customErrorHandle($('.login-signin-popup .dentist .form-register .step.second .privacy-policy-row'), 'Please agree with our <a href="//dentacoin.com/privacy-policy" target="_blank">Privacy policy</a>.');
-                    errors = true;
-                }
-
-                if (!errors) {
-                    fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep2');
-
-                    $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
-                    $('.login-signin-popup .dentist .form-register .step.third').addClass('visible');
-
-                    this_btn.attr('data-current-step', 'third');
-                    this_btn.val('Next');
-                }
-                break;
-            case 'third':
-                var third_step_inputs = $('.login-signin-popup .dentist .form-register .step.third .form-field.required');
-                var errors = false;
-                $('.login-signin-popup .dentist .form-register .step.third').find('.error-handle').remove();
-
-                for(var i = 0, len = third_step_inputs.length; i < len; i+=1) {
-                    if (third_step_inputs.eq(i).is('select')) {
-                        //IF SELECT TAG
-                        if (third_step_inputs.eq(i).val().trim() == '') {
-                            customErrorHandle(third_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
-                            errors = true;
-                        }
-                    } else if (third_step_inputs.eq(i).is('input')) {
-                        //IF INPUT TAG
-                        if (third_step_inputs.eq(i).val().trim() == '') {
-                            customErrorHandle(third_step_inputs.eq(i).closest('.field-parent'), 'This field is required.');
-                            errors = true;
-                        }
-                        if (third_step_inputs.eq(i).attr('type') == 'url' && !basic.validateUrl(third_step_inputs.eq(i).val().trim())) {
-                            customErrorHandle(third_step_inputs.eq(i).closest('.field-parent'), 'Please enter your website URL starting with http:// or https://.');
-                            errors = true;
-                        }else if (third_step_inputs.eq(i).attr('type') == 'number' && !basic.validatePhone(third_step_inputs.eq(i).val().trim())) {
-                            customErrorHandle(third_step_inputs.eq(i).closest('.field-parent'), 'Please use valid numbers.');
-                            errors = true;
-                        }
-                    }
-                }
-
-                var validate_phone = await validatePhone($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').val().trim(), $('.login-signin-popup .dentist .form-register .step.third select[name="country-code"]').val());
-                if (basic.property_exists(validate_phone, 'success') && !validate_phone.success) {
-                    customErrorHandle($('.login-signin-popup .dentist .form-register .step.third input[name="phone"]').closest('.field-parent'), 'Please use valid phone.');
-                    errors = true;
-                }
-
-                if (!errors) {
-                    if ($('#dentist-country').attr('data-current-user-country-code') != undefined && $('#dentist-country').val() != $('#dentist-country').attr('data-current-user-country-code')) {
-                        var different_country_warning_obj = {};
-                        different_country_warning_obj.callback = function (result) {
-                            if (result) {
-                                fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep3');
-
-                                $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
-                                $('.login-signin-popup .dentist .form-register .step.fourth').addClass('visible');
-
-                                this_btn.attr('data-current-step', 'fourth');
-                                this_btn.val('Create account');
-                            }
-                        };
-                        basic.showConfirm('Your IP thinks differently. Sure you\'ve entered the right country?', '', different_country_warning_obj, true);
-                    } else {
-                        fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationStep3');
-
-                        $('.login-signin-popup .dentist .form-register .step').removeClass('visible');
-                        $('.login-signin-popup .dentist .form-register .step.fourth').addClass('visible');
-
-                        this_btn.attr('data-current-step', 'fourth');
-                        this_btn.val('Create account');
-                    }
-                }
-                break;
-            case 'fourth':
-                $('.login-signin-popup .dentist .form-register .step.fourth').find('.error-handle').remove();
-                var errors = false;
-                //checking if empty avatar
-                if ($('.dentist .form-register .step.fourth #custom-upload-avatar').val().trim() == '') {
-                    customErrorHandle($('.step.fourth .step-errors-holder'), 'Please select profile picture.');
-                    errors = true;
-                }
-
-                //checking if no specialization checkbox selected
-                if ($('.login-signin-popup .dentist .form-register .step.fourth [name="specializations[]"]:checked').val() == undefined) {
-                    customErrorHandle($('.login-signin-popup .step.fourth .step-errors-holder'), 'Please select specialization/s.');
-                    errors = true;
-                }
-
-                //check captcha
-                if (!$('.login-signin-popup .dentist .form-register .step.fourth .captcha-parent').length || !$('.login-signin-popup .dentist .form-register .step.fourth #register-captcha').length) {
-                    errors = true;
-                    window.location.reload();
-                } else {
-                    var check_captcha_response = await checkCaptcha($('.login-signin-popup .dentist .form-register .step.fourth #register-captcha').val().trim());
-                    if (check_captcha_response.error) {
-                        customErrorHandle($('.login-signin-popup .step.fourth .step-errors-holder'), 'Please enter correct captcha.');
-                        errors = true;
-                    }
-                }
-
-                if (!errors) {
-                    fireGoogleAnalyticsEvent('DentistRegistration', 'ClickNext', 'DentistRegistrationComplete');
-
-                    //submit the form
-                    showLoader();
-                    $('.login-signin-popup form#dentist-register').submit();
-                }
-                break;
-        }
-    });
-    return false;
-    // ====================== /DENTIST LOGIN/SIGNUP LOGIC ======================
 }
 
 var croppie_instance;
@@ -77309,7 +76939,7 @@ function cancelContractEventInit() {
                                     var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                                     const on_page_load_gwei = ethgasstation_json.safeLow;
                                     //adding 10% just in case the transaction dont fail
-                                    const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * 10 / 100);
+                                    const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
                                     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                                     var gas_cost_for_contract_cancellation = await dApp.assurance_proxy_instance.methods.breakContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist)).estimateGas({
@@ -77445,7 +77075,7 @@ function cancelContractEventInit() {
                                                     var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
 
                                                     var contract_cancellation_transaction_obj = {
-                                                        gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + (gas_cost_for_contract_cancellation * 10 / 100))),
+                                                        gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + (gas_cost_for_contract_cancellation * projectData.variables.bonusPercentagesToGasEstimations / 100))),
                                                         gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                         from: global_state.account,
                                                         nonce: dApp.web3_1_0.utils.toHex(nonce),
