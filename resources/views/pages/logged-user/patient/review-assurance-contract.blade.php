@@ -89,15 +89,20 @@
                                     @endif
                                 </div>
                                 <div class="single-row fs-0">
-                                    <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0 @if(empty($patient->address)) cursor-pointer @endif" @if(empty($patient->address)) for="address" @endif>Postal Address:</label>
-                                    <div class="suggester-parent module inline-block">
-                                        <input type="text" name="address" id="address" maxlength="250" class="address-suggester init-address-suggester calibri-regular fs-18 dark-color pencil-background required-field" autocomplete="off" @if(!empty($patient->address)) value="{{$patient->address}}" @endif>
-                                        <div class="fs-14 padding-top-5">Ex: 49 Pembroke Square, Kensington, London</div>
-                                        <div class="suggester-map-div margin-top-15 margin-bottom-10"></div>
-                                        <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
-                                        <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number).</div>
-                                        <div class="alert alert-warning different-country-hint margin-top-10 margin-bottom-10">Unable to proceed. Please, choose address from your country.</div>
-                                    </div>
+                                    @if(empty($patient->address))
+                                        <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0 cursor-pointer" for="address">Postal Address:</label>
+                                        <div class="suggester-parent module inline-block">
+                                            <input type="text" name="address" id="address" maxlength="250" class="address-suggester init-address-suggester calibri-regular fs-18 dark-color pencil-background required-field" autocomplete="off">
+                                            <div class="fs-14 padding-top-5">Ex: 49 Pembroke Square, Kensington, London</div>
+                                            <div class="suggester-map-div margin-top-15 margin-bottom-10"></div>
+                                            <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
+                                            <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number).</div>
+                                            <div class="alert alert-warning different-country-hint margin-top-10 margin-bottom-10">Unable to proceed. Please, choose address from your country.</div>
+                                        </div>
+                                    @else
+                                        <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0 cursor-pointer">Postal Address:</label>
+                                        <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">{{$patient->address}}</div>
+                                    @endif
                                 </div>
                                 <div class="single-row fs-0 dcn-address-row">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer padding-top-0 padding-bottom-0" for="dcn_address">Wallet Address:</label>
