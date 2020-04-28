@@ -101,7 +101,7 @@
                                         </div>
                                     @else
                                         <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0 cursor-pointer">Postal Address:</label>
-                                        <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">{{$patient->address}}</div>
+                                        <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$patient->address}}</div>
                                     @endif
                                 </div>
                                 <div class="single-row fs-0 dcn-address-row">
