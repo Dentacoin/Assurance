@@ -55,7 +55,7 @@
                 </div>
             </div>
         </section>
-        <section class="container camping-withdraw-time-left-section"></section>
+        {{--<section class="container camping-withdraw-time-left-section"></section>--}}
         <section class="container contract-details">
             <div class="row text-center">
                 <div class="col-xs-12 col-lg-10 col-lg-offset-1 no-gutter-xs">
