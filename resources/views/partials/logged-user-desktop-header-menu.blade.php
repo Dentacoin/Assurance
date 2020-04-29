@@ -5,8 +5,12 @@
             <span>{{$user_data->name}}</span>
             @php($dcn_balance = (new \App\Http\Controllers\APIRequestsController())->getDCNBalance()->data)
             @php($dentacoin_data = (new \App\Http\Controllers\APIRequestsController())->getDentacoinDataByExternalProvider())
-            @php($usd_balance = $dentacoin_data['USD'] * $dcn_balance)
-            <div>{{$dcn_balance}} DCN | ${{number_format((float)$usd_balance, 2, '.', '')}}</div>
+            @if(!empty($dentacoin_data))
+                @php($usd_balance = $dentacoin_data['USD'] * $dcn_balance)
+                <div>{{$dcn_balance}} DCN | ${{number_format((float)$usd_balance, 2, '.', '')}}</div>
+            @else
+                <div>{{$dcn_balance}} DCN</div>
+            @endif
         </div>
         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block header-avatar">
             @if(!empty($user_data->thumbnail_url))
