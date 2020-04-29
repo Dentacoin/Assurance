@@ -34,6 +34,7 @@ class DentistController extends Controller
                 $this_dentist_having_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->all();
                 $alreadySentEthToThisUser = FreeETHReceiver::where(array('walletAddress' => $contract->dentist_address))->get()->first();
 
+                var_dump(sizeof($this_dentist_having_contracts) == 1 && empty($alreadySentEthToThisUser));
                 if (sizeof($this_dentist_having_contracts) == 1 && empty($alreadySentEthToThisUser)) {
                     //send ETH to dentist only for his first contract
                     $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
@@ -45,8 +46,8 @@ class DentistController extends Controller
                     );
 
                     // saving record that we sent eth amount to this user
-                    $freeETHReceiver = new FreeETHReceiver();
-                    $freeETHReceiver->walletAddress = $contract->dentist_address;
+                    //$freeETHReceiver = new FreeETHReceiver();
+                    //$freeETHReceiver->walletAddress = $contract->dentist_address;
                     $freeETHReceiver->save();
 
                     $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendEthAmount(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode($sendEthAmountParams)), 'dentist-approval', $contract->patient_address, $contract->dentist_address, $gasPrice);
