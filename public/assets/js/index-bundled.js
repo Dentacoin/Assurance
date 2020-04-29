@@ -74403,6 +74403,8 @@ var projectData = {
                             trackForContractStatusChange($('.patient-contract-single-page-section').attr('data-contract'), 'awaiting-approval');
                         }
 
+                        console.log(nextWithdrawTimestamp, 'nextWithdrawTimestamp');
+
                         var timer_label = '';
                         if (time_passed_since_signed > period_to_withdraw && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
                             next_payment_timestamp = (nextWithdrawTimestamp + dApp.grace_period - now_timestamp) * 1000;
