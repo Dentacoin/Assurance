@@ -1748,3 +1748,15 @@ select.select-mac-fix {
         text-align: center;
     }
 }
+
+#search-result-parent {
+    position: relative;
+    &:after {
+        content: '';
+        right: 10px;
+        border-style: solid;
+        border-width: 14px 6px 0 6px;
+        border-color: #616161 transparent transparent transparent;
+        @include vertical-align(absolute);
+    }
+}
