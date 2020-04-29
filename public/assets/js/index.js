@@ -1087,6 +1087,7 @@ var projectData = {
 
                         var timer_label = '';
                         if (time_passed_since_signed > period_to_withdraw && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
+                            console.log(1);
                             next_payment_timestamp = (nextWithdrawTimestamp + dApp.grace_period - now_timestamp) * 1000;
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                             next_payment_timestamp_unix = (nextWithdrawTimestamp + dApp.grace_period - now_timestamp);
@@ -1094,6 +1095,7 @@ var projectData = {
                             timer_label = 'Overdue payment. If you doesn\'t fill in '+projectData.utils.convertUsdToDcn(dcn_needed_to_be_payed_to_dentist)+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
                             $('.clock').addClass('red-background');
                         } else if (time_passed_since_signed > period_to_withdraw) {
+                            console.log(2);
                             var remainder = time_passed_since_signed % period_to_withdraw;
                             next_payment_timestamp_unix = period_to_withdraw - remainder;
                             next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
@@ -1108,6 +1110,7 @@ var projectData = {
                                 }
                             }
                         } else {
+                            console.log(3);
                             next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                             next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
