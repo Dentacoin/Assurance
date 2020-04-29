@@ -74381,28 +74381,33 @@ var projectData = {
                         var next_payment_timestamp_date_obj;
                         var next_payment_timestamp_unix;
                         var next_payment_timestamp;
-                        var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient'), $('.patient-contract-single-page-section').attr('data-dentist'));
-                        console.log(on_load_exiting_contract, 'on_load_exiting_contract');
                         var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient')));
-                        console.log(current_patient_dcn_balance, 'current_patient_dcn_balance');
 
+                        var nextWithdrawTimestamp = 0;
+                        var dcn_needed_to_be_payed_to_dentist = 0;
                         if ($('.contract-header').hasClass('awaiting-payment')) {
                             // reading the monthly premium from DB, because contract is not yet created on the blockchain
-                            var dcn_needed_to_be_payed_to_dentist = parseInt($('.patient-contract-single-page-section').attr('data-monthly-premium'));
+                            dcn_needed_to_be_payed_to_dentist = parseInt($('.patient-contract-single-page-section').attr('data-monthly-premium'));
+
+                            nextWithdrawTimestamp = parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw;
 
                             trackForContractStatusChange($('.patient-contract-single-page-section').attr('data-contract'), 'awaiting-payment');
                         } else if ($('.contract-header').hasClass('awaiting-approval')) {
+                            var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient'), $('.patient-contract-single-page-section').attr('data-dentist'));
+
                             // reading the monthly premium from the smart contract
-                            var dcn_needed_to_be_payed_to_dentist = parseInt(on_load_exiting_contract[5]);
+                            dcn_needed_to_be_payed_to_dentist = parseInt(on_load_exiting_contract[5]);
+
+                            nextWithdrawTimestamp = parseInt(on_load_exiting_contract[0]);
 
                             trackForContractStatusChange($('.patient-contract-single-page-section').attr('data-contract'), 'awaiting-approval');
                         }
 
                         var timer_label = '';
                         if (time_passed_since_signed > period_to_withdraw && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
-                            next_payment_timestamp = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp) * 1000;
+                            next_payment_timestamp = (nextWithdrawTimestamp + dApp.grace_period - now_timestamp) * 1000;
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                            next_payment_timestamp_unix = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp);
+                            next_payment_timestamp_unix = (nextWithdrawTimestamp + dApp.grace_period - now_timestamp);
 
                             timer_label = 'Overdue payment. If you doesn\'t fill in '+projectData.utils.convertUsdToDcn(dcn_needed_to_be_payed_to_dentist)+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
                             $('.clock').addClass('red-background');
@@ -74411,7 +74416,7 @@ var projectData = {
                             next_payment_timestamp_unix = period_to_withdraw - remainder;
                             next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                            if (current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
+                            if (current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist) {
                                 timer_label = 'Fund your account until:';
                             } else {
                                 timer_label = 'Next payment processed in:';
@@ -74424,7 +74429,7 @@ var projectData = {
                             next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
                             next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                            if (current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
+                            if (current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist) {
                                 timer_label = 'Fund your account until:';
                             } else {
                                 timer_label = 'Next payment processed in:';
@@ -78091,7 +78096,6 @@ function generateQRCodeForDentacoinWalletScan(object) {
 
 // track for $contract status change
 function trackForContractStatusChange(contract, currentStatus) {
-    console.log(contract, currentStatus, 'trackForContractStatusChange');
     var changeInStatusFound = false;
     setInterval(function() {
         $.ajax({
