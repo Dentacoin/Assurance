@@ -1090,6 +1090,7 @@ var projectData = {
                             console.log(1);
                             next_payment_timestamp = (nextWithdrawTimestamp + dApp.grace_period - now_timestamp) * 1000;
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
+                            console.log(next_payment_timestamp_date_obj, 'next_payment_timestamp_date_obj');
                             next_payment_timestamp_unix = (nextWithdrawTimestamp + dApp.grace_period - now_timestamp);
 
                             timer_label = 'Overdue payment. If you doesn\'t fill in '+projectData.utils.convertUsdToDcn(dcn_needed_to_be_payed_to_dentist)+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
