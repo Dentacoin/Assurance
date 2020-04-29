@@ -353,7 +353,7 @@ class DentistController extends Controller
         for ($i = 0; $i < 62; $i+=1) {
             $random_string .= $characters[mt_rand(0, $charactersLength - 1)];
         }
-        $random_string = $random_string.time();
+        $random_string = $random_string;
 
         //saving the dentist signature in new unique folder for this contract
         $temp_contract_folder_path = CONTRACTS . DS . $random_string;

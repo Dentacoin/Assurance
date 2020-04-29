@@ -263,5 +263,9 @@ class Controller extends BaseController
             'seconds' => $seconds
         );
     }
+
+    public function generateRandomString() {
+
+    }
 }
 

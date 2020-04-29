@@ -74382,7 +74382,9 @@ var projectData = {
                         var next_payment_timestamp_unix;
                         var next_payment_timestamp;
                         var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient'), $('.patient-contract-single-page-section').attr('data-dentist'));
+                        console.log(on_load_exiting_contract, 'on_load_exiting_contract');
                         var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient')));
+                        console.log(current_patient_dcn_balance, 'current_patient_dcn_balance');
 
                         if ($('.contract-header').hasClass('awaiting-payment')) {
                             // reading the monthly premium from DB, because contract is not yet created on the blockchain
@@ -74731,8 +74733,11 @@ var projectData = {
                         }
                     } else if ($('.contract-header').hasClass('awaiting-payment')) {
                         var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account));
+                        console.log(current_user_dcn_balance, 'current_user_dcn_balance');
                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+                        console.log(current_user_eth_balance, 'current_user_eth_balance');
                         var monthly_premium_in_dcn = Math.floor(projectData.utils.convertUsdToDcn(parseInt($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
+                        console.log(monthly_premium_in_dcn, 'monthly_premium_in_dcn');
                         var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                         const on_page_load_gwei = ethgasstation_json.safeLow;
                         //adding 10% just in case the transaction dont fail
@@ -74751,6 +74756,7 @@ var projectData = {
 
                         //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                         var gas_cost_for_contract_creation = await dApp.assurance_proxy_instance.methods.registerContract(assurance_config.dummy_address, projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-dentist')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: assurance_config.dummy_address, gas: 1000000});
+                        console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation');
 
                         var methods_gas_cost;
                         if (!approval_given) {
