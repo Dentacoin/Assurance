@@ -1429,6 +1429,8 @@ var projectData = {
                             approval_given = true;
                         }
 
+                        console.log(approval_given, 'approval_given');
+
                         if (!approval_given) {
                             //gas estimation for DentacoinToken approval method
                             var gas_cost_for_approval = await dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).estimateGas({gas: 500000});
