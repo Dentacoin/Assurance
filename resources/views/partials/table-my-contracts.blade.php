@@ -34,7 +34,7 @@
                     @php($url = route('patient-contract-view', ['slug' => $contract->slug]))
                 @endif
             @endif
-            <tr @if($contract->status != 'active' && $contract->status != 'pending') data-timestamp-signed="{{strtotime($contract->contract_active_at)}}" @endif>
+            <tr @if($contract->status != 'active' && $contract->status != 'pending') data-timestamp-signed="{{strtotime($contract->contract_active_at)}}" @endif onclick="window.location = '{{$url}}'">
                 <td class="status">
                     @switch($contract->status)
                         @case('active')
