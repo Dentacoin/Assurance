@@ -37,6 +37,7 @@
                     </div>
                 </div>
             </div>
+            <div class="row camping-for-popups" data-patient-name="{{$patient->name}}"></div>
             <div class="row fs-0 padding-top-40 row-with-bottom-squares text-center">
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15 border-right-light-gray">
                     <h3 class="fs-20 calibri-bold">Date Signed:</h3>
@@ -53,7 +54,6 @@
             </div>
         </section>
         <section class="container camping-withdraw-time-left-section"></section>
-        <section class="container camping-withdraw-section" data-patient-name="{{$patient->name}}"></section>
         <section class="container contract-details">
             <div class="row text-center">
                 <div class="col-xs-12 col-lg-10 col-lg-offset-1 no-gutter-xs">
