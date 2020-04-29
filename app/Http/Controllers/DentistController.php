@@ -45,6 +45,8 @@ class DentistController extends Controller
                         'gas_price' => $gasPrice
                     );
 
+                    var_dump(json_encode($sendEthAmountParams));
+
                     // saving record that we sent eth amount to this user
                     //$freeETHReceiver = new FreeETHReceiver();
                     //$freeETHReceiver->walletAddress = $contract->dentist_address;
