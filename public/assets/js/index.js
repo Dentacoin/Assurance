@@ -3556,9 +3556,7 @@ function customCreateContractErrorHandle(el, text) {
 
 //if cancel contract button exist add the event for it
 function cancelContractEventInit() {
-    console.log('cancelContractEventInit');
     if ($('.cancel-contract-btn').length) {
-        console.log($('.cancel-contract-btn').length, '$(\'.cancel-contract-btn\').length');
         $('.cancel-contract-btn').click(async function() {
             var this_btn = $(this);
 

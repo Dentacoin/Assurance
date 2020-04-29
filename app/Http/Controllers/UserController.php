@@ -396,6 +396,15 @@ class UserController extends Controller {
                 $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
                 $message->setBody($body, 'text/html');
             });
+
+            $initiator_email_view = view('emails/notifier-for-successfully-contract-cancel', ['initiator' => $initiator->name, 'url' => route('dentist-contract-view', ['slug' => $contract->slug]), 'reason' => $reason]);
+            $initiator_body = $initiator_email_view->render();
+
+            Mail::send(array(), array(), function($message) use ($initiator_body, $initiator) {
+                $message->to($initiator->email)->subject('You have cancelled your Assurance contract successfully');
+                $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                $message->setBody($initiator_body, 'text/html');
+            });
         } else if($type == 'patient') {
             $cancellation_reason = array(
                 'reason' => $reason
@@ -418,6 +427,15 @@ class UserController extends Controller {
                 $message->to($dentist->email)->subject($initiator->name . ' Has Cancelled Their Contract');
                 $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
                 $message->setBody($body, 'text/html');
+            });
+
+            $initiator_email_view = view('emails/notifier-for-successfully-contract-cancel', ['initiator' => $initiator->name, 'url' => route('patient-contract-view', ['slug' => $contract->slug]), 'reason' => $reason]);
+            $initiator_body = $initiator_email_view->render();
+
+            Mail::send(array(), array(), function($message) use ($initiator_body, $initiator) {
+                $message->to($initiator->email)->subject('You have cancelled your Assurance contract successfully');
+                $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
+                $message->setBody($initiator_body, 'text/html');
             });
         }
     }
