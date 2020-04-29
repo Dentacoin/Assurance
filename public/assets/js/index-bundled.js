@@ -75635,7 +75635,7 @@ var projectData = {
                                                                                 //SEND EMAIL TO PATIENT
                                                                                 $.ajax({
                                                                                     type: 'POST',
-                                                                                    url: '/notify-patient-for-successful-withdraw',
+                                                                                    url: '/dentist/notify-patient-for-successful-withdraw',
                                                                                     dataType: 'json',
                                                                                     data: {
                                                                                         transaction_hash: transactionHash,
