@@ -74409,8 +74409,9 @@ var projectData = {
                         if (time_passed_since_signed > period_to_withdraw && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
                             console.log(1);
                             next_payment_timestamp = (nextWithdrawTimestamp + dApp.grace_period - now_timestamp) * 1000;
+                            console.log(now_timestamp, 'now_timestamp');
+                            console.log(next_payment_timestamp, 'next_payment_timestamp');
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                            console.log(next_payment_timestamp_date_obj, 'next_payment_timestamp_date_obj');
                             next_payment_timestamp_unix = (nextWithdrawTimestamp + dApp.grace_period - now_timestamp);
 
                             timer_label = 'Overdue payment. If you doesn\'t fill in '+projectData.utils.convertUsdToDcn(dcn_needed_to_be_payed_to_dentist)+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
@@ -74793,7 +74794,6 @@ var projectData = {
 
                         patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance);
                         function patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance) {
-                            console.log(next_payment_timestamp_date_obj, 'patientApprovalAndContractCreationLogic');
                             if (current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
                                 // 1st step
                                 $('.camping-for-popups').html('');
