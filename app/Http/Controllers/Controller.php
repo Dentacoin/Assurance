@@ -265,7 +265,16 @@ class Controller extends BaseController
     }
 
     public function generateRandomString() {
+        do {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $random_string = '';
+            for ($i = 0; $i < 62; $i+=1) {
+                $random_string .= $characters[mt_rand(0, $charactersLength - 1)];
+            }
+        } while (!empty(TemporallyContract::where(array('slug' => $random_string))->get()->first()));
 
+        return $random_string;
     }
 }
 
