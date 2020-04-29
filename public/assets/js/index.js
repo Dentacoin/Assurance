@@ -1,6 +1,10 @@
 console.log('Don\'t touch the code. Or do ... ¯\\_(ツ)_/¯');
 
 checkIfCookie();
+var allowAutomaticScripts = true;
+$(window).bind('beforeunload',function(){
+    allowAutomaticScripts = false;
+});
 
 var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore} = require('./helper');
 var {assurance_config} = require('./assurance_config');
@@ -2039,7 +2043,7 @@ var projectData = {
                         // check for pending patient records - check-up or teeth cleaning
                         var visibleRecord = false;
                         setInterval(function() {
-                            if (!visibleRecord) {
+                            if (!visibleRecord && allowAutomaticScripts) {
                                 $.ajax({
                                     type: 'POST',
                                     url: '/dentist/check-for-pending-contract-records',
@@ -4780,24 +4784,26 @@ function generateQRCodeForDentacoinWalletScan(object) {
 function trackForContractStatusChange(contract, currentStatus) {
     var changeInStatusFound = false;
     setInterval(function() {
-        $.ajax({
-            type: 'POST',
-            url: '/check-contract-status',
-            dataType: 'json',
-            data: {
-                contract: contract,
-                currentStatus: currentStatus
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: async function (response) {
-                if (response.success && !changeInStatusFound) {
-                    changeInStatusFound = true;
-                    window.location.reload();
+        if (allowAutomaticScripts) {
+            $.ajax({
+                type: 'POST',
+                url: '/check-contract-status',
+                dataType: 'json',
+                data: {
+                    contract: contract,
+                    currentStatus: currentStatus
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: async function (response) {
+                    if (response.success && !changeInStatusFound) {
+                        changeInStatusFound = true;
+                        window.location.reload();
+                    }
                 }
-            }
-        });
+            });
+        }
     }, 5000);
 }
 
