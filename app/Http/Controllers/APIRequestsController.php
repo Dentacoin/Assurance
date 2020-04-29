@@ -351,6 +351,7 @@ class APIRequestsController extends Controller {
         }
 
         var_dump($json);
+        die('asd');
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,

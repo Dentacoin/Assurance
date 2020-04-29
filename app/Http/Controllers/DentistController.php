@@ -34,7 +34,6 @@ class DentistController extends Controller
                 $this_dentist_having_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->all();
                 $alreadySentEthToThisUser = FreeETHReceiver::where(array('walletAddress' => $contract->dentist_address))->get()->first();
 
-                var_dump(sizeof($this_dentist_having_contracts) == 1 && empty($alreadySentEthToThisUser));
                 if (sizeof($this_dentist_having_contracts) == 1 && empty($alreadySentEthToThisUser)) {
                     //send ETH to dentist only for his first contract
                     $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
