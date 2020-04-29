@@ -48,7 +48,7 @@ class DentistController extends Controller
                     // saving record that we sent eth amount to this user
                     //$freeETHReceiver = new FreeETHReceiver();
                     //$freeETHReceiver->walletAddress = $contract->dentist_address;
-                    $freeETHReceiver->save();
+                    //$freeETHReceiver->save();
 
                     $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendEthAmount(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode($sendEthAmountParams)), 'dentist-approval', $contract->patient_address, $contract->dentist_address, $gasPrice);
                     var_dump($sending_eth_response);
