@@ -428,7 +428,7 @@ class PatientController extends Controller {
 
                     // saving record that we sent eth amount to this user
                     $freeETHReceiver = new FreeETHReceiver();
-                    $freeETHReceiver->walletAddress = $contract->dentist_address;
+                    $freeETHReceiver->walletAddress = $contract->patient_address;
                     $freeETHReceiver->save();
 
                     if(is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
