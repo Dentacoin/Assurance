@@ -34,7 +34,7 @@
                     @php($url = route('patient-contract-view', ['slug' => $contract->slug]))
                 @endif
             @endif
-            <tr @if($contract->status != 'active' && $contract->status != 'pending') data-timestamp-signed="{{strtotime($contract->contract_active_at)}}" @endif onclick="window.location = '{{$url}}'">
+            <tr @if($contract->status != 'active' && $contract->status != 'pending') data-timestamp-signed="{{strtotime($contract->contract_active_at)}}" @endif onclick="window.open('{{$url}}', '_top');">
                 <td class="status">
                     @switch($contract->status)
                         @case('active')
@@ -53,7 +53,7 @@
                         @php($status = 'Cancelled')
                         @break
                     @endswitch
-                    <a href="{{$url}}" target="_top" class="{{$contract->status}} alike-btn">{{$status}}</a>
+                    <span class="{{$contract->status}} alike-btn">{{$status}}</span>
                 </td>
                 <td class="avatar-and-name">
                     @if($patient_or_not)
