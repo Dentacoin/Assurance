@@ -110,6 +110,7 @@
             <section class="container padding-top-50 records-history module">
                 <div class="row">
                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+                        <h2 class="fs-34 text-center lato-bold padding-bottom-20">Records History</h2>
                         <table>
                             <thead>
                                 <tr>
@@ -141,7 +142,7 @@
                                                     <span class="lato-bold">PENDING</span>
                                                 @endif
                                             @elseif(!empty($record->data))
-                                                <a href="http://etherscan.io/tx/{{$record->data}}" target="_blank" class="blue-green-color lato-bold">SEE PROOF</a>
+                                                <a href="https://etherscan.io/tx/{{$record->data}}" target="_blank" class="blue-green-color lato-bold">SEE PROOF</a>
                                             @else
                                                 <span class="lato-bold">-</span>
                                             @endif
