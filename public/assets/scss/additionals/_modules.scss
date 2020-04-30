@@ -1660,4 +1660,21 @@
             }
         }
     }
+    &.records-history {
+        table {
+            width: 100%;
+            font-size: 16px;
+            td {
+                padding: 5px;
+            }
+            tr {
+                border-bottom: 1.5px solid #c9c9c9; 
+            }
+            thead {
+                tr {
+                    background-color: #dddddd;
+                }
+            }
+        }
+    }
 }

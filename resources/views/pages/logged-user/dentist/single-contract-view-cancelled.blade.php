@@ -107,15 +107,15 @@
             </div>
         </section>
         @if(!empty($recordsHistory))
-            <section class="container padding-top-50">
+            <section class="container padding-top-50 records-history module">
                 <div class="row">
                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Action</th>
-                                    <th>Details</th>
+                                    <th class="lato-bold">Date</th>
+                                    <th class="lato-bold">Action</th>
+                                    <th class="lato-bold">Details</th>
                                 </tr>
                             </thead>
                             <tbody>
