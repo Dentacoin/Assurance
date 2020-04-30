@@ -75379,10 +75379,16 @@ var projectData = {
                                             console.log(response.data, 'response.data');
                                             if (response.data) {
                                                 Object.keys(response.data).forEach(function(key) {
-                                                    console.log(key);
-                                                    console.log(response.data[key]);
+                                                    if (!$('.records-history.module tr[data-id="'+key+'"]').length) {
+                                                        var action;
+                                                        if (response.data[key].type == 'teeth-cleaning') {
+                                                            action = 'Teeth cleaning recorded';
+                                                        } else if (response.data[key].type == 'check-up') {
+                                                            action = 'Check-up recorded';
+                                                        }
 
-                                                    console.log($('.records-history.module tr[data-id="'+key+'"]').length, 'length');
+                                                        $('.records-history.module table tbody').prepend('<tr data-id="'+key+'"> <td>'+projectData.utils.dateObjToFormattedDate(new Date(response.data[key].created_at))+'</td><td>'+action+'</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
+                                                    }
                                                 });
                                             }
 
