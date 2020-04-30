@@ -36,6 +36,15 @@ class DentistController extends Controller
             var_dump($record->created_at);
             echo "<br><br>";
         }
+
+        usort($mergedRecordsAndCheckups, function($a, $b) {
+            return $a['created_at'] < $b['created_at'];
+        });
+
+        foreach ($mergedRecordsAndCheckups as $record) {
+            var_dump($record->created_at);
+            echo "<br><br>";
+        }
         die();
 
         $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
