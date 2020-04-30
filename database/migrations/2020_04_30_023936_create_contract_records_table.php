@@ -16,7 +16,7 @@ class CreateContractRecordsTable extends Migration
         Schema::create('contract_records', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('contract_id');
-            $table->enum('type', ['Contract creation', 'Contract signing', 'Contract funding', 'Contract approval', 'Successful payment', 'Contract cancelled'])->default('pending');
+            $table->enum('type', ['Contract creation', 'Contract signing', 'Contract funding', 'Contract approval', 'Successful payment', 'Contract cancelled']);
             $table->string('data')->nullable();
             $table->timestamps();
         });
