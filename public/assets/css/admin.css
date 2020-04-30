@@ -1684,12 +1684,20 @@
 .module.records-history table {
   width: 100%;
   font-size: 16px; }
-  .module.records-history table td {
-    padding: 5px; }
+  .module.records-history table td, .module.records-history table th {
+    padding: 8px 5px; }
+  .module.records-history table td:first-child {
+    width: 32.5%;
+    padding-left: 12.5%; }
   .module.records-history table tr {
     border-bottom: 1.5px solid #c9c9c9; }
   .module.records-history table thead tr {
     background-color: #dddddd; }
+    .module.records-history table thead tr th {
+      width: 25%; }
+      .module.records-history table thead tr th:first-child {
+        width: 32.5%;
+        padding-left: 12.5%; }
 
 body {
   background-color: #222d32; }

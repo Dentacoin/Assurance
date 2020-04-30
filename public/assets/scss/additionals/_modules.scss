@@ -1664,15 +1664,28 @@
         table {
             width: 100%;
             font-size: 16px;
+            td, th {
+                padding: 8px 5px;
+            }
             td {
-                padding: 5px;
+                &:first-child {
+                    width: 32.5%;
+                    padding-left: 12.5%;
+                }
             }
             tr {
-                border-bottom: 1.5px solid #c9c9c9; 
+                border-bottom: 1.5px solid #c9c9c9;
             }
             thead {
                 tr {
                     background-color: #dddddd;
+                    th {
+                        width: 25%;
+                        &:first-child {
+                            width: 32.5%;
+                            padding-left: 12.5%;
+                        }
+                    }
                 }
             }
         }
