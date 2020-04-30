@@ -1666,6 +1666,9 @@
             font-size: 16px;
             td, th {
                 padding: 8px 5px;
+                a {
+                    text-decoration: underline;
+                }
             }
             td {
                 &:first-child {
