@@ -75377,6 +75377,14 @@ var projectData = {
                                     success: function (response) {
                                         if (response.success) {
                                             console.log(response.data, 'response.data');
+                                            if (response.data) {
+                                                Object.keys(response.data).forEach(function(key) {
+                                                    console.log(key);
+                                                    console.log(response.data[key]);
+
+                                                    console.log($('.records-history.module tr[data-id="'+key+'"]').length, 'length');
+                                                });
+                                            }
 
                                             visibleRecord = true;
                                             basic.showDialog(response.html, 'pending-contract-record', null, true);
