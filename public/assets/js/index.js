@@ -2067,7 +2067,7 @@ var projectData = {
                                                             action = 'Check-up recorded';
                                                         }
 
-                                                        $('.records-history.module table tbody').prepend('<tr data-id="'+key+'"> <td>'+projectData.utils.dateObjToFormattedDate(new Date(response.data[key].created_at))+'</td><td>'+action+'</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
+                                                        $('.records-history.module table tbody').prepend('<tr data-id="'+key+'"> <td>'+projectData.utils.dateObjToFormattedDate(new Date(response.data[key].date_at))+'</td><td>'+action+'</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
                                                     }
                                                 });
                                             }
@@ -2100,7 +2100,11 @@ var projectData = {
                                                                         basic.closeDialog();
                                                                         hideLoader();
 
-                                                                        console.log(response.data, 'response.data');
+                                                                        if (response.data && response.data.length) {
+                                                                            for (var i = 0, len = response.data.length; i < len; i+=1) {
+                                                                                $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold active-color">CONFIRMED</span>');
+                                                                            }
+                                                                        }
                                                                     } else if (response.error) {
                                                                         hideLoader();
                                                                         basic.showAlert(response.message, '', true);
@@ -2138,7 +2142,11 @@ var projectData = {
                                                                         basic.closeDialog();
                                                                         hideLoader();
 
-                                                                        console.log(response.data, 'response.data');
+                                                                        if (response.data && response.data.length) {
+                                                                            for (var i = 0, len = response.data.length; i < len; i+=1) {
+                                                                                $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold cancelled-color">DECLINED</span>');
+                                                                            }
+                                                                        }
                                                                     } else if (response.error) {
                                                                         hideLoader();
                                                                         basic.showAlert(response.message, '', true);
