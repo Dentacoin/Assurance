@@ -74148,6 +74148,8 @@ var projectData = {
                     }
                 } else if ($('body').hasClass('dentist-side')) {
                     if ($('body').hasClass('dentist-contract-view')) {
+                        console.log('dentist-contract-view');
+                        return false;
                         // dentist side
                         cancelContractEventInit();
 
@@ -75092,6 +75094,8 @@ var projectData = {
                         }
                     }
                 } else if ($('body').hasClass('dentist-contract-view')) {
+                    console.log('dentist-contract-view');
+                    return false;
                     if ($('.contract-header').hasClass('awaiting-payment')) {
                         trackForContractStatusChange($('.single-contract-view-section').attr('data-contract'), 'awaiting-payment');
                     } else if ($('.contract-header').hasClass('pending')) {
