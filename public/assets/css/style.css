@@ -6872,6 +6872,7 @@ fieldset {
   width: 95%;
   max-width: 900px; }
   .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog .icon-title-row {
+    font-size: 0;
     max-width: 500px;
     margin: 0 auto; }
     .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog .icon-title-row h3 {
@@ -6879,13 +6880,22 @@ fieldset {
       width: calc(100% - 70px); }
   .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog ul {
     padding-top: 30px;
-    padding-bottom: 20px; }
+    padding-bottom: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    font-size: 18px; }
   .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog #popup-qrcode {
     text-align: center; }
     .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog #popup-qrcode img {
       width: 100%;
       max-width: 500px;
       margin: 0 auto; }
+  @media screen and (max-width: 767px) {
+    .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog .icon-title-row {
+      padding-top: 30px; }
+    .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog ul {
+      padding-top: 15px;
+      padding-bottom: 10px; } }
 .bootbox.style-anchors .modal-dialog .modal-content .modal-body a {
   font-weight: bold;
   text-decoration: underline; }

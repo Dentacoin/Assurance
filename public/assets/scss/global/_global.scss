@@ -644,6 +644,7 @@ fieldset {
             width: 95%;
             max-width: 900px;
             .icon-title-row {
+                font-size: 0;
                 max-width: 500px;
                 margin: 0 auto;
                 h3 {
@@ -654,6 +655,9 @@ fieldset {
             ul {
                 padding-top: 30px;
                 padding-bottom: 20px;
+                max-width: 500px;
+                margin: 0 auto;
+                font-size: 18px;
             }
             #popup-qrcode {
                 text-align: center;
@@ -661,6 +665,15 @@ fieldset {
                     width: 100%;
                     max-width: 500px;
                     margin: 0 auto;
+                }
+            }
+            @include breakpoint($xs) {
+                .icon-title-row {
+                    padding-top: 30px;
+                }
+                ul {
+                    padding-top: 15px;
+                    padding-bottom: 10px;
                 }
             }
         }
