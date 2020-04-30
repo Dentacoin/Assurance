@@ -106,5 +106,43 @@
                 </div>
             </div>
         </section>
+        @if(!empty($recordsHistory))
+            <section class="container padding-top-50">
+                <div class="row">
+                    <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($recordsHistory as $record)
+                                    <tr>
+                                        <td>{{date('d/m/Y', $record->created_at->timestamp)}}</td>
+                                        <td>
+                                            @if($record->type == 'teeth-cleaning')
+                                                Teeth cleaning recorded
+                                            @elseif($record->type == 'check-up')
+                                                Check-up recorded
+                                            @else
+                                                {{$record->type}}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if(property_exists($record, 'data'))
+                                                <a href="http://etherscan.io/tx/{{$record->data}}" target="_blank">SEE PROOF</a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        @endif
     </section>
 @endsection
