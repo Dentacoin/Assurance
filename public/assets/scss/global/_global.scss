@@ -645,6 +645,18 @@ fieldset {
             max-width: 900px;
             #popup-qrcode {
                 text-align: center;
+                .icon-title-row {
+                    max-width: 500px;
+                    margin: 0 auto;
+                    h3 {
+                        text-align: left;
+                        width: calc(100% - 70px);
+                    }
+                }
+                ul {
+                    padding-top: 30px;
+                    padding-bottom: 20px;
+                }
                 img {
                     width: 100%;
                     max-width: 500px;

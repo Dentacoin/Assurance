@@ -6873,6 +6873,15 @@ fieldset {
   max-width: 900px; }
   .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog #popup-qrcode {
     text-align: center; }
+    .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog #popup-qrcode .icon-title-row {
+      max-width: 500px;
+      margin: 0 auto; }
+      .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog #popup-qrcode .icon-title-row h3 {
+        text-align: left;
+        width: calc(100% - 70px); }
+    .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog #popup-qrcode ul {
+      padding-top: 30px;
+      padding-bottom: 20px; }
     .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog #popup-qrcode img {
       width: 100%;
       max-width: 500px;
