@@ -34,6 +34,7 @@ class DentistController extends Controller
 
         foreach ($mergedRecordsAndCheckups as $record) {
             var_dump($record->created_at);
+            echo "<br><br>";
         }
         die();
 
