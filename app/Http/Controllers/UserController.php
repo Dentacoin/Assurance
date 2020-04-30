@@ -635,6 +635,7 @@ class UserController extends Controller {
         }
     }
 
+
     // method for cancelling contracts on single page contract visiting. This method is built, because we cannot have the cronjob running every seconds and sometimes users might see contract that have to be cancelled as active one
     public function automaticContractCancel($contract, $onBlockchain = true) {
         if($onBlockchain) {
