@@ -110,7 +110,7 @@
             <section class="container padding-top-50 records-history module">
                 <div class="row">
                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
-                        {{--<table>
+                        <table>
                             <thead>
                                 <tr>
                                     <th class="lato-bold first-th">Date</th>
@@ -118,11 +118,9 @@
                                     <th class="lato-bold">Details</th>
                                 </tr>
                             </thead>
-                            <tbody>--}}
+                            <tbody>
                                 @foreach($recordsHistory as $record)
-                                    {{var_dump($record)}}
-                                    {{var_dump($record->data)}}
-                                    {{--<tr>
+                                    <tr>
                                         <td>{{date('d/m/Y', $record->created_at->timestamp)}}</td>
                                         <td>
                                             @if($record->type == 'teeth-cleaning')
@@ -134,14 +132,14 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if(property_exists($record, 'data'))
+                                            @if(!empty($record->data))
                                                 <a href="http://etherscan.io/tx/{{$record->data}}" target="_blank">SEE PROOF</a>
                                             @endif
                                         </td>
-                                    </tr>--}}
-                                @endforeach{{--
+                                    </tr>
+                                @endforeach
                             </tbody>
-                        </table>--}}
+                        </table>
                     </div>
                 </div>
             </section>
