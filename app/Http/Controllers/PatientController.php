@@ -619,7 +619,7 @@ class PatientController extends Controller {
                     $checkUp = new ContractCheckup();
                     $checkUp->contract_id = $contract->id;
                     $checkUp->type = $request->input('type');
-                    $checkUp->date_at = date('Y-m-d H:i:s', strtotime($date));
+                    $checkUp->request_date_at = date('Y-m-d H:i:s', strtotime($date));
 
                     Mail::send(array(), array(), function($message) use ($email_body, $email_subject, $dentistEmail) {
                         $message->to($dentistEmail)->subject($email_subject);
@@ -652,14 +652,14 @@ class PatientController extends Controller {
                         $checkUp = new ContractCheckup();
                         $checkUp->contract_id = $contract->id;
                         $checkUp->type = 'check-up';
-                        $checkUp->date_at = date('Y-m-d H:i:s', strtotime($check_up_date));
+                        $checkUp->request_date_at = date('Y-m-d H:i:s', strtotime($check_up_date));
                     }
 
                     if($currentTeethCLeaningRecordsCount < $aMustTeethCleaningRecordsCount && !empty($teeth_cleaning_date)) {
                         $teethCleaning = new ContractCheckup();
                         $teethCleaning->contract_id = $contract->id;
                         $teethCleaning->type = 'teeth-cleaning';
-                        $teethCleaning->date_at = date('Y-m-d H:i:s', strtotime($teeth_cleaning_date));
+                        $teethCleaning->request_date_at = date('Y-m-d H:i:s', strtotime($teeth_cleaning_date));
                     }
 
                     if(isset($checkUp) && isset($teethCleaning)) {
@@ -735,11 +735,11 @@ class PatientController extends Controller {
         if($dentist) {
             $checkUps = ContractCheckup::leftJoin('temporally_contracts', function($join) {
                 $join->on('contract_checkups.contract_id', '=', 'temporally_contracts.id');
-            })->where(array('temporally_contracts.dentist_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->whereIn('contract_checkups.status', $statuses)->whereBetween('contract_checkups.date_at', array($from, $to))->get()->all();
+            })->where(array('temporally_contracts.dentist_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->whereIn('contract_checkups.status', $statuses)->whereBetween('contract_checkups.request_date_at', array($from, $to))->get()->all();
         } else {
             $checkUps = ContractCheckup::leftJoin('temporally_contracts', function($join) {
                 $join->on('contract_checkups.contract_id', '=', 'temporally_contracts.id');
-            })->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->whereIn('contract_checkups.status', $statuses)->whereBetween('contract_checkups.date_at', array($from, $to))->get()->all();
+            })->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->whereIn('contract_checkups.status', $statuses)->whereBetween('contract_checkups.request_date_at', array($from, $to))->get()->all();
         }
 
         if(!empty($checkUps)) {
