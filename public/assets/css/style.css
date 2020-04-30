@@ -204,6 +204,9 @@
 .cancelled-color {
   color: #e92f30; }
 
+.active-color {
+  color: #239234; }
+
 body {
   margin: 0;
   font-family: "Calibri-Regular";

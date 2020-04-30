@@ -132,8 +132,18 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if(!empty($record->data))
-                                                <a href="http://etherscan.io/tx/{{$record->data}}" target="_blank">SEE PROOF</a>
+                                            @if($record->type == 'teeth-cleaning' || $record->type == 'check-up')
+                                                @if($record->status == 'approved')
+                                                    <span class="lato-bold active-color">CONFIRMED</span>
+                                                @elseif($record->status == 'rejected')
+                                                    <span class="lato-bold cancelled-color">DECLINED</span>
+                                                @elseif($record->status == 'sent')
+                                                    <span class="lato-bold">PENDING</span>
+                                                @endif
+                                            @elseif(!empty($record->data))
+                                                <a href="http://etherscan.io/tx/{{$record->data}}" target="_blank" class="blue-green-color lato-bold">SEE PROOF</a>
+                                            @else
+                                                <span class="lato-bold">-</span>
                                             @endif
                                         </td>
                                     </tr>
