@@ -20,12 +20,16 @@ class DentistController extends Controller
 
     public function getDentistContractView($slug) {
         $contract = TemporallyContract::where(array('slug' => $slug))->get()->first();
-        $contract_records = ContractRecord::where(array('contract_id' => $contract->id))->get()->all()->toArray();
-        $contract_checkups = ContractCheckup::where(array('contract_id' => $contract->id))->get()->all()->toArray();
+        $contract_records = ContractRecord::where(array('contract_id' => $contract->id))->get()->all();
+        $contract_checkups = ContractCheckup::where(array('contract_id' => $contract->id))->get()->all();
 
         var_dump($contract_records);
         echo "<br><br><br><br><br><br><br>";
         var_dump($contract_checkups);
+        echo "<br><br><br><br><br><br><br>";
+
+
+        var_dump(array_merge($contract_records, $contract_checkups));
         die();
 
         $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
