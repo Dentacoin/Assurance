@@ -28,8 +28,13 @@ class DentistController extends Controller
         var_dump($contract_checkups);
         echo "<br><br><br><br><br><br><br>";
 
+        $mergedRecordsAndCheckups = array_merge($contract_records, $contract_checkups);
+        var_dump($mergedRecordsAndCheckups);
+        echo "<br><br><br><br><br><br><br>";
 
-        var_dump(array_merge($contract_records, $contract_checkups));
+        foreach ($mergedRecordsAndCheckups as $record) {
+            var_dump($record->created_at);
+        }
         die();
 
         $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
