@@ -13,7 +13,8 @@
                 <tbody>
                 @foreach($recordsHistory as $record)
                     <tr @if($record->type == 'teeth-cleaning' || $record->type == 'check-up') data-id="{{$record->id}}" @endif>
-                        <td>{{date('d/m/Y', $record->date_at->getTimestamp())}}</td>
+                        {{--<td>{{date('d/m/Y', $record->date_at->getTimestamp())}}</td>--}}
+                        <td>{{var_dump($record->date_at)}}</td>
                         <td>
                             @if($record->type == 'teeth-cleaning')
                                 Teeth cleaning recorded
