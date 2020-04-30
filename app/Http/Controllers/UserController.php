@@ -646,6 +646,7 @@ class UserController extends Controller {
             );
 
             $check_if_legit_contract = (new APIRequestsController())->cancelIfLatePayment(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode($cancelContractParams)), $contract->patient_address, $contract->dentist_address, $gasPrice);
+            die('asd1');
             if(is_object($check_if_legit_contract) && property_exists($check_if_legit_contract, 'success') && $check_if_legit_contract->success) {
                 //IF NORMAL PERIOD AND GRACE PERIOD PASSED CANCEL THIS CONTRACT
                 $cancellation_reason = array(

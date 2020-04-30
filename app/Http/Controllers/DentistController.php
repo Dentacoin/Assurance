@@ -29,7 +29,6 @@ class DentistController extends Controller
             } else if ($contract->status == 'awaiting-payment' || $contract->status == 'pending') {
                 $contract = (new UserController())->automaticContractCancel($contract, false);
             }
-            die('asd');
 
             if ($contract->status == 'awaiting-approval') {
                 $this_dentist_having_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->all();
