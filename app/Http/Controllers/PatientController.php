@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CalculatorParameter;
 use App\ContractCheckup;
+use App\ContractRecord;
 use App\FreeETHReceiver;
 use App\InviteDentistsReward;
 use App\PublicKey;
@@ -77,70 +78,6 @@ class PatientController extends Controller {
             }
         }else {
             return (new HomeController())->getView();
-        }
-    }
-
-    protected function authenticate(Request $request) {
-        $this->validate($request, [
-            'token' => 'required',
-            'email' => 'required',
-            'id' => 'required'
-        ], [
-            'token.required' => 'Token is required.',
-            'email.required' => 'Email is required.',
-            'id.required' => 'Email is required.'
-        ]);
-
-        //change the email of the contract in case if the email which patient used for register is different
-        if(!empty($request->input('slug'))) {
-            $contract = TemporallyContract::where(array('slug' => $request->input('slug'), 'status' => 'pending'))->get()->first();
-            if($contract->patient_email != $request->input('email')) {
-                $contract->patient_email = $request->input('email');
-                $contract->save();
-            }
-        }
-
-        $session_arr = [
-            'token' => $request->input('token'),
-            'id' => $request->input('id'),
-            'type' => 'patient'
-        ];
-
-        $current_logging_patient = (new APIRequestsController())->getUserData($request->input('id'), true);
-        if (!$current_logging_patient->success) {
-            if (property_exists($current_logging_patient, 'self_deleted') && $current_logging_patient->self_deleted == true) {
-                // self deleted
-                return redirect()->route('home')->with(['error' => 'This account has been deleted by its owner and cannot be restored.']);
-            } else if ((property_exists($current_logging_patient, 'deleted') && $current_logging_patient->deleted == true)) {
-                // deleted by admin
-                return redirect()->route('home')->with(['error' => 'ACCESS BLOCKED: We have detected suspicious activity from your profile. If you have had one genuine profile only, please contact us at <a href="mailto:admin@dentacoin.com">admin@dentacoin.com</a>. Otherwise, blocking is irreversible.']);
-            } else {
-                return redirect()->route('home')->with(['error' => 'Account not found. <a href="//dentacoin.com?show-patient-register">Sign up here</a>.']);
-            }
-        } else {
-            session(['logged_user' => $session_arr]);
-            
-            //send request to API to add this reward to the patient account
-            $rewards = InviteDentistsReward::where(array('patient_id' => $request->input('id'), /*'dentist_registered_and_approved' => 1,*/ 'sent_to_api' => 0, 'payed_on' => NULL))->get()->all();
-            //if rewards forward them to coredb
-            if(!empty($rewards)) {
-                foreach($rewards as $reward) {
-                    $invited_dentist_data = (new APIRequestsController())->getUserByEmailAndType($reward->dentist_email, 'dentist');
-                    if(!empty($invited_dentist_data) && $invited_dentist_data[0]->status == 'approved') {
-                        $reward_api_method_response = (new APIRequestsController())->registerDCNReward(array('amount' => self::DCN_REWARD, 'type' => 'assurance', 'reference_id' => $reward->id));
-                        if($reward_api_method_response->success) {
-                            $reward->sent_to_api = 1;
-                            $reward->save();
-                        }
-                    }
-                }
-            }
-
-            if(!empty($request->input('route')) && !empty($request->input('slug'))) {
-                return redirect()->route($request->input('route'), ['slug' => $request->input('slug')]);
-            } else {
-                return redirect()->route('patient-access');
-            }
         }
     }
 
@@ -432,6 +369,11 @@ class PatientController extends Controller {
                     $freeETHReceiver->save();
 
                     if(is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
+                        $contractRecord = new ContractRecord();
+                        $contractRecord->contract_id = $contract->id;
+                        $contractRecord->type = 'Contract signing';
+                        $contractRecord->save();
+
                         $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
                         $body = $email_view->render();
 
@@ -450,6 +392,11 @@ class PatientController extends Controller {
                         return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "1 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
                     }
                 } else {
+                    $contractRecord = new ContractRecord();
+                    $contractRecord->contract_id = $contract->id;
+                    $contractRecord->type = 'Contract signing';
+                    $contractRecord->save();
+
                     $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
                     $body = $email_view->render();
 
@@ -553,6 +500,11 @@ class PatientController extends Controller {
             $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
             $message->setBody($body, 'text/html');
         });
+
+        $contractRecord = new ContractRecord();
+        $contractRecord->contract_id = $contract->id;
+        $contractRecord->type = 'Contract funding';
+        $contractRecord->save();
     }
 
     protected function getContactClinicPopup(Request $request) {

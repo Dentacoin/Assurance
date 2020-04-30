@@ -25,10 +25,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::get('/contract-proposal/{slug}', 'PatientController@getContractProposal')->name('contract-proposal');
 
-    Route::get('/forgotten-password', 'UserController@getForgottenPasswordView')->name('forgotten-password');
-
-    Route::get('/password-recover', 'UserController@getRecoverPassword')->name('password-recover');
-
     /*Route::get('/my-contracts', 'UserController@getMyContractsView')->middleware('HandleUserSession')->name('my-contracts');*/
 
     //======================================= AJAX ========================================
@@ -56,8 +52,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::group(['prefix' => 'patient', 'middleware' => 'HandlePatientSession'], function () {
         Route::get('/', 'PatientController@getPatientAccess')->name('patient-access');
-
-        /*Route::post('/authenticate', 'PatientController@authenticate')->name('authenticate-patient');*/
 
         Route::post('/get-invite-dentists-popup', 'PatientController@getInviteDentistsPopup')->name('get-invite-dentists-popup');
 
@@ -138,15 +132,9 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/get-recipe-popup', 'UserController@getRecipePopup')->middleware('HandleUserSession')->name('get-recipe-popup');
 
-    /*Route::post('/dentist-register', 'DentistController@register')->name('dentist-register');
-
-    Route::post('/dentist-login', 'DentistController@login')->name('dentist-login');*/
-
     Route::post('/authenticate-user', 'UserController@authenticateUser')->name('authenticate-user');
 
     Route::get('/ipfs-hashes', 'Controller@getIpfsHashes')->name('ipfs-hashes');
-
-    Route::post('/enrich-profile', 'DentistController@enrichProfile')->name('enrich-profile');
 
     Route::post('/invite-your-clinic', 'DentistController@inviteYourClinic')->name('invite-your-clinic');
 

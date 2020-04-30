@@ -203,51 +203,6 @@ class APIRequestsController extends Controller {
         }
     }
 
-    public function generatePasswordRecoveryToken($email) {
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://api.dentacoin.com/api/recoverToken/',
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POSTFIELDS => array(
-                'email' => $this->encrypt($email, getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'))
-            )
-        ));
-
-        $resp = json_decode(curl_exec($curl));
-        curl_close($curl);
-
-        if(!empty($resp))   {
-            return $resp;
-        }else {
-            return false;
-        }
-    }
-
-    public function recoverPassword($data) {
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_POST => 1,
-            CURLOPT_URL => 'https://api.dentacoin.com/api/recoverPassword/',
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POSTFIELDS => array(
-                'recoverToken' => $data['token'],
-                'password' => $this->encrypt($data['password'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'))
-            )
-        ));
-
-        $resp = json_decode(curl_exec($curl));
-        curl_close($curl);
-
-        if(!empty($resp))   {
-            return $resp;
-        }else {
-            return false;
-        }
-    }
-
     public function checkIfFreeEmail($email) {
         $curl = curl_init();
         curl_setopt_array($curl, array(
