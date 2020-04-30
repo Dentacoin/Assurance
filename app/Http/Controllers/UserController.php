@@ -638,7 +638,13 @@ class UserController extends Controller {
     // method for cancelling contracts on single page contract visiting. This method is built, because we cannot have the cronjob running every seconds and sometimes users might see contract that have to be cancelled as active one
     public function automaticContractCancel($contract, $onBlockchain = true) {
         if($onBlockchain) {
-            $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
+            // UPGRADE THIS WITH web3 - make the check here if the contract should be cancelled and then cancel it
+
+            // or
+
+            // make the check on javascript once page is loaded
+
+            /*$gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
             $cancelContractParams = array(
                 'patient_address' => $contract->patient_address,
                 'dentist_address' => $contract->dentist_address,
@@ -646,7 +652,6 @@ class UserController extends Controller {
             );
 
             $check_if_legit_contract = (new APIRequestsController())->cancelIfLatePayment(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode($cancelContractParams)), $contract->patient_address, $contract->dentist_address, $gasPrice);
-            die('asd1');
             if(is_object($check_if_legit_contract) && property_exists($check_if_legit_contract, 'success') && $check_if_legit_contract->success) {
                 //IF NORMAL PERIOD AND GRACE PERIOD PASSED CANCEL THIS CONTRACT
                 $cancellation_reason = array(
@@ -658,7 +663,7 @@ class UserController extends Controller {
                 $contract->save();
 
                 $this->sendNotificationEmailToDentistAndPatientAboutContractCancelling($contract, $cancellation_reason);
-            }
+            }*/
         } else {
             if(!empty($contract->contract_active_at)) {
                 // awaiting-payment
