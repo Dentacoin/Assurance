@@ -101,6 +101,9 @@
             </div>
         </div>
     </section>
+    @if(!empty($recordsHistory))
+        @include('partials.records-history', $recordsHistory)
+    @endif
     @include('partials.patient-ready-to-purchase-with-external-api')
 @endsection
 

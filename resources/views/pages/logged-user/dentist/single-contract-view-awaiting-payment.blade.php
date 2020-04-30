@@ -96,5 +96,8 @@
                 </div>
             </div>
         </section>
+        @if(!empty($recordsHistory))
+            @include('partials.records-history', $recordsHistory)
+        @endif
     </section>
 @endsection

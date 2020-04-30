@@ -2056,6 +2056,8 @@ var projectData = {
                                     },
                                     success: function (response) {
                                         if (response.success) {
+                                            console.log(response.data, 'response.data');
+
                                             visibleRecord = true;
                                             basic.showDialog(response.html, 'pending-contract-record', null, true);
 
@@ -2083,6 +2085,8 @@ var projectData = {
                                                                         visibleRecord = false;
                                                                         basic.closeDialog();
                                                                         hideLoader();
+
+                                                                        console.log(response.data, 'response.data');
                                                                     } else if (response.error) {
                                                                         hideLoader();
                                                                         basic.showAlert(response.message, '', true);
@@ -2119,6 +2123,8 @@ var projectData = {
                                                                         visibleRecord = false;
                                                                         basic.closeDialog();
                                                                         hideLoader();
+
+                                                                        console.log(response.data, 'response.data');
                                                                     } else if (response.error) {
                                                                         hideLoader();
                                                                         basic.showAlert(response.message, '', true);

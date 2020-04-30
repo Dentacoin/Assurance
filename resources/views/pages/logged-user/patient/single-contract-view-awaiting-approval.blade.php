@@ -82,6 +82,9 @@
             </div>
         </div>
     </section>
+    @if(!empty($recordsHistory))
+        @include('partials.records-history', $recordsHistory)
+    @endif
     <div class="external-api-crypto-provider hide">@include('partials.patient-ready-to-purchase-with-external-api')</div>
 @endsection
 

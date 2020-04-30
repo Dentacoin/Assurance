@@ -473,7 +473,7 @@ class DentistController extends Controller
                     $message->setBody($emailBody, 'text/html');
                 });
 
-                return response()->json(['success' => true]);
+                return response()->json(['success' => true, 'data' => $recordIds]);
 
             } else {
                 return response()->json(['error' => true, 'message' => 'Something went wrong, please try again later or contact <a href=\'mailto:assurance@dentacoin.com\'>Dentacoin team</a>.']);
@@ -512,15 +512,15 @@ class DentistController extends Controller
                 if($checkUp != NULL && $teethCleaning != NULL) {
                     $popupHtml = '<div class="text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-70 max-width-xs-40 width-100"/></figure>'.$patientAvatar.'<figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Teeth cleaning" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70 max-width-xs-40 width-100"/></figure></div><div class="padding-top-15 padding-bottom-10 text-center lato-bold fs-30">'.$patient->name.'</div><div class="text-center fs-22 line-height-24 max-width-500 margin-0-auto">said they\'ve visited you for a <span class="calibri-bold blue-green-color">check-up</span> on <span class="calibri-bold">'.date('d-m-Y', strtotime($checkUp->date_at)).'</span> and <span class="calibri-bold blue-green-color">teeth cleaning</span> on <span class="calibri-bold">'.date('d-m-Y', strtotime($teethCleaning->date_at)).'</span>.</div><div class="text-center padding-bottom-20 padding-top-15"><a href="javascript:void(0);" class="red-white-btn decline-record min-width-200 margin-left-10 margin-right-10 margin-top-10" data-record="'.serialize(array($checkUp->id, $teethCleaning->id)).'">Decline</a><a href="javascript:void(0);" class="white-green-btn confirm-record min-width-200 margin-left-10 margin-right-10 margin-top-10" data-record="'.serialize(array($checkUp->id, $teethCleaning->id)).'">CONFIRM</a></div>';
 
-                    return response()->json(['success' => true, 'html' => $popupHtml]);
+                    return response()->json(['success' => true, 'html' => $popupHtml, 'data' => array($checkUp->id => $checkUp, $teethCleaning->id => $teethCleaning)]);
                 } else if($checkUp != NULL) {
                     $popupHtml = '<div class="text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-70 max-width-xs-40 width-100"/></figure>'.$patientAvatar.'</div><div class="padding-top-15 padding-bottom-10 text-center lato-bold fs-30">'.$patient->name.'</div><div class="text-center fs-22 line-height-24 max-width-500 margin-0-auto">said they\'ve visited you for a <span class="calibri-bold blue-green-color">check-up</span> on <span class="calibri-bold">'.date('d-m-Y', strtotime($checkUp->date_at)).'</span>.</div><div class="text-center padding-bottom-20 padding-top-15"><a href="javascript:void(0);" class="red-white-btn decline-record min-width-200 margin-left-10 margin-right-10 margin-top-10" data-record="'.serialize(array($checkUp->id)).'">Decline</a><a href="javascript:void(0);" class="white-green-btn confirm-record min-width-200 margin-left-10 margin-right-10 margin-top-10" data-record="'.serialize(array($checkUp->id)).'">CONFIRM</a></div>';
 
-                    return response()->json(['success' => true, 'html' => $popupHtml]);
+                    return response()->json(['success' => true, 'html' => $popupHtml, 'data' => array($checkUp->id => $checkUp)]);
                 } else if($teethCleaning != NULL) {
                     $popupHtml = '<div class="text-center">'.$patientAvatar.'<figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block"><img alt="Teeth cleaning" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70 max-width-xs-40 width-100"/></figure></div><div class="padding-top-15 padding-bottom-10 text-center lato-bold fs-30">'.$patient->name.'</div><div class="text-center fs-22 line-height-24 max-width-500 margin-0-auto">said they\'ve visited you for a teeth cleaning</span> on <span class="calibri-bold">'.date('d-m-Y', strtotime($teethCleaning->date_at)).'</span>.</div><div class="text-center padding-bottom-20 padding-top-15"><a href="javascript:void(0);" class="red-white-btn decline-record min-width-200 margin-left-10 margin-right-10 margin-top-10" data-record="'.serialize(array($teethCleaning->id)).'">Decline</a><a href="javascript:void(0);" class="white-green-btn confirm-record min-width-200 margin-left-10 margin-right-10 margin-top-10" data-record="'.serialize(array($teethCleaning->id)).'">CONFIRM</a></div>';
 
-                    return response()->json(['success' => true, 'html' => $popupHtml]);
+                    return response()->json(['success' => true, 'html' => $popupHtml, 'data' => array($teethCleaning->id => $teethCleaning)]);
                 }
             } else {
                 return response()->json(['error' => true, 'message' => 'Missing records.']);
