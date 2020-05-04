@@ -48,7 +48,7 @@
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 ">Wallet Address:</label>
             @php($addresses = (new \App\Http\Controllers\APIRequestsController())->getAddresses())
             <div class="right-extra-field no-padding break-word position-relative" id="search-result-parent">
-                <input autocomplete="off" readonly type="text" data-type="address" id="dcn_address" name="address" maxlength="42" class="right-field width-100 calibri-regular fs-18 dark-color inline-block pencil-background search-input" placeholder="Select Wallet Address" @if(!empty($addresses) && !empty($addresses->data) && sizeof($addresses->data) == 1) value="{{$addresses->data[0]->dcn_address}}" @endif/>
+                <input autocomplete="off" readonly type="text" data-type="address" id="dcn_address" name="address" maxlength="42" class="right-field width-100 calibri-regular fs-18 dark-color inline-block search-input" placeholder="Select Wallet Address" @if(!empty($addresses) && !empty($addresses->data) && sizeof($addresses->data) == 1) value="{{$addresses->data[0]->dcn_address}}" @endif/>
                 <div class="search-result module">
                     <div class="search-body">
                         <ul class="addresses-list" id="addresses-list">
