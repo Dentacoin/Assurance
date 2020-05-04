@@ -554,7 +554,7 @@ var projectData = {
                     return false;
                 } else {
                     //check file extension
-                    if (jQuery.inArray(filename.split('.').pop().toLowerCase(), allowedImagesExtensions) !== -1) {
+                    if ($.inArray(filename.split('.').pop().toLowerCase(), allowedImagesExtensions) !== -1) {
                         if ($('.avatar.module .error-handle').length) {
                             $('.avatar.module .error-handle').remove();
                         }
@@ -631,7 +631,7 @@ var projectData = {
         initFlipClockTimer: function(time_left) {
             var clock;
             if (time_left > 0) {
-                clock = jQuery('.clock').FlipClock(time_left, {
+                clock = $('.clock').FlipClock(time_left, {
                     clockFace: 'DailyCounter',
                     autoStart: false,
                     showSeconds: false,
@@ -644,7 +644,7 @@ var projectData = {
                 clock.setCountdown(true);
                 clock.start();
             }else {
-                jQuery('.countdown-section').hide();
+                $('.countdown-section').hide();
             }
         },
         initTooltips: function() {
@@ -653,8 +653,8 @@ var projectData = {
             }
         },
         initComboboxes: function() {
-            jQuery("select.combobox").each(function () {
-                jQuery(this).combobox();
+            $("select.combobox").each(function () {
+                $(this).combobox();
             });
         }
     },
@@ -3348,10 +3348,10 @@ if (!$('body').hasClass('logged-in')) {
 
 var croppie_instance;
 function styleAvatarUploadButton()    {
-    if (jQuery(".avatar.module").length) {
+    if ($('.avatar.module').length) {
         var inputs = document.querySelectorAll('.avatar.module [type="file"]');
         Array.prototype.forEach.call(inputs, function(input) {
-            var this_file_btn_parent = $(input);
+            var this_file_btn_parent = $(input).parent();
             this_file_btn_parent.find('.btn-wrapper').append('<label for="custom-upload-avatar" role="button"><div class="inner"><i class="fa fa-plus" aria-hidden="true"></i><div class="inner-label">Add profile photo</div></div></label>');
             input.addEventListener('change', function(e) {
                 var this_input = $(this);
