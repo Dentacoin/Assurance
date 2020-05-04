@@ -75838,7 +75838,7 @@ projectData.pagesData.onInit();
 if ($('body').hasClass('logged-in')) {
     if ($('body').hasClass('create-contract')) {
         var signature_pad_inited = false;
-        styleAvatarUploadButton('.steps-body .avatar .btn-wrapper label');
+        styleAvatarUploadButton();
 
         bindTrackerClickDentistCreateWallet();
 
@@ -76662,159 +76662,88 @@ if (!$('body').hasClass('logged-in')) {
 }
 
 var croppie_instance;
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var filename = input.files[0].name;
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $('#cropper-container').addClass('width-and-height');
-            if (croppie_instance != undefined) {
-                croppie_instance.croppie('destroy');
-                $('#cropper-container').html('');
-            }
-
-            var croppieParams = {
-                enableOrientation: true,
-                enforceBoundary: false
-            };
-
-            if ($(window).width() < 768) {
-                croppieParams.viewport = {
-                    width: 200,
-                    height: 200
-                };
-                croppieParams.boundary = {width: 200, height: 200};
-            } else {
-                croppieParams.viewport = {
-                    width: 180,
-                    height: 180
-                };
-                croppieParams.boundary = {width: 180, height: 180};
-            }
-
-            croppie_instance = $('#cropper-container').croppie(croppieParams);
-
-            $('.destroy-croppie').unbind().click(function() {
-                croppie_instance.croppie('destroy');
-                $('#cropper-container').html('');
-                $('#cropper-container').removeClass('width-and-height');
-                $('.avatar.module .btn-wrapper').show();
-                $('.avatar-name').hide();
-                $('.dentist .form-register .step.fourth #custom-upload-avatar').val('');
-            });
-
-            $('.avatar.module .btn-wrapper').hide();
-
-            croppie_instance.croppie('bind', {
-                url: e.target.result,
-                zoom: 1
-            });
-
-            $('#cropper-container').on('update.croppie', function(ev, cropData) {
-                croppie_instance.croppie('result', {
-                    type: 'canvas',
-                    size: {width: 300, height: 300}
-                }).then(function (src) {
-                    $('#hidden-image').val(src);
-                });
-            });
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-var croppie_instance;
-function styleAvatarUploadButton(label_el)    {
+function styleAvatarUploadButton()    {
     if (jQuery(".upload-file.avatar").length) {
-        jQuery(".upload-file.avatar").each(function(key, form){
-            var this_file_btn_parent = jQuery(this);
-            if (this_file_btn_parent.attr('data-current-user-avatar')) {
-                this_file_btn_parent.find('.btn-wrapper').append('<label for="custom-upload-avatar" role="button" style="background-image:url('+this_file_btn_parent.attr('data-current-user-avatar')+');"><div class="inner"><i class="fa fa-plus fs-0" aria-hidden="true"></i><div class="inner-label fs-0">Add profile photo</div></div></label>');
-            } else {
-                this_file_btn_parent.find('.btn-wrapper').append('<label for="custom-upload-avatar" role="button"><div class="inner"><i class="fa fa-plus" aria-hidden="true"></i><div class="inner-label">Add profile photo</div></div></label>');
-            }
+        var avatars = document.querySelectorAll('.avatar.module');
+        Array.prototype.forEach.call(avatars, function(input) {
+            var this_file_btn_parent = $(input);
+            this_file_btn_parent.find('.btn-wrapper').append('<label for="custom-upload-avatar" role="button"><div class="inner"><i class="fa fa-plus" aria-hidden="true"></i><div class="inner-label">Add profile photo</div></div></label>');
+            input.addEventListener('change', function(e) {
+                var this_input = $(this);
+                projectData.utils.readURL(this, 2, ['png', 'jpg', 'jpeg'], function(e, filename) {
+                    if (filename != '' && filename != undefined) {
+                        $('.avatar-name').show().find('span').html(filename.slice(0, 20) + '...');
+                        $('.upload-label-btn').addClass('less-padding');
+                    }
 
-            var inputs = document.querySelectorAll('.inputfile');
-            Array.prototype.forEach.call(inputs, function(input) {
-                var this_file_btn_parent = $(input).parent();
-                this_file_btn_parent.find('.btn-wrapper').append('<label for="custom-upload-avatar" role="button"><div class="inner"><i class="fa fa-plus" aria-hidden="true"></i><div class="inner-label">Add profile photo</div></div></label>');
-                input.addEventListener('change', function(e) {
-                    var this_input = $(this);
-                    projectData.utils.readURL(this, 2, ['png', 'jpg', 'jpeg'], function(e, filename) {
-                        if (filename != '' && filename != undefined) {
-                            $('.avatar-name').show().find('span').html(filename.slice(0, 20) + '...');
-                            $('.upload-label-btn').addClass('less-padding');
-                        }
+                    $('#cropper-container').addClass('width-and-height');
+                    if (croppie_instance != undefined) {
+                        croppie_instance.croppie('destroy');
+                        $('#cropper-container').html('');
+                    }
 
-                        $('#cropper-container').addClass('width-and-height');
-                        if (croppie_instance != undefined) {
-                            croppie_instance.croppie('destroy');
-                            $('#cropper-container').html('');
-                        }
+                    var croppieParams = {
+                        enableOrientation: true,
+                        enforceBoundary: false
+                    };
 
-                        var croppieParams = {
-                            enableOrientation: true,
-                            enforceBoundary: false
+                    if ($(window).width() < 768) {
+                        croppieParams.viewport = {
+                            width: 200,
+                            height: 200
                         };
+                        croppieParams.boundary = {width: 200, height: 200};
+                    } else {
+                        croppieParams.viewport = {
+                            width: 180,
+                            height: 180
+                        };
+                        croppieParams.boundary = {width: 180, height: 180};
+                    }
 
-                        if ($(window).width() < 768) {
-                            croppieParams.viewport = {
-                                width: 200,
-                                height: 200
-                            };
-                            croppieParams.boundary = {width: 200, height: 200};
-                        } else {
-                            croppieParams.viewport = {
-                                width: 180,
-                                height: 180
-                            };
-                            croppieParams.boundary = {width: 180, height: 180};
-                        }
+                    croppie_instance = $('#cropper-container').croppie(croppieParams);
 
-                        croppie_instance = $('#cropper-container').croppie(croppieParams);
-
-                        $('.destroy-croppie').unbind().click(function() {
-                            croppie_instance.croppie('destroy');
-                            $('#cropper-container').html('');
-                            $('#cropper-container').removeClass('width-and-height');
-                            $('.avatar.module .btn-wrapper').show();
-                            $('.avatar-name').hide();
-                            $('.dentist .form-register .step.fourth #custom-upload-avatar').val('');
-                        });
-
-                        $('.avatar.module .btn-wrapper').hide();
-
-                        croppie_instance.croppie('bind', {
-                            url: e.target.result,
-                            zoom: 1
-                        });
-
-                        /*croppie_instance.croppie('bind', 'url').then(function(){
-                            croppie_instance.croppie('setZoom', 1);
-                        });*/
-
-                        $('#cropper-container').on('update.croppie', function(ev, cropData) {
-                            croppie_instance.croppie('result', {
-                                type: 'canvas',
-                                size: {width: 300, height: 300}
-                            }).then(function (src) {
-                                $('#hidden-image').val(src);
-                            });
-                        });
-                    }, function() {
-                        this_input.val('');
-
-                        $('.avatar.module').append('<div class="error-handle">The file you selected is large. Max size: 2MB.</div>');
-                    }, function() {
-                        this_input.val('');
-
-                        $('.avatar.module').append('<div class="error-handle">Allowed file formats are only .png, .jpeg and .jpg.</div>');
+                    $('.destroy-croppie').unbind().click(function() {
+                        croppie_instance.croppie('destroy');
+                        $('#cropper-container').html('');
+                        $('#cropper-container').removeClass('width-and-height');
+                        $('.avatar.module .btn-wrapper').show();
+                        $('.avatar-name').hide();
+                        $('.dentist .form-register .step.fourth #custom-upload-avatar').val('');
                     });
+
+                    $('.avatar.module .btn-wrapper').hide();
+
+                    croppie_instance.croppie('bind', {
+                        url: e.target.result,
+                        zoom: 1
+                    });
+
+                    /*croppie_instance.croppie('bind', 'url').then(function(){
+                        croppie_instance.croppie('setZoom', 1);
+                    });*/
+
+                    $('#cropper-container').on('update.croppie', function(ev, cropData) {
+                        croppie_instance.croppie('result', {
+                            type: 'canvas',
+                            size: {width: 300, height: 300}
+                        }).then(function (src) {
+                            $('#hidden-image').val(src);
+                        });
+                    });
+                }, function() {
+                    this_input.val('');
+
+                    $('.avatar.module').append('<div class="error-handle">The file you selected is large. Max size: 2MB.</div>');
+                }, function() {
+                    this_input.val('');
+
+                    $('.avatar.module').append('<div class="error-handle">Allowed file formats are only .png, .jpeg and .jpg.</div>');
                 });
-                // Firefox bug fix
-                input.addEventListener('focus', function(){ input.classList.add('has-focus'); });
-                input.addEventListener('blur', function(){ input.classList.remove('has-focus'); });
             });
+            // Firefox bug fix
+            input.addEventListener('focus', function(){ input.classList.add('has-focus'); });
+            input.addEventListener('blur', function(){ input.classList.remove('has-focus'); });
         });
     }
 }
