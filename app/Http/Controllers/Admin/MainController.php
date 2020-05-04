@@ -75,32 +75,4 @@ class MainController extends Controller
     protected function getGuideView()   {
         return view('admin/pages/guide');
     }
-
-    protected function getAdditionalsView(Request $request)   {
-        if($request->isMethod('post')) {
-            //clearing all records before inserting
-            ApiEndpoint::truncate();
-            if(sizeof($request->input('api-endpoints')) > 0)    {
-                foreach($request->input('api-endpoints') as $key => $value) {
-                    $api_end_point = new ApiEndpoint();
-                    $api_end_point->slug = $key;
-                    $api_end_point->data = $value['data'];
-                    $api_end_point->name = $value['name'];
-
-                    $api_end_point->save();
-                }
-            }
-
-            return redirect()->route('additionals')->with(['success' => 'Edited successfully.']);
-        }
-        return view('admin/pages/additionals', ['api_endpoints' => $this->getApiEndpoints()]);
-    }
-
-    protected function getApiEndpoints()  {
-        return ApiEndpoint::all();
-    }
-
-    public function getApiEndpoint($slug)  {
-        return ApiEndpoint::where(array('slug' => $slug))->get()->first();
-    }
 }

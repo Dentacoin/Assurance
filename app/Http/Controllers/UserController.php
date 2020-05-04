@@ -889,12 +889,7 @@ class UserController extends Controller {
                 }
                 break;
             default:
-                $additional_data = (new Admin\MainController())->getApiEndpoint($slug);
-                if (!empty($additional_data)) {
-                    return $additional_data->data;
-                } else {
-                    return abort(404);
-                }
+                return abort(404);
         }
     }
 
