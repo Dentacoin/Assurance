@@ -219,7 +219,7 @@ class DentistController extends Controller
 
             //handle the API response
             $api_response = (new APIRequestsController())->updateUserData($post_fields_arr);
-            if (is_array($api_response) && array_key_exists('success', $api_response) && $api_response['success']) {
+            if ($api_response && array_key_exists('success', $api_response) && $api_response['success']) {
                 if (!empty($data['hidden-image'])) {
                     //deleting the dummy image
                     unlink($data['image-path']);

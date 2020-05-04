@@ -126,7 +126,7 @@ class PatientController extends Controller {
         }
 
         //if user entered dcn_address for first time save it in coredb
-        if(!empty($data['dcn_address'])) {
+        /*if(!empty($data['dcn_address'])) {
             $post_fields_arr = array('dcn_address' => $data['dcn_address']);
 
             //handle the API response
@@ -134,7 +134,7 @@ class PatientController extends Controller {
             if(!$api_response) {
                 return redirect()->route($data['redirect'])->with(['errors_response' => $api_response['errors']]);
             }
-        }
+        }*/
 
         //===================================================================================
         //CHECK HERE IF THIS DENTIST EMAIL IS NOT ALREADY REGISTERED IN LOCAL DB AND IN API
