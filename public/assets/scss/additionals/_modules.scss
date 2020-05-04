@@ -461,6 +461,7 @@
         }
     }
     &.avatar {
+        width: 180px;
         input[type="file"] {
             display: none;
         }
@@ -501,21 +502,68 @@
                 }
             }
         }
-        #cropper-container.width-and-height {
+        #gateway-cropper-container.width-and-height {
             width: 180px;
-            height: 180px;
+            .cr-viewport {
+                border: 2px dashed #777777;
+            }
+            .cr-slider-wrap {
+                margin: 10px auto !important;
+            }
+            @include breakpoint($xs) {
+                width: 100%;
+                height: auto;
+            }
         }
         .max-size-label {
             label {
                 display: none;
                 cursor: pointer;
+                max-width: 30px;
+                margin-right: 10px;
+                width: 100%;
             }
             &.active {
-                margin-top: 40px !important;
                 label {
                     display: inline-block;
                 }
             }
+        }
+        .avatar-name {
+            display: none;
+            padding-top: 10px;
+            font-size: 0;
+            button {
+                color: red;
+                font-size: 36px;
+                width: 30px;
+                display: inline-block;
+                vertical-align: middle;
+                text-align: right;
+                cursor: pointer;
+                margin: 0;
+                line-height: 22px;
+                border: 0;
+                background: transparent;
+            }
+            span {
+                font-size: 14px;
+                display: inline-block;
+                vertical-align: middle;
+                width: calc(100% - 30px);
+            }
+            @include breakpoint($xs) {
+                padding-top: 10px;
+            }
+        }
+        .upload-label-btn {
+            padding-top: 25px;
+            &.less-padding {
+                padding-top: 10px;
+            }
+        }
+        @include breakpoint($xs) {
+            width: 100%;
         }
     }
     &.step-fields {

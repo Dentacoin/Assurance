@@ -646,54 +646,95 @@
         display: block; }
   .module.section-ideal-use-cases .custom-container .custom-row:last-child .content .wrapper .after-xs:after {
     display: none; } }
-.module.avatar input[type="file"] {
-  display: none; }
-.module.avatar .btn-wrapper {
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  margin: 0; }
-  .module.avatar .btn-wrapper label {
-    background-color: #e3e3e3;
-    border: 2px dashed #777777;
-    color: #777777;
-    width: 100%;
-    padding-top: 100%;
+.module.avatar {
+  width: 180px; }
+  .module.avatar input[type="file"] {
+    display: none; }
+  .module.avatar .btn-wrapper {
     display: block;
-    position: relative;
-    text-align: center;
-    margin-bottom: 0;
-    cursor: pointer;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat; }
-    .module.avatar .btn-wrapper label .inner {
-      left: 0;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    margin: 0; }
+    .module.avatar .btn-wrapper label {
+      background-color: #e3e3e3;
+      border: 2px dashed #777777;
+      color: #777777;
       width: 100%;
-      position: absolute;
-      top: 50%;
-      -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-      transform: translateY(-50%); }
-      .module.avatar .btn-wrapper label .inner i {
-        font-size: 30px; }
-      .module.avatar .btn-wrapper label .inner .inner-label {
-        font-size: 18px;
-        padding: 0 10px; }
-        @media screen and (max-width: 767px) {
-          .module.avatar .btn-wrapper label .inner .inner-label {
-            font-size: 16px; } }
-.module.avatar #cropper-container.width-and-height {
-  width: 180px;
-  height: 180px; }
-.module.avatar .max-size-label label {
-  display: none;
-  cursor: pointer; }
-.module.avatar .max-size-label.active {
-  margin-top: 40px !important; }
+      padding-top: 100%;
+      display: block;
+      position: relative;
+      text-align: center;
+      margin-bottom: 0;
+      cursor: pointer;
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat; }
+      .module.avatar .btn-wrapper label .inner {
+        left: 0;
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%); }
+        .module.avatar .btn-wrapper label .inner i {
+          font-size: 30px; }
+        .module.avatar .btn-wrapper label .inner .inner-label {
+          font-size: 18px;
+          padding: 0 10px; }
+          @media screen and (max-width: 767px) {
+            .module.avatar .btn-wrapper label .inner .inner-label {
+              font-size: 16px; } }
+  .module.avatar #gateway-cropper-container.width-and-height {
+    width: 180px; }
+    .module.avatar #gateway-cropper-container.width-and-height .cr-viewport {
+      border: 2px dashed #777777; }
+    .module.avatar #gateway-cropper-container.width-and-height .cr-slider-wrap {
+      margin: 10px auto !important; }
+    @media screen and (max-width: 767px) {
+      .module.avatar #gateway-cropper-container.width-and-height {
+        width: 100%;
+        height: auto; } }
+  .module.avatar .max-size-label label {
+    display: none;
+    cursor: pointer;
+    max-width: 30px;
+    margin-right: 10px;
+    width: 100%; }
   .module.avatar .max-size-label.active label {
     display: inline-block; }
+  .module.avatar .avatar-name {
+    display: none;
+    padding-top: 10px;
+    font-size: 0; }
+    .module.avatar .avatar-name button {
+      color: red;
+      font-size: 36px;
+      width: 30px;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: right;
+      cursor: pointer;
+      margin: 0;
+      line-height: 22px;
+      border: 0;
+      background: transparent; }
+    .module.avatar .avatar-name span {
+      font-size: 14px;
+      display: inline-block;
+      vertical-align: middle;
+      width: calc(100% - 30px); }
+    @media screen and (max-width: 767px) {
+      .module.avatar .avatar-name {
+        padding-top: 10px; } }
+  .module.avatar .upload-label-btn {
+    padding-top: 25px; }
+    .module.avatar .upload-label-btn.less-padding {
+      padding-top: 10px; }
+  @media screen and (max-width: 767px) {
+    .module.avatar {
+      width: 100%; } }
 .module.step-fields .single-row {
   border-bottom: 1px solid #888888;
   -webkit-transition: 0.3s;

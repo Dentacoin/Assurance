@@ -2,9 +2,12 @@
     <h2 class="text-center calibri-bold fs-30 padding-bottom-25">{{$current_logged_dentist->name}}</h2>
     <div class="avatar">
         @if(!$current_logged_dentist->hasimage)
-            <div class="avatar module text-center upload-file">
+            <div class="inline-block-top avatar module upload-file">
                 <input type="file" class="visualise-image inputfile" id="custom-upload-avatar" name="image" accept=".jpg,.png,.jpeg,.svg,.bmp"/>
+                <input type="hidden" id="hidden-image" name="hidden-image"/>
                 <div class="btn-wrapper"></div>
+                <div id="cropper-container"></div>
+                <div class="avatar-name"><span class="dcn-gateway-gray-color"></span><button class="destroy-croppie" type="button">×</button></div>
             </div>
         @else
             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="text-center">
