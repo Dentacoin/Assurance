@@ -73863,8 +73863,11 @@ var projectData = {
             if (input.files && input.files[0]) {
                 var filename = input.files[0].name;
 
+                console.log(input.files, 'input.files');
+
                 // check file size
                 if (megaBytesLimit < projectData.utils.bytesToMegabytes(input.files[0].size)) {
+                    console.log('failedMaxSizeCallback1');
                     if (failedMaxSizeCallback != undefined) {
                         failedMaxSizeCallback();
                     }
@@ -73875,6 +73878,7 @@ var projectData = {
                         if ($('.avatar.module .error-handle').length) {
                             $('.avatar.module .error-handle').remove();
                         }
+                        console.log('callback');
 
                         if (callback != undefined) {
                             var reader = new FileReader();
@@ -73884,6 +73888,7 @@ var projectData = {
                             reader.readAsDataURL(input.files[0]);
                         }
                     } else {
+                        console.log('failedExtensionsCallback1');
                         if (failedExtensionsCallback != undefined) {
                             failedExtensionsCallback();
                         }
@@ -76671,6 +76676,8 @@ function styleAvatarUploadButton()    {
             input.addEventListener('change', function(e) {
                 var this_input = $(this);
                 projectData.utils.readURL(this, 2, ['png', 'jpg', 'jpeg'], function(e, filename) {
+                    console.log(filename, 'filename');
+
                     if (filename != '' && filename != undefined) {
                         $('.avatar-name').show().find('span').html(filename.slice(0, 20) + '...');
                         $('.upload-label-btn').addClass('less-padding');
