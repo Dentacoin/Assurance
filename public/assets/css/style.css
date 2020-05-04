@@ -8295,14 +8295,14 @@ select.select-mac-fix {
           @media screen and (max-width: 767px) {
             .module.avatar .btn-wrapper label .inner .inner-label {
               font-size: 16px; } }
-  .module.avatar #gateway-cropper-container.width-and-height {
+  .module.avatar #cropper-container.width-and-height {
     width: 180px; }
-    .module.avatar #gateway-cropper-container.width-and-height .cr-viewport {
+    .module.avatar #cropper-container.width-and-height .cr-viewport {
       border: 2px dashed #777777; }
-    .module.avatar #gateway-cropper-container.width-and-height .cr-slider-wrap {
+    .module.avatar #cropper-container.width-and-height .cr-slider-wrap {
       margin: 10px auto !important; }
     @media screen and (max-width: 767px) {
-      .module.avatar #gateway-cropper-container.width-and-height {
+      .module.avatar #cropper-container.width-and-height {
         width: 100%;
         height: auto; } }
   .module.avatar .max-size-label label {
