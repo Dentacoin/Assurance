@@ -1,6 +1,6 @@
 <div class="one step">
     <h2 class="text-center calibri-bold fs-30 padding-bottom-25">{{$current_logged_dentist->name}}</h2>
-    <div class="avatar">
+    <div class="avatar text-center">
         @if(!$current_logged_dentist->hasimage)
             <div class="inline-block-top avatar module upload-file">
                 <input type="file" class="visualise-image inputfile" id="custom-upload-avatar" name="image" accept=".jpg,.png,.jpeg,.svg,.bmp"/>

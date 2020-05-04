@@ -166,14 +166,14 @@ class DentistController extends Controller
         ], $customMessages);
 
         $data = $request->input();
-        $files = $request->file();
+        //$files = $request->file();
 
         //check email validation
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             return redirect()->route('create-contract')->with(['error' => 'Your form was not sent. Please try again with valid email.']);
         }
 
-        if (!empty($files)) {
+        /*if (!empty($files)) {
             //404 if they're trying to send more than 2 files
             if (sizeof($files) > 2) {
                 return abort(404);
@@ -194,13 +194,18 @@ class DentistController extends Controller
                     }
                 }
             }
-        }
+        }*/
 
         //if user selected avatar or entered dcn_address both for first time
-        if (!empty($files['image']) || !empty($data['address']) || !empty($data['website'])) {
+        if (!empty($data['hidden-image']) || !empty($data['address']) || !empty($data['website'])) {
             $post_fields_arr = array();
-            if (!empty($files['image'])) {
-                $post_fields_arr['avatar'] = curl_file_create($files['image']->getPathName(), 'image/'.pathinfo($files['image']->getClientOriginalName(), PATHINFO_EXTENSION), $files['image']->getClientOriginalName());
+            if (!empty($data['hidden-image'])) {
+                $data['image-name'] = 'user-'.time().'.png';
+                $data['image-path'] = UPLOADS . $data['image-name'];
+                $img_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data['hidden-image']));
+
+                file_put_contents($data['image-path'], $img_data);
+                $post_fields_arr['avatar'] = curl_file_create($data['image-path'], 'image/png', $data['image-name']);
             }
             if (!empty($data['address'])) {
                 $post_fields_arr['dcn_address'] = trim($data['address']);
@@ -214,7 +219,12 @@ class DentistController extends Controller
 
             //handle the API response
             $api_response = (new APIRequestsController())->updateUserData($post_fields_arr);
-            if (!$api_response) {
+            if (is_array($api_response) && array_key_exists('success', $api_response) && $api_response['success']) {
+                if (!empty($data['hidden-image'])) {
+                    //deleting the dummy image
+                    unlink($data['image-path']);
+                }
+            } else {
                 return redirect()->route('create-contract')->with(['errors_response' => $api_response['errors']]);
             }
         }

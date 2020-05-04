@@ -2582,6 +2582,7 @@ if ($('body').hasClass('logged-in')) {
             step_fields.removeClass('with-error');
             $('.step.'+step+' .single-row').removeClass('row-with-error');
             $('.step.'+step+' .single-row > label span').remove();
+            $('.step.'+step+' .error-handle').remove();
 
             var inner_error = false;
 
@@ -2609,6 +2610,11 @@ if ($('body').hasClass('logged-in')) {
                     if (validate_dentist_address) {
                         inner_error = true;
                     }
+                }
+
+                if ($('#hidden-image').length && $('#hidden-image').val() == '') {
+                    inner_error = true;
+                    $('.avatar.module').append('<div class="error-handle">Profile photo is required.</div>');
                 }
             }
 
@@ -3390,6 +3396,7 @@ function styleAvatarUploadButton()    {
 
                     $('.destroy-croppie').unbind().click(function() {
                         croppie_instance.croppie('destroy');
+                        $('.avatar.module #hidden-image').val('');
                         $('#cropper-container').html('');
                         $('#cropper-container').removeClass('width-and-height');
                         $('.avatar.module .btn-wrapper').show();
