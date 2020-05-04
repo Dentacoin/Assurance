@@ -18,7 +18,7 @@ class CreateContractCheckupsTable extends Migration
             $table->unsignedInteger('contract_id');
             $table->enum('status', ['sent', 'approved', 'rejected'])->default('sent');
             $table->enum('type', ['check-up', 'teeth-cleaning']);
-            $table->timestamp('request_date_at');
+            $table->timestamp('request_date_at')->nullable();
             $table->timestamps();
         });
 

@@ -319,11 +319,11 @@ class UserController extends Controller {
                 $message->setBody($body, 'text/html');
             });
 
-            $initiator_email_view = view('emails/notifier-for-successfully-contract-cancel', ['initiator' => $initiator->name, 'url' => route('dentist-contract-view', ['slug' => $contract->slug]), 'reason' => $reason]);
+            $initiator_email_view = view('emails/notifier-for-successfully-contract-cancel', ['initiator' => $initiator->name, 'opposite_side' => $patient_name, 'url' => route('dentist-contract-view', ['slug' => $contract->slug]), 'reason' => $reason]);
             $initiator_body = $initiator_email_view->render();
 
-            Mail::send(array(), array(), function($message) use ($initiator_body, $initiator) {
-                $message->to($initiator->email)->subject('You have cancelled your Assurance contract successfully');
+            Mail::send(array(), array(), function($message) use ($initiator_body, $initiator, $patient_name) {
+                $message->to($initiator->email)->subject('Successfully Cancelled Contract With ' . $patient_name);
                 $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
                 $message->setBody($initiator_body, 'text/html');
             });
@@ -351,11 +351,11 @@ class UserController extends Controller {
                 $message->setBody($body, 'text/html');
             });
 
-            $initiator_email_view = view('emails/notifier-for-successfully-contract-cancel', ['initiator' => $initiator->name, 'url' => route('patient-contract-view', ['slug' => $contract->slug]), 'reason' => $reason]);
+            $initiator_email_view = view('emails/notifier-for-successfully-contract-cancel', ['initiator' => $initiator->name, 'opposite_side' => $dentist->name, 'url' => route('patient-contract-view', ['slug' => $contract->slug]), 'reason' => $reason]);
             $initiator_body = $initiator_email_view->render();
 
-            Mail::send(array(), array(), function($message) use ($initiator_body, $initiator) {
-                $message->to($initiator->email)->subject('You have cancelled your Assurance contract successfully');
+            Mail::send(array(), array(), function($message) use ($initiator_body, $initiator, $dentist) {
+                $message->to($initiator->email)->subject('Successfully Cancelled Contract With ' . $dentist->name);
                 $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
                 $message->setBody($initiator_body, 'text/html');
             });

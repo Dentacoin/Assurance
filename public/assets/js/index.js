@@ -55,7 +55,9 @@ function checkIfCookie()    {
             basic.cookies.set('marketing_cookies', 1);
             basic.cookies.set('strictly_necessary_policy', 1);
 
-            window.location.reload();
+            $('#google-analytics-script').html("window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-108398439-4');");
+
+            $('.privacy-policy-cookie').remove();
         });
 
         $('.adjust-cookies').click(function() {
@@ -82,9 +84,11 @@ function checkIfCookie()    {
 
                 if ($('#performance-cookies').is(':checked')) {
                     basic.cookies.set('performance_cookies', 1);
+
+                    $('#google-analytics-script').html("window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-108398439-4');");
                 }
 
-                window.location.reload();
+                $('.privacy-policy-cookie').remove();
             });
         });
     }
