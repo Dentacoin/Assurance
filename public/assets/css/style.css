@@ -10248,7 +10248,6 @@ body.logged-in .profile-page-title {
     .steps-body .wrapper .step.one {
       display: block; }
       .steps-body .wrapper .step.one .avatar {
-        width: 150px;
         margin: 0 auto; }
     .steps-body .wrapper .step.three .show-on-services-pick {
       display: none; }
