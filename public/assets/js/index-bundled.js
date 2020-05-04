@@ -76668,16 +76668,14 @@ if (!$('body').hasClass('logged-in')) {
 
 var croppie_instance;
 function styleAvatarUploadButton()    {
-    if (jQuery(".upload-file.avatar").length) {
-        var avatars = document.querySelectorAll('.avatar.module');
-        Array.prototype.forEach.call(avatars, function(input) {
+    if (jQuery(".avatar.module").length) {
+        var inputs = document.querySelectorAll('.avatar.module [type="file"]');
+        Array.prototype.forEach.call(inputs, function(input) {
             var this_file_btn_parent = $(input);
             this_file_btn_parent.find('.btn-wrapper').append('<label for="custom-upload-avatar" role="button"><div class="inner"><i class="fa fa-plus" aria-hidden="true"></i><div class="inner-label">Add profile photo</div></div></label>');
             input.addEventListener('change', function(e) {
                 var this_input = $(this);
                 projectData.utils.readURL(this, 2, ['png', 'jpg', 'jpeg'], function(e, filename) {
-                    console.log(filename, 'filename');
-
                     if (filename != '' && filename != undefined) {
                         $('.avatar-name').show().find('span').html(filename.slice(0, 20) + '...');
                         $('.upload-label-btn').addClass('less-padding');
