@@ -18,9 +18,9 @@
                         <div class="top-right-page-alike"></div>
                         <h2 class="text-center blue-green-color fs-30 fs-xs-22 lato-bold padding-bottom-20">ASSURANCE CONTRACT SAMPLE</h2>
                         @if((time() - strtotime($created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL)
-                            <div class="calibri-bold fs-14 padding-bottom-50 padding-bottom-xs-20 text-center cancelled-color">This contract proposal has expired.</div>
+                            <div class="fs-18 padding-bottom-50 padding-bottom-xs-20 text-center cancelled-color">This contract proposal has expired.</div>
                         @else
-                            <div class="calibri-bold fs-14 padding-bottom-50 text-center blue-green-color">( This contract proposal will be active until <span class="active-until">{{date('d/m/Y', strtotime('+'.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days', strtotime($created_at))) . PHP_EOL}}</span>. )</div>
+                            <div class="fs-18 padding-bottom-50 text-center blue-green-color">( This contract proposal will be active until <span class="active-until">{{date('d/m/Y', strtotime('+'.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days', strtotime($created_at))) . PHP_EOL}}</span>. )</div>
                         @endif
                         <div class="step-fields module padding-top-20">
                             <form method="POST" enctype="multipart/form-data" action="{{route('update-and-sign-contract')}}" id="patient-update-and-sign-contract" class="address-suggester-wrapper">
@@ -108,7 +108,7 @@
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer padding-top-0 padding-bottom-0" for="dcn_address">Wallet Address:</label>
                                     @php($addresses = (new \App\Http\Controllers\APIRequestsController())->getAddresses())
                                     <div class="right-extra-field no-padding position-relative inline-block break-word" id="search-result-parent">
-                                        <input autocomplete="off" readonly type="text" maxlength="42" id="dcn_address" name="dcn_address" class="right-field width-100 required-field calibri-regular fs-18 dark-color pencil-background search-input"/>
+                                        <input autocomplete="off" readonly type="text" maxlength="42" id="dcn_address" name="dcn_address" class="right-field width-100 required-field calibri-regular fs-18 dark-color search-input" placeholder="Select Wallet Address" @if(!empty($addresses) && !empty($addresses->data) && sizeof($addresses->data) == 1) value="{{$addresses->data[0]->dcn_address}}" @endif/>
                                         <div class="search-result module">
                                             <div class="search-body">
                                                 <ul class="addresses-list" id="addresses-list">
@@ -129,7 +129,7 @@
                                                 </ul>
                                             </div>
                                             <div class="search-footer">
-                                                <a href="javascript:void(0)" class="platform-color add-to-address-book lato-bold fs-18 fs-xs-16">+ Add to Address Book</a>
+                                                <a href="javascript:void(0)" class="platform-color add-to-address-book lato-bold fs-18 fs-xs-16">+ Add New Wallet Address</a>
                                             </div>
                                         </div>
                                     </div>

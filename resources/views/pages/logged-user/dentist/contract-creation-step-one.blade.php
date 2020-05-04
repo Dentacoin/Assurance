@@ -69,7 +69,7 @@
                         </ul>
                     </div>
                     <div class="search-footer">
-                        <a href="javascript:void(0)" class="add-to-address-book lato-bold fs-18 fs-xs-16">+ Add to Address Book</a>
+                        <a href="javascript:void(0)" class="add-to-address-book lato-bold fs-18 fs-xs-16">+ Add New Wallet Address</a>
                     </div>
                 </div>
             </div>
