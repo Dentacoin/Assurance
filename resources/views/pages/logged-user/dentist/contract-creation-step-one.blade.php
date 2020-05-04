@@ -46,16 +46,9 @@
         </div>
         <div class="single-row flex-row fs-0 dcn-address-row">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 ">Wallet Address:</label>
-            {{--@if(!empty($current_logged_dentist->dcn_address))
-                <div class="right-field calibri-regular fs-18 dark-color break-word" name="address">
-                    <a href="//etherscan.io/address/{{$current_logged_dentist->dcn_address}}" target="_blank" id="dcn_address">{{$current_logged_dentist->dcn_address}}</a>
-                </div>
-            @else
-
-            @endif--}}
             @php($addresses = (new \App\Http\Controllers\APIRequestsController())->getAddresses())
             <div class="right-extra-field no-padding break-word position-relative" id="search-result-parent">
-                <input autocomplete="off" readonly type="text" data-type="address" id="dcn_address" name="address" maxlength="42" class="right-field width-100 calibri-regular fs-18 dark-color inline-block pencil-background search-input" />
+                <input autocomplete="off" readonly type="text" data-type="address" id="dcn_address" name="address" maxlength="42" class="right-field width-100 calibri-regular fs-18 dark-color inline-block pencil-background search-input" placeholder="Select Wallet Address" @if(!empty($addresses) && !empty($addresses->data) && sizeof($addresses->data) == 1) value="{{$addresses->data[0]->dcn_address}}" @endif/>
                 <div class="search-result module">
                     <div class="search-body">
                         <ul class="addresses-list" id="addresses-list">

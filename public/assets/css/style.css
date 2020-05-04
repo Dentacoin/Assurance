@@ -7698,6 +7698,20 @@ input[type='file'].hide-input {
   -ms-transition: 0.3s;
   transition: 0.3s; }
 
+#search-result-parent {
+  position: relative; }
+  #search-result-parent:after {
+    content: '';
+    right: 10px;
+    border-style: solid;
+    border-width: 14px 6px 0 6px;
+    border-color: #616161 transparent transparent transparent;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); }
+
 .popover-el {
   cursor: pointer; }
 
