@@ -73,7 +73,10 @@
                         <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Reason:</div>
                         <div class="calibri-light fs-18">{{$cancellation_reason['reason']}}</div>
                         <div class="cancelled-color fs-20 calibri-bold padding-top-10">Cancellation Comments:</div>
-                        <div class="calibri-light fs-18">{{$cancellation_reason['comments']}}</div>
+                        @if(!empty($cancellation_reason['comments']))
+                            <div class="cancelled-color fs-18 calibri-bold padding-top-10">Cancellation Comments:</div>
+                            <div class="calibri-light fs-18">{{$cancellation_reason['comments']}}</div>
+                        @endif
                     </div>
                 @endif
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15 border-right-light-gray">
