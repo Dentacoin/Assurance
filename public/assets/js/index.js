@@ -96,7 +96,7 @@ function checkIfCookie()    {
 
 // camping for event when user didn't accept strictly necessary cookies
 $(document).on('cannotLoginBecauseOfMissingCookies', function (event) {
-    basic.showAlert('Please accept the strictly necessary cookies in order to continue with logging in.', '', true);
+    basic.showAlert('Please accept the strictly necessary cookies in order to continue with logging in.', 'boobox-alert', true);
 });
 
 var is_mac = navigator.platform.indexOf('Mac') > -1;
@@ -184,7 +184,7 @@ var dApp = {
                 from: global_state.account,
                 gas: 65000
             }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', '', true);
+                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
             }).catch(function(err) {
                 console.error(err);
             });
@@ -224,7 +224,7 @@ var dApp = {
             return dApp.assurance_proxy_instance.methods.registerContract(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash).send({
                 from: global_state.account
             }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', '', true);
+                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
             }).catch(function(err) {
                 console.error(err);
             });
@@ -305,7 +305,7 @@ var dApp = {
                 from: global_state.account,
                 gas: 130000
             }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', '', true);
+                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
             }).catch(function(err) {
                 console.error(err);
             });
@@ -320,7 +320,7 @@ var dApp = {
                 from: global_state.account,
                 gas: 65000
             }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', '', true);
+                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
             }).catch(function(err) {
                 console.error(err);
             });
@@ -330,7 +330,7 @@ var dApp = {
                 from: global_state.account,
                 gas: 65000
             }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', '', true);
+                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
             }).catch(function(err) {
                 console.error(err);
             });
@@ -366,7 +366,7 @@ var dApp = {
                 from: global_state.account,
                 gas: 330000
             }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', '', true);
+                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
             }).catch(function(err) {
                 console.error(err);
             });
@@ -376,7 +376,7 @@ var dApp = {
                 from: global_state.account,
                 gas: 100000
             }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', '', true);
+                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
             }).catch(function(err) {
                 console.error(err);
             });
@@ -400,7 +400,7 @@ var dApp = {
                     from: global_state.account,
                     gas: ready_to_withdraw_arr.length * 60000
                 }).on('transactionHash', function(hash){
-                    basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', '', true);
+                    basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
                 }).catch(function(err) {
                     console.error(err);
                 });
@@ -777,7 +777,7 @@ var projectData = {
                 $('form#forgotten-password').on('submit', function(event) {
                     var this_form = $(this);
                     if (this_form.find('input[type="email"]').val().trim() == '' || !basic.validateEmail(this_form.find('input[type="email"]').val().trim())) {
-                        basic.showAlert('Please try again with valid email.', '', true);
+                        basic.showAlert('Please try again with valid email.', 'boobox-alert', true);
                         event.preventDefault();
                     }
                 });
@@ -785,7 +785,7 @@ var projectData = {
                 $('form#recover-password').on('submit', function(event) {
                     var this_form = $(this);
                     if (this_form.find('input[type="password"]').val().trim() == '' || this_form.find('input[type="password"]').val().trim().length < 8 || this_form.find('input[type="email"]').val().trim().length > 100) {
-                        basic.showAlert('Please try again with valid password between 8 and 30 symbols.', '', true);
+                        basic.showAlert('Please try again with valid password between 8 and 30 symbols.', 'boobox-alert', true);
                         event.preventDefault();
                     }
                 });
@@ -962,7 +962,7 @@ var projectData = {
 
                                                 var this_form = $(this);
                                                 if (this_form.find('#new-usd-proposal-to-dentist').val().trim() == '' || parseFloat(this_form.find('#new-usd-proposal-to-dentist').val().trim()) <= 0) {
-                                                    basic.showAlert('Please enter valid monthly premium proposal', '', true);
+                                                    basic.showAlert('Please enter valid monthly premium proposal', 'boobox-alert', true);
                                                 } else {
                                                     showLoader();
 
@@ -982,16 +982,16 @@ var projectData = {
                                                             basic.closeDialog();
                                                             hideLoader();
                                                             if (response.success) {
-                                                                basic.showDialog(response.success, '', '', true);
+                                                                basic.showDialog(response.success, '', 'boobox-alert', true);
                                                             } else if (response.error) {
-                                                                basic.showAlert(response.error, '', true);
+                                                                basic.showAlert(response.error, 'boobox-alert', true);
                                                             }
                                                         }
                                                     });
                                                 }
                                             });
                                         } else if (response.error) {
-                                            basic.showAlert(response.success, '', true);
+                                            basic.showAlert(response.success, 'boobox-alert', true);
                                         }
                                     }
                                 });
@@ -1009,7 +1009,7 @@ var projectData = {
                                 var form_errors = false;
 
                                 if ($('.contract-proposal.section.module').attr('data-expired') != undefined) {
-                                    basic.showAlert('This contract proposal has expired.', '', true);
+                                    basic.showAlert('This contract proposal has expired.', 'boobox-alert', true);
                                     return false;
                                 }
 
@@ -1067,11 +1067,11 @@ var projectData = {
                                     //save the base64 signature image in hidden value
                                     this_form.find('input[name="patient_signature"]').val(signature_pad.toDataURL('image/png'));
                                     if (signature_pad.isEmpty()) {
-                                        basic.showAlert('Please sign the contract sample. Use your mouse or touch screen to sign.', '', true);
+                                        basic.showAlert('Please sign the contract sample. Use your mouse or touch screen to sign.', 'boobox-alert', true);
                                     }else if (!this_form.find('input#terms').is(':checked')) {
-                                        basic.showAlert('Please accept the Terms and Conditions', '', true);
+                                        basic.showAlert('Please accept the Terms and Conditions', 'boobox-alert', true);
                                     }else if (!this_form.find('input#privacy-policy').is(':checked')) {
-                                        basic.showAlert('Please accept the Privacy Policy', '', true);
+                                        basic.showAlert('Please accept the Privacy Policy', 'boobox-alert', true);
                                     }else {
                                         fireGoogleAnalyticsEvent('Contract Patient Accepted', 'Accept', 'Contact Accepted');
 
@@ -1306,17 +1306,17 @@ var projectData = {
                                                         hideLoader();
                                                         if (response.success) {
                                                             $('.camping-for-popups').html('');
-                                                            basic.showAlert('Check-up recorded successfully. Now your dentist has to approve it.', '', true);
+                                                            basic.showAlert('Check-up recorded successfully. Now your dentist has to approve it.', 'boobox-alert', true);
                                                         } else if (response.error) {
                                                             sentRecord = false;
-                                                            basic.showAlert(response.message, '', true);
+                                                            basic.showAlert(response.message, 'boobox-alert', true);
                                                         }
                                                     }
                                                 });
                                             }, 2000);
                                         }
                                     } else {
-                                        basic.showAlert('Please select valid date.', '', true);
+                                        basic.showAlert('Please select valid date.', 'boobox-alert', true);
                                     }
                                 });
                             });
@@ -1362,17 +1362,17 @@ var projectData = {
                                                         hideLoader();
                                                         if (response.success) {
                                                             $('.camping-for-popups').html('');
-                                                            basic.showAlert('Teeth cleaning recorded successfully. Now your dentist have to approve it.', '', true);
+                                                            basic.showAlert('Teeth cleaning recorded successfully. Now your dentist have to approve it.', 'boobox-alert', true);
                                                         } else if (response.error) {
                                                             sentRecord = false;
-                                                            basic.showAlert(response.message, '', true);
+                                                            basic.showAlert(response.message, 'boobox-alert', true);
                                                         }
                                                     }
                                                 });
                                             }, 2000);
                                         }
                                     } else {
-                                        basic.showAlert('Please select valid date.', '', true);
+                                        basic.showAlert('Please select valid date.', 'boobox-alert', true);
                                     }
                                 });
                             });
@@ -1413,17 +1413,17 @@ var projectData = {
                                                         hideLoader();
                                                         if (response.success) {
                                                             $('.camping-for-popups').html('');
-                                                            basic.showAlert('Record is saved successfully. Now your dentist have to approve it.', '', true);
+                                                            basic.showAlert('Record is saved successfully. Now your dentist have to approve it.', 'boobox-alert', true);
                                                         } else if (response.error) {
                                                             sentRecord = false;
-                                                            basic.showAlert(response.message, '', true);
+                                                            basic.showAlert(response.message, 'boobox-alert', true);
                                                         }
                                                     }
                                                 });
                                             }, 2000);
                                         }
                                     } else {
-                                        basic.showAlert('Please select at least one valid date.', '', true);
+                                        basic.showAlert('Please select at least one valid date.', 'boobox-alert', true);
                                     }
                                 });
                             });
@@ -1635,9 +1635,9 @@ var projectData = {
                                                     $('.generate-qr-code-for-wallet-scanning').click(async function() {
                                                         if (parseFloat(eth_fee) > parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)))) {
                                                             //not enough ETH balance
-                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
                                                         } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                            basic.showAlert('Please check the checkbox below to continue with the QR code generation.', '', true);
+                                                            basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                                         } else {
                                                             showLoader();
 
@@ -1662,7 +1662,7 @@ var projectData = {
 
                                                                     generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
                                                                 } else {
-                                                                    basic.showAlert('Something went wrong, please try again later.', '', true);
+                                                                    basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
                                                                     hideLoader();
                                                                 }
                                                             });
@@ -1701,16 +1701,16 @@ var projectData = {
                                                         var this_btn = $(this);
                                                         if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                             //not enough ETH balance
-                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
                                                         } else {
                                                             if (!existingCachedKey && transaction_key == undefined) {
-                                                                basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                                basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
                                                                 return false;
                                                             } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
-                                                                basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                                basic.showAlert('Please enter the secret password for your keystore file.', 'boobox-alert', true);
                                                                 return false;
                                                             } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                                basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                                basic.showAlert('Please check the checkbox below to continue with the transaction creation.', 'boobox-alert', true);
                                                                 return false;
                                                             } else {
                                                                 showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
@@ -1722,7 +1722,7 @@ var projectData = {
                                                                             transaction_key = decrypted_keystore_file_response.to_string;
                                                                         } else if (decrypted_keystore_file_response.error) {
                                                                             hideLoader();
-                                                                            basic.showAlert(decrypted_keystore_file_response.message, '', true);
+                                                                            basic.showAlert(decrypted_keystore_file_response.message, 'boobox-alert', true);
                                                                             return false;
                                                                         }
                                                                     }
@@ -1818,7 +1818,7 @@ var projectData = {
                                                         }
                                                     });
                                                 } else {
-                                                    basic.showAlert(response.error, '', true);
+                                                    basic.showAlert(response.error, 'boobox-alert', true);
                                                 }
                                             }
                                         });
@@ -1881,7 +1881,7 @@ var projectData = {
                                 } else {
                                     //custom
                                     if (!$('#read-the-contract-details').is(':checked')) {
-                                        basic.showAlert('Please check the checkbox above to continue with the contract approval.', '', true);
+                                        basic.showAlert('Please check the checkbox above to continue with the contract approval.', 'boobox-alert', true);
                                         return false;
                                     }
 
@@ -1934,9 +1934,9 @@ var projectData = {
                                                     var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                                     if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                         //not enough ETH balance
-                                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
                                                     } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                        basic.showAlert('Please check the checkbox below to continue with the QR code generation.', '', true);
+                                                        basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                                     } else {
                                                         showLoader();
 
@@ -1980,16 +1980,16 @@ var projectData = {
                                                     var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                                     if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                         //not enough ETH balance
-                                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
                                                     } else {
                                                         if (!existingCachedKey && transaction_key == undefined) {
-                                                            basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                            basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
                                                             return false;
                                                         } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
-                                                            basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                            basic.showAlert('Please enter the secret password for your keystore file.', 'boobox-alert', true);
                                                             return false;
                                                         } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                            basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                            basic.showAlert('Please check the checkbox below to continue with the transaction creation.', 'boobox-alert', true);
                                                             return false;
                                                         } else {
                                                             showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
@@ -2000,7 +2000,7 @@ var projectData = {
                                                                         transaction_key = decrypted_keystore_file_response.to_string;
                                                                     } else if (decrypted_keystore_file_response.error) {
                                                                         hideLoader();
-                                                                        basic.showAlert(decrypted_keystore_file_response.message, '', true);
+                                                                        basic.showAlert(decrypted_keystore_file_response.message, 'boobox-alert', true);
                                                                         return false;
                                                                     }
                                                                 }
@@ -2063,7 +2063,7 @@ var projectData = {
                                                     }
                                                 });
                                             } else if (response.error) {
-                                                basic.showAlert(response.error, '', true);
+                                                basic.showAlert(response.error, 'boobox-alert', true);
                                             }
                                         }
                                     });
@@ -2163,7 +2163,7 @@ var projectData = {
                                                                         }
                                                                     } else if (response.error) {
                                                                         hideLoader();
-                                                                        basic.showAlert(response.message, '', true);
+                                                                        basic.showAlert(response.message, 'boobox-alert', true);
                                                                     }
                                                                 }
                                                             });
@@ -2205,7 +2205,7 @@ var projectData = {
                                                                         }
                                                                     } else if (response.error) {
                                                                         hideLoader();
-                                                                        basic.showAlert(response.message, '', true);
+                                                                        basic.showAlert(response.message, 'boobox-alert', true);
                                                                     }
                                                                 }
                                                             });
@@ -2227,7 +2227,7 @@ var projectData = {
                         } else if (contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > period_to_withdraw * 2 && current_patient_dcn_balance < (Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1) * contract_dcn_amount) {
                             var months_dentist_didnt_withdraw = Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1;
 
-                            basic.showAlert('You haven\'t withdraw from this patient for ' + months_dentist_didnt_withdraw + ' months in a row, but the patient currently have not enough Dentacoins to cover all the months. Contact him and let him know to refill Dentacoins inside his Wallet Address.', '', true);
+                            basic.showAlert('You haven\'t withdraw from this patient for ' + months_dentist_didnt_withdraw + ' months in a row, but the patient currently have not enough Dentacoins to cover all the months. Contact him and let him know to refill Dentacoins inside his Wallet Address.', 'boobox-alert', true);
                         } else if (contract_next_payment < now_timestamp && now_timestamp < contract_next_payment + dApp.grace_period && current_patient_dcn_balance < contract_dcn_amount) {
                             //show red counter (grace period)
                             /*$('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold">Overdue payment. If the patient doesn\'t fill in '+contract_dcn_amount+' Dentacoins inside his Wallet Address the contract will be canceled in:</h2></div> </div><div class="clock red-background"></div><div class="flip-clock-message"></div></div></div>');*/
@@ -2301,9 +2301,9 @@ var projectData = {
                                                     var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                                     if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                         //not enough ETH balance
-                                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
                                                     } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                        basic.showAlert('Please check the checkbox below to continue with the QR code generation.', '', true);
+                                                        basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                                     } else {
                                                         showLoader();
 
@@ -2347,16 +2347,16 @@ var projectData = {
                                                     var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                                     if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                         //not enough ETH balance
-                                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
                                                     } else {
                                                         if (!existingCachedKey && transaction_key == undefined) {
-                                                            basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                            basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
                                                             return false;
                                                         } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
-                                                            basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                            basic.showAlert('Please enter the secret password for your keystore file.', 'boobox-alert', true);
                                                             return false;
                                                         } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                            basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                            basic.showAlert('Please check the checkbox below to continue with the transaction creation.', 'boobox-alert', true);
                                                             return false;
                                                         } else {
                                                             showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
@@ -2367,7 +2367,7 @@ var projectData = {
                                                                         transaction_key = decrypted_keystore_file_response.to_string;
                                                                     } else if (decrypted_keystore_file_response.error) {
                                                                         hideLoader();
-                                                                        basic.showAlert(decrypted_keystore_file_response.message, '', true);
+                                                                        basic.showAlert(decrypted_keystore_file_response.message, 'boobox-alert', true);
                                                                         return false;
                                                                     }
                                                                 }
@@ -2475,7 +2475,7 @@ var projectData = {
 
                                             $('.keystore-file-password-validation .btn-container a').click(async function() {
                                                 if ($('.keystore-file-password-validation .keystore-password').val().trim() == '') {
-                                                    basic.showAlert('Please enter your password.', '', true);
+                                                    basic.showAlert('Please enter your password.', 'boobox-alert', true);
                                                 }else {
                                                     var decrypt_response = await decryptDataByKeystore(encrypted_pdf_content.success, existingCachedKeystore, $('.keystore-file-password-validation .keystore-password').val().trim());
                                                     if (decrypt_response.success) {
@@ -2483,7 +2483,7 @@ var projectData = {
                                                         render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
                                                         render_form.submit();
                                                     } else if (decrypt_response.error) {
-                                                        basic.showAlert(decrypt_response.message, '', true);
+                                                        basic.showAlert(decrypt_response.message, 'boobox-alert', true);
                                                     }
                                                 }
                                             });
@@ -2498,7 +2498,7 @@ var projectData = {
                                 openCacheKeyPopup(encrypted_pdf_content.success);
                             }
                         } else if (encrypted_pdf_content.error) {
-                            basic.showAlert(encrypted_pdf_content.error, '', true);
+                            basic.showAlert(encrypted_pdf_content.error, 'boobox-alert', true);
                         }
                     });
                 }
@@ -2820,15 +2820,15 @@ if ($('body').hasClass('logged-in')) {
                 var this_form = this;
                 var form_errors = false;
                 if (signature_pad.isEmpty()) {
-                    basic.showAlert('Please sign the contract sample. Use your mouse or touch screen to sign.', '', true);
+                    basic.showAlert('Please sign the contract sample. Use your mouse or touch screen to sign.', 'boobox-alert', true);
                     event.preventDefault();
                     form_errors = true;
                 }else if (!$('.step.four input#terms').is(':checked')) {
-                    basic.showAlert('Please accept the Terms and Conditions', '', true);
+                    basic.showAlert('Please accept the Terms and Conditions', 'boobox-alert', true);
                     event.preventDefault();
                     form_errors = true;
                 }else if (!$('.step.four input#privacy-policy').is(':checked')) {
-                    basic.showAlert('Please accept the Privacy Policy', '', true);
+                    basic.showAlert('Please accept the Privacy Policy', 'boobox-alert', true);
                     event.preventDefault();
                     form_errors = true;
                 }
@@ -3195,19 +3195,19 @@ if ($('body').hasClass('logged-in')) {
             }
 
             if (parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) < 10)  {
-                basic.showAlert('The minimum transaction limit is 10 USD.', '', true);
+                basic.showAlert('The minimum transaction limit is 10 USD.', 'boobox-alert', true);
             }else if (parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) > 6000)  {
-                basic.showAlert('The maximum transaction limit is 6000 USD.', '', true);
+                basic.showAlert('The maximum transaction limit is 6000 USD.', 'boobox-alert', true);
             }else if (parseFloat($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()) < currency_amount_for_one_usd * 30)  {
-                basic.showAlert('The minimum transaction limit is 10 USD in '+currency.toUpperCase()+'.', '', true);
+                basic.showAlert('The minimum transaction limit is 10 USD in '+currency.toUpperCase()+'.', 'boobox-alert', true);
             }else if (parseFloat($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()) > currency_amount_for_one_usd * 6000)  {
-                basic.showAlert('The maximum transaction limit is 6000 USD in '+currency.toUpperCase()+'.', '', true);
+                basic.showAlert('The maximum transaction limit is 6000 USD in '+currency.toUpperCase()+'.', 'boobox-alert', true);
             }else if (!projectData.utils.innerAddressCheck($('section.ready-to-purchase-with-external-api input#dcn_address').val().trim())) {
-                basic.showAlert('Please enter a valid wallet address. It should start with "0x" and be followed by 40 characters (numbers and letters).', '', true);
+                basic.showAlert('Please enter a valid wallet address. It should start with "0x" and be followed by 40 characters (numbers and letters).', 'boobox-alert', true);
             }else if (!basic.validateEmail($('section.ready-to-purchase-with-external-api input#email').val().trim()))  {
-                basic.showAlert('Please enter a valid email.', '', true);
+                basic.showAlert('Please enter a valid email.', 'boobox-alert', true);
             }else if (!$('section.ready-to-purchase-with-external-api #privacy-policy-agree').is(':checked')) {
-                basic.showAlert('Please agree with our Privacy Policy.', '', true);
+                basic.showAlert('Please agree with our Privacy Policy.', 'boobox-alert', true);
             }else {
                 //sending GTAG event
                 gtag('event', 'Buy', event_obj);
@@ -3252,16 +3252,16 @@ function calculateLogic() {
         var currency = $('#currency').val();
 
         if (patients_number == '' || parseInt(patients_number) <= 0) {
-            basic.showAlert('Please enter valid number of patients per day.', '', true);
+            basic.showAlert('Please enter valid number of patients per day.', 'boobox-alert', true);
             return false;
         } else if (params_type == undefined) {
-            basic.showAlert('Please select specialties.', '', true);
+            basic.showAlert('Please select specialties.', 'boobox-alert', true);
             return false;
         } else if (country == undefined) {
-            basic.showAlert('Please select country.', '', true);
+            basic.showAlert('Please select country.', 'boobox-alert', true);
             return false;
         } else if (currency == undefined) {
-            basic.showAlert('Please select currency.', '', true);
+            basic.showAlert('Please select currency.', 'boobox-alert', true);
             return false;
         }
         var calculator_data = {
@@ -3786,13 +3786,13 @@ function cancelContractEventInit() {
                                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                         if (parseFloat(eth_fee) > current_user_eth_balance) {
                                             //not enough ETH balance
-                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
                                         } else if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
-                                            basic.showAlert('Please enter other reason.', '', true);
+                                            basic.showAlert('Please enter other reason.', 'boobox-alert', true);
                                         } else if ($('.recipe-popup #cancel-contract-reason').val() == null) {
-                                            basic.showAlert('Please select cancellation reason.', '', true);
+                                            basic.showAlert('Please select cancellation reason.', 'boobox-alert', true);
                                         } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                            basic.showAlert('Please check the checkbox below to continue with the QR code generation.', '', true);
+                                            basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                         } else {
                                             showLoader();
 
@@ -3822,22 +3822,22 @@ function cancelContractEventInit() {
 
                                         if (parseFloat(eth_fee) > current_user_eth_balance) {
                                             //not enough ETH balance
-                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', '', true);
+                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
                                         } else {
                                             if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
-                                                basic.showAlert('Please enter other reason.', '', true);
+                                                basic.showAlert('Please enter other reason.', 'boobox-alert', true);
                                             } else if ($('.recipe-popup #cancel-contract-reason').val() == null) {
-                                                basic.showAlert('Please select cancellation reason.', '', true);
+                                                basic.showAlert('Please select cancellation reason.', 'boobox-alert', true);
                                             } /*else if ($('.recipe-popup #cancel-contract-comments').val().trim() == '') {
-                                                basic.showAlert('Please enter comments.', '', true);
+                                                basic.showAlert('Please enter comments.', 'boobox-alert', true);
                                             }*/ else if (!existingCachedKey && transaction_key == undefined) {
-                                                basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', '', true);
+                                                basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
                                                 return false;
                                             } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
-                                                basic.showAlert('Please enter the secret password for your keystore file.', '', true);
+                                                basic.showAlert('Please enter the secret password for your keystore file.', 'boobox-alert', true);
                                                 return false;
                                             } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                basic.showAlert('Please check the checkbox below to continue with the transaction creation.', '', true);
+                                                basic.showAlert('Please check the checkbox below to continue with the transaction creation.', 'boobox-alert', true);
                                                 return false;
                                             } else {
                                                 showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
@@ -3848,7 +3848,7 @@ function cancelContractEventInit() {
                                                             transaction_key = decrypted_keystore_file_response.to_string;
                                                         } else if (decrypted_keystore_file_response.error) {
                                                             hideLoader();
-                                                            basic.showAlert(decrypted_keystore_file_response.message, '', true);
+                                                            basic.showAlert(decrypted_keystore_file_response.message, 'boobox-alert', true);
                                                             return false;
                                                         }
                                                     }
@@ -3923,7 +3923,7 @@ function cancelContractEventInit() {
                                                                                 window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
                                                                             } else if (inner_response.error) {
                                                                                 hideLoader();
-                                                                                basic.showAlert(inner_response.error, '', true);
+                                                                                basic.showAlert(inner_response.error, 'boobox-alert', true);
                                                                             }
                                                                         }
                                                                     });
@@ -3936,7 +3936,7 @@ function cancelContractEventInit() {
                                         }
                                     });
                                 } else if (response.error) {
-                                    basic.showAlert(response.error, '', true);
+                                    basic.showAlert(response.error, 'boobox-alert', true);
                                 }
                             }
                         });
@@ -3970,11 +3970,11 @@ function cancelContractEventInit() {
 
                             $('.popup-cancel-contract .cancel-contract-popup-confirmation').click(function() {
                                 if ($('.popup-cancel-contract #cancel-contract-other-reason').length && $('.popup-cancel-contract #cancel-contract-other-reason').val().trim() == '') {
-                                    basic.showAlert('Please enter other reason.', '', true);
+                                    basic.showAlert('Please enter other reason.', 'boobox-alert', true);
                                 } else if ($('.popup-cancel-contract #cancel-contract-reason').val() == null) {
-                                    basic.showAlert('Please select cancellation reason.', '', true);
+                                    basic.showAlert('Please select cancellation reason.', 'boobox-alert', true);
                                 } /*else if ($('.popup-cancel-contract #cancel-contract-comments').val().trim() == '') {
-                                    basic.showAlert('Please enter comments.', '', true);
+                                    basic.showAlert('Please enter comments.', 'boobox-alert', true);
                                 }*/ else {
                                     var data = {
                                         contract: this_btn.attr('data-contract'),
@@ -4021,14 +4021,14 @@ function cancelContractEventInit() {
                                                 window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
                                             } else if (inner_response.error) {
                                                 hideLoader();
-                                                basic.showAlert(inner_response.error, '', true);
+                                                basic.showAlert(inner_response.error, 'boobox-alert', true);
                                             }
                                         }
                                     });
                                 }
                             });
                         } else if (response.error) {
-                            basic.showAlert('Wrong contract.', '', true);
+                            basic.showAlert('Wrong contract.', 'boobox-alert', true);
                         }
                     }
                 });
@@ -4122,7 +4122,7 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                                     render_form.find('input[name="pdf_data"]').val(decrypt_response.success.decrypted);
                                                     render_form.submit();
                                                 } else if (decrypt_response.error) {
-                                                    basic.showAlert(decrypt_response.message, '', true);
+                                                    basic.showAlert(decrypt_response.message, 'boobox-alert', true);
                                                 }
                                             });
                                         } else {
@@ -4137,14 +4137,14 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                     }
                                 } else {
                                     $('#upload-keystore-file').val('');
-                                    basic.showAlert('Please upload valid keystore file which is related to the Wallet Address saved in your profile.', '', true);
+                                    basic.showAlert('Please upload valid keystore file which is related to the Wallet Address saved in your profile.', 'boobox-alert', true);
                                 }
                             } else {
                                 $('#upload-keystore-file').val('');
-                                basic.showAlert('Please upload valid keystore file which is related to the Wallet Address saved in your profile.', '', true);
+                                basic.showAlert('Please upload valid keystore file which is related to the Wallet Address saved in your profile.', 'boobox-alert', true);
                             }
                         } else {
-                            basic.showAlert('You don\'t have any Wallet Address saved in our database.', '', true);
+                            basic.showAlert('You don\'t have any Wallet Address saved in our database.', 'boobox-alert', true);
                         }
                     });
                     reader.readAsBinaryString(uploaded_file);
@@ -4234,9 +4234,9 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
             if (keystore_file != null) {
                 //import with keystore
                 if (currentUserAddresses.indexOf(keystoreFileAddress) != -1) {
-                    basic.showAlert('Please enter valid keystore file for your Wallet Address.', '', true);
+                    basic.showAlert('Please enter valid keystore file for your Wallet Address.', 'boobox-alert', true);
                 } else if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
-                    basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
+                    basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', 'boobox-alert', true);
                 } else {
                     showLoader();
                     setTimeout(function() {
@@ -4273,20 +4273,20 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                         $('.proof-of-address').remove();
                                         $('.proof-success').fadeIn(1500);
                                     } else {
-                                        basic.showAlert(inner_response.error, '', true);
+                                        basic.showAlert(inner_response.error, 'boobox-alert', true);
                                     }
                                 }
                             });
                         } else if (import_response.error) {
                             hideLoader();
-                            basic.showAlert(import_response.message, '', true);
+                            basic.showAlert(import_response.message, 'boobox-alert', true);
                         }
                     }, 1000);
                 }
             } else {
                 //import with private key
                 if ($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
-                    basic.showAlert('Please enter valid private key.', '', true);
+                    basic.showAlert('Please enter valid private key.', 'boobox-alert', true);
                 } else {
                     showLoader();
                     setTimeout(async function () {
@@ -4301,7 +4301,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                 render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
                                 render_form.submit();
                             } else if (decrypted_pdf_response.error) {
-                                basic.showAlert(decrypted_pdf_response.message, '', true);
+                                basic.showAlert(decrypted_pdf_response.message, 'boobox-alert', true);
                             }
                         } else {
                             var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
@@ -4309,7 +4309,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                             if (import_response.success) {
                                 //checking if fake private key or just miss spell it
                                 if (currentUserAddresses.indexOf(projectData.utils.checksumAddress(import_response.address)) != -1) {
-                                    basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', '', true);
+                                    basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', 'boobox-alert', true);
                                     hideLoader();
                                 } else {
 
@@ -4330,21 +4330,21 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                                                 $('.proof-of-address').remove();
                                                 $('.proof-success').fadeIn(1500);
                                             } else {
-                                                basic.showAlert(inner_response.error, '', true);
+                                                basic.showAlert(inner_response.error, 'boobox-alert', true);
                                             }
                                         }
                                     });
                                 }
                             } else if (import_response.error) {
                                 hideLoader();
-                                basic.showAlert(import_response.message, '', true);
+                                basic.showAlert(import_response.message, 'boobox-alert', true);
                             }
                         }
                     }, 1000);
                 }
             }
         } else {
-            basic.showAlert('You don\'t have any Wallet Address saved in our database.', '', true);
+            basic.showAlert('You don\'t have any Wallet Address saved in our database.', 'boobox-alert', true);
         }
     });
 }
@@ -4363,7 +4363,7 @@ function bindTransactionAddressVerify(keystore_file, keystoreFileAddress) {
                 //import with keystore
                 if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
                     hideLoader();
-                    basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
+                    basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', 'boobox-alert', true);
                 } else {
                     var decrypt_response = decryptKeystore(keystore_file, $('.proof-of-address #your-secret-key-password').val().trim());
                     if (decrypt_response.success) {
@@ -4387,20 +4387,20 @@ function bindTransactionAddressVerify(keystore_file, keystoreFileAddress) {
                             response_data: decrypt_response.to_string
                         });
                     } else if (decrypt_response.error) {
-                        basic.showAlert(decrypt_response.message, '', true);
+                        basic.showAlert(decrypt_response.message, 'boobox-alert', true);
                         hideLoader();
                     }
                 }
             } else {
                 //import with private key
                 if ($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
-                    basic.showAlert('Please enter valid private key.', '', true);
+                    basic.showAlert('Please enter valid private key.', 'boobox-alert', true);
                 } else {
                     var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
                     if (import_response.success) {
                         //checking if fake private key or just miss spell it
                         if (global_state.account != projectData.utils.checksumAddress(import_response.address)) {
-                            basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', '', true);
+                            basic.showAlert('Please enter private key related to the Wallet Address you have saved in your profile.', 'boobox-alert', true);
                             hideLoader();
                         } else {
 
@@ -4411,7 +4411,7 @@ function bindTransactionAddressVerify(keystore_file, keystoreFileAddress) {
                             });
                         }
                     } else if (import_response.error) {
-                        basic.showAlert(import_response.message, '', true);
+                        basic.showAlert(import_response.message, 'boobox-alert', true);
                         hideLoader();
                     }
                 }
@@ -4435,7 +4435,7 @@ function bindCacheKeyEvent(keystore_file) {
             var keystoreFileAddress = projectData.utils.checksumAddress('0x' + JSON.parse(keystore_file).address);
             if (currentUserAddresses.indexOf(keystoreFileAddress) != -1) {
                 if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
-                    basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', '', true);
+                    basic.showAlert('Please enter valid secret key password with length between 6 and 100 symbols.', 'boobox-alert', true);
                 } else {
                     showLoader();
                     setTimeout(function() {
@@ -4466,20 +4466,20 @@ function bindCacheKeyEvent(keystore_file) {
                                 success: function (inner_response) {
                                     hideLoader();
                                     $('.remember-my-wallet-camp').remove();
-                                    basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', '', true);
+                                    basic.showAlert('Your wallet has been remembered successfully. If you want to delete your private key or keystore file you can do this from Manage Privacy section in your profile.', 'boobox-alert', true);
                                 }
                             });
                         } else if (import_response.error) {
                             hideLoader();
-                            basic.showAlert(import_response.message, '', true);
+                            basic.showAlert(import_response.message, 'boobox-alert', true);
                         }
                     }, 1000);
                 }
             } else {
-                basic.showAlert('Please enter valid keystore file for your Wallet Address.', '', true);
+                basic.showAlert('Please enter valid keystore file for your Wallet Address.', 'boobox-alert', true);
             }
         } else {
-            basic.showAlert('You don\'t have any Wallet Address saved in our database.', '', true);
+            basic.showAlert('You don\'t have any Wallet Address saved in our database.', 'boobox-alert', true);
         }
     });
 }
@@ -4795,7 +4795,7 @@ function showWarningTestingVersion() {
         basic.showDialog('<div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 inline-block"><img src="/assets/images/warning-pop-up.png" class="hide-xs"></div><div class="col-xs-12 col-md-5 col-sm-6 text-center inline-block padding-top-20 padding-bottom-20"><div class="warning"><img class="max-width-50" src="/assets/images/attention.svg" alt="attention icon"></div><div class="lato-bold fs-30" style="color: #ff8d8d;">WARNING:</div><div class="black-warning lato-bold fs-30 dark-color">THIS IS A TEST WEBSITE VERSION.</div><div class="additional-text padding-top-20 padding-bottom-20 fs-20">Please do not make any transactions as your funds will be lost.We will notify you via email when the official version is launched.</div><div class="btn-container"><a href="javascript:void(0)" class="white-blue-green-btn min-width-220 understood">I UNDERSTAND</a></div></div></div></div>', 'warning-test-version', true);
         $('.warning-test-version .understood').click(function() {
             if (basic.cookies.get('strictly_necessary_policy') != '1') {
-                basic.showAlert('Please accept the strictly necessary cookies.', '', true);
+                basic.showAlert('Please accept the strictly necessary cookies.', 'boobox-alert', true);
             } else {
                 basic.cookies.set('warning-test-version', 1);
                 basic.closeDialog();
@@ -5031,9 +5031,9 @@ function multipleUseWalletAddressesLogic() {
                                 this_btn.closest('li').remove();
                                 $('.search-result').hide();
                                 $('.search-input').val('');
-                                basic.showAlert(response.message, '', true);
+                                basic.showAlert(response.message, 'boobox-alert', true);
                             } else if (response.error) {
-                                basic.showAlert(response.message, '', true);
+                                basic.showAlert(response.message, 'boobox-alert', true);
                             }
                         }
                     });
@@ -5049,9 +5049,9 @@ function multipleUseWalletAddressesLogic() {
             var ajaxSent = false;
             $('.save-to-address-book').click(function() {
                 if ($('.popup-save-to-address-book #contact-name').val().trim() == '') {
-                    basic.showAlert('Please enter name.', '', true);
+                    basic.showAlert('Please enter name.', 'boobox-alert', true);
                 } else if ($('.popup-save-to-address-book #wallet-address').val().trim() == '' || !projectData.utils.innerAddressCheck($('.popup-save-to-address-book #wallet-address').val().trim())){
-                    basic.showAlert('Please enter valid Wallet Address.', '', true);
+                    basic.showAlert('Please enter valid Wallet Address.', 'boobox-alert', true);
                 } else if (!ajaxSent) {
                     ajaxSent = true;
                     var addressName = $('.popup-save-to-address-book #contact-name').val().trim();
@@ -5072,7 +5072,7 @@ function multipleUseWalletAddressesLogic() {
                             ajaxSent = false;
                             if (response.success) {
                                 basic.closeDialog();
-                                basic.showAlert(response.message, '', true);
+                                basic.showAlert(response.message, 'boobox-alert', true);
 
 
                                 if (response.addresses) {
@@ -5091,7 +5091,7 @@ function multipleUseWalletAddressesLogic() {
                                     $('#addresses-list').html(addressesHtml);
                                 }
                             } else if (response.error) {
-                                basic.showAlert(response.message, '', true);
+                                basic.showAlert(response.message, 'boobox-alert', true);
                             }
                         }
                     });
