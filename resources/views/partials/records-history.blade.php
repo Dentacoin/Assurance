@@ -1,6 +1,6 @@
 <section class="container padding-top-50 padding-bottom-50 records-history module">
     <div class="row">
-        <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+        <div class="col-xs-12 col-lg-10 col-lg-offset-1 mobile-overflow-y-auto">
             <h2 class="fs-34 text-center lato-bold padding-bottom-20">Records History</h2>
             <table>
                 <thead>
@@ -49,5 +49,10 @@
                 </tbody>
             </table>
         </div>
+        @if(isset($mobile) && $mobile)
+            <figure itemscope="" itemtype="http://schema.org/ImageObject" class="mobile-slide col-xs-12">
+                <img src="/assets/uploads/slide.gif" alt="Slide gif"/>
+            </figure>
+        @endif
     </div>
 </section>

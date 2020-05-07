@@ -1725,6 +1725,8 @@
       display: block;
       padding: 10px 15px;
       color: #126585; }
+.module.records-history .mobile-slide {
+  display: none; }
 .module.records-history table {
   width: 100%;
   font-size: 16px; }
@@ -1744,6 +1746,13 @@
       .module.records-history table thead tr th:first-child {
         width: 32.5%;
         padding-left: 12.5%; }
+@media screen and (max-width: 991px) {
+  .module.records-history .mobile-overflow-y-auto {
+    overflow-y: auto; }
+  .module.records-history table {
+    min-width: 800px; }
+  .module.records-history .mobile-slide {
+    display: block; } }
 
 body {
   background-color: #222d32; }
