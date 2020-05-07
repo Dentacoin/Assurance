@@ -613,7 +613,7 @@ class UserController extends Controller {
 
                     $this->sendNotificationEmailToDentistAndPatientAboutContractCancelling($contract, $cancellation_reason);
                 }
-            } else {
+            }/* else {
                 // pending
                 if(time() > strtotime($contract->created_at->toDateTimeString(). ' + '.DAYS_ACTIVE_CONTRACT_PROPOSAL.' days')) {
                     $cancellation_reason = array(
@@ -626,7 +626,7 @@ class UserController extends Controller {
 
                     $this->sendNotificationEmailToDentistAndPatientAboutContractCancelling($contract, $cancellation_reason);
                 }
-            }
+            }*/
         }
 
         return $contract;
