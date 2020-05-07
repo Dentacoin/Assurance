@@ -617,7 +617,7 @@ class PatientController extends Controller {
                 }
 
                 if($request->input('type') == 'check-up') {
-                    $currentRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd);
+                    $currentRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
                     $event = $currentRecordsCount + 1;
                     $aMustRecordsCount = $contract->check_ups_per_year;
 
@@ -626,7 +626,7 @@ class PatientController extends Controller {
                     $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
                     $type = 'check-ups';
                 } else if($request->input('type') == 'teeth-cleaning') {
-                    $currentRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd);
+                    $currentRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
                     $event = $currentRecordsCount + 1;
                     $aMustRecordsCount = $contract->teeth_cleaning_per_year;
 
@@ -665,9 +665,9 @@ class PatientController extends Controller {
                 }
 
                 if(!empty($check_up_date) || !empty($teeth_cleaning_date)) {
-                    $currentCheckUpRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd);
+                    $currentCheckUpRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
                     $checkUpEvent = $currentCheckUpRecordsCount + 1;
-                    $currentTeethCleaningRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd);
+                    $currentTeethCleaningRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
                     $teethCleaningUpEvent = $currentTeethCleaningRecordsCount + 1;
                     $aMustCheckUpRecordsCount = $contract->teeth_cleaning_per_year;
                     $aMustTeethCleaningRecordsCount = $contract->teeth_cleaning_per_year;
@@ -763,16 +763,9 @@ class PatientController extends Controller {
                 $join->on('contract_checkups.contract_id', '=', 'temporally_contracts.id');
             })->where(array('temporally_contracts.dentist_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->whereIn('contract_checkups.status', $statuses)->whereBetween('contract_checkups.request_date_at', array($from, $to))->get()->all();
         } else {
-            var_dump($from);
-            var_dump($to);
-            echo "<br>";
-            var_dump($statuses);
-            echo "<br>";
             $checkUps = ContractCheckup::leftJoin('temporally_contracts', function($join) {
                 $join->on('contract_checkups.contract_id', '=', 'temporally_contracts.id');
             })->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->whereIn('contract_checkups.status', $statuses)->whereBetween('contract_checkups.request_date_at', array($from, $to))->get()->all();
-            var_dump($checkUps);
-            die();
         }
 
         if(!empty($checkUps)) {
