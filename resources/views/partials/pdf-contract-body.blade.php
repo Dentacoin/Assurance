@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <label class="inline-block">Phone:</label>
-            <div class="right-field inline-block">{{$dentist->phone}}</div>
+            <div class="right-field inline-block">+{{$countries[$dentist->country_id - 1]->phone_code}} {{$dentist->phone}}</div>
         </div>
         <div class="row">
             <label class="inline-block">Website:</label>

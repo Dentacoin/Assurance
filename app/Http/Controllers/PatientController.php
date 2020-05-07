@@ -200,7 +200,7 @@ class PatientController extends Controller {
             //if patient is logged in and if the contract is about the logged patient
             return view('pages/logged-user/patient/review-assurance-contract', $params);
         } else {
-            return view('pages/contract-proposal-partly', ['contract' => $contract]);
+            return view('pages/contract-proposal-partly', ['contract' => $contract, 'countries' => (new APIRequestsController())->getAllCountries()]);
         }
     }
 

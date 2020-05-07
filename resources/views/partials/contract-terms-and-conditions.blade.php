@@ -2,12 +2,13 @@
 @if(!empty($contract->contract_active_at) && !empty($contract->document_hash))
     @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+    @php($countries = (new \App\Http\Controllers\APIRequestsController())->getAllCountries())
     <div class="padding-bottom-20">This present Dentacoin Assurance Contract Agreement was reached on </div>
     <div><span class="calibri-bold padding-top-10 padding-bottom-10 fs-18">BETWEEN</span></div>
     <div class="padding-top-10 padding-bottom-10">
         <div>Name - Dr. {{$dentist->name}}</div>
         <div>Email - {{$dentist->email}}</div>
-        <div>Phone - {{$dentist->phone}}</div>
+        <div>Phone - +{{$countries[$dentist->country_id - 1]->phone_code}} {{$dentist->phone}}</div>
         <div>Website - {{$dentist->website}}</div>
         <div>Wallet Address - {{$dentist->dcn_address}}</div>
     </div>

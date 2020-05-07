@@ -40,7 +40,7 @@
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Phone:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="phone">@if(!empty($dentist)){{$dentist->phone}}@endif</div>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="phone">@if(!empty($dentist)) +{{(new \App\Http\Controllers\UserController())->getCountryPhoneCodeById($dentist->country_id)}} {{$dentist->phone}}@endif</div>
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Website:</label>

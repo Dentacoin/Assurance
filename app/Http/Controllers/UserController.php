@@ -523,6 +523,11 @@ class UserController extends Controller {
         return $countries[$id - 1]->name;
     }
 
+    public function getCountryPhoneCodeById($id) {
+        $countries = (new APIRequestsController())->getAllCountries();
+        return $countries[$id - 1]->phone_code;
+    }
+
     protected function manageCustomCookie(Request $request) {
         if(!empty(Input::get('slug')) && !empty(Input::get('type')) && !empty(Input::get('token'))) {
             //logging
