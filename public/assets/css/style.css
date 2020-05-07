@@ -6871,9 +6871,14 @@ fieldset {
 @media screen and (max-width: 767px) {
   .bootbox .modal-dialog {
     margin-bottom: 50px; } }
+.bootbox .bootbox-close-button {
+  font-size: 40px;
+  padding: 5px;
+  line-height: 20px;
+  cursor: pointer; }
 .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog {
   width: 95%;
-  max-width: 900px; }
+  max-width: 800px; }
   .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog .icon-title-row {
     font-size: 0;
     max-width: 500px;

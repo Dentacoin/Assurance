@@ -73916,7 +73916,8 @@ var projectData = {
             if ($('.datepicker').length > 0) {
                 $('.datepicker').datepicker({
                     dateFormat: 'yy-mm-dd',
-                    startDate: '-3d'
+                    minDate: new Date(2020, 0, 1),
+                    maxDate: new Date()
                 });
             }
         },
@@ -76359,11 +76360,22 @@ if ($('body').hasClass('logged-in')) {
         window.open($(this).attr('href'));
     });
 
-    if ($('.open-mobile-single-page-nav').length) {
-        $('.open-mobile-single-page-nav > a').click(function() {
-            $(this).closest('.contract-single-page-nav').find('ul').toggle(300);
-        });
+    if ($('.contract-single-page-nav').length) {
+        if ($('.open-mobile-single-page-nav').length) {
+            $('.open-mobile-single-page-nav > a').click(function() {
+                $(this).closest('.contract-single-page-nav').find('ul').toggle(300);
+            });
+        }
+
+        if ($('.records-history.module').length) {
+            $('.show-on-records-history').removeClass('hide');
+            $('.show-on-records-history > a').click(function() {
+
+            });
+        }
     }
+
+
 
     /*if ($('.logged-user-hamburger').length) {
         $('.logged-user-hamburger').click(function() {

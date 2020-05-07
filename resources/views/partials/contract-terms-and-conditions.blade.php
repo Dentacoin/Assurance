@@ -6,17 +6,17 @@
     <div class="padding-bottom-20">This present Dentacoin Assurance Contract Agreement was reached on </div>
     <div><span class="calibri-bold padding-top-10 padding-bottom-10 fs-18">BETWEEN</span></div>
     <div class="padding-top-10 padding-bottom-10">
-        <div>Name - Dr. {{$dentist->name}}</div>
+        <div>Name - Dr. {{$dentist->name}} (the "Dentist")</div>
         <div>Email - {{$dentist->email}}</div>
         <div>Phone - +{{$countries[$dentist->country_id - 1]->phone_code}} {{$dentist->phone}}</div>
         <div>Website - {{$dentist->website}}</div>
-        <div>Wallet Address - {{$dentist->dcn_address}}</div>
+        <div>Wallet Address - {{$contract->dentist_address}}</div>
     </div>
     <div><span class="calibri-bold padding-top-10 padding-bottom-10 fs-18">and</span></div>
     <div class="padding-top-10 padding-bottom-10">
-        <div>Name - {{$patient->name}}</div>
+        <div>Name - {{$patient->name}} (the "Patient")</div>
         <div>Email - {{$patient->email}}</div>
-        <div>Wallet Address - {{$patient->dcn_address}}</div>
+        <div>Wallet Address - {{$contract->patient_address}}</div>
     </div>
     <div></div>
 @endif
