@@ -110,7 +110,7 @@
             </div>
         </section>
         @if(!empty($recordsHistory))
-            @include('partials.records-history', $recordsHistory)
+            @include('partials.records-history', ['contract' => $contract])
         @endif
     </section>
 @endsection

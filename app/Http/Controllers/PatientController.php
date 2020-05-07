@@ -390,7 +390,7 @@ class PatientController extends Controller {
                     if(is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
                         $contractRecord = new ContractRecord();
                         $contractRecord->contract_id = $contract->id;
-                        $contractRecord->type = 'Contract signing';
+                        $contractRecord->type = 'Contract signed by dentist';
                         $contractRecord->save();
 
                         $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
@@ -413,7 +413,7 @@ class PatientController extends Controller {
                 } else {
                     $contractRecord = new ContractRecord();
                     $contractRecord->contract_id = $contract->id;
-                    $contractRecord->type = 'Contract signing';
+                    $contractRecord->type = 'Contract signed by dentist';
                     $contractRecord->save();
 
                     $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
@@ -522,7 +522,7 @@ class PatientController extends Controller {
 
         $contractRecord = new ContractRecord();
         $contractRecord->contract_id = $contract->id;
-        $contractRecord->type = 'Contract funding';
+        $contractRecord->type = 'Contract activated by patient';
         $contractRecord->save();
     }
 
@@ -618,6 +618,7 @@ class PatientController extends Controller {
 
                 if($request->input('type') == 'check-up') {
                     $currentRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd);
+                    $event = $currentRecordsCount + 1;
                     $aMustRecordsCount = $contract->check_ups_per_year;
 
                     $email_view = view('emails/patient-recording-check-up', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d', strtotime($request->input('date')))]);
@@ -626,6 +627,7 @@ class PatientController extends Controller {
                     $type = 'check-ups';
                 } else if($request->input('type') == 'teeth-cleaning') {
                     $currentRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd);
+                    $event = $currentRecordsCount + 1;
                     $aMustRecordsCount = $contract->teeth_cleaning_per_year;
 
                     $email_view = view('emails/patient-recording-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d', strtotime($request->input('date')))]);
@@ -638,6 +640,7 @@ class PatientController extends Controller {
                     $checkUp = new ContractCheckup();
                     $checkUp->contract_id = $contract->id;
                     $checkUp->type = $request->input('type');
+                    $checkUp->event = $event;
                     $checkUp->request_date_at = date('Y-m-d H:i:s', strtotime($date));
 
                     Mail::send(array(), array(), function($message) use ($email_body, $email_subject, $dentistEmail) {
@@ -663,7 +666,9 @@ class PatientController extends Controller {
 
                 if(!empty($check_up_date) || !empty($teeth_cleaning_date)) {
                     $currentCheckUpRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd);
-                    $currentTeethCLeaningRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd);
+                    $checkUpEvent = $currentCheckUpRecordsCount + 1;
+                    $currentTeethCleaningRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd);
+                    $teethCleaningUpEvent = $currentTeethCleaningRecordsCount + 1;
                     $aMustCheckUpRecordsCount = $contract->teeth_cleaning_per_year;
                     $aMustTeethCleaningRecordsCount = $contract->teeth_cleaning_per_year;
 
@@ -671,13 +676,15 @@ class PatientController extends Controller {
                         $checkUp = new ContractCheckup();
                         $checkUp->contract_id = $contract->id;
                         $checkUp->type = 'check-up';
+                        $checkUp->event = $checkUpEvent;
                         $checkUp->request_date_at = date('Y-m-d H:i:s', strtotime($check_up_date));
                     }
 
-                    if($currentTeethCLeaningRecordsCount < $aMustTeethCleaningRecordsCount && !empty($teeth_cleaning_date)) {
+                    if($currentTeethCleaningRecordsCount < $aMustTeethCleaningRecordsCount && !empty($teeth_cleaning_date)) {
                         $teethCleaning = new ContractCheckup();
                         $teethCleaning->contract_id = $contract->id;
                         $teethCleaning->type = 'teeth-cleaning';
+                        $teethCleaning->event = $teethCleaningUpEvent;
                         $teethCleaning->request_date_at = date('Y-m-d H:i:s', strtotime($teeth_cleaning_date));
                     }
 

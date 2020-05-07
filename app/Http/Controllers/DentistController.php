@@ -270,7 +270,7 @@ class DentistController extends Controller
 
             $contractRecord = new ContractRecord();
             $contractRecord->contract_id = $temporally_contract->id;
-            $contractRecord->type = 'Contract creation';
+            $contractRecord->type = 'Contract creation by dentist';
             $contractRecord->save();
 
             Mail::send(array(), array(), function($message) use ($body, $data, $sender) {
@@ -325,7 +325,7 @@ class DentistController extends Controller
 
         $contractRecord = new ContractRecord();
         $contractRecord->contract_id = $contract->id;
-        $contractRecord->type = 'Contract approval';
+        $contractRecord->type = 'Contract approved by dentist';
         $contractRecord->save();
     }
 

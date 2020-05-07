@@ -22,9 +22,9 @@
                         </td>
                         <td>
                             @if($record->type == 'teeth-cleaning')
-                                Teeth cleaning recorded
+                                Teeth cleaning recorded ({{$record->event}}/{{$contract->teeth_cleaning_per_year}})
                             @elseif($record->type == 'check-up')
-                                Check-up recorded
+                                Check-up recorded ({{$record->event}}/{{$contract->check_ups_per_year}})
                             @else
                                 {{$record->type}}
                             @endif

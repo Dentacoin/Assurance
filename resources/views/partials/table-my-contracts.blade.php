@@ -19,6 +19,10 @@
     <tbody>
     @if(count($contracts) > 0)
         @foreach($contracts as $contract)
+            @if($contract->status == 'pending' && (time() - strtotime($contract->created_at->format('d-m-Y'))) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL)
+                @continue
+            @endif
+
             @if(!empty($contract->patient_id))
                 @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
                 @if(empty($patient))

@@ -102,7 +102,7 @@
         </div>
     </section>
     @if(!empty($recordsHistory))
-        @include('partials.records-history', $recordsHistory)
+        @include('partials.records-history', ['contract' => $contract])
     @endif
     @include('partials.patient-ready-to-purchase-with-external-api')
 @endsection

@@ -363,7 +363,12 @@ class UserController extends Controller {
 
         $contractRecord = new ContractRecord();
         $contractRecord->contract_id = $contract->id;
-        $contractRecord->type = 'Contract cancelled';
+        if($type == 'dentist') {
+            $contractRecord->type = 'Contract cancelled by dentist';
+        } else if($type == 'patient') {
+            $contractRecord->type = 'Contract cancelled by patient';
+        }
+
         $contractRecord->save();
     }
 
