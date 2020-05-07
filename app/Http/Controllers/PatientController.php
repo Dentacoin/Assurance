@@ -763,9 +763,16 @@ class PatientController extends Controller {
                 $join->on('contract_checkups.contract_id', '=', 'temporally_contracts.id');
             })->where(array('temporally_contracts.dentist_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->whereIn('contract_checkups.status', $statuses)->whereBetween('contract_checkups.request_date_at', array($from, $to))->get()->all();
         } else {
+            var_dump($from);
+            var_dump($to);
+            echo "<br>";
+            var_dump($statuses);
+            echo "<br>";
             $checkUps = ContractCheckup::leftJoin('temporally_contracts', function($join) {
                 $join->on('contract_checkups.contract_id', '=', 'temporally_contracts.id');
             })->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->whereIn('contract_checkups.status', $statuses)->whereBetween('contract_checkups.request_date_at', array($from, $to))->get()->all();
+            var_dump($checkUps);
+            die();
         }
 
         if(!empty($checkUps)) {
