@@ -35,20 +35,13 @@ class PatientController extends Controller {
 
     protected function getPatientContractView($slug) {
         $contract = TemporallyContract::where(array('slug' => $slug))->get()->first();
-        var_dump((time() - strtotime($contract->created_at->format('d-m-Y'))) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL);
-        die('asd');
-        if($contract->status == '`pending') {
+        if($contract->status == 'pending') {
             return abort(404);
         } else {
             if ($contract->status == 'active' || $contract->status == 'awaiting-approval') {
                 //checking here if the contract withdraw period and grace period passed and the patient still didnt full in his wallet address
                 $contract = (new UserController())->automaticContractCancel($contract);
-            } else if ($contract->status == 'awaiting-payment' || $contract->status == 'pending') {
-                // if pending and the contract proposal expired redirect to homepage
-                if ($contract->status == 'pending' && (time() - strtotime($contract->created_at->format('d-m-Y'))) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) {
-                    return redirect()->route('patient-access')->with(['error' => 'This contract proposal has expired.']);
-                }
-
+            } else if ($contract->status == 'awaiting-payment') {
                 $contract = (new UserController())->automaticContractCancel($contract, false);
             }
 
@@ -196,6 +189,11 @@ class PatientController extends Controller {
             //if dentist trying to access the proposal or if there is no such contract
             return abort(404);
         } else if((new UserController())->checkPatientSession()) {
+            // if pending and the contract proposal expired redirect to homepage
+            if ((time() - strtotime($contract->created_at->format('d-m-Y'))) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) {
+                return redirect()->route('patient-access')->with(['error' => 'This contract proposal has expired.']);
+            }
+
             $current_logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
 
             $params = array(
