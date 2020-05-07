@@ -3049,7 +3049,7 @@ if ($('body').hasClass('logged-in')) {
 
         if ($('.records-history.module').length) {
             $('.show-on-records-history').removeClass('hide');
-            $('.show-on-records-history > a').click(function() {
+            $('.show-on-records-history.scroll-init > a').click(function() {
                 $('html, body').animate({
                     scrollTop: $('.records-history.module').offset().top
                 }, {

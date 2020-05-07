@@ -65,11 +65,12 @@
                 <li class="inline-block delimeter teeth-cleaning-element">|</li>
             @endif
         @endif
-            <li class="inline-block show-on-records-history hide width-100 max-width-170">
+            <li class="inline-block show-on-records-history scroll-init hide width-100 max-width-170">
                 <a href="javascript:void(0);" itemprop="url">
                     <svg class="inline-block max-width-20" version="1.1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 95.1 86.2" style="enable-background:new 0 0 95.1 86.2;" xml:space="preserve"><metadata><sfw xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds bottomLeftOrigin="true" height="86.2" width="95.1" x="2.5" y="31.9"></sliceSourceBounds></sfw></metadata><g id="Layer_2"></g><g id="Layer_1"><g><path d="M22.7,36.8c6.9,0,13.8,2.7,19.1,8c5.1,5.1,7.7,11.7,8,18.4h28.4c5.3,0,9.6-4.3,9.6-9.6V21.7H22.7V36.8z M44.4,31.2c0-1.2,0.9-2.1,2.1-2.1H64c1.2,0,2.1,0.9,2.1,2.1v3.9c0,1.2-0.9,2.1-2.1,2.1H46.5c-1.2,0-2.1-0.9-2.1-2.1V31.2z"/><path d="M91.9,0H18.7c-1.7,0-3.1,1.4-3.1,3.1v9.6c0,1.7,1.4,3.1,3.1,3.1H92c1.7,0,3.1-1.4,3.1-3.1V3.1C95,1.4,93.6,0,91.9,0z"/><path d="M7.4,48L5,45.6c-0.4-0.4-1-0.5-1.6-0.4c-0.4,0.1-0.9,0.6-1,1.2L0,57.8c-0.1,0.5,0,1,0.4,1.4s0.9,0.5,1.4,0.4l11.4-2.4c0.6-0.1,1-0.5,1.2-1c0.1-0.6,0-1.2-0.4-1.5l-2.4-2.4c6.3-5.8,16.2-5.6,22.3,0.5c6.3,6.3,6.3,16.5,0,22.8s-16.5,6.3-22.8,0c-2.5-2.4-4-5.5-4.6-8.8c-0.3-1.6-1.8-2.7-3.4-2.4c-1.6,0.3-2.7,1.8-2.4,3.4c0.8,4.5,2.9,8.7,6.2,11.9c4.3,4.3,10,6.5,15.6,6.5c5.7,0,11.3-2.2,15.6-6.5c8.6-8.6,8.6-22.6,0-31.2C29.6,40.1,16.1,39.9,7.4,48z"/><path d="M22.6,51.8c-1.6,0-3,1.3-3,3v9.3c0,1.1,0.6,2.1,1.5,2.6l5.7,3.2c0.5,0.3,0.9,0.4,1.4,0.4c1,0,2.1-0.6,2.6-1.5c0.8-1.4,0.3-3.2-1.2-4l-4.1-2.4v-7.6C25.5,53.2,24.2,51.8,22.6,51.8z"/></g></g></svg> <span itemprop="name" class="inline-block">Records History</span>
                 </a>
             </li>
+            <li class="inline-block delimeter show-on-records-history hide">|</li>
             <li class="inline-block">
                 <a href="https://account.dentacoin.com/assurance?platform=assurance" itemprop="url">
                     <span itemprop="name"><i class="fa fa-bars" aria-hidden="true"></i> View all contracts</span>
