@@ -78,6 +78,10 @@
                             <div class="contracts-list pendings slider">
                                 @php($counter = 0)
                                 @foreach($pending_contracts as $contract)
+                                    @if((time() - strtotime($contract->created_at->format('d-m-Y'))) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL)
+                                        @continue
+                                    @endif
+
                                     @php($counter+=1)
                                     @if ($counter == 4)
                                         @break

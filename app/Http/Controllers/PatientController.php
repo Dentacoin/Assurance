@@ -42,6 +42,11 @@ class PatientController extends Controller {
                 //checking here if the contract withdraw period and grace period passed and the patient still didnt full in his wallet address
                 $contract = (new UserController())->automaticContractCancel($contract);
             } else if ($contract->status == 'awaiting-payment' || $contract->status == 'pending') {
+                // if pending and the contract proposal expired redirect to homepage
+                if ($contract->status == 'pending' && (time() - strtotime($contract->created_at->format('d-m-Y'))) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) {
+                    return redirect()->route('patient-access')->with(['error' => 'This contract proposal has expired.']);
+                }
+
                 $contract = (new UserController())->automaticContractCancel($contract, false);
             }
 

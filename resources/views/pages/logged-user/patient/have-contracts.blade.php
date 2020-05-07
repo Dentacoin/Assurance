@@ -13,6 +13,10 @@
                         @if(sizeof($contracts) > 0)
                             @foreach($contracts as $contract)
                                 @if($contract->status == 'pending')
+                                    @if((time() - strtotime($contract->created_at->format('d-m-Y'))) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL)
+                                        @continue
+                                    @endif
+
                                     @php($url = route('contract-proposal', ['slug' => $contract->slug]))
                                     @php($btn_label = 'Details and Sign')
                                 @else

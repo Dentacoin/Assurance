@@ -20,30 +20,35 @@ class DentistController extends Controller
 
     public function getDentistContractView($slug) {
         $contract = TemporallyContract::where(array('slug' => $slug))->get()->first();
-        $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
-        $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
-        $params = ['contract' => $contract, 'calculator_proposals' => $calculator_proposals, 'current_logged_dentist' => $current_logged_dentist];
-
-        $contract_records = ContractRecord::where(array('contract_id' => $contract->id))->get()->all();
-        $contract_checkups = ContractCheckup::where(array('contract_id' => $contract->id))->get()->all();
-
-        if (!empty($contract_records) || !empty($contract_checkups)) {
-            // merging records and checkups into recordshistory
-            $recordsHistory = array_merge($contract_records, $contract_checkups);
-
-            // ordering the merged result
-            usort($recordsHistory, function($a, $b) {
-                return $a['created_at'] < $b['created_at'];
-            });
-
-            $params['recordsHistory'] = $recordsHistory;
-        }
-
         if (!empty($contract)) {
+            $current_logged_dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
+            $calculator_proposals = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[$current_logged_dentist->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
+            $params = ['contract' => $contract, 'calculator_proposals' => $calculator_proposals, 'current_logged_dentist' => $current_logged_dentist];
+
+            $contract_records = ContractRecord::where(array('contract_id' => $contract->id))->get()->all();
+            $contract_checkups = ContractCheckup::where(array('contract_id' => $contract->id))->get()->all();
+
+            if (!empty($contract_records) || !empty($contract_checkups)) {
+                // merging records and checkups into recordshistory
+                $recordsHistory = array_merge($contract_records, $contract_checkups);
+
+                // ordering the merged result
+                usort($recordsHistory, function($a, $b) {
+                    return $a['created_at'] < $b['created_at'];
+                });
+
+                $params['recordsHistory'] = $recordsHistory;
+            }
+
             if ($contract->status == 'active' || $contract->status == 'awaiting-approval') {
                 //checking here if the contract withdraw period and grace period passed and the patient still didnt full in his wallet address
                 $contract = (new UserController())->automaticContractCancel($contract);
             } else if ($contract->status == 'awaiting-payment' || $contract->status == 'pending') {
+                // if pending and the contract proposal expired redirect to homepage
+                if ($contract->status == 'pending' && (time() - strtotime($contract->created_at->format('d-m-Y'))) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) {
+                    return redirect()->route('home')->with(['error' => 'This contract proposal has expired.']);
+                }
+
                 $contract = (new UserController())->automaticContractCancel($contract, false);
             }
 
