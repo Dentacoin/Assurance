@@ -24,7 +24,9 @@
                         <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
                     </figure>
                     <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$dentist->name}}</div>
-                    <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$dentist->email}}</div>
+                    <div class="calibri-light">
+                        <a href="mailto:{{$dentist->email}}" class="light-gray-color fs-18 fs-xs-16 word-break">{{$dentist->email}}</a>
+                    </div>
                 </div>
                 <div class="col-xs-4 col-md-3 inline-block-top margin-top-40 margin-top-xs-0 contract-body text-center">
                     <div class="contract-header text-center lato-bold fs-20 white-color padding-top-10 padding-bottom-15 cancelled">CANCELLED</div>
@@ -46,9 +48,7 @@
                         <img alt="Patient avatar" src="{{$patient->avatar_url}}"/>
                     </figure>
                     <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">{{$patient->name}}</div>
-                    <div class="calibri-light">
-                        <a href="mailto:{{$patient->email}}" class="light-gray-color fs-18 fs-xs-16 word-break">{{$patient->email}}</a>
-                    </div>
+                    <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$patient->email}}</div>
                 </div>
             </div>
             <div class="row fa-0 padding-top-40 padding-top-xs-10 row-with-bottom-squares text-center">

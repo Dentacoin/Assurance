@@ -636,6 +636,9 @@ class PatientController extends Controller {
                     $type = 'teeth cleaning';
                 }
 
+                var_dump($currentRecordsCount);
+                die('asd');
+
                 if($currentRecordsCount < $aMustRecordsCount) {
                     $checkUp = new ContractCheckup();
                     $checkUp->contract_id = $contract->id;
