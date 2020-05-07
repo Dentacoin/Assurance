@@ -636,9 +636,6 @@ class PatientController extends Controller {
                     $type = 'teeth cleaning';
                 }
 
-                var_dump($currentRecordsCount);
-                die('asd');
-
                 if($currentRecordsCount < $aMustRecordsCount) {
                     $checkUp = new ContractCheckup();
                     $checkUp->contract_id = $contract->id;
@@ -769,7 +766,15 @@ class PatientController extends Controller {
             $checkUps = ContractCheckup::leftJoin('temporally_contracts', function($join) {
                 $join->on('contract_checkups.contract_id', '=', 'temporally_contracts.id');
             })->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->whereIn('contract_checkups.status', $statuses)->whereBetween('contract_checkups.request_date_at', array($from, $to))->get()->all();
+            var_dump($from);
+            var_dump($to);
+            echo "<br><br>";
+            var_dump($statuses);
+            echo "<br><br>";
+            var_dump($checkUps);
         }
+
+        die('asd');
 
         if(!empty($checkUps)) {
             return sizeof($checkUps);
