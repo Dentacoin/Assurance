@@ -73912,11 +73912,15 @@ var projectData = {
         }
     },
     initiators: {
-        initDatepicker: function() {
+        initDatepicker: function(startDate) {
             if ($('.datepicker').length > 0) {
+                if (startDate == undefined) {
+                    startDate = new Date(2020, 0, 1);
+                }
+
                 $('.datepicker').datepicker({
                     dateFormat: 'yy-mm-dd',
-                    minDate: new Date(2020, 0, 1),
+                    minDate: new Date(parseInt(startDate) * 1000),
                     maxDate: new Date()
                 });
             }
@@ -74597,8 +74601,8 @@ var projectData = {
                             scrollToPopupsCamper();
 
                             $('.record-check-up-action').click(function() {
-                                $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR CHECK-UP?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><input type="text" class="custom-input max-width-300 margin-0-auto datepicker"/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
-                                projectData.initiators.initDatepicker();
+                                $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR CHECK-UP?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><input type="text" class="custom-input max-width-300 margin-0-auto datepicker" readonly/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
+                                projectData.initiators.initDatepicker($('.patient-contract-single-page-section').attr('data-date-start-contract'));
 
                                 $('.camping-for-popups .datepicker').focus();
 
@@ -74653,8 +74657,8 @@ var projectData = {
                             scrollToPopupsCamper();
 
                             $('.record-teeth-cleaning-action').click(function() {
-                                $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Teeth cleaning" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR TEETH CLEANING?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><input type="text" class="custom-input max-width-300 margin-0-auto datepicker"/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
-                                projectData.initiators.initDatepicker();
+                                $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Teeth cleaning" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR TEETH CLEANING?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><input type="text" class="custom-input max-width-300 margin-0-auto datepicker" readonly/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-submit">SUBMIT</a></div></div></div>');
+                                projectData.initiators.initDatepicker($('.patient-contract-single-page-section').attr('data-date-start-contract'));
 
                                 $('.camping-for-popups .datepicker').focus();
 
@@ -74703,8 +74707,8 @@ var projectData = {
                             scrollToPopupsCamper();
 
                             $('.record-teeth-cleaning-action').click(function() {
-                                $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20 margin-right-10 inline-block"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-70 width-100"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20 inline-block"><img alt="Teeth cleaning" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70 width-100"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR CHECK-UP AND TEETH CLEANING?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><label class="display-block fs-16 lato-semibold max-width-300 margin-0-auto text-left padding-bottom-5">Check-up Date:</label><input type="text" class="custom-input max-width-300 margin-0-auto check-up-datepicker datepicker"/></div><div class="fs-18 fs-xs-16 calibri-light padding-bottom-25"><label class="display-block fs-16 lato-semibold max-width-300 margin-0-auto text-left padding-bottom-5">Teeth Cleaning Date:</label><input type="text" class="custom-input max-width-300 margin-0-auto teeth-cleaning-datepicker datepicker"/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-and-teeth-cleaning-submit">SUBMIT</a></div></div></div>');
-                                projectData.initiators.initDatepicker();
+                                $('.camping-for-popups').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20 margin-right-10 inline-block"><img alt="Check up" src="/assets/uploads/check-up.svg" class="max-width-70 width-100"/></figure><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20 inline-block"><img alt="Teeth cleaning" src="/assets/uploads/teeth-cleaning.svg" class="max-width-70 width-100"/></figure><h2 class="lato-bold fs-20 padding-top-15">WHEN DID YOU HAVE YOUR CHECK-UP AND TEETH CLEANING?</h2><div class="fs-18 fs-xs-16 calibri-light padding-top-20 padding-bottom-25"><label class="display-block fs-16 lato-semibold max-width-300 margin-0-auto text-left padding-bottom-5">Check-up Date:</label><input type="text" class="custom-input max-width-300 margin-0-auto check-up-datepicker datepicker" readonly/></div><div class="fs-18 fs-xs-16 calibri-light padding-bottom-25"><label class="display-block fs-16 lato-semibold max-width-300 margin-0-auto text-left padding-bottom-5">Teeth Cleaning Date:</label><input type="text" class="custom-input max-width-300 margin-0-auto teeth-cleaning-datepicker datepicker" readonly/></div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 record-check-up-and-teeth-cleaning-submit">SUBMIT</a></div></div></div>');
+                                projectData.initiators.initDatepicker($('.patient-contract-single-page-section').attr('data-date-start-contract'));
 
                                 $('.camping-for-popups .check-up-datepicker').focus();
 
@@ -75438,9 +75442,9 @@ var projectData = {
                                                     if (!$('.records-history.module tr[data-id="'+key+'"]').length) {
                                                         var action;
                                                         if (response.data[key].type == 'teeth-cleaning') {
-                                                            action = 'Teeth cleaning recorded';
+                                                            action = 'Teeth cleaning recorded ('+response.currentTeethCleaningsCount+'/'+response.teeth_cleaning_per_year+')';
                                                         } else if (response.data[key].type == 'check-up') {
-                                                            action = 'Check-up recorded';
+                                                            action = 'Check-up recorded ('+response.currentCheckUpCount+'/'+response.check_ups_per_year+')';
                                                         }
 
                                                         $('.records-history.module table tbody').prepend('<tr data-id="'+key+'"> <td>'+projectData.utils.dateObjToFormattedDate(new Date(response.data[key].request_date_at))+'</td><td>'+action+'</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
