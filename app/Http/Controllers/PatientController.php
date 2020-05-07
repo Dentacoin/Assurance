@@ -34,6 +34,8 @@ class PatientController extends Controller {
     }*/
 
     protected function getPatientContractView($slug) {
+        var_dump((time() - strtotime($contract->created_at->format('d-m-Y'))) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL);
+        die('asd');
         $contract = TemporallyContract::where(array('slug' => $slug))->get()->first();
         if($contract->status == '`pending') {
             return abort(404);
