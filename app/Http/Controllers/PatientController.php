@@ -46,6 +46,20 @@ class PatientController extends Controller {
             }
 
             $params = array('contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'));
+            $contract_records = ContractRecord::where(array('contract_id' => $contract->id))->get()->all();
+            $contract_checkups = ContractCheckup::where(array('contract_id' => $contract->id))->get()->all();
+
+            if (!empty($contract_records) || !empty($contract_checkups)) {
+                // merging records and checkups into recordshistory
+                $recordsHistory = array_merge($contract_records, $contract_checkups);
+
+                // ordering the merged result
+                usort($recordsHistory, function($a, $b) {
+                    return $a['created_at'] < $b['created_at'];
+                });
+
+                $params['recordsHistory'] = $recordsHistory;
+            }
 
             $params['calculator_proposals'] = CalculatorParameter::where(array('code' => (new APIRequestsController())->getAllCountries()[(new APIRequestsController())->getUserData($contract->dentist_id)->country_id - 1]->code))->get(['param_gd_cd_id', 'param_gd_cd', 'param_gd_id', 'param_cd_id', 'param_gd', 'param_cd', 'param_id'])->first()->toArray();
             return view('pages/logged-user/patient/single-contract-view-'.$contract->status, $params);
