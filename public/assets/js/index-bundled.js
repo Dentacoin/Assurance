@@ -76771,7 +76771,7 @@ function hidePopupOnBackdropClick() {
         console.log($(event.target), 'event.target');
 
         if (classname && !$('.' + classname).parents('.modal-dialog').length) {
-            bootbox.hideAll();
+            $('.' + classname).modal('hide');
         }
     });
 }

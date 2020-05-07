@@ -48,7 +48,7 @@
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Wallet Address:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word" id="address">@if(!empty($dentist))<a href="//etherscan.io/address/{{$contract->dentist_address}}" target="_blank">{{$contract->dentist_address}}</a>@endif</div>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word" id="address">@if(!empty($contract))<a href="//etherscan.io/address/{{$contract->dentist_address}}" target="_blank">{{$contract->dentist_address}}</a>@endif</div>
         </div>
         @if(!empty($patient))
             <h3 class="calibri-bold fs-30 fs-xs-22 dark-color padding-top-50">PATIENT DETAILS</h3>
