@@ -1266,6 +1266,7 @@ var projectData = {
 
                         cancelContractEventInit();
 
+                        var patientDcnBalanceLogicAnimation = true;
                         patientDcnBalanceLogic(current_patient_dcn_balance);
                         function patientDcnBalanceLogic(current_patient_dcn_balance) {
                             $('.camping-for-popups').html('');
@@ -1278,6 +1279,11 @@ var projectData = {
 
                                 //not enough DCN
                                 $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+(months_passed_for_reward * on_load_exiting_contract[4])+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+dcn_needed_to_be_payed_to_dentist+' DCN</span>) before <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+
+                                if (patientDcnBalanceLogicAnimation) {
+                                    patientDcnBalanceLogicAnimation = false;
+                                    $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
+                                }
 
                                 initPopupEvents(true);
 
@@ -1483,6 +1489,7 @@ var projectData = {
                         var monthly_premium_in_usd = parseInt(on_load_exiting_contract[4]);
                         var monthly_premium_in_dcn = parseInt(on_load_exiting_contract[5]);
 
+                        var patientDcnBalanceLogicAnimation = true;
                         patientWaitingForDentistApprovalLogic(current_user_dcn_balance);
                         function patientWaitingForDentistApprovalLogic(current_user_dcn_balance) {
 
@@ -1495,10 +1502,16 @@ var projectData = {
 
                                 //not enough DCN
                                 $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+monthly_premium_in_usd+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+monthly_premium_in_dcn+' DCN</span>) before <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+
+                                if (patientDcnBalanceLogicAnimation) {
+                                    patientDcnBalanceLogicAnimation = false;
+                                    $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
+                                }
+
                                 initPopupEvents(true);
 
                                 $('.external-api-crypto-provider').removeClass('hide');
-                            }``
+                            }
                         }
                     } else if ($('.contract-header').hasClass('awaiting-payment')) {
                         var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account));
@@ -1549,6 +1562,11 @@ var projectData = {
                             }
                         });
 
+                        var patientDcnBalanceLogicAnimation = true;
+                        var patientEthBalanceLogicAnimation = true;
+                        var patientEthDcnBalanceLogicAnimation = true;
+                        var patientHavingEthBalanceLogicAnimation = true;
+
                         patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance);
                         function patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance) {
                             if (current_user_dcn_balance < monthly_premium_in_dcn && parseFloat(eth_fee) > current_user_eth_balance) {
@@ -1562,6 +1580,12 @@ var projectData = {
 
                                 //not enough DCN and ETH balance
                                 $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+monthly_premium_in_dcn+' DCN</span>) and <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> before <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+
+                                if (patientEthDcnBalanceLogicAnimation) {
+                                    patientEthDcnBalanceLogicAnimation = false;
+                                    $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
+                                }
+
                                 initPopupEvents(true);
                             } else if (current_user_dcn_balance < monthly_premium_in_dcn) {
                                 // 1st step
@@ -1574,6 +1598,12 @@ var projectData = {
 
                                 //not enough DCN
                                 $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+$('.patient-contract-single-page-section').attr('data-monthly-premium')+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+monthly_premium_in_dcn+' DCN</span>) before <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+
+                                if (patientEthDcnBalanceLogicAnimation) {
+                                    patientEthDcnBalanceLogicAnimation = false;
+                                    $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
+                                }
+
                                 initPopupEvents(true);
                             } else if (parseFloat(eth_fee) > current_user_eth_balance) {
                                 // 1st step
@@ -1586,6 +1616,12 @@ var projectData = {
 
                                 //not enough ETH balance
                                 $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with <span class="calibri-bold blue-green-color">'+eth_fee+' ETH</span> before <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+
+                                if (patientEthBalanceLogicAnimation) {
+                                    patientEthBalanceLogicAnimation = false;
+                                    $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
+                                }
+
                                 initPopupEvents(true);
                             } else {
                                 // 2nd step
@@ -1601,6 +1637,12 @@ var projectData = {
 
                                 //show CONTINUE TO BLOCKCHAIN BTN
                                 $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-one"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Shield check" src="/assets/uploads/shield-check.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">is now funded!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">It seems you already have the needed amount of Dentacoin (DCN) in your wallet and you should activate your contract before or on <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 proceed-to-second-step">STEP 2 >></a></div></div></div><div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module popup-step-two"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Automatic payment icon" src="/assets/uploads/automatic-payments-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">MONTHLY AUTOPAYMENTS</h2><h3 class="fs-22 padding-top-5 lato-bold">Get your Assurance contract started!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">Your account is already funded. Last step: Activate your secure, automatic payments now! Due date: <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 call-recipe margin-bottom-10 width-xs-100 max-width-400">ACTIVATE NOW</a></div></div></div>');
+
+                                if (patientHavingEthBalanceLogicAnimation) {
+                                    patientEthBalanceLogicAnimation = false;
+                                    $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
+                                }
+
                                 initPopupEvents();
 
                                 $('.proceed-to-second-step').click(function() {

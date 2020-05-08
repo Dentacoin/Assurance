@@ -54,5 +54,6 @@
 }
 
 .box-shadow-animation {
-    @include animation(0, 1.25s, boxShadowAnimation, infinite); 
+    animation-iteration-count: 5;
+    @include animation(0, 1s, boxShadowAnimation);
 }
