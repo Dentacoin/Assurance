@@ -37,11 +37,36 @@
         gtag('js', new Date());
 
         @if(empty($_COOKIE['performance_cookies']))
-        gtag('config', 'UA-108398439-4', {'anonymize_ip': true});
+            gtag('config', 'UA-108398439-4', {'anonymize_ip': true});
         @else
-        gtag('config', 'UA-108398439-4');
+            gtag('config', 'UA-108398439-4');
         @endif
     </script>
+
+    <!-- Facebook Pixel Code -->
+    <script id="facebook-pixel-script">
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window,document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        @if(empty($_COOKIE['marketing_cookies']))
+            fbq('consent', 'revoke');
+        @else
+            fbq('consent', 'grant');
+        @endif
+        fbq('init', '2366034370318681');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1"
+             src="https://www.facebook.com/tr?id=2366034370318681&ev=PageView
+&noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel Code -->
 
     <script>
         var HOME_URL = '{{ route("home") }}';

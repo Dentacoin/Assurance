@@ -40,3 +40,19 @@
     -moz-animation: spin .9s linear infinite;
     animation: spin .9s linear infinite;
 }
+
+@keyframes boxShadowAnimation {
+    0% {
+        @include box-shadow(0 2px 6px 0 rgba(0, 0, 0, 0.4));
+    }
+    50% {
+        @include box-shadow(0 2px 12px 3px #126585);
+    }
+    100% {
+        @include box-shadow(0 2px 6px 0 rgba(0, 0, 0, 0.4));
+    }
+}
+
+.box-shadow-animation {
+    @include animation(0, 1.25s, boxShadowAnimation, infinite); 
+}

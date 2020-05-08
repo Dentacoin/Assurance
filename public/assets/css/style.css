@@ -147,6 +147,44 @@
   -moz-animation: spin .9s linear infinite;
   animation: spin .9s linear infinite; }
 
+@keyframes boxShadowAnimation {
+  0% {
+    -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
+  50% {
+    -webkit-box-shadow: 0 2px 12px 3px #126585;
+    -moz-box-shadow: 0 2px 12px 3px #126585;
+    -ms-box-shadow: 0 2px 12px 3px #126585;
+    box-shadow: 0 2px 12px 3px #126585; }
+  100% {
+    -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); } }
+.box-shadow-animation {
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-delay: 0;
+  -moz-animation-delay: 0;
+  animation-delay: 0;
+  -o-animation-delay: 0;
+  -webkit-animation-name: boxShadowAnimation;
+  -moz-animation-name: boxShadowAnimation;
+  animation-name: boxShadowAnimation;
+  -o-animation-name: boxShadowAnimation;
+  -webkit-animation-duration: 1.25s;
+  -moz-animation-duration: 1.25s;
+  animation-duration: 1.25s;
+  -o-animation-duration: 1.25s;
+  -o-animation-timing-function: infinite;
+  -webkit-animation-timing-function: infinite;
+  -moz-animation-timing-function: infinite;
+  animation-timing-function: infinite; }
+
 @media screen and (max-width: 450px) {
   .col-xxs-12 {
     width: 100%; }
