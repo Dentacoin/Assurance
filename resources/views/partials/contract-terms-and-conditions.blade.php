@@ -1,7 +1,9 @@
 <h2 class="text-center fs-32 fs-xs-22 padding-bottom-10 calibri-bold">DENTACOIN ASSURANCE CONTRACT</h2>
-@if(!empty($contract->contract_active_at) && !empty($contract->document_hash))
-    @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
-    @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+@if(!empty($contract->contract_active_at) && !empty($contract->document_hash) || $show_dentist_patient_data)
+    @if(!empty($contract->contract_active_at) && !empty($contract->document_hash))
+        @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
+        @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
+    @endif
     @php($countries = (new \App\Http\Controllers\APIRequestsController())->getAllCountries())
     <div class="padding-bottom-20">This present Dentacoin Assurance Contract Agreement was reached on </div>
     <div><span class="calibri-bold padding-top-10 padding-bottom-10 fs-18">BETWEEN</span></div>
