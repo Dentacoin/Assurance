@@ -8,7 +8,7 @@
     <div>This present Dentacoin Assurance Contract Agreement was reached on </div>
     <br>
     <div><span class="calibri-bold fs-18">BETWEEN:</span></div>
-    <br><br>
+    <br>
     <div>
         <div>Name - Dr. {{$dentist->name}} (the "Dentist")</div>
         <div>Email - {{$dentist->email}}</div>
@@ -18,7 +18,7 @@
     </div>
     <br>
     <div><span class="calibri-bold fs-18">and</span></div>
-    <br><br>
+    <br>
     <div>
         <div>Name - {{$patient->name}} (the "Patient")</div>
         <div>Email - {{$patient->email}}</div>
