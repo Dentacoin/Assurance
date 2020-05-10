@@ -390,7 +390,7 @@ class PatientController extends Controller {
                     if(is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
                         $contractRecord = new ContractRecord();
                         $contractRecord->contract_id = $contract->id;
-                        $contractRecord->type = 'Contract signed by dentist';
+                        $contractRecord->type = 'Contract signed by patient';
                         $contractRecord->save();
 
                         $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
@@ -413,7 +413,7 @@ class PatientController extends Controller {
                 } else {
                     $contractRecord = new ContractRecord();
                     $contractRecord->contract_id = $contract->id;
-                    $contractRecord->type = 'Contract signed by dentist';
+                    $contractRecord->type = 'Contract signed by patient';
                     $contractRecord->save();
 
                     $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
