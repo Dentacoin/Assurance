@@ -1,5 +1,5 @@
 <h2 class="text-center fs-32 fs-xs-22 padding-bottom-10 calibri-bold">DENTACOIN ASSURANCE CONTRACT</h2>
-@if(!empty($contract->contract_active_at) && !empty($contract->document_hash) || $show_dentist_patient_data)
+@if(!empty($contract->contract_active_at) && !empty($contract->document_hash) || (isset($show_dentist_patient_data) && $show_dentist_patient_data))
     @if(!empty($contract->contract_active_at) && !empty($contract->document_hash))
         @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
         @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
