@@ -24,7 +24,7 @@
         <div>Email - {{$patient->email}}</div>
         <div>Wallet Address - {{$contract->patient_address}}</div>
     </div>
-    <div></div>
+    <br>
 @endif
 <h3 class="fs-22 fs-xs-18 calibri-bold padding-top-30 padding-bottom-15">1. DENTIST RIGHTS AND OBLIGATIONS</h3>
 <div class="padding-bottom-15">This present Dentacoin Assurance Contract obliges the Dentist to provide free of charge to the Patient <span class="terms-check-ups-per-year"></span> check-ups per year and <span class="terms-teeth-cleaning-per-year"></span> professional tooth cleanings per year for the duration of the contract.</div>
