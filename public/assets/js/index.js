@@ -1695,6 +1695,7 @@ var projectData = {
                                                         } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
                                                             basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                                         } else {
+                                                            $('.onsite-transaction-signing').fadeOut(500);
                                                             showLoader();
 
                                                             var scanObject = {
@@ -1994,6 +1995,7 @@ var projectData = {
                                                     } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
                                                         basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                                     } else {
+                                                        $('.onsite-transaction-signing').fadeOut(500);
                                                         showLoader();
 
                                                         var scanObject = {
@@ -2361,6 +2363,7 @@ var projectData = {
                                                     } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
                                                         basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                                     } else {
+                                                        $('.onsite-transaction-signing').fadeOut(500);
                                                         showLoader();
 
                                                         var scanObject = {
@@ -2578,15 +2581,13 @@ projectData.pagesData.onInit();
 
 //LOGGED USER LOGIC
 if ($('body').hasClass('logged-in')) {
-    if ($('.continue-with-onside-transaction-signing').length) {
-        var alreadyClicked = false;
-        $('.continue-with-onside-transaction-signing').click(function() {
-            if (!alreadyClicked) {
-                alreadyClicked = true;
-                $('.onside-transaction-signing').fadeIn(500);
-            }
-        });
-    }
+    $(document).on('click', '.continue-with-onsite-transaction-signing', function() {
+        if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+            basic.showAlert('Please check the checkbox below to continue with the transaction creation.', 'boobox-alert', true);
+        } else {
+            $('.onsite-transaction-signing').fadeIn(500);
+        }
+    });
 
     if ($('body').hasClass('create-contract')) {
         var signature_pad_inited = false;
@@ -3860,6 +3861,7 @@ function cancelContractEventInit() {
                                         } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
                                             basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                         } else {
+                                            $('.onsite-transaction-signing').fadeOut(500);
                                             showLoader();
 
                                             var scanObject = {
