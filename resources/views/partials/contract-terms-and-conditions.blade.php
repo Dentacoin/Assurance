@@ -5,17 +5,21 @@
         @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
     @endif
     @php($countries = (new \App\Http\Controllers\APIRequestsController())->getAllCountries())
-    <div class="padding-bottom-20">This present Dentacoin Assurance Contract Agreement was reached on </div>
-    <div><span class="calibri-bold padding-top-10 padding-bottom-10 fs-18">BETWEEN</span></div>
-    <div class="padding-top-10 padding-bottom-10">
+    <div>This present Dentacoin Assurance Contract Agreement was reached on </div>
+    <br>
+    <div><span class="calibri-bold fs-18">BETWEEN:</span></div>
+    <br><br>
+    <div>
         <div>Name - Dr. {{$dentist->name}} (the "Dentist")</div>
         <div>Email - {{$dentist->email}}</div>
         <div>Phone - +{{$countries[$dentist->country_id - 1]->phone_code}} {{$dentist->phone}}</div>
         <div>Website - {{$dentist->website}}</div>
         <div>Wallet Address - {{$contract->dentist_address}}</div>
     </div>
-    <div><span class="calibri-bold padding-top-10 padding-bottom-10 fs-18">and</span></div>
-    <div class="padding-top-10 padding-bottom-10">
+    <br>
+    <div><span class="calibri-bold fs-18">and</span></div>
+    <br><br>
+    <div>
         <div>Name - {{$patient->name}} (the "Patient")</div>
         <div>Email - {{$patient->email}}</div>
         <div>Wallet Address - {{$contract->patient_address}}</div>
