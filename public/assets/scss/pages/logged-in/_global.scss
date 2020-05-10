@@ -151,6 +151,9 @@ body.logged-in {
             max-width: 800px;
             .modal-body {
                 padding: 30px;
+                .onside-transaction-signing {
+                    display: none;
+                }
                 .checkbox-container .pretty.on-white-background.p-svg .state .svg {
                     border-color: #126585 !important;
                     top: 0;

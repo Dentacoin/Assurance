@@ -74589,6 +74589,7 @@ var projectData = {
                                 if (patientDcnBalanceLogicAnimation) {
                                     patientDcnBalanceLogicAnimation = false;
                                     $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
+                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 300);
                                 }
 
                                 initPopupEvents(true);
@@ -74812,6 +74813,7 @@ var projectData = {
                                 if (patientDcnBalanceLogicAnimation) {
                                     patientDcnBalanceLogicAnimation = false;
                                     $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
+                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 300);
                                 }
 
                                 initPopupEvents(true);
@@ -74890,6 +74892,7 @@ var projectData = {
                                 if (patientEthDcnBalanceLogicAnimation) {
                                     patientEthDcnBalanceLogicAnimation = false;
                                     $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
+                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 300);
                                 }
 
                                 initPopupEvents(true);
@@ -74908,6 +74911,7 @@ var projectData = {
                                 if (patientDcnBalanceLogicAnimation) {
                                     patientDcnBalanceLogicAnimation = false;
                                     $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
+                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 300);
                                 }
 
                                 initPopupEvents(true);
@@ -74926,6 +74930,7 @@ var projectData = {
                                 if (patientEthBalanceLogicAnimation) {
                                     patientEthBalanceLogicAnimation = false;
                                     $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
+                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 300);
                                 }
 
                                 initPopupEvents(true);
@@ -74947,6 +74952,7 @@ var projectData = {
                                 if (patientHavingEthBalanceLogicAnimation) {
                                     patientEthBalanceLogicAnimation = false;
                                     $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
+                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 300);
                                 }
 
                                 initPopupEvents();
@@ -75892,6 +75898,16 @@ projectData.pagesData.onInit();
 
 //LOGGED USER LOGIC
 if ($('body').hasClass('logged-in')) {
+    if ($('.continue-with-onside-transaction-signing').length) {
+        var alreadyClicked = false;
+        $('.continue-with-onside-transaction-signing').click(function() {
+            if (!alreadyClicked) {
+                alreadyClicked = true;
+                $('.onside-transaction-signing').fadeIn(500);
+            }
+        });
+    }
+
     if ($('body').hasClass('create-contract')) {
         var signature_pad_inited = false;
         styleAvatarUploadButton();

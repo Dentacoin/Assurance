@@ -10037,6 +10037,8 @@ body.logged-in .profile-page-title {
   max-width: 800px; }
   .bootbox.recipe-popup .modal-dialog .modal-body {
     padding: 30px; }
+    .bootbox.recipe-popup .modal-dialog .modal-body .onside-transaction-signing {
+      display: none; }
     .bootbox.recipe-popup .modal-dialog .modal-body .checkbox-container .pretty.on-white-background.p-svg .state .svg {
       border-color: #126585 !important;
       top: 0; }
