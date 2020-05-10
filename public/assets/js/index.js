@@ -4290,6 +4290,8 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
     if (encrypted_pdf_content === undefined) {
         encrypted_pdf_content = null;
     }
+    console.log(keystore_file, 'keystore_file');
+
     $('.proof-of-address .verify-address-btn').click(async function() {
         // get all multiple user addresses
         var currentUserAddressesResponse = await getUserAddresses($('.proof-of-address').attr('data-id'));

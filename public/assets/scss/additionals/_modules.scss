@@ -972,6 +972,7 @@
                     display: block;
                     padding: 10px;
                     border-bottom: 1px solid $light_gray;
+                    max-width: none !important;
                 }
             }
         }

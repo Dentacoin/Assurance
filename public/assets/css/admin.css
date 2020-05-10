@@ -1090,7 +1090,8 @@
       .module.contract-single-page-nav ul li {
         display: block;
         padding: 10px;
-        border-bottom: 1px solid #888888; } }
+        border-bottom: 1px solid #888888;
+        max-width: none !important; } }
 .module.single-contract-tile .contract-participant {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
