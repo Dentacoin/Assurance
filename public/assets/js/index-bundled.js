@@ -77610,21 +77610,18 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
     if (encrypted_pdf_content === undefined) {
         encrypted_pdf_content = null;
     }
-    console.log(keystore_file, 'keystore_file');
 
     $('.proof-of-address .verify-address-btn').click(async function() {
-        // get all multiple user addresses
-        var currentUserAddressesResponse = await getUserAddresses($('.proof-of-address').attr('data-id'));
-        if (currentUserAddressesResponse.success) {
-            var keystoreFileAddress = projectData.utils.checksumAddress('0x' + JSON.parse(keystore_file).address);
-            var currentUserAddresses = [];
-            for(var i = 0, len = currentUserAddressesResponse.data.length; i< len; i+=1) {
-                currentUserAddresses.push(projectData.utils.checksumAddress(currentUserAddressesResponse.data[i].dcn_address));
-            }
+        if (keystore_file != null) {
+            // get all multiple user addresses
+            var currentUserAddressesResponse = await getUserAddresses($('.proof-of-address').attr('data-id'));
+            if (currentUserAddressesResponse.success) {
+                var keystoreFileAddress = projectData.utils.checksumAddress('0x' + JSON.parse(keystore_file).address);
+                var currentUserAddresses = [];
+                for(var i = 0, len = currentUserAddressesResponse.data.length; i< len; i+=1) {
+                    currentUserAddresses.push(projectData.utils.checksumAddress(currentUserAddressesResponse.data[i].dcn_address));
+                }
 
-            console.log(currentUserAddresses, 'currentUserAddresses1');
-
-            if (keystore_file != null) {
                 //import with keystore
                 if (currentUserAddresses.indexOf(keystoreFileAddress) != -1) {
                     basic.showAlert('Please enter valid keystore file for your Wallet Address.', 'boobox-alert', true);
@@ -77677,67 +77674,67 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
                     }, 1000);
                 }
             } else {
-                //import with private key
-                if ($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
-                    basic.showAlert('Please enter valid private key.', 'boobox-alert', true);
-                } else {
-                    showLoader();
-                    setTimeout(async function () {
-                        if (render_pdf != null) {
-                            var render_form = $('form#render-pdf');
-                            var decrypted_pdf_response = await decryptDataByPlainKey(encrypted_pdf_content, $('.proof-of-address #your-private-key').val().trim());
-
-                            hideLoader();
-                            if (decrypted_pdf_response.success) {
-
-                                basic.closeDialog();
-                                render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
-                                render_form.submit();
-                            } else if (decrypted_pdf_response.error) {
-                                basic.showAlert(decrypted_pdf_response.message, 'boobox-alert', true);
-                            }
-                        } else {
-                            var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
-                            //now with the address and the public key received from the nodejs api update the db
-                            if (import_response.success) {
-                                //checking if fake private key or just miss spell it
-                                if (currentUserAddresses.indexOf(projectData.utils.checksumAddress(import_response.address)) != -1) {
-                                    basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', 'boobox-alert', true);
-                                    hideLoader();
-                                } else {
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '/update-public-keys',
-                                        dataType: 'json',
-                                        data: {
-                                            address: projectData.utils.checksumAddress(import_response.address),
-                                            public_key: import_response.public_key
-                                        },
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        },
-                                        success: function (inner_response) {
-                                            hideLoader();
-                                            if (inner_response.success) {
-                                                $('.proof-of-address').remove();
-                                                $('.proof-success').fadeIn(1500);
-                                            } else {
-                                                basic.showAlert(inner_response.error, 'boobox-alert', true);
-                                            }
-                                        }
-                                    });
-                                }
-                            } else if (import_response.error) {
-                                hideLoader();
-                                basic.showAlert(import_response.message, 'boobox-alert', true);
-                            }
-                        }
-                    }, 1000);
-                }
+                basic.showAlert('You don\'t have any Wallet Address saved in our database.', 'boobox-alert', true);
             }
         } else {
-            basic.showAlert('You don\'t have any Wallet Address saved in our database.', 'boobox-alert', true);
+            //import with private key
+            if ($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
+                basic.showAlert('Please enter valid private key.', 'boobox-alert', true);
+            } else {
+                showLoader();
+                setTimeout(async function () {
+                    if (render_pdf != null) {
+                        var render_form = $('form#render-pdf');
+                        var decrypted_pdf_response = await decryptDataByPlainKey(encrypted_pdf_content, $('.proof-of-address #your-private-key').val().trim());
+
+                        hideLoader();
+                        if (decrypted_pdf_response.success) {
+
+                            basic.closeDialog();
+                            render_form.find('input[name="pdf_data"]').val(decrypted_pdf_response.success.decrypted);
+                            render_form.submit();
+                        } else if (decrypted_pdf_response.error) {
+                            basic.showAlert(decrypted_pdf_response.message, 'boobox-alert', true);
+                        }
+                    } else {
+                        var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
+                        //now with the address and the public key received from the nodejs api update the db
+                        if (import_response.success) {
+                            //checking if fake private key or just miss spell it
+                            if (currentUserAddresses.indexOf(projectData.utils.checksumAddress(import_response.address)) != -1) {
+                                basic.showAlert('Please enter private key related to the Wallet Address you have entered in Wallet Address field.', 'boobox-alert', true);
+                                hideLoader();
+                            } else {
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/update-public-keys',
+                                    dataType: 'json',
+                                    data: {
+                                        address: projectData.utils.checksumAddress(import_response.address),
+                                        public_key: import_response.public_key
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function (inner_response) {
+                                        hideLoader();
+                                        if (inner_response.success) {
+                                            $('.proof-of-address').remove();
+                                            $('.proof-success').fadeIn(1500);
+                                        } else {
+                                            basic.showAlert(inner_response.error, 'boobox-alert', true);
+                                        }
+                                    }
+                                });
+                            }
+                        } else if (import_response.error) {
+                            hideLoader();
+                            basic.showAlert(import_response.message, 'boobox-alert', true);
+                        }
+                    }
+                }, 1000);
+            }
         }
     });
 }
