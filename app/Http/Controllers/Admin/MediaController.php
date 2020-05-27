@@ -81,8 +81,10 @@ class MediaController extends Controller
     protected function deleteMedia($id) {
         $media = Media::where('id', $id)->first();
         if(!empty($media))  {
-            //deleting image from uploads folder
-            unlink(UPLOADS . $media->name);
+            if (file_exists(UPLOADS . $media->name)) {
+                //deleting image from uploads folder
+                unlink(UPLOADS . $media->name);
+            }
             //deleting media from DB
             $media->delete();
             return json_encode(array('success' => 'Image have been deleted successfully.'));
