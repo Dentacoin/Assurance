@@ -4368,6 +4368,7 @@ function bindVerifyAddressEvent(keystore_file, render_pdf, encrypted_pdf_content
             //import with private key
             if ($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
                 basic.showAlert('Please enter valid private key.', 'boobox-alert', true);
+                hideLoader();
             } else {
                 showLoader();
                 setTimeout(async function () {
@@ -4473,6 +4474,7 @@ function bindTransactionAddressVerify(keystore_file, keystoreFileAddress) {
                 //import with private key
                 if ($('.proof-of-address #your-private-key').val().trim() == '' || $('.proof-of-address #your-private-key').val().trim().length > 64) {
                     basic.showAlert('Please enter valid private key.', 'boobox-alert', true);
+                    hideLoader();
                 } else {
                     var import_response = importPrivateKey($('.proof-of-address #your-private-key').val().trim());
                     if (import_response.success) {
