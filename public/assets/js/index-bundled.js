@@ -75072,6 +75072,7 @@ var projectData = {
                                                     } else {
                                                         // if the current contract patient address has been cached
                                                         $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
+                                                        $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
                                                         $('.camp-for-keystore-password input[type="password"]').focus();
                                                     }
 
@@ -75352,6 +75353,7 @@ var projectData = {
                                                     });
                                                 } else {
                                                     $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
+                                                    $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
                                                     $('.camp-for-keystore-password input[type="password"]').focus();
                                                 }
 
@@ -75721,6 +75723,7 @@ var projectData = {
                                                     });
                                                 } else {
                                                     $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
+                                                    $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
                                                     $('.camp-for-keystore-password input[type="password"]').focus();
                                                 }
 
@@ -77169,6 +77172,7 @@ function cancelContractEventInit() {
                                         });
                                     } else {
                                         $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
+                                        $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
                                         $('.camp-for-keystore-password input[type="password"]').focus();
                                     }
 
