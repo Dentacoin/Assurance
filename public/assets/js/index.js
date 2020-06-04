@@ -3110,14 +3110,8 @@ if ($('body').hasClass('logged-in')) {
 
     if ($('body').hasClass('logged-patient')) {
         miniHubParams.type_hub = 'mini-hub-patients';
-        if ($('body').hasClass('home')) {
-            miniHubParams.without_apps = true;
-        }
     } else if ($('body').hasClass('logged-dentist')) {
         miniHubParams.type_hub = 'mini-hub-dentists';
-        if ($('body').hasClass('home')) {
-            miniHubParams.without_apps = true;
-        }
     }
 
     dcnHub.initMiniHub(miniHubParams);
