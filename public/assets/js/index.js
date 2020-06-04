@@ -3052,7 +3052,7 @@ function initSliders() {
 
 //THIS IS FUNCTIONALITY ONLY FOR LOGGED IN USERS (MODULES)
 if ($('body').hasClass('logged-in')) {
-    var add_overflow_hidden_on_hidden_box_show = false;
+    /*var add_overflow_hidden_on_hidden_box_show = false;
     var sm_screen_width = false;
     $('body').addClass('overflow-hidden');
     if ($(window).width() < 992) {
@@ -3100,7 +3100,27 @@ if ($('body').hasClass('logged-in')) {
                 $('.logged-user-nav .up-arrow').removeClass('show-this');
             }
         }
-    });
+    });*/
+
+    var miniHubParams = {
+        'element_id_to_bind' : 'header-avatar',
+        'platform' : 'assurance',
+        'log_out_link' : 'https://assurance.dentacoin.com/user-logout'
+    };
+
+    if ($('body').hasClass('logged-patient')) {
+        miniHubParams.type_hub = 'mini-hub-patients';
+        if ($('body').hasClass('home')) {
+            miniHubParams.without_apps = true;
+        }
+    } else if ($('body').hasClass('logged-dentist')) {
+        miniHubParams.type_hub = 'mini-hub-dentists';
+        if ($('body').hasClass('home')) {
+            miniHubParams.without_apps = true;
+        }
+    }
+
+    dcnHub.initMiniHub(miniHubParams);
 
     $(document).on('click', '.module.contract-tile', function() {
         showLoader();

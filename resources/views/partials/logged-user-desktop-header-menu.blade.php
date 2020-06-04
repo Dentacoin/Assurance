@@ -12,14 +12,14 @@
                 <div>{{$dcn_balance}} DCN</div>
             @endif
         </div>
-        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block header-avatar">
+        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block header-avatar" id="header-avatar">
             @if(!empty($user_data->thumbnail_url))
                 <img alt="" itemprop="contentUrl" src="{{$user_data->thumbnail_url}}"/>
             @else
                 <img alt="" itemprop="contentUrl" src="/assets/images/avatar-icon.svg"/>
             @endif
         </figure>
-        <span class="up-arrow">▲</span>
+        {{--<span class="up-arrow">▲</span>
         <div class="hidden-box">
             <div class="hidden-box-hub container-fluid">
                 <div class="row close-btn">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
     </div>
     {{--@if(isset($mobile) && $mobile)
         <a href="javascript:void(0)" class="logged-user-hamburger inline-block padding-left-10"><i class="fa fa-bars fs-26 dark-color" aria-hidden="true"></i></a>
