@@ -567,6 +567,8 @@ class UserController extends Controller {
             if(session('logged_user')['token'] == $token) {
                 $request->session()->forget('logged_user');
             }
+
+            return redirect()->route('home');
         } else {
             return abort(404);
         }
