@@ -19,6 +19,11 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     //======================================= PAGES ========================================
     Route::get('/', 'HomeController@getView')->name('home');
 
+    Route::get('/test', function() {
+        var_dump($this->encrypt(session('logged_user')['token'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY')));
+        die('asd');
+    })->name('test');
+
     Route::get('/support-guide', 'SupportGuideController@getView')->name('support-guide');
 
     Route::get('/assurance-demo', 'AssuranceDemoController@getView')->name('assurance-demo');
