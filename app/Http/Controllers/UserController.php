@@ -568,7 +568,7 @@ class UserController extends Controller {
                 $request->session()->forget('logged_user');
             }
 
-            return redirect()->route('home');
+            //return redirect()->route('home');
         } else {
             return abort(404);
         }
