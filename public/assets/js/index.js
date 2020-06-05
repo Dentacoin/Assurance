@@ -3446,12 +3446,12 @@ if (!$('body').hasClass('logged-in')) {
 
     $(document).on('dentistAuthSuccessResponse', async function (event) {
         console.log('dentistAuthSuccessResponse');
-        window.location.reload();
+        window.location.href = window.location.href + '?cross-login=true';
     });
 
     $(document).on('patientAuthSuccessResponse', async function (event) {
         console.log('patientAuthSuccessResponse');
-        window.location.reload();
+        window.location.href = window.location.href + '?cross-login=true';
     });
 }
 

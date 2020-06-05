@@ -242,8 +242,8 @@
         </div>
     </footer>
     <div class="camping-loader"></div>
-
-    @if(\App\Http\Controllers\UserController::instance()->checkSession())
+    @php($crossLogin = \Illuminate\Support\Facades\Input::get('cross-login'))
+    @if(\App\Http\Controllers\UserController::instance()->checkSession() && !empty($crossLogin))
         @php($slug = (new \App\Http\Controllers\Controller())->encrypt(session('logged_user')['id'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY')))
         @php($type = (new \App\Http\Controllers\Controller())->encrypt(session('logged_user')['type'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY')))
         @php($token = (new \App\Http\Controllers\Controller())->encrypt(session('logged_user')['token'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY')))
