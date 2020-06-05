@@ -20,7 +20,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::get('/', 'HomeController@getView')->name('home');
 
     Route::get('/test', function() {
-        var_dump($this->encrypt(session('logged_user')['token'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY')));
+        var_dump((new \App\Http\Controllers\Controller())->encrypt(session('logged_user')['token'], getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY')));
         die('asd');
     })->name('test');
 
