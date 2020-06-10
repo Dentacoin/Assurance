@@ -1491,13 +1491,6 @@
       .module.camping-for-validation .proof-of-address .checkbox-container .pretty label i {
         display: inline;
         padding-left: 5px; }
-@media screen and (max-width: 767px) {
-  .module.camping-for-validation .proof-of-address .enter-private-key {
-    margin: 0 auto 10px;
-    max-width: 280px; }
-  .module.camping-for-validation .proof-of-address .upload-file-container {
-    margin: 10px auto 0;
-    max-width: 280px; } }
 .module.suggester-parent .suggester-map-div {
   height: 200px;
   display: none;

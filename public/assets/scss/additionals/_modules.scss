@@ -1431,18 +1431,6 @@
                 }
             }
         }
-        @include breakpoint($xs) {
-            .proof-of-address {
-                .enter-private-key {
-                    margin: 0 auto 10px;
-                    max-width: 280px;
-                }
-                .upload-file-container {
-                    margin: 10px auto 0;
-                    max-width: 280px;
-                }
-            }
-        }
     }
     &.suggester-parent {
         .suggester-map-div {
