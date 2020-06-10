@@ -1827,9 +1827,14 @@ var projectData = {
                                                                             //signing the transaction
                                                                             approval_transaction.sign(new Buffer(transaction_key, 'hex'));
 
-                                                                            //sending the transaction
-                                                                            dApp.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
+                                                                            dApp.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
+                                                                                console.log(transactionHash, 'transactionHash');
+                                                                            }).on('confirmation', function(confirmationNumber, receipt) {
                                                                                 fireAssuranceContractCreationTransaction(nonce + 1);
+                                                                            }).on('error', function(error) {
+                                                                                console.log(error, 'error');
+                                                                                basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
+                                                                                hideLoader();
                                                                             });
                                                                         });
                                                                     } else {
@@ -1858,44 +1863,35 @@ var projectData = {
                                                                     //signing the transaction
                                                                     contract_creation_transaction.sign(new Buffer(transaction_key, 'hex'));
 
-                                                                    //sending the transaction
-                                                                    dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                                        var execute_ajax = true;
-                                                                        //doing setinterval check to check if the smart creation transaction got mined
-                                                                        var contract_creation_interval_check = setInterval(async function () {
-                                                                            var contract_creation_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                                            if (contract_creation_status != null && basic.property_exists(contract_creation_status, 'status')) {
-                                                                                clearInterval(contract_creation_interval_check);
-                                                                                if (contract_creation_status.status && execute_ajax) {
-                                                                                    execute_ajax = false;
-                                                                                    $.ajax({
-                                                                                        type: 'POST',
-                                                                                        url: '/patient/on-blockchain-contract-creation',
-                                                                                        dataType: 'json',
-                                                                                        data: {
-                                                                                            ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                                        },
-                                                                                        headers: {
-                                                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                                        },
-                                                                                        success: function (inner_response) {
-                                                                                            if (inner_response.success) {
-                                                                                                hideLoader();
-                                                                                                basic.closeDialog();
-                                                                                                basic.showDialog(inner_response.success, '', null, true);
-                                                                                                setTimeout(function () {
-                                                                                                    window.location.reload();
-                                                                                                }, 5000);
-                                                                                            }
-                                                                                        }
-                                                                                    });
-                                                                                } else {
+
+                                                                    dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
+                                                                        console.log(transactionHash, 'transactionHash');
+                                                                    }).on('confirmation', function(confirmationNumber, receipt) {
+                                                                        $.ajax({
+                                                                            type: 'POST',
+                                                                            url: '/patient/on-blockchain-contract-creation',
+                                                                            dataType: 'json',
+                                                                            data: {
+                                                                                ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                            },
+                                                                            headers: {
+                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                            },
+                                                                            success: function (inner_response) {
+                                                                                if (inner_response.success) {
                                                                                     hideLoader();
                                                                                     basic.closeDialog();
-                                                                                    basic.showAlert('Your transaction and blockchain contract creation failed. Please try again later when the gas cost is low or contact <a href="mailto:assurance@dentacoin.com">assurance@dentacoin.com</a>. You can see your transaction on <a href="https://rinkeby.etherscan.io/tx/' + transactionHash + '" target="_blank" class="etherscan-hash">Etherscan</a>');
+                                                                                    basic.showDialog(inner_response.success, '', null, true);
+                                                                                    setTimeout(function () {
+                                                                                        window.location.reload();
+                                                                                    }, 5000);
                                                                                 }
                                                                             }
-                                                                        }, 3000);
+                                                                        });
+                                                                    }).on('error', function(error) {
+                                                                        console.log(error, 'error');
+                                                                        basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
+                                                                        hideLoader();
                                                                     });
                                                                 }
                                                             }
@@ -2110,41 +2106,34 @@ var projectData = {
                                                                 //signing the transaction
                                                                 contract_approval_transaction.sign(new Buffer(transaction_key, 'hex'));
 
-                                                                //sending the transaction
-                                                                dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                                    var execute_ajax = true;
-                                                                    //doing setinterval check to check if the smart creation transaction got mined
-                                                                    var contract_approval_interval_check = setInterval(async function () {
-                                                                        var contract_approval_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                                        if (contract_approval_status != null && basic.property_exists(contract_approval_status, 'status')) {
-                                                                            if (contract_approval_status.status && execute_ajax) {
-                                                                                execute_ajax = false;
-
-                                                                                clearInterval(contract_approval_interval_check);
-                                                                                $.ajax({
-                                                                                    type: 'POST',
-                                                                                    url: '/dentist/on-blockchain-contract-approval',
-                                                                                    dataType: 'json',
-                                                                                    data: {
-                                                                                        ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                                    },
-                                                                                    headers: {
-                                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                                    },
-                                                                                    success: function (inner_response) {
-                                                                                        if (inner_response.success) {
-                                                                                            hideLoader();
-                                                                                            basic.closeDialog();
-                                                                                            basic.showDialog(inner_response.success, '', null, true);
-                                                                                            setTimeout(function () {
-                                                                                                window.location.reload();
-                                                                                            }, 3000);
-                                                                                        }
-                                                                                    }
-                                                                                });
+                                                                dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
+                                                                    console.log(transactionHash, 'transactionHash');
+                                                                }).on('confirmation', function(confirmationNumber, receipt) {
+                                                                    $.ajax({
+                                                                        type: 'POST',
+                                                                        url: '/dentist/on-blockchain-contract-approval',
+                                                                        dataType: 'json',
+                                                                        data: {
+                                                                            ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                        },
+                                                                        headers: {
+                                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                        },
+                                                                        success: function (inner_response) {
+                                                                            if (inner_response.success) {
+                                                                                hideLoader();
+                                                                                basic.closeDialog();
+                                                                                basic.showDialog(inner_response.success, '', null, true);
+                                                                                setTimeout(function () {
+                                                                                    window.location.reload();
+                                                                                }, 3000);
                                                                             }
                                                                         }
-                                                                    }, 3000);
+                                                                    });
+                                                                }).on('error', function(error) {
+                                                                    console.log(error, 'error');
+                                                                    basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
+                                                                    hideLoader();
                                                                 });
                                                             }, 2000);
                                                         }
@@ -2505,7 +2494,7 @@ var projectData = {
                                                                             },
                                                                             success: async function (response) {
                                                                                 history.pushState({},'', '?successful-withdraw=' + receipt.transactionHash);
-                                                                                window.location.reload(); 
+                                                                                window.location.reload();
                                                                             }
                                                                         });
                                                                     }
@@ -2514,42 +2503,6 @@ var projectData = {
                                                                     basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
                                                                     hideLoader();
                                                                 });
-
-
-                                                                /*dApp.web3_1_0.eth.sendSignedTransaction('0x' + withdraw_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                                    console.log(transactionHash, 'transactionHash');
-                                                                    var execute_ajax = true;
-                                                                    //doing setinterval check to check if the smart creation transaction got mined
-                                                                    var withdraw_interval_check = setInterval(async function() {
-                                                                        var withdraw_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                                        console.log(withdraw_status, 'withdraw_status');
-                                                                        if (withdraw_status != null && basic.property_exists(withdraw_status, 'status')) {
-                                                                            if (withdraw_status.status && execute_ajax) {
-                                                                                execute_ajax = false;
-                                                                                clearInterval(withdraw_interval_check);
-                                                                                console.log('SENDING AJAX');
-
-                                                                                //SEND EMAIL TO PATIENT
-                                                                                $.ajax({
-                                                                                    type: 'POST',
-                                                                                    url: '/dentist/notify-patient-for-successful-withdraw',
-                                                                                    dataType: 'json',
-                                                                                    data: {
-                                                                                        transaction_hash: transactionHash,
-                                                                                        contract: $('.single-contract-view-section').attr('data-contract')
-                                                                                    },
-                                                                                    headers: {
-                                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                                    },
-                                                                                    success: async function (response) {
-                                                                                        history.pushState({},'', '?successful-withdraw=' + transactionHash);
-                                                                                        window.location.reload();
-                                                                                    }
-                                                                                });
-                                                                            }
-                                                                        }
-                                                                    }, 3000);
-                                                                });*/
                                                             }, 2000);
                                                         }
                                                     }
@@ -4059,39 +4012,32 @@ function cancelContractEventInit() {
                                                     //signing the transaction
                                                     contract_cancellation_transaction.sign(new Buffer(transaction_key, 'hex'));
 
-                                                    //sending the transaction
-                                                    dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex'), function (err, transactionHash) {
-                                                        var execute_ajax = true;
-                                                        //doing setinterval check to check if the smart creation transaction got mined
-                                                        var contract_cancellation_interval_check = setInterval(async function () {
-                                                            var contract_cancellation_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                            if (contract_cancellation_status != null && basic.property_exists(contract_cancellation_status, 'status')) {
-                                                                if (contract_cancellation_status.status && execute_ajax) {
-                                                                    execute_ajax = false;
-                                                                    clearInterval(contract_cancellation_interval_check);
-
-                                                                    $.ajax({
-                                                                        type: 'POST',
-                                                                        url: '/update-contract-status',
-                                                                        dataType: 'json',
-                                                                        data: cancellation_ajax_data,
-                                                                        headers: {
-                                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                        },
-                                                                        success: function (inner_response) {
-                                                                            showLoader();
-                                                                            if (inner_response.success) {
-                                                                                window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
-                                                                            } else if (inner_response.error) {
-                                                                                hideLoader();
-                                                                                basic.closeDialog();
-                                                                                basic.showAlert(inner_response.error, 'boobox-alert', true);
-                                                                            }
-                                                                        }
-                                                                    });
+                                                    dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
+                                                        console.log(transactionHash, 'transactionHash');
+                                                    }).on('confirmation', function(confirmationNumber, receipt) {
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: '/update-contract-status',
+                                                            dataType: 'json',
+                                                            data: cancellation_ajax_data,
+                                                            headers: {
+                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                            },
+                                                            success: function (inner_response) {
+                                                                showLoader();
+                                                                if (inner_response.success) {
+                                                                    window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
+                                                                } else if (inner_response.error) {
+                                                                    hideLoader();
+                                                                    basic.closeDialog();
+                                                                    basic.showAlert(inner_response.error, 'boobox-alert', true);
                                                                 }
                                                             }
-                                                        }, 3000);
+                                                        });
+                                                    }).on('error', function(error) {
+                                                        console.log(error, 'error');
+                                                        basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
+                                                        hideLoader();
                                                     });
                                                 }, 2000);
                                             }
