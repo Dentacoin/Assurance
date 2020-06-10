@@ -75802,44 +75802,33 @@ var projectData = {
                                                                 //signing the transaction
                                                                 withdraw_transaction.sign(new Buffer(transaction_key, 'hex'));
 
+                                                                var confirmedTransaction = false;
                                                                 //sending the transaction
                                                                 dApp.web3_1_0.eth.sendSignedTransaction('0x' + withdraw_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
                                                                     console.log(transactionHash, 'transactionHash');
-                                                                    var execute_ajax = true;
-                                                                    //doing setinterval check to check if the smart creation transaction got mined
-                                                                    var withdraw_interval_check = setInterval(async function() {
-                                                                        var withdraw_status = await dApp.web3_1_0.eth.getTransactionReceipt(transactionHash);
-                                                                        console.log(withdraw_status, 'withdraw_status');
-                                                                        if (withdraw_status != null && basic.property_exists(withdraw_status, 'status')) {
-                                                                            if (withdraw_status.status && execute_ajax) {
-                                                                                execute_ajax = false;
-                                                                                clearInterval(withdraw_interval_check);
-                                                                                console.log('SENDING AJAX');
-
-                                                                                //SEND EMAIL TO PATIENT
-                                                                                $.ajax({
-                                                                                    type: 'POST',
-                                                                                    url: '/dentist/notify-patient-for-successful-withdraw',
-                                                                                    dataType: 'json',
-                                                                                    data: {
-                                                                                        transaction_hash: transactionHash,
-                                                                                        contract: $('.single-contract-view-section').attr('data-contract')
-                                                                                    },
-                                                                                    headers: {
-                                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                                    },
-                                                                                    success: async function (response) {
-                                                                                        history.pushState({},'', '?successful-withdraw=' + transactionHash);
-                                                                                        // window.location.reload();
-                                                                                    }
-                                                                                });
-                                                                            }
-                                                                        }
-                                                                    }, 3000);
                                                                 }).on('confirmation', function(confirmationNumber, receipt) {
                                                                     console.log(confirmationNumber, 'confirmationNumber');
-                                                                    console.log(receipt, 'receipt');
-                                                                    console.log(' ========= CONFIRMATION ===========');
+                                                                    if (!confirmedTransaction) {
+                                                                        confirmedTransaction = true;
+
+                                                                        //SEND EMAIL TO PATIENT
+                                                                        $.ajax({
+                                                                            type: 'POST',
+                                                                            url: '/dentist/notify-patient-for-successful-withdraw',
+                                                                            dataType: 'json',
+                                                                            data: {
+                                                                                transaction_hash: receipt.transactionHash,
+                                                                                contract: $('.single-contract-view-section').attr('data-contract')
+                                                                            },
+                                                                            headers: {
+                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                            },
+                                                                            success: async function (response) {
+                                                                                history.pushState({},'', '?successful-withdraw=' + transactionHash);
+                                                                                window.location.reload();
+                                                                            }
+                                                                        });
+                                                                    }
                                                                 }).on('error', function(error) {
                                                                     console.log(error, 'error');
                                                                     basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
