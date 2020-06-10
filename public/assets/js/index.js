@@ -1328,9 +1328,9 @@ var projectData = {
                                                     success: function (response) {
                                                         hideLoader();
                                                         if (response.success) {
-                                                            $('.camping-for-popups').html('');
-
                                                             $('.records-history.module table tbody').prepend('<tr data-id="'+response.id+'"> <td>'+Math.round(new Date($('.camping-for-popups .datepicker').val().trim()).getTime() / 1000)+'</td><td>Check-up recorded ('+response.event+'/'+response.mustRecordsCount+')</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
+
+                                                            $('.camping-for-popups').html('');
                                                             basic.showAlert('Check-up recorded successfully. Now your dentist has to approve it.', 'boobox-alert', true);
                                                         } else if (response.error) {
                                                             sentRecord = false;
@@ -1386,9 +1386,9 @@ var projectData = {
                                                     success: function (response) {
                                                         hideLoader();
                                                         if (response.success) {
-                                                            $('.camping-for-popups').html('');
-
                                                             $('.records-history.module table tbody').prepend('<tr data-id="'+response.id+'"> <td>'+Math.round(new Date($('.camping-for-popups .datepicker').val().trim()).getTime() / 1000)+'</td><td>Teeth cleaning recorded ('+response.event+'/'+response.mustRecordsCount+')</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
+
+                                                            $('.camping-for-popups').html('');
                                                             basic.showAlert('Teeth cleaning recorded successfully. Now your dentist have to approve it.', 'boobox-alert', true);
                                                         } else if (response.error) {
                                                             sentRecord = false;
@@ -1439,11 +1439,11 @@ var projectData = {
                                                     success: function (response) {
                                                         hideLoader();
                                                         if (response.success) {
-                                                            $('.camping-for-popups').html('');
-
                                                             $('.records-history.module table tbody').prepend('<tr data-id="'+response.teethCleaningId+'"> <td>'+Math.round(new Date($('.camping-for-popups .teeth-cleaning-datepicker').val().trim()).getTime() / 1000)+'</td><td>Teeth cleaning recorded ('+response.teethCleaningUpEvent+'/'+response.aMustTeethCleaningRecordsCount+')</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
 
                                                             $('.records-history.module table tbody').prepend('<tr data-id="'+response.checkUpId+'"> <td>'+Math.round(new Date($('.camping-for-popups .check-up-datepicker').val().trim()).getTime() / 1000)+'</td><td>Check-up recorded ('+response.checkUpEvent+'/'+response.aMustCheckUpRecordsCount+')</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
+
+                                                            $('.camping-for-popups').html('');
 
                                                             basic.showAlert('Record is saved successfully. Now your dentist have to approve it.', 'boobox-alert', true);
                                                         } else if (response.error) {
