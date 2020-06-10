@@ -654,7 +654,7 @@ class PatientController extends Controller {
                     } else {
                         $checkUp->save();
 
-                        return response()->json(array('success' => true));
+                        return response()->json(array('success' => true, 'id' => $checkUp->id, 'event' => $event, 'mustRecordsCount' => $aMustRecordsCount));
                     }
                 } else {
                     return response()->json(['error' => true, 'message' => 'You already have ' . $aMustRecordsCount . ' ' . $type . ' recorded, as agreed in the contract terms.']);
@@ -706,7 +706,7 @@ class PatientController extends Controller {
                             $checkUp->save();
                             $teethCleaning->save();
 
-                            return response()->json(array('success' => true));
+                            return response()->json(array('success' => true, 'checkUpId' => $checkUp->id, 'teethCleaningId' => $teethCleaning->id, 'checkUpEvent' => $checkUpEvent, 'teethCleaningUpEvent' => $teethCleaningUpEvent, 'aMustCheckUpRecordsCount' => $aMustCheckUpRecordsCount, 'aMustTeethCleaningRecordsCount' => $aMustTeethCleaningRecordsCount));
                         }
                     } else if(isset($checkUp)) {
                         // CHECK UP
