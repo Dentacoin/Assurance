@@ -6646,6 +6646,9 @@ body {
   .show-on-xs-inline-block.bottom {
     vertical-align: bottom; }
 
+.text-center {
+  text-align: center !important; }
+
 .text-left {
   text-align: left !important; }
 

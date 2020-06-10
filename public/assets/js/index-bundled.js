@@ -73321,10 +73321,6 @@ module.exports = {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPla
 console.log('Don\'t touch the code. Or do ... ¯\\_(ツ)_/¯');
 
 checkIfCookie();
-var allowAutomaticScripts = true;
-$(window).bind('beforeunload',function(){
-    allowAutomaticScripts = false;
-});
 
 var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore} = require('./helper');
 var {assurance_config} = require('./assurance_config');
@@ -73335,6 +73331,12 @@ $(document).ready(async function() {
     projectData.pagesData.onDocumentReady();
 
     fixButtonsFocus();
+});
+
+var allowAutomaticScripts = true;
+$(window).bind('beforeunload',function(){
+    allowAutomaticScripts = false;
+    $(window).scrollTop(0);
 });
 
 $(window).on('load', function() {
@@ -74216,7 +74218,9 @@ var projectData = {
                         cancelContractEventInit();
 
                         if ($('.terms-and-conditions-long-list').length) {
-                            $('.terms-and-conditions-long-list').mCustomScrollbar();
+                            $('.terms-and-conditions-long-list').mCustomScrollbar({
+                                contentTouchScroll: false
+                            });
                         }
 
                         if ($('.open-contract-details').length) {
@@ -74253,7 +74257,9 @@ var projectData = {
                         }
 
                         if ($('.terms-and-conditions-long-list').length) {
-                            $('.terms-and-conditions-long-list').mCustomScrollbar();
+                            $('.terms-and-conditions-long-list').mCustomScrollbar({
+                                contentTouchScroll: false
+                            });
                         }
 
                         multipleUseWalletAddressesLogic();
@@ -74411,7 +74417,9 @@ var projectData = {
                         }
                     } else if ($('body').hasClass('patient-contract-view')) {
                         if ($('.terms-and-conditions-long-list').length) {
-                            $('.terms-and-conditions-long-list').mCustomScrollbar();
+                            $('.terms-and-conditions-long-list').mCustomScrollbar({
+                                contentTouchScroll: false
+                            });
                         }
 
                         if ($('.open-contract-details').length) {
@@ -75941,7 +75949,9 @@ if ($('body').hasClass('logged-in')) {
 
         var form_props_arr = ['professional-company-number', 'postal-address', 'country', 'phone', 'website', 'address', 'fname', 'lname', 'email', 'monthly-premium', 'check-ups-per-year', 'teeth-cleaning-per-year'];
         var create_contract_form = $('form#dentist-create-contract');
-        create_contract_form.find('.terms-and-conditions-long-list').mCustomScrollbar();
+        create_contract_form.find('.terms-and-conditions-long-list').mCustomScrollbar({
+            contentTouchScroll: false
+        });
 
         //on second step of contract creation when entering patient email execute query to check if this patient is already existing in the CoreDB
         var checkingPatientInterval;
