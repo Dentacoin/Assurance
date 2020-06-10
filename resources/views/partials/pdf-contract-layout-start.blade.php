@@ -49,6 +49,7 @@
         .right-field {
             color: #212121;
             font-size: 18px;
+            width: 65%;
         }
         .right-field.bolded {
             font-weight: bold;
