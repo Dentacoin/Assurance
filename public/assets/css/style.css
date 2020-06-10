@@ -6940,12 +6940,18 @@ fieldset {
       width: 100%;
       max-width: 500px;
       margin: 0 auto; }
+  .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog .download-app-buttons figure {
+    width: 50%;
+    padding: 0 15px; }
   @media screen and (max-width: 767px) {
     .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog .icon-title-row {
       padding-top: 30px; }
     .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog ul {
       padding-top: 15px;
-      padding-bottom: 10px; } }
+      padding-bottom: 10px; }
+    .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog .download-app-buttons figure {
+      width: 100%;
+      padding: 0 15px; } }
 .bootbox.style-anchors .modal-dialog .modal-content .modal-body a {
   font-weight: bold;
   text-decoration: underline; }

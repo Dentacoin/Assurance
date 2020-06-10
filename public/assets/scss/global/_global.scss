@@ -677,6 +677,12 @@ fieldset {
                     margin: 0 auto;
                 }
             }
+            .download-app-buttons {
+                figure {
+                    width: 50%;
+                    padding: 0 15px;
+                }
+            }
             @include breakpoint($xs) {
                 .icon-title-row {
                     padding-top: 30px;
@@ -684,6 +690,11 @@ fieldset {
                 ul {
                     padding-top: 15px;
                     padding-bottom: 10px;
+                }
+                .download-app-buttons {
+                    figure {
+                        width: 100%;
+                    }
                 }
             }
         }
