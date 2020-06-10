@@ -75812,9 +75812,8 @@ var projectData = {
                                                                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                                                     },
                                                                                     success: async function (response) {
-                                                                                        console.log('response RELOG');
-                                                                                        var url = window.location.href;
-                                                                                        window.location.href = url + '?successful-withdraw=' + transactionHash;
+                                                                                        history.pushState({},'', '?successful-withdraw=' + transactionHash);
+                                                                                        window.location.reload();
                                                                                     }
                                                                                 });
                                                                                 /*hideLoader();
@@ -76792,12 +76791,14 @@ if (!$('body').hasClass('logged-in')) {
 
     $(document).on('dentistAuthSuccessResponse', async function (event) {
         console.log('dentistAuthSuccessResponse');
-        window.location.href = window.location.href + '?cross-login=true';
+        history.pushState({},'', '?cross-login=true');
+        window.location.reload();
     });
 
     $(document).on('patientAuthSuccessResponse', async function (event) {
         console.log('patientAuthSuccessResponse');
-        window.location.href = window.location.href + '?cross-login=true';
+        history.pushState({},'', '?cross-login=true');
+        window.location.reload();
     });
 }
 
