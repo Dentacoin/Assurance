@@ -6950,8 +6950,7 @@ fieldset {
       padding-top: 15px;
       padding-bottom: 10px; }
     .bootbox.qr-code-for-dentacoin-wallet-scan .modal-dialog .download-app-buttons figure {
-      width: 100%;
-      padding: 0 15px; } }
+      width: 100%; } }
 .bootbox.style-anchors .modal-dialog .modal-content .modal-body a {
   font-weight: bold;
   text-decoration: underline; }
@@ -7539,14 +7538,18 @@ fieldset {
 .display-block {
   display: block; }
 
+.display-block-important {
+  display: block !important; }
+
+@media screen and (max-width: 767px) {
+  .display-block-xs {
+    display: block; } }
+
 .position-relative {
   position: relative; }
 
 input[type='file'].hide-input {
   display: none; }
-
-.display-block-important {
-  display: block !important; }
 
 .sticky-open-calculator-container {
   position: fixed;

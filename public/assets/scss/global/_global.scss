@@ -1467,16 +1467,22 @@ fieldset {
     display: block;
 }
 
+.display-block-important {
+    display: block !important;
+}
+
+.display-block-xs {
+    @include breakpoint($xs) {
+        display: block;
+    }
+}
+
 .position-relative {
     position: relative;
 }
 
 input[type='file'].hide-input {
     display: none;
-}
-
-.display-block-important {
-    display: block !important;
 }
 
 .sticky-open-calculator-container {
