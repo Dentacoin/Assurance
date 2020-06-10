@@ -4620,7 +4620,7 @@ function openCacheKeyPopup(encrypted_pdf_content) {
                 styleUploadFileButton('UNLOCK', true, encrypted_pdf_content);
 
                 $('.enter-private-key').unbind().click(function() {
-                    $('.proof-of-address .on-change-result').html('<div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">UNLOCK</a></div></div>');
+                    $('.proof-of-address .on-change-result').html('<div class="max-width-500 margin-0-auto padding-top-20"><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-private-key">Your Private Key:</label><input type="text" id="your-private-key" maxlength="64" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">UNLOCK</a></div></div>');
 
                     $('.proof-of-address [for="your-private-key"]').addClass('active-label');
                     $('.proof-of-address #your-private-key').focus();
