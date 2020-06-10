@@ -75925,7 +75925,7 @@ if ($('body').hasClass('logged-in')) {
             $('.onsite-transaction-signing').fadeIn(500);
             $('.change-on-options-selected .hide-on-options-selected').hide();
 
-            $('.change-on-options-selected').append('<div class="text-center go-back-to-signing-options"><a href="javascript:void(0);" class="fs-20 inline-block text-decoration-underline">Go back to signing options</a></div>')
+            $('.change-on-options-selected').append('<div class="text-center go-back-to-signing-options padding-bottom-20"><a href="javascript:void(0);" class="fs-20 inline-block text-decoration-underline">Go back to signing options</a></div>')
         }
     });
 
