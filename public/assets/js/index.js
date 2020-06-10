@@ -2504,8 +2504,8 @@ var projectData = {
                                                                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                                             },
                                                                             success: async function (response) {
-                                                                                history.pushState({},'', '?successful-withdraw=' + transactionHash);
-                                                                                window.location.reload();
+                                                                                history.pushState({},'', '?successful-withdraw=' + receipt.transactionHash);
+                                                                                window.location.reload(); 
                                                                             }
                                                                         });
                                                                     }
