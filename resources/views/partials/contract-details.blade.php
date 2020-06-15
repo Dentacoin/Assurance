@@ -48,7 +48,7 @@
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Postal Address:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="postal-address">@if(!empty($contract)){{$contract->dentist_address}}@endif</div>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="postal-address">@if(!empty($contract)){{$contract->dentist_street_address}}@endif</div>
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Country:</label>
@@ -98,6 +98,16 @@
                     <a href="mailto:{{$contract->patient_email}}">{{$contract->patient_email}}</a>
                 @endif</div>
         </div>
+        @if(!empty($contract) && !empty($contract->patient_street_address) && !empty($contract->patient_country))
+            <div class="single-row fs-0">
+                <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Postal Address:</label>
+                <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">{{$contract->patient_street_address}}</div>
+            </div>
+            <div class="single-row fs-0">
+                <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Country:</label>
+                <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">{{$contract->patient_country}}</div>
+            </div>
+        @endif
         @if(!empty($contract) && !empty($contract->patient_address))
             <div class="single-row fs-0">
                 <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Wallet Address:</label>
