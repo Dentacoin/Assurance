@@ -208,7 +208,7 @@ contract ProxyAssurance is SafeMath {
             assurance.decreaseDiscount(_patient_addr, discount);
         }
 
-        // require(dcn.balanceOf(_patient_addr) >= current_withdraw_amount, "This Patient has not enough Dentacoin balance.");
+        require(dcn.balanceOf(_patient_addr) >= current_withdraw_amount, "This Patient has not enough Dentacoin balance.");
 
         //check if patient had registered discount and send that discount to the dentist
         if (discount > 0) {
