@@ -24,7 +24,7 @@ class CreateContractTransactionHashesTable extends Migration
         });
 
         Schema::table('contract_transaction_hashes', function (Blueprint $table) {
-            $table->foreign('contract_id')->references('id')->on('temporally_contracts')->onDelete('cascade');
+            $table->foreign('slug')->references('id')->on('temporally_contracts')->onDelete('cascade');
         });
     }
 
