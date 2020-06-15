@@ -1,6 +1,5 @@
 @extends("layout")
 @section("content")
-    @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
     @php($general_dentistry = unserialize($contract->general_dentistry))
     @php($created_at = $contract->created_at->format('d-m-Y'))
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 padding-bottom-50 contract-proposal section module" data-created-at-timestamp="{{strtotime($created_at)}}" @if((time() - strtotime($created_at)) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) data-expired="true" @endif>
@@ -23,7 +22,7 @@
                                 <h3 class="calibri-bold fs-30 dark-color">DENTIST DETAILS</h3>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Name:</label>
-                                    <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">{{$dentist->name}}</div>
+                                    <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">{{$contract->dentist_name}}</div>
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Professional / Company Registration Number:</label>
@@ -31,22 +30,20 @@
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Postal Address:</label>
-                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$dentist->address}}</div>
+                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$contract->dentist_street_address}}</div>
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Country:</label>
-                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$countries[$dentist->country_id - 1]->name}}</div>
+                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$contract->dentist_country}}</div>
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Phone:</label>
-                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">
-                                        +{{$countries[$dentist->country_id - 1]->phone_code}} {{$dentist->phone}}
-                                    </div>
+                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$contract->dentist_phone}}</div>
                                 </div>
                                 <div class="single-row fs-0">
                                     <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Website:</label>
                                     <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">
-                                        <a href="{{$dentist->website}}" target="_blank">{{$dentist->website}}</a>
+                                        <a href="{{$contract->dentist_website}}" target="_blank">{{$contract->dentist_website}}</a>
                                     </div>
                                 </div>
                                 <div class="single-row fs-0">
@@ -224,7 +221,7 @@
                                     <div class="dentist-sign inline-block">
                                         <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                             <img src="/assets/contracts/{{$contract->slug}}/dentist-signature.png" alt="Dentist signature"/>
-                                            <figcaption class="fs-16 calibri-light">/Dr. {{$dentist->name}}/</figcaption>
+                                            <figcaption class="fs-16 calibri-light">/{{$contract->dentist_name}}/</figcaption>
                                         </figure>
                                     </div>
                                     <div class="signature-wrapper inline-block module">
