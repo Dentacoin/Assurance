@@ -15,8 +15,18 @@
             <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">
                 @if(!empty($contract))
                     {{$contract->dentist_name}}
-                @elseif(!empty($current_logged_dentist)))
-                    {{$current_logged_dentist->name}}
+                @elseif(!empty($current_logged_dentist))
+                    @if (!empty($sender->title))
+                        @php($api_enums = (new \App\Http\Controllers\APIRequestsController())->getAllEnums())
+                        @foreach ($api_enums->titles as $key => $title)
+                            @if ($sender->title == $key)
+                                {{$title}} {{$current_logged_dentist->name}}
+                                @break
+                            @endif
+                        @endforeach
+                    @else
+                        {{$current_logged_dentist->name}}
+                    @endif
                 @endif
             </div>
         </div>
