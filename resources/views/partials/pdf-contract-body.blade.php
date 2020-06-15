@@ -1,7 +1,4 @@
-@php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
-@php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
 @php($services = unserialize($contract->general_dentistry))
-
 @if(is_object($contract->contract_active_at))
     @php($active_timestamp = $contract->contract_active_at->getTimestamp())
 @else
@@ -14,24 +11,28 @@
         <div class="section-title">DENTIST DETAILS</div>
         <div class="row">
             <label class="inline-block">Name:</label>
-            <div class="right-field bolded inline-block">{{$dentist->name}}</div>
+            <div class="right-field bolded inline-block">{{$contract->dentist_name}}</div>
         </div>
         <div class="row">
             <label class="inline-block">Professional / Company Registration Number:</label>
             <div class="right-field inline-block">{{$contract->professional_company_number}}</div>
         </div>
         <div class="row">
+            <label class="inline-block">Postal Address:</label>
+            <div class="right-field inline-block">{{$contract->dentist_street_address}}</div>
+        </div>
+        <div class="row">
             <label class="inline-block">Country:</label>
-            <div class="right-field inline-block">{{$countries[$dentist->country_id - 1]->name}}</div>
+            <div class="right-field inline-block">{{$contract->dentist_country}}</div>
         </div>
         <div class="row">
             <label class="inline-block">Phone:</label>
-            <div class="right-field inline-block">+{{$countries[$dentist->country_id - 1]->phone_code}} {{$dentist->phone}}</div>
+            <div class="right-field inline-block">{{$contract->dentist_phone}}</div>
         </div>
         <div class="row">
             <label class="inline-block">Website:</label>
             <div class="right-field inline-block">
-                <a href="{{$dentist->website}}" target="_blank">{{$dentist->website}}</a>
+                <a href="{{$contract->dentist_website}}" target="_blank">{{$contract->dentist_website}}</a>
             </div>
         </div>
         <div class="row">
@@ -43,11 +44,11 @@
         <div class="section-title">PATIENT DETAILS</div>
         <div class="row">
             <label class="inline-block">Name:</label>
-            <div class="right-field bolded inline-block">{{$patient->name}}</div>
+            <div class="right-field bolded inline-block">{{$contract->patient_name}}</div>
         </div>
         <div class="row">
             <label class="inline-block">Email Address:</label>
-            <div class="right-field inline-block">{{$patient->email}}</div>
+            <div class="right-field inline-block">{{$contract->patient_email}}</div>
         </div>
         <div class="row">
             <label class="inline-block">ID Number:</label>
@@ -55,11 +56,11 @@
         </div>
         <div class="row">
             <label class="inline-block">Postal Address:</label>
-            <div class="right-field inline-block">{{$patient->address}}</div>
+            <div class="right-field inline-block">{{$contract->patient_street_address}}</div>
         </div>
         <div class="row">
             <label class="inline-block">Country:</label>
-            <div class="right-field inline-block">{{$countries[$patient->country_id - 1]->name}}</div>
+            <div class="right-field inline-block">{{$contract->patient_country}}</div>
         </div>
         <div class="row">
             <label class="inline-block">Wallet Address:</label>
@@ -96,15 +97,15 @@
         </div>
         <div class="section-title">TERMS AND CONDITIONS</div>
         <div style="font-size: 14px;padding-top: 30px;
-padding-bottom:60px;">@include('partials.contract-terms-and-conditions', ['dont_show_terms_signatures' => true, 'show_dentist_patient_data' => true, 'dentist' => $dentist, 'patient' => $patient])</div>
+padding-bottom:60px;">@include('partials.contract-terms-and-conditions', ['dont_show_terms_signatures' => true, 'show_dentist_patient_data' => true])</div>
         <div class="signs-container clearfix">
             <div class="doctor">
                 <img src="{{CONTRACTS.$contract->slug.'/dentist-signature.png'}}"/>
-                <div class="name">/ Dr. {{$dentist->name}} /</div>
+                <div class="name">/ {{$contract->dentist_name}} /</div>
             </div>
             <div class="patient">
                 <img src="{{CONTRACTS.$contract->slug.'/patient-signature.png'}}"/>
-                <div class="name">/ {{$patient->name}} /</div>
+                <div class="name">/ {{$contract->patient_name}} /</div>
             </div>
         </div>
     </div>

@@ -12,14 +12,20 @@
     <div class="step-fields module padding-top-20">
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Name:</label>
-            <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">{{(new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id'])->name}}</div>
+            <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">
+                @if(!empty($contract))
+                    {{$contract->dentist_name}}
+                @elseif(!empty($current_logged_dentist)))
+                    {{$current_logged_dentist->name}}
+                @endif
+            </div>
         </div>
-        @if(!empty($dentist) || !empty($current_logged_dentist))
+        @if(!empty($contract) || !empty($current_logged_dentist))
             <div class="single-row fs-0">
                 <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Email Address:</label>
                 <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">
-                    @if(!empty($dentist))
-                        <a href="mailto:{{$dentist->email}}">{{$dentist->email}}</a>
+                    @if(!empty($contract))
+                        <a href="mailto:{{$contract->dentist_email}}">{{$contract->dentist_email}}</a>
                     @elseif(!empty($current_logged_dentist))
                         <a href="mailto:{{$current_logged_dentist->email}}">{{$current_logged_dentist->email}}</a>
                     @endif
@@ -32,35 +38,35 @@
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Postal Address:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="postal-address">@if(!empty($dentist)){{$dentist->address}}@endif</div>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="postal-address">@if(!empty($contract)){{$contract->dentist_address}}@endif</div>
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Country:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="country">@if(!empty($dentist)){{(new \App\Http\Controllers\UserController())->getCountryNameById($dentist->country_id)}}@endif</div>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="country">@if(!empty($contract)){{$contract->dentist_country}}@endif</div>
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Phone:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="phone">@if(!empty($dentist)) +{{(new \App\Http\Controllers\UserController())->getCountryPhoneCodeById($dentist->country_id)}} {{$dentist->phone}}@endif</div>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="phone">@if(!empty($contract)) {{$contract->dentist_phone}}@endif</div>
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Website:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word" id="website">@if(!empty($dentist))<a href="{{$dentist->website}}" target="_blank">{{$dentist->website}}</a>@endif</div>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word" id="website">@if(!empty($contract))<a href="{{$contract->dentist_website}}" target="_blank">{{$contract->dentist_website}}</a>@endif</div>
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Wallet Address:</label>
             <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word" id="address">@if(!empty($contract))<a href="//etherscan.io/address/{{$contract->dentist_address}}" target="_blank">{{$contract->dentist_address}}</a>@endif</div>
         </div>
-        @if(!empty($patient))
+        @if(!empty($contract) && (!empty($contract->patient_full_name) || (!empty($contract->patient_fname) && !empty($contract->patient_lname))))
             <h3 class="calibri-bold fs-30 fs-xs-22 dark-color padding-top-50">PATIENT DETAILS</h3>
             <div class="single-row fs-0">
                 <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Name:</label>
-                <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">{{$patient->name}}</div>
-            </div>
-        @elseif(!empty($contract))
-            <h3 class="calibri-bold fs-30 fs-xs-22 dark-color padding-top-50">PATIENT DETAILS</h3>
-            <div class="single-row fs-0">
-                <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Name:</label>
-                <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">{{$contract->patient_fname}} {{$contract->patient_lname}}</div>
+                <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">
+                    @if (!empty($contract->patient_full_name))
+                        {{$contract->patient_full_name}}
+                    @else
+                        {{$contract->patient_fname}} {{$contract->patient_lname}}
+                    @endif
+                </div>
             </div>
         @else
             <div class="fs-14 calibri-light light-gray-color padding-top-10">This is the wallet where you will receive your monthly premiums. Please double-check if everything is correct.</div>
@@ -78,22 +84,16 @@
         <div class="single-row fs-0">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Email Address:</label>
             <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word" id="email">
-                @if(!empty($patient))
-                    <a href="mailto:{{$patient->email}}">{{$patient->email}}</a>
-                @elseif(!empty($contract))
+                @if(!empty($contract))
                     <a href="mailto:{{$contract->patient_email}}">{{$contract->patient_email}}</a>
                 @endif</div>
         </div>
-        @if(!empty($patient) && !empty($patient->address))
-            <div class="single-row fs-0">
-                <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Postal Address:</label>
-                <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$patient->address}}</div>
-            </div>
-        @endif
         @if(!empty($contract) && !empty($contract->patient_address))
             <div class="single-row fs-0">
                 <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Wallet Address:</label>
-                <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">@if(!empty($dentist))<a href="//etherscan.io/address/{{$contract->patient_address}}" target="_blank">{{$contract->patient_address}}</a>@endif</div>
+                <div class="right-extra-field calibri-regular fs-18 dark-color inline-block break-word">
+                    <a href="//etherscan.io/address/{{$contract->patient_address}}" target="_blank">{{$contract->patient_address}}</a>
+                </div>
             </div>
         @endif
         <h3 class="calibri-bold fs-30 fs-xs-22 dark-color padding-top-50">CONTRACT CONDITIONS</h3>

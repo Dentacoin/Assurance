@@ -1,9 +1,5 @@
 <h2 class="text-center fs-32 fs-xs-22 padding-bottom-10 calibri-bold">DENTACOIN ASSURANCE CONTRACT</h2>
 @if(!empty($contract->contract_active_at) && !empty($contract->document_hash) || (isset($show_dentist_patient_data) && $show_dentist_patient_data))
-    @if(!empty($contract->contract_active_at) && !empty($contract->document_hash))
-        @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
-        @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
-    @endif
     @if(is_object($contract->contract_active_at))
         @php($active_timestamp = $contract->contract_active_at->getTimestamp())
     @else
@@ -15,18 +11,22 @@
     <div><span class="calibri-bold fs-18">BETWEEN:</span></div>
     <br>
     <div>
-        <div>Name - Dr. {{$dentist->name}} (the "Dentist")</div>
-        <div>Email - {{$dentist->email}}</div>
-        <div>Phone - +{{$countries[$dentist->country_id - 1]->phone_code}} {{$dentist->phone}}</div>
-        <div>Website - {{$dentist->website}}</div>
+        <div>Name - {{$contract->dentist_name}} (the "Dentist")</div>
+        <div>Email - {{$contract->dentist_email}}</div>
+        <div>Address - {{$contract->dentist_street_address}}</div>
+        <div>Country - {{$contract->dentist_country}}</div>
+        <div>Phone - {{$contract->dentist_phone}}</div>
+        <div>Website - {{$contract->dentist_website}}</div>
         <div>Wallet Address - {{$contract->dentist_address}}</div>
     </div>
     <br>
     <div><span class="calibri-bold fs-18">and</span></div>
     <br>
     <div>
-        <div>Name - {{$patient->name}} (the "Patient")</div>
-        <div>Email - {{$patient->email}}</div>
+        <div>Name - {{$contract->patient_name}} (the "Patient")</div>
+        <div>Email - {{$contract->patient_email}}</div>
+        <div>Address - {{$contract->patient_street_address}}</div>
+        <div>Country - {{$contract->patient_country}}</div>
         <div>Wallet Address - {{$contract->patient_address}}</div>
     </div>
     <br>
@@ -89,11 +89,11 @@
         <div class="row text-right-xs">
             <div class="col-xs-12 col-sm-6">
                 <img src="/assets/contracts/{{$contract->slug.'/dentist-signature.png'}}"/>
-                <div class="name">/ Dr. {{$dentist->name}} /</div>
+                <div class="name">/ {{$contract->dentist_name}} /</div>
             </div>
             <div class="col-xs-12 col-sm-6 text-right padding-top-xs-30">
                 <img src="/assets/contracts/{{$contract->slug.'/patient-signature.png'}}"/>
-                <div class="name">/ {{$patient->name}} /</div>
+                <div class="name">/ {{$contract->patient_name}} /</div>
             </div>
         </div>
     </div>
