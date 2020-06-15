@@ -2597,8 +2597,15 @@ async function bindDentistWithdrawEvent() {
 
                                         var confirmedTransaction = false;
                                         //sending the transaction
-                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + withdraw_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
+                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + withdraw_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
                                             console.log(transactionHash, 'transactionHash');
+
+                                            var saveTransactionResponse = await saveTransaction({
+                                                'transactionHash' : transactionHash,
+                                                'to_status' : 'active-withdraw',
+                                                'contract_slug' : $('.single-contract-view-section').attr('data-contract')
+                                            });
+                                            console.log(saveTransactionResponse, 'saveTransactionResponse');
                                         }).on('confirmation', function(confirmationNumber, receipt) {
                                             console.log(confirmationNumber, 'confirmationNumber');
                                             if (!confirmedTransaction) {
@@ -4079,8 +4086,18 @@ function cancelContractEventInit() {
                                                         contract_cancellation_transaction.sign(new Buffer(transaction_key, 'hex'));
 
                                                         var confirmedTransaction = false;
-                                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
+                                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
                                                             console.log(transactionHash, 'transactionHash');
+
+                                                            var saveTransactionResponse = await saveTransaction({
+                                                                'transactionHash' : transactionHash,
+                                                                'to_status' : 'cancelled',
+                                                                'contract_slug' : this_btn.attr('data-contract'),
+                                                                'type' : this_btn.attr('data-type'),
+                                                                'reason' : cancellation_ajax_data.reason,
+                                                                'comments' : cancellation_ajax_data.comments
+                                                            });
+                                                            console.log(saveTransactionResponse, 'saveTransactionResponse');
                                                         }).on('confirmation', function(confirmationNumber, receipt) {
                                                             if (!confirmedTransaction) {
                                                                 confirmedTransaction = true;

@@ -1093,8 +1093,8 @@ class UserController extends Controller {
             $transaction->contract_slug = trim($request->input('contract_slug'));
             $transaction->to_status = trim($request->input('to_status'));
 
-            if ($to_status == 'cancelled' && !empty($request->input('cancelling_reason')) && !empty($request->input('cancelling_type'))) {
-                $transaction->data = serialize(array('reason' => $request->input('cancelling_reason'), 'type' => $request->input('cancelling_type')));
+            if ($to_status == 'cancelled' && !empty($request->input('type')) && !empty($request->input('reason')) && !empty($request->input('comments'))) {
+                $transaction->data = serialize(array('type' => $request->input('type'), 'reason' => $request->input('reason'), 'comments' => $request->input('comments')));
             }
 
             $transaction->save();
