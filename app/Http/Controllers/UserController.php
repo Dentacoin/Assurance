@@ -300,6 +300,7 @@ class UserController extends Controller {
             $contract->status = 'cancelled';
             $contract->cancelled_at = new \DateTime();
             $contract->cancellation_reason = serialize($cancellation_reason);
+            $contract->is_processing = false;
             $contract->save();
 
             if(!empty($contract->patient_id)) {
@@ -1105,6 +1106,9 @@ class UserController extends Controller {
             }
 
             $transaction->save();
+
+            $contract->is_processing = true;
+            $contract->save();
 
             return response()->json(['success' => true]);
         } else {

@@ -310,6 +310,7 @@ class DentistController extends Controller
         $dentist = (new APIRequestsController())->getUserData($dentistId);
 
         $contract->status = 'active';
+        $contract->is_processing = false;
         $contract->save();
 
         // let cronjob check know that database is synced with this transaction status
@@ -359,6 +360,9 @@ class DentistController extends Controller
         }
         $dentist_name = (new APIRequestsController())->getUserData($dentistId)->name;
         $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+
+        $contract->is_processing = false;
+        $contract->save();
 
         // let cronjob check know that database is synced with this transaction status
         $contractTransactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'to_status' => 'active-withdraw'))->get()->first();

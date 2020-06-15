@@ -510,6 +510,7 @@ class PatientController extends Controller {
 
     public function changeToAwaitingApprovalStatus($contract) {
         $contract->status = 'awaiting-approval';
+        $contract->is_processing = false;
         $contract->save();
 
         if((new UserController())->checkPatientSession()) {
