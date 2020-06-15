@@ -194,7 +194,7 @@ contract ProxyAssurance is SafeMath {
                 // if patient has not enough DCN to cover all the months he has to pay for, then withdraw only the amount he has
                 uint256 availableMonthsToPay = div(dcn.balanceOf(_patient_addr), assurance.getContractDcnValue(_patient_addr, msg.sender));
 
-                time_passed_for_next_withdraw = sub(time_range, availableMonthsToPay * assurance.getPeriodToWithdraw());
+                current_withdraw_amount = mul(assurance.getContractDcnValue(_patient_addr, msg.sender), availableMonthsToPay);
                 nextTransferTime = add(mul(availableMonthsToPay, assurance.getPeriodToWithdraw()), assurance.getContractNextTransfer(_patient_addr, msg.sender));
             }
         }

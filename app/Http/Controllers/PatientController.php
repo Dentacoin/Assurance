@@ -322,10 +322,12 @@ class PatientController extends Controller {
         $temp_contract_folder_path = CONTRACTS . $data['contract'];
         file_put_contents($temp_contract_folder_path . DS . $signature_filename, $this->base64ToPng($data['patient_signature']));
 
-        $contract->	patient_email = $logged_patient->email;
         $contract->patient_id = $logged_patient->id;
-        $contract->patient_address = $data['dcn_address'];
+        $contract->patient_full_name = $logged_patient->name;
+        $contract->patient_email = $logged_patient->email;
         $contract->patient_id_number = $data['patient-id-number'];
+        $contract->patient_address = $data['dcn_address'];
+        $contract->patient_street_address = $logged_patient->address;
         $contract->contract_active_at = new \DateTime();
 
         //GENERATE PDF

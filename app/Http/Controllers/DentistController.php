@@ -178,29 +178,6 @@ class DentistController extends Controller
             return redirect()->route('create-contract')->with(['error' => 'Your form was not sent. Please try again with valid email.']);
         }
 
-        /*if (!empty($files)) {
-            //404 if they're trying to send more than 2 files
-            if (sizeof($files) > 2) {
-                return abort(404);
-            } else {
-                $allowed = array('png', 'jpg', 'jpeg', 'svg', 'bmp', 'PNG', 'JPG', 'JPEG', 'SVG', 'BMP');
-                foreach($files as $file)  {
-                    //checking the file size
-                    if ($file->getSize() > MAX_UPL_SIZE) {
-                        return redirect()->route('create-contract')->with(['error' => 'Your form was not sent. Files can be only with with maximum size of '.number_format(MAX_UPL_SIZE / 1048576).'MB. Please try again.']);
-                    }
-                    //checking file format
-                    if (!in_array(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION), $allowed)) {
-                        return redirect()->route('create-contract')->with(['error' => 'Your form was not sent. Files can be only with .png, .jpg, .jpeg, .svg, .bmp formats. Please try again.']);
-                    }
-                    //checking if error in file
-                    if ($file->getError()) {
-                        return redirect()->route('create-contract')->with(['error' => 'Your form was not sent. There is error with one or more of the files, please try with other files. Please try again.']);
-                    }
-                }
-            }
-        }*/
-
         //if user selected avatar or entered dcn_address both for first time
         if (!empty($data['hidden-image']) || !empty($data['address']) || !empty($data['website'])) {
             $post_fields_arr = array();
@@ -253,6 +230,11 @@ class DentistController extends Controller
         $temporally_contract = new TemporallyContract();
         $temporally_contract->dentist_id = session('logged_user')['id'];
         $temporally_contract->dentist_address = trim($data['address']);
+        $temporally_contract->dentist_street_address = $sender->address;
+        $temporally_contract->dentist_name = $sender->name;
+        $temporally_contract->dentist_email = $sender->email;
+        $temporally_contract->dentist_phone = $sender->phone;
+        $temporally_contract->dentist_website = $sender->website;
         $temporally_contract->patient_fname = trim($data['fname']);
         $temporally_contract->patient_lname = trim($data['lname']);
         $temporally_contract->patient_email = trim($data['email']);

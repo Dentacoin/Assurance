@@ -254,6 +254,15 @@ var dApp = {
                     console.error(error);
                 }
             });
+        },
+        getMinAllowedAmount: function()  {
+            return dApp.assurance_state_instance.methods.getMinAllowedAmount().call({}, function(error, result)   {
+                if (!error)  {
+                    return result;
+                }else {
+                    console.error(error);
+                }
+            });
         }
         /*getDentist: function(dentist_addr)  {
             return dApp.assurance_state_instance.methods.getDentist(dentist_addr).call({ from: global_state.account }, function(error, result)   {
@@ -1537,14 +1546,15 @@ var projectData = {
                         const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
                         var approval_given = false;
+                        var min_allowed_amount = parseInt(await dApp.assurance_state_methods.getMinAllowedAmount());
                         //if approval is given already SOMEHOW ...
-                        if (parseInt(await dApp.dentacoin_token_methods.allowance(projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-patient')), assurance_config.assurance_state_address)) > 0) {
+                        if (parseInt(await dApp.dentacoin_token_methods.allowance(projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-patient')), assurance_config.assurance_state_address)) >= min_allowed_amount) {
                             approval_given = true;
                         }
 
                         if (!approval_given) {
                             //gas estimation for DentacoinToken approval method
-                            var gas_cost_for_approval = await dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).estimateGas({gas: 500000});
+                            var gas_cost_for_approval = await dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).estimateGas({gas: 100000});
                         }
 
                         //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
@@ -1958,7 +1968,7 @@ var projectData = {
                             const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
                             //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                            var gas_cost_for_contract_approval = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient')).estimateGas({from: global_state.account, gas: 500000});
+                            var gas_cost_for_contract_approval = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient')).estimateGas({from: global_state.account, gas: 100000});
 
                             var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_contract_approval * on_page_load_gas_price).toString(), 'ether');
 
@@ -2413,7 +2423,7 @@ async function bindDentistWithdrawEvent() {
     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
     var gas_cost_for_withdraw = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).estimateGas({
         from: global_state.account,
-        gas: 500000
+        gas: 100000
     });
 
     var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_withdraw * on_page_load_gas_price).toString(), 'ether');
@@ -3894,7 +3904,7 @@ function cancelContractEventInit() {
                                         //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                                         var gas_cost_for_contract_cancellation = await dApp.assurance_proxy_instance.methods.breakContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist)).estimateGas({
                                             from: global_state.account,
-                                            gas: 500000
+                                            gas: 100000
                                         });
 
                                         var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_contract_cancellation * on_page_load_gas_price).toString(), 'ether');
