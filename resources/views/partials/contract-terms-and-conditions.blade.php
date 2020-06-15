@@ -4,8 +4,13 @@
         @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
         @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
     @endif
+    @if(is_object($contract->contract_active_at))
+        @php($active_timestamp = $contract->contract_active_at->getTimestamp())
+    @else
+        @php($active_timestamp = strtotime($contract->contract_active_at))
+    @endif
     @php($countries = (new \App\Http\Controllers\APIRequestsController())->getAllCountries())
-    <div>This present Dentacoin Assurance Contract Agreement was reached on {{date('d/m/Y', strtotime($contract->contract_active_at))}}</div>
+    <div>This present Dentacoin Assurance Contract Agreement was reached on {{date('d/m/Y', $active_timestamp)}}</div>
     <br>
     <div><span class="calibri-bold fs-18">BETWEEN:</span></div>
     <br>
