@@ -23,7 +23,7 @@ class HandlePatientSession
             return response((new PatientController())->getNotLoggedView());
         } else if($user_controller->checkSession() && session('logged_user')['type'] != 'patient') {
             //if logged user with other role trying to access routes protected by this middleware
-            return (new HomeController())->redirectToHome();
+            return redirect()->route('home', ['cross-login' => true]);
         } else {
             return $next($request);
         }

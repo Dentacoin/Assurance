@@ -75750,8 +75750,9 @@ async function bindDentistWithdrawEvent() {
     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
     var gas_cost_for_withdraw = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).estimateGas({
         from: global_state.account,
-        gas: 100000
+        gas: 500000
     });
+    console.log(gas_cost_for_withdraw, 'gas_cost_for_withdraw');
 
     var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_withdraw * on_page_load_gas_price).toString(), 'ether');
 

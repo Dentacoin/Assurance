@@ -16,6 +16,25 @@ use Dompdf\Dompdf;
 use Endroid\QrCode\QrCode;
 
 class PatientController extends Controller {
+
+    public function getPatientAccess()    {
+        if((new UserController())->checkPatientSession()) {
+            $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
+            $clinics = (new APIRequestsController())->getAllClinicsByName();
+            $contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => $logged_patient->email))->get()->sortByDesc('created_at')->all();
+
+            if(!empty($contracts)) {
+                //IF PATIENT HAVE EXISTING CONTRACTS
+                return view('pages/logged-user/patient/have-contracts', ['contracts' => $contracts, 'clinics' => $clinics]);
+            } else {
+                //IF PATIENT HAVE NO EXISTING CONTRACTS
+                return view('pages/logged-user/patient/start-first-contract', ['clinics' => $clinics]);
+            }
+        } else {
+            return (new HomeController())->getView();
+        }
+    }
+
     public function getNotLoggedView()   {
         return view('pages/patient', ['clinics' => (new APIRequestsController())->getAllClinicsByName()]);
     }
@@ -74,24 +93,6 @@ class PatientController extends Controller {
             return response()->json(['success' => $view]);
         } else {
             return response()->json(['error' => 'Wrong data passed.']);
-        }
-    }
-
-    public function getPatientAccess()    {
-        if((new UserController())->checkPatientSession()) {
-            $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
-            $clinics = (new APIRequestsController())->getAllClinicsByName();
-            $contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => $logged_patient->email))->get()->sortByDesc('created_at')->all();
-
-            if(!empty($contracts)) {
-                //IF PATIENT HAVE EXISTING CONTRACTS
-                return view('pages/logged-user/patient/have-contracts', ['contracts' => $contracts, 'clinics' => $clinics]);
-            } else {
-                //IF PATIENT HAVE NO EXISTING CONTRACTS
-                return view('pages/logged-user/patient/start-first-contract', ['clinics' => $clinics]);
-            }
-        }else {
-            return (new HomeController())->getView();
         }
     }
 
