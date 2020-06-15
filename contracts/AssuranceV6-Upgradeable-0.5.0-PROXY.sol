@@ -100,6 +100,21 @@ contract ProxyAssurance is SafeMath {
     event logSuccessfulContractApproval(address indexed _patient_addr, address indexed _dentist_addr);
     // ==================================== /EVENTS ====================================
 
+    //called by dentist
+    function registerDentist() public checkIfPaused {
+        //FETCH DENTIST DATA
+        bool dentist_exists;
+        address[] memory patient_addresses;
+        (dentist_exists, patient_addresses) = assurance.getDentist(msg.sender);
+
+        //check if dentist is registered in the dentists mapping, so there cannot be overwrite
+        require(!dentist_exists, "A Dentist can only be registered once in the Assurance contract.");
+
+        assurance.registerDentist(msg.sender);
+
+        emit logSuccessfulDentistRegistration(msg.sender, now);
+    }
+
     //can be called by patient and by dentist
     function registerContract(address _patient_addr, address _dentist_addr, uint256 _value_usd, uint256 _value_dcn, uint256 _date_start_contract, string memory _contract_ipfs_hash) public validPatientDentistAddresses(_patient_addr, _dentist_addr) checkIfPaused {
         //FETCH DENTIST DATA
@@ -109,6 +124,8 @@ contract ProxyAssurance is SafeMath {
 
         //check if one of the patient or dentist is the one who call the method
         require(msg.sender == _patient_addr || msg.sender == _dentist_addr, "Contract cannot be created for other parties. A Patient and Dentist can only create a contract between themselves.");
+        //check if this dentist is already registered one in the contract (used registerDentist method to register him self)
+        require(dentist_exists, "Please select a Dentist who is already registered in the Assurance contract database.");
         //check if value for USD and DCN are valid
         require(_value_usd > 0 && _value_dcn > 0, "USD and DCN values must be valid.");
         //check if this patient is not already registered for this dentist, so there cannot be overwrite
@@ -171,6 +188,9 @@ contract ProxyAssurance is SafeMath {
         //time_passed_for_next_withdraw is the time that passed until the next_withdraw , but not finished the full period_to_withdraw for next_withdraw
         uint256 time_passed_for_next_withdraw = sub(time_range, (months_num - 1) * assurance.getPeriodToWithdraw());
 
+        //updating next_transfer timestamp
+        assurance.updateNextTransferTime(_patient_addr, msg.sender, add(now, sub(assurance.getPeriodToWithdraw(),time_passed_for_next_withdraw)));
+
         //getting the amount that should be transfered to dentist for all the months since the contract init
         uint256 current_withdraw_amount;
         //transfer DCN to dentist
@@ -185,11 +205,6 @@ contract ProxyAssurance is SafeMath {
             //IF DCN MATTERS
             current_withdraw_amount = mul(assurance.getContractDcnValue(_patient_addr, msg.sender), months_num);
         }
-
-        require(dcn.balanceOf(_patient_addr) >= current_withdraw_amount, "This Patient has not enough Dentacoin balance.");
-
-        //updating next_transfer timestamp
-        assurance.updateNextTransferTime(_patient_addr, msg.sender, add(now, sub(assurance.getPeriodToWithdraw(),time_passed_for_next_withdraw)));
 
         //transferring the DCN from patient to dentist
         assurance.dcnTransferFrom(_patient_addr, msg.sender, current_withdraw_amount);
@@ -225,24 +240,25 @@ interface DentacoinToken {
 
 interface Assurance {
     function getDentist(address _dentist_addr) external view returns(bool, address[] memory);
+    function registerDentist(address _dentist_addr) external;
     function dcnTransferFrom(address _patient_addr, address _dentist_addr, uint256 _amount) external;
     function registerContract(address _patient_addr, address _dentist_addr, uint256 _date_start_contract, bool _approved_by_dentist, bool _approved_by_patient, bool _validation_checked, uint256 _value_usd, uint256 _value_dcn, string calldata _contract_ipfs_hash) external;
-function insertPatientContractHistory(address _patient_addr, address _dentist_addr) external;
-function dentistApproveContract(address _patient_addr, address _dentist_addr) external;
-function patientApproveContract(address _patient_addr, address _dentist_addr) external;
-function updateValidationCheck(address _patient_addr, address _dentist_addr) external;
-function updateNextTransferTime(address _patient_addr, address _dentist_addr, uint256 _next_transfer) external;
-function getUsdOverDcn() external view returns(bool);
-function getApiDecimals() external view returns(uint256);
-function getApiResultDcnUsdPrice() external view returns(uint256);
-function getMinAllowedAmount() external view returns(uint256);
-function getPeriodToWithdraw() external view returns(uint256);
-function breakContract(address _patient_addr, address _dentist_addr) external;
-function getContractNextTransfer(address _patient_addr, address _dentist_addr) external view returns(uint256);
-function getContractApprovedByDentist(address _patient_addr, address _dentist_addr) external view returns(bool);
-function getContractApprovedByPatient(address _patient_addr, address _dentist_addr) external view returns(bool);
-function getContractValidationChecked(address _patient_addr, address _dentist_addr) external view returns(bool);
-function getContractUsdValue(address _patient_addr, address _dentist_addr) external view returns(uint256);
-function getContractDcnValue(address _patient_addr, address _dentist_addr) external view returns(uint256);
-function getContractPaused() external view returns(bool);
+    function insertPatientContractHistory(address _patient_addr, address _dentist_addr) external;
+    function dentistApproveContract(address _patient_addr, address _dentist_addr) external;
+    function patientApproveContract(address _patient_addr, address _dentist_addr) external;
+    function updateValidationCheck(address _patient_addr, address _dentist_addr) external;
+    function updateNextTransferTime(address _patient_addr, address _dentist_addr, uint256 _next_transfer) external;
+    function getUsdOverDcn() external view returns(bool);
+    function getApiDecimals() external view returns(uint256);
+    function getApiResultDcnUsdPrice() external view returns(uint256);
+    function getMinAllowedAmount() external view returns(uint256);
+    function getPeriodToWithdraw() external view returns(uint256);
+    function breakContract(address _patient_addr, address _dentist_addr) external;
+    function getContractNextTransfer(address _patient_addr, address _dentist_addr) external view returns(uint256);
+    function getContractApprovedByDentist(address _patient_addr, address _dentist_addr) external view returns(bool);
+    function getContractApprovedByPatient(address _patient_addr, address _dentist_addr) external view returns(bool);
+    function getContractValidationChecked(address _patient_addr, address _dentist_addr) external view returns(bool);
+    function getContractUsdValue(address _patient_addr, address _dentist_addr) external view returns(uint256);
+    function getContractDcnValue(address _patient_addr, address _dentist_addr) external view returns(uint256);
+    function getContractPaused() external view returns(bool);
 }

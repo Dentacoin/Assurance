@@ -96,10 +96,17 @@ contract ownerSettings is Ownable {
     uint256 public api_result_dcn_usd_price = 1700000; //usd for one dcn
     uint256 public api_decimals = 10; //decimals, because solidity doesn't support float at this time
     bool public usd_over_dcn = true;
+    //DentacoinToken address
+    address public dentacoin_token_address = 0x19f49a24c7CB0ca1cbf38436A86656C2F30ab362;
+    //DentacoinToken instance
+    DentacoinToken dcn = DentacoinToken(dentacoin_token_address);
 
     function circuitBreaker() public onlyOwner {
-        if (contract_paused == false) { contract_paused = true; }
-        else { contract_paused = false; }
+        if(!contract_paused) {
+            contract_paused = true;
+        }else {
+            contract_paused = false;
+        }
     }
 
     function changePeriodToWithdraw(uint256 _period_to_withdraw) public onlyOwner {
@@ -119,7 +126,6 @@ contract ownerSettings is Ownable {
     }
 
     // ====== PRICE SETTERS ======
-
     function changeApiResultDcnUsdPrice(uint256 _api_result_dcn_usd_price) public onlyOwnerOrAdmin {
         api_result_dcn_usd_price = _api_result_dcn_usd_price;
     }
@@ -133,10 +139,6 @@ contract ownerSettings is Ownable {
 contract Assurance is ownerSettings, SafeMath {
     // ==================================== STATE ====================================
     address public AssuranceContract = address(this);
-    //DentacoinToken address
-    address public dentacoin_token_address = 0x19f49a24c7CB0ca1cbf38436A86656C2F30ab362;
-    //DentacoinToken instance
-    DentacoinToken dcn = DentacoinToken(dentacoin_token_address);
 
     struct contractStruct {
         uint256 next_transfer;
@@ -150,7 +152,6 @@ contract Assurance is ownerSettings, SafeMath {
     }
 
     struct dentistStruct {
-        address addr;
         bool exists;
         address[] patients_addresses; //list of patients addresses for THIS dentist
         mapping (address => contractStruct) contracts; //list of contracts for THIS dentist
@@ -181,7 +182,7 @@ contract Assurance is ownerSettings, SafeMath {
     }
 
     modifier checkIfPaused() {
-        require(contract_paused == false, "Contract is paused. Please try again later.");
+        require(!contract_paused, "Contract is paused. Please try again later.");
         _;
     }
     // ==================================== /MODIFIERS ====================================
@@ -202,7 +203,7 @@ contract Assurance is ownerSettings, SafeMath {
     //can be called by patient and by dentist
     function registerContract(address _patient_addr, address _dentist_addr, uint256 _value_usd, uint256 _value_dcn, uint256 _date_start_contract, string memory _contract_ipfs_hash) public validPatientDentistAddresses(_patient_addr, _dentist_addr) checkIfPaused {
         //check if one of the patient or dentist is the one who call the method
-        require(msg.sender == _patient_addr || msg.sender == _dentist_addr, "Contract cannot be created for other parties. A Patient and Dentist can only create a contract between themselves");
+        require(msg.sender == _patient_addr || msg.sender == _dentist_addr, "Contract cannot be created for other parties. A Patient and Dentist can only create a contract between themselves.");
         //check if this dentist is already registered one in the contract (used registerDentist method to register him self)
         require(dentists[_dentist_addr].exists, "Please select a Dentist who is already registered in the Assurance contract database.");
         //check if this patient already allowed Assurance to use his DCN in DentacoinToken
@@ -243,58 +244,62 @@ contract Assurance is ownerSettings, SafeMath {
         //check if dentist is registered in the dentists mapping, so there cannot be overwrite
         require(!dentists[msg.sender].exists, "A Dentist can only be registered once in the Assurance contract.");
 
-        dentists[msg.sender] = dentistStruct(msg.sender, true, new address[](0));
+        dentists[msg.sender] = dentistStruct(true, new address[](0));
         dentists_addresses.push(msg.sender);
         emit logSuccessfulDentistRegistration(msg.sender, now);
     }
 
-    function withdrawToDentist(address[] memory _array) public {
+    function singleWithdraw(address _patient_addr) public {
+        //'caching' the check for next withdraw for same patient
+        if(!dentists[msg.sender].contracts[_patient_addr].validation_checked) {
+            //check if both patient and dentist address are valid
+            require(_patient_addr != address(0) && msg.sender != address(0), "Patient and Dentist addresses must be valid.");
+            //check if valid dentist and patient address are different
+            require(_patient_addr != msg.sender, "Patient and Dentist addresses cannot match.");
+            //check if contract is approved by the dentist and by the patient
+            require(dentists[msg.sender].contracts[_patient_addr].approved_by_dentist && dentists[msg.sender].contracts[_patient_addr].approved_by_patient, "Both Patient and Dentist must agree to the contract terms, before the contract becomes active.");
+
+            dentists[msg.sender].contracts[_patient_addr].validation_checked = true;
+        }
+
+        //check if time passed for dentist to withdraw his dentacoins from patient
+        require(now > dentists[msg.sender].contracts[_patient_addr].next_transfer, "Please wait, you cannot withdraw your Dentacoin tokens yet.");
+
+        uint256 months_num = 1;
+        //time range from the last withdraw from this patient till now
+        uint256 time_range = sub(now, dentists[msg.sender].contracts[_patient_addr].next_transfer);
+        //adding the number of months in a row dentists didn't pull his DCN from the patient
+        months_num+=div(time_range, period_to_withdraw);
+        //time_passed_for_next_withdraw is the time that passed until the next_withdraw , but not finished the full period_to_withdraw for next_withdraw
+        uint256 time_passed_for_next_withdraw = sub(time_range, ((months_num - 1) * period_to_withdraw));
+
+        //updating next_transfer timestamp
+        dentists[msg.sender].contracts[_patient_addr].next_transfer = add(now, sub(period_to_withdraw, time_passed_for_next_withdraw));
+
+        //getting the amount that should be transfered to dentist for all the months since the contract init
+        uint256 current_withdraw_amount;
+        //transfer DCN to dentist
+
+        if(usd_over_dcn) {
+            //IF USD MATTERS
+            //here we multiply the value_usd with 10**api_decimals, because the api_result_dcn_usd_price is multiplied earlier with 10**api_decimals. Doing this, because solidity doesn't support floats yet
+            current_withdraw_amount = div(mul(dentists[msg.sender].contracts[_patient_addr].value_usd, 10**api_decimals), api_result_dcn_usd_price);
+            //here we multiply the amount each month with the number of months for which dentist didn't make withdraw
+            current_withdraw_amount = mul(current_withdraw_amount, months_num);
+        } else {
+            //IF DCN MATTERS
+            current_withdraw_amount = mul(dentists[msg.sender].contracts[_patient_addr].value_dcn, months_num);
+        }
+
+        //transferring the DCN from patient to dentist
+        require(dcn.transferFrom(_patient_addr, msg.sender, current_withdraw_amount));
+        emit logSuccessfulWithdraw(msg.sender, _patient_addr, current_withdraw_amount, now);
+    }
+
+    function multipleWithdraw(address[] memory _array) public {
         uint256 len = _array.length;
         for(uint256 i = 0; i < len; i+=1) {
-            //'caching' the check for next withdraw for same patient
-            if(!dentists[msg.sender].contracts[_array[i]].validation_checked) {
-                //check if both patient and dentist address are valid
-                require(_array[i] != address(0) && msg.sender != address(0), "Patient and Dentist addresses must be valid.");
-                //check if valid dentist and patient address are different
-                require(_array[i] != msg.sender, "Patient and Dentist addresses cannot match.");
-                //check if contract is approved by the dentist and by the patient
-                require(dentists[msg.sender].contracts[_array[i]].approved_by_dentist && dentists[msg.sender].contracts[_array[i]].approved_by_patient, "Both Patient and Dentist must agree to the contract terms, before the contract becomes active.");
-
-                dentists[msg.sender].contracts[_array[i]].validation_checked = true;
-            }
-
-            //check if time passed for dentist to withdraw his dentacoins from patient
-            require(now > dentists[msg.sender].contracts[_array[i]].next_transfer, "Please wait, you cannot withdraw your Dentacoin tokens yet.");
-
-            uint256 months_num = 1;
-            //time range from the last withdraw from this patient till now
-            uint256 time_range = now - dentists[msg.sender].contracts[_array[i]].next_transfer;
-            //adding the number of months in a row dentists didn't pull his DCN from the patient
-            months_num+=div(time_range, period_to_withdraw);
-            //time_passed_for_next_withdraw is the time that passed until the next_withdraw , but not finished the full period_to_withdraw for next_withdraw
-            uint256 time_passed_for_next_withdraw = time_range - ((months_num - 1) * period_to_withdraw);
-
-            //updating next_transfer timestamp
-            dentists[msg.sender].contracts[_array[i]].next_transfer = now + period_to_withdraw - time_passed_for_next_withdraw;
-
-            //getting the amount that should be transfered to dentist for all the months since the contract init
-            uint256 current_withdraw_amount;
-            //transfer DCN to dentist
-
-            if(usd_over_dcn) {
-                //IF USD MATTERS
-                //here we multiply the value_usd with 10**api_decimals, because the api_result_dcn_usd_price is multiplied earlier with 10**api_decimals. Doing this, because solidity doesn't support floats yet
-                current_withdraw_amount = div(mul(dentists[msg.sender].contracts[_array[i]].value_usd, 10**api_decimals), api_result_dcn_usd_price);
-                //here we multiply the amount each month with the number of months for which dentist didn't make withdraw
-                current_withdraw_amount = mul(current_withdraw_amount, months_num);
-            } else {
-                //IF DCN MATTERS
-                current_withdraw_amount = mul(dentists[msg.sender].contracts[_array[i]].value_dcn, months_num);
-            }
-
-            //transferring the DCN from patient to dentist
-            require(dcn.transferFrom(_array[i], msg.sender, current_withdraw_amount));
-            emit logSuccessfulWithdraw(msg.sender, _array[i], current_withdraw_amount, now);
+            singleWithdraw(_array[i]);
         }
     }
 
@@ -333,21 +338,17 @@ contract Assurance is ownerSettings, SafeMath {
     /// @dev add a fallback method including require(msg.data.length == 0) to prevent invalid calls.
 
     // ====== GETTERS ======
-    function getDentist(address _dentist_addr) public view returns(address) {
-        return dentists[_dentist_addr].addr;
+    function getDentist(address _dentist_addr) public view returns(bool, address[] memory) {
+        return (dentists[_dentist_addr].exists, dentists[_dentist_addr].patients_addresses);
     }
 
     function getDentistsArr() public view returns(address[] memory) {
         return dentists_addresses;
     }
 
-    function getPatient(address _patient_addr, address _dentist_addr) public view validPatientDentistAddresses(_patient_addr, _dentist_addr) returns(address, address, uint256, bool, bool, bool, uint256, uint256, string memory) {
+    function getPatient(address _patient_addr, address _dentist_addr) public view validPatientDentistAddresses(_patient_addr, _dentist_addr) returns(uint256, bool, bool, bool, uint256, uint256, string memory) {
         contractStruct memory patient = dentists[_dentist_addr].contracts[_patient_addr];
-        return (_dentist_addr, _patient_addr, patient.next_transfer, patient.approved_by_dentist, patient.approved_by_patient, patient.validation_checked, patient.value_usd, patient.value_dcn, patient.contract_ipfs_hash);
-    }
-
-    function getPatientsArrForDentist(address _dentist_addr) public view returns(address[] memory) {
-        return dentists[_dentist_addr].patients_addresses;
+        return (patient.next_transfer, patient.approved_by_dentist, patient.approved_by_patient, patient.validation_checked, patient.value_usd, patient.value_dcn, patient.contract_ipfs_hash);
     }
 
     function getWaitingContractsForPatient(address _patient_addr) public view returns(address[] memory) {

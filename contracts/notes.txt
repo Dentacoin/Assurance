@@ -1,0 +1,20 @@
+* V4:
+- Transform contract code for solidity 0.5 breaking changes.
+
+* V5:
+- Add multiple withdraw method ```multipleWithdraw```.
+
+* V6:
+- Split contract logic into PROXY and STATE contracts.
+
+* V7:
+- Make dentist registration into the ```dentists``` mapping dynamic on method ```registerContract``` in the STATE contract. Removing method ```registerDentist```.
+
+* V8:
+- Add patient dentacoin balance validation to method ```singleWithdraw``` in the PROXY contact. Add modifier ```onlyApprovedProxyOrAdmin``` to STATE contract.
+
+* V9:
+- Add discounts logic to both PROXY and STATE contracts, Future feature - the discount part can be handled by Dentacoin Foundation and sent to the dentist to cover the missing part sent from patient.
+
+* V10 (Testing phase):
+- Edit method ```singleWithdraw```. Example: If dentist didn't withdraw for 10 months, but patient have the DCN balance to cover only 3 months then only 3 months * monthlyContractDcnAmount is paid and the time for only these 3 months is saved in the contract as last withdraw.

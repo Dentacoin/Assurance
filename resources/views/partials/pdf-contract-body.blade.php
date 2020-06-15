@@ -4,7 +4,7 @@
 <div>
     <div class="wrapper">
         <div class="main-title">ASSURANCE CONTRACT</div>
-        <div class="sub-title">Signed on {{$contract->created_at->format('d/m/Y')}}</div>
+        <div class="sub-title">Signed on {{date('d/m/Y', strtotime($contract->contract_active_at))}}</div>
         <div class="section-title">DENTIST DETAILS</div>
         <div class="row">
             <label class="inline-block">Name:</label>

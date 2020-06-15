@@ -74598,7 +74598,7 @@ var projectData = {
                                 $('.external-api-crypto-provider').removeClass('hide');
 
                                 //not enough DCN
-                                $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+(months_passed_for_reward * on_load_exiting_contract[4])+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+dcn_needed_to_be_payed_to_dentist+' DCN</span>) before <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+                                $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+(months_passed_for_reward * on_load_exiting_contract[5])+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+dcn_needed_to_be_payed_to_dentist+' DCN</span>) before <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
 
                                 if (patientDcnBalanceLogicAnimation) {
                                     patientDcnBalanceLogicAnimation = false;
@@ -75147,10 +75147,15 @@ var projectData = {
                                                                             //signing the transaction
                                                                             approval_transaction.sign(new Buffer(transaction_key, 'hex'));
 
+                                                                            var confirmedAllowedTransaction = false;
                                                                             dApp.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
                                                                                 console.log(transactionHash, 'transactionHash');
                                                                             }).on('confirmation', function(confirmationNumber, receipt) {
-                                                                                fireAssuranceContractCreationTransaction(nonce + 1);
+                                                                                if (!confirmedAllowedTransaction) {
+                                                                                    confirmedAllowedTransaction = true;
+
+                                                                                    fireAssuranceContractCreationTransaction(nonce + 1);
+                                                                                }
                                                                             }).on('error', function(error) {
                                                                                 console.log(error, 'error');
                                                                                 basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
@@ -75183,31 +75188,35 @@ var projectData = {
                                                                     //signing the transaction
                                                                     contract_creation_transaction.sign(new Buffer(transaction_key, 'hex'));
 
-
+                                                                    var confirmedTransaction = false;
                                                                     dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
                                                                         console.log(transactionHash, 'transactionHash');
                                                                     }).on('confirmation', function(confirmationNumber, receipt) {
-                                                                        $.ajax({
-                                                                            type: 'POST',
-                                                                            url: '/patient/on-blockchain-contract-creation',
-                                                                            dataType: 'json',
-                                                                            data: {
-                                                                                ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                            },
-                                                                            headers: {
-                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                            },
-                                                                            success: function (inner_response) {
-                                                                                if (inner_response.success) {
-                                                                                    hideLoader();
-                                                                                    basic.closeDialog();
-                                                                                    basic.showDialog(inner_response.success, '', null, true);
-                                                                                    setTimeout(function () {
-                                                                                        window.location.reload();
-                                                                                    }, 5000);
+                                                                        if (!confirmedTransaction) {
+                                                                            confirmedTransaction = true;
+
+                                                                            $.ajax({
+                                                                                type: 'POST',
+                                                                                url: '/patient/on-blockchain-contract-creation',
+                                                                                dataType: 'json',
+                                                                                data: {
+                                                                                    ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                                },
+                                                                                headers: {
+                                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                                },
+                                                                                success: function (inner_response) {
+                                                                                    if (inner_response.success) {
+                                                                                        hideLoader();
+                                                                                        basic.closeDialog();
+                                                                                        basic.showDialog(inner_response.success, '', null, true);
+                                                                                        setTimeout(function () {
+                                                                                            window.location.reload();
+                                                                                        }, 5000);
+                                                                                    }
                                                                                 }
-                                                                            }
-                                                                        });
+                                                                            });
+                                                                        }
                                                                     }).on('error', function(error) {
                                                                         console.log(error, 'error');
                                                                         basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
@@ -75426,30 +75435,35 @@ var projectData = {
                                                                 //signing the transaction
                                                                 contract_approval_transaction.sign(new Buffer(transaction_key, 'hex'));
 
+                                                                var confirmedTransaction = false;
                                                                 dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
                                                                     console.log(transactionHash, 'transactionHash');
                                                                 }).on('confirmation', function(confirmationNumber, receipt) {
-                                                                    $.ajax({
-                                                                        type: 'POST',
-                                                                        url: '/dentist/on-blockchain-contract-approval',
-                                                                        dataType: 'json',
-                                                                        data: {
-                                                                            ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                        },
-                                                                        headers: {
-                                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                        },
-                                                                        success: function (inner_response) {
-                                                                            if (inner_response.success) {
-                                                                                hideLoader();
-                                                                                basic.closeDialog();
-                                                                                basic.showDialog(inner_response.success, '', null, true);
-                                                                                setTimeout(function () {
-                                                                                    window.location.reload();
-                                                                                }, 3000);
+                                                                    if (!confirmedTransaction) {
+                                                                        confirmedTransaction = true;
+
+                                                                        $.ajax({
+                                                                            type: 'POST',
+                                                                            url: '/dentist/on-blockchain-contract-approval',
+                                                                            dataType: 'json',
+                                                                            data: {
+                                                                                ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                            },
+                                                                            headers: {
+                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                            },
+                                                                            success: function (inner_response) {
+                                                                                if (inner_response.success) {
+                                                                                    hideLoader();
+                                                                                    basic.closeDialog();
+                                                                                    basic.showDialog(inner_response.success, '', null, true);
+                                                                                    setTimeout(function () {
+                                                                                        window.location.reload();
+                                                                                    }, 3000);
+                                                                                }
                                                                             }
-                                                                        }
-                                                                    });
+                                                                        });
+                                                                    }
                                                                 }).on('error', function(error) {
                                                                     console.log(error, 'error');
                                                                     basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
@@ -75638,200 +75652,7 @@ var projectData = {
                             // ready to withdraw
                             $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/shield-check.svg" class="max-width-70"></figure><div class="fs-20 padding-top-15">Your money is waiting for you.</div><div class="padding-bottom-20 fs-20">Withdraw the Dentacoin tokens collected by <span class="calibri-bold">'+$('.camping-for-popups').attr('data-patient-name')+'</span>.</div><div class="text-center"><a href="javascript:void(0)" class="dentist-withdraw white-blue-green-btn inline-block max-width-280 max-width-xs-400 margin-bottom-10 width-100"><svg class="inline-block-top margin-right-5" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 75.7 74.3" style="enable-background:new 0 0 75.7 74.3;max-width: 25px;" xml:space="preserve"><style type="text/css">.st0{fill:#FFFFFF;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds bottomLeftOrigin="true" height="74.3" width="75.7" x="12.2" y="37.8"></sliceSourceBounds></sfw></metadata><path class="st0" d="M29.7,32.2h-7.5l0,0c-0.1,0-0.2,0-0.3,0h-0.1c-0.1,0-0.1,0-0.2,0.1c-0.1,0-0.1,0-0.2,0.1c-0.1,0-0.1,0.1-0.2,0.1c-0.1,0-0.1,0.1-0.2,0.1l-0.1,0.1c-0.1,0-0.1,0.1-0.2,0.2l0,0L20.6,33c0,0.1-0.1,0.1-0.1,0.2s-0.1,0.1-0.1,0.2c0,0.1-0.1,0.1-0.1,0.2s0,0.1-0.1,0.2c0,0.1,0,0.1,0,0.2s0,0.1,0,0.2v0.1l0,0c0,0.1,0,0.2,0,0.2c0,0.1,0,0.1,0,0.2c0,0.1,0,0.1,0.1,0.2c0,0.1,0,0.1,0.1,0.2c0,0.1,0.1,0.1,0.1,0.2s0.1,0.1,0.1,0.2l0.1,0.1c0,0.1,0.1,0.1,0.1,0.2l0,0l15.4,14.5c0.4,0.4,0.9,0.5,1.4,0.5s1-0.2,1.4-0.5l15.4-14.5c0.8-0.8,0.8-2,0.1-2.8c-0.4-0.5-1-0.7-1.6-0.6h-0.1h-7.5v-2.9c0-1.1-0.9-2-2-2s-2,0.9-2,2v4.9c0,1.1,0.9,2,2,2H48l-10.4,9.8l-10.4-9.8h4.4c1.1,0,2-0.9,2-2v-4.9c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2L29.7,32.2L29.7,32.2z"/><path class="st0" d="M29.7,23.3c0,1.1,0.9,2,2,2c1.1,0,2-0.9,2-2v-3.2c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2V23.3z"/><path class="st0" d="M41.3,23.3c0,1.1,0.9,2,2,2s2-0.9,2-2v-3.2c0-1.1-0.9-2-2-2s-2,0.9-2,2V23.3z"/><path class="st0" d="M29.7,12.8c0,1.1,0.9,2,2,2c1.1,0,2-0.9,2-2v-1.4c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2V12.8z"/><path class="st0" d="M41.3,12.8c0,1.1,0.9,2,2,2s2-0.9,2-2v-1.4c0-1.1-0.9-2-2-2s-2,0.9-2,2V12.8z"/><path class="st0" d="M31.7,4.1c1.1,0,2-0.9,2-2V2c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2v0.1C29.7,3.2,30.6,4.1,31.7,4.1z"/><path class="st0" d="M43.3,4.1c1.1,0,2-0.9,2-2V2c0-1.1-0.9-2-2-2s-2,0.9-2,2v0.1C41.3,3.2,42.2,4.1,43.3,4.1z"/><path class="st0" d="M75.7,51.4V37.2c0-9.4-9.2-17.7-23.4-21.2c-1.1-0.3-2.2,0.4-2.4,1.5c-0.3,1.1,0.4,2.2,1.5,2.4c12.4,3,20.4,9.8,20.4,17.3c0,10.2-15.5,18.9-33.9,18.9S4,47.5,4,37.2c0-7.3,7.8-14.1,19.9-17.2c1.1-0.3,1.7-1.4,1.4-2.4c-0.3-1.1-1.4-1.7-2.4-1.4C9,19.8,0,28,0,37.2v14.2c0,12.8,16.6,22.9,37.9,22.9S75.7,64.2,75.7,51.4z M71.7,47.6v3.9c0,2.9-1.2,5.7-3.5,8.1V51C69.5,49.9,70.7,48.8,71.7,47.6z M11.2,53.6c1.4,0.8,2.9,1.6,4.6,2.3v9.7c-1.7-0.8-3.2-1.7-4.6-2.7V53.6zM19.8,57.4c1.8,0.6,3.6,1,5.5,1.4v10.1c-1.9-0.4-3.8-1-5.5-1.6V57.4z M29.3,59.5c2.1,0.3,4.3,0.5,6.5,0.5v10.2c-2.2-0.1-4.4-0.3-6.5-0.6V59.5z M39.8,60c2.2-0.1,4.3-0.2,6.3-0.5v10.2c-2,0.3-4.2,0.5-6.3,0.6V60z M50.1,58.8c1.9-0.4,3.8-0.9,5.5-1.4v9.9c-1.7,0.6-3.6,1.1-5.5,1.6C50.1,68.9,50.1,58.8,50.1,58.8z M59.7,56c1.6-0.7,3.2-1.4,4.6-2.3v9.4c-1.4,1-2.9,1.8-4.6,2.6V56z M3.9,51.4v-3.9c1,1.2,2.1,2.3,3.3,3.3v8.6C5.1,57,3.9,54.3,3.9,51.4z"/></svg> WITHDRAW NOW</a></div></div></div>');
 
-                            var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
-                            const on_page_load_gwei = ethgasstation_json.safeLow;
-                            //adding 10% just in case the transaction dont fail
-                            const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
-
-                            //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                            var gas_cost_for_withdraw = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).estimateGas({
-                                from: global_state.account,
-                                gas: 500000
-                            });
-
-                            var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_withdraw * on_page_load_gas_price).toString(), 'ether');
-
-                            var withdraw_function_abi = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).encodeABI();
-
-                            $('.dentist-withdraw').click(async function() {
-                                if (metamask) {
-                                    basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
-                                } else {
-                                    var existingCachedKey = false;
-                                    var existingCachedKeystore = '';
-                                    var currentAccountsStorage = localStorage.getItem('current-accounts');
-                                    if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
-                                        var currentAccounts = JSON.parse(currentAccountsStorage);
-
-                                        for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
-                                            if (global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
-                                                existingCachedKey = true;
-                                                existingCachedKeystore = currentAccounts[i].keystore;
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '/get-recipe-popup',
-                                        dataType: 'json',
-                                        data: {
-                                            /*to: assurance_config.assurance_proxy_address,*/
-                                            cached_key: existingCachedKey,
-                                            contract: $('.single-contract-view-section').attr('data-contract'),
-                                            show_dcn_bar: false,
-                                            recipe_title: 'WITHDRAW NOW',
-                                            recipe_subtitle: '',
-                                            recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.',
-                                            btn_label: 'WITHDRAW NOW',
-                                            type: 'qr-scan'
-                                        },
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        },
-                                        success: async function (response) {
-                                            if (response.success) {
-                                                basic.closeDialog();
-                                                basic.showDialog(response.success, 'recipe-popup', null, true);
-
-                                                // proceed to dentacoin wallet scanning
-                                                $('.generate-qr-code-for-wallet-scanning').click(async function() {
-                                                    var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                                                    if (parseFloat(eth_fee) > current_user_eth_balance) {
-                                                        //not enough ETH balance
-                                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
-                                                    } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                        basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
-                                                    } else {
-                                                        $('.onsite-transaction-signing').fadeOut(500);
-                                                        showLoader();
-
-                                                        var scanObject = {
-                                                            0 : eth_fee,
-                                                            1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                            2 : global_state.account,
-                                                            3 : $('.single-contract-view-section').attr('data-contract'),
-                                                            4 : 'active-withdraw'
-                                                        };
-
-                                                        generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
-                                                    }
-                                                });
-
-                                                $('.recipe-popup .ether-fee .field').html(eth_fee);
-
-                                                $('.recipe-popup .ether-fee i').popover({
-                                                    trigger: 'click',
-                                                    html: true
-                                                });
-
-                                                var transaction_key;
-                                                if (!existingCachedKey) {
-                                                    bindVerifyAddressLogic(true);
-                                                    $(document).on('on-transaction-recipe-agree', function(event) {
-                                                        transaction_key = event.response_data;
-                                                        setTimeout(function() {
-                                                            hideLoader();
-
-                                                            $('.proof-of-address').remove();
-                                                            $('.proof-success').fadeIn(1500);
-                                                        }, 500);
-                                                    });
-                                                } else {
-                                                    $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
-                                                    $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
-                                                    $('.camp-for-keystore-password input[type="password"]').focus();
-                                                }
-
-                                                $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
-                                                    var this_btn = $(this);
-                                                    var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                                                    if (parseFloat(eth_fee) > current_user_eth_balance) {
-                                                        //not enough ETH balance
-                                                        basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
-                                                    } else {
-                                                        if (!existingCachedKey && transaction_key == undefined) {
-                                                            basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
-                                                            return false;
-                                                        } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
-                                                            basic.showAlert('Please enter the secret password for your keystore file.', 'boobox-alert', true);
-                                                            return false;
-                                                        } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                            basic.showAlert('Please check the checkbox below to continue with the transaction creation.', 'boobox-alert', true);
-                                                            return false;
-                                                        } else {
-                                                            showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
-                                                            setTimeout(async function() {
-                                                                if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                                    var decrypted_keystore_file_response = decryptKeystore(existingCachedKeystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
-                                                                    if (decrypted_keystore_file_response.success) {
-                                                                        transaction_key = decrypted_keystore_file_response.to_string;
-                                                                    } else if (decrypted_keystore_file_response.error) {
-                                                                        hideLoader();
-                                                                        basic.showAlert(decrypted_keystore_file_response.message, 'boobox-alert', true);
-                                                                        return false;
-                                                                    }
-                                                                }
-                                                                this_btn.unbind();
-                                                                const EthereumTx = require('ethereumjs-tx');
-                                                                var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
-
-                                                                var withdraw_transaction_obj = {
-                                                                    gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_withdraw + (gas_cost_for_withdraw * 5/100))),
-                                                                    gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                                    from: global_state.account,
-                                                                    nonce: dApp.web3_1_0.utils.toHex(nonce),
-                                                                    chainId: dApp.chain_id,
-                                                                    data: withdraw_function_abi,
-                                                                    to: assurance_config.assurance_proxy_address
-                                                                };
-
-                                                                const withdraw_transaction = new EthereumTx(withdraw_transaction_obj);
-                                                                //signing the transaction
-                                                                withdraw_transaction.sign(new Buffer(transaction_key, 'hex'));
-
-                                                                var confirmedTransaction = false;
-                                                                //sending the transaction
-                                                                dApp.web3_1_0.eth.sendSignedTransaction('0x' + withdraw_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
-                                                                    console.log(transactionHash, 'transactionHash');
-                                                                }).on('confirmation', function(confirmationNumber, receipt) {
-                                                                    console.log(confirmationNumber, 'confirmationNumber');
-                                                                    if (!confirmedTransaction) {
-                                                                        confirmedTransaction = true;
-
-                                                                        //SEND EMAIL TO PATIENT
-                                                                        $.ajax({
-                                                                            type: 'POST',
-                                                                            url: '/dentist/notify-patient-for-successful-withdraw',
-                                                                            dataType: 'json',
-                                                                            data: {
-                                                                                transaction_hash: receipt.transactionHash,
-                                                                                contract: $('.single-contract-view-section').attr('data-contract')
-                                                                            },
-                                                                            headers: {
-                                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                            },
-                                                                            success: async function (response) {
-                                                                                history.pushState({},'', '?successful-withdraw=' + receipt.transactionHash);
-                                                                                window.location.reload();
-                                                                            }
-                                                                        });
-                                                                    }
-                                                                }).on('error', function(error) {
-                                                                    console.log(error, 'error');
-                                                                    basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
-                                                                    hideLoader();
-                                                                });
-                                                            }, 2000);
-                                                        }
-                                                    }
-                                                });
-                                            }
-                                        }
-                                    });
-                                }
-                            });
+                            bindDentistWithdrawEvent();
                         }
                     }
                 }
@@ -75902,6 +75723,203 @@ var projectData = {
         }
     }
 };
+
+async function bindDentistWithdrawEvent() {
+    var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
+    const on_page_load_gwei = ethgasstation_json.safeLow;
+    //adding 10% just in case the transaction dont fail
+    const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
+
+    //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+    var gas_cost_for_withdraw = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).estimateGas({
+        from: global_state.account,
+        gas: 500000
+    });
+
+    var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_withdraw * on_page_load_gas_price).toString(), 'ether');
+
+    var withdraw_function_abi = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).encodeABI();
+
+    $('.dentist-withdraw').click(async function() {
+        if (metamask) {
+            basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
+        } else {
+            var existingCachedKey = false;
+            var existingCachedKeystore = '';
+            var currentAccountsStorage = localStorage.getItem('current-accounts');
+            if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                var currentAccounts = JSON.parse(currentAccountsStorage);
+
+                for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
+                    if (global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
+                        existingCachedKey = true;
+                        existingCachedKeystore = currentAccounts[i].keystore;
+                        break;
+                    }
+                }
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/get-recipe-popup',
+                dataType: 'json',
+                data: {
+                    /*to: assurance_config.assurance_proxy_address,*/
+                    cached_key: existingCachedKey,
+                    contract: $('.single-contract-view-section').attr('data-contract'),
+                    show_dcn_bar: false,
+                    recipe_title: 'WITHDRAW NOW',
+                    recipe_subtitle: '',
+                    recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.',
+                    btn_label: 'WITHDRAW NOW',
+                    type: 'qr-scan'
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: async function (response) {
+                    if (response.success) {
+                        basic.closeDialog();
+                        basic.showDialog(response.success, 'recipe-popup', null, true);
+
+                        // proceed to dentacoin wallet scanning
+                        $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                            var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+                            if (parseFloat(eth_fee) > current_user_eth_balance) {
+                                //not enough ETH balance
+                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                            } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
+                            } else {
+                                $('.onsite-transaction-signing').fadeOut(500);
+                                showLoader();
+
+                                var scanObject = {
+                                    0 : eth_fee,
+                                    1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                    2 : global_state.account,
+                                    3 : $('.single-contract-view-section').attr('data-contract'),
+                                    4 : 'active-withdraw'
+                                };
+
+                                generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
+                            }
+                        });
+
+                        $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                        $('.recipe-popup .ether-fee i').popover({
+                            trigger: 'click',
+                            html: true
+                        });
+
+                        var transaction_key;
+                        if (!existingCachedKey) {
+                            bindVerifyAddressLogic(true);
+                            $(document).on('on-transaction-recipe-agree', function(event) {
+                                transaction_key = event.response_data;
+                                setTimeout(function() {
+                                    hideLoader();
+
+                                    $('.proof-of-address').remove();
+                                    $('.proof-success').fadeIn(1500);
+                                }, 500);
+                            });
+                        } else {
+                            $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
+                            $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
+                            $('.camp-for-keystore-password input[type="password"]').focus();
+                        }
+
+                        $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
+                            var this_btn = $(this);
+                            var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+                            if (parseFloat(eth_fee) > current_user_eth_balance) {
+                                //not enough ETH balance
+                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                            } else {
+                                if (!existingCachedKey && transaction_key == undefined) {
+                                    basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
+                                    return false;
+                                } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                    basic.showAlert('Please enter the secret password for your keystore file.', 'boobox-alert', true);
+                                    return false;
+                                } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                    basic.showAlert('Please check the checkbox below to continue with the transaction creation.', 'boobox-alert', true);
+                                    return false;
+                                } else {
+                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
+                                    setTimeout(async function() {
+                                        if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                            var decrypted_keystore_file_response = decryptKeystore(existingCachedKeystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                            if (decrypted_keystore_file_response.success) {
+                                                transaction_key = decrypted_keystore_file_response.to_string;
+                                            } else if (decrypted_keystore_file_response.error) {
+                                                hideLoader();
+                                                basic.showAlert(decrypted_keystore_file_response.message, 'boobox-alert', true);
+                                                return false;
+                                            }
+                                        }
+                                        this_btn.unbind();
+                                        const EthereumTx = require('ethereumjs-tx');
+                                        var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
+
+                                        var withdraw_transaction_obj = {
+                                            gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_withdraw + (gas_cost_for_withdraw * 5/100))),
+                                            gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                            from: global_state.account,
+                                            nonce: dApp.web3_1_0.utils.toHex(nonce),
+                                            chainId: dApp.chain_id,
+                                            data: withdraw_function_abi,
+                                            to: assurance_config.assurance_proxy_address
+                                        };
+
+                                        const withdraw_transaction = new EthereumTx(withdraw_transaction_obj);
+                                        //signing the transaction
+                                        withdraw_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                        var confirmedTransaction = false;
+                                        //sending the transaction
+                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + withdraw_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
+                                            console.log(transactionHash, 'transactionHash');
+                                        }).on('confirmation', function(confirmationNumber, receipt) {
+                                            console.log(confirmationNumber, 'confirmationNumber');
+                                            if (!confirmedTransaction) {
+                                                confirmedTransaction = true;
+
+                                                //SEND EMAIL TO PATIENT
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: '/dentist/notify-patient-for-successful-withdraw',
+                                                    dataType: 'json',
+                                                    data: {
+                                                        transaction_hash: receipt.transactionHash,
+                                                        contract: $('.single-contract-view-section').attr('data-contract')
+                                                    },
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                    },
+                                                    success: async function (response) {
+                                                        history.pushState({},'', '?successful-withdraw=' + receipt.transactionHash);
+                                                        window.location.reload();
+                                                    }
+                                                });
+                                            }
+                                        }).on('error', function(error) {
+                                            console.log(error, 'error');
+                                            basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
+                                            hideLoader();
+                                        });
+                                    }, 2000);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+}
 
 projectData.initiators.initDatepicker();
 
@@ -77116,258 +77134,275 @@ function cancelContractEventInit() {
                     if (metamask) {
                         basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
                     } else {
-                        var existingCachedKey = false;
-                        var existingCachedKeystore = '';
-                        var currentAccountsStorage = localStorage.getItem('current-accounts');
-                        if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
-                            var currentAccounts = JSON.parse(currentAccountsStorage);
+                        // check if dentists is contact canceling initiator and check if any dentacoins can be withdrawn, if yes then show warning
+                        var contract_next_payment = parseInt(exiting_contract[0]);
+                        var now_timestamp = Math.round((new Date()).getTime() / 1000);
+                        var contract_dcn_amount = parseInt(exiting_contract[5]);
+                        var patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
 
-                            for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
-                                if (global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
-                                    existingCachedKey = true;
-                                    existingCachedKeystore = currentAccounts[i].keystore;
-                                    break;
+                        if (contract_next_payment < now_timestamp && patient_dcn_balance >= contract_dcn_amount) {
+                            basic.showAlert('<div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img class="max-width-50" src="/assets/images/attention.svg" alt="attention icon" class="max-width-70"></figure><div class="lato-bold fs-30" style="color: #ff8d8d;">WARNING!</div><div class="black-warning lato-bold fs-30 dark-color">YOU HAVE UNCOLLECTED PAYMENTS.</div><div class="additional-text padding-top-20 padding-bottom-20 fs-20">Withdraw before canceling this contract.<br> Otherwise, you will irreversibly lose your DCN.</div><div class="text-center"><a href="javascript:void(0)" class="dentist-withdraw white-blue-green-btn inline-block max-width-280 max-width-xs-400 margin-bottom-10 width-100">WITHDRAW NOW</a></div></div>', 'boobox-alert', true);
+
+                            bindDentistWithdrawEvent();
+                        } else {
+                            var existingCachedKey = false;
+                            var existingCachedKeystore = '';
+                            var currentAccountsStorage = localStorage.getItem('current-accounts');
+                            if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                var currentAccounts = JSON.parse(currentAccountsStorage);
+
+                                for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
+                                    if (global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
+                                        existingCachedKey = true;
+                                        existingCachedKeystore = currentAccounts[i].keystore;
+                                        break;
+                                    }
                                 }
                             }
-                        }
 
-                        $.ajax({
-                            type: 'POST',
-                            url: '/get-recipe-popup',
-                            dataType: 'json',
-                            data: {
-                                cached_key: existingCachedKey,
-                                contract: this_btn.attr('data-contract'),
-                                show_dcn_bar: false,
-                                recipe_title: this_btn.attr('data-recipe-title'),
-                                recipe_subtitle: this_btn.attr('data-recipe-subtitle'),
-                                recipe_checkbox_text: this_btn.attr('data-recipe-checkbox-text'),
-                                btn_label: 'CANCEL NOW',
-                                type: 'qr-scan'
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: async function (response) {
-                                if (response.success) {
-                                    basic.closeDialog();
-                                    basic.showDialog(response.success, 'recipe-popup', null, true);
-                                    var contract_cancellation_function_abi = await dApp.assurance_proxy_instance.methods.breakContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist)).encodeABI();
+                            $.ajax({
+                                type: 'POST',
+                                url: '/get-recipe-popup',
+                                dataType: 'json',
+                                data: {
+                                    cached_key: existingCachedKey,
+                                    contract: this_btn.attr('data-contract'),
+                                    show_dcn_bar: false,
+                                    recipe_title: this_btn.attr('data-recipe-title'),
+                                    recipe_subtitle: this_btn.attr('data-recipe-subtitle'),
+                                    recipe_checkbox_text: this_btn.attr('data-recipe-checkbox-text'),
+                                    btn_label: 'CANCEL NOW',
+                                    type: 'qr-scan'
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: async function (response) {
+                                    if (response.success) {
+                                        basic.closeDialog();
+                                        basic.showDialog(response.success, 'recipe-popup', null, true);
+                                        var contract_cancellation_function_abi = await dApp.assurance_proxy_instance.methods.breakContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist)).encodeABI();
 
-                                    var select_options = '';
-                                    if (response.contract_data.type == 'dentist') {
-                                        select_options = '<option value="Overdue payments">Overdue payments</option><option value="Missed regular check-ups">Missed regular check-ups</option><option value="Inappropriate behaviour">Inappropriate behaviour</option>';
-                                    } else if (response.contract_data.type == 'patient') {
-                                        if (response.contract_data.status == 'pending') {
-                                            select_options = '<option value="I don\'t need this contract.">I don\'t need this contract.</option><option value="The monthly premium is too high.">The monthly premium is too high.</option><option value="I don\'t like the conditions.">I don\'t like the conditions.</option><option value="I think I\'ve received this by mistake.">I think I\'ve received this by mistake.</option>';
-                                        } else {
-                                            select_options = '<option value="I don\'t need this contract anymore.">I don\'t need this contract anymore.</option><option value="I decided to go to a different dentist.">I decided to go to a different dentist.</option><option value="Inappropriate behaviour or service.">Inappropriate behaviour or service.</option>';
-                                        }
-                                    }
-
-                                    $('.recipe-popup .extra-recipe-html').html('<div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-reason" class="inline-block">Cancellation reason</label><div class="field inline-block"><select id="cancel-contract-reason"><option selected disabled value="">Choose from the list</option>'+select_options+'<option data-open-bonus-field="true" value="Other">Other</option></select></div></div><div class="camp-for-row"></div><div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-comments" class="inline-block">Comments:</label><div class="field inline-block"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background" placeholder="Describe the reason for cancelling this contract in more details (optional)"></textarea></div></div>');
-
-                                    projectData.initiators.fixSelectsOnMac();
-
-                                    $('.recipe-popup #cancel-contract-reason').on('change', function() {
-                                        if ($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
-                                            $('.recipe-popup .camp-for-row').html('<div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-other-reason" class="inline-block">Other reason:</label><div class="field inline-block"><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background" maxlength="255"/></div></div>');
-                                        } else {
-                                            $('.recipe-popup .camp-for-row').html('');
-                                        }
-                                    });
-
-                                    var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
-                                    const on_page_load_gwei = ethgasstation_json.safeLow;
-                                    //adding 10% just in case the transaction dont fail
-                                    const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
-
-                                    //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                                    var gas_cost_for_contract_cancellation = await dApp.assurance_proxy_instance.methods.breakContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist)).estimateGas({
-                                        from: global_state.account,
-                                        gas: 500000
-                                    });
-
-                                    var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_contract_cancellation * on_page_load_gas_price).toString(), 'ether');
-                                    $('.recipe-popup .ether-fee .field').html(eth_fee);
-
-                                    $('.recipe-popup .ether-fee i').popover({
-                                        trigger: 'click',
-                                        html: true
-                                    });
-
-                                    var transaction_key;
-                                    if (!existingCachedKey) {
-                                        bindVerifyAddressLogic(true);
-                                        $(document).on('on-transaction-recipe-agree', function (event) {
-                                            transaction_key = event.response_data;
-                                            setTimeout(function () {
-                                                hideLoader();
-
-                                                $('.proof-of-address').remove();
-                                                $('.proof-success').fadeIn(1500);
-                                            }, 500);
-                                        });
-                                    } else {
-                                        $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
-                                        $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
-                                        $('.camp-for-keystore-password input[type="password"]').focus();
-                                    }
-
-                                    // proceed to dentacoin wallet scanning
-                                    $('.generate-qr-code-for-wallet-scanning').click(async function() {
-                                        var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                                        if (parseFloat(eth_fee) > current_user_eth_balance) {
-                                            //not enough ETH balance
-                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
-                                        } else if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
-                                            basic.showAlert('Please enter other reason.', 'boobox-alert', true);
-                                        } else if ($('.recipe-popup #cancel-contract-reason').val() == null) {
-                                            basic.showAlert('Please select cancellation reason.', 'boobox-alert', true);
-                                        } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                            basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
-                                        } else {
-                                            $('.onsite-transaction-signing').fadeOut(500);
-                                            showLoader();
-
-                                            var scanObject = {
-                                                0 : eth_fee,
-                                                1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                2 : global_state.account,
-                                                3 : this_btn.attr('data-contract'),
-                                                4 : 'cancel',
-                                                5 : response.contract_data.type
-                                            };
-
-                                            if ($('.recipe-popup #cancel-contract-other-reason').length) {
-                                                scanObject[6] = $('.recipe-popup #cancel-contract-other-reason').val().trim();
+                                        var select_options = '';
+                                        if (response.contract_data.type == 'dentist') {
+                                            select_options = '<option value="Overdue payments">Overdue payments</option><option value="Missed regular check-ups">Missed regular check-ups</option><option value="Inappropriate behaviour">Inappropriate behaviour</option>';
+                                        } else if (response.contract_data.type == 'patient') {
+                                            if (response.contract_data.status == 'pending') {
+                                                select_options = '<option value="I don\'t need this contract.">I don\'t need this contract.</option><option value="The monthly premium is too high.">The monthly premium is too high.</option><option value="I don\'t like the conditions.">I don\'t like the conditions.</option><option value="I think I\'ve received this by mistake.">I think I\'ve received this by mistake.</option>';
                                             } else {
-                                                scanObject[6] = $('.recipe-popup #cancel-contract-reason option:selected').html();
+                                                select_options = '<option value="I don\'t need this contract anymore.">I don\'t need this contract anymore.</option><option value="I decided to go to a different dentist.">I decided to go to a different dentist.</option><option value="Inappropriate behaviour or service.">Inappropriate behaviour or service.</option>';
                                             }
-
-                                            generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
                                         }
-                                    });
 
-                                    // continue with assurance blockchain execution
-                                    $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function () {
-                                        var this_execute_transaction_btn = $(this);
-                                        var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+                                        $('.recipe-popup .extra-recipe-html').html('<div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-reason" class="inline-block">Cancellation reason</label><div class="field inline-block"><select id="cancel-contract-reason"><option selected disabled value="">Choose from the list</option>'+select_options+'<option data-open-bonus-field="true" value="Other">Other</option></select></div></div><div class="camp-for-row"></div><div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-comments" class="inline-block">Comments:</label><div class="field inline-block"><textarea id="cancel-contract-comments" maxlength="3000" class="pencil-background" placeholder="Describe the reason for cancelling this contract in more details (optional)"></textarea></div></div>');
 
-                                        if (parseFloat(eth_fee) > current_user_eth_balance) {
-                                            //not enough ETH balance
-                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                                        projectData.initiators.fixSelectsOnMac();
+
+                                        $('.recipe-popup #cancel-contract-reason').on('change', function() {
+                                            if ($(this).find('option:selected').attr('data-open-bonus-field') == 'true') {
+                                                $('.recipe-popup .camp-for-row').html('<div class="input-row padding-top-0 padding-bottom-0"><label for="cancel-contract-other-reason" class="inline-block">Other reason:</label><div class="field inline-block"><input type="text" id="cancel-contract-other-reason" placeholder="Please specify" class="pencil-background" maxlength="255"/></div></div>');
+                                            } else {
+                                                $('.recipe-popup .camp-for-row').html('');
+                                            }
+                                        });
+
+                                        var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
+                                        const on_page_load_gwei = ethgasstation_json.safeLow;
+                                        //adding 10% just in case the transaction dont fail
+                                        const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
+
+                                        //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
+                                        var gas_cost_for_contract_cancellation = await dApp.assurance_proxy_instance.methods.breakContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist)).estimateGas({
+                                            from: global_state.account,
+                                            gas: 500000
+                                        });
+
+                                        var eth_fee = dApp.web3_1_0.utils.fromWei((gas_cost_for_contract_cancellation * on_page_load_gas_price).toString(), 'ether');
+                                        $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                        $('.recipe-popup .ether-fee i').popover({
+                                            trigger: 'click',
+                                            html: true
+                                        });
+
+                                        var transaction_key;
+                                        if (!existingCachedKey) {
+                                            bindVerifyAddressLogic(true);
+                                            $(document).on('on-transaction-recipe-agree', function (event) {
+                                                transaction_key = event.response_data;
+                                                setTimeout(function () {
+                                                    hideLoader();
+
+                                                    $('.proof-of-address').remove();
+                                                    $('.proof-success').fadeIn(1500);
+                                                }, 500);
+                                            });
                                         } else {
-                                            if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
+                                            $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
+                                            $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
+                                            $('.camp-for-keystore-password input[type="password"]').focus();
+                                        }
+
+                                        // proceed to dentacoin wallet scanning
+                                        $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                                            var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+                                            if (parseFloat(eth_fee) > current_user_eth_balance) {
+                                                //not enough ETH balance
+                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                                            } else if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
                                                 basic.showAlert('Please enter other reason.', 'boobox-alert', true);
                                             } else if ($('.recipe-popup #cancel-contract-reason').val() == null) {
                                                 basic.showAlert('Please select cancellation reason.', 'boobox-alert', true);
-                                            } /*else if ($('.recipe-popup #cancel-contract-comments').val().trim() == '') {
+                                            } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
+                                            } else {
+                                                $('.onsite-transaction-signing').fadeOut(500);
+                                                showLoader();
+
+                                                var scanObject = {
+                                                    0 : eth_fee,
+                                                    1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                    2 : global_state.account,
+                                                    3 : this_btn.attr('data-contract'),
+                                                    4 : 'cancel',
+                                                    5 : response.contract_data.type
+                                                };
+
+                                                if ($('.recipe-popup #cancel-contract-other-reason').length) {
+                                                    scanObject[6] = $('.recipe-popup #cancel-contract-other-reason').val().trim();
+                                                } else {
+                                                    scanObject[6] = $('.recipe-popup #cancel-contract-reason option:selected').html();
+                                                }
+
+                                                generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
+                                            }
+                                        });
+
+                                        // continue with assurance blockchain execution
+                                        $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function () {
+                                            var this_execute_transaction_btn = $(this);
+                                            var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
+
+                                            if (parseFloat(eth_fee) > current_user_eth_balance) {
+                                                //not enough ETH balance
+                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                                            } else {
+                                                if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
+                                                    basic.showAlert('Please enter other reason.', 'boobox-alert', true);
+                                                } else if ($('.recipe-popup #cancel-contract-reason').val() == null) {
+                                                    basic.showAlert('Please select cancellation reason.', 'boobox-alert', true);
+                                                } /*else if ($('.recipe-popup #cancel-contract-comments').val().trim() == '') {
                                                 basic.showAlert('Please enter comments.', 'boobox-alert', true);
                                             }*/ else if (!existingCachedKey && transaction_key == undefined) {
-                                                basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
-                                                return false;
-                                            } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
-                                                basic.showAlert('Please enter the secret password for your keystore file.', 'boobox-alert', true);
-                                                return false;
-                                            } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                basic.showAlert('Please check the checkbox below to continue with the transaction creation.', 'boobox-alert', true);
-                                                return false;
-                                            } else {
-                                                showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
-                                                setTimeout(async function() {
-                                                    if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                        var decrypted_keystore_file_response = decryptKeystore(existingCachedKeystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
-                                                        if (decrypted_keystore_file_response.success) {
-                                                            transaction_key = decrypted_keystore_file_response.to_string;
-                                                        } else if (decrypted_keystore_file_response.error) {
-                                                            hideLoader();
-                                                            basic.showAlert(decrypted_keystore_file_response.message, 'boobox-alert', true);
-                                                            return false;
-                                                        }
-                                                    }
-                                                    this_execute_transaction_btn.unbind();
-
-                                                    //fire google analytics event
-                                                    if ($('.recipe-popup #cancel-contract-reason').val() != '' && $('.recipe-popup #cancel-contract-reason').val() != 'Other') {
-                                                        if (this_btn.attr('data-type') == 'dentist') {
-                                                            fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
-                                                        } else if (this_btn.attr('data-type') == 'patient') {
-                                                            fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
-                                                        }
-                                                    } else if ($('.popup-cancel-contract #cancel-contract-reason').val() == 'Other') {
-                                                        if (this_btn.attr('data-type') == 'dentist') {
-                                                            fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-other-reason').val().trim());
-                                                        } else if (this_btn.attr('data-type') == 'patient') {
-                                                            fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.recipe-popup #cancel-contract-other-reason').val().trim());
-                                                        }
-                                                    }
-
-                                                    var cancellation_ajax_data = {
-                                                        contract: this_btn.attr('data-contract'),
-                                                        status: 'cancelled',
-                                                        comments: $('.recipe-popup #cancel-contract-comments').val().trim()
-                                                    };
-
-                                                    if ($('.recipe-popup #cancel-contract-other-reason').length) {
-                                                        cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-other-reason').val().trim();
-                                                    } else {
-                                                        cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-reason option:selected').html();
-                                                    }
-
-                                                    const EthereumTx = require('ethereumjs-tx');
-                                                    var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
-
-                                                    var contract_cancellation_transaction_obj = {
-                                                        gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + (gas_cost_for_contract_cancellation * projectData.variables.bonusPercentagesToGasEstimations / 100))),
-                                                        gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                        from: global_state.account,
-                                                        nonce: dApp.web3_1_0.utils.toHex(nonce),
-                                                        chainId: dApp.chain_id,
-                                                        data: contract_cancellation_function_abi,
-                                                        to: assurance_config.assurance_proxy_address
-                                                    };
-
-                                                    const contract_cancellation_transaction = new EthereumTx(contract_cancellation_transaction_obj);
-                                                    //signing the transaction
-                                                    contract_cancellation_transaction.sign(new Buffer(transaction_key, 'hex'));
-
-                                                    dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
-                                                        console.log(transactionHash, 'transactionHash');
-                                                    }).on('confirmation', function(confirmationNumber, receipt) {
-                                                        $.ajax({
-                                                            type: 'POST',
-                                                            url: '/update-contract-status',
-                                                            dataType: 'json',
-                                                            data: cancellation_ajax_data,
-                                                            headers: {
-                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                            },
-                                                            success: function (inner_response) {
-                                                                showLoader();
-                                                                if (inner_response.success) {
-                                                                    window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
-                                                                } else if (inner_response.error) {
-                                                                    hideLoader();
-                                                                    basic.closeDialog();
-                                                                    basic.showAlert(inner_response.error, 'boobox-alert', true);
-                                                                }
+                                                    basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
+                                                    return false;
+                                                } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                                    basic.showAlert('Please enter the secret password for your keystore file.', 'boobox-alert', true);
+                                                    return false;
+                                                } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                    basic.showAlert('Please check the checkbox below to continue with the transaction creation.', 'boobox-alert', true);
+                                                    return false;
+                                                } else {
+                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
+                                                    setTimeout(async function() {
+                                                        if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                            var decrypted_keystore_file_response = decryptKeystore(existingCachedKeystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                            if (decrypted_keystore_file_response.success) {
+                                                                transaction_key = decrypted_keystore_file_response.to_string;
+                                                            } else if (decrypted_keystore_file_response.error) {
+                                                                hideLoader();
+                                                                basic.showAlert(decrypted_keystore_file_response.message, 'boobox-alert', true);
+                                                                return false;
                                                             }
+                                                        }
+                                                        this_execute_transaction_btn.unbind();
+
+                                                        //fire google analytics event
+                                                        if ($('.recipe-popup #cancel-contract-reason').val() != '' && $('.recipe-popup #cancel-contract-reason').val() != 'Other') {
+                                                            if (this_btn.attr('data-type') == 'dentist') {
+                                                                fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
+                                                            } else if (this_btn.attr('data-type') == 'patient') {
+                                                                fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.recipe-popup #cancel-contract-reason').val());
+                                                            }
+                                                        } else if ($('.popup-cancel-contract #cancel-contract-reason').val() == 'Other') {
+                                                            if (this_btn.attr('data-type') == 'dentist') {
+                                                                fireGoogleAnalyticsEvent('Contract Dentist', 'Cancel', $('.recipe-popup #cancel-contract-other-reason').val().trim());
+                                                            } else if (this_btn.attr('data-type') == 'patient') {
+                                                                fireGoogleAnalyticsEvent('Contract Patient', 'Cancel', $('.recipe-popup #cancel-contract-other-reason').val().trim());
+                                                            }
+                                                        }
+
+                                                        var cancellation_ajax_data = {
+                                                            contract: this_btn.attr('data-contract'),
+                                                            status: 'cancelled',
+                                                            comments: $('.recipe-popup #cancel-contract-comments').val().trim()
+                                                        };
+
+                                                        if ($('.recipe-popup #cancel-contract-other-reason').length) {
+                                                            cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-other-reason').val().trim();
+                                                        } else {
+                                                            cancellation_ajax_data.reason = $('.recipe-popup #cancel-contract-reason option:selected').html();
+                                                        }
+
+                                                        const EthereumTx = require('ethereumjs-tx');
+                                                        var nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
+
+                                                        var contract_cancellation_transaction_obj = {
+                                                            gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_cancellation + (gas_cost_for_contract_cancellation * projectData.variables.bonusPercentagesToGasEstimations / 100))),
+                                                            gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                            from: global_state.account,
+                                                            nonce: dApp.web3_1_0.utils.toHex(nonce),
+                                                            chainId: dApp.chain_id,
+                                                            data: contract_cancellation_function_abi,
+                                                            to: assurance_config.assurance_proxy_address
+                                                        };
+
+                                                        const contract_cancellation_transaction = new EthereumTx(contract_cancellation_transaction_obj);
+                                                        //signing the transaction
+                                                        contract_cancellation_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                                        var confirmedTransaction = false;
+                                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
+                                                            console.log(transactionHash, 'transactionHash');
+                                                        }).on('confirmation', function(confirmationNumber, receipt) {
+                                                            if (!confirmedTransaction) {
+                                                                confirmedTransaction = true;
+
+                                                                $.ajax({
+                                                                    type: 'POST',
+                                                                    url: '/update-contract-status',
+                                                                    dataType: 'json',
+                                                                    data: cancellation_ajax_data,
+                                                                    headers: {
+                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                    },
+                                                                    success: function (inner_response) {
+                                                                        showLoader();
+                                                                        if (inner_response.success) {
+                                                                            window.location = '/' + inner_response.path + '/contract/' + this_btn.attr('data-contract');
+                                                                        } else if (inner_response.error) {
+                                                                            hideLoader();
+                                                                            basic.closeDialog();
+                                                                            basic.showAlert(inner_response.error, 'boobox-alert', true);
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
+                                                        }).on('error', function(error) {
+                                                            console.log(error, 'error');
+                                                            basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
+                                                            hideLoader();
                                                         });
-                                                    }).on('error', function(error) {
-                                                        console.log(error, 'error');
-                                                        basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
-                                                        hideLoader();
-                                                    });
-                                                }, 2000);
+                                                    }, 2000);
+                                                }
                                             }
-                                        }
-                                    });
-                                } else if (response.error) {
-                                    basic.showAlert(response.error, 'boobox-alert', true);
+                                        });
+                                    } else if (response.error) {
+                                        basic.showAlert(response.error, 'boobox-alert', true);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
             } else {

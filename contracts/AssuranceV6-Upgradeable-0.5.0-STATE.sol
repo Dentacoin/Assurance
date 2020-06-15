@@ -32,7 +32,7 @@ contract Ownable {
 
 contract ownerSettings is Ownable {
     bool public contract_paused = false;
-    uint256 public period_to_withdraw = 2592000; //one month
+    uint256 public period_to_withdraw = 180; //3 minutes for testing purpose
     uint256 public min_allowed_amount = 8000000000000; //minimum allowed amount to sign a contract
     uint256 public api_result_dcn_usd_price = 1700000; //usd for one dcn
     uint256 public api_decimals = 10; //decimals, because solidity doesn't support float at this time
@@ -48,11 +48,6 @@ contract ownerSettings is Ownable {
     // ==================================== MODIFIERS ====================================
     modifier onlyApprovedProxy() {
         require(msg.sender == proxy_contract);
-        _;
-    }
-
-    modifier onlyApprovedProxyOrAdmin() {
-        require(msg.sender == proxy_contract || msg.sender == admin);
         _;
     }
 
@@ -164,13 +159,12 @@ contract Assurance is ownerSettings {
     // ==================================== /STATE ====================================
 
     // ==================================== LOGIC ====================================
-    function registerContract(address _patient_addr, address _dentist_addr, uint256 _date_start_contract, bool _approved_by_dentist, bool _approved_by_patient, bool _validation_checked, uint256 _value_usd, uint256 _value_dcn, string calldata _contract_ipfs_hash) external onlyApprovedProxy checkIfPaused {
-//if dentist not registered in the mapping add him
-if(!dentists[_dentist_addr].exists) {
-dentists[_dentist_addr] = dentistStruct(true, new address[](0));
-dentists_addresses.push(_dentist_addr);
-}
+    function registerDentist(address _dentist_addr) public onlyApprovedProxy checkIfPaused {
+        dentists[_dentist_addr] = dentistStruct(true, new address[](0));
+        dentists_addresses.push(_dentist_addr);
+    }
 
+    function registerContract(address _patient_addr, address _dentist_addr, uint256 _date_start_contract, bool _approved_by_dentist, bool _approved_by_patient, bool _validation_checked, uint256 _value_usd, uint256 _value_dcn, string calldata _contract_ipfs_hash) external onlyApprovedProxy checkIfPaused {
 dentists[_dentist_addr].contracts[_patient_addr] = contractStruct(_date_start_contract, _approved_by_dentist, _approved_by_patient, _validation_checked, _value_usd, _value_dcn, _contract_ipfs_hash, dentists[_dentist_addr].patients_addresses.push(_patient_addr) - 1);
 }
 
@@ -199,7 +193,7 @@ require(dcn.transferFrom(_patient_addr, _dentist_addr, _amount));
 }
 
 //can be called from patient and dentist
-function breakContract(address _patient_addr, address _dentist_addr) public onlyApprovedProxyOrAdmin checkIfPaused {
+function breakContract(address _patient_addr, address _dentist_addr) public onlyApprovedProxy checkIfPaused {
 //if there is proposal recorded from this dentist for this patient ----> delete it
 if(patient_contract_history[_patient_addr].dentists[_dentist_addr].exists) {
 //deleting the dentist address from the dentists_addresses array for the current patient

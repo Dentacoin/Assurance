@@ -5,7 +5,7 @@
         @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
     @endif
     @php($countries = (new \App\Http\Controllers\APIRequestsController())->getAllCountries())
-    <div>This present Dentacoin Assurance Contract Agreement was reached on </div>
+    <div>This present Dentacoin Assurance Contract Agreement was reached on {{date('d/m/Y', strtotime($contract->contract_active_at))}}</div>
     <br>
     <div><span class="calibri-bold fs-18">BETWEEN:</span></div>
     <br>

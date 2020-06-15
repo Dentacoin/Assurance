@@ -171,9 +171,6 @@ contract ProxyAssurance is SafeMath {
         //time_passed_for_next_withdraw is the time that passed until the next_withdraw , but not finished the full period_to_withdraw for next_withdraw
         uint256 time_passed_for_next_withdraw = sub(time_range, (months_num - 1) * assurance.getPeriodToWithdraw());
 
-        //updating next_transfer timestamp
-        assurance.updateNextTransferTime(_patient_addr, msg.sender, add(now, sub(assurance.getPeriodToWithdraw(),time_passed_for_next_withdraw)));
-
         //getting the amount that should be transfered to dentist for all the months since the contract init
         uint256 current_withdraw_amount;
         //transfer DCN to dentist
@@ -188,6 +185,11 @@ contract ProxyAssurance is SafeMath {
             //IF DCN MATTERS
             current_withdraw_amount = mul(assurance.getContractDcnValue(_patient_addr, msg.sender), months_num);
         }
+
+        require(dcn.balanceOf(_patient_addr) >= current_withdraw_amount, "This Patient has not enough Dentacoin balance.");
+
+        //updating next_transfer timestamp
+        assurance.updateNextTransferTime(_patient_addr, msg.sender, add(now, sub(assurance.getPeriodToWithdraw(),time_passed_for_next_withdraw)));
 
         //transferring the DCN from patient to dentist
         assurance.dcnTransferFrom(_patient_addr, msg.sender, current_withdraw_amount);
