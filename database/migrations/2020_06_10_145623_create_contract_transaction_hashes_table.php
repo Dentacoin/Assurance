@@ -15,12 +15,16 @@ class CreateContractTransactionHashesTable extends Migration
     {
         Schema::create('contract_transaction_hashes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('contract_slug')->unique();
+            $table->string('contract_slug');
             $table->string('transactionHash');
             $table->enum('to_status', ['awaiting-approval', 'active', 'active-withdraw', 'cancelled']);
             $table->text('data')->nullable();
             $table->tinyInteger('synced_with_assurance_db')->default(0);
             $table->timestamps();
+        });
+
+        Schema::table('contract_checkups', function (Blueprint $table) {
+            $table->foreign('contract_slug')->references('slug')->on('temporally_contracts')->onDelete('cascade');
         });
     }
 
