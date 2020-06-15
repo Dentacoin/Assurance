@@ -75206,8 +75206,14 @@ var projectData = {
                                                                     contract_creation_transaction.sign(new Buffer(transaction_key, 'hex'));
 
                                                                     var confirmedTransaction = false;
-                                                                    dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
+                                                                    dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
                                                                         console.log(transactionHash, 'transactionHash');
+                                                                        var saveTransactionResponse = await saveTransaction({
+                                                                            'transactionHash' : transactionHash,
+                                                                            'to_status' : 'awaiting-approval',
+                                                                            'contract_slug' : $('.init-contract-section').attr('data-contract')
+                                                                        });
+
                                                                     }).on('confirmation', function(confirmationNumber, receipt) {
                                                                         if (!confirmedTransaction) {
                                                                             confirmedTransaction = true;
@@ -75750,7 +75756,7 @@ async function bindDentistWithdrawEvent() {
     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
     var gas_cost_for_withdraw = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).estimateGas({
         from: global_state.account,
-        gas: 500000
+        gas: 300000
     });
     console.log(gas_cost_for_withdraw, 'gas_cost_for_withdraw');
 
@@ -78224,20 +78230,6 @@ async function getUserAddresses(id) {
     });
 }
 
-async function checkIfFreeEmail(email) {
-    return await $.ajax({
-        type: 'POST',
-        url: '/check-email',
-        dataType: 'json',
-        data: {
-            email: email
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-}
-
 async function checkEmailAndReturnData(email, type) {
     return await $.ajax({
         type: 'POST',
@@ -78253,26 +78245,12 @@ async function checkEmailAndReturnData(email, type) {
     });
 }
 
-async function validatePhone(phone, country_code) {
+async function saveTransaction(data) {
     return await $.ajax({
         type: 'POST',
-        url: 'https://api.dentacoin.com/api/phone/',
+        url: '/save-transaction',
         dataType: 'json',
-        data: {
-            phone: phone,
-            country_code: country_code
-        }
-    });
-}
-
-async function checkCaptcha(captcha) {
-    return await $.ajax({
-        type: 'POST',
-        url: '/check-captcha',
-        dataType: 'json',
-        data: {
-            captcha: captcha
-        },
+        data: data,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
