@@ -39,6 +39,16 @@
                     </div>
                 </div>
             </div>
+            @if(isset($mobile) && $mobile)
+                <div class="row contract-footer">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 padding-bottom-40 padding-left-50 padding-right-50 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-xs-15 padding-right-xs-15">
+                        <div class="lato-bold fs-20 padding-bottom-5 timer-label"></div>
+                        <div class="clock"></div>
+                        <div class="flip-clock-message"></div>
+                        {{--<div class="timer-text"></div>--}}
+                    </div>
+                </div>
+            @endif
             <div class="row camping-for-popups" data-patient-name="{{$patient->name}}"></div>
             <div class="row fs-0 padding-top-40 row-with-bottom-squares text-center">
                 <div class="col-sm-3 col-xs-12 inline-block padding-top-15 padding-bottom-15 border-right-light-gray">
