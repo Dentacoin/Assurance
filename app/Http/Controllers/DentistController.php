@@ -231,6 +231,8 @@ class DentistController extends Controller
         $temporally_contract->dentist_id = session('logged_user')['id'];
         $temporally_contract->dentist_address = trim($data['address']);
         $temporally_contract->dentist_street_address = $sender->address;
+        $countries = (new APIRequestsController())->getAllCountries();
+        $temporally_contract->dentist_country = $countries[$sender->country_id - 1]->name;
         $temporally_contract->dentist_name = $sender->name;
         $temporally_contract->dentist_email = $sender->email;
         $temporally_contract->dentist_phone = $sender->phone;

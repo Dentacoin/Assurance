@@ -328,6 +328,8 @@ class PatientController extends Controller {
         $contract->patient_id_number = $data['patient-id-number'];
         $contract->patient_address = $data['dcn_address'];
         $contract->patient_street_address = $logged_patient->address;
+        $countries = (new APIRequestsController())->getAllCountries();
+        $contract->patient_country = $countries[$logged_patient->country_id - 1]->name;
         $contract->contract_active_at = new \DateTime();
 
         //GENERATE PDF

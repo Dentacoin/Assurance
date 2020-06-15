@@ -18,6 +18,7 @@ class CreateTemporallyContractsTable extends Migration
             $table->integer('dentist_id');
             $table->string('dentist_address', 42);
             $table->string('dentist_street_address');
+            $table->string('dentist_country');
             $table->string('dentist_name');
             $table->string('dentist_email', 100);
             $table->string('dentist_phone', 100);
@@ -30,6 +31,7 @@ class CreateTemporallyContractsTable extends Migration
             $table->string('patient_id_number', 100)->nullable();
             $table->string('patient_address', 42)->nullable();
             $table->string('patient_street_address')->nullable();
+            $table->string('patient_country')->nullable();
             $table->string('professional_company_number', 100)->nullable();
             $table->string('general_dentistry');
             $table->float('monthly_premium');
