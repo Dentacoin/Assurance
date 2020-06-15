@@ -1547,18 +1547,25 @@ var projectData = {
 
                         var approval_given = false;
                         var min_allowed_amount = parseInt(await dApp.assurance_state_methods.getMinAllowedAmount());
+                        console.log(min_allowed_amount, 'min_allowed_amount');
                         //if approval is given already SOMEHOW ...
                         if (parseInt(await dApp.dentacoin_token_methods.allowance(projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-patient')), assurance_config.assurance_state_address)) >= min_allowed_amount) {
                             approval_given = true;
                         }
 
+                        console.log(approval_given, 'approval_given');
+
                         if (!approval_given) {
                             //gas estimation for DentacoinToken approval method
                             var gas_cost_for_approval = await dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).estimateGas({gas: 100000});
+                            console.log(gas_cost_for_approval, 'gas_cost_for_approval');
                         }
+
+                        console.log(assurance_config.dummy_address, projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-dentist')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs'));
 
                         //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                         var gas_cost_for_contract_creation = await dApp.assurance_proxy_instance.methods.registerContract(assurance_config.dummy_address, projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-dentist')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: assurance_config.dummy_address, gas: 1000000});
+                        console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation)');
 
                         var methods_gas_cost;
                         if (!approval_given) {
