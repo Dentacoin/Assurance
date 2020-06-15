@@ -23,7 +23,7 @@
     <div><span class="calibri-bold fs-18">and</span></div>
     <br>
     <div>
-        <div>Name - {{$contract->patient_name}} (the "Patient")</div>
+        <div>Name - {{$contract->patient_full_name}} (the "Patient")</div>
         <div>Email - {{$contract->patient_email}}</div>
         <div>Address - {{$contract->patient_street_address}}</div>
         <div>Country - {{$contract->patient_country}}</div>
@@ -93,7 +93,7 @@
             </div>
             <div class="col-xs-12 col-sm-6 text-right padding-top-xs-30">
                 <img src="/assets/contracts/{{$contract->slug.'/patient-signature.png'}}"/>
-                <div class="name">/ {{$contract->patient_name}} /</div>
+                <div class="name">/ {{$contract->patient_full_name}} /</div>
             </div>
         </div>
     </div>

@@ -8,6 +8,7 @@ use App\TemporallyContract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Input;
 
 class HomeController extends Controller
 {
@@ -19,7 +20,11 @@ class HomeController extends Controller
                 return (new DentistController())->getNoContractsView();
             }
         } else if((new UserController())->checkPatientSession()) {
-            return redirect()->route('patient-access');
+            if(!empty(Input::get('cross-login'))) {
+                return redirect()->route('patient-access', ['cross-login' => true]);
+            } else {
+                return redirect()->route('patient-access');
+            }
         } else {
             return view('pages/homepage', ['testimonials' => (new APIRequestsController())->getTestimonials()]);
         }

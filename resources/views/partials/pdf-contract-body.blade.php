@@ -44,7 +44,7 @@
         <div class="section-title">PATIENT DETAILS</div>
         <div class="row">
             <label class="inline-block">Name:</label>
-            <div class="right-field bolded inline-block">{{$contract->patient_name}}</div>
+            <div class="right-field bolded inline-block">{{$contract->patient_full_name}}</div>
         </div>
         <div class="row">
             <label class="inline-block">Email Address:</label>
@@ -105,7 +105,7 @@ padding-bottom:60px;">@include('partials.contract-terms-and-conditions', ['dont_
             </div>
             <div class="patient">
                 <img src="{{CONTRACTS.$contract->slug.'/patient-signature.png'}}"/>
-                <div class="name">/ {{$contract->patient_name}} /</div>
+                <div class="name">/ {{$contract->patient_full_name}} /</div>
             </div>
         </div>
     </div>
