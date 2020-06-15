@@ -308,7 +308,7 @@ class UserController extends Controller {
                 $patient_email = $patient->email;
 
                 // let cronjob check know that database is synced with this transaction status
-                $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'dentist_id' => $initiator->id, 'patient_id' => $patient->id, 'to_status' => 'cancelled'))->get()->first();
+                $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'to_status' => 'cancelled'))->get()->first();
                 if (!empty($transactionHash)) {
                     $transactionHash->synced_with_assurance_db = true;
                     $transactionHash->save();

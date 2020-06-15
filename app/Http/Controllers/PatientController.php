@@ -519,10 +519,10 @@ class PatientController extends Controller {
         }
 
         // let cronjob check know that database is synced with this transaction status
-        $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'patient_id' => $patientId, 'to_status' => 'awaiting-approval'))->get()->first();
-        if (!empty($transactionHash)) {
-            $transactionHash->synced_with_assurance_db = true;
-            $transactionHash->save();
+        $contractTransactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'to_status' => 'awaiting-approval'))->get()->first();
+        if (!empty($contractTransactionHash)) {
+            $contractTransactionHash->synced_with_assurance_db = true;
+            $contractTransactionHash->save();
         }
 
         $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);

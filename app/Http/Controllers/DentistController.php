@@ -313,10 +313,10 @@ class DentistController extends Controller
         $contract->save();
 
         // let cronjob check know that database is synced with this transaction status
-        $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'dentist_id' => $dentistId, 'to_status' => 'active'))->get()->first();
-        if (!empty($transactionHash)) {
-            $transactionHash->synced_with_assurance_db = true;
-            $transactionHash->save();
+        $contractTransactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'to_status' => 'active'))->get()->first();
+        if (!empty($contractTransactionHash)) {
+            $contractTransactionHash->synced_with_assurance_db = true;
+            $contractTransactionHash->save();
         }
 
         $email_view = view('emails/dentist-approve-contract-on-blockchain', ['dentist' => $dentist, 'patient_name' => $patient->name, 'contract_slug' => $contract->slug, 'amount' => $contract->monthly_premium]);
@@ -361,10 +361,10 @@ class DentistController extends Controller
         $patient = (new APIRequestsController())->getUserData($contract->patient_id);
 
         // let cronjob check know that database is synced with this transaction status
-        $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'dentist_id' => $dentistId, 'to_status' => 'active-withdraw'))->get()->first();
-        if (!empty($transactionHash)) {
-            $transactionHash->synced_with_assurance_db = true;
-            $transactionHash->save();
+        $contractTransactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'to_status' => 'active-withdraw'))->get()->first();
+        if (!empty($contractTransactionHash)) {
+            $contractTransactionHash->synced_with_assurance_db = true;
+            $contractTransactionHash->save();
         }
 
         $email_view = view('emails/dentist-successful-withdraw', ['dentist_name' => $dentist_name, 'patient_name' => $patient->name, 'transaction_hash' => $transactionHash]);
