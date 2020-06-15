@@ -22,10 +22,6 @@ class CreateContractTransactionHashesTable extends Migration
             $table->tinyInteger('synced_with_assurance_db')->default(0);
             $table->timestamps();
         });
-
-        Schema::table('contract_transaction_hashes', function (Blueprint $table) {
-            $table->foreign('slug')->references('id')->on('temporally_contracts')->onDelete('cascade');
-        });
     }
 
     /**
