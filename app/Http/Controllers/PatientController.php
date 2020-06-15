@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CalculatorParameter;
 use App\ContractCheckup;
 use App\ContractRecord;
+use App\contractTransactionHash;
 use App\FreeETHReceiver;
 use App\InviteDentistsReward;
 use App\PublicKey;
@@ -511,12 +512,20 @@ class PatientController extends Controller {
         $contract->status = 'awaiting-approval';
         $contract->save();
 
-        $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
         if((new UserController())->checkPatientSession()) {
             $patientId = session('logged_user')['id'];
         } else {
             $patientId = $contract->patient_id;
         }
+
+        // let cronjob check know that database is synced with this transaction status
+        $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'patient_id' => $patientId, 'to_status' => 'awaiting-approval'))->get()->first();
+        if (!empty($transactionHash)) {
+            $transactionHash->synced_with_assurance_db = true;
+            $transactionHash->save();
+        }
+
+        $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
         $logged_patient = (new APIRequestsController())->getUserData($patientId);
 
         $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);

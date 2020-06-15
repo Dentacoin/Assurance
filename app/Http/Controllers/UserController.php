@@ -306,6 +306,13 @@ class UserController extends Controller {
                 $patient = (new APIRequestsController())->getUserData($contract->patient_id);
                 $patient_name = $patient->name;
                 $patient_email = $patient->email;
+
+                // let cronjob check know that database is synced with this transaction status
+                $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'dentist_id' => $initiator->id, 'patient_id' => $patient->id, 'to_status' => 'cancelled'))->get()->first();
+                if (!empty($transactionHash)) {
+                    $transactionHash->synced_with_assurance_db = true;
+                    $transactionHash->save();
+                }
             } else {
                 $patient_name = $contract->patient_fname . ' ' . $contract->patient_lname;
                 $patient_email = $contract->patient_email;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CalculatorParameter;
 use App\ContractCheckup;
 use App\ContractRecord;
+use App\contractTransactionHash;
 use App\FreeETHReceiver;
 use App\InviteDentistsReward;
 use App\TemporallyContract;
@@ -311,6 +312,13 @@ class DentistController extends Controller
         $contract->status = 'active';
         $contract->save();
 
+        // let cronjob check know that database is synced with this transaction status
+        $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'dentist_id' => $dentistId, 'to_status' => 'active'))->get()->first();
+        if (!empty($transactionHash)) {
+            $transactionHash->synced_with_assurance_db = true;
+            $transactionHash->save();
+        }
+
         $email_view = view('emails/dentist-approve-contract-on-blockchain', ['dentist' => $dentist, 'patient_name' => $patient->name, 'contract_slug' => $contract->slug, 'amount' => $contract->monthly_premium]);
         $body = $email_view->render();
 
@@ -351,6 +359,13 @@ class DentistController extends Controller
         }
         $dentist_name = (new APIRequestsController())->getUserData($dentistId)->name;
         $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+
+        // let cronjob check know that database is synced with this transaction status
+        $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'dentist_id' => $dentistId, 'to_status' => 'active-withdraw'))->get()->first();
+        if (!empty($transactionHash)) {
+            $transactionHash->synced_with_assurance_db = true;
+            $transactionHash->save();
+        }
 
         $email_view = view('emails/dentist-successful-withdraw', ['dentist_name' => $dentist_name, 'patient_name' => $patient->name, 'transaction_hash' => $transactionHash]);
         $body = $email_view->render();
