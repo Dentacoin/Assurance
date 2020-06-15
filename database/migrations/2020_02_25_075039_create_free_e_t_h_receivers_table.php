@@ -16,6 +16,7 @@ class CreateFreeETHReceiversTable extends Migration
         Schema::create('free_e_t_h_receivers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('walletAddress', 42)->unique();
+            $table->string('txHash')->unique();
             $table->timestamps();
         });
     }

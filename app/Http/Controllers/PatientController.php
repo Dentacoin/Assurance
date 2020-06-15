@@ -392,6 +392,9 @@ class PatientController extends Controller {
                     $freeETHReceiver->save();
 
                     if(is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
+                        $freeETHReceiver->txHash = $sending_eth_response->transactionHash;
+                        $freeETHReceiver->save();
+
                         $contractRecord = new ContractRecord();
                         $contractRecord->contract_id = $contract->id;
                         $contractRecord->type = 'Contract signed by patient';

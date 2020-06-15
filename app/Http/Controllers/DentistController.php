@@ -73,6 +73,9 @@ class DentistController extends Controller
 
                     $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendEthAmount(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode($sendEthAmountParams)), 'dentist-approval', $contract->patient_address, $contract->dentist_address, $gasPrice);
                     if(is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
+                        $freeETHReceiver->txHash = $sending_eth_response->transactionHash;
+                        $freeETHReceiver->save();
+
                         $params['sent_eth_to_dentist'] = true;
                     } else {
                         // deleting the record if the transaction fails
