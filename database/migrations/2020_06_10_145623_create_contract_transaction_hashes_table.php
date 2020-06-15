@@ -23,7 +23,7 @@ class CreateContractTransactionHashesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('contract_checkups', function (Blueprint $table) {
+        Schema::table('contract_transaction_hashes', function (Blueprint $table) {
             $table->foreign('contract_slug')->references('slug')->on('temporally_contracts')->onDelete('cascade');
         });
     }
