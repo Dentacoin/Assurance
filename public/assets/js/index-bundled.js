@@ -75208,11 +75208,17 @@ var projectData = {
                                                                     var confirmedTransaction = false;
                                                                     dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
                                                                         console.log(transactionHash, 'transactionHash');
+                                                                        console.log({
+                                                                            'transactionHash' : transactionHash,
+                                                                            'to_status' : 'awaiting-approval',
+                                                                            'contract_slug' : $('.init-contract-section').attr('data-contract')
+                                                                        });
                                                                         var saveTransactionResponse = await saveTransaction({
                                                                             'transactionHash' : transactionHash,
                                                                             'to_status' : 'awaiting-approval',
                                                                             'contract_slug' : $('.init-contract-section').attr('data-contract')
                                                                         });
+                                                                        console.log(saveTransactionResponse, 'saveTransactionResponse');
 
                                                                     }).on('confirmation', function(confirmationNumber, receipt) {
                                                                         if (!confirmedTransaction) {
