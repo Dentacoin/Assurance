@@ -2145,8 +2145,15 @@ var projectData = {
                                                                 contract_approval_transaction.sign(new Buffer(transaction_key, 'hex'));
 
                                                                 var confirmedTransaction = false;
-                                                                dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
+                                                                dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
                                                                     console.log(transactionHash, 'transactionHash');
+
+                                                                    var saveTransactionResponse = await saveTransaction({
+                                                                        'transactionHash' : transactionHash,
+                                                                        'to_status' : 'active',
+                                                                        'contract_slug' : $('.init-contract-section').attr('data-contract')
+                                                                    });
+                                                                    console.log(saveTransactionResponse, 'saveTransactionResponse');
                                                                 }).on('confirmation', function(confirmationNumber, receipt) {
                                                                     if (!confirmedTransaction) {
                                                                         confirmedTransaction = true;

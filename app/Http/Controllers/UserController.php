@@ -1091,7 +1091,7 @@ class UserController extends Controller {
             $transaction = new contractTransactionHash();
             $transaction->transactionHash = trim($request->input('transactionHash'));
             $transaction->contract_slug = trim($request->input('contract_slug'));
-            $transaction->status = trim($request->input('to_status'));
+            $transaction->to_status = trim($request->input('to_status'));
 
             if ($to_status == 'cancelled' && !empty($request->input('cancelling_reason')) && !empty($request->input('cancelling_type'))) {
                 $transaction->data = serialize(array('reason' => $request->input('cancelling_reason'), 'type' => $request->input('cancelling_type')));
