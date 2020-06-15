@@ -1,10 +1,16 @@
 @php($dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))
 @php($patient = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id))
 @php($services = unserialize($contract->general_dentistry))
+
+@if(is_object($contract->contract_active_at))
+    @php($active_timestamp = $contract->contract_active_at->getTimestamp())
+@else
+    @php($active_timestamp = strtotime($contract->contract_active_at))
+@endif
 <div>
     <div class="wrapper">
         <div class="main-title">ASSURANCE CONTRACT</div>
-        <div class="sub-title">Signed on {{date('d/m/Y', strtotime($contract->contract_active_at))}}</div>
+        <div class="sub-title">Signed on {{date('d/m/Y', $active_timestamp)}}</div>
         <div class="section-title">DENTIST DETAILS</div>
         <div class="row">
             <label class="inline-block">Name:</label>
