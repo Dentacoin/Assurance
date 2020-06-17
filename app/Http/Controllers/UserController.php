@@ -121,8 +121,7 @@ class UserController extends Controller {
             if($this->checkDentistSession()) {
                 $type = 'dentist';
                 $currentTransactionInitiatorAddress = $contract->dentist_address;
-                /*$dentist_data = $current_logged_user_data;
-                $patient_data = (new APIRequestsController())->getUserData($contract->patient_id);*/
+                $patient_data = (new APIRequestsController())->getUserData($contract->patient_id);
             } else if($this->checkPatientSession()) {
                 $type = 'patient';
                 $currentTransactionInitiatorAddress = $contract->patient_address;
@@ -157,6 +156,10 @@ class UserController extends Controller {
                 'contract_ipfs_hash' => $contract->document_hash,
                 'type' => $type
             );
+
+            if (!empty($patient_data)) {
+                $contract_data['patient_name'] = $patient_data->name;
+            }
 
             return response()->json(['success' => $view, 'contract_data' => $contract_data/*, 'dcn_address' => $current_user_data->dcn_address*/]);
         } else {
@@ -1056,8 +1059,13 @@ class UserController extends Controller {
                 return response()->json(['success' => true]);
             } else if($request->input('to_status') == 'cancelled') {
                 // cancelling contract
-                $type = $request->input('type');
-                $reason = $request->input('reason');
+                $type = trim($request->input('type'));
+                $reason = trim($request->input('reason'));
+                $comments = null;
+                if (!empty($request->input('comments'))) {
+                    $comments = trim($request->input('comments'));
+                }
+
                 if(!isset($type) || !isset($reason)) {
                     return response()->json(['error' => true]);
                 }
@@ -1072,7 +1080,7 @@ class UserController extends Controller {
                     }
                 }
 
-                $this->changeToCancelledStatus($contract, $type, $initiator, $reason);
+                $this->changeToCancelledStatus($contract, $type, $initiator, $reason, $comments);
 
                 return response()->json(['success' => true]);
             }

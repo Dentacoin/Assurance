@@ -1844,7 +1844,9 @@ var projectData = {
                                                                             //signing the transaction
                                                                             approval_transaction.sign(new Buffer(transaction_key, 'hex'));
 
-                                                                            var confirmedAllowedTransaction = false;
+                                                                            fireAssuranceContractCreationTransaction('0x' + approval_transaction.serialize().toString('hex'), nonce + 1);
+
+                                                                            /*var confirmedAllowedTransaction = false;
                                                                             dApp.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
                                                                                 console.log(transactionHash, 'transactionHash');
                                                                             }).on('confirmation', function(confirmationNumber, receipt) {
@@ -1857,14 +1859,17 @@ var projectData = {
                                                                                 console.log(error, 'error');
                                                                                 basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
                                                                                 hideLoader();
-                                                                            });
+                                                                            });*/
                                                                         });
                                                                     } else {
                                                                         fireAssuranceContractCreationTransaction();
                                                                     }
                                                                 }, 2000);
 
-                                                                async function fireAssuranceContractCreationTransaction(nonce) {
+                                                                async function fireAssuranceContractCreationTransaction(signedUnsubmittedTransactionApproval, nonce) {
+                                                                    if (signedUnsubmittedTransactionApproval == undefined) {
+                                                                        signedUnsubmittedTransactionApproval = null;
+                                                                    }
                                                                     if (nonce == undefined) {
                                                                         nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
                                                                     }
@@ -1885,7 +1890,23 @@ var projectData = {
                                                                     //signing the transaction
                                                                     contract_creation_transaction.sign(new Buffer(transaction_key, 'hex'));
 
-                                                                    var confirmedTransaction = false;
+                                                                    var transactionData = {
+                                                                        slug: $('.init-contract-section').attr('data-contract'),
+                                                                        to_status: 'awaiting-approval',
+                                                                        patient_address: projectData.utils.checksumAddress(global_state.account),
+                                                                        dentist_address: projectData.utils.checksumAddress(response.contract_data.dentist),
+                                                                        signedUnsubmittedTransaction: '0x' + contract_creation_transaction.serialize().toString('hex')
+                                                                    };
+
+                                                                    if (signedUnsubmittedTransactionApproval != null) {
+                                                                        transactionData.signedUnsubmittedTransactionApproval = signedUnsubmittedTransactionApproval;
+                                                                    }
+
+                                                                    submitTransactionToApi(transactionData, function() {
+                                                                        onSuccessfulContractCreation();
+                                                                    });
+
+                                                                    /*var confirmedTransaction = false;
                                                                     dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
                                                                         console.log(transactionHash, 'transactionHash');
                                                                         console.log({
@@ -1930,7 +1951,7 @@ var projectData = {
                                                                         console.log(error, 'error');
                                                                         basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
                                                                         hideLoader();
-                                                                    });
+                                                                    });*/
                                                                 }
                                                             }
                                                         }
@@ -2144,7 +2165,17 @@ var projectData = {
                                                                 //signing the transaction
                                                                 contract_approval_transaction.sign(new Buffer(transaction_key, 'hex'));
 
-                                                                var confirmedTransaction = false;
+                                                                submitTransactionToApi({
+                                                                    slug: $('.init-contract-section').attr('data-contract'),
+                                                                    to_status: 'active',
+                                                                    patient_address: projectData.utils.checksumAddress($('.single-contract-view-section').attr('data-patient')),
+                                                                    dentist_address: projectData.utils.checksumAddress(global_state.account),
+                                                                    signedUnsubmittedTransaction: '0x' + contract_approval_transaction.serialize().toString('hex')
+                                                                }, function() {
+                                                                    onSuccessfulContractApproval(response.contract_data.patient_name);
+                                                                });
+
+                                                                /*var confirmedTransaction = false;
                                                                 dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
                                                                     console.log(transactionHash, 'transactionHash');
 
@@ -2184,7 +2215,7 @@ var projectData = {
                                                                     console.log(error, 'error');
                                                                     basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
                                                                     hideLoader();
-                                                                });
+                                                                });*/
                                                             }, 2000);
                                                         }
                                                     }
@@ -2595,8 +2626,19 @@ async function bindDentistWithdrawEvent() {
                                         //signing the transaction
                                         withdraw_transaction.sign(new Buffer(transaction_key, 'hex'));
 
-                                        var confirmedTransaction = false;
+                                        submitTransactionToApi({
+                                            slug: $('.single-contract-view-section').attr('data-contract'),
+                                            to_status: 'active-withdraw',
+                                            patient_address: projectData.utils.checksumAddress($('.single-contract-view-section').attr('data-patient')),
+                                            dentist_address: projectData.utils.checksumAddress(global_state.account),
+                                            signedUnsubmittedTransaction: '0x' + withdraw_transaction.serialize().toString('hex')
+                                        }, function() {
+                                            onSuccessfulContractWithdraw(transactionHash);
+                                        });
+
                                         //sending the transaction
+                                        /*
+                                        var confirmedTransaction = false;
                                         dApp.web3_1_0.eth.sendSignedTransaction('0x' + withdraw_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
                                             console.log(transactionHash, 'transactionHash');
 
@@ -2633,7 +2675,7 @@ async function bindDentistWithdrawEvent() {
                                             console.log(error, 'error');
                                             basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
                                             hideLoader();
-                                        });
+                                        });*/
                                     }, 2000);
                                 }
                             }
@@ -4085,7 +4127,20 @@ function cancelContractEventInit() {
                                                         //signing the transaction
                                                         contract_cancellation_transaction.sign(new Buffer(transaction_key, 'hex'));
 
-                                                        var confirmedTransaction = false;
+                                                        submitTransactionToApi({
+                                                            slug: this_btn.attr('data-contract'),
+                                                            to_status: 'cancelled',
+                                                            patient_address: projectData.utils.checksumAddress(response.contract_data.patient),
+                                                            dentist_address: projectData.utils.checksumAddress(response.contract_data.dentist),
+                                                            type: this_btn.attr('data-type'),
+                                                            reason: cancellation_ajax_data.reason,
+                                                            comments: cancellation_ajax_data.comments,
+                                                            signedUnsubmittedTransaction: '0x' + contract_cancellation_transaction.serialize().toString('hex')
+                                                        }, function() {
+                                                            onSuccessfulContractCancel(this_btn.attr('data-type'), this_btn.attr('data-contract'));
+                                                        });
+
+                                                        /*var confirmedTransaction = false;
                                                         dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_cancellation_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
                                                             console.log(transactionHash, 'transactionHash');
 
@@ -4126,7 +4181,7 @@ function cancelContractEventInit() {
                                                             console.log(error, 'error');
                                                             basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
                                                             hideLoader();
-                                                        });
+                                                        });*/
                                                     }, 2000);
                                                 }
                                             }
@@ -5276,4 +5331,49 @@ function multipleUseWalletAddressesLogic() {
             });
         });
     }
+}
+
+function submitTransactionToApi(data, successCallback) {
+    $.ajax({
+        type: 'POST',
+        url: '/submit-assurance-transaction',
+        dataType: 'json',
+        data: data,
+        success: function(response) {
+            hideLoader();
+            basic.closeDialog();
+            if(response.success) {
+                successCallback(response.transactionHash);
+            } else {
+                basic.showAlert('Something went wrong. Please try again later or write a message to admin@dentacoin.com with description of the problem.', '', true);
+            }
+        }
+    });
+}
+
+function onSuccessfulContractCreation() {
+    hideLoader();
+    basic.closeDialog();
+    basic.showDialog('<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">WELL DONE!</div><div class="padding-top-20 padding-bottom-15 fs-20">Your dentist has been notified. Once they approve it, your smart contract will be automatically activated.</div><div class="btn-container padding-bottom-40"><a href="javascript:void(0)" class="white-blue-green-btn min-width-200 close-popup">OK</a></div></div>', '', null, true);
+    setTimeout(function () {
+        window.location.reload();
+    }, 5000);
+}
+
+function onSuccessfulContractApproval(patientName) {
+    hideLoader();
+    basic.closeDialog();
+    basic.showDialog('<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">SUCCESSFULLY APPROVED</div><div class="padding-top-20 padding-bottom-15 fs-20">Your contract with '+patientName+' has been successfully approved and activated. You will be notified when the first monthly payment is available.</div><div class="btn-container padding-bottom-40"><a href="javascript:void(0)" class="white-blue-green-btn min-width-200 close-popup">OK</a></div></div>', '', null, true);
+    setTimeout(function () {
+        window.location.reload();
+    }, 5000);
+}
+
+function onSuccessfulContractWithdraw(hash) {
+    history.pushState({},'', '?successful-withdraw=' + hash);
+    window.location.reload();
+}
+
+function onSuccessfulContractCancel(path, slug) {
+    window.location = '/' + path + '/contract/' + slug;
 }
