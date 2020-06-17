@@ -998,48 +998,55 @@ class UserController extends Controller {
 
         $contract = TemporallyContract::where(array('slug' => $request->input('slug')))->get()->first();
         if(!empty($contract)) {
-            $approveContractStatusChange = (new APIRequestsController())->approveContractStatusChange($contract->patient_address, $contract->dentist_address, $request->input('to_status'));
-            if(is_object($approveContractStatusChange) && property_exists($approveContractStatusChange, 'success') && $approveContractStatusChange->success) {
-                if($request->input('to_status') == 'awaiting-approval' && $contract->status == 'awaiting-payment') {
-                    // creating contract
-                    (new PatientController())->changeToAwaitingApprovalStatus($contract);
-
-                    return response()->json(['success' => true]);
-                } else if($request->input('to_status') == 'active' && $contract->status == 'awaiting-approval') {
-                    // approving contract
-                    $patient = (new APIRequestsController())->getUserData($contract->patient_id);
-                    (new DentistController())->changeToActiveStatus($contract, $patient);
-
-                    return response()->json(['success' => true]);
-                } else if($request->input('to_status') == 'active-withdraw' && $contract->status == 'active') {
-                    // withdrawing from contract
-                    (new DentistController())->successfulBlockchainWithdraw($contract, $request->input('transactionHash'));
-
-                    return response()->json(['success' => true]);
-                } else if($request->input('to_status') == 'cancelled') {
-                    // cancelling contract
-                    $type = $request->input('type');
-                    $reason = $request->input('reason');
-                    if(!isset($type) || !isset($reason)) {
-                        return response()->json(['error' => true]);
-                    }
-
-                    if($type == 'dentist') {
-                        $initiator = (new APIRequestsController())->getUserData($contract->dentist_id);
-                    } else if($type == 'patient') {
-                        if(!empty($contract->patient_id)) {
-                            $initiator = (new APIRequestsController())->getUserData($contract->patient_id);
-                        } else {
-                            $initiator = (new APIRequestsController())->getUserByEmailAndType($contract->patient_email, 'patient');
-                        }
-                    }
-
-                    $this->changeToCancelledStatus($contract, $type, $initiator, $reason);
-
-                    return response()->json(['success' => true]);
-                }
+            //$approveContractStatusChange = (new APIRequestsController())->approveContractStatusChange($contract->patient_address, $contract->dentist_address, $request->input('to_status'));
+            //if(is_object($approveContractStatusChange) && property_exists($approveContractStatusChange, 'success') && $approveContractStatusChange->success) {
+            if($request->input('to_status') == 'cancelled') {
+                $hash = hash('sha256', getenv('SECRET_PASSWORD').json_encode(array('slug' => $request->input('slug'), 'transactionHash' => $request->input('transactionHash'), 'to_status' => $request->input('to_status'), 'type' => $request->input('type'), 'reason' => $request->input('reason'))));
             } else {
-                return response()->json(['error' => true]);
+                $hash = hash('sha256', getenv('SECRET_PASSWORD').json_encode(array('slug' => $request->input('slug'), 'transactionHash' => $request->input('transactionHash'), 'to_status' => $request->input('to_status'))));
+            }
+
+            if ($hash != $request->input('updateContractStatusHash')) {
+                return response()->json(['error' => true, 'message' => 'False hash.']);
+            }
+
+            if($request->input('to_status') == 'awaiting-approval' && $contract->status == 'awaiting-payment') {
+                // creating contract
+                (new PatientController())->changeToAwaitingApprovalStatus($contract);
+
+                return response()->json(['success' => true]);
+            } else if($request->input('to_status') == 'active' && $contract->status == 'awaiting-approval') {
+                // approving contract
+                $patient = (new APIRequestsController())->getUserData($contract->patient_id);
+                (new DentistController())->changeToActiveStatus($contract, $patient);
+
+                return response()->json(['success' => true]);
+            } else if($request->input('to_status') == 'active-withdraw' && $contract->status == 'active') {
+                // withdrawing from contract
+                (new DentistController())->successfulBlockchainWithdraw($contract, $request->input('transactionHash'));
+
+                return response()->json(['success' => true]);
+            } else if($request->input('to_status') == 'cancelled') {
+                // cancelling contract
+                $type = $request->input('type');
+                $reason = $request->input('reason');
+                if(!isset($type) || !isset($reason)) {
+                    return response()->json(['error' => true]);
+                }
+
+                if($type == 'dentist') {
+                    $initiator = (new APIRequestsController())->getUserData($contract->dentist_id);
+                } else if($type == 'patient') {
+                    if(!empty($contract->patient_id)) {
+                        $initiator = (new APIRequestsController())->getUserData($contract->patient_id);
+                    } else {
+                        $initiator = (new APIRequestsController())->getUserByEmailAndType($contract->patient_email, 'patient');
+                    }
+                }
+
+                $this->changeToCancelledStatus($contract, $type, $initiator, $reason);
+
+                return response()->json(['success' => true]);
             }
         } else {
             return response()->json(['error' => true]);
