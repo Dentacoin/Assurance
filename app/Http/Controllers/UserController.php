@@ -985,6 +985,34 @@ class UserController extends Controller {
         }
     }
 
+    protected function markContractAsProcessing(Request $request) {
+        $this->validate($request, [
+            'slug' => 'required',
+            'patient_address' => 'required',
+            'dentist_address' => 'required',
+            'hash' => 'required'
+        ], [
+            'slug.required' => 'Slug is required.',
+            'patient_address.required' => 'Patient is required.',
+            'dentist_address.required' => 'Dentist is required.',
+            'hash.required' => 'Hash is required.'
+        ]);
+
+        if (hash('sha256', getenv('SECRET_PASSWORD').json_encode(array('slug' => $request->input('slug'), 'patient_address' => $request->input('patient_address'), 'dentist_address' => $request->input('dentist_address')))) != $request->input('hash')) {
+            return response()->json(['error' => true, 'message' => 'False hash.']);
+        }
+
+        $contract = TemporallyContract::where(array('slug' => trim($request->input('slug')), 'patient_address' => trim($request->input('patient_address')), 'dentist_address' => trim($request->input('dentist_address'))))->get()->first();
+        if(!empty($contract)) {
+            $contract->is_processing = true;
+            $contract->save();
+
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
+
     protected function requestContractStatusChange(Request $request) {
         $this->validate($request, [
             'slug' => 'required',
