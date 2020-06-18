@@ -7,7 +7,7 @@
     @else
         @php($contract_active_at = strtotime($contract->contract_active_at))
     @endif
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section margin-bottom-20" data-monthly-premium="{{$contract->monthly_premium}}" data-patient="{{$contract->patient_address}}" data-dentist="{{$contract->dentist_address}}" data-date-start-contract="{{$contract_active_at}}" data-contract-ipfs="{{$contract->document_hash}}" data-contract="{{$contract->slug}}">
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section margin-bottom-20" data-monthly-premium="{{$contract->monthly_premium}}" data-patient="{{$contract->patient_address}}" data-dentist="{{$contract->dentist_address}}" data-date-start-contract="{{$contract_active_at}}" data-contract-ipfs="{{$contract->document_hash}}" data-contract="{{$contract->slug}}" data-processing-contract="{{$contract->is_processing}}">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
@@ -28,7 +28,10 @@
                     </div>
                 </div>
                 <div class="col-xs-4 inline-block-bottom contract-body">
-                    <div class="attention-in-process fs-16 text-center padding-bottom-5">ATTENTION: ACTION IN PROCESS</div>
+                    @if ($contract->is_processing)
+
+                    @endif
+                    <div class="attention-in-process fs-16 text-center padding-bottom-5">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-10 width-100 max-width-20" alt="Question mark"/></div>
                     <div class="contact-body-wrapper">
                         <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-payment">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING PAYMENT</div>
                         @if(isset($mobile) && !$mobile)
