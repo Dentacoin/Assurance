@@ -17,14 +17,13 @@
             </div>
         </div>
         <div class="container single-contract-tile module text-center padding-top-20 @if(isset($mobile) && $mobile) mobile @endif">
-            @if ($contract->is_processing)
-
-            @endif
-            <div class="row">
-                <div class="attention-in-process fs-16 text-center padding-bottom-5 col-xs-12">
-                    <a href="javascript:void(0);">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/></a>
+            @if ($contract->is_processing && isset($mobile) && $mobile)
+                <div class="row">
+                    <div class="attention-in-process fs-18 text-center padding-bottom-15 col-xs-12">
+                        <a href="javascript:void(0);">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/></a>
+                    </div>
                 </div>
-            </div>
+            @endif
             <div class="row fs-0 patient-dentist-data">
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-bottom padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15 dentist">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
@@ -36,12 +35,11 @@
                     </div>
                 </div>
                 <div class="col-xs-4 inline-block-bottom contract-body">
-                    @if ($contract->is_processing)
-
+                    @if ($contract->is_processing && isset($mobile) && !$mobile)
+                        <div class="attention-in-process fs-16 text-center padding-bottom-10">
+                            <a href="javascript:void(0);">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/></a>
+                        </div>
                     @endif
-                    <div class="attention-in-process fs-16 text-center padding-bottom-5">
-                        <a href="javascript:void(0);">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/></a>
-                    </div>
                     <div class="contact-body-wrapper">
                         <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-payment">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING PAYMENT</div>
                         @if(isset($mobile) && !$mobile)
