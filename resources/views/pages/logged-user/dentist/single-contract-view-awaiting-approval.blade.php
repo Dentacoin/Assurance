@@ -6,7 +6,7 @@
     @else
         @php($contract_active_at = strtotime($contract->contract_active_at))
     @endif
-    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section awaiting-approval dentist-contract-single-page-section" data-created-at="{{strtotime($contract->contract_active_at)}}" data-date-start-contract="{{$contract_active_at}}" data-patient="{{$contract->patient_address}}" data-dentist="{{$contract->dentist_address}}" data-contract="{{$contract->slug}}" data-processing-contract="{{$contract->is_processing}}">
+    <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section awaiting-approval dentist-contract-single-page-section" data-created-at="{{strtotime($contract->contract_active_at)}}" data-date-start-contract="{{$contract_active_at}}" data-patient="{{$contract->patient_address}}" data-dentist="{{$contract->dentist_address}}" data-contract="{{$contract->slug}}" @if($contract->is_processing) data-processing-contract="true" @else data-processing-contract="false" @endif>
         <section class="container">
             <div class="row">
                 <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
@@ -17,11 +17,7 @@
         </section>
         <section class="container single-contract-tile module pending text-center padding-top-20 @if(isset($mobile) && $mobile) mobile @endif">
             @if ($contract->is_processing && isset($mobile) && $mobile)
-                <div class="row">
-                    <div class="attention-in-process fs-18 text-center padding-bottom-15 col-xs-12">
-                        <a href="javascript:void(0);">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/></a>
-                    </div>
-                </div>
+                @include('partials.processing-contract-mobile')
             @endif
             <div class="row fs-0 patient-dentist-data">
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15 dentist">
@@ -44,9 +40,7 @@
                 </div>--}}
                 <div class="col-xs-4 inline-block contract-body">
                     @if ($contract->is_processing && isset($mobile) && !$mobile)
-                        <div class="attention-in-process fs-16 text-center padding-bottom-10">
-                            <a href="javascript:void(0);">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/></a>
-                        </div>
+                        @include('partials.processing-contract-desktop')
                     @endif
                     <div class="contact-body-wrapper">
                         <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-approval">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING APPROVAL</div>
