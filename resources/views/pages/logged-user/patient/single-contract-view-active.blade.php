@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="col-xs-4 inline-block contract-body">
-                    @if ($contract->is_processing && isset($mobile) && !$mobile)
+                    @if ($contract->is_processing && isset($mobile) && !$mobile && !$contract->is_processing)
                         @include('partials.processing-contract-desktop')
                     @endif
                     <div class="contact-body-wrapper">
@@ -65,7 +65,7 @@
                     <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$patient->email}}</div>
                 </div>
             </div>
-            @if(isset($mobile) && $mobile)
+            @if(isset($mobile) && $mobile && !$contract->is_processing)
                 <div class="row contract-footer">
                     <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 padding-bottom-40 padding-left-50 padding-right-50 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-xs-15 padding-right-xs-15">
                         <div class="lato-bold fs-20 padding-bottom-5 timer-label"></div>
@@ -160,6 +160,10 @@
     @if(!empty($recordsHistory))
         @include('partials.records-history', ['contract' => $contract])
     @endif
-    <div class="external-api-crypto-provider hide">@include('partials.patient-ready-to-purchase-with-external-api')</div>
+    <div class="external-api-crypto-provider hide">
+        @if (!$contract->is_processing)
+            @include('partials.patient-ready-to-purchase-with-external-api')
+        @endif
+    </div>
 @endsection
 

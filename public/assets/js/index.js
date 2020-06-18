@@ -1598,7 +1598,13 @@ var projectData = {
 
 
                         if ($('.patient-contract-single-page-section').attr('data-processing-contract') == 'true') {
-                            showContractAttentionInProcess();
+                            $('.ready-to-purchase-with-external-api').hide();
+                            if ($('body').hasClass('mobile')) {
+                                $('.contract-footer').remove();
+                            } else if ($('body').hasClass('not-mobile')) {
+                                $('.contract-header .wrapper').remove();
+                                $('.contract-header .steps-navigation').remove();
+                            }
                         } else {
                             patientApprovalAndContractCreationLogic(current_user_dcn_balance, current_user_eth_balance);
                         }
