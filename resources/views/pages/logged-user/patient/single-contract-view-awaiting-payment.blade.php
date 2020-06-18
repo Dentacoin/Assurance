@@ -17,6 +17,14 @@
             </div>
         </div>
         <div class="container single-contract-tile module text-center padding-top-20 @if(isset($mobile) && $mobile) mobile @endif">
+            @if ($contract->is_processing)
+
+            @endif
+            <div class="row">
+                <div class="attention-in-process fs-16 text-center padding-bottom-5 col-xs-12">
+                    <a href="javascript:void(0);">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/></a>
+                </div>
+            </div>
             <div class="row fs-0 patient-dentist-data">
                 <div class="col-xs-4 col-md-3 contract-participant text-center inline-block-bottom padding-top-35 padding-bottom-35 white-color-background padding-left-xs-5 padding-right-xs-5 padding-top-xs-15 padding-bottom-xs-15 dentist">
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
@@ -59,9 +67,6 @@
             </div>
             @if(isset($mobile) && $mobile)
                 <div class="row contract-footer">
-                    <div class="attention-in-process fs-16 text-center padding-bottom-5">
-                        <a href="javascript:void(0);">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/></a>
-                    </div>
                     <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-0 padding-right-0">
                         <div class="padding-left-15 padding-right-15">
                             <div class="lato-bold fs-20 padding-bottom-5 timer-label"></div>

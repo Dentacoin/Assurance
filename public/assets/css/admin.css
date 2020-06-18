@@ -1092,6 +1092,8 @@
         padding: 10px;
         border-bottom: 1px solid #888888;
         max-width: none !important; } }
+.module.single-contract-tile .attention-in-process a {
+  color: #888888; }
 .module.single-contract-tile .contract-participant {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
