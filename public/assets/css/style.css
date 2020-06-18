@@ -8834,6 +8834,8 @@ select.select-mac-fix {
   padding-left: 0;
   padding-right: 0;
   color: #888888; }
+  .module.single-contract-tile .contract-body .attention-in-process a {
+    color: #888888; }
   .module.single-contract-tile .contract-body .contact-body-wrapper {
     background-color: #ebebeb;
     -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);

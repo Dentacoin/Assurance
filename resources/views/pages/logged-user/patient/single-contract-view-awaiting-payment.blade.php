@@ -31,7 +31,9 @@
                     @if ($contract->is_processing)
 
                     @endif
-                    <div class="attention-in-process fs-16 text-center padding-bottom-5">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-10 width-100 max-width-20" alt="Question mark"/></div>
+                    <div class="attention-in-process fs-16 text-center padding-bottom-5">
+                        <a href="javascript:void(0);">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/></a>
+                    </div>
                     <div class="contact-body-wrapper">
                         <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-payment">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING PAYMENT</div>
                         @if(isset($mobile) && !$mobile)
@@ -57,6 +59,9 @@
             </div>
             @if(isset($mobile) && $mobile)
                 <div class="row contract-footer">
+                    <div class="attention-in-process fs-16 text-center padding-bottom-5">
+                        <a href="javascript:void(0);">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/></a>
+                    </div>
                     <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-0 padding-right-0">
                         <div class="padding-left-15 padding-right-15">
                             <div class="lato-bold fs-20 padding-bottom-5 timer-label"></div>
