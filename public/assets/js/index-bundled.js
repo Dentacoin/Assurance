@@ -75011,291 +75011,302 @@ var projectData = {
                                 });
 
                                 $('.call-recipe').click(function() {
-                                    if (metamask) {
-                                        basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
+                                    if ($('.single-contract-view-section').attr('data-processing-contract') == 'true') {
+                                        showContractAttentionInProcess();
                                     } else {
-                                        var existingCachedKey = false;
-                                        var existingCachedKeystore = '';
-                                        var currentAccountsStorage = localStorage.getItem('current-accounts');
-                                        if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
-                                            var currentAccounts = JSON.parse(currentAccountsStorage);
 
-                                            for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
-                                                if (global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
-                                                    existingCachedKey = true;
-                                                    existingCachedKeystore = currentAccounts[i].keystore;
-                                                    break;
+                                        if (metamask) {
+                                            basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
+                                        } else {
+                                            var existingCachedKey = false;
+                                            var existingCachedKeystore = '';
+                                            var currentAccountsStorage = localStorage.getItem('current-accounts');
+                                            if (currentAccountsStorage != null && currentAccountsStorage != undefined) {
+                                                var currentAccounts = JSON.parse(currentAccountsStorage);
+
+                                                for(var i = 0, len = currentAccounts.length; i < len; i+=1) {
+                                                    if (global_state.account == projectData.utils.checksumAddress(currentAccounts[i].address)) {
+                                                        existingCachedKey = true;
+                                                        existingCachedKeystore = currentAccounts[i].keystore;
+                                                        break;
+                                                    }
                                                 }
                                             }
-                                        }
 
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: '/get-recipe-popup',
-                                            dataType: 'json',
-                                            data: {
-                                                /*to: assurance_config.assurance_proxy_address,*/
-                                                cached_key: existingCachedKey,
-                                                contract: $('.init-contract-section').attr('data-contract'),
-                                                show_dcn_bar: true,
-                                                recipe_title: 'Activate Autopayments',
-                                                recipe_subtitle: 'to never worry about a missed due date',
-                                                recipe_checkbox_text: 'By clicking on the button below you also agree that from now on your monthly premium amount will be automatically deducted from your wallet balance on the payment due date.',
-                                                btn_label: 'CONFIRM',
-                                                type: 'qr-scan'
-                                            },
-                                            headers: {
-                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                            },
-                                            success: async function (response) {
-                                                if (response.success) {
-                                                    basic.closeDialog();
-                                                    basic.showDialog(response.success, 'recipe-popup', null, true);
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '/get-recipe-popup',
+                                                dataType: 'json',
+                                                data: {
+                                                    /*to: assurance_config.assurance_proxy_address,*/
+                                                    cached_key: existingCachedKey,
+                                                    contract: $('.init-contract-section').attr('data-contract'),
+                                                    show_dcn_bar: true,
+                                                    recipe_title: 'Activate Autopayments',
+                                                    recipe_subtitle: 'to never worry about a missed due date',
+                                                    recipe_checkbox_text: 'By clicking on the button below you also agree that from now on your monthly premium amount will be automatically deducted from your wallet balance on the payment due date.',
+                                                    btn_label: 'CONFIRM',
+                                                    type: 'qr-scan'
+                                                },
+                                                headers: {
+                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                },
+                                                success: async function (response) {
+                                                    if (response.success) {
+                                                        basic.closeDialog();
+                                                        basic.showDialog(response.success, 'recipe-popup', null, true);
 
-                                                    // proceed to dentacoin wallet scanning
-                                                    $('.generate-qr-code-for-wallet-scanning').click(async function() {
-                                                        if (parseFloat(eth_fee) > parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)))) {
-                                                            //not enough ETH balance
-                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
-                                                        } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                            basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
-                                                        } else {
-                                                            $('.onsite-transaction-signing').fadeOut(500);
-                                                            showLoader();
-
-                                                            var scanObject = {
-                                                                0 : eth_fee,
-                                                                1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                                2 : global_state.account,
-                                                                3 : $('.patient-contract-single-page-section').attr('data-contract')
-                                                            };
-                                                            var approvalProperty = false;
-                                                            if (!approval_given) {
-                                                                approvalProperty = true;
-                                                            }
-
-                                                            getContractData($('.init-contract-section').attr('data-contract'), async function(response) {
-                                                                if (response.success) {
-                                                                    if(approvalProperty) {
-                                                                        scanObject[4] = 'approval-creation';
-                                                                    } else {
-                                                                        scanObject[4] = 'creation';
-                                                                    }
-
-                                                                    generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
-                                                                } else {
-                                                                    basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
-                                                                    hideLoader();
-                                                                }
-                                                            });
-                                                        }
-                                                    });
-
-                                                    $('.recipe-popup .usd_val span').html($('.patient-contract-single-page-section').attr('data-monthly-premium'));
-                                                    $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
-
-                                                    $('.recipe-popup .ether-fee .field').html(eth_fee);
-
-                                                    $('.recipe-popup .ether-fee i').popover({
-                                                        trigger: 'click',
-                                                        html: true
-                                                    });
-
-                                                    var transaction_key;
-                                                    if (!existingCachedKey) {
-                                                        // if the current contract patient address has not been cached
-                                                        bindVerifyAddressLogic(true);
-                                                        $(document).on('on-transaction-recipe-agree', function(event) {
-                                                            transaction_key = event.response_data;
-                                                            setTimeout(function() {
-                                                                hideLoader();
-
-                                                                $('.proof-of-address').remove();
-                                                                $('.proof-success').fadeIn(1500);
-                                                            }, 500);
-                                                        });
-                                                    } else {
-                                                        // if the current contract patient address has been cached
-                                                        $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
-                                                        $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
-                                                        $('.camp-for-keystore-password input[type="password"]').focus();
-                                                    }
-
-                                                    $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
-                                                        var this_btn = $(this);
-                                                        if (parseFloat(eth_fee) > current_user_eth_balance) {
-                                                            //not enough ETH balance
-                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
-                                                        } else {
-                                                            if (!existingCachedKey && transaction_key == undefined) {
-                                                                basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
-                                                                return false;
-                                                            } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
-                                                                basic.showAlert('Please enter the secret password for your keystore file.', 'boobox-alert', true);
-                                                                return false;
+                                                        // proceed to dentacoin wallet scanning
+                                                        $('.generate-qr-code-for-wallet-scanning').click(async function() {
+                                                            if (parseFloat(eth_fee) > parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)))) {
+                                                                //not enough ETH balance
+                                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
                                                             } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
-                                                                basic.showAlert('Please check the checkbox below to continue with the transaction creation.', 'boobox-alert', true);
-                                                                return false;
+                                                                basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                                             } else {
-                                                                showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
-                                                                const EthereumTx = require('ethereumjs-tx');
-                                                                setTimeout(async function() {
-                                                                    if (existingCachedKey && existingCachedKeystore != '' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
-                                                                        var decrypted_keystore_file_response = decryptKeystore(existingCachedKeystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
-                                                                        if (decrypted_keystore_file_response.success) {
-                                                                            transaction_key = decrypted_keystore_file_response.to_string;
-                                                                        } else if (decrypted_keystore_file_response.error) {
-                                                                            hideLoader();
-                                                                            basic.showAlert(decrypted_keystore_file_response.message, 'boobox-alert', true);
-                                                                            return false;
+                                                                $('.onsite-transaction-signing').fadeOut(500);
+                                                                showLoader();
+
+                                                                var scanObject = {
+                                                                    0 : eth_fee,
+                                                                    1 : dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                                    2 : global_state.account,
+                                                                    3 : $('.patient-contract-single-page-section').attr('data-contract')
+                                                                };
+                                                                var approvalProperty = false;
+                                                                if (!approval_given) {
+                                                                    approvalProperty = true;
+                                                                }
+
+                                                                getContractData($('.init-contract-section').attr('data-contract'), async function(response) {
+                                                                    if (response.success) {
+                                                                        if(approvalProperty) {
+                                                                            scanObject[4] = 'approval-creation';
+                                                                        } else {
+                                                                            scanObject[4] = 'creation';
                                                                         }
-                                                                    }
 
-                                                                    this_btn.unbind();
-                                                                    if (!approval_given) {
-                                                                        var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).encodeABI();
-                                                                        dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending', function (err, nonce) {
-                                                                            var approval_transaction_obj = {
-                                                                                gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * projectData.variables.bonusPercentagesToGasEstimations / 100))),
-                                                                                gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                                                from: global_state.account,
-                                                                                nonce: dApp.web3_1_0.utils.toHex(nonce),
-                                                                                chainId: dApp.chain_id,
-                                                                                data: approval_function_abi,
-                                                                                to: assurance_config.dentacoin_token_address
-                                                                            };
-
-                                                                            const approval_transaction = new EthereumTx(approval_transaction_obj);
-                                                                            //signing the transaction
-                                                                            approval_transaction.sign(new Buffer(transaction_key, 'hex'));
-
-                                                                            fireAssuranceContractCreationTransaction('0x' + approval_transaction.serialize().toString('hex'), nonce + 1);
-
-                                                                            /*var confirmedAllowedTransaction = false;
-                                                                            dApp.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
-                                                                                console.log(transactionHash, 'transactionHash');
-                                                                            }).on('confirmation', function(confirmationNumber, receipt) {
-                                                                                if (!confirmedAllowedTransaction) {
-                                                                                    confirmedAllowedTransaction = true;
-
-                                                                                    fireAssuranceContractCreationTransaction(nonce + 1);
-                                                                                }
-                                                                            }).on('error', function(error) {
-                                                                                console.log(error, 'error');
-                                                                                basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
-                                                                                hideLoader();
-                                                                            });*/
-                                                                        });
+                                                                        generateQRCodeForDentacoinWalletScan(JSON.stringify(scanObject));
                                                                     } else {
-                                                                        fireAssuranceContractCreationTransaction();
-                                                                    }
-                                                                }, 2000);
-
-                                                                async function fireAssuranceContractCreationTransaction(signedUnsubmittedTransactionApproval, nonce) {
-                                                                    if (signedUnsubmittedTransactionApproval == undefined) {
-                                                                        signedUnsubmittedTransactionApproval = null;
-                                                                    }
-                                                                    if (nonce == undefined) {
-                                                                        nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
-                                                                    }
-
-                                                                    var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
-
-                                                                    var contract_creation_transaction_obj = {
-                                                                        gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * projectData.variables.bonusPercentagesToGasEstimations / 100))),
-                                                                        gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
-                                                                        from: global_state.account,
-                                                                        nonce: dApp.web3_1_0.utils.toHex(nonce),
-                                                                        chainId: dApp.chain_id,
-                                                                        data: contract_creation_function_abi,
-                                                                        to: assurance_config.assurance_proxy_address
-                                                                    };
-
-                                                                    const contract_creation_transaction = new EthereumTx(contract_creation_transaction_obj);
-                                                                    //signing the transaction
-                                                                    contract_creation_transaction.sign(new Buffer(transaction_key, 'hex'));
-
-                                                                    var transactionData = {
-                                                                        slug: $('.init-contract-section').attr('data-contract'),
-                                                                        to_status: 'awaiting-approval',
-                                                                        patient_address: projectData.utils.checksumAddress(global_state.account),
-                                                                        dentist_address: projectData.utils.checksumAddress(response.contract_data.dentist),
-                                                                        signedUnsubmittedTransaction: '0x' + contract_creation_transaction.serialize().toString('hex')
-                                                                    };
-
-                                                                    if (signedUnsubmittedTransactionApproval != null) {
-                                                                        transactionData.signedUnsubmittedTransactionApproval = signedUnsubmittedTransactionApproval;
-                                                                    }
-
-                                                                    submitTransactionToApi(transactionData, function() {
-                                                                        markContractAsProcessing($('.init-contract-section').attr('data-contract'));
-                                                                        $('.camping-for-popups').html('');
-                                                                        $('.ready-to-purchase-with-external-api').hide();
-                                                                        if ($('body').hasClass('mobile')) {
-                                                                            $('.contract-footer').remove();
-                                                                        } else if ($('body').hasClass('not-mobile')) {
-                                                                            $('.contract-header .wrapper').remove();
-                                                                            $('.contract-header .steps-navigation').remove();
-                                                                        }
-
-                                                                        onSuccessfulContractCreation();
-                                                                    });
-
-                                                                    /*var confirmedTransaction = false;
-                                                                    dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
-                                                                        console.log(transactionHash, 'transactionHash');
-                                                                        console.log({
-                                                                            'transactionHash' : transactionHash,
-                                                                            'to_status' : 'awaiting-approval',
-                                                                            'contract_slug' : $('.init-contract-section').attr('data-contract')
-                                                                        });
-                                                                        var saveTransactionResponse = await saveTransaction({
-                                                                            'transactionHash' : transactionHash,
-                                                                            'to_status' : 'awaiting-approval',
-                                                                            'contract_slug' : $('.init-contract-section').attr('data-contract')
-                                                                        });
-                                                                        console.log(saveTransactionResponse, 'saveTransactionResponse');
-
-                                                                    }).on('confirmation', function(confirmationNumber, receipt) {
-                                                                        if (!confirmedTransaction) {
-                                                                            confirmedTransaction = true;
-
-                                                                            $.ajax({
-                                                                                type: 'POST',
-                                                                                url: '/patient/on-blockchain-contract-creation',
-                                                                                dataType: 'json',
-                                                                                data: {
-                                                                                    ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                                },
-                                                                                headers: {
-                                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                                },
-                                                                                success: function (inner_response) {
-                                                                                    if (inner_response.success) {
-                                                                                        hideLoader();
-                                                                                        basic.closeDialog();
-                                                                                        basic.showDialog(inner_response.success, '', null, true);
-                                                                                        setTimeout(function () {
-                                                                                            window.location.reload();
-                                                                                        }, 5000);
-                                                                                    }
-                                                                                }
-                                                                            });
-                                                                        }
-                                                                    }).on('error', function(error) {
-                                                                        console.log(error, 'error');
                                                                         basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
                                                                         hideLoader();
-                                                                    });*/
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+
+                                                        $('.recipe-popup .usd_val span').html($('.patient-contract-single-page-section').attr('data-monthly-premium'));
+                                                        $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
+
+                                                        $('.recipe-popup .ether-fee .field').html(eth_fee);
+
+                                                        $('.recipe-popup .ether-fee i').popover({
+                                                            trigger: 'click',
+                                                            html: true
+                                                        });
+
+                                                        var transaction_key;
+                                                        if (!existingCachedKey) {
+                                                            // if the current contract patient address has not been cached
+                                                            bindVerifyAddressLogic(true);
+                                                            $(document).on('on-transaction-recipe-agree', function(event) {
+                                                                transaction_key = event.response_data;
+                                                                setTimeout(function() {
+                                                                    hideLoader();
+
+                                                                    $('.proof-of-address').remove();
+                                                                    $('.proof-success').fadeIn(1500);
+                                                                }, 500);
+                                                            });
+                                                        } else {
+                                                            // if the current contract patient address has been cached
+                                                            $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
+                                                            $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
+                                                            $('.camp-for-keystore-password input[type="password"]').focus();
+                                                        }
+
+                                                        $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
+                                                            var this_btn = $(this);
+                                                            if (parseFloat(eth_fee) > current_user_eth_balance) {
+                                                                //not enough ETH balance
+                                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                                                            } else {
+                                                                if (!existingCachedKey && transaction_key == undefined) {
+                                                                    basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
+                                                                    return false;
+                                                                } else if (existingCachedKey && $('.camp-for-keystore-password input[type="password"]').val().trim() == '') {
+                                                                    basic.showAlert('Please enter the secret password for your keystore file.', 'boobox-alert', true);
+                                                                    return false;
+                                                                } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
+                                                                    basic.showAlert('Please check the checkbox below to continue with the transaction creation.', 'boobox-alert', true);
+                                                                    return false;
+                                                                } else {
+                                                                    showLoader('Your transaction is now being sent to the blockchain. It might take some time until it gets approved.');
+                                                                    const EthereumTx = require('ethereumjs-tx');
+                                                                    setTimeout(async function() {
+                                                                        if (existingCachedKey && existingCachedKeystore != '' && $('.camp-for-keystore-password input[type="password"]').val().trim() != '') {
+                                                                            var decrypted_keystore_file_response = decryptKeystore(existingCachedKeystore, $('.camp-for-keystore-password input[type="password"]').val().trim());
+                                                                            if (decrypted_keystore_file_response.success) {
+                                                                                transaction_key = decrypted_keystore_file_response.to_string;
+                                                                            } else if (decrypted_keystore_file_response.error) {
+                                                                                hideLoader();
+                                                                                basic.showAlert(decrypted_keystore_file_response.message, 'boobox-alert', true);
+                                                                                return false;
+                                                                            }
+                                                                        }
+
+                                                                        this_btn.unbind();
+                                                                        if (!approval_given) {
+                                                                            var approval_function_abi = await dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).encodeABI();
+                                                                            dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending', function (err, nonce) {
+                                                                                var approval_transaction_obj = {
+                                                                                    gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_approval + (gas_cost_for_approval * projectData.variables.bonusPercentagesToGasEstimations / 100))),
+                                                                                    gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                                                    from: global_state.account,
+                                                                                    nonce: dApp.web3_1_0.utils.toHex(nonce),
+                                                                                    chainId: dApp.chain_id,
+                                                                                    data: approval_function_abi,
+                                                                                    to: assurance_config.dentacoin_token_address
+                                                                                };
+
+                                                                                const approval_transaction = new EthereumTx(approval_transaction_obj);
+                                                                                //signing the transaction
+                                                                                approval_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                                                                fireAssuranceContractCreationTransaction('0x' + approval_transaction.serialize().toString('hex'), nonce + 1);
+
+                                                                                /*var confirmedAllowedTransaction = false;
+                                                                                dApp.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
+                                                                                    console.log(transactionHash, 'transactionHash');
+                                                                                }).on('confirmation', function(confirmationNumber, receipt) {
+                                                                                    if (!confirmedAllowedTransaction) {
+                                                                                        confirmedAllowedTransaction = true;
+
+                                                                                        fireAssuranceContractCreationTransaction(nonce + 1);
+                                                                                    }
+                                                                                }).on('error', function(error) {
+                                                                                    console.log(error, 'error');
+                                                                                    basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
+                                                                                    hideLoader();
+                                                                                });*/
+                                                                            });
+                                                                        } else {
+                                                                            fireAssuranceContractCreationTransaction();
+                                                                        }
+                                                                    }, 2000);
+
+                                                                    async function fireAssuranceContractCreationTransaction(signedUnsubmittedTransactionApproval, nonce) {
+                                                                        if (signedUnsubmittedTransactionApproval == undefined) {
+                                                                            signedUnsubmittedTransactionApproval = null;
+                                                                        }
+                                                                        if (nonce == undefined) {
+                                                                            nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
+                                                                        }
+
+                                                                        var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
+
+                                                                        var contract_creation_transaction_obj = {
+                                                                            gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * projectData.variables.bonusPercentagesToGasEstimations / 100))),
+                                                                            gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
+                                                                            from: global_state.account,
+                                                                            nonce: dApp.web3_1_0.utils.toHex(nonce),
+                                                                            chainId: dApp.chain_id,
+                                                                            data: contract_creation_function_abi,
+                                                                            to: assurance_config.assurance_proxy_address
+                                                                        };
+
+                                                                        const contract_creation_transaction = new EthereumTx(contract_creation_transaction_obj);
+                                                                        //signing the transaction
+                                                                        contract_creation_transaction.sign(new Buffer(transaction_key, 'hex'));
+
+                                                                        var transactionData = {
+                                                                            slug: $('.init-contract-section').attr('data-contract'),
+                                                                            to_status: 'awaiting-approval',
+                                                                            patient_address: projectData.utils.checksumAddress(global_state.account),
+                                                                            dentist_address: projectData.utils.checksumAddress(response.contract_data.dentist),
+                                                                            signedUnsubmittedTransaction: '0x' + contract_creation_transaction.serialize().toString('hex')
+                                                                        };
+
+                                                                        if (signedUnsubmittedTransactionApproval != null) {
+                                                                            transactionData.signedUnsubmittedTransactionApproval = signedUnsubmittedTransactionApproval;
+                                                                        }
+
+                                                                        submitTransactionToApi(transactionData, function() {
+                                                                            markContractAsProcessing($('.init-contract-section').attr('data-contract'));
+
+                                                                            if ($('.camping-for-popups').length) {
+                                                                                $('.camping-for-popups').html('');
+                                                                            }
+                                                                            
+                                                                            $('.ready-to-purchase-with-external-api').hide();
+                                                                            if ($('body').hasClass('mobile')) {
+                                                                                $('.contract-footer').remove();
+                                                                            } else if ($('body').hasClass('not-mobile')) {
+                                                                                $('.contract-body .wrapper').remove();
+                                                                                $('.contract-body .steps-navigation').remove();
+                                                                            }
+
+                                                                            $('.single-contract-tile .inline-block-bottom').addClass('inline-block').removeClass('inline-block-bottom');
+
+                                                                            onSuccessfulContractCreation();
+                                                                        });
+
+                                                                        /*var confirmedTransaction = false;
+                                                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
+                                                                            console.log(transactionHash, 'transactionHash');
+                                                                            console.log({
+                                                                                'transactionHash' : transactionHash,
+                                                                                'to_status' : 'awaiting-approval',
+                                                                                'contract_slug' : $('.init-contract-section').attr('data-contract')
+                                                                            });
+                                                                            var saveTransactionResponse = await saveTransaction({
+                                                                                'transactionHash' : transactionHash,
+                                                                                'to_status' : 'awaiting-approval',
+                                                                                'contract_slug' : $('.init-contract-section').attr('data-contract')
+                                                                            });
+                                                                            console.log(saveTransactionResponse, 'saveTransactionResponse');
+
+                                                                        }).on('confirmation', function(confirmationNumber, receipt) {
+                                                                            if (!confirmedTransaction) {
+                                                                                confirmedTransaction = true;
+
+                                                                                $.ajax({
+                                                                                    type: 'POST',
+                                                                                    url: '/patient/on-blockchain-contract-creation',
+                                                                                    dataType: 'json',
+                                                                                    data: {
+                                                                                        ipfs_hash: response.contract_data.contract_ipfs_hash
+                                                                                    },
+                                                                                    headers: {
+                                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                                    },
+                                                                                    success: function (inner_response) {
+                                                                                        if (inner_response.success) {
+                                                                                            hideLoader();
+                                                                                            basic.closeDialog();
+                                                                                            basic.showDialog(inner_response.success, '', null, true);
+                                                                                            setTimeout(function () {
+                                                                                                window.location.reload();
+                                                                                            }, 5000);
+                                                                                        }
+                                                                                    }
+                                                                                });
+                                                                            }
+                                                                        }).on('error', function(error) {
+                                                                            console.log(error, 'error');
+                                                                            basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
+                                                                            hideLoader();
+                                                                        });*/
+                                                                    }
                                                                 }
                                                             }
-                                                        }
-                                                    });
-                                                } else {
-                                                    basic.showAlert(response.error, 'boobox-alert', true);
+                                                        });
+                                                    } else {
+                                                        basic.showAlert(response.error, 'boobox-alert', true);
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                        }
                                     }
                                 });
                             }
@@ -75511,6 +75522,13 @@ var projectData = {
                                                                         signedUnsubmittedTransaction: '0x' + contract_approval_transaction.serialize().toString('hex')
                                                                     }, function() {
                                                                         markContractAsProcessing($('.init-contract-section').attr('data-contract'));
+
+                                                                        if ($('body').hasClass('mobile')) {
+                                                                            $('.contract-footer').remove();
+                                                                        } else if ($('body').hasClass('not-mobile')) {
+                                                                            $('.contract-body .wrapper').remove();
+                                                                            $('.contract-body .steps-navigation').remove();
+                                                                        }
 
                                                                         onSuccessfulContractApproval(response.contract_data.patient_name);
                                                                     });
@@ -75973,6 +75991,17 @@ async function bindDentistWithdrawEvent() {
                                                 signedUnsubmittedTransaction: '0x' + withdraw_transaction.serialize().toString('hex')
                                             }, function(transactionHash) {
                                                 markContractAsProcessing($('.single-contract-view-section').attr('data-contract'));
+
+                                                if ($('.camping-for-popups').length) {
+                                                    $('.camping-for-popups').html('');
+                                                }
+
+                                                if ($('body').hasClass('mobile')) {
+                                                    $('.contract-footer').remove();
+                                                } else if ($('body').hasClass('not-mobile')) {
+                                                    $('.contract-body .wrapper').remove();
+                                                    $('.contract-body .steps-navigation').remove();
+                                                }
 
                                                 onSuccessfulContractWithdraw(transactionHash);
                                             });
@@ -77483,6 +77512,17 @@ function cancelContractEventInit() {
                                                                 signedUnsubmittedTransaction: '0x' + contract_cancellation_transaction.serialize().toString('hex')
                                                             }, function() {
                                                                 markContractAsProcessing(this_btn.attr('data-contract'));
+
+                                                                if ($('.camping-for-popups').length) {
+                                                                    $('.camping-for-popups').html('');
+                                                                }
+
+                                                                if ($('body').hasClass('mobile')) {
+                                                                    $('.contract-footer').remove();
+                                                                } else if ($('body').hasClass('not-mobile')) {
+                                                                    $('.contract-body .wrapper').remove();
+                                                                    $('.contract-body .steps-navigation').remove();
+                                                                }
 
                                                                 onSuccessfulContractCancel(this_btn);
                                                             });
