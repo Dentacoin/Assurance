@@ -758,10 +758,13 @@ class UserController extends Controller {
             'to_status.required' => 'Status is required.'
         ]);
 
-        $transaction = contractTransactionHash::where(array('contract_slug' => $request->input('slug'), 'to_status' => $request->input('to_status'), 'wallet_signed' => true))->get()->first();
+        $transaction = contractTransactionHash::where(array('contract_slug' => $request->input('slug'), 'to_status' => $request->input('to_status'), 'wallet_signed' => true, 'notified_front_end' => false))->get()->first();
 
         if(!empty($transaction)) {
             $contract = TemporallyContract::where(array('slug' => $transaction->contract_slug))->get()->first();
+
+            $transaction->notified_front_end = true;
+            $transaction->save();
 
             return response()->json([
                 'success' => true,
