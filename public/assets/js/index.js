@@ -172,7 +172,7 @@ var dApp = {
         //DentacoinToken
         dApp.dentacoin_token_instance = await new dApp.web3_1_0.eth.Contract(assurance_config.dentacoin_token_abi, assurance_config.dentacoin_token_address);
 
-        console.log(await dApp.assurance_state_instance.getUsdOverDcn());
+        console.log(await dApp.assurance_state_methods.getUsdOverDcn(), 'getUsdOverDcn');
 
         //init pages logic
         projectData.pagesData.onContractInit();
@@ -199,15 +199,6 @@ var dApp = {
         },
         balanceOf: function(address)  {
             return dApp.dentacoin_token_instance.methods.balanceOf(address).call({}, function(error, result)   {
-                if (!error)  {
-                    return result;
-                }else {
-                    console.error(error);
-                }
-            });
-        },
-        getUsdOverDcn: function()  {
-            return dApp.assurance_state_instance.methods.getUsdOverDcn().call({}, function(error, result)   {
                 if (!error)  {
                     return result;
                 }else {
@@ -268,6 +259,15 @@ var dApp = {
         },
         getMinAllowedAmount: function()  {
             return dApp.assurance_state_instance.methods.getMinAllowedAmount().call({}, function(error, result)   {
+                if (!error)  {
+                    return result;
+                }else {
+                    console.error(error);
+                }
+            });
+        },
+        getUsdOverDcn: function()  {
+            return dApp.assurance_state_instance.methods.getUsdOverDcn().call({}, function(error, result)   {
                 if (!error)  {
                     return result;
                 }else {
