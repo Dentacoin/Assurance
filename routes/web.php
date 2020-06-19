@@ -48,6 +48,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/check-contract-status', 'UserController@checkContractStatus')->middleware('HandleUserSession')->name('check-contract-status');
 
+    Route::post('/check-contract-signing', 'UserController@checkContractSigning')->middleware('HandleUserSession')->name('check-contract-signing');
+
     //======================================= /AJAX ========================================
 
     Route::group(['prefix' => 'patient', 'middleware' => 'HandlePatientSession'], function () {

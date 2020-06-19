@@ -749,6 +749,33 @@ class UserController extends Controller {
         }
     }
 
+    protected function checkContractSigning(Request $request) {
+        $this->validate($request, [
+            'slug' => 'required',
+            'to_status' => 'required',
+        ], [
+            'slug.required' => 'Slug is required.',
+            'to_status.required' => 'Status is required.'
+        ]);
+
+        $transaction = contractTransactionHash::where(array('contract_slug' => $request->input('slug'), 'to_status' => $request->input('to_status'), 'wallet_signed' => true))->get()->first();
+
+        if(!empty($transaction)) {
+            $contract = TemporallyContract::where(array('slug' => $transaction->contract_slug))->get()->first();
+
+            return response()->json([
+                'success' => true,
+                'patient_name' => $contract->patient_name,
+                'transactionHash' => $transaction->transactionHash
+            ]);
+        } else {
+            return response()->json([
+                'error' => true,
+                'message' => 'Not existing contract.'
+            ]);
+        }
+    }
+
     protected function sendNotificationEmailToDentistAndPatientAboutContractCancelling($contract, $cancellation_reason) {
         // sending email to dentist
         $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
