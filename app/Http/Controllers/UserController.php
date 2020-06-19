@@ -1009,11 +1009,11 @@ class UserController extends Controller {
             'transactionHash.required' => 'Transaction is required.',
         ]);
 
-        $slug = trim($request->input('slug'));
         $patient_address = trim($request->input('patient_address'));
         $dentist_address = trim($request->input('dentist_address'));
 
         if (!empty($patient_address) && !empty($dentist_address)) {
+            $slug = trim($request->input('slug'));
             if (hash('sha256', getenv('SECRET_PASSWORD').json_encode(array('slug' => $slug, 'patient_address' => $patient_address, 'dentist_address' => $dentist_address, 'to_status' => $request->input('to_status'), 'transactionHash' => $request->input('transactionHash')))) != $request->input('hash')) {
                 return response()->json(['error' => true, 'message' => 'False hash.']);
             }
@@ -1024,6 +1024,10 @@ class UserController extends Controller {
                 $contract->save();
 
                 $transaction = new contractTransactionHash();
+                $wallet_signed = $request->input('wallet_signed');
+                if (!empty($wallet_signed)) {
+                    $transaction->wallet_signed = true;
+                }
                 $transaction->transactionHash = trim($request->input('transactionHash'));
                 $transaction->contract_slug = $slug;
                 $transaction->to_status = trim($request->input('to_status'));

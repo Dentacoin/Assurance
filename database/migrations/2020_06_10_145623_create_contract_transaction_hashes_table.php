@@ -18,6 +18,7 @@ class CreateContractTransactionHashesTable extends Migration
             $table->string('contract_slug');
             $table->string('transactionHash');
             $table->enum('to_status', ['awaiting-approval', 'active', 'active-withdraw', 'cancelled']);
+            $table->tinyInteger('wallet_signed')->default(0);
             $table->tinyInteger('synced_with_assurance_db')->default(0);
             $table->timestamps();
         });
