@@ -75232,7 +75232,7 @@ var projectData = {
                                                                         }
 
                                                                         submitTransactionToApi(transactionData, function() {
-                                                                            markContractAsProcessing($('.init-contract-section').attr('data-contract'));
+                                                                            changeContractViewToProcessing();
 
                                                                             onSuccessfulContractCreation();
                                                                         });
@@ -75507,7 +75507,7 @@ var projectData = {
                                                                         dentist_address: projectData.utils.checksumAddress(global_state.account),
                                                                         signedUnsubmittedTransaction: '0x' + contract_approval_transaction.serialize().toString('hex')
                                                                     }, function() {
-                                                                        markContractAsProcessing($('.init-contract-section').attr('data-contract'));
+                                                                        changeContractViewToProcessing();
 
                                                                         onSuccessfulContractApproval(response.contract_data.patient_name);
                                                                     });
@@ -75969,7 +75969,7 @@ async function bindDentistWithdrawEvent() {
                                                 dentist_address: projectData.utils.checksumAddress(global_state.account),
                                                 signedUnsubmittedTransaction: '0x' + withdraw_transaction.serialize().toString('hex')
                                             }, function(transactionHash) {
-                                                markContractAsProcessing($('.single-contract-view-section').attr('data-contract'));
+                                                changeContractViewToProcessing();
 
                                                 onSuccessfulContractWithdraw(transactionHash);
                                             });
@@ -77479,7 +77479,7 @@ function cancelContractEventInit() {
                                                                 comments: cancellation_ajax_data.comments,
                                                                 signedUnsubmittedTransaction: '0x' + contract_cancellation_transaction.serialize().toString('hex')
                                                             }, function() {
-                                                                markContractAsProcessing(this_btn.attr('data-contract'));
+                                                                changeContractViewToProcessing();
 
                                                                 onSuccessfulContractCancel(this_btn);
                                                             });
@@ -78736,51 +78736,39 @@ function onSuccessfulContractCancel(btn) {
     btn.attr('data-processing-contract', 'true');
 }
 
-function markContractAsProcessing(slug) {
-    $.ajax({
-        type: 'POST',
-        url: '/mark-contract-as-processing',
-        dataType: 'json',
-        data: {
-            slug: slug
-        },
-        success: function(response) {
-            if(response.success) {
-                var mobileHtml = '<div class="row"> <div class="attention-in-process fs-18 text-center padding-bottom-15 col-xs-12"> <a href="javascript:void(0);"> <div class="padding-bottom-10"><img src="/assets/images/processing-contract-loading.gif" class="width-100 max-width-80" alt="Processing contact loader"/></div>ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/> </a> </div></div>';
-                var desktopHtml = '<div class="attention-in-process fs-16 text-center padding-bottom-10 padding-left-10 padding-right-10"> <a href="javascript:void(0);"> <div class="padding-bottom-10"><img src="/assets/images/processing-contract-loading.gif" class="width-100 max-width-80" alt="Processing contact loader"/></div>ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/> </a></div>';
+function changeContractViewToProcessing() {
+    var mobileHtml = '<div class="row"> <div class="attention-in-process fs-18 text-center padding-bottom-15 col-xs-12"> <a href="javascript:void(0);"> <div class="padding-bottom-10"><img src="/assets/images/processing-contract-loading.gif" class="width-100 max-width-80" alt="Processing contact loader"/></div>ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/> </a> </div></div>';
+    var desktopHtml = '<div class="attention-in-process fs-16 text-center padding-bottom-10 padding-left-10 padding-right-10"> <a href="javascript:void(0);"> <div class="padding-bottom-10"><img src="/assets/images/processing-contract-loading.gif" class="width-100 max-width-80" alt="Processing contact loader"/></div>ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/> </a></div>';
 
-                if ($('body').hasClass('logged-patient')) {
-                    $('.patient-contract-single-page-section').attr('data-processing-contract', 'true');
-                } else if ($('body').hasClass('logged-dentist')) {
-                    $('.single-contract-view-section').attr('data-processing-contract', 'true');
-                }
+    if ($('body').hasClass('logged-patient')) {
+        $('.patient-contract-single-page-section').attr('data-processing-contract', 'true');
+    } else if ($('body').hasClass('logged-dentist')) {
+        $('.single-contract-view-section').attr('data-processing-contract', 'true');
+    }
 
-                // show the processing label
-                if ($('body').hasClass('mobile')) {
-                    $('.single-contract-tile').prepend(mobileHtml);
-                } else if ($('body').hasClass('not-mobile')) {
-                    $('.contract-body').prepend(desktopHtml);
-                }
+    // show the processing label
+    if ($('body').hasClass('mobile')) {
+        $('.single-contract-tile').prepend(mobileHtml);
+    } else if ($('body').hasClass('not-mobile')) {
+        $('.contract-body').prepend(desktopHtml);
+    }
 
-                // remove timers
-                if ($('body').hasClass('mobile')) {
-                    if ($('.contract-footer').length) {
-                        $('.contract-footer').remove();
-                    }
-                } else if ($('body').hasClass('not-mobile')) {
-                    if ($('.contract-body .wrapper').length) {
-                        $('.contract-body .wrapper').remove();
-                    }
-                    if ($('.contract-body .steps-navigation').length) {
-                        $('.contract-body .steps-navigation').remove();
-                    }
-                    $('.contract-body .steps-navigation').remove();
-                }
-
-                $('html, body').animate({scrollTop: 0}, 300);
-            }
+    // remove timers
+    if ($('body').hasClass('mobile')) {
+        if ($('.contract-footer').length) {
+            $('.contract-footer').remove();
         }
-    });
+    } else if ($('body').hasClass('not-mobile')) {
+        if ($('.contract-body .wrapper').length) {
+            $('.contract-body .wrapper').remove();
+        }
+        if ($('.contract-body .steps-navigation').length) {
+            $('.contract-body .steps-navigation').remove();
+        }
+        $('.contract-body .steps-navigation').remove();
+    }
+
+    $('html, body').animate({scrollTop: 0}, 300);
 }
 
 function showContractAttentionInProcess() {
