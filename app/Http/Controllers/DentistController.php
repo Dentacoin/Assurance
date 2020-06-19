@@ -237,17 +237,6 @@ class DentistController extends Controller
         $temporally_contract->dentist_street_address = trim($data['postal-address']);
         $countries = (new APIRequestsController())->getAllCountries();
         $temporally_contract->dentist_country = $countries[$sender->country_id - 1]->name;
-        $api_enums = (new APIRequestsController())->getAllEnums();
-        if (!empty($sender->title)) {
-            foreach ($api_enums->titles as $key => $title) {
-                if ($sender->title == $key) {
-                    $temporally_contract->dentist_name = $title . ' ' . trim($data['dentist-name']);
-                    break;
-                }
-            }
-        } else {
-            $temporally_contract->dentist_name = trim($data['dentist-name']);
-        }
         $temporally_contract->dentist_email = $sender->email;
         $temporally_contract->dentist_phone = '+' . $countries[$sender->country_id - 1]->phone_code . ' ' . trim($data['phone']);
         $temporally_contract->dentist_website = trim($data['website']);

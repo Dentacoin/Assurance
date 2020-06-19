@@ -1,6 +1,22 @@
+@if(!empty($renew_contract))
+    @php($dentist_name = $renew_contract->dentist_name)
+@else
+    @php($api_enums = (new \App\Http\Controllers\APIRequestsController())->getAllEnums())
+    @if (!empty($current_logged_dentist->title))
+        @foreach ($api_enums->titles as $key => $title)
+            @if ($current_logged_dentist->title == $key)
+                @php($dentist_name = $title . ' ' . $current_logged_dentist->name)
+                @break
+            @endif
+        @endforeach
+    @else
+        @php($dentist_name = $current_logged_dentist->name)
+    @endif
+@endif
+
 <div class="one step">
-    <h2 class="text-center calibri-bold fs-30 padding-bottom-25">@if(!empty($renew_contract)){{$renew_contract->dentist_name}}@else{{$current_logged_dentist->name}}@endif</h2>
-    <input type="hidden" name="dentist-name" value="@if(!empty($renew_contract)){{$renew_contract->dentist_name}}@else{{$current_logged_dentist->name}}@endif"/>
+    <h2 class="text-center calibri-bold fs-30 padding-bottom-25">{{$dentist_name}}</h2>
+    <input type="hidden" name="dentist-name" value="{{$dentist_name}}"/>
     <div class="avatar text-center">
         @if(!$current_logged_dentist->hasimage)
             <div class="inline-block-top avatar module upload-file">
