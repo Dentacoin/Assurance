@@ -992,9 +992,13 @@ class UserController extends Controller {
         $this->validate($request, [
             'slug' => 'required',
             'hash' => 'required',
+            'to_status' => 'required',
+            'transactionHash' => 'required',
         ], [
             'slug.required' => 'Slug is required.',
             'hash.required' => 'Hash is required.',
+            'to_status.required' => 'Status is required.',
+            'transactionHash.required' => 'Transaction is required.',
         ]);
 
         $slug = trim($request->input('slug'));
@@ -1010,6 +1014,12 @@ class UserController extends Controller {
             if(!empty($contract)) {
                 $contract->is_processing = true;
                 $contract->save();
+
+                $transaction = new contractTransactionHash();
+                $transaction->transactionHash = trim($request->input('transactionHash'));
+                $transaction->contract_slug = $slug;
+                $transaction->to_status = trim($request->input('to_status'));
+                $transaction->save();
 
                 return response()->json(['success' => true]);
             } else {

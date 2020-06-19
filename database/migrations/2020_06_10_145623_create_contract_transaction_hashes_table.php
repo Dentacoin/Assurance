@@ -18,7 +18,6 @@ class CreateContractTransactionHashesTable extends Migration
             $table->string('contract_slug');
             $table->string('transactionHash');
             $table->enum('to_status', ['awaiting-approval', 'active', 'active-withdraw', 'cancelled']);
-            $table->text('data')->nullable();
             $table->tinyInteger('synced_with_assurance_db')->default(0);
             $table->timestamps();
         });
