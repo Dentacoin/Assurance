@@ -69,8 +69,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
         Route::get('/contract/{slug}', 'PatientController@getPatientContractView')->name('patient-contract-view');
 
-        Route::post('/on-blockchain-contract-creation', 'PatientController@onBlockchainContractCreation')->name('on-blockchain-contract-creation');
-
         Route::post('/record-check-up-or-teeth-cleaning', 'PatientController@recordCheckUpOrTeethCleaning')->name('record-check-up-or-teeth-cleaning');
 
         Route::post('/check-for-incoming-pending-contracts', 'PatientController@checkForIncomingPendingContracts')->name('check-for-incoming-pending-contracts');
@@ -84,10 +82,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
         Route::post('/store-and-submit-temporally-contract', 'DentistController@storeAndSubmitTemporallyContract')->middleware('HandleUserSession')->name('store-and-submit-temporally-contract');
 
         Route::get('/contract/{slug}', 'DentistController@getDentistContractView')->name('dentist-contract-view');
-
-        Route::post('/on-blockchain-contract-approval', 'DentistController@onBlockchainContractApproval')->name('on-blockchain-contract-approval');
-
-        Route::post('/notify-patient-for-successful-withdraw', 'DentistController@notifyPatientForSuccessfulWithdraw')->name('notify-patient-for-successful-withdraw');
 
         Route::post('/check-for-pending-contract-records', 'DentistController@checkForPendingContractRecords')->name('check-for-pending-contract-records');
 

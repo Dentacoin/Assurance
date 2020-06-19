@@ -8842,20 +8842,20 @@ select.select-mac-fix {
     -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
     -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
-    .module.single-contract-tile .contract-body .contact-body-wrapper .absolute-hands {
-      width: 120%;
-      top: 130%;
-      z-index: 5;
-      position: absolute;
-      left: 50%;
-      -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-      transform: translateX(-50%); }
-    .module.single-contract-tile .contract-body .contact-body-wrapper .rotate-animation {
-      width: 8%;
-      top: 150%;
-      position: absolute;
-      left: 46%; }
+  .module.single-contract-tile .contract-body .absolute-hands {
+    width: 120%;
+    top: 130%;
+    z-index: 5;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%); }
+  .module.single-contract-tile .contract-body .rotate-animation {
+    width: 8%;
+    top: 150%;
+    position: absolute;
+    left: 46%; }
 .module.single-contract-tile .clock {
   display: inline-block;
   text-align: center;
