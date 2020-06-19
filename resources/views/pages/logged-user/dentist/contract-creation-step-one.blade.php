@@ -22,15 +22,29 @@
         </div>
         <div class="single-row flex-row fs-0">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Postal Address:</label>
-            <div class="right-field calibri-regular fs-18 dark-color" name="postal-address">{{$current_logged_dentist->address}}</div>
+            <div class="right-field calibri-regular fs-18 dark-color" name="postal-address">
+                @if(!empty($renew_contract))
+                    {{$renew_contract->dentist_street_address}}
+                @else
+                    {{$current_logged_dentist->address}}
+                @endif
+            </div>
         </div>
         <div class="single-row flex-row fs-0">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Country:</label>
-            <div class="right-field calibri-regular fs-18 dark-color" name="country">{{$countries[$current_logged_dentist->country_id - 1]->name}}</div>
+            <div class="right-field calibri-regular fs-18 dark-color" name="country">
+                @if(!empty($renew_contract))
+                    {{$renew_contract->dentist_country}}
+                @else
+                    {{$countries[$current_logged_dentist->country_id - 1]->name}}
+                @endif
+            </div>
         </div>
         <div class="single-row flex-row fs-0">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Phone:</label>
-            @if(!empty($current_logged_dentist->phone))
+            @if(!empty($renew_contract))
+                <div class="right-field calibri-regular fs-18 dark-color" name="phone">{{$renew_contract->dentist_phone}}</div>
+            @elseif(!empty($current_logged_dentist->phone))
                 <div class="right-field calibri-regular fs-18 dark-color" name="phone">{{$current_logged_dentist->phone}}</div>
             @else
                 <input type="number" data-type="phone" name="phone" maxlength="50" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background"/>
@@ -38,7 +52,9 @@
         </div>
         <div class="single-row flex-row fs-0">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Website:</label>
-            @if(!empty($current_logged_dentist->website))
+            @if(!empty($renew_contract))
+                <div class="right-field calibri-regular fs-18 dark-color break-word" name="website"><a href="{{$renew_contract->dentist_website}}" target="_blank">{{$renew_contract->dentist_website}}</a></div>
+            @elseif(!empty($current_logged_dentist->website))
                 <div class="right-field calibri-regular fs-18 dark-color break-word" name="website"><a href="{{$current_logged_dentist->website}}" target="_blank">{{$current_logged_dentist->website}}</a></div>
             @else
                 <input type="text" data-type="website" name="website" maxlength="250" class="right-field break-word calibri-regular fs-18 dark-color inline-block pencil-background"/>
