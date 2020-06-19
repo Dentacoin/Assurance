@@ -768,7 +768,7 @@ class UserController extends Controller {
 
             return response()->json([
                 'success' => true,
-                'patient_name' => $contract->patient_name,
+                'patient_name' => $contract->patient_full_name,
                 'transactionHash' => $transaction->transactionHash
             ]);
         } else {

@@ -172,6 +172,8 @@ var dApp = {
         //DentacoinToken
         dApp.dentacoin_token_instance = await new dApp.web3_1_0.eth.Contract(assurance_config.dentacoin_token_abi, assurance_config.dentacoin_token_address);
 
+        console.log(await dApp.assurance_state_instance.getUsdOverDcn());
+
         //init pages logic
         projectData.pagesData.onContractInit();
     },
@@ -197,6 +199,15 @@ var dApp = {
         },
         balanceOf: function(address)  {
             return dApp.dentacoin_token_instance.methods.balanceOf(address).call({}, function(error, result)   {
+                if (!error)  {
+                    return result;
+                }else {
+                    console.error(error);
+                }
+            });
+        },
+        getUsdOverDcn: function()  {
+            return dApp.assurance_state_instance.methods.getUsdOverDcn().call({}, function(error, result)   {
                 if (!error)  {
                     return result;
                 }else {
@@ -264,166 +275,6 @@ var dApp = {
                 }
             });
         }
-        /*getDentist: function(dentist_addr)  {
-            return dApp.assurance_state_instance.methods.getDentist(dentist_addr).call({ from: global_state.account }, function(error, result)   {
-                if (!error)  {
-                    return result;
-                }else {
-                    console.error(error);
-                }
-            });
-        },
-        getPatient: function(patient_addr, dentist_addr)  {
-            return dApp.assurance_state_instance.methods.getPatient(patient_addr, dentist_addr).call({ from: global_state.account }, function(error, result)   {
-                if (!error)  {
-                    return result;
-                }else {
-                    console.error(error);
-                }
-            });
-        },
-        getDentistsArr: function()  {
-            return dApp.assurance_state_instance.methods.getDentistsArr().call({ from: global_state.account }, function(error, result)   {
-                if (!error)  {
-                    console.log(result);
-                }else {
-                    console.error(error);
-                }
-            });
-        },
-        getPatientsArrForDentist: function(dentist_addr)  {
-            return dApp.assurance_state_instance.methods.getPatientsArrForDentist(dentist_addr).call({ from: global_state.account }, function(error, result)   {
-                if (!error)  {
-                    return result;
-                }else {
-                    console.error(error);
-                }
-            });
-        },
-        getWaitingContractsForPatient: function(patient_addr)  {
-            return dApp.assurance_state_instance.methods.getWaitingContractsForPatient(patient_addr).call({ from: global_state.account }, function(error, result)   {
-                if (!error)  {
-                    return result;
-                }else {
-                    console.error(error);
-                }
-            });
-        },
-        breakContract: function(patient_addr, dentist_addr)  {
-            //check if patient and dentist addresses are valid
-            if (!projectData.utils.innerAddressCheck(patient_addr) || !projectData.utils.innerAddressCheck(dentist_addr)) {
-                basic.showAlert('Patient and dentist addresses must be valid.');
-                return false;
-            }
-            //CHECK IF THERE IS CONTRACT BETWEEN THEM?????
-            return App.assurance_state_instance.methods.breakContract(patient_addr, dentist_addr).send({
-                from: global_state.account,
-                gas: 130000
-            }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
-            }).catch(function(err) {
-                console.error(err);
-            });
-        },
-        dentistApproveContract: function(patient_addr)  {
-            //check if patient address is valid
-            if (!projectData.utils.innerAddressCheck(patient_addr)) {
-                basic.showAlert('Patient address must be valid.');
-                return false;
-            }
-            return dApp.assurance_state_instance.methods.dentistApproveContract(patient_addr).send({
-                from: global_state.account,
-                gas: 65000
-            }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
-            }).catch(function(err) {
-                console.error(err);
-            });
-        },
-        patientApproveContract: function(dentist_addr)  {
-            return dApp.assurance_state_instance.methods.patientApproveContract(dentist_addr).send({
-                from: global_state.account,
-                gas: 65000
-            }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
-            }).catch(function(err) {
-                console.error(err);
-            });
-        },
-        registerContract: async function(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash)  {
-            var check_if_dentist_registered = await dApp.assurance_methods.getDentist(dentist_addr);
-            //check if patient and dentist addresses are valid
-            if (!projectData.utils.innerAddressCheck(patient_addr) || !projectData.utils.innerAddressCheck(dentist_addr)) {
-                basic.showAlert('Patient and dentist addresses must be valid.');
-                return false;
-            }
-            //check if dentist is registered on Assurance contract
-            if (check_if_dentist_registered.toLowerCase() != dentist_addr.toLowerCase()) {
-                basic.showAlert('You are not registered dentist on the Assurance contract. In order to init contracts you must first register your self.');
-                return false;
-            }
-            //(talk with Jeremias about this check) check if patient gave allowance to Assurance contract to manage his Dentacoins
-            if (parseInt(await dApp.dentacoin_token_methods.allowance(patient_addr, dApp.assurance_address)) <= 0) {
-                basic.showAlert('This patient didn\'t give allowance to Assurance contract to manage his Dentacoins.');
-                return false;
-            }
-            //check if USD and DCN values are valid
-            if (parseInt(value_usd) <= 0 || parseInt(value_dcn) <= 0) {
-                basic.showAlert('Both USD and DCN values must be greater than 0.');
-                return false;
-            }
-            //check if valid timestamp
-            if (date_start_contract < 0) {
-                basic.showAlert('Please enter valid date.');
-                return false;
-            }
-            return dApp.assurance_state_instance.methods.registerContract(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash).send({
-                from: global_state.account,
-                gas: 330000
-            }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
-            }).catch(function(err) {
-                console.error(err);
-            });
-        },
-        registerDentist: function()  {
-            return dApp.assurance_state_instance.methods.registerDentist().send({
-                from: global_state.account,
-                gas: 100000
-            }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
-            }).catch(function(err) {
-                console.error(err);
-            });
-        },
-        withdrawToDentist: async function()  {
-            var ready_to_withdraw_arr = [];
-            var current_patients_for_dentist = await dApp.assurance_methods.getPatientsArrForDentist(global_state.account);
-            if (current_patients_for_dentist.length > 0) {
-                for (var i = 0, len = current_patients_for_dentist.length; i < len; i += 1) {
-                    var patient = await dApp.assurance_methods.getPatient(current_patients_for_dentist[i], global_state.account);
-                    //if time passed for next_transfer of contract and if the contract is approved by both patient and dentist and then dentist can withdraw from patient legit
-                    console.log(patient);
-                    if (Math.round(new Date().getTime() / 1000) > parseInt(patient[2]) && patient[3] && patient[4]) {
-                        ready_to_withdraw_arr.push(patient[1]);
-                    }
-                }
-            }
-
-            if (ready_to_withdraw_arr.length > 0) {
-                return dApp.assurance_state_instance.methods.withdrawToDentist(ready_to_withdraw_arr).send({
-                    from: global_state.account,
-                    gas: ready_to_withdraw_arr.length * 60000
-                }).on('transactionHash', function(hash){
-                    basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
-                }).catch(function(err) {
-                    console.error(err);
-                });
-            }else {
-                basic.showAlert('At this moment you don\'t have any possible withdraws (no running contracts or not ready to withdraw contracts).');
-                return false;
-            }
-        }*/
     },
     helper: {
         addBlockTimestampToTransaction: function(transaction)    {
