@@ -78535,7 +78535,7 @@ function trackForWalletSigning(slug, to_status) {
                 }
             });
         }
-    }, 5000);
+    }, 2000);
 }
 
 function trackForWalletCancel(slug) {
@@ -78564,7 +78564,7 @@ function trackForWalletCancel(slug) {
                 }
             });
         }
-    }, 5000);
+    }, 2000);
 }
 
 // =================================== GOOGLE ANALYTICS TRACKING LOGIC ======================================
@@ -78812,7 +78812,7 @@ function onSuccessfulContractWithdraw(hash) {
 function onSuccessfulContractCancel() {
     hideLoader();
     basic.closeDialog();
-    
+
     if ($('.camping-for-popups').length) {
         $('.camping-for-popups').html('');
     }
