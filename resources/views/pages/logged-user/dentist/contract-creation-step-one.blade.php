@@ -1,5 +1,6 @@
 <div class="one step">
     <h2 class="text-center calibri-bold fs-30 padding-bottom-25">{{$current_logged_dentist->name}}</h2>
+    <input type="hidden" name="dentist-name" value="@if(!empty($renew_contract)){{$renew_contract->dentist_name}}@else{{$current_logged_dentist->name}}@endif"/>
     <div class="avatar text-center">
         @if(!$current_logged_dentist->hasimage)
             <div class="inline-block-top avatar module upload-file">
