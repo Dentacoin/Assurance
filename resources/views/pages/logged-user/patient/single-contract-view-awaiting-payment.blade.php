@@ -36,7 +36,7 @@
                     @endif
                     <div class="contact-body-wrapper">
                         <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-payment">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING PAYMENT</div>
-                        @if(isset($mobile) && !$mobile && !$contract->is_processing)
+                        @if(isset($mobile) && !$mobile && $contract->is_processing)
                             <div class="wrapper">
                                 <div class="lato-bold fs-20 padding-top-15 padding-bottom-10 padding-left-10 padding-right-10 timer-label"></div>
                                 <div class="clock"></div>
@@ -57,7 +57,7 @@
                     <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$patient->email}}</div>
                 </div>
             </div>
-            @if(isset($mobile) && $mobile && !$contract->is_processing)
+            @if(isset($mobile) && $mobile && $contract->is_processing)
                 <div class="row contract-footer">
                     <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-0 padding-right-0">
                         <div class="padding-left-15 padding-right-15">
@@ -112,7 +112,7 @@
     @if(!empty($recordsHistory))
         @include('partials.records-history', ['contract' => $contract])
     @endif
-    @if (!$contract->is_processing)
+    @if ($contract->is_processing)
         @include('partials.patient-ready-to-purchase-with-external-api')
     @endif
 @endsection

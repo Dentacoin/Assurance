@@ -75234,20 +75234,6 @@ var projectData = {
                                                                         submitTransactionToApi(transactionData, function() {
                                                                             markContractAsProcessing($('.init-contract-section').attr('data-contract'));
 
-                                                                            if ($('.camping-for-popups').length) {
-                                                                                $('.camping-for-popups').html('');
-                                                                            }
-                                                                            
-                                                                            $('.ready-to-purchase-with-external-api').hide();
-                                                                            if ($('body').hasClass('mobile')) {
-                                                                                $('.contract-footer').remove();
-                                                                            } else if ($('body').hasClass('not-mobile')) {
-                                                                                $('.contract-body .wrapper').remove();
-                                                                                $('.contract-body .steps-navigation').remove();
-                                                                            }
-
-                                                                            $('.single-contract-tile .inline-block-bottom').addClass('inline-block').removeClass('inline-block-bottom');
-
                                                                             onSuccessfulContractCreation();
                                                                         });
 
@@ -75522,13 +75508,6 @@ var projectData = {
                                                                         signedUnsubmittedTransaction: '0x' + contract_approval_transaction.serialize().toString('hex')
                                                                     }, function() {
                                                                         markContractAsProcessing($('.init-contract-section').attr('data-contract'));
-
-                                                                        if ($('body').hasClass('mobile')) {
-                                                                            $('.contract-footer').remove();
-                                                                        } else if ($('body').hasClass('not-mobile')) {
-                                                                            $('.contract-body .wrapper').remove();
-                                                                            $('.contract-body .steps-navigation').remove();
-                                                                        }
 
                                                                         onSuccessfulContractApproval(response.contract_data.patient_name);
                                                                     });
@@ -75991,17 +75970,6 @@ async function bindDentistWithdrawEvent() {
                                                 signedUnsubmittedTransaction: '0x' + withdraw_transaction.serialize().toString('hex')
                                             }, function(transactionHash) {
                                                 markContractAsProcessing($('.single-contract-view-section').attr('data-contract'));
-
-                                                if ($('.camping-for-popups').length) {
-                                                    $('.camping-for-popups').html('');
-                                                }
-
-                                                if ($('body').hasClass('mobile')) {
-                                                    $('.contract-footer').remove();
-                                                } else if ($('body').hasClass('not-mobile')) {
-                                                    $('.contract-body .wrapper').remove();
-                                                    $('.contract-body .steps-navigation').remove();
-                                                }
 
                                                 onSuccessfulContractWithdraw(transactionHash);
                                             });
@@ -77513,17 +77481,6 @@ function cancelContractEventInit() {
                                                             }, function() {
                                                                 markContractAsProcessing(this_btn.attr('data-contract'));
 
-                                                                if ($('.camping-for-popups').length) {
-                                                                    $('.camping-for-popups').html('');
-                                                                }
-
-                                                                if ($('body').hasClass('mobile')) {
-                                                                    $('.contract-footer').remove();
-                                                                } else if ($('body').hasClass('not-mobile')) {
-                                                                    $('.contract-body .wrapper').remove();
-                                                                    $('.contract-body .steps-navigation').remove();
-                                                                }
-
                                                                 onSuccessfulContractCancel(this_btn);
                                                             });
 
@@ -78509,7 +78466,7 @@ function generateQRCodeForDentacoinWalletScan(object) {
 
 // track for $contract status change
 function trackForContractStatusChange(contract, currentStatus) {
-    /*var changeInStatusFound = false;
+    var changeInStatusFound = false;
     setInterval(function() {
         if (allowAutomaticScripts) {
             $.ajax({
@@ -78531,7 +78488,7 @@ function trackForContractStatusChange(contract, currentStatus) {
                 }
             });
         }
-    }, 5000);*/
+    }, 5000);
 }
 
 // =================================== GOOGLE ANALYTICS TRACKING LOGIC ======================================
@@ -78722,6 +78679,7 @@ function multipleUseWalletAddressesLogic() {
 }
 
 function submitTransactionToApi(data, successCallback) {
+    console.log(data, 'submitTransactionToApi');
     $.ajax({
         type: 'POST',
         url: '/submit-assurance-transaction',
@@ -78740,22 +78698,41 @@ function submitTransactionToApi(data, successCallback) {
 }
 
 function onSuccessfulContractCreation() {
+    if ($('.camping-for-popups').length) {
+        $('.camping-for-popups').html('');
+    }
+
+    $('.ready-to-purchase-with-external-api').hide();
+    $('.single-contract-tile .inline-block-bottom').addClass('inline-block').removeClass('inline-block-bottom');
+
     hideLoader();
     basic.closeDialog();
     basic.showDialog('<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">WELL DONE!</div><div class="padding-top-20 padding-bottom-15 fs-20">Your dentist has been notified. Once they approve it, your smart contract will be automatically activated.</div><div class="btn-container padding-bottom-40"><a href="javascript:void(0)" class="white-blue-green-btn min-width-200 close-popup">OK</a></div></div>', '', null, true);
 }
 
 function onSuccessfulContractApproval(patientName) {
+    if ($('.approve-button-container').length) {
+        $('.approve-button-container').remove();
+    }
+
     hideLoader();
     basic.closeDialog();
     basic.showDialog('<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">SUCCESSFULLY APPROVED</div><div class="padding-top-20 padding-bottom-15 fs-20">Your contract with '+patientName+' has been successfully approved and activated. You will be notified when the first monthly payment is available.</div><div class="btn-container padding-bottom-40"><a href="javascript:void(0)" class="white-blue-green-btn min-width-200 close-popup">OK</a></div></div>', '', null, true);
 }
 
 function onSuccessfulContractWithdraw(hash) {
+    if ($('.camping-for-popups').length) {
+        $('.camping-for-popups').html('');
+    }
+
     basic.showDialog('<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">SUCCESSFULLY WITHDRAWN</div><div class="padding-top-20 padding-bottom-15 fs-20">You have successfully withdrawn your Dentacoins from this contract. You will be notified via email when next withdraw is possible.</div><div class="btn-container padding-bottom-40"><a href="http://etherscan.io/tx/'+hash+'" target="_blank" class="white-blue-green-btn min-width-200">Check on Etherscan</a></div></div>', '', null, true);
 }
 
 function onSuccessfulContractCancel(btn) {
+    if ($('.camping-for-popups').length) {
+        $('.camping-for-popups').html('');
+    }
+
     btn.attr('data-processing-contract', 'true');
 }
 
@@ -78768,7 +78745,6 @@ function markContractAsProcessing(slug) {
             slug: slug
         },
         success: function(response) {
-            console.log(response, 'markContractAsProcessing response');
             if(response.success) {
                 var mobileHtml = '<div class="row"><div class="attention-in-process fs-18 text-center padding-bottom-15 col-xs-12"><a href="javascript:void(0);">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/></a></div></div>';
                 var desktopHtml = '<div class="attention-in-process fs-16 text-center padding-bottom-10"><a href="javascript:void(0);">ATTENTION: ACTION IN PROCESS <img src="/assets/images/question-mark.svg" class="margin-left-5 width-100 max-width-20" alt="Question mark"/></a></div>';
@@ -78779,10 +78755,26 @@ function markContractAsProcessing(slug) {
                     $('.single-contract-view-section').attr('data-processing-contract', 'true');
                 }
 
+                // show the processing label
                 if ($('body').hasClass('mobile')) {
                     $('.single-contract-tile').prepend(mobileHtml);
                 } else if ($('body').hasClass('not-mobile')) {
                     $('.contract-body').prepend(desktopHtml);
+                }
+
+                // remove timers
+                if ($('body').hasClass('mobile')) {
+                    if ($('.contract-footer').length) {
+                        $('.contract-footer').remove();
+                    }
+                } else if ($('body').hasClass('not-mobile')) {
+                    if ($('.contract-body .wrapper').length) {
+                        $('.contract-body .wrapper').remove();
+                    }
+                    if ($('.contract-body .steps-navigation').length) {
+                        $('.contract-body .steps-navigation').remove();
+                    }
+                    $('.contract-body .steps-navigation').remove();
                 }
             }
         }

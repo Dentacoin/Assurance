@@ -1054,7 +1054,13 @@ class UserController extends Controller {
             //$approveContractStatusChange = (new APIRequestsController())->approveContractStatusChange($contract->patient_address, $contract->dentist_address, $request->input('to_status'));
             //if(is_object($approveContractStatusChange) && property_exists($approveContractStatusChange, 'success') && $approveContractStatusChange->success) {
             if($request->input('to_status') == 'cancelled') {
-                $hash = hash('sha256', getenv('SECRET_PASSWORD').json_encode(array('slug' => $request->input('slug'), 'transactionHash' => $request->input('transactionHash'), 'to_status' => $request->input('to_status'), 'type' => $request->input('type'), 'reason' => $request->input('reason'))));
+                $comments = trim($request->input('comments'));
+                if (!empty($comments)) {
+                    $hashArray = array('slug' => $request->input('slug'), 'transactionHash' => $request->input('transactionHash'), 'to_status' => $request->input('to_status'), 'type' => $request->input('type'), 'reason' => trim($request->input('reason')), 'comments' => $comments);
+                } else {
+                    $hashArray = array('slug' => $request->input('slug'), 'transactionHash' => $request->input('transactionHash'), 'to_status' => $request->input('to_status'), 'type' => $request->input('type'), 'reason' => $request->input('reason'));
+                }
+                $hash = hash('sha256', getenv('SECRET_PASSWORD').json_encode($hashArray));
             } else {
                 $hash = hash('sha256', getenv('SECRET_PASSWORD').json_encode(array('slug' => $request->input('slug'), 'transactionHash' => $request->input('transactionHash'), 'to_status' => $request->input('to_status'))));
             }
