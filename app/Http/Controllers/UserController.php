@@ -1057,6 +1057,9 @@ class UserController extends Controller {
                 $wallet_signed = $request->input('wallet_signed');
                 if (!empty($wallet_signed)) {
                     $transaction->wallet_signed = true;
+                } else {
+                    // setting this to true, because we don't need to camp for this flag change
+                    $transaction->notified_front_end = true;
                 }
                 $transaction->transactionHash = trim($request->input('transactionHash'));
                 $transaction->contract_slug = $slug;
