@@ -351,7 +351,15 @@ class UserController extends Controller {
             $contract->status = 'cancelled';
             $contract->cancelled_at = new \DateTime();
             $contract->cancellation_reason = serialize($cancellation_reason);
+            $contract->is_processing = false;
             $contract->save();
+
+            // let cronjob check know that database is synced with this transaction status
+            $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'to_status' => 'cancelled'))->get()->first();
+            if (!empty($transactionHash)) {
+                $transactionHash->synced_with_assurance_db = true;
+                $transactionHash->save();
+            }
 
             $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
             $email_view = view('emails/patient-cancel-contract', ['dentist' => $dentist, 'patient_name' => $initiator->name, 'reason' => $reason, 'contract_slug' => $contract->slug]);
