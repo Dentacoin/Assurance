@@ -44,7 +44,7 @@
                     @endif
                     <div class="contact-body-wrapper">
                         <div class="contract-header text-center lato-bold fs-20 white-color padding-top-15 padding-bottom-15 awaiting-approval">@if(isset($mobile) && !$mobile)ACTIVE -@endif AWAITING APPROVAL</div>
-                        @if(isset($mobile) && !$mobile && $contract->is_processing)
+                        @if(isset($mobile) && !$mobile && !$contract->is_processing)
                             <div class="wrapper">
                                 <div class="lato-bold fs-20 padding-top-15 padding-bottom-10 padding-left-10 padding-right-10 timer-label"></div>
                                 <div class="clock"></div>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </div>
-            @if(isset($mobile) && $mobile && $contract->is_processing)
+            @if(isset($mobile) && $mobile && !$contract->is_processing)
                 <div class="row contract-footer">
                     <div class="col-xs-12 col-sm-8 col-sm-offset-2 padding-top-30 padding-bottom-40 padding-left-50 padding-right-50 text-center fs-20 wrapper padding-top-xs-20 padding-bottom-xs-0 padding-left-xs-15 padding-right-xs-15">
                         <div class="lato-bold fs-20 padding-bottom-5 timer-label"></div>
