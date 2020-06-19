@@ -112,7 +112,7 @@
     @if(!empty($recordsHistory))
         @include('partials.records-history', ['contract' => $contract])
     @endif
-    @if ($contract->is_processing)
+    @if (!$contract->is_processing)
         @include('partials.patient-ready-to-purchase-with-external-api')
     @endif
 @endsection

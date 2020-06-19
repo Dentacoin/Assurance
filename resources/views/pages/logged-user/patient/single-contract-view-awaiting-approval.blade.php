@@ -94,7 +94,7 @@
         @include('partials.records-history', ['contract' => $contract])
     @endif
     <div class="external-api-crypto-provider hide">
-        @if ($contract->is_processing)
+        @if (!$contract->is_processing)
             @include('partials.patient-ready-to-purchase-with-external-api')
         @endif
     </div>
