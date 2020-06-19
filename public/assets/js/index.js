@@ -172,8 +172,6 @@ var dApp = {
         //DentacoinToken
         dApp.dentacoin_token_instance = await new dApp.web3_1_0.eth.Contract(assurance_config.dentacoin_token_abi, assurance_config.dentacoin_token_address);
 
-        console.log(await dApp.assurance_state_methods.getUsdOverDcn(), 'getUsdOverDcn');
-
         //init pages logic
         projectData.pagesData.onContractInit();
     },
@@ -388,6 +386,13 @@ var projectData = {
         convertUsdToDcn: function(usd_val) {
             if ($("[data-dcn-for-one-usd]").length) {
                 return parseInt($("[data-dcn-for-one-usd]").attr('data-dcn-for-one-usd')) * usd_val;
+            } else {
+                return false;
+            }
+        },
+        convertDcnToUsd: function(dcn_val) {
+            if ($("[data-dcn-for-one-usd]").length) {
+                return parseInt($("[data-usd-for-one-dcn]").attr('data-usd-for-one-dcn')) * dcn_val;
             } else {
                 return false;
             }
@@ -998,6 +1003,8 @@ var projectData = {
             if ($('body').hasClass('logged-in')) {
                 var now_timestamp = Math.round((new Date()).getTime() / 1000);
                 if ($('body').hasClass('patient-contract-view')) {
+                    // reading the monthly premium from the smart contract
+                    var usdOverDcn = await dApp.assurance_state_methods.getUsdOverDcn();
                     var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
                     if ($('.contract-header').hasClass('awaiting-payment') || $('.contract-header').hasClass('awaiting-approval')) {
                         var time_passed_since_signed = now_timestamp - parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract'));
@@ -1019,8 +1026,11 @@ var projectData = {
                         } else if ($('.contract-header').hasClass('awaiting-approval')) {
                             var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient'), $('.patient-contract-single-page-section').attr('data-dentist'));
 
-                            // reading the monthly premium from the smart contract
-                            dcn_needed_to_be_payed_to_dentist = parseInt(on_load_exiting_contract[5]);
+                            if (usdOverDcn) {
+                                dcn_needed_to_be_payed_to_dentist = Math.round(projectData.utils.convertUsdToDcn(parseInt(on_load_exiting_contract[4])));
+                            } else {
+                                dcn_needed_to_be_payed_to_dentist = parseInt(on_load_exiting_contract[5]);
+                            }
 
                             nextWithdrawTimestamp = parseInt(on_load_exiting_contract[0]);
 
@@ -1090,7 +1100,16 @@ var projectData = {
                         if (Math.floor(time_passed_since_signed / period_to_withdraw) >= 0) {
                             months_passed_for_reward += Math.floor(time_passed_since_signed / period_to_withdraw);
                         }
-                        var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * parseInt(on_load_exiting_contract[5]);
+
+                        if (usdOverDcn) {
+                            var monthly_premium_in_dcn = Math.round(projectData.utils.convertUsdToDcn(on_load_exiting_contract[4]));
+                            var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * monthly_premium_in_dcn;
+                            var monthly_premium_in_usd = parseInt(on_load_exiting_contract[4]);
+                        } else {
+                            var monthly_premium_in_dcn = parseInt(on_load_exiting_contract[5]);
+                            var dcn_needed_to_be_payed_to_dentist = months_passed_for_reward * monthly_premium_in_dcn;
+                            var monthly_premium_in_usd = Math.round(projectData.utils.convertDcnToUsd(monthly_premium_in_dcn));
+                        }
 
                         var timer_label = '';
                         if (time_passed_since_signed > period_to_withdraw && months_passed_for_reward == 1 && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
@@ -1105,7 +1124,7 @@ var projectData = {
                             next_payment_timestamp_unix = period_to_withdraw - remainder;
                             next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                            if (current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
+                            if (current_patient_dcn_balance < monthly_premium_in_dcn) {
                                 timer_label = 'Fund your account until:';
                             } else {
                                 timer_label = 'Next payment processed in:';
@@ -1118,7 +1137,7 @@ var projectData = {
                             }
                             next_payment_timestamp = (next_payment_timestamp_unix + now_timestamp) * 1000;
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
-                            if (current_patient_dcn_balance < parseInt(on_load_exiting_contract[5])) {
+                            if (current_patient_dcn_balance < monthly_premium_in_dcn) {
                                 timer_label = 'Fund your account until:';
                             } else {
                                 timer_label = 'Next payment processed in:';
@@ -1142,7 +1161,7 @@ var projectData = {
                                 $('.external-api-crypto-provider').removeClass('hide');
 
                                 //not enough DCN
-                                $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+(months_passed_for_reward * on_load_exiting_contract[5])+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+dcn_needed_to_be_payed_to_dentist+' DCN</span>) before <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
+                                $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+(months_passed_for_reward * monthly_premium_in_usd)+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+dcn_needed_to_be_payed_to_dentist+' DCN</span>) before <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
 
                                 if (patientDcnBalanceLogicAnimation) {
                                     patientDcnBalanceLogicAnimation = false;
@@ -1360,8 +1379,14 @@ var projectData = {
                     } else if ($('.contract-header').hasClass('awaiting-approval')) {
                         var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.patient-contract-single-page-section').attr('data-patient')));
                         var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.patient-contract-single-page-section').attr('data-patient'), $('.patient-contract-single-page-section').attr('data-dentist'));
-                        var monthly_premium_in_usd = parseInt(on_load_exiting_contract[4]);
-                        var monthly_premium_in_dcn = parseInt(on_load_exiting_contract[5]);
+
+                        if (usdOverDcn) {
+                            var monthly_premium_in_usd = parseInt(on_load_exiting_contract[4]);
+                            var monthly_premium_in_dcn = Math.round(projectData.utils.convertUsdToDcn(monthly_premium_in_usd));
+                        } else {
+                            var monthly_premium_in_dcn = parseInt(on_load_exiting_contract[5]);
+                            var monthly_premium_in_usd = Math.round(projectData.utils.convertDcnToUsd(monthly_premium_in_dcn));
+                        }
 
                         var patientDcnBalanceLogicAnimation = true;
                         patientWaitingForDentistApprovalLogic(current_user_dcn_balance);
@@ -1393,7 +1418,7 @@ var projectData = {
                         console.log(current_user_dcn_balance, 'current_user_dcn_balance');
                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                         console.log(current_user_eth_balance, 'current_user_eth_balance');
-                        var monthly_premium_in_dcn = Math.floor(projectData.utils.convertUsdToDcn(parseInt($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
+                        var monthly_premium_in_dcn = Math.round(projectData.utils.convertUsdToDcn(parseInt($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
                         console.log(monthly_premium_in_dcn, 'monthly_premium_in_dcn');
                         var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                         const on_page_load_gwei = ethgasstation_json.safeLow;
@@ -1416,10 +1441,10 @@ var projectData = {
                             console.log(gas_cost_for_approval, 'gas_cost_for_approval');
                         }
 
-                        console.log(assurance_config.dummy_address, projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-dentist')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs'));
+                        console.log(assurance_config.dummy_address, projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-dentist')), Math.round($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs'));
 
                         //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
-                        var gas_cost_for_contract_creation = await dApp.assurance_proxy_instance.methods.registerContract(assurance_config.dummy_address, projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-dentist')), Math.floor($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: assurance_config.dummy_address, gas: 1000000});
+                        var gas_cost_for_contract_creation = await dApp.assurance_proxy_instance.methods.registerContract(assurance_config.dummy_address, projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-dentist')), Math.round($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: assurance_config.dummy_address, gas: 1000000});
                         console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation)');
 
                         var methods_gas_cost;
@@ -1737,7 +1762,7 @@ var projectData = {
                                                                             nonce = await dApp.web3_1_0.eth.getTransactionCount(global_state.account, 'pending');
                                                                         }
 
-                                                                        var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist), Math.floor(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
+                                                                        var contract_creation_function_abi = await dApp.assurance_proxy_instance.methods.registerContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist), Math.round(response.contract_data.value_usd), monthly_premium_in_dcn, response.contract_data.date_start_contract + period_to_withdraw, response.contract_data.contract_ipfs_hash).encodeABI();
 
                                                                         var contract_creation_transaction_obj = {
                                                                             gasLimit: dApp.web3_1_0.utils.toHex(Math.round(gas_cost_for_contract_creation + (gas_cost_for_contract_creation * projectData.variables.bonusPercentagesToGasEstimations / 100))),
@@ -2105,8 +2130,6 @@ var projectData = {
                             });
                         }
                     } else if ($('.contract-header').hasClass('active')) {
-                        var get_params = projectData.utils.getGETParameters();
-
                         var now_timestamp = Math.round((new Date()).getTime() / 1000);
                         var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
                         var time_passed_since_signed = now_timestamp - parseInt($('.single-contract-view-section').attr('data-created-at'));
@@ -2123,7 +2146,13 @@ var projectData = {
                         $('.single-contract-view-section .row-with-bottom-squares .next-payment').html(projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj));
 
                         var on_load_exiting_contract = await dApp.assurance_state_methods.getPatient($('.single-contract-view-section').attr('data-patient'), $('.single-contract-view-section').attr('data-dentist'));
-                        var contract_dcn_amount = on_load_exiting_contract[5];
+                        
+                        if (usdOverDcn) {
+                            var monthly_premium_in_dcn = Math.round(projectData.utils.convertUsdToDcn(on_load_exiting_contract[4]));
+                        } else {
+                            var monthly_premium_in_dcn = parseInt(on_load_exiting_contract[5]);
+                        }
+                        
                         var contract_next_payment = parseInt(on_load_exiting_contract[0]);
                         var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
 
@@ -2256,14 +2285,14 @@ var projectData = {
                                 /*$('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold ">MAKE YOUR NEXT WITHDRAW IN</h2></div> </div><div class="clock"></div><div class="flip-clock-message"></div></div></div>');*/
                                 $('.timer-label').html('MAKE YOUR NEXT WITHDRAW IN');
                                 projectData.initiators.initFlipClockTimer(contract_next_payment - now_timestamp);
-                            } /*else if (contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > period_to_withdraw * 2 && current_patient_dcn_balance < (Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1) * contract_dcn_amount) {
+                            } /*else if (contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > period_to_withdraw * 2 && current_patient_dcn_balance < (Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1) * monthly_premium_in_dcn) {
                             var months_dentist_didnt_withdraw = Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1;
 
                             basic.showAlert('You haven\'t withdraw from this patient for ' + months_dentist_didnt_withdraw + ' months in a row, but the patient currently have not enough Dentacoins to cover all the months. Contact him and let him know to refill Dentacoins inside his Wallet Address.', 'boobox-alert', true);
-                        }*/ else if (contract_next_payment < now_timestamp && now_timestamp < contract_next_payment + dApp.grace_period && current_patient_dcn_balance < contract_dcn_amount) {
+                        }*/ else if (contract_next_payment < now_timestamp && now_timestamp < contract_next_payment + dApp.grace_period && current_patient_dcn_balance < monthly_premium_in_dcn) {
                                 //show red counter (grace period)
-                                /*$('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold">Overdue payment. If the patient doesn\'t fill in '+contract_dcn_amount+' Dentacoins inside his Wallet Address the contract will be canceled in:</h2></div> </div><div class="clock red-background"></div><div class="flip-clock-message"></div></div></div>');*/
-                                $('.timer-label').html('Overdue payment. If the patient doesn\'t fill in '+contract_dcn_amount+' Dentacoins inside his Wallet Address the contract will be canceled in:');
+                                /*$('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold">Overdue payment. If the patient doesn\'t fill in '+monthly_premium_in_dcn+' Dentacoins inside his Wallet Address the contract will be canceled in:</h2></div> </div><div class="clock red-background"></div><div class="flip-clock-message"></div></div></div>');*/
+                                $('.timer-label').html('Overdue payment. If the patient doesn\'t fill in '+monthly_premium_in_dcn+' Dentacoins inside his Wallet Address the contract will be canceled in:');
                                 projectData.initiators.initFlipClockTimer(contract_next_payment + dApp.grace_period - now_timestamp);
                             } else {
                                 $('.contract-body .wrapper').remove();
@@ -2646,7 +2675,7 @@ if ($('body').hasClass('logged-in')) {
             if (parseInt($(this).val()) < 0) {
                 $(this).val(0);
             } else {
-                $(this).val(Math.floor($(this).val()));
+                $(this).val(Math.round($(this).val()));
             }
 
             $(this).closest('.single-row').find('.absolute-currency-label').fadeIn(300).css({'left' : 'calc(40% + ' + (15 + $(this).val().length * 10) + 'px)'});
@@ -3781,10 +3810,17 @@ function cancelContractEventInit() {
                             // check if dentists is contact canceling initiator and check if any dentacoins can be withdrawn, if yes then show warning
                             var contract_next_payment = parseInt(exiting_contract[0]);
                             var now_timestamp = Math.round((new Date()).getTime() / 1000);
-                            var contract_dcn_amount = parseInt(exiting_contract[5]);
+
+                            var usdOverDcn = await dApp.assurance_state_methods.getUsdOverDcn();
+                            if (usdOverDcn) {
+                                var monthly_premium_in_dcn = Math.round(projectData.utils.convertUsdToDcn(exiting_contract[4]));
+                            } else {
+                                var monthly_premium_in_dcn = parseInt(exiting_contract[5]);
+                            }
+                            
                             var patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(this_btn.attr('data-patient')));
 
-                            if (contract_next_payment < now_timestamp && patient_dcn_balance >= contract_dcn_amount && this_btn.attr('data-type') == 'dentist') {
+                            if (contract_next_payment < now_timestamp && patient_dcn_balance >= monthly_premium_in_dcn && this_btn.attr('data-type') == 'dentist') {
                                 basic.showDialog('<div class="wrapper text-center"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img class="max-width-50" src="/assets/images/attention.svg" alt="attention icon" class="max-width-70"></figure><div class="lato-bold fs-30" style="color: #ff8d8d;">WARNING!</div><div class="black-warning lato-bold fs-24 dark-color">YOU HAVE UNCOLLECTED PAYMENTS.</div><div class="additional-text padding-top-20 padding-bottom-30 fs-20">Withdraw before canceling this contract.<br> Otherwise, you will irreversibly lose your DCN.</div><div class="text-center"><a href="javascript:void(0)" class="dentist-withdraw white-blue-green-btn inline-block max-width-250 margin-bottom-10 width-100">WITHDRAW NOW</a></div></div>', '', null, true);
 
                                 bindDentistWithdrawEvent();

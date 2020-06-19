@@ -4,7 +4,6 @@
         <div class="inline-block fs-14 padding-right-10 color-white-on-hub">
             <span>{{$user_data->name}}</span>
             @php($dcn_balance = (new \App\Http\Controllers\APIRequestsController())->getDCNBalance()->data)
-            @php($dentacoin_data = (new \App\Http\Controllers\APIRequestsController())->getDentacoinDataByExternalProvider())
             @if(!empty($dentacoin_data))
                 @php($usd_balance = $dentacoin_data['USD'] * $dcn_balance)
                 <div>{{$dcn_balance}} DCN | ${{number_format((float)$usd_balance, 2, '.', '')}}</div>

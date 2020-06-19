@@ -1,5 +1,6 @@
 @php($user_data = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']))
-<section class="ready-to-purchase-with-external-api" id="ready-to-purchase-with-external-api" data-dcn-for-one-usd="{{$dcn_for_one_usd}}" data-eth-for-one-usd="{{$eth_for_one_usd}}">
+@php($dentacoin_data = (new \App\Http\Controllers\APIRequestsController())->getDentacoinDataByExternalProvider())
+<section class="ready-to-purchase-with-external-api" id="ready-to-purchase-with-external-api" data-dcn-for-one-usd="{{$dcn_for_one_usd}}" data-usd-for-one-dcn="{{$dentacoin_data['USD']}}" data-eth-for-one-usd="{{$eth_for_one_usd}}">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 text-center">
