@@ -3081,7 +3081,7 @@ function initSliders() {
 }
 
 //THIS IS FUNCTIONALITY ONLY FOR LOGGED IN USERS (MODULES)
-if ($('body').hasClass('logged-in')) {
+if ($('body').hasClass('logged-in') && !$('.my-contracts-iframe').length) {
     /*var add_overflow_hidden_on_hidden_box_show = false;
     var sm_screen_width = false;
     $('body').addClass('overflow-hidden');
