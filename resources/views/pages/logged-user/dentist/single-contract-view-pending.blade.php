@@ -44,7 +44,7 @@
                     <div class="wrapper text-center">
                         <div class="fs-90 line-height-90 blue-green-color">!</div>
                         <h1 class="lato-bold fs-20 padding-top-15">WARNING</h1>
-                        <div class="fs-18 fs-xs-16 calibri-light padding-top-10">Your patient has received their contract but has not yet signed it. Check again later.</div>
+                        <div class="fs-18 fs-xs-16 calibri-light padding-top-10">Your patient has received their contract sample but has not yet signed it. The proposal will be valid for one month after the sample sending date.</div>
                     </div>
                 </div>
             </div>
