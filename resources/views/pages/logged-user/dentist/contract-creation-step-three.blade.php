@@ -8,6 +8,7 @@
         <div class="single-row flex-row fs-0 no-border">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
             <select class="right-field calibri-regular fs-18 dark-color inline-block" name="check-ups-per-year">
+                <option value="">Select number</option>
                 @for ($i = 1; $i <= 4; $i+=1)
                     <option @if(!empty($renew_contract) && $renew_contract->check_ups_per_year == $i) selected @endif>{{$i}}</option>
                 @endfor
@@ -16,6 +17,7 @@
         <div class="single-row flex-row fs-0 no-border">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Teeth Cleaning per Year:</label>
             <select class="right-field calibri-regular fs-18 dark-color inline-block" name="teeth-cleaning-per-year">
+                <option value="">Select number</option>
                 @for ($i = 1; $i <= 4; $i+=1)
                     <option @if(!empty($renew_contract) && $renew_contract->teeth_cleaning_per_year == $i) selected @endif>{{$i}}</option>
                 @endfor

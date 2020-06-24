@@ -28,7 +28,7 @@
             </div>
         @else
             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="text-center">
-                <img alt="Dentist avatar" itemprop="contentUrl" src="{{$current_logged_dentist->avatar_url}}"/>
+                <img alt="Dentist avatar" itemprop="contentUrl" class="max-width-300 width-100" src="{{$current_logged_dentist->avatar_url}}"/>
             </figure>
         @endif
     </div>
