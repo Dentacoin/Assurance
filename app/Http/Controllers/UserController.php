@@ -552,7 +552,7 @@ class UserController extends Controller {
 
             $user = (new APIRequestsController())->getUserData($slug);
             if($user) {
-                $approved_statuses = array('approved', 'test');
+                $approved_statuses = array('approved','test','added_by_clinic_claimed','added_by_dentist_claimed');
                 if($user->self_deleted != NULL) {
                     return abort(404);
                 } else if(!in_array($user->status, $approved_statuses)) {

@@ -136,8 +136,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/invite-your-clinic', 'DentistController@inviteYourClinic')->name('invite-your-clinic');
 
-    Route::post('/check-dentist-account', 'DentistController@checkDentistAccount')->name('check-dentist-account');
-
     Route::get('/custom-cookie', 'UserController@manageCustomCookie')->name('custom-cookie');
 
     Route::any('/info/{slug}', 'UserController@handleApiEndpoints')->name('api-endpoints');
