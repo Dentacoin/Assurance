@@ -2687,16 +2687,23 @@ if ($('body').hasClass('logged-in')) {
             $('.step.'+step+' .single-row').removeClass('row-with-error');
             $('.step.'+step+' .single-row > label span').remove();
             $('.step.'+step+' .error-handle').remove();
+            $('.step.'+step+' .with-error').removeClass('with-error');
 
             var inner_error = false;
 
-            if (step == 'three' && $('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
-                $('.step.three .checkboxes-right-container').removeClass('with-error');
-
+            if (step == 'three') {
                 if ($('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
-                    $('.step.three .checkboxes-right-container').prev().find('span').remove();
-                    customCreateContractErrorHandle($('.step.three .checkboxes-right-container'), 'Please select at least one service.');
-                    inner_error = true;
+                    $('.step.three .checkboxes-right-container').removeClass('with-error');
+
+                    if ($('.step.three [name="general-dentistry[]"]:checked').val() == undefined) {
+                        $('.step.three .checkboxes-right-container').prev().find('span').remove();
+                        customCreateContractErrorHandle($('.step.three .checkboxes-right-container'), 'Please select at least one service.');
+                        inner_error = true;
+                    }
+                } else if ($('.step.three select[name="check-ups-per-year"]').val().trim() == '') {
+                    customCreateContractErrorHandle($('.step.three select[name="check-ups-per-year"]'), 'Please select number.');
+                } else if ($('.step.three select[name="teeth-cleaning-per-year"]').val().trim() == '') {
+                    customCreateContractErrorHandle($('.step.three select[name="teeth-cleaning-per-year"]'), 'Please select number.');
                 }
             } else if (step == 'one') {
                 var validate_dentist_address = false;
