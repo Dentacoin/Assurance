@@ -38,8 +38,6 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/get-all-clinics', 'Controller@getAllClinicsResponse')->name('get-all-clinics');
 
-    Route::post('/check-email', 'UserController@checkEmail')->name('check-email');
-
     Route::post('/check-captcha', 'UserController@checkCaptcha')->name('check-captcha');
 
     Route::post('/forgotten-password-submit', 'UserController@forgottenPasswordSubmit')->name('forgotten-password-submit');

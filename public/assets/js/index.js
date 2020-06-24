@@ -212,7 +212,7 @@ var dApp = {
                 basic.showAlert('Patient and dentist addresses must be valid.');
                 return false;
             } else if (parseInt(await dApp.dentacoin_token_methods.allowance(patient_addr, assurance_config.assurance_state_address)) <= 0) {
-                basic.showAlert('This patient didn\'t give allowance to Assurance contract to manage his Dentacoins.');
+                basic.showAlert('This patient didn\'t give allowance to Assurance contract to manage his DCN.');
                 return false;
             } else if (parseInt(value_usd) <= 0 || parseInt(value_dcn) <= 0) {
                 //check if USD and DCN values are valid
@@ -1051,7 +1051,7 @@ var projectData = {
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                             next_payment_timestamp_unix = (nextWithdrawTimestamp + dApp.grace_period - now_timestamp);
 
-                            timer_label = 'Overdue payment. If you doesn\'t fill in '+projectData.utils.convertUsdToDcn(dcn_needed_to_be_payed_to_dentist)+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
+                            timer_label = 'If you doesn\'t fill in '+projectData.utils.convertUsdToDcn(dcn_needed_to_be_payed_to_dentist)+' DCN inside your  Wallet Address the contract will be canceled in:';
                             $('.clock').addClass('red-background');
                         } else if (time_passed_since_signed > period_to_withdraw) {
                             var remainder = time_passed_since_signed % period_to_withdraw;
@@ -1122,7 +1122,8 @@ var projectData = {
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                             next_payment_timestamp_unix = (parseInt(on_load_exiting_contract[0]) + dApp.grace_period - now_timestamp);
 
-                            timer_label = 'Overdue payment. If you doesn\'t fill in '+projectData.utils.convertUsdToDcn(dcn_needed_to_be_payed_to_dentist)+' Dentacoins inside your  Wallet Address the contract will be canceled in:';
+                            timer_label = 'If you doesn\'t fill in '+projectData.utils.convertUsdToDcn(dcn_needed_to_be_payed_to_dentist)+' DCN inside your  Wallet Address the contract will be canceled in:';
+                            $('.contract-header').html('ACTIVE - OVERDUE PAYMENT');
                             $('.clock').addClass('red-background');
                         } else if (time_passed_since_signed > period_to_withdraw) {
                             var remainder = time_passed_since_signed % period_to_withdraw;
@@ -1894,6 +1895,7 @@ var projectData = {
 
                             timer_label = 'Withdraw payment after (grace period):';
                             $('.clock').addClass('red-background');
+                            $('.contract-header').html('ACTIVE - OVERDUE PAYMENT');
                         }  else {
                             // running the period when patient has to execute the first payment
                             next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
@@ -2083,48 +2085,6 @@ var projectData = {
 
                                                                         onSuccessfulContractApproval(response.contract_data.patient_name);
                                                                     });
-
-                                                                    /*var confirmedTransaction = false;
-                                                                    dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_approval_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
-                                                                        console.log(transactionHash, 'transactionHash');
-
-                                                                        var saveTransactionResponse = await saveTransaction({
-                                                                            'transactionHash' : transactionHash,
-                                                                            'to_status' : 'active',
-                                                                            'contract_slug' : $('.init-contract-section').attr('data-contract')
-                                                                        });
-                                                                        console.log(saveTransactionResponse, 'saveTransactionResponse');
-                                                                    }).on('confirmation', function(confirmationNumber, receipt) {
-                                                                        if (!confirmedTransaction) {
-                                                                            confirmedTransaction = true;
-
-                                                                            $.ajax({
-                                                                                type: 'POST',
-                                                                                url: '/dentist/on-blockchain-contract-approval',
-                                                                                dataType: 'json',
-                                                                                data: {
-                                                                                    ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                                },
-                                                                                headers: {
-                                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                                },
-                                                                                success: function (inner_response) {
-                                                                                    if (inner_response.success) {
-                                                                                        hideLoader();
-                                                                                        basic.closeDialog();
-                                                                                        basic.showDialog(inner_response.success, '', null, true);
-                                                                                        setTimeout(function () {
-                                                                                            window.location.reload();
-                                                                                        }, 3000);
-                                                                                    }
-                                                                                }
-                                                                            });
-                                                                        }
-                                                                    }).on('error', function(error) {
-                                                                        console.log(error, 'error');
-                                                                        basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
-                                                                        hideLoader();
-                                                                    });*/
                                                                 }, 2000);
                                                             }
                                                         }
@@ -2297,11 +2257,12 @@ var projectData = {
                             } /*else if (contract_next_payment < now_timestamp && now_timestamp - contract_next_payment > period_to_withdraw * 2 && current_patient_dcn_balance < (Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1) * monthly_premium_in_dcn) {
                             var months_dentist_didnt_withdraw = Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1;
 
-                            basic.showAlert('You haven\'t withdraw from this patient for ' + months_dentist_didnt_withdraw + ' months in a row, but the patient currently have not enough Dentacoins to cover all the months. Contact him and let him know to refill Dentacoins inside his Wallet Address.', 'boobox-alert', true);
+                            basic.showAlert('You haven\'t withdraw from this patient for ' + months_dentist_didnt_withdraw + ' months in a row, but the patient currently have not enough DCN to cover all the months. Contact him and let him know to refill DCN inside his Wallet Address.', 'boobox-alert', true);
                         }*/ else if (contract_next_payment < now_timestamp && now_timestamp < contract_next_payment + dApp.grace_period && current_patient_dcn_balance < monthly_premium_in_dcn) {
                                 //show red counter (grace period)
-                                /*$('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold">Overdue payment. If the patient doesn\'t fill in '+monthly_premium_in_dcn+' Dentacoins inside his Wallet Address the contract will be canceled in:</h2></div> </div><div class="clock red-background"></div><div class="flip-clock-message"></div></div></div>');*/
-                                $('.timer-label').html('Overdue payment. If the patient doesn\'t fill in '+monthly_premium_in_dcn+' Dentacoins inside his Wallet Address the contract will be canceled in:');
+                                /*$('.camping-withdraw-time-left-section').html('<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 padding-top-30 padding-bottom-30 clock-container text-center"><div class="row"><div class="col-xs-12 col-md-8 col-md-offset-2"><h2 class="fs-20 fs-xs-17 padding-bottom-20 padding-bottom-xs-10 lato-bold">If the patient doesn\'t fill in '+monthly_premium_in_dcn+' DCN inside his Wallet Address the contract will be canceled in:</h2></div> </div><div class="clock red-background"></div><div class="flip-clock-message"></div></div></div>');*/
+                                $('.contract-header').html('ACTIVE - OVERDUE PAYMENT');
+                                $('.timer-label').html('If the patient doesn\'t fill in '+monthly_premium_in_dcn+' DCN inside his Wallet Address the contract will be canceled in:');
                                 projectData.initiators.initFlipClockTimer(contract_next_payment + dApp.grace_period - now_timestamp);
                             } else {
                                 $('.contract-body .wrapper').remove();
@@ -2429,7 +2390,7 @@ async function bindDentistWithdrawEvent() {
                     show_dcn_bar: false,
                     recipe_title: 'WITHDRAW NOW',
                     recipe_subtitle: '',
-                    recipe_checkbox_text: 'By clicking on the button below you will withdraw your Dentacoins from your Patient.',
+                    recipe_checkbox_text: 'By clicking on the button below you will withdraw your DCN from your Patient.',
                     btn_label: 'WITHDRAW NOW',
                     type: 'qr-scan'
                 },
@@ -3829,7 +3790,7 @@ function cancelContractEventInit() {
                         if (metamask) {
                             basic.showAlert('Using MetaMask is currently not supported in Dentacoin Assurance. Please switch off MetaMask extension and try again.');
                         } else {
-                            // check if dentists is contact canceling initiator and check if any dentacoins can be withdrawn, if yes then show warning
+                            // check if dentists is contact canceling initiator and check if any DCN can be withdrawn, if yes then show warning
                             var contract_next_payment = parseInt(exiting_contract[0]);
                             var now_timestamp = Math.round((new Date()).getTime() / 1000);
 
@@ -5361,7 +5322,7 @@ function onSuccessfulContractWithdraw(hash) {
         $('.camping-for-popups').html('');
     }
 
-    basic.showDialog('<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">SUCCESSFULLY WITHDRAWN</div><div class="padding-top-20 padding-bottom-15 fs-20">You have successfully withdrawn your Dentacoins from this contract. You will be notified via email when next withdraw is possible.</div><div class="btn-container padding-bottom-40"><a href="http://etherscan.io/tx/'+hash+'" target="_blank" class="white-blue-green-btn min-width-200">Check on Etherscan</a></div></div>', '', null, true);
+    basic.showDialog('<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">SUCCESSFULLY WITHDRAWN</div><div class="padding-top-20 padding-bottom-15 fs-20">You have successfully withdrawn your DCN from this contract. You will be notified via email when next withdraw is possible.</div><div class="btn-container padding-bottom-40"><a href="http://etherscan.io/tx/'+hash+'" target="_blank" class="white-blue-green-btn min-width-200">Check on Etherscan</a></div></div>', '', null, true);
 }
 
 function onSuccessfulContractCancel() {

@@ -167,16 +167,6 @@ class UserController extends Controller {
         }
     }
 
-    function checkEmail(Request $request) {
-        $data = $this->clearPostData($request->input());
-        $api_response = (new APIRequestsController())->checkIfFreeEmail($data['email']);
-        if(property_exists($api_response, 'success') && $api_response->success) {
-            return response()->json(['success' => true]);
-        } else if(!$api_response->success) {
-            return response()->json(['error' => true]);
-        }
-    }
-
     function checkEmailAndReturnData(Request $request) {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',

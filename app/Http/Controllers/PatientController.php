@@ -130,27 +130,16 @@ class PatientController extends Controller {
             return redirect()->route($data['redirect'])->with(['error' => 'Your form was not sent. Please try again with valid email.']);
         }
 
-        //check if someone inviting already invited dentist
-        if(InviteDentistsReward::where(array('dentist_email' => $data['email']))->get()->first()) {
-            return redirect()->route($data['redirect'])->with(['error' => 'This dentist/ clinic is already invited in Assurance platform.']);
-        }
-
         //check if the invited dentist is already registered in the CoreDB
         $api_response = (new APIRequestsController())->checkIfFreeEmail($data['email']);
         if(!$api_response->success) {
             return redirect()->route($data['redirect'])->with(['error' => 'This dentist/ clinic is already register on Dentacoin.']);
         }
 
-        //if user entered dcn_address for first time save it in coredb
-        /*if(!empty($data['dcn_address'])) {
-            $post_fields_arr = array('dcn_address' => $data['dcn_address']);
-
-            //handle the API response
-            $api_response = (new APIRequestsController())->updateUserData($post_fields_arr);
-            if(!$api_response) {
-                return redirect()->route($data['redirect'])->with(['errors_response' => $api_response['errors']]);
-            }
-        }*/
+        //check if someone inviting already invited dentist
+        if(InviteDentistsReward::where(array('dentist_email' => $data['email']))->get()->first()) {
+            return redirect()->route($data['redirect'])->with(['error' => 'This dentist/ clinic is already invited in Assurance platform.']);
+        }
 
         //===================================================================================
         //CHECK HERE IF THIS DENTIST EMAIL IS NOT ALREADY REGISTERED IN LOCAL DB AND IN API
