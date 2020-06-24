@@ -1022,6 +1022,10 @@ var projectData = {
 
                             nextWithdrawTimestamp = parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw;
 
+                            window.onbeforeunload = function(e) {
+                                return '';
+                            };
+
                             trackForContractStatusChange($('.patient-contract-single-page-section').attr('data-contract'), 'awaiting-payment');
                             trackForWalletSigning($('.patient-contract-single-page-section').attr('data-contract'), 'awaiting-approval');
                         } else if ($('.contract-header').hasClass('awaiting-approval')) {
