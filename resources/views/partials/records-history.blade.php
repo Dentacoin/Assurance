@@ -21,11 +21,11 @@
                                     {{date('d/m/Y', strtotime($record->created_at))}}
                                 @endif
                             </td>
-                            <td>
+                            <td class="action-td" @if($record->type == 'teeth-cleaning') data-label="Teeth cleaning recorded" @elseif($record->type == 'check-up') data-label="Check-up recorded" @endif>
                                 @if($record->type == 'teeth-cleaning')
-                                    Teeth cleaning recorded ({{$record->event}}/{{$contract->teeth_cleaning_per_year}})
+                                    Teeth cleaning recorded @if($record->status != 'rejected') ({{$record->event}}/{{$contract->teeth_cleaning_per_year}}) @endif
                                 @elseif($record->type == 'check-up')
-                                    Check-up recorded ({{$record->event}}/{{$contract->check_ups_per_year}})
+                                    Check-up recorded @if($record->status != 'rejected')  ({{$record->event}}/{{$contract->check_ups_per_year}}) @endif
                                 @else
                                     {{$record->type}}
                                 @endif

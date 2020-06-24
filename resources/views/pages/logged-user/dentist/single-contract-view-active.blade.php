@@ -19,7 +19,7 @@
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
                         <img alt="Dentist avatar" src="{{$current_logged_dentist->avatar_url}}"/>
                     </figure>
-                    <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$current_logged_dentist->name}}</div>
+                    <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">{{(new \App\Http\Controllers\Controller())->prepareUserName($current_logged_dentist)}}</div>
                     <div class="calibri-light fs-18 fs-xs-16 light-gray-color word-break">{{$current_logged_dentist->email}}</div>
                 </div>
                 <div class="col-xs-3 inline-block-top margin-top-40 margin-top-xs-0 contract-body" data-time-left-next-transfer="{{strtotime($contract->contract_active_at)}}">

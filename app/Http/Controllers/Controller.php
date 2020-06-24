@@ -276,5 +276,22 @@ class Controller extends BaseController
 
         return $random_string;
     }
+
+    public function prepareUserName($userData) {
+        if ($userData->is_dentist) {
+            $api_enums = (new APIRequestsController())->getAllEnums();
+            if (!(empty($api_enums)) && !empty($userData->title)) {
+                foreach ($api_enums->titles as $key => $title) {
+                    if ($userData->title == $key) {
+                        return $title . ' ' . $userData->name;
+                    }
+                }
+            } else {
+                return $userData->name;
+            }
+        } else {
+            return $userData->name;
+        }
+    }
 }
 

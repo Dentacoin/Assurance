@@ -25,7 +25,7 @@
                     <figure itemscope="" itemtype="http://schema.org/ImageObject">
                         <img alt="Dentist avatar" src="{{$dentist->avatar_url}}"/>
                     </figure>
-                    <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">Dr. {{$dentist->name}}</div>
+                    <div class="fs-22 fs-xs-18 calibri-bold padding-top-15 padding-bottom-5">{{(new \App\Http\Controllers\Controller())->prepareUserName($dentist)}}</div>
                     <div class="calibri-light">
                         <a href="mailto:{{$dentist->email}}" class="light-gray-color fs-18 fs-xs-16 word-break">{{$dentist->email}}</a>
                     </div>

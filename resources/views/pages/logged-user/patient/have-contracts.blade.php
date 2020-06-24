@@ -52,7 +52,7 @@
                                                     </figure>
                                                 </div>
                                                 <div class="contract-info inline-block-top">
-                                                    <div class="calibri-bold fs-18 title">Dr. {{$dentist->name}}</div>
+                                                    <div class="calibri-bold fs-18 title">{{(new \App\Http\Controllers\Controller())->prepareUserName($dentist)}}</div>
                                                     <time class="display-block fs-14 calibri-light">Sent on: {{$contract->created_at->format('d/m/Y')}}</time>
                                                     <div class="lato-semibold fs-24 line-height-24">{{$contract->monthly_premium}}$</div>
                                                     <div class="btn-container">

@@ -2,9 +2,13 @@
     <div class="padding-bottom-15 fs-0">
         <select name="title" class="custom-input">
             <option value="">Choose a title (optional)</option>
-            <option value="Dr.">Dr.</option>
-            <option value="Prof.">Prof.</option>
-            <option value="Prof. Dr.">Prof. Dr.</option>
+            @php($api_enums = (new \App\Http\Controllers\APIRequestsController())->getAllEnums())
+            @if (!empty($api_enums))
+                @foreach ($api_enums->titles as $key => $title)
+                    <option value="{{$title}}">{{$title}}</option>
+                @endforeach
+            @endif
+
         </select>
     </div>
     <div class="padding-bottom-15 fs-0">

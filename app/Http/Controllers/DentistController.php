@@ -291,7 +291,8 @@ class DentistController extends Controller
         } else {
             $dentistId = $contract->dentist_id;
         }
-        $dentist_name = (new APIRequestsController())->getUserData($dentistId)->name;
+        $dentist = (new APIRequestsController())->getUserData($dentistId);
+        $dentist_name = $dentist->name;
         $patient = (new APIRequestsController())->getUserData($contract->patient_id);
 
         $contract->is_processing = false;
@@ -304,7 +305,7 @@ class DentistController extends Controller
             $contractTransactionHash->save();
         }
 
-        $email_view = view('emails/dentist-successful-withdraw', ['dentist_name' => $dentist_name, 'patient_name' => $patient->name, 'transaction_hash' => $transactionHash]);
+        $email_view = view('emails/dentist-successful-withdraw', ['dentist_name' => $this->prepareUserName($dentist), 'patient_name' => $patient->name, 'transaction_hash' => $transactionHash]);
         $body = $email_view->render();
 
         Mail::send(array(), array(), function($message) use ($body, $patient, $dentist_name) {

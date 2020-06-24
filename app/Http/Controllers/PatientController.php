@@ -469,7 +469,7 @@ class PatientController extends Controller {
 
         $sender = (new APIRequestsController())->getUserData(session('logged_user')['id']);
 
-        $body = '<!DOCTYPE html><html><head></head><body><div style="font-size: 13px;">Dear Dr. '.$data['dentist-name'].',<br><br><br>My name is <b>'.$sender->name.'</b> and I have successfully received my Assurance Contract Sample, but I’d like to suggest a monthly premium of '.$data['new-usd-proposal-to-dentist'].' USD in Dentacoin (DCN).<br><br>I hope you will reconsider your proposal.<br><br>Regards,<br><b>'.$sender->name.'</div></body></html>';
+        $body = '<!DOCTYPE html><html><head></head><body><div style="font-size: 13px;">Dear '.$data['dentist-name'].',<br><br><br>My name is <b>'.$sender->name.'</b> and I have successfully received my Assurance Contract Sample, but I’d like to suggest a monthly premium of '.$data['new-usd-proposal-to-dentist'].' USD in Dentacoin (DCN).<br><br>I hope you will reconsider your proposal.<br><br>Regards,<br><b>'.$sender->name.'</div></body></html>';
 
         Mail::send(array(), array(), function($message) use ($body, $data, $sender) {
             $message->to($data['dentist-email'])->subject('Reconsider Monthly Premium Proposal');
@@ -529,14 +529,9 @@ class PatientController extends Controller {
 
         $clinic = (new APIRequestsController())->getUserData($request->input('clinic_id'));
         $current_patient = (new \App\Http\Controllers\APIRequestsController())->getUserData(session('logged_user')['id']);
-        $receiver = $clinic->name . ' (' . $clinic->email . ')';
-        if($clinic->is_clinic) {
-            $title = '';
-        } else {
-            $title = 'Dr. ';
-        }
+        $receiver = $this->prepareUserName($clinic) . ' (' . $clinic->email . ')';
 
-        $body = '<div class="padding-bottom-25 padding-bottom-xs-0 padding-top-15">Dear '.$title.'<span class="calibri-bold">'.$clinic->name.'</span>, <br> I\'d like to receive a Dentacoin Assurance contract sample by you.<br><br><a href="'.BASE_URL.'dentist/create-contract" class="blue-green-white-btn fs-xs-16" target="_blank">CREATE CONTRACT SAMPLE</a><br><br>';
+        $body = '<div class="padding-bottom-25 padding-bottom-xs-0 padding-top-15">Dear <span class="calibri-bold">'.$this->prepareUserName($clinic).'</span>, <br> I\'d like to receive a Dentacoin Assurance contract sample by you.<br><br><a href="'.BASE_URL.'dentist/create-contract" class="blue-green-white-btn fs-xs-16" target="_blank">CREATE CONTRACT SAMPLE</a><br><br>';
 
         $view = view('emails/popup-module-sending-email-confirmation', ['sender' => $current_patient, 'receiver' => $receiver, 'mail_title' => 'Send email to your dentist', 'mail_subject' => 'Please send me a Dentacoin Assurance contract sample', 'mail_body' => $body]);
         $view = $view->render();
@@ -553,13 +548,8 @@ class PatientController extends Controller {
         $data = $this->clearPostData($request->input());
         $clinic = (new APIRequestsController())->getUserData($request->input('clinic_id'));
         $sender = (new APIRequestsController())->getUserData(session('logged_user')['id']);
-        if($clinic->is_clinic) {
-            $title = '';
-        } else {
-            $title = 'Dr. ';
-        }
 
-        $body = '<!DOCTYPE html><html><head></head><body><div style="font-size: 13px;">Dear '.$title.$clinic->name.', <br><br><br>I\'d like to receive a Dentacoin Assurance contract sample by you.<br><br><br><a href="'.BASE_URL.'dentist/create-contract?patient-email='.$sender->email.'" style="font-size: 16px;color: #126585;background-color: white;padding: 10px 20px;text-decoration: none;font-weight: bold;border-radius: 4px;border: 2px solid #126585;" target="_blank">CREATE CONTRACT SAMPLE</a><br><br><br><i style="font-size: 11px;">* Blockchain is just a new technology used for secure storage and exchange of value and data.</i></div></body></html>';
+        $body = '<!DOCTYPE html><html><head></head><body><div style="font-size: 13px;">Dear '.$this->prepareUserName($clinic).', <br><br><br>I\'d like to receive a Dentacoin Assurance contract sample by you.<br><br><br><a href="'.BASE_URL.'dentist/create-contract?patient-email='.$sender->email.'" style="font-size: 16px;color: #126585;background-color: white;padding: 10px 20px;text-decoration: none;font-weight: bold;border-radius: 4px;border: 2px solid #126585;" target="_blank">CREATE CONTRACT SAMPLE</a><br><br><br><i style="font-size: 11px;">* Blockchain is just a new technology used for secure storage and exchange of value and data.</i></div></body></html>';
 
         Mail::send(array(), array(), function($message) use ($body, $clinic, $sender) {
             $message->to($clinic->email)->subject('Please send me a Dentacoin Assurance contract sample');
@@ -797,7 +787,7 @@ class PatientController extends Controller {
                 $dentist = (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id);
 
                 $tempContract['dentistAvatar'] = $dentist->avatar_url;
-                $tempContract['dentistName'] = $dentist->name;
+                $tempContract['dentistName'] = $this->prepareUserName($dentist);
                 $tempContract['status'] = $contract->status;
                 $tempContract['monthlyPremium'] = $contract->monthly_premium;
                 $tempContract['createdAt'] = $contract->created_at->format('d/m/Y');

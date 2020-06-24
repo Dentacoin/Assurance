@@ -2,7 +2,7 @@
 <html>
 <head></head>
 <body>
-<div style="font-size: 13px;">Dear {{$dentist->title}} {{$dentist->name}},
+<div style="font-size: 13px;">Dear {{(new \App\Http\Controllers\Controller())->prepareUserName($dentist)}},
     <br><br>
     Your patient {{$patient->name}} said they've visited you for a check-up on {{$check_up_date}} and teeth cleaning on {{$teeth_cleaning_date}}.
     <br><br><br>

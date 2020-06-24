@@ -74025,7 +74025,7 @@ var projectData = {
                                                     foundContracts.push(response.data[i].slug);
 
                                                     $('.contracts-list.slider').slick('unslick');
-                                                    $('.contracts-list.slider').prepend('<a href="'+response.data[i].url+'" class="module contract-tile padding-bottom-10 pending"><div class="tile-wrapper fs-0"> <div class="inline-block-top figure-container"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Dentist avatar" src="'+response.data[i].dentistAvatar+'"><figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">'+response.data[i].status+'</figcaption></figure></div><div class="contract-info inline-block-top"><div class="calibri-bold fs-18 title">Dr. '+response.data[i].dentistName+'</div><time class="display-block fs-14 calibri-light">Sent on: '+response.data[i].createdAt+'</time><div class="lato-semibold fs-24 line-height-24">'+response.data[i].monthlyPremium+'$</div><div class="btn-container"><div class="white-blue-green-btn">'+response.data[i].btnLabel+'</div></div></div></div></a>', 0);
+                                                    $('.contracts-list.slider').prepend('<a href="'+response.data[i].url+'" class="module contract-tile padding-bottom-10 pending"><div class="tile-wrapper fs-0"> <div class="inline-block-top figure-container"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Dentist avatar" src="'+response.data[i].dentistAvatar+'"><figcaption class="fs-14 calibri-light text-center padding-left-5 padding-right-5">'+response.data[i].status+'</figcaption></figure></div><div class="contract-info inline-block-top"><div class="calibri-bold fs-18 title">'+response.data[i].dentistName+'</div><time class="display-block fs-14 calibri-light">Sent on: '+response.data[i].createdAt+'</time><div class="lato-semibold fs-24 line-height-24">'+response.data[i].monthlyPremium+'$</div><div class="btn-container"><div class="white-blue-green-btn">'+response.data[i].btnLabel+'</div></div></div></div></a>', 0);
                                                     initSliders();
                                                 }
                                             }
@@ -74544,7 +74544,7 @@ var projectData = {
                                                     success: function (response) {
                                                         hideLoader();
                                                         if (response.success) {
-                                                            $('.records-history.module table tbody').prepend('<tr data-id="'+response.id+'"> <td>'+Math.round(new Date($('.camping-for-popups .datepicker').val().trim()).getTime() / 1000)+'</td><td>Check-up recorded ('+response.event+'/'+response.mustRecordsCount+')</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
+                                                            $('.records-history.module table tbody').prepend('<tr data-id="'+response.id+'"> <td>'+Math.round(new Date($('.camping-for-popups .datepicker').val().trim()).getTime() / 1000)+'</td><td class="action-td" data-label="Check-up recorded">Check-up recorded ('+response.event+'/'+response.mustRecordsCount+')</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
 
                                                             $('.camping-for-popups').html('');
                                                             basic.showAlert('Check-up recorded successfully. Now your dentist has to approve it.', 'boobox-alert', true);
@@ -74602,7 +74602,7 @@ var projectData = {
                                                     success: function (response) {
                                                         hideLoader();
                                                         if (response.success) {
-                                                            $('.records-history.module table tbody').prepend('<tr data-id="'+response.id+'"> <td>'+Math.round(new Date($('.camping-for-popups .datepicker').val().trim()).getTime() / 1000)+'</td><td>Teeth cleaning recorded ('+response.event+'/'+response.mustRecordsCount+')</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
+                                                            $('.records-history.module table tbody').prepend('<tr data-id="'+response.id+'"> <td>'+Math.round(new Date($('.camping-for-popups .datepicker').val().trim()).getTime() / 1000)+'</td><td class="action-td" data-label="Teeth cleaning recorded">Teeth cleaning recorded ('+response.event+'/'+response.mustRecordsCount+')</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
 
                                                             $('.camping-for-popups').html('');
                                                             basic.showAlert('Teeth cleaning recorded successfully. Now your dentist has to approve it.', 'boobox-alert', true);
@@ -74655,9 +74655,9 @@ var projectData = {
                                                     success: function (response) {
                                                         hideLoader();
                                                         if (response.success) {
-                                                            $('.records-history.module table tbody').prepend('<tr data-id="'+response.teethCleaningId+'"> <td>'+Math.round(new Date($('.camping-for-popups .teeth-cleaning-datepicker').val().trim()).getTime() / 1000)+'</td><td>Teeth cleaning recorded ('+response.teethCleaningUpEvent+'/'+response.aMustTeethCleaningRecordsCount+')</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
+                                                            $('.records-history.module table tbody').prepend('<tr data-id="'+response.teethCleaningId+'"> <td>'+Math.round(new Date($('.camping-for-popups .teeth-cleaning-datepicker').val().trim()).getTime() / 1000)+'</td><td class="action-td" data-label="Teeth cleaning recorded">Teeth cleaning recorded ('+response.teethCleaningUpEvent+'/'+response.aMustTeethCleaningRecordsCount+')</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
 
-                                                            $('.records-history.module table tbody').prepend('<tr data-id="'+response.checkUpId+'"> <td>'+Math.round(new Date($('.camping-for-popups .check-up-datepicker').val().trim()).getTime() / 1000)+'</td><td>Check-up recorded ('+response.checkUpEvent+'/'+response.aMustCheckUpRecordsCount+')</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
+                                                            $('.records-history.module table tbody').prepend('<tr data-id="'+response.checkUpId+'"> <td>'+Math.round(new Date($('.camping-for-popups .check-up-datepicker').val().trim()).getTime() / 1000)+'</td><td class="action-td" data-label="Check-up recorded">Check-up recorded ('+response.checkUpEvent+'/'+response.aMustCheckUpRecordsCount+')</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
 
                                                             $('.camping-for-popups').html('');
 
@@ -75466,14 +75466,17 @@ var projectData = {
                                             if (response.data) {
                                                 Object.keys(response.data).forEach(function(key) {
                                                     if (!$('.records-history.module tr[data-id="'+key+'"]').length) {
+                                                        var typeLabel;
                                                         var action;
                                                         if (response.data[key].type == 'teeth-cleaning') {
+                                                            typeLabel = 'Teeth cleaning recorded';
                                                             action = 'Teeth cleaning recorded ('+response.currentTeethCleaningsCount+'/'+response.teeth_cleaning_per_year+')';
                                                         } else if (response.data[key].type == 'check-up') {
+                                                            typeLabel = 'Check-up recorded';
                                                             action = 'Check-up recorded ('+response.currentCheckUpCount+'/'+response.check_ups_per_year+')';
                                                         }
 
-                                                        $('.records-history.module table tbody').prepend('<tr data-id="'+key+'"> <td>'+projectData.utils.dateObjToFormattedDate(new Date(response.data[key].request_date_at))+'</td><td>'+action+'</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
+                                                        $('.records-history.module table tbody').prepend('<tr data-id="'+key+'"> <td>'+projectData.utils.dateObjToFormattedDate(new Date(response.data[key].request_date_at))+'</td><td class="action-td" data-label="'+typeLabel+'">'+action+'</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
                                                     }
                                                 });
                                             }
@@ -75551,6 +75554,7 @@ var projectData = {
                                                                         if (response.data && response.data.length) {
                                                                             for (var i = 0, len = response.data.length; i < len; i+=1) {
                                                                                 $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold cancelled-color">DECLINED</span>');
+                                                                                $('.records-history.module tr[data-id="'+response.data[i]+'"] .action-td').html($('.records-history.module tr[data-id="'+response.data[i]+'"] .action-td').attr('data-label'));
                                                                             }
                                                                         }
                                                                     } else if (response.error) {

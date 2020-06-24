@@ -5,7 +5,7 @@
 <body>
 <div style="font-size: 13px;">Dear {{$patient_name}},
     <br><br>
-    {{$dentist->title}} {{$dentist->name}} has officially approved and activated your smart Assurance contract.
+    {{(new \App\Http\Controllers\Controller())->prepareUserName($dentist)}} has officially approved and activated your smart Assurance contract.
     <br><br>
     Please take care to charge your account every month with the amount of Dentacoin equivalent to your monthly premium: {{$amount}} USD.
     <br><br>
