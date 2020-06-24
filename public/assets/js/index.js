@@ -1052,6 +1052,7 @@ var projectData = {
                             next_payment_timestamp_unix = (nextWithdrawTimestamp + dApp.grace_period - now_timestamp);
 
                             timer_label = 'If you doesn\'t fill in '+projectData.utils.convertUsdToDcn(dcn_needed_to_be_payed_to_dentist)+' DCN inside your  Wallet Address the contract will be canceled in:';
+                            $('.contract-header').html('ACTIVE - OVERDUE PAYMENT');
                             $('.clock').addClass('red-background');
                         } else if (time_passed_since_signed > period_to_withdraw) {
                             var remainder = time_passed_since_signed % period_to_withdraw;
