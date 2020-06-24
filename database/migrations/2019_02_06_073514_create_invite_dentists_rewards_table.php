@@ -22,8 +22,6 @@ class CreateInviteDentistsRewardsTable extends Migration
             $table->string('website', 500);
             $table->string('phone', 50)->nullable();
             $table->tinyInteger('sent_to_api')->default(0);
-            $table->tinyInteger('dentist_registered_and_approved')->default(0);
-            $table->timestamp('payed_on')->nullable();
             $table->timestamps();
         });
     }

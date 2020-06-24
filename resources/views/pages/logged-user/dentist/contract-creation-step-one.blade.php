@@ -2,10 +2,10 @@
     @php($dentist_name = $renew_contract->dentist_name)
 @else
     @php($api_enums = (new \App\Http\Controllers\APIRequestsController())->getAllEnums())
-    @if (!empty($current_logged_dentist->title))
+    @if (!empty($current_logged_dentist->title) && $current_logged_dentist->is_dentist)
         @foreach ($api_enums->titles as $key => $title)
             @if ($current_logged_dentist->title == $key)
-                @php($dentist_name = $title . ' ' . $current_logged_dentist->name)
+                @php(exists)
                 @break
             @endif
         @endforeach
