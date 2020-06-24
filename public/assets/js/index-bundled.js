@@ -76020,10 +76020,16 @@ if ($('body').hasClass('logged-in')) {
                         customCreateContractErrorHandle($('.step.three .checkboxes-right-container'), 'Please select at least one service.');
                         inner_error = true;
                     }
-                } else if ($('.step.three select[name="check-ups-per-year"]').val().trim() == '') {
+                }
+
+                if ($('.step.three select[name="check-ups-per-year"]').val().trim() == '') {
                     customCreateContractErrorHandle($('.step.three select[name="check-ups-per-year"]'), 'Please select number.');
-                } else if ($('.step.three select[name="teeth-cleaning-per-year"]').val().trim() == '') {
+                    inner_error = true;
+                }
+
+                if ($('.step.three select[name="teeth-cleaning-per-year"]').val().trim() == '') {
                     customCreateContractErrorHandle($('.step.three select[name="teeth-cleaning-per-year"]'), 'Please select number.');
+                    inner_error = true;
                 }
             } else if (step == 'one') {
                 var validate_dentist_address = false;
