@@ -70,7 +70,7 @@
         <div class="container text-center">
             <div class="row">
                 <div class="col-xs-12">
-                    <h2 class="fs-35 fs-xs-30 lato-bold padding-top-50 padding-top-xs-30 padding-bottom-20">Your Account Has Been Successfully Funded.</h2>
+                    <h2 class="fs-35 fs-xs-30 lato-bold padding-top-50 padding-top-xs-30 padding-bottom-20">Time for Your Dentist's Final Approval</h2>
                 </div>
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                     <div class="fs-20 fs-xs-18 calibri-regular">Your dentist has been notified. Once they approve it, your smart contract will be automatically activated.</div>

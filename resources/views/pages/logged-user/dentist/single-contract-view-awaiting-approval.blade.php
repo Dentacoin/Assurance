@@ -91,13 +91,16 @@
         <section class="container contract-details init-contract-section" data-contract="{{$contract->slug}}">
             <div class="row text-center">
                 <div class="col-xs-12">
-                    <h2 class="fs-35 fs-xs-30 lato-bold padding-top-50 padding-top-xs-40 padding-bottom-20">You Have Received Your First Payment.</h2>
+                    <h2 class="fs-35 fs-xs-30 lato-bold padding-top-50 padding-top-xs-40 padding-bottom-20">Time for Your Final Approval</h2>
                 </div>
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                     <div class="fs-20 fs-xs-18 calibri-regular">Now you can check all details and give your approval in order to activate your contract on the blockchain as well.</div>
                 </div>
+                <div class="col-xs-12 text-center padding-top-30 padding-bottom-20">
+                    <a href="javascript:void(0)" class="white-green-btn min-width-250 width-xs-100 max-width-400 scroll-to-begging-of-contact">CHECK & APPROVE</a>
+                </div>
                 <div class="col-xs-12 col-lg-10 col-lg-offset-1 no-gutter-xs">
-                    <div class="contract-details-container show-this module fs-16 text-left padding-top-40 padding-bottom-60">
+                    <div class="contract-details-container show-this module fs-16 text-left padding-top-40 padding-bottom-60" id="begging-of-contact">
                         @include('partials.contract-details', ['type' => 'single-page', 'contract' => $contract, 'dentist' => $current_logged_dentist, 'patient' => $patient, 'calculator_proposals' => $calculator_proposals, 'subtitle' => 'Please read carefully, check all details and approve.<br>There is no way to change anything in the contract later.'])
                     </div>
                     <div class="padding-top-50 padding-left-15 padding-right-15 approve-button-container">

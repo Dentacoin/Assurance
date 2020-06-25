@@ -3,7 +3,7 @@
         @php($general_dentistry_arr = unserialize($renew_contract->general_dentistry))
     @endif
     <h2 class="text-center calibri-bold fs-30 padding-bottom-25 padding-bottom-xs-0">CONTRACT CONDITIONS</h2>
-    <h3 class="calibri-light light-gray-color fs-16 padding-top-35 padding-bottom-10 light-gray-bottom-border">Prophylaxis <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Prophylaxis visits are always covered by Dentacoin Assurance."></i></h3>
+    <h3 class="lato-semibold light-gray-color fs-16 padding-top-35 padding-bottom-10 light-gray-bottom-border">Required Prophylaxis Visits <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Prophylaxis visits are always covered by Dentacoin Assurance."></i> :</h3>
     <div class="step-fields module margin-top-10">
         <div class="single-row flex-row fs-0 no-border">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
@@ -24,7 +24,7 @@
             </select>
         </div>
         <div class="single-row flex-row fs-0 padding-bottom-15">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful Dentacare Journeys:</label>
+            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful <a href="https://dentacare.dentacoin.com/" target="_blank" class="text-decoration-underline blue-green-color lato-semibold">Dentacare Journeys</a>:</label>
             <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">1 (90 days)</div>
         </div>
         <div class="single-row fs-0">

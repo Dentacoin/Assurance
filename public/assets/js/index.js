@@ -1878,6 +1878,12 @@ var projectData = {
                             return '';
                         };
 
+                        if ($('.scroll-to-begging-of-contact').length) {
+                            $('.scroll-to-begging-of-contact').click(function() {
+                                $('html, body').animate({scrollTop: $('#begging-of-contact').offset().top}, 500);
+                            });
+                        }
+
                         trackForContractStatusChange($('.single-contract-view-section').attr('data-contract'), 'awaiting-approval');
                         trackForWalletSigning($('.single-contract-view-section').attr('data-contract'), 'active');
                         trackForWalletCancel($('.single-contract-view-section').attr('data-contract'));
