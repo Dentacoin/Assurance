@@ -1087,7 +1087,7 @@ class UserController extends Controller {
             //if(is_object($approveContractStatusChange) && property_exists($approveContractStatusChange, 'success') && $approveContractStatusChange->success) {
             if($request->input('to_status') == 'cancelled') {
                 $comments = trim($request->input('comments'));
-                if (!empty($comments)) {
+                if (isset($comments)) {
                     $hashArray = array('slug' => $request->input('slug'), 'transactionHash' => $request->input('transactionHash'), 'to_status' => $request->input('to_status'), 'type' => $request->input('type'), 'reason' => trim($request->input('reason')), 'comments' => $comments);
                 } else {
                     $hashArray = array('slug' => $request->input('slug'), 'transactionHash' => $request->input('transactionHash'), 'to_status' => $request->input('to_status'), 'type' => $request->input('type'), 'reason' => $request->input('reason'));

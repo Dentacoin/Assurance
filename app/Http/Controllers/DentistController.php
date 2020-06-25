@@ -421,12 +421,12 @@ class DentistController extends Controller
                 }
 
                 if($request->input('action') == 'confirm') {
-                    $subject = $dentist->title. ' ' . $dentist->name . ' confirmed your teeth cleaning ';
+                    $subject = $this->prepareUserName($dentist) . ' confirmed your record';
 
                     $email_view = view('emails/dentist-approving-contract-record', ['dentist' => $dentist, 'patient_name' => $patient->name, 'type' => $recordEmailType, 'approvedRecordRecordsLeft' => $approvedRecordRecordsLeft]);
                     $emailBody = $email_view->render();
                 } else if($request->input('action') == 'decline') {
-                    $subject = $dentist->title. ' ' . $dentist->name . ' declined your teeth cleaning';
+                    $subject = $this->prepareUserName($dentist) . ' ' . $dentist->name . ' declined your record';
 
                     $email_view = view('emails/dentist-declining-contract-record', ['dentist' => $dentist, 'patient_name' => $patient->name, 'type' => $recordEmailType, 'recordGetTypeParam' => $recordGetTypeParam, 'slug' => $contract->slug]);
                     $emailBody = $email_view->render();
