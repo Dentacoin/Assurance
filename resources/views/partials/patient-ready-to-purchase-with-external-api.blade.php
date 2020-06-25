@@ -46,7 +46,7 @@
                 <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
                     <div class="custom-google-label-style module" data-input-blue-green-border="true">
                         <label for="dcn_address" class="active-label">Address to receive DCN:</label>
-                        <input type="url" id="dcn_address" maxlength="42" class="full-rounded" value="{{$contact->patient_address}}"/>
+                        <input type="url" id="dcn_address" maxlength="42" class="full-rounded" value="{{$contract->patient_address}}"/>
                     </div>
                 </div>
             </div>
