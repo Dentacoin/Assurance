@@ -10,9 +10,11 @@
     text-decoration: none !important;
     @include rounded(4px);
     @include simple_transition(.3s);
-    &:hover {
-        color: $blue_green_color;
-        background-color: white;
+    @include breakpoint($md) {
+        &:hover {
+            color: $blue_green_color;
+            background-color: white;
+        }
     }
     &:focus {
         color: white;
@@ -31,9 +33,11 @@
     text-decoration: none !important;
     @include rounded(4px);
     @include simple_transition(.3s);
-    &:hover {
-        color: white;
-        background-color: $cancelled;
+    @include breakpoint($md) {
+        &:hover {
+            color: white;
+            background-color: $cancelled;
+        }
     }
     &:focus {
         color: $cancelled;
@@ -52,9 +56,11 @@
     text-decoration: none !important;
     @include rounded(4px);
     @include simple_transition(.3s);
-    &:hover {
-        color: $cancelled;
-        background-color: white;
+    @include breakpoint($md) {
+        &:hover {
+            color: $cancelled;
+            background-color: white;
+        }
     }
     &:focus {
         color: white;
@@ -73,9 +79,11 @@
     text-decoration: none !important;
     @include rounded(4px);
     @include simple_transition(.3s);
-    &:hover {
-        color: $active;
-        background-color: white;
+    @include breakpoint($md) {
+        &:hover {
+            color: $active;
+            background-color: white;
+        }
     }
     &:focus {
         color: white;
@@ -97,11 +105,13 @@
     path {
         fill: $active;
     }
-    &:hover {
-        background-color: $active;
-        color: white;
-        path {
-            fill: white;
+    @include breakpoint($md) {
+        &:hover {
+            background-color: $active;
+            color: white;
+            path {
+                fill: white;
+            }
         }
     }
     &:focus {
@@ -124,19 +134,21 @@
     path {
         fill: $blue_green_color;
     }
-    &:hover {
-        background-color: $active;
-        color: white;
-        path {
-            fill: white;
-        }
-    }
-    &:hover {
-        color: white;
-        background-color: $blue_green_color;
-    }
     &:focus {
         color: $blue_green_color;
+    }
+    @include breakpoint($md) {
+        &:hover {
+            color: white;
+            background-color: $active;
+            path {
+                fill: white;
+            }
+        }
+        &:hover {
+            color: white;
+            background-color: $blue_green_color;
+        }
     }
 }
 
@@ -162,9 +174,11 @@
     cursor: pointer;
     @include rounded(4px);
     @include simple_transition(.3s);
-    &:hover {
-        color: $blue_green_color;
-        background-color: white;
+    @include breakpoint($md) {
+        &:hover {
+            color: $blue_green_color;
+            background-color: white;
+        }
     }
     &:focus {
         color: white;

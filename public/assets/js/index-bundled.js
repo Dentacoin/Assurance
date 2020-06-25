@@ -75446,6 +75446,38 @@ var projectData = {
                         var contract_next_payment = parseInt(on_load_exiting_contract[0]);
                         var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
 
+                        function confirmRecord(record, successCallback) {
+                            var clickWarningObj = {};
+                            clickWarningObj.callback = function (result) {
+                                if (result) {
+                                    showLoader();
+                                    setTimeout(function() {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/dentist/take-action-for-pending-contract-records',
+                                            dataType: 'json',
+                                            data: {
+                                                record: record,
+                                                action: 'confirm'
+                                            },
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success: function (response) {
+                                                if (response.success) {
+                                                    successCallback(response);
+                                                } else if (response.error) {
+                                                    hideLoader();
+                                                    basic.showAlert(response.message, 'boobox-alert', true);
+                                                }
+                                            }
+                                        });
+                                    }, 2000);
+                                }
+                            };
+                            basic.showConfirm('Are you sure you want to confirm this visit?', '', clickWarningObj, true);
+                        }
+
                         // check for pending patient records - check-up or teeth cleaning
                         var visibleRecord = false;
                         setInterval(function() {
@@ -75487,43 +75519,32 @@ var projectData = {
                                             $('.pending-contract-record .confirm-record').click(function() {
                                                 var record = $(this).attr('data-record');
 
-                                                var clickWarningObj = {};
-                                                clickWarningObj.callback = function (result) {
-                                                    if (result) {
-                                                        showLoader();
-                                                        setTimeout(function() {
-                                                            $.ajax({
-                                                                type: 'POST',
-                                                                url: '/dentist/take-action-for-pending-contract-records',
-                                                                dataType: 'json',
-                                                                data: {
-                                                                    record: record,
-                                                                    action: 'confirm'
-                                                                },
-                                                                headers: {
-                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                },
-                                                                success: function (response) {
-                                                                    if (response.success) {
-                                                                        visibleRecord = false;
-                                                                        basic.closeDialog();
-                                                                        hideLoader();
+                                                confirmRecord(record, function(response) {
+                                                    visibleRecord = false;
+                                                    basic.closeDialog();
+                                                    hideLoader();
 
-                                                                        if (response.data && response.data.length) {
-                                                                            for (var i = 0, len = response.data.length; i < len; i+=1) {
-                                                                                $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold active-color">CONFIRMED</span>');
-                                                                            }
-                                                                        }
-                                                                    } else if (response.error) {
-                                                                        hideLoader();
-                                                                        basic.showAlert(response.message, 'boobox-alert', true);
-                                                                    }
-                                                                }
-                                                            });
-                                                        }, 2000);
+                                                    if (response.data && response.data.length) {
+                                                        for (var i = 0, len = response.data.length; i < len; i+=1) {
+                                                            $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold active-color">CONFIRMED</span>');
+                                                        }
                                                     }
-                                                };
-                                                basic.showConfirm('Are you sure you want to confirm this visit?', '', clickWarningObj, true);
+                                                });
+                                            });
+
+                                            $(document).on('click', '.confirm-record-from-records-history', function() {
+                                                var record = $(this).attr('data-record');
+
+                                                confirmRecord(record, function(response) {
+                                                    basic.closeDialog();
+                                                    hideLoader();
+
+                                                    if (response.data && response.data.length) {
+                                                        for (var i = 0, len = response.data.length; i < len; i+=1) {
+                                                            $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold active-color">CONFIRMED</span>');
+                                                        }
+                                                    }
+                                                });
                                             });
 
                                             $('.pending-contract-record .decline-record').click(function() {

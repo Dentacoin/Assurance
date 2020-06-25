@@ -188,9 +188,10 @@
   -o-transition: 0.3s;
   -ms-transition: 0.3s;
   transition: 0.3s; }
-  .white-blue-green-btn:hover {
-    color: #126585;
-    background-color: white; }
+  @media screen and (min-width: 992px) {
+    .white-blue-green-btn:hover {
+      color: #126585;
+      background-color: white; } }
   .white-blue-green-btn:focus {
     color: white; }
 
@@ -213,9 +214,10 @@
   -o-transition: 0.3s;
   -ms-transition: 0.3s;
   transition: 0.3s; }
-  .white-red-btn:hover {
-    color: white;
-    background-color: #e92f30; }
+  @media screen and (min-width: 992px) {
+    .white-red-btn:hover {
+      color: white;
+      background-color: #e92f30; } }
   .white-red-btn:focus {
     color: #e92f30; }
 
@@ -238,9 +240,10 @@
   -o-transition: 0.3s;
   -ms-transition: 0.3s;
   transition: 0.3s; }
-  .red-white-btn:hover {
-    color: #e92f30;
-    background-color: white; }
+  @media screen and (min-width: 992px) {
+    .red-white-btn:hover {
+      color: #e92f30;
+      background-color: white; } }
   .red-white-btn:focus {
     color: white; }
 
@@ -263,9 +266,10 @@
   -o-transition: 0.3s;
   -ms-transition: 0.3s;
   transition: 0.3s; }
-  .white-green-btn:hover {
-    color: #239234;
-    background-color: white; }
+  @media screen and (min-width: 992px) {
+    .white-green-btn:hover {
+      color: #239234;
+      background-color: white; } }
   .white-green-btn:focus {
     color: white; }
 
@@ -290,11 +294,12 @@
   transition: 0.3s; }
   .green-white-btn path {
     fill: #239234; }
-  .green-white-btn:hover {
-    background-color: #239234;
-    color: white; }
-    .green-white-btn:hover path {
-      fill: white; }
+  @media screen and (min-width: 992px) {
+    .green-white-btn:hover {
+      background-color: #239234;
+      color: white; }
+      .green-white-btn:hover path {
+        fill: white; } }
   .green-white-btn:focus {
     color: white; }
 
@@ -319,16 +324,17 @@
   transition: 0.3s; }
   .blue-green-white-btn path {
     fill: #126585; }
-  .blue-green-white-btn:hover {
-    background-color: #239234;
-    color: white; }
-    .blue-green-white-btn:hover path {
-      fill: white; }
-  .blue-green-white-btn:hover {
-    color: white;
-    background-color: #126585; }
   .blue-green-white-btn:focus {
     color: #126585; }
+  @media screen and (min-width: 992px) {
+    .blue-green-white-btn:hover {
+      color: white;
+      background-color: #239234; }
+      .blue-green-white-btn:hover path {
+        fill: white; }
+    .blue-green-white-btn:hover {
+      color: white;
+      background-color: #126585; } }
 
 .light-blue-green-white-btn {
   font-size: 20px;
@@ -361,9 +367,10 @@
   -o-transition: 0.3s;
   -ms-transition: 0.3s;
   transition: 0.3s; }
-  .white-transparent-btn:hover {
-    color: #126585;
-    background-color: white; }
+  @media screen and (min-width: 992px) {
+    .white-transparent-btn:hover {
+      color: #126585;
+      background-color: white; } }
   .white-transparent-btn:focus {
     color: white; }
 
