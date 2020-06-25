@@ -8725,22 +8725,6 @@ select.select-mac-fix {
   font-size: 16px;
   padding-top: 10px;
   padding-bottom: 10px; }
-  .module.contract-single-page-nav .open-mobile-single-page-nav {
-    display: none;
-    padding-top: 15px; }
-    .module.contract-single-page-nav .open-mobile-single-page-nav .nav-btn {
-      font-size: 35px;
-      padding: 10px 20px;
-      border: 2px solid #212121;
-      line-height: 14px;
-      color: #212121;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      -ms-border-radius: 4px;
-      border-radius: 4px; }
-    @media screen and (max-width: 767px) {
-      .module.contract-single-page-nav .open-mobile-single-page-nav {
-        display: block; } }
   .module.contract-single-page-nav ul li {
     padding: 0 10px; }
     .module.contract-single-page-nav ul li a {
@@ -8754,33 +8738,31 @@ select.select-mac-fix {
     .module.contract-single-page-nav ul li i.fa-info-circle {
       padding-left: 5px; }
   @media screen and (max-width: 767px) {
-    .module.contract-single-page-nav ul {
-      display: none;
-      z-index: 10;
-      background-color: white;
-      font-size: 20px;
-      width: 260px;
-      top: 100%;
-      position: absolute;
-      left: 50%;
-      -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-      transform: translateX(-50%);
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      -ms-border-radius: 4px;
-      border-radius: 4px;
-      -webkit-box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.7);
-      -moz-box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.7);
-      -ms-box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.7);
-      box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.7); }
-      .module.contract-single-page-nav ul .delimeter {
-        display: none; }
-      .module.contract-single-page-nav ul li {
-        display: block;
-        padding: 10px;
-        border-bottom: 1px solid #888888;
-        max-width: none !important; } }
+    .module.contract-single-page-nav.desktop {
+      display: none; }
+    .module.contract-single-page-nav.mobile {
+      display: none; }
+      .module.contract-single-page-nav.mobile ul {
+        z-index: 10;
+        background-color: white;
+        font-size: 20px;
+        width: 100%;
+        top: 100%;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -ms-border-radius: 4px;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.7);
+        -moz-box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.7);
+        -ms-box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.7);
+        box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.7); }
+        .module.contract-single-page-nav.mobile ul .delimeter {
+          display: none; }
+        .module.contract-single-page-nav.mobile ul li {
+          display: block;
+          padding: 10px;
+          border-bottom: 1px solid #888888;
+          max-width: none !important; } }
 .module.single-contract-tile .attention-in-process a {
   color: #888888; }
 .module.single-contract-tile .contract-participant {

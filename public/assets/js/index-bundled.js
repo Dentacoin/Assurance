@@ -76519,12 +76519,6 @@ if ($('body').hasClass('logged-in') && !$('.my-contracts-iframe').length) {
     });
 
     if ($('.contract-single-page-nav').length) {
-        if ($('.open-mobile-single-page-nav').length) {
-            $('.open-mobile-single-page-nav > a').click(function() {
-                $(this).closest('.contract-single-page-nav').find('ul').toggle(300);
-            });
-        }
-
         if ($('.records-history.module').length) {
             $('.show-on-records-history').removeClass('hide');
             $('.show-on-records-history.scroll-init > a').click(function() {

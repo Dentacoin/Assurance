@@ -1,9 +1,6 @@
 @php($patient_session = (new \App\Http\Controllers\UserController())->checkPatientSession())
 @php($dentist_session = (new \App\Http\Controllers\UserController())->checkDentistSession())
-<nav class="col-xs-12 text-center contract-single-page-nav module">
-    @if(isset($mobile) && $mobile)
-        <div class="open-mobile-single-page-nav text-center"><a href="javascript:void(0);" class="nav-btn inline-block">···</a></div>
-    @endif
+<nav class="col-xs-12 text-center contract-single-page-nav module @if (empty($type)) {{$type}} @endif">
     <ul itemscope="" itemtype="http://schema.org/SiteNavigationElement">
         @if(!empty($contract->document_hash))
             <li class="inline-block">

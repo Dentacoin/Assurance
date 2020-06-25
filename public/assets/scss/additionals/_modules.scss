@@ -931,21 +931,6 @@
         font-size: 16px;
         padding-top: 10px;
         padding-bottom: 10px;
-        .open-mobile-single-page-nav {
-            display: none;
-            padding-top: 15px;
-            .nav-btn {
-                font-size: 35px;
-                padding: 10px 20px;
-                border: 2px solid $dark_color;
-                line-height: 14px;
-                color: $dark_color;
-                @include rounded(4px);
-            }
-            @include breakpoint($xs) {
-                display: block;
-            }
-        }
         ul {
             li {
                 padding: 0 10px;
@@ -969,24 +954,31 @@
                     padding-left: 5px;
                 }
             }
-            @include breakpoint($xs) {
+        }
+
+        @include breakpoint($xs) {
+            &.desktop {
                 display: none;
-                z-index: 10;
-                background-color: white;
-                font-size: 20px;
-                width: 260px;
-                top: 100%;
-                @include horizontal-align(absolute);
-                @include rounded(4px);
-                @include box-shadow(0 1px 20px 0 rgba(0, 0, 0, 0.7));
-                .delimeter {
-                    display: none;
-                }
-                li {
-                    display: block;
-                    padding: 10px;
-                    border-bottom: 1px solid $light_gray;
-                    max-width: none !important;
+            } 
+            &.mobile {
+                display: none;
+                ul {
+                    z-index: 10;
+                    background-color: white;
+                    font-size: 20px;
+                    width: 100%;
+                    top: 100%;
+                    @include rounded(4px);
+                    @include box-shadow(0 1px 20px 0 rgba(0, 0, 0, 0.7));
+                    .delimeter {
+                        display: none;
+                    }
+                    li {
+                        display: block;
+                        padding: 10px;
+                        border-bottom: 1px solid $light_gray;
+                        max-width: none !important;
+                    }
                 }
             }
         }
