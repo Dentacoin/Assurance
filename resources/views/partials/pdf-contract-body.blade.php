@@ -70,6 +70,18 @@
         </div>
         <div class="section-title">CONTRACT CONDITIONS</div>
         <div class="row">
+            <label class="inline-block">Required Check-ups per Year:</label>
+            <div class="right-field inline-block">{{$contract->check_ups_per_year}}</div>
+        </div>
+        <div class="row">
+            <label class="inline-block">Required Teeth Cleaning per Year:</label>
+            <div class="right-field inline-block">{{$contract->teeth_cleaning_per_year}}</div>
+        </div>
+        <div class="row">
+            <label class="inline-block">Required Successful <a href="https://dentacare.dentacoin.com/" target="_blank" class="text-decoration-underline blue-green-color lato-semibold">Dentacare Journeys</a>:</label>
+            <div class="right-field inline-block">1 (90 days)</div>
+        </div>
+        <div class="row">
             <label class="inline-block">Services Covered:</label>
             <div class="right-field inline-block">
                 @if(in_array('param_gd', $services))
@@ -84,16 +96,12 @@
             </div>
         </div>
         <div class="row">
-            <label class="inline-block">Required Check-ups per Year:</label>
-            <div class="right-field inline-block">{{$contract->check_ups_per_year}}</div>
+            <label class="inline-block">Monthly Premium:</label>
+            <div class="right-field inline-block calibri-bold fs-25 dark-color">{{$contract->monthly_premium}} USD</div>
         </div>
         <div class="row">
-            <label class="inline-block">Required Teeth Cleaning per Year:</label>
-            <div class="right-field inline-block">{{$contract->teeth_cleaning_per_year}}</div>
-        </div>
-        <div class="row">
-            <label class="inline-block">Required Successful Dentacare Journeys:</label>
-            <div class="right-field inline-block">1 (90 days)</div>
+            <label class="inline-block">Contract Validity:</label>
+            <div class="right-field inline-block">Valid until canceled</div>
         </div>
         <div class="section-title">TERMS AND CONDITIONS</div>
         <div style="font-size: 14px;padding-top: 30px;

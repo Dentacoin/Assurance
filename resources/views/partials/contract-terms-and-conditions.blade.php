@@ -42,7 +42,7 @@
 <div class="padding-bottom-15">In case the above-described recommendations are followed, the Patient has the right to have their occurring treatment costs covered for the predefined set of possibly occurring treatments described in 3. Service Coverage.</div>
 <div class="padding-bottom-15">The Patient has the right to cancel the contract at any given moment.</div>
 <h3 class="fs-22 fs-xs-18 calibri-bold padding-top-30 padding-bottom-15">3. DENTAL SERVICES COVERAGE</h3>
-<div class="fs-18 calibri-bold">Prophylaxis visits:</div>
+<div class="fs-18 calibri-bold">Required Prophylaxis visits:</div>
 @if(!empty($contract))
     @php($general_dentistry_arr = unserialize($contract->general_dentistry))
     @php($prophylaxis_list = '')

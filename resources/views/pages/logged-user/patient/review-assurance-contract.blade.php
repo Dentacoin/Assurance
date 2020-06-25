@@ -181,6 +181,10 @@
                                 </div>
                                 <div class="single-row fs-14 light-gray-color calibri-light padding-top-10 padding-bottom-40">You are not satisfied with the rate offered? <a href="javascript:void(0)" class="calibri-bold blue-green-color contact-your-dentist">Contact your dentist.</a> </div>
                                 <div class="single-row flex-row fs-0">
+                                    <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Contract Validity:</label>
+                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">Valid until canceled</div>
+                                </div>
+                                <div class="single-row flex-row fs-0">
                                     <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
                                     <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$contract->check_ups_per_year}}</div>
                                 </div>
@@ -189,7 +193,7 @@
                                     <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$contract->teeth_cleaning_per_year}}</div>
                                 </div>
                                 <div class="single-row flex-row fs-0">
-                                    <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful Dentacare Journeys:</label>
+                                    <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful <a href="https://dentacare.dentacoin.com/" target="_blank" class="text-decoration-underline blue-green-color lato-semibold">Dentacare Journeys</a>:</label>
                                     <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">1 (90 days)</div>
                                 </div>
                                 <h3 class="calibri-bold fs-30 dark-color padding-top-70">CONTRACT DETAILS</h3>

@@ -117,7 +117,7 @@
             </div>
         @endif
         <h3 class="calibri-bold fs-30 fs-xs-22 dark-color padding-top-50">CONTRACT CONDITIONS</h3>
-        <h3 class="calibri-light light-gray-color fs-16 padding-top-35 padding-bottom-10 light-gray-bottom-border">Prophylaxis <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Prophylaxis visits are always covered by Dentacoin Assurance."></i></h3>
+        <h3 class="lato-semibold light-gray-color fs-16 padding-top-35 padding-bottom-10 light-gray-bottom-border">Required Prophylaxis <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Prophylaxis visits are always covered by Dentacoin Assurance."></i> :</h3>
         <div class="single-row fs-0 no-border">
             <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
             <<div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="check-ups-per-year">@if(!empty($contract)){{$contract->check_ups_per_year}}@endif</div>
@@ -127,7 +127,7 @@
             <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="teeth-cleaning-per-year">@if(!empty($contract)){{$contract->teeth_cleaning_per_year}}@endif</div>
         </div>
         <div class="single-row fs-0 margin-bottom-15">
-            <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful Dentacare Journeys:</label>
+            <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful <a href="https://dentacare.dentacoin.com/" target="_blank" class="text-decoration-underline blue-green-color lato-semibold">Dentacare Journeys</a>:</label>
             <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">1 (90 days)</div>
         </div>
         @if(!empty($contract) && !empty($calculator_proposals))
@@ -223,6 +223,10 @@
         <div class="single-row fs-0">
             <div class="fs-14 calibri-light light-gray-color padding-top-5">Based on the services covered, the average monthly rate in your country is <span class="calibri-bold blue-green-color"><span id="suggested-price">@if(!empty($price)) {{$price}} @endif</span> USD</span> in Dentacoin (DCN).</div>
             <div class="fs-14 calibri-light light-gray-color padding-bottom-25">You are free to propose a different rate to your patient.</div>
+        </div>
+        <div class="single-row fs-0 margin-bottom-15">
+            <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Contract Validity:</label>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">Valid until canceled</div>
         </div>
         <h3 class="calibri-bold fs-30 fs-xs-22 dark-color padding-top-50">CONTRACT DETAILS</h3>
         <div class="terms-and-conditions-long-list margin-top-30 margin-bottom-60 margin-bottom-xs-30">

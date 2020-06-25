@@ -131,5 +131,9 @@
                 <div class="fs-14 calibri-light light-gray-color padding-bottom-25">You are free to propose a different rate to your patient.</div>
             </div>
         @endif
+        <div class="single-row flex-row fs-0 relative-position">
+            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer" for="monthly-premium">Contract Validity:</label>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">Valid until canceled</div>
+        </div>
     </div>
 </div>
