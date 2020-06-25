@@ -43,15 +43,15 @@
                 </div>
             </div>
             <div class="row padding-top-50 padding-top-xs-0 padding-bottom-20">
-                <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
                     <div class="custom-google-label-style module" data-input-blue-green-border="true">
                         <label for="dcn_address" class="active-label">Address to receive DCN:</label>
-                        <input type="url" id="dcn_address" maxlength="42" class="full-rounded" value="{{$contract->patient_address}}"/>
+                        <input type="url" id="dcn_address" maxlength="42" readonly class="full-rounded" value="{{$contract->patient_address}}"/>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
                     <div class="custom-google-label-style module" data-input-blue-green-border="true">
                         <label for="email" class="active-label">Email:</label>
                         <input type="email" id="email" maxlength="100" class="full-rounded" @if(!empty($user_data) && !empty($user_data->email)) value="{{$user_data->email}}" @endif/>

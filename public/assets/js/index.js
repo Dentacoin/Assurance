@@ -3284,7 +3284,7 @@ if ($('body').hasClass('logged-in') && !$('.my-contracts-iframe').length) {
             var currency = $('section.ready-to-purchase-with-external-api nav ul li a.active').attr('data-currency');
             var currency_amount_for_one_usd;
             if (currency == 'dcn') {
-                currency_amount_for_one_usd = dcn_for_one_usd;
+                currency_amount_for_one_usd = parseInt(dcn_for_one_usd);
                 var event_obj = {
                     'event_category': 'Purchase',
                     'value': parseInt($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()),
@@ -3298,8 +3298,6 @@ if ($('body').hasClass('logged-in') && !$('.my-contracts-iframe').length) {
                     'event_label': 'USD in ETH'
                 };
             }
-
-            console.log(currency_amount_for_one_usd, 'currency_amount_for_one_usd');
 
             if (parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) < 10)  {
                 basic.showAlert('The minimum transaction limit is 10 USD.', 'boobox-alert', true);
