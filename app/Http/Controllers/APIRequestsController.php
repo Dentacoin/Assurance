@@ -203,6 +203,24 @@ class APIRequestsController extends Controller {
         }
     }
 
+    public function getUserDataByEmail($email) {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'https://api.dentacoin.com/api/user/?email='.urlencode($this->encrypt($email, API_ENCRYPTION_METHOD, API_ENCRYPTION_KEY)),
+            CURLOPT_SSL_VERIFYPEER => 0
+        ));
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        if (!empty($resp))   {
+            return $resp;
+        } else {
+            return false;
+        }
+    }
+
     public function checkIfFreeEmail($email) {
         $curl = curl_init();
         curl_setopt_array($curl, array(

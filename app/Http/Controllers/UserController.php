@@ -316,7 +316,7 @@ class UserController extends Controller {
             $body = $email_view->render();
 
             Mail::send(array(), array(), function($message) use ($body, $patient_email, $initiator) {
-                $message->to($patient_email)->subject($initiator->name . ' Has Cancelled Your Contract');
+                $message->to($patient_email)->subject($this->prepareUserName($initiator) . ' has cancelled your contract');
                 $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
                 $message->setBody($body, 'text/html');
             });

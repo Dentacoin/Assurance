@@ -5248,6 +5248,7 @@ function multipleUseWalletAddressesLogic() {
                                 basic.closeDialog();
                                 basic.showAlert(response.message, 'boobox-alert', true);
 
+                                $('.search-input').val(walletAddress).trigger('change');
 
                                 if (response.addresses) {
                                     var addressesHtml = '';

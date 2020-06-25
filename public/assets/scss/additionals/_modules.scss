@@ -648,7 +648,7 @@
                 @include breakpoint($sm-down) {
                     position: relative;
                     .position-relative {
-                        position: static;
+                        position: static !important;
                     }
                     .search-result {
                         left: 0;
@@ -693,7 +693,7 @@
                     @include breakpoint($sm-down) {
                         position: relative;
                         .position-relative {
-                            position: static;
+                            position: static !important;
                         }
                         .search-result {
                             left: 0;

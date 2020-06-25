@@ -88,7 +88,7 @@
                                         <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0 padding-top-0 padding-bottom-0 cursor-pointer" for="address">Postal Address:</label>
                                         <div class="suggester-parent module inline-block">
                                             <input type="text" name="address" id="address" maxlength="250" class="address-suggester init-address-suggester calibri-regular fs-18 dark-color pencil-background required-field" autocomplete="off">
-                                            <div class="fs-14 padding-top-5">Ex: 49 Pembroke Square, Kensington, London</div>
+                                            <div class="fs-14 light-gray-color padding-top-5">Ex: 49 Pembroke Square, Kensington, London</div>
                                             <div class="suggester-map-div margin-top-15 margin-bottom-10"></div>
                                             <div class="alert alert-notice geoip-confirmation margin-top-10 margin-bottom-10 hide-this">Please check the map to make sure we got your correct address. If you're not happy - please drag the map to adjust it.</div>
                                             <div class="alert alert-warning geoip-hint margin-top-10 margin-bottom-10">Please enter a valid address for your practice (including street name and number).</div>

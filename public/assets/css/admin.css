@@ -817,7 +817,7 @@
     .module.step-fields .single-row.dcn-address-row {
       position: relative; }
       .module.step-fields .single-row.dcn-address-row .position-relative {
-        position: static; }
+        position: static !important; }
       .module.step-fields .single-row.dcn-address-row .search-result {
         left: 0; } }
 .module.contract-proposal .wrapper {
@@ -857,7 +857,7 @@
     .module.contract-proposal .wrapper .single-row.dcn-address-row {
       position: relative; }
       .module.contract-proposal .wrapper .single-row.dcn-address-row .position-relative {
-        position: static; }
+        position: static !important; }
       .module.contract-proposal .wrapper .single-row.dcn-address-row .search-result {
         left: 0; } }
   .module.contract-proposal .wrapper .pretty input[disabled] ~ * {
