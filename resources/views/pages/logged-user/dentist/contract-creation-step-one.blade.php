@@ -5,7 +5,7 @@
     @if (!empty($current_logged_dentist->title) && $current_logged_dentist->is_dentist)
         @foreach ($api_enums->titles as $key => $title)
             @if ($current_logged_dentist->title == $key)
-                @php(exists)
+                @php($dentist_name = $title . ' ' . $current_logged_dentist->name)
                 @break
             @endif
         @endforeach
