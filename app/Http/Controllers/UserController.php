@@ -138,7 +138,7 @@ class UserController extends Controller {
 
             $withdrawableDCN = $request->input('withdrawableDCN');
             if(!empty($withdrawableDCN)) {
-                $params['withdrawableDCN'] = true;
+                $params['withdrawableDCN'] = $withdrawableDCN;
             }
 
             $requestType = $request->input('type');
