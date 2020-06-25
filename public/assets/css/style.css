@@ -8737,11 +8737,13 @@ select.select-mac-fix {
         color: #239234; }
     .module.contract-single-page-nav ul li i.fa-info-circle {
       padding-left: 5px; }
+  .module.contract-single-page-nav.mobile {
+    display: none; }
   @media screen and (max-width: 767px) {
     .module.contract-single-page-nav.desktop {
       display: none; }
     .module.contract-single-page-nav.mobile {
-      display: none; }
+      display: block; }
       .module.contract-single-page-nav.mobile ul {
         z-index: 10;
         background-color: white;

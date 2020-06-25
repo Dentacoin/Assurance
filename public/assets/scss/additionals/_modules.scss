@@ -955,13 +955,15 @@
                 }
             }
         }
-
+        &.mobile {
+            display: none;     
+        }
         @include breakpoint($xs) {
             &.desktop {
                 display: none;
             }
             &.mobile {
-                display: none;
+                display: block;
                 ul {
                     z-index: 10;
                     background-color: white;
