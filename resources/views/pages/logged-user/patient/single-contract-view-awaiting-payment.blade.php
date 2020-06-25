@@ -113,7 +113,7 @@
         @include('partials.records-history', ['contract' => $contract])
     @endif
     @if (!$contract->is_processing)
-        @include('partials.patient-ready-to-purchase-with-external-api')
+        @include('partials.patient-ready-to-purchase-with-external-api', ['contract' => $contract])
     @endif
 @endsection
 

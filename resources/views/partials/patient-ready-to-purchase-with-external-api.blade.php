@@ -46,7 +46,7 @@
                 <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
                     <div class="custom-google-label-style module" data-input-blue-green-border="true">
                         <label for="dcn_address" class="active-label">Address to receive DCN:</label>
-                        <input type="url" id="dcn_address" maxlength="42" class="full-rounded" @if(!empty($user_data) && !empty($user_data->dcn_address)) value="{{$user_data->dcn_address}}" @endif/>
+                        <input type="url" id="dcn_address" maxlength="42" class="full-rounded" value="{{$contact->patient_address}}"/>
                     </div>
                 </div>
             </div>
@@ -71,7 +71,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="btn-container padding-top-20">
+                    <div class="padding-top-20 text-center">
+                        Powered by
+                        <figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-bottom-10">
+                            <img alt="Indacoin logo" itemprop="contentUrl" src="/assets/images/indacoin-logo.svg" class="width-100 max-width-150"/>
+                        </figure>
+                        <div>All transactions are solely handled by Indacoin Limited.</div>
+                        <a href="https://indacoin.com/" target="_blank" class="text-decoration-underline blue-green-color">www.indacoin.com</a>
+                    </div>
+                    <div class="btn-container padding-top-30">
                         <a href="javascript:void(0)" class="white-blue-green-btn min-width-220 buy-crypto-btn">BUY</a>
                     </div>
                 </div>
