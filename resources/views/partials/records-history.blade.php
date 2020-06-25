@@ -37,7 +37,11 @@
                                     @elseif($record->status == 'rejected')
                                         <span class="lato-bold cancelled-color">DECLINED</span>
                                     @elseif($record->status == 'sent')
-                                        <span class="lato-bold">PENDING</span>
+                                        @if ((new \App\Http\Controllers\UserController())->checkDentistSession())
+
+                                        @elseif ((new \App\Http\Controllers\UserController())->checkPatientSession())
+                                            <span class="lato-bold">PENDING</span>
+                                        @endif
                                     @endif
                                 @elseif(!empty($record->data))
                                     <a href="https://etherscan.io/tx/{{$record->data}}" target="_blank" class="blue-green-color lato-bold">SEE PROOF</a>

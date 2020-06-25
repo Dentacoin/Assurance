@@ -75523,7 +75523,7 @@ var projectData = {
                                                         }, 2000);
                                                     }
                                                 };
-                                                basic.showConfirm('Sure you want to continue with approving your patient record?', '', clickWarningObj, true);
+                                                basic.showConfirm('Are you sure you want to confirm this visit?', '', clickWarningObj, true);
                                             });
 
                                             $('.pending-contract-record .decline-record').click(function() {
@@ -78227,25 +78227,6 @@ function showWarningTestingVersion() {
     }
 }
 showWarningTestingVersion();
-
-//binding the refresh captcha event to existing button
-function initCaptchaRefreshEvent()  {
-    if ($('.refresh-captcha').length > 0)    {
-        $('.refresh-captcha').click(function()  {
-            $.ajax({
-                type: 'GET',
-                url: '/refresh-captcha',
-                dataType: 'json',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (response) {
-                    $('.captcha-container span').html(response.captcha);
-                }
-            });
-        });
-    }
-}
 
 function initPopupEvents(scroll_to_buy_section) {
     projectData.initiators.initTooltips();
