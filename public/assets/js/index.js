@@ -3299,11 +3299,13 @@ if ($('body').hasClass('logged-in') && !$('.my-contracts-iframe').length) {
                 };
             }
 
+            console.log(currency_amount_for_one_usd, 'currency_amount_for_one_usd');
+
             if (parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) < 10)  {
                 basic.showAlert('The minimum transaction limit is 10 USD.', 'boobox-alert', true);
             }else if (parseFloat($('section.ready-to-purchase-with-external-api #usd-value').val().trim()) > 6000)  {
                 basic.showAlert('The maximum transaction limit is 6000 USD.', 'boobox-alert', true);
-            }else if (parseFloat($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()) < currency_amount_for_one_usd * 30)  {
+            }else if (parseFloat($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()) < currency_amount_for_one_usd * 10)  {
                 basic.showAlert('The minimum transaction limit is 10 USD in '+currency.toUpperCase()+'.', 'boobox-alert', true);
             }else if (parseFloat($('section.ready-to-purchase-with-external-api #crypto-amount').val().trim()) > currency_amount_for_one_usd * 6000)  {
                 basic.showAlert('The maximum transaction limit is 6000 USD in '+currency.toUpperCase()+'.', 'boobox-alert', true);
