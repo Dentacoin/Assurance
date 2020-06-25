@@ -339,7 +339,6 @@ class DentistController extends Controller
         ]);
 
         $recordIds = @unserialize($request->input('record'));
-        var_dump($recordIds);die('asd');
         if ($recordIds === false && $request->input('record') !== 'b:0;') {
             return response()->json(['error' => true, 'message' => 'Something went wrong, please try again later or contact <a href=\'mailto:assurance@dentacoin.com\'>Dentacoin team</a>.']);
         } else {
