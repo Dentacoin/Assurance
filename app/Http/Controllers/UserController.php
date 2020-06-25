@@ -136,6 +136,11 @@ class UserController extends Controller {
                 $params['sent_eth_to_dentist'] = true;
             }
 
+            $withdrawableDCN = $request->input('withdrawableDCN');
+            if(!empty($withdrawableDCN)) {
+                $params['withdrawableDCN'] = true;
+            }
+
             $requestType = $request->input('type');
             if(!empty($requestType)) {
                 if($requestType == 'qr-scan') {
