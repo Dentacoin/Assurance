@@ -456,7 +456,28 @@ class PatientController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
         // / 100 because we need the dcns for 1USD, we cannot make API request for 1USD
-        return $resp / 100;
+
+        if (!empty($resp)) {
+            return $resp / 100;
+        } else {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_URL => "https://api.coingecko.com/api/v3/coins/dentacoin",
+                CURLOPT_SSL_VERIFYPEER => 0
+            ));
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            $resp = json_decode(curl_exec($curl));
+            curl_close($curl);
+
+            if (!empty($resp))   {
+                if (property_exists($resp, 'market_data') && !empty($resp->market_data->current_price) )  {
+                    return 1 / $resp->market_data->current_price->usd;
+                }else {
+                    return 0;
+                }
+            }
+        }
     }
 
     protected function submitReconsiderMonthlyPremium(Request $request) {

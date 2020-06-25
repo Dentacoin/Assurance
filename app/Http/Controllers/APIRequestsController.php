@@ -14,7 +14,7 @@ class APIRequestsController extends Controller {
             'client_ip' => $this->getClientIp()
         );
 
-        if($dontCountLogin) {
+        if ($dontCountLogin) {
             $postData['dont_count_login'] = true;
         }
 
@@ -30,7 +30,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl), true);
         curl_close($curl);
 
-        if(!empty($resp)) {
+        if (!empty($resp)) {
             return $resp;
         } else {
             return false;
@@ -55,11 +55,11 @@ class APIRequestsController extends Controller {
             'client_ip' => $this->getClientIp()
         );
 
-        if(!empty($data['alternative-name'])) {
+        if (!empty($data['alternative-name'])) {
             $post_fields_arr['name_alternative'] = trim($data['alternative-name']);
         }
 
-        if(!empty($data['inviter'])) {
+        if (!empty($data['inviter'])) {
             $post_fields_arr['invited_by'] = trim($data['inviter']);
         }
 
@@ -84,7 +84,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl), true);
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp;
         }else {
             return false;
@@ -101,7 +101,7 @@ class APIRequestsController extends Controller {
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp->data;
         }else {
             return false;
@@ -118,7 +118,7 @@ class APIRequestsController extends Controller {
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp->data;
         }else {
             return false;
@@ -132,7 +132,7 @@ class APIRequestsController extends Controller {
             'status' => 'approved'
         );
 
-        if(!empty($name)) {
+        if (!empty($name)) {
             $post_fields_arr['name'] = $name;
         }
 
@@ -148,7 +148,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp->data;
         }else {
 
@@ -192,8 +192,8 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp) && property_exists($resp, 'data') && !empty($resp->data))   {
-            if($logging) {
+        if (!empty($resp) && property_exists($resp, 'data') && !empty($resp->data))   {
+            if ($logging) {
                 return $resp;
             } else {
                 return $resp->data;
@@ -236,7 +236,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp;
         }else {
             return false;
@@ -244,7 +244,7 @@ class APIRequestsController extends Controller {
     }
 
     public function updateUserData($data) {
-        if(isset($data['specialisations'])) {
+        if (isset($data['specialisations'])) {
             $data['specialisations'] = json_encode($data['specialisations']);
         }
 
@@ -266,7 +266,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl), true);
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp;
         }else {
             return false;
@@ -308,7 +308,7 @@ class APIRequestsController extends Controller {
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp->safeLow;
         }
     }
@@ -317,9 +317,9 @@ class APIRequestsController extends Controller {
     public function sendEthAmount($hash, $type, $patient_address, $dentist_address, $gasPrice, $value_usd = null, $monthly_premium_in_dcn = null, $time = null, $contract_ipfs_hash = null) {
         $curl = curl_init();
 
-        if($type == 'dentist-approval') {
+        if ($type == 'dentist-approval') {
             $json = '{"hash":"'.$hash.'", "type":"'.$type.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "gas_price":"'.$gasPrice.'"}';
-        } else if($type == 'patient-approval-and-contract-creation') {
+        } else if ($type == 'patient-approval-and-contract-creation') {
             $json = '{"hash":"'.$hash.'", "type":"'.$type.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "value_usd":"'.$value_usd.'", "monthly_premium_in_dcn":"'.$monthly_premium_in_dcn.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$contract_ipfs_hash.'", "gas_price":"'.$gasPrice.'"}';
         }
 
@@ -387,7 +387,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp;
         }else {
             return false;
@@ -412,7 +412,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp;
         }else {
             return false;
@@ -436,7 +436,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp;
         }else {
             return false;
@@ -455,7 +455,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp;
         }else {
             return false;
@@ -523,7 +523,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp;
         }else {
             return false;
@@ -541,8 +541,8 @@ class APIRequestsController extends Controller {
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
-        if(!empty($resp))   {
-            if(!empty($resp->market_data->current_price))  {
+        if (!empty($resp))   {
+            if (!empty($resp->market_data->current_price))  {
                 return array(
                     'USD' => $resp->market_data->current_price->usd,
                     'EUR' => $resp->market_data->current_price->eur,
@@ -572,15 +572,40 @@ class APIRequestsController extends Controller {
             $resp = json_decode(curl_exec($curl));
             curl_close($curl);
 
-            if(!empty($resp))   {
+            if (!empty($resp))   {
                 $tempArray[$currency] = 1 / (int)((int)$resp / 100);
             }
         }
 
-        if(!empty($tempArray)) {
+        if (!empty($tempArray)) {
             return $tempArray;
         } else {
-            return 0;
+            // FALLBACK TO QUERY FOR COINGECKO DCN DATA
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_URL => "https://api.coingecko.com/api/v3/coins/dentacoin",
+                CURLOPT_SSL_VERIFYPEER => 0
+            ));
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            $resp = json_decode(curl_exec($curl));
+            curl_close($curl);
+
+            if (!empty($resp))   {
+                if (property_exists($resp, 'market_data') && !empty($resp->market_data->current_price) )  {
+                    return array(
+                        'USD' => $resp->market_data->current_price->usd,
+                        /*'EUR' => $resp->market_data->current_price->eur,
+                        'GBP' => $resp->market_data->current_price->gbp,
+                        'RUB' => $resp->market_data->current_price->rub,
+                        'INR' => $resp->market_data->current_price->inr,
+                        'CNY' => $resp->market_data->current_price->cny,
+                        'JPY' => $resp->market_data->current_price->jpy*/
+                    );
+                }else {
+                    return 0;
+                }
+            }
         }
     }
 
@@ -615,7 +640,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp;
         } else {
             return false;
@@ -643,7 +668,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp;
         } else {
             return false;
@@ -661,7 +686,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp;
         }else {
             return false;
@@ -689,7 +714,7 @@ class APIRequestsController extends Controller {
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
 
-        if(!empty($resp))   {
+        if (!empty($resp))   {
             return $resp;
         }else {
             return false;

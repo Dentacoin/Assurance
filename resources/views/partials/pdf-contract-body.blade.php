@@ -97,7 +97,7 @@
         </div>
         <div class="row">
             <label class="inline-block">Monthly Premium:</label>
-            <div class="right-field inline-block calibri-bold fs-25 dark-color">{{$contract->monthly_premium}} USD</div>
+            <div class="right-field bolded inline-block">{{$contract->monthly_premium}} USD</div>
         </div>
         <div class="row">
             <label class="inline-block">Contract Validity:</label>
