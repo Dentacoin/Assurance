@@ -75540,7 +75540,7 @@ var projectData = {
                                                             action = 'Check-up recorded ('+response.currentCheckUpCount+'/'+response.check_ups_per_year+')';
                                                         }
 
-                                                        $('.records-history.module table tbody').prepend('<tr data-id="'+key+'"> <td>'+projectData.utils.dateObjToFormattedDate(new Date(response.data[key].request_date_at))+'</td><td class="action-td" data-label="'+typeLabel+'">'+action+'</td><td class="details"><span class="lato-bold">PENDING</span></td></tr>');
+                                                        $('.records-history.module table tbody').prepend('<tr data-id="'+key+'"> <td>'+projectData.utils.dateObjToFormattedDate(new Date(response.data[key].request_date_at))+'</td><td class="action-td" data-label="'+typeLabel+'">'+action+'</td><td class="details"><span class="lato-bold"><a href="javascript:void(0)" class="inline-block margin-right-5 white-green-btn fs-14 padding-top-5 padding-bottom-5 padding-left-10 padding-right-10 confirm-record-from-records-history" data-record="'+response.data_record+'">CONFIRM</a> | <a href="javascript:void(0)" class="inline-block margin-left-5 red-white-btn fs-14 padding-top-5 padding-bottom-5 padding-left-10 padding-right-10 decline-record-from-records-history" data-record="'+response.data_record+'">DECLINE</a></span></td></tr>');
                                                     }
                                                 });
                                             }
