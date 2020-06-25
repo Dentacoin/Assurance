@@ -75478,6 +75478,38 @@ var projectData = {
                             basic.showConfirm('Are you sure you want to confirm this visit?', '', clickWarningObj, true);
                         }
 
+                        function declineRecord(record, successCallback) {
+                            var clickWarningObj = {};
+                            clickWarningObj.callback = function (result) {
+                                if (result) {
+                                    showLoader();
+                                    setTimeout(function() {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/dentist/take-action-for-pending-contract-records',
+                                            dataType: 'json',
+                                            data: {
+                                                record: record,
+                                                action: 'decline'
+                                            },
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success: function (response) {
+                                                if (response.success) {
+                                                    successCallback(response);
+                                                } else if (response.error) {
+                                                    hideLoader();
+                                                    basic.showAlert(response.message, 'boobox-alert', true);
+                                                }
+                                            }
+                                        });
+                                    }, 2000);
+                                }
+                            };
+                            basic.showConfirm('Sure you want to continue with declining your patient record?', '', clickWarningObj, true);
+                        }
+
                         // check for pending patient records - check-up or teeth cleaning
                         var visibleRecord = false;
                         setInterval(function() {
@@ -75550,44 +75582,34 @@ var projectData = {
                                             $('.pending-contract-record .decline-record').click(function() {
                                                 var record = $(this).attr('data-record');
 
-                                                var clickWarningObj = {};
-                                                clickWarningObj.callback = function (result) {
-                                                    if (result) {
-                                                        showLoader();
-                                                        setTimeout(function() {
-                                                            $.ajax({
-                                                                type: 'POST',
-                                                                url: '/dentist/take-action-for-pending-contract-records',
-                                                                dataType: 'json',
-                                                                data: {
-                                                                    record: record,
-                                                                    action: 'decline'
-                                                                },
-                                                                headers: {
-                                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                },
-                                                                success: function (response) {
-                                                                    if (response.success) {
-                                                                        visibleRecord = false;
-                                                                        basic.closeDialog();
-                                                                        hideLoader();
+                                                declineRecord(record, function(response) {
+                                                    visibleRecord = false;
+                                                    basic.closeDialog();
+                                                    hideLoader();
 
-                                                                        if (response.data && response.data.length) {
-                                                                            for (var i = 0, len = response.data.length; i < len; i+=1) {
-                                                                                $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold cancelled-color">DECLINED</span>');
-                                                                                $('.records-history.module tr[data-id="'+response.data[i]+'"] .action-td').html($('.records-history.module tr[data-id="'+response.data[i]+'"] .action-td').attr('data-label'));
-                                                                            }
-                                                                        }
-                                                                    } else if (response.error) {
-                                                                        hideLoader();
-                                                                        basic.showAlert(response.message, 'boobox-alert', true);
-                                                                    }
-                                                                }
-                                                            });
-                                                        }, 2000);
+                                                    if (response.data && response.data.length) {
+                                                        for (var i = 0, len = response.data.length; i < len; i+=1) {
+                                                            $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold cancelled-color">DECLINED</span>');
+                                                            $('.records-history.module tr[data-id="'+response.data[i]+'"] .action-td').html($('.records-history.module tr[data-id="'+response.data[i]+'"] .action-td').attr('data-label'));
+                                                        }
                                                     }
-                                                };
-                                                basic.showConfirm('Sure you want to continue with declining your patient record?', '', clickWarningObj, true);
+                                                });
+                                            });
+
+                                            $(document).on('click', '.decline-record-from-records-history', function() {
+                                                var record = $(this).attr('data-record');
+
+                                                declineRecord(record, function(response) {
+                                                    basic.closeDialog();
+                                                    hideLoader();
+
+                                                    if (response.data && response.data.length) {
+                                                        for (var i = 0, len = response.data.length; i < len; i+=1) {
+                                                            $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold cancelled-color">DECLINED</span>');
+                                                            $('.records-history.module tr[data-id="'+response.data[i]+'"] .action-td').html($('.records-history.module tr[data-id="'+response.data[i]+'"] .action-td').attr('data-label'));
+                                                        }
+                                                    }
+                                                });
                                             });
                                         }
                                     }
