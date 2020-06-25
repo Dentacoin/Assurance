@@ -38,9 +38,9 @@
                                         <span class="lato-bold cancelled-color">DECLINED</span>
                                     @elseif($record->status == 'sent')
                                         @if ((new \App\Http\Controllers\UserController())->checkDentistSession())
-                                            <a href="javascript:void(0)" class="inline-block margin-right-5 white-green-btn fs-14 padding-top-5 padding-bottom-5 padding-left-10 padding-right-10" data-record="{{serialize($record->id)}}">CONFIRM</a>
+                                            <a href="javascript:void(0)" class="inline-block margin-right-5 white-green-btn fs-14 padding-top-5 padding-bottom-5 padding-left-10 padding-right-10 confirm-record-from-records-history" data-record="{{serialize($record->id)}}">CONFIRM</a>
                                             |
-                                            <a href="javascript:void(0)" class="inline-block margin-left-5 red-white-btn fs-14 padding-top-5 padding-bottom-5 padding-left-10 padding-right-10" data-record="{{serialize($record->id)}}">DECLINE</a>
+                                            <a href="javascript:void(0)" class="inline-block margin-left-5 red-white-btn fs-14 padding-top-5 padding-bottom-5 padding-left-10 padding-right-10 decline-record-from-records-history" data-record="{{serialize($record->id)}}">DECLINE</a>
                                         @elseif ((new \App\Http\Controllers\UserController())->checkPatientSession())
                                             <span class="lato-bold">PENDING</span>
                                         @endif
