@@ -86,7 +86,9 @@
                 </div>
             </div>
         </section>
-        @include('partials.contract-single-page-nav', ['dentist_data' => $current_logged_dentist, 'patient_data' => $patient, 'type' => 'mobile'])
+        <section class="container">
+            <div class="row">@include('partials.contract-single-page-nav', ['dentist_data' => $current_logged_dentist, 'patient_data' => $patient, 'type' => 'mobile'])</div>
+        </section>
         @if(!empty($recordsHistory))
             @include('partials.records-history', ['contract' => $contract])
         @endif

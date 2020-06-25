@@ -8743,7 +8743,8 @@ select.select-mac-fix {
     .module.contract-single-page-nav.desktop {
       display: none; }
     .module.contract-single-page-nav.mobile {
-      display: block; }
+      display: block;
+      padding-top: 25px; }
       .module.contract-single-page-nav.mobile ul {
         z-index: 10;
         background-color: white;

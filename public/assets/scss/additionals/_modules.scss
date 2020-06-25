@@ -956,7 +956,7 @@
             }
         }
         &.mobile {
-            display: none;     
+            display: none;
         }
         @include breakpoint($xs) {
             &.desktop {
@@ -964,6 +964,7 @@
             }
             &.mobile {
                 display: block;
+                padding-top: 25px;    
                 ul {
                     z-index: 10;
                     background-color: white;
