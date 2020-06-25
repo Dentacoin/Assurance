@@ -2248,6 +2248,7 @@ var projectData = {
                                                 var record = $(this).attr('data-record');
 
                                                 confirmRecord(record, function(response) {
+                                                    visibleRecord = false;
                                                     basic.closeDialog();
                                                     hideLoader();
 
@@ -2280,6 +2281,7 @@ var projectData = {
                                                 var record = $(this).attr('data-record');
 
                                                 declineRecord(record, function(response) {
+                                                    visibleRecord = false;
                                                     basic.closeDialog();
                                                     hideLoader();
 
