@@ -1166,6 +1166,7 @@ var projectData = {
                             } else {
                                 //showing section where ETH and DCN can be bough when doesnt have enough DCN
                                 $('.external-api-crypto-provider').removeClass('hide');
+                                $('.external-api-crypto-provider .ready-to-charge-account').removeClass('hide');
 
                                 //not enough DCN
                                 $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center padding-top-30"><figure itemscope="" itemtype="http://schema.org/ImageObject"><img alt="Fund icon" src="/assets/uploads/fund-icon.svg" class="max-width-70"/></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">YOUR CONTRACT</h2><h3 class="fs-22 padding-top-5 lato-bold">Time to fund your account now!</h3><div class="fs-18 fs-xs-16 calibri-light padding-top-15 padding-bottom-25">You should fund your account with DCN equivalent to <span class="calibri-bold blue-green-color">'+(months_passed_for_reward * monthly_premium_in_usd)+' USD</span> (at the moment: <span class="calibri-bold blue-green-color">'+dcn_needed_to_be_payed_to_dentist+' DCN</span>) before <span class="calibri-bold blue-green-color">'+projectData.utils.dateObjToFormattedDate(next_payment_timestamp_date_obj)+'</span>.</div><div><a href="javascript:void(0)" class="white-blue-green-btn min-width-150 scroll-to-buy-section">FUND NOW</a></div></div></div>');
@@ -1418,6 +1419,7 @@ var projectData = {
                                 initPopupEvents(true);
 
                                 $('.external-api-crypto-provider').removeClass('hide');
+                                $('.external-api-crypto-provider .ready-to-charge-account').removeClass('hide');
                             }
                         }
                     } else if ($('.contract-header').hasClass('awaiting-payment')) {
@@ -1439,8 +1441,6 @@ var projectData = {
                         if (parseInt(await dApp.dentacoin_token_methods.allowance(projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-patient')), assurance_config.assurance_state_address)) >= min_allowed_amount) {
                             approval_given = true;
                         }
-
-                        console.log(approval_given, 'approval_given');
 
                         if (!approval_given) {
                             //gas estimation for DentacoinToken approval method
@@ -1626,7 +1626,7 @@ var projectData = {
                                                         $('.generate-qr-code-for-wallet-scanning').click(async function() {
                                                             if (parseFloat(eth_fee) > parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)))) {
                                                                 //not enough ETH balance
-                                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                                                             } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
                                                                 basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                                             } else {
@@ -1695,7 +1695,7 @@ var projectData = {
                                                             var this_btn = $(this);
                                                             if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                                 //not enough ETH balance
-                                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                                                             } else {
                                                                 if (!existingCachedKey && transaction_key == undefined) {
                                                                     basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
@@ -1927,7 +1927,7 @@ var projectData = {
                                                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                                         if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                             //not enough ETH balance
-                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                                                         } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
                                                             basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                                         } else {
@@ -1976,7 +1976,7 @@ var projectData = {
                                                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                                         if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                             //not enough ETH balance
-                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                                                         } else {
                                                             if (!existingCachedKey && transaction_key == undefined) {
                                                                 basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
@@ -2415,7 +2415,7 @@ async function bindDentistWithdrawEvent(withdrawableDCN) {
                             var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                             if (parseFloat(eth_fee) > current_user_eth_balance) {
                                 //not enough ETH balance
-                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                             } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
                                 basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                             } else {
@@ -2464,7 +2464,7 @@ async function bindDentistWithdrawEvent(withdrawableDCN) {
                             var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                             if (parseFloat(eth_fee) > current_user_eth_balance) {
                                 //not enough ETH balance
-                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                             } else {
                                 if (!existingCachedKey && transaction_key == undefined) {
                                     basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
@@ -2584,6 +2584,22 @@ projectData.pagesData.onInit();
 
 //LOGGED USER LOGIC
 if ($('body').hasClass('logged-in')) {
+    $(document).on('click', '.please-refill', function() {
+        if ($('.external-api-crypto-provider').length) {
+            if ($('.external-api-crypto-provider').hasClass('hide')) {
+                $('.external-api-crypto-provider').removeClass('hide');
+            }
+
+            $('.external-api-crypto-provider [data-currency="eth"]').click();
+
+            $('html, body').animate({
+                scrollTop: $('.ready-to-purchase-with-external-api .form-container').offset().top
+            }, {
+                duration: 500
+            });
+        }
+    });
+
     $(document).on('click', '.continue-with-onsite-transaction-signing', function() {
         if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
             basic.showAlert('Please check the checkbox below to continue with the transaction creation.', 'boobox-alert', true);
@@ -3919,7 +3935,7 @@ function cancelContractEventInit() {
                                                 var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                                 if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                     //not enough ETH balance
-                                                    basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                                                    basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                                                 } else if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
                                                     basic.showAlert('Please enter other reason.', 'boobox-alert', true);
                                                 } else if ($('.recipe-popup #cancel-contract-reason').val() == null) {
@@ -3956,7 +3972,7 @@ function cancelContractEventInit() {
 
                                                 if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                     //not enough ETH balance
-                                                    basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. Please refill <a href="//wallet.dentacoin.com/buy" target="_blank">here</a>.</div>', 'boobox-alert', true);
+                                                    basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                                                 } else {
                                                     if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
                                                         basic.showAlert('Please enter other reason.', 'boobox-alert', true);

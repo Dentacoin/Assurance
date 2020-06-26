@@ -115,8 +115,10 @@
     @if(!empty($recordsHistory))
         @include('partials.records-history', ['contract' => $contract])
     @endif
-    @if (!$contract->is_processing)
-        @include('partials.patient-ready-to-purchase-with-external-api', ['contract' => $contract])
-    @endif
+    <div class="external-api-crypto-provider hide">
+        @if (!$contract->is_processing)
+            @include('partials.patient-ready-to-purchase-with-external-api', ['contract' => $contract])
+        @endif
+    </div>
 @endsection
 
