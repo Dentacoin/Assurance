@@ -75416,7 +75416,11 @@ var projectData = {
                                     }, 2000);
                                 }
                             };
-                            basic.showConfirm('Are you sure you want to confirm this visit?', '', clickWarningObj, true);
+                            basic.showConfirm('Are you sure you want to confirm this visit?', 'confirmRecord', clickWarningObj, true, {
+                                onEscape : function() {
+                                    visibleRecord = false;
+                                }
+                            });
                         }
 
                         function declineRecord(record, successCallback) {
@@ -75449,7 +75453,11 @@ var projectData = {
                                     }, 2000);
                                 }
                             };
-                            basic.showConfirm('Sure you want to continue with declining your patient record?', '', clickWarningObj, true);
+                            basic.showConfirm('Sure you want to continue with declining your patient record?', 'declineRecord', clickWarningObj, true, {
+                                onEscape : function() {
+                                    visibleRecord = false;
+                                }
+                            });
                         }
 
                         // check for pending patient records - check-up or teeth cleaning
@@ -75534,6 +75542,7 @@ var projectData = {
 
                         $(document).on('click', '.confirm-record-from-records-history', function() {
                             var record = $(this).attr('data-record');
+                            visibleRecord = true;
 
                             confirmRecord(record, function(response) {
                                 visibleRecord = false;
@@ -75550,6 +75559,7 @@ var projectData = {
 
                         $(document).on('click', '.decline-record-from-records-history', function() {
                             var record = $(this).attr('data-record');
+                            visibleRecord = true;
 
                             declineRecord(record, function(response) {
                                 visibleRecord = false;
@@ -76924,6 +76934,10 @@ function hidePopupOnBackdropClick() {
 
         if ($(event.target).hasClass('pending-contract-record')) {
             $('.pending-contract-record').trigger('escape');
+        } else if ($(event.target).hasClass('confirmRecord')) {
+            $('.confirmRecord').trigger('escape');
+        }if ($(event.target).hasClass('declineRecord')) {
+            $('.declineRecord').trigger('escape');
         }
 
         if (classname && !$('.' + classname).parents('.modal-dialog').length) {
