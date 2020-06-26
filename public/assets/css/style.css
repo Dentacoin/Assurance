@@ -7759,6 +7759,8 @@ input[type='file'].hide-input {
 
 #search-result-parent {
   position: relative; }
+  #search-result-parent .search-input {
+    background-color: transparent; }
   #search-result-parent:after {
     z-index: -1;
     content: '';
