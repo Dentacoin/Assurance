@@ -1838,7 +1838,7 @@ var projectData = {
 
                             timer_label = 'Grace period for payment:';
                             $('.clock').addClass('red-background');
-                            $('.contract-header').html('ACTIVE - OVERDUE PAYMENT');
+                            // $('.contract-header').html('ACTIVE - OVERDUE PAYMENT');
                         }  else {
                             // running the period when patient has to execute the first payment
                             next_payment_timestamp_unix = period_to_withdraw - time_passed_since_signed;
