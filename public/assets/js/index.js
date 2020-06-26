@@ -2162,31 +2162,19 @@ var projectData = {
                                                             action = 'Check-up recorded ('+response.currentCheckUpCount+'/'+response.check_ups_per_year+')';
                                                         }
 
-                                                        $('.records-history.module table tbody').prepend('<tr data-id="'+key+'"> <td>'+projectData.utils.dateObjToFormattedDate(new Date(response.data[key].request_date_at))+'</td><td class="action-td" data-label="'+typeLabel+'">'+action+'</td><td class="details"><span class="lato-bold"><a href="javascript:void(0)" class="inline-block margin-right-5 white-green-btn fs-14 padding-top-5 padding-bottom-5 padding-left-10 padding-right-10 confirm-record-from-records-history" data-record="'+response.data_record+'">CONFIRM</a> | <a href="javascript:void(0)" class="inline-block margin-left-5 red-white-btn fs-14 padding-top-5 padding-bottom-5 padding-left-10 padding-right-10 decline-record-from-records-history" data-record="'+response.data_record+'">DECLINE</a></span></td></tr>');
+                                                        $('.records-history.module table tbody').prepend('<tr data-id="'+key+'"> <td>'+projectData.utils.dateObjToFormattedDate(new Date(response.data[key].request_date_at))+'</td><td class="action-td" data-label="'+typeLabel+'">'+action+'</td><td class="details"><span class="lato-bold"><a href="javascript:void(0)" class="inline-block margin-left-5 red-white-btn fs-14 padding-top-5 padding-bottom-5 padding-left-10 padding-right-10 decline-record-from-records-history" data-record="'+response.data_record+'">Decline</a> | <a href="javascript:void(0)" class="inline-block margin-right-5 white-green-btn fs-14 padding-top-5 padding-bottom-5 padding-left-10 padding-right-10 confirm-record-from-records-history" data-record="'+response.data_record+'">CONFIRM</a></span></td></tr>');
                                                     }
                                                 });
                                             }
 
                                             visibleRecord = true;
-                                            basic.showDialog(response.html, 'pending-contract-record', null, true);
-
-                                            $('.pending-contract-record .confirm-record').click(function() {
-                                                var record = $(this).attr('data-record');
-
-                                                confirmRecord(record, function(response) {
-                                                    visibleRecord = false;
-                                                    basic.closeDialog();
-                                                    hideLoader();
-
-                                                    if (response.data && response.data.length) {
-                                                        for (var i = 0, len = response.data.length; i < len; i+=1) {
-                                                            $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold active-color">CONFIRMED</span>');
-                                                        }
-                                                    }
-                                                });
+                                            basic.showDialog(response.html, 'pending-contract-record', null, true, {
+                                                onEscape : function() {
+                                                    visibleRecord = true;
+                                                }
                                             });
 
-                                            $(document).on('click', '.confirm-record-from-records-history', function() {
+                                            $('.pending-contract-record .confirm-record').click(function() {
                                                 var record = $(this).attr('data-record');
 
                                                 confirmRecord(record, function(response) {
@@ -2218,28 +2206,44 @@ var projectData = {
                                                     }
                                                 });
                                             });
-
-                                            $(document).on('click', '.decline-record-from-records-history', function() {
-                                                var record = $(this).attr('data-record');
-
-                                                declineRecord(record, function(response) {
-                                                    visibleRecord = false;
-                                                    basic.closeDialog();
-                                                    hideLoader();
-
-                                                    if (response.data && response.data.length) {
-                                                        for (var i = 0, len = response.data.length; i < len; i+=1) {
-                                                            $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold cancelled-color">DECLINED</span>');
-                                                            $('.records-history.module tr[data-id="'+response.data[i]+'"] .action-td').html($('.records-history.module tr[data-id="'+response.data[i]+'"] .action-td').attr('data-label'));
-                                                        }
-                                                    }
-                                                });
-                                            });
                                         }
                                     }
                                 });
                             }
                         }, 5000);
+
+                        $(document).on('click', '.confirm-record-from-records-history', function() {
+                            var record = $(this).attr('data-record');
+
+                            confirmRecord(record, function(response) {
+                                visibleRecord = false;
+                                basic.closeDialog();
+                                hideLoader();
+
+                                if (response.data && response.data.length) {
+                                    for (var i = 0, len = response.data.length; i < len; i+=1) {
+                                        $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold active-color">CONFIRMED</span>');
+                                    }
+                                }
+                            });
+                        });
+
+                        $(document).on('click', '.decline-record-from-records-history', function() {
+                            var record = $(this).attr('data-record');
+
+                            declineRecord(record, function(response) {
+                                visibleRecord = false;
+                                basic.closeDialog();
+                                hideLoader();
+
+                                if (response.data && response.data.length) {
+                                    for (var i = 0, len = response.data.length; i < len; i+=1) {
+                                        $('.records-history.module tr[data-id="'+response.data[i]+'"] .details').html('<span class="lato-bold cancelled-color">DECLINED</span>');
+                                        $('.records-history.module tr[data-id="'+response.data[i]+'"] .action-td').html($('.records-history.module tr[data-id="'+response.data[i]+'"] .action-td').attr('data-label'));
+                                    }
+                                }
+                            });
+                        });
 
                         if ($('.single-contract-view-section').attr('data-processing-contract') != 'true') {
                             if (contract_next_payment > now_timestamp) {
@@ -3598,8 +3602,9 @@ function hidePopupOnBackdropClick() {
 
         classname = classname.replace(/ /g, '.');
 
-        console.log(event.target, 'event.target');
-        console.log($(event.target), 'event.target');
+        if ($(event.target).hasClass('pending-contract-record')) {
+            $('.pending-contract-record').trigger('escape');
+        }
 
         if (classname && !$('.' + classname).parents('.modal-dialog').length) {
             $('.' + classname).modal('hide');
