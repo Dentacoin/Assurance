@@ -74493,7 +74493,7 @@ var projectData = {
                                 if (patientDcnBalanceLogicAnimation) {
                                     patientDcnBalanceLogicAnimation = false;
                                     $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
-                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 300);
+                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 500);
                                 }
 
                                 initPopupEvents(true);
@@ -74732,7 +74732,7 @@ var projectData = {
                                 if (patientDcnBalanceLogicAnimation) {
                                     patientDcnBalanceLogicAnimation = false;
                                     $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
-                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 300);
+                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 500);
                                 }
 
                                 initPopupEvents(true);
@@ -74823,7 +74823,7 @@ var projectData = {
                                 if (patientEthDcnBalanceLogicAnimation) {
                                     patientEthDcnBalanceLogicAnimation = false;
                                     $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
-                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 300);
+                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 500);
                                 }
 
                                 initPopupEvents(true);
@@ -74842,7 +74842,7 @@ var projectData = {
                                 if (patientDcnBalanceLogicAnimation) {
                                     patientDcnBalanceLogicAnimation = false;
                                     $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
-                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 300);
+                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 500);
                                 }
 
                                 initPopupEvents(true);
@@ -74861,7 +74861,7 @@ var projectData = {
                                 if (patientEthBalanceLogicAnimation) {
                                     patientEthBalanceLogicAnimation = false;
                                     $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
-                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 300);
+                                    $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 500);
                                 }
 
                                 initPopupEvents(true);
@@ -74883,7 +74883,7 @@ var projectData = {
                                 if (patientHavingEthBalanceLogicAnimation) {
                                     patientEthBalanceLogicAnimation = false;
                                     $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
-                                    $('html, body').animate({scrollTop: $('.steps-navigation').offset().top}, 300);
+                                    $('html, body').animate({scrollTop: $('.steps-navigation').offset().top}, 500);
                                 }
 
                                 initPopupEvents();
@@ -75591,7 +75591,7 @@ var projectData = {
                                 $('.camping-for-popups').addClass('position-relative-and-z-index');
 
                                 $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
-                                $('html, body').animate({scrollTop: $('.row.camping-for-popups').offset().top}, 300);
+                                $('html, body').animate({scrollTop: $('.row.camping-for-popups .wrapper ').offset().top}, 500);
 
                                 bindDentistWithdrawEvent(withdrawableDCN);
                             }
