@@ -74946,7 +74946,7 @@ var projectData = {
                                                         $('.generate-qr-code-for-wallet-scanning').click(async function() {
                                                             if (parseFloat(eth_fee) > parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)))) {
                                                                 //not enough ETH balance
-                                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
+                                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill</a></div>', 'boobox-alert', true);
                                                             } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
                                                                 basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                                             } else {
@@ -75015,7 +75015,7 @@ var projectData = {
                                                             var this_btn = $(this);
                                                             if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                                 //not enough ETH balance
-                                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
+                                                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                                                             } else {
                                                                 if (!existingCachedKey && transaction_key == undefined) {
                                                                     basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
@@ -75247,7 +75247,7 @@ var projectData = {
                                                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                                         if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                             //not enough ETH balance
-                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
+                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                                                         } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
                                                             basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                                                         } else {
@@ -75296,7 +75296,7 @@ var projectData = {
                                                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                                         if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                             //not enough ETH balance
-                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
+                                                            basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                                                         } else {
                                                             if (!existingCachedKey && transaction_key == undefined) {
                                                                 basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
@@ -75735,7 +75735,7 @@ async function bindDentistWithdrawEvent(withdrawableDCN) {
                             var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                             if (parseFloat(eth_fee) > current_user_eth_balance) {
                                 //not enough ETH balance
-                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
+                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                             } else if (!$('.recipe-popup input#understand-and-agree').is(':checked')) {
                                 basic.showAlert('Please check the checkbox below to continue with the QR code generation.', 'boobox-alert', true);
                             } else {
@@ -75784,7 +75784,7 @@ async function bindDentistWithdrawEvent(withdrawableDCN) {
                             var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                             if (parseFloat(eth_fee) > current_user_eth_balance) {
                                 //not enough ETH balance
-                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
+                                basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                             } else {
                                 if (!existingCachedKey && transaction_key == undefined) {
                                     basic.showAlert('You must first enter your private key or keystore file in order to sign the transaction.', 'boobox-alert', true);
@@ -75909,6 +75909,8 @@ if ($('body').hasClass('logged-in')) {
             if ($('.external-api-crypto-provider').hasClass('hide')) {
                 $('.external-api-crypto-provider').removeClass('hide');
             }
+
+            basic.closeDialog();
 
             $('.external-api-crypto-provider [data-currency="eth"]').click();
 
@@ -77255,7 +77257,7 @@ function cancelContractEventInit() {
                                                 var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                                                 if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                     //not enough ETH balance
-                                                    basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
+                                                    basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                                                 } else if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
                                                     basic.showAlert('Please enter other reason.', 'boobox-alert', true);
                                                 } else if ($('.recipe-popup #cancel-contract-reason').val() == null) {
@@ -77292,7 +77294,7 @@ function cancelContractEventInit() {
 
                                                 if (parseFloat(eth_fee) > current_user_eth_balance) {
                                                     //not enough ETH balance
-                                                    basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" target="_blank" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
+                                                    basic.showAlert('<div class="text-center fs-18">You don\'t have enough ETH balance to create and sign this transaction on the blockchain. <a href="javascript:void(0);" class="text-decoration-underline blue-green-color please-refill">Please refill.</a></div>', 'boobox-alert', true);
                                                 } else {
                                                     if ($('.recipe-popup #cancel-contract-other-reason').length && $('.recipe-popup #cancel-contract-other-reason').val().trim() == '') {
                                                         basic.showAlert('Please enter other reason.', 'boobox-alert', true);
