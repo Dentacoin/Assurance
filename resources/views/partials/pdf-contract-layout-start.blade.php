@@ -97,7 +97,4 @@
             font-size: 16px;
             padding: 5px 0 15px 25px;
         }
-        .services-list li {
-            list-style: disc inside none;
-        }
     </style></head><body>

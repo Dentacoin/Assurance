@@ -33,10 +33,10 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-6 inline-block">
                                     <div class="single-container text-center">
-                                        <a href="/assurance-demo" target="_blank" class="display-block">
+                                        <a href="/video-demo" target="_blank" class="display-block">
                                             <figure itemscope="" itemtype="http://schema.org/ImageObject">
                                                 <img alt="" class="max-width-90" itemprop="contentUrl" src="/assets/uploads/assurance-demo.svg"/>
-                                                <figcaption class="fs-20 padding-top-15">Go Through Assurance Demo</figcaption>
+                                                <figcaption class="fs-20 padding-top-15">Go Through Video Demo</figcaption>
                                             </figure>
                                         </a>
                                     </div>

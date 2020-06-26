@@ -654,7 +654,7 @@ var projectData = {
 
                 $('video.demo-video').on('pause', function() {
                     clearInterval(demo_video_timer);
-                    fireGoogleAnalyticsEvent('Video', 'Play', 'Assurance Demo', demo_video_time_watched);
+                    fireGoogleAnalyticsEvent('Video', 'Play', 'Video Demo', demo_video_time_watched);
                 });
             } else if ($('body').hasClass('forgotten-password')) {
                 $('form#forgotten-password').on('submit', function(event) {
@@ -3711,11 +3711,9 @@ if ($('form#invite-dentists').length) {
             }
         }
 
-        if (this_form.find('input[name="dcn_address"]').length) {
-            if (this_form.find('input[name="dcn_address"]').val().trim() == '' || !projectData.utils.innerAddressCheck(this_form.find('input[name="dcn_address"]').val().trim())) {
-                customErrorHandle(this_form.find('input[name="dcn_address"]').parent(), 'This field is required. Please enter valid Wallet Address.');
-                errors = true;
-            }
+        if (!basic.validateUrl(this_form.find('input[name="website"]').val().trim())) {
+            customErrorHandle(this_form.find('input[name="website"]').parent(), 'Please enter your website URL starting with http:// or https://.');
+            errors = true;
         }
 
         if (!errors) {

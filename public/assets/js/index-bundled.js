@@ -73974,7 +73974,7 @@ var projectData = {
 
                 $('video.demo-video').on('pause', function() {
                     clearInterval(demo_video_timer);
-                    fireGoogleAnalyticsEvent('Video', 'Play', 'Assurance Demo', demo_video_time_watched);
+                    fireGoogleAnalyticsEvent('Video', 'Play', 'Video Demo', demo_video_time_watched);
                 });
             } else if ($('body').hasClass('forgotten-password')) {
                 $('form#forgotten-password').on('submit', function(event) {
@@ -75420,7 +75420,7 @@ var projectData = {
                                 }
                             };
                             basic.showConfirm('Are you sure you want to confirm this visit?', 'confirmRecord', clickWarningObj, true, {
-                                onEscape : function() {
+                                'onEscape' : function() {
                                     visibleRecord = false;
                                 }
                             });
@@ -75457,7 +75457,7 @@ var projectData = {
                                 }
                             };
                             basic.showConfirm('Sure you want to continue with declining your patient record?', 'declineRecord', clickWarningObj, true, {
-                                onEscape : function() {
+                                'onEscape' : function() {
                                     visibleRecord = false;
                                 }
                             });
@@ -75498,7 +75498,7 @@ var projectData = {
 
                                             visibleRecord = true;
                                             basic.showDialog(response.html, 'pending-contract-record', null, true, {
-                                                onEscape : function() {
+                                                'onEscape' : function() {
                                                     visibleRecord = false;
                                                 }
                                             });
@@ -77031,11 +77031,9 @@ if ($('form#invite-dentists').length) {
             }
         }
 
-        if (this_form.find('input[name="dcn_address"]').length) {
-            if (this_form.find('input[name="dcn_address"]').val().trim() == '' || !projectData.utils.innerAddressCheck(this_form.find('input[name="dcn_address"]').val().trim())) {
-                customErrorHandle(this_form.find('input[name="dcn_address"]').parent(), 'This field is required. Please enter valid Wallet Address.');
-                errors = true;
-            }
+        if (!basic.validateUrl(this_form.find('input[name="website"]').val().trim())) {
+            customErrorHandle(this_form.find('input[name="website"]').parent(), 'Please enter your website URL starting with http:// or https://.');
+            errors = true;
         }
 
         if (!errors) {

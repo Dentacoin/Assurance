@@ -21,7 +21,7 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::get('/support-guide', 'SupportGuideController@getView')->name('support-guide');
 
-    Route::get('/assurance-demo', 'AssuranceDemoController@getView')->name('assurance-demo');
+    Route::get('/video-demo', 'AssuranceDemoController@getView')->name('assurance-demo');
 
     Route::get('/contract-proposal/{slug}', 'PatientController@getContractProposal')->name('contract-proposal');
 

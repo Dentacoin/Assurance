@@ -87,36 +87,36 @@
                 @if(in_array('param_gd', $services))
                     <div class="svg-row">General Dentistry</div>
                     <ul class="services-list">
-                        <li>Fillings</li>
-                        <li>Caries infiltration</li>
-                        <li>Dental sealants for children</li>
-                        <li>Root canal treatment</li>
-                        <li>Periodontal treatment</li>
-                        <li>Tooth extraction</li>
+                        <li>- Fillings</li>
+                        <li>- Caries infiltration</li>
+                        <li>- Dental sealants for children</li>
+                        <li>- Root canal treatment</li>
+                        <li>- Periodontal treatment</li>
+                        <li>- Tooth extraction</li>
                     </ul>
                 @endif
                 @if(in_array('param_cd', $services))
                     <div class="svg-row">Cosmetic Dentistry</div>
                     <ul class="services-list">
-                        <li>Composite bonding</li>
-                        <li>Porcelain veneers (material & laboratory costs - not covered)</li>
-                        <li>Composite veneers (material & laboratory costs - not covered)</li>
-                        <li>Inlays & onlays (material & laboratory costs - not covered)</li>
-                        <li>Crowns (material & laboratory costs - not covered)</li>
-                        <li>Bridges (material & laboratory costs - not covered)</li>
-                        <li>Dentures (material & laboratory costs - not covered)</li>
+                        <li>- Composite bonding</li>
+                        <li>- Porcelain veneers (material & laboratory costs - not covered)</li>
+                        <li>- Composite veneers (material & laboratory costs - not covered)</li>
+                        <li>- Inlays & onlays (material & laboratory costs - not covered)</li>
+                        <li>- Crowns (material & laboratory costs - not covered)</li>
+                        <li>- Bridges (material & laboratory costs - not covered)</li>
+                        <li>- Dentures (material & laboratory costs - not covered)</li>
                     </ul>
                 @endif
                 @if(in_array('param_id', $services))
                     <div class="svg-row">Implant Dentistry</div>
                     <ul class="services-list">
-                        <li>Implant placement (implants and abutments - not covered)</li>
-                        <li>Porcelain veneers (material & laboratory costs - not covered)</li>
-                        <li>Composite veneers (material & laboratory costs - not covered)</li>
-                        <li>Inlays & onlays (material & laboratory costs - not covered)</li>
-                        <li>Crowns (material & laboratory costs - not covered)</li>
-                        <li>Bridges (material & laboratory costs - not covered)</li>
-                        <li>Bone augmentation (bone replacement material - not covered)</li>
+                        <li>- Implant placement (implants and abutments - not covered)</li>
+                        <li>- Porcelain veneers (material & laboratory costs - not covered)</li>
+                        <li>- Composite veneers (material & laboratory costs - not covered)</li>
+                        <li>- Inlays & onlays (material & laboratory costs - not covered)</li>
+                        <li>- Crowns (material & laboratory costs - not covered)</li>
+                        <li>- Bridges (material & laboratory costs - not covered)</li>
+                        <li>- Bone augmentation (bone replacement material - not covered)</li>
                     </ul>
                 @endif
             </div>

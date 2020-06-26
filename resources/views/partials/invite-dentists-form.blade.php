@@ -15,7 +15,7 @@
         <input class="fs-16 custom-input required" maxlength="100" type="text" name="dentist-name" placeholder="Your Dentist/ Clinic Name"/>
     </div>
     <div class="padding-bottom-15 fs-0">
-        <input class="fs-16 custom-input required" maxlength="250" type="url" name="website" placeholder="Your Dentist/ Clinic Website"/>
+        <input class="fs-16 custom-input required" maxlength="250" type="text" name="website" placeholder="Your Dentist/ Clinic Website"/>
     </div>
     <div class="padding-bottom-15 fs-0">
         <input class="fs-16 custom-input required" maxlength="100" type="email" name="email" placeholder="Your Dentist/ Clinic Email"/>
