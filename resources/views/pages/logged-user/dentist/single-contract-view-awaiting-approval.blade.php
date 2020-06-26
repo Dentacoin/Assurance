@@ -126,7 +126,7 @@
         @if(!empty($recordsHistory))
             @include('partials.records-history', ['contract' => $contract])
         @endif
-        <div class="external-api-crypto-provider hide">
+        <div class="external-api-crypto-provider hide margin-top-50">
             @if (!$contract->is_processing)
                 @include('partials.patient-ready-to-purchase-with-external-api', ['contract' => $contract, 'type' => 'dentist'])
             @endif

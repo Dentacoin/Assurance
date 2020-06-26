@@ -75007,8 +75007,10 @@ var projectData = {
                                                         } else {
                                                             // if the current contract patient address has been cached
                                                             $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
-                                                            $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
-                                                            $('.camp-for-keystore-password input[type="password"]').focus();
+                                                            $('.bootbox.recipe-popup').animate({ scrollTop: $(document).height() }, '500', function() {
+                                                                $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
+                                                                $('.camp-for-keystore-password input[type="password"]').focus();
+                                                            });
                                                         }
 
                                                         $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
@@ -75287,8 +75289,11 @@ var projectData = {
                                                         });
                                                     } else {
                                                         $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
-                                                        $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
-                                                        $('.camp-for-keystore-password input[type="password"]').focus();
+
+                                                        $('.bootbox.recipe-popup').animate({ scrollTop: $(document).height() }, '500', function() {
+                                                            $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
+                                                            $('.camp-for-keystore-password input[type="password"]').focus();
+                                                        });
                                                     }
 
                                                     $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
@@ -75775,8 +75780,11 @@ async function bindDentistWithdrawEvent(withdrawableDCN) {
                             });
                         } else {
                             $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
-                            $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
-                            $('.camp-for-keystore-password input[type="password"]').focus();
+
+                            $('.bootbox.recipe-popup').animate({ scrollTop: $(document).height() }, '500', function() {
+                                $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
+                                $('.camp-for-keystore-password input[type="password"]').focus();
+                            });
                         }
 
                         $('.recipe-popup .execute-transaction .fire-blockchain-transaction').click(async function() {
@@ -77248,8 +77256,11 @@ function cancelContractEventInit() {
                                                 });
                                             } else {
                                                 $('.camp-for-keystore-password').html('<div class="lato-regular fs-30 text-center padding-bottom-20 padding-top-15">Enter your keystore secret password</div><div class="padding-bottom-20"><div class="custom-google-label-style module max-width-280 margin-0-auto" data-input-blue-green-border="true"><label for="keystore-password">Secret password:</label><input type="password" maxlength="30" id="keystore-password" class="full-rounded keystore-password"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn min-width-250 margin-bottom-10 width-xs-100 max-width-400 fire-blockchain-transaction">SIGN TRANSACTION</a></div></div>');
-                                                $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
-                                                $('.camp-for-keystore-password input[type="password"]').focus();
+
+                                                $('.bootbox.recipe-popup').animate({ scrollTop: $(document).height() }, '500', function() {
+                                                    $('.camp-for-keystore-password input[type="password"]').closest('.custom-google-label-style').find('label').addClass('active-label');
+                                                    $('.camp-for-keystore-password input[type="password"]').focus();
+                                                });
                                             }
 
                                             // proceed to dentacoin wallet scanning
@@ -77560,6 +77571,12 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                 if (currentUserAddresses.indexOf(keystoreFileAddress) != -1) {
                                     if (caching) {
                                         $('.proof-of-address .on-change-result').html('<div class="max-width-500 margin-0-auto padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn cache-key-btn">REMEMBER</a></div></div>');
+
+                                        $('.bootbox.recipe-popup').animate({ scrollTop: $(document).height() }, '500', function() {
+                                            $('.proof-of-address .on-change-result #your-secret-key-password').closest('.custom-google-label-style').find('label').addClass('active-label');
+                                            $('.proof-of-address .on-change-result #your-secret-key-password').focus();
+                                        });
+
                                         bindCacheKeyEvent(keystore_string);
                                     } else {
                                         var btn_name = 'VERIFY';
@@ -77567,6 +77584,12 @@ function styleUploadFileButton(button_label, render_pdf, encrypted_pdf_content, 
                                             btn_name = button_label;
                                         }
                                         $('.proof-of-address .on-change-result').html('<div class="max-width-500 margin-0-auto padding-top-5"><div class="fs-14 light-gray-color text-center padding-bottom-10 file-name">'+fileName+'</div><div class="custom-google-label-style module" data-input-blue-green-border="true"><label for="your-secret-key-password">Secret password:</label><input type="password" id="your-secret-key-password" maxlength="100" class="full-rounded"/></div><div class="checkbox-container max-width-250 margin-0-auto"><div class="pretty p-svg p-curve on-white-background margin-bottom-0"><input type="checkbox" id="remember-my-keystore-file" checked/><div class="state p-success"><svg class="svg svg-icon" viewBox="0 0 20 20"><path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path></svg><label class="fs-14 calibri-bold" for="remember-my-keystore-file">Remember my keystore file <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Remembering your keystore file allows for easier and faster transactions. It is stored only in your browser and nobody else has access to it."></i></label></div></div></div><div class="text-center padding-top-15"><a href="javascript:void(0)" class="white-blue-green-btn verify-address-btn">'+btn_name+'</a></div></div>');
+
+                                        $('.bootbox.recipe-popup').animate({ scrollTop: $(document).height() }, '500', function() {
+                                            $('.proof-of-address .on-change-result #your-secret-key-password').closest('.custom-google-label-style').find('label').addClass('active-label');
+                                            $('.proof-of-address .on-change-result #your-secret-key-password').focus();
+                                        });
+
                                         projectData.initiators.initTooltips();
 
                                         if (render_pdf != null && encrypted_pdf_content != null) {
