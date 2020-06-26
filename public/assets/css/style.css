@@ -154,10 +154,10 @@
     -ms-box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
     box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4); }
   50% {
-    -webkit-box-shadow: 0 6px 12px 3px #126585;
-    -moz-box-shadow: 0 6px 12px 3px #126585;
-    -ms-box-shadow: 0 6px 12px 3px #126585;
-    box-shadow: 0 6px 12px 3px #126585; }
+    -webkit-box-shadow: 0 8px 6px 1px #126585;
+    -moz-box-shadow: 0 8px 6px 1px #126585;
+    -ms-box-shadow: 0 8px 6px 1px #126585;
+    box-shadow: 0 8px 6px 1px #126585; }
   100% {
     -webkit-box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
     -moz-box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
