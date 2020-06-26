@@ -7,7 +7,7 @@
     <div class="step-fields module margin-top-10">
         <div class="single-row flex-row fs-0 no-border">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
-            <select class="right-field calibri-regular fs-18 dark-color inline-block" name="check-ups-per-year">
+            <select class="right-field calibri-regular fs-18 dark-color inline-block on-value-change-color light-gray-color" name="check-ups-per-year">
                 <option value="">Select number</option>
                 @for ($i = 1; $i <= 4; $i+=1)
                     <option @if(!empty($renew_contract) && $renew_contract->check_ups_per_year == $i) selected @endif>{{$i}}</option>
@@ -16,7 +16,7 @@
         </div>
         <div class="single-row flex-row fs-0 no-border">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Teeth Cleaning per Year:</label>
-            <select class="right-field calibri-regular fs-18 dark-color inline-block" name="teeth-cleaning-per-year">
+            <select class="right-field calibri-regular fs-18 dark-color inline-block on-value-change-color light-gray-color" name="teeth-cleaning-per-year">
                 <option value="">Select number</option>
                 @for ($i = 1; $i <= 4; $i+=1)
                     <option @if(!empty($renew_contract) && $renew_contract->teeth_cleaning_per_year == $i) selected @endif>{{$i}}</option>
@@ -97,8 +97,8 @@
                 </div>
             </div>
         </div>
-        <div class="single-row flex-row fs-0 relative-position">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer" for="monthly-premium">Monthly Premium Suggestion:</label>
+        <div class="single-row fs-0 relative-position">
+            <label class="calibri-light light-gray-color fs-16 padding-bottom-15 inline-block padding-right-15 margin-bottom-0 cursor-pointer" for="monthly-premium">Monthly Premium Suggestion:</label>
             <input type="number" name="monthly-premium" id="monthly-premium" maxlength="20" placeholder="Please enter a value in USD" class="right-field calibri-regular fs-18 dark-color inline-block pencil-background" @if(!empty($renew_contract)) value="{{$renew_contract->monthly_premium}}" @endif/>
             <span class="absolute-currency-label calibri-regular fs-18 dark-color">USD</span>
         </div>
@@ -128,8 +128,8 @@
                 <div class="fs-14 calibri-light light-gray-color padding-bottom-25">You are free to propose a different rate to your patient.</div>
             </div>
         @endif
-        <div class="single-row flex-row fs-0 relative-position">
-            <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer" for="monthly-premium">Contract Validity:</label>
+        <div class="single-row fs-0 relative-position">
+            <label class="calibri-light light-gray-color fs-16 padding-bottom-15 inline-block padding-right-15 margin-bottom-0 cursor-pointer" for="monthly-premium">Contract Validity:</label>
             <div class="right-extra-field calibri-regular fs-18 dark-color inline-block not-allowed-cursor">Valid until canceled</div>
         </div>
     </div>

@@ -75978,6 +75978,14 @@ if ($('body').hasClass('logged-in')) {
             $(this).closest('.single-row').find('.absolute-currency-label').fadeIn(300).css({'left' : 'calc(40% + ' + (15 + $(this).val().length * 10) + 'px)'});
         });
 
+        $('.on-value-change-color').on('change', function() {
+            if ($(this).val().trim() != '') {
+                $(this).removeClass('light-gray-color');
+            } else {
+                $(this).addClass('light-gray-color');
+            }
+        });
+
         //validation for all fields for each step
         async function validateStepFields(step_fields, step) {
             step_fields.removeClass('with-error');
