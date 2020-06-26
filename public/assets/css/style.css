@@ -149,20 +149,20 @@
 
 @keyframes boxShadowAnimation {
   0% {
-    -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-    -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-    -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
+    -webkit-box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
+    -ms-box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4); }
   50% {
-    -webkit-box-shadow: 0 2px 12px 3px #126585;
-    -moz-box-shadow: 0 2px 12px 3px #126585;
-    -ms-box-shadow: 0 2px 12px 3px #126585;
-    box-shadow: 0 2px 12px 3px #126585; }
+    -webkit-box-shadow: 0 6px 12px 3px #126585;
+    -moz-box-shadow: 0 6px 12px 3px #126585;
+    -ms-box-shadow: 0 6px 12px 3px #126585;
+    box-shadow: 0 6px 12px 3px #126585; }
   100% {
-    -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-    -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-    -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); } }
+    -webkit-box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
+    -ms-box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4); } }
 .box-shadow-animation {
   animation-iteration-count: 5;
   -webkit-animation-fill-mode: forwards;

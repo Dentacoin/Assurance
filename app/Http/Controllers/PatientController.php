@@ -19,12 +19,12 @@ use Endroid\QrCode\QrCode;
 class PatientController extends Controller {
 
     public function getPatientAccess()    {
-        if((new UserController())->checkPatientSession()) {
+        if ((new UserController())->checkPatientSession()) {
             $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
             $clinics = (new APIRequestsController())->getAllClinicsByName();
             $contracts = TemporallyContract::where(array('patient_id' => session('logged_user')['id']))->orWhere(array('patient_email' => $logged_patient->email))->get()->sortByDesc('created_at')->all();
 
-            if(!empty($contracts)) {
+            if (!empty($contracts)) {
                 //IF PATIENT HAVE EXISTING CONTRACTS
                 return view('pages/logged-user/patient/have-contracts', ['contracts' => $contracts, 'clinics' => $clinics]);
             } else {
@@ -46,7 +46,7 @@ class PatientController extends Controller {
 
     /*protected function getCongratulationsView($slug) {
         $contract = TemporallyContract::where(array('slug' => $slug, 'status' => 'awaiting-payment'))->get()->first();
-        if(!empty($contract)) {
+        if (!empty($contract)) {
             return view('pages/logged-user/patient/congratulations', ['contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH')]);
         } else {
             return abort(404);
@@ -55,7 +55,7 @@ class PatientController extends Controller {
 
     protected function getPatientContractView($slug) {
         $contract = TemporallyContract::where(array('slug' => $slug))->get()->first();
-        if($contract->status == 'pending') {
+        if ($contract->status == 'pending') {
             return abort(404);
         } else {
             if ($contract->status == 'active' || $contract->status == 'awaiting-approval') {
@@ -88,7 +88,7 @@ class PatientController extends Controller {
 
     protected function getReconsiderMonthlyPremium(Request $request) {
         $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'status' => 'pending'))->get()->first();
-        if($contract && (new APIRequestsController())->getUserData(session('logged_user')['id'])->email == $contract->patient_email) {
+        if ($contract && (new APIRequestsController())->getUserData(session('logged_user')['id'])->email == $contract->patient_email) {
             $view = view('emails/popup-reconsider-monthly-premium', ['dentist' => (new APIRequestsController())->getUserData($contract->dentist_id), 'contract' => $contract]);
             $view = $view->render();
             return response()->json(['success' => $view]);
@@ -126,18 +126,18 @@ class PatientController extends Controller {
         $data = $this->clearPostData($request->input());
 
         //check email validation
-        if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             return redirect()->route($data['redirect'])->with(['error' => 'Your form was not sent. Please try again with valid email.']);
         }
 
         //check if the invited dentist is already registered in the CoreDB
         $api_response = (new APIRequestsController())->checkIfFreeEmail($data['email']);
-        if(!$api_response->success) {
+        if (!$api_response->success) {
             return redirect()->route($data['redirect'])->with(['error' => 'This dentist/ clinic is already register on Dentacoin.']);
         }
 
         //check if someone inviting already invited dentist
-        if(InviteDentistsReward::where(array('dentist_email' => $data['email']))->get()->first()) {
+        if (InviteDentistsReward::where(array('dentist_email' => $data['email']))->get()->first()) {
             return redirect()->route($data['redirect'])->with(['error' => 'This dentist/ clinic is already invited in Assurance platform.']);
         }
 
@@ -155,7 +155,7 @@ class PatientController extends Controller {
             $message->setBody($body, 'text/html');
         });
 
-        if(count(Mail::failures()) > 0) {
+        if (count(Mail::failures()) > 0) {
             return redirect()->route($data['redirect'])->with(['error' => 'Email has not been sent to your dentist, please try again later.']);
         } else {
             $invite_dentist_reward = new InviteDentistsReward();
@@ -164,7 +164,7 @@ class PatientController extends Controller {
             $invite_dentist_reward->title = $data['title'];
             $invite_dentist_reward->name = $data['dentist-name'];
             $invite_dentist_reward->website = $data['website'];
-            if(!empty($data['phone'])) {
+            if (!empty($data['phone'])) {
                 $invite_dentist_reward->phone = $data['phone'];
             }
 
@@ -176,10 +176,10 @@ class PatientController extends Controller {
 
     protected function getContractProposal($slug) {
         $contract = TemporallyContract::where(array('slug' => $slug, 'status' => 'pending'))->get()->first();
-        if((new UserController())->checkDentistSession() || empty($contract)) {
+        if ((new UserController())->checkDentistSession() || empty($contract)) {
             //if dentist trying to access the proposal or if there is no such contract
             return abort(404);
-        } else if((new UserController())->checkPatientSession()) {
+        } else if ((new UserController())->checkPatientSession()) {
             // if pending and the contract proposal expired redirect to homepage
             if ((time() - strtotime($contract->created_at->format('d-m-Y'))) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) {
                 return redirect()->route('patient-access')->with(['error' => 'This contract proposal has expired.']);
@@ -197,14 +197,14 @@ class PatientController extends Controller {
             $existing_id_number = TemporallyContract::where(array('patient_id' => $current_logged_patient->id))->where('patient_id_number', '!=' , '')->get()->first();
 
             $patient_id_number = '';
-            if($existing_id_number && $existing_id_number->patient_id_number != '') {
+            if ($existing_id_number && $existing_id_number->patient_id_number != '') {
                 $patient_id_number = $existing_id_number->patient_id_number;
             }
 
             $params['patient_id_number'] = $patient_id_number;
             $params['patient'] = $current_logged_patient;
 
-            if(!empty($contract->patient_id_number)) {
+            if (!empty($contract->patient_id_number)) {
                 $params['shown'] = 'two';
             }
             //if patient is logged in and if the contract is about the logged patient
@@ -232,12 +232,12 @@ class PatientController extends Controller {
             'dcn_address.min' => 'Wallet Address is invalid.',
         );
 
-        if(empty($logged_patient->country_id)) {
+        if (empty($logged_patient->country_id)) {
             $required_fields_arr['country'] = 'required';
             $required_fields_msgs_arr['country.required'] = 'Country is required.';
         }
 
-        if(empty($logged_patient->address)) {
+        if (empty($logged_patient->address)) {
             $required_fields_arr['address'] = 'required';
             $required_fields_msgs_arr['address.required'] = 'Postal Address is required.';
         }
@@ -249,36 +249,36 @@ class PatientController extends Controller {
         $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
 
         //if empty contract
-        if(empty($contract) /*|| (!empty($contract) && $contract->patient_email != $logged_patient->email)*/) {
+        if (empty($contract) /*|| (!empty($contract) && $contract->patient_email != $logged_patient->email)*/) {
             return abort(404);
         }
 
         //check if contract expired
-        if((time() - $contract->created_at->timestamp) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) {
+        if ((time() - $contract->created_at->timestamp) / (60 * 60 * 24) > DAYS_ACTIVE_CONTRACT_PROPOSAL) {
             return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'This contract proposal has expired.']);
         }
 
         //check if have other contract with status active, pending, awaiting-payment or awaiting-approval
         $other_contracts = TemporallyContract::where(array('dentist_id' => $contract->dentist_id, 'patient_id' => session('logged_user')['id']))->whereIn('status', array('active', 'awaiting-payment', 'awaiting-approval', 'pending'))->get()->all();
         foreach($other_contracts as $other_contract) {
-            if($other_contract->id != $contract->id) {
+            if ($other_contract->id != $contract->id) {
                 return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'You cannot have more than one pending or active contract with same dentist. Please first cancel your previous contract with '.$dentist->name.' and then try to sign this contract.']);
             }
         }
 
         //update CoreDB api data for this patient
-        if(isset($data['country']) || isset($data['address'])) {
+        if (isset($data['country']) || isset($data['address'])) {
             $edited_patient_account = true;
             $curl_arr = array();
-            if(isset($data['country'])) {
-                if(!empty($data['country'])) {
+            if (isset($data['country'])) {
+                if (!empty($data['country'])) {
                     $curl_arr['country_code'] = $data['country'];
                 }else {
                     return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'Country is required']);
                 }
             }
-            if(isset($data['address'])) {
-                if(!empty($data['address'])) {
+            if (isset($data['address'])) {
+                if (!empty($data['address'])) {
                     $curl_arr['address'] = $data['address'];
                 }else {
                     return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'Postal Address is required']);
@@ -287,12 +287,12 @@ class PatientController extends Controller {
 
             //handle the API response
             $api_response = (new APIRequestsController())->updateUserData($curl_arr);
-            if(!$api_response) {
+            if (!$api_response) {
                 return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['errors_response' => $api_response['errors']]);
             }
         }
 
-        if($edited_patient_account) {
+        if ($edited_patient_account) {
             //asking for logged_patient updated data
             $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         }
@@ -301,7 +301,7 @@ class PatientController extends Controller {
         $patient_pub_key = PublicKey::where(array('address' => $data['dcn_address']))->get()->first();
         $dentist_pub_key = PublicKey::where(array('address' => $contract->dentist_address))->get()->first();
 
-        if(empty($patient_pub_key) || empty($dentist_pub_key)) {
+        if (empty($patient_pub_key) || empty($dentist_pub_key)) {
             return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => 'No such public keys in the database.']);
         }
 
@@ -338,7 +338,7 @@ class PatientController extends Controller {
         $encrypted_html_by_dentist = (new \App\Http\Controllers\APIRequestsController())->encryptFile($dentist_pub_key->public_key, htmlentities($html_body));
 
         //if no errors from the api
-        if($encrypted_html_by_patient && !isset($encrypted_html_by_patient->error) && $encrypted_html_by_dentist && !isset($encrypted_html_by_dentist->error)) {
+        if ($encrypted_html_by_patient && !isset($encrypted_html_by_patient->error) && $encrypted_html_by_dentist && !isset($encrypted_html_by_dentist->error)) {
             $this->storePdfFileTemporally($html_start, $encrypted_html_by_patient->success->encrypted, $html_end, CONTRACTS . $contract->slug . DS . 'patient-pdf-file.pdf');
             $this->storePdfFileTemporally($html_start, $encrypted_html_by_dentist->success->encrypted, $html_end, CONTRACTS . $contract->slug . DS . 'dentist-pdf-file.pdf');
 
@@ -350,7 +350,7 @@ class PatientController extends Controller {
             $zipper->close();
 
             $ipfs_hash = (new \App\Http\Controllers\APIRequestsController())->uploadFileToIPFS(BASE_URL . 'assets' . DS . 'contracts' . DS . $contract->slug . DS . $zip_name);
-            if($ipfs_hash->response_obj && $ipfs_hash->response_obj->success) {
+            if ($ipfs_hash->response_obj && $ipfs_hash->response_obj->success) {
                 $contract->document_hash = $ipfs_hash->response_obj->success->hash;
 
                 //deleting the contract folder
@@ -364,7 +364,7 @@ class PatientController extends Controller {
                 $alreadySentEthToThisUser = FreeETHReceiver::where(array('walletAddress' => $contract->patient_address))->get()->first();
 
                 //send ETH amount to patient
-                if(sizeof($this_patient_having_contracts) == 0 && empty($alreadySentEthToThisUser)) {
+                if (sizeof($this_patient_having_contracts) == 0 && empty($alreadySentEthToThisUser)) {
                     //only if no previous contracts, aka sending only for first contract
                     //request to nodejs server, if the transaction fails the nodejs server will recover back the tokens to user balance in DB
                     $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
@@ -382,7 +382,7 @@ class PatientController extends Controller {
                     $freeETHReceiver->walletAddress = $contract->patient_address;
                     $freeETHReceiver->save();
 
-                    if(is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
+                    if (is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
                         $freeETHReceiver->txHash = $sending_eth_response->transactionHash;
                         $freeETHReceiver->save();
 
@@ -490,18 +490,24 @@ class PatientController extends Controller {
 
         $sender = (new APIRequestsController())->getUserData(session('logged_user')['id']);
 
-        $body = '<!DOCTYPE html><html><head></head><body><div style="font-size: 13px;">Dear '.$data['dentist-name'].',<br><br><br>My name is <b>'.$sender->name.'</b> and I have successfully received my Assurance Contract Sample, but I’d like to suggest a monthly premium of '.$data['new-usd-proposal-to-dentist'].' USD in Dentacoin (DCN).<br><br>I hope you will reconsider your proposal.<br><br>Regards,<br><b>'.$sender->name.'</div></body></html>';
+        $contract = TemporallyContract::where(array('slug' => $data['contract'], 'patient_email' => $sender->email))->get()->first();
+        if (!empty($contract)) {
+            $email_view = view('emails/reconsider-monthly-premium', ['dentist_name' => $data['dentist-name'], 'usd_proposal' => $data['new-usd-proposal-to-dentist'], 'sender_name' => $sender->name, 'contract' => $contract]);
+            $body = $email_view->render();
 
-        Mail::send(array(), array(), function($message) use ($body, $data, $sender) {
-            $message->to($data['dentist-email'])->subject('Reconsider Monthly Premium Proposal');
-            $message->from($sender->email, $sender->name)->replyTo($sender->email, $sender->name);
-            $message->setBody($body, 'text/html');
-        });
+            Mail::send(array(), array(), function($message) use ($body, $data, $sender) {
+                $message->to($data['dentist-email'])->subject('Reconsider Monthly Premium Proposal');
+                $message->from($sender->email, $sender->name)->replyTo($sender->email, $sender->name);
+                $message->setBody($body, 'text/html');
+            });
 
-        if(count(Mail::failures()) > 0) {
-            return response()->json(['error' => 'Email has not been sent to your dentist, please try again later.']);
+            if (count(Mail::failures()) > 0) {
+                return response()->json(['error' => 'Email has not been sent to your dentist, please try again later.']);
+            } else {
+                return response()->json(['success' => '<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">EMAIL SUCCESSFULLY SENT</div><div class="padding-top-20 padding-bottom-15 fs-20">Your monthly premium proposal has been successfully sent to your dentist.</div><div class="btn-container padding-bottom-40"><a href="javascript:void(0)" class="white-blue-green-btn min-width-200 close-popup">OK</a></div></div>']);
+            }
         } else {
-            return response()->json(['success' => '<div class="text-center padding-top-30"><svg class="max-width-50" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 82"style="enable-background:new 0 0 64 82;" xml:space="preserve"><style type="text/css">.st0{fill:#126585;}  .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#126585;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds  bottomLeftOrigin="true" height="82" width="64" x="18" y="34"></sliceSourceBounds></sfw></metadata><g transform="translate(0,-952.36218)"><g><path class="st0" d="M31.7,952.4c-0.1,0-0.3,0.1-0.4,0.1l-30,11c-0.8,0.3-1.3,1-1.3,1.9v33c0,7.8,4.4,14.3,10.3,20c5.9,5.7,13.5,10.7,20.5,15.7c0.7,0.5,1.6,0.5,2.3,0c7-5,14.6-10,20.5-15.7c5.9-5.7,10.3-12.2,10.3-20v-33c0-0.8-0.5-1.6-1.3-1.9l-30-11C32.4,952.4,32,952.3,31.7,952.4z M32,956.5l28,10.3v31.6c0,6.3-3.5,11.8-9.1,17.1c-5.2,5-12.2,9.7-18.9,14.4c-6.7-4.7-13.7-9.4-18.9-14.4c-5.5-5.3-9.1-10.8-9.1-17.1v-31.6L32,956.5z"/></g></g><g><g><path class="st1" d="M50.3,25.9c0.6,0.6,1.2,1.2,1.8,1.8c0.9,0.9,0.9,2.5,0,3.4C45.6,37.5,39.1,44,32.6,50.5c-3.3,3.3-3.5,3.3-6.8,0c-3.3-3.3-6.7-6.7-10-10c-0.9-0.9-0.9-2.5,0-3.4c0.6-0.6,1.2-1.2,1.8-1.8c0.9-0.9,2.5-0.9,3.4,0c2.7,2.7,5.4,5.4,8.2,8.2c5.9-5.9,11.7-11.7,17.6-17.6C47.8,25,49.3,25,50.3,25.9z"/></g></g></svg><div class="lato-bold fs-30">EMAIL SUCCESSFULLY SENT</div><div class="padding-top-20 padding-bottom-15 fs-20">Your monthly premium proposal has been successfully sent to your dentist.</div><div class="btn-container padding-bottom-40"><a href="javascript:void(0)" class="white-blue-green-btn min-width-200 close-popup">OK</a></div></div>']);
+            return response()->json(['error' => 'False contract.']);
         }
     }
 
@@ -509,12 +515,6 @@ class PatientController extends Controller {
         $contract->status = 'awaiting-approval';
         $contract->is_processing = false;
         $contract->save();
-
-        if((new UserController())->checkPatientSession()) {
-            $patientId = session('logged_user')['id'];
-        } else {
-            $patientId = $contract->patient_id;
-        }
 
         // let cronjob check know that database is synced with this transaction status
         $contractTransactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'to_status' => 'awaiting-approval'))->get()->first();
@@ -524,7 +524,7 @@ class PatientController extends Controller {
         }
 
         $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
-        $logged_patient = (new APIRequestsController())->getUserData($patientId);
+        $logged_patient = (new APIRequestsController())->getUserData($contract->patient_id);
 
         $email_view = view('emails/patient-sign-contract', ['dentist' => $dentist, 'patient' => $logged_patient, 'contract' => $contract]);
         $body = $email_view->render();
@@ -539,6 +539,29 @@ class PatientController extends Controller {
         $contractRecord->contract_id = $contract->id;
         $contractRecord->type = 'Contract activated by patient';
         $contractRecord->save();
+
+        // send ETH to dentist for the approval
+        $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
+        $sendEthAmountParams = array(
+            'patient_address' => $contract->patient_address,
+            'dentist_address' => $contract->dentist_address,
+            'type' => 'dentist-approval',
+            'gas_price' => $gasPrice
+        );
+
+        // saving record that we sent eth amount to this user
+        $freeETHReceiver = new FreeETHReceiver();
+        $freeETHReceiver->walletAddress = $contract->dentist_address;
+        $freeETHReceiver->save();
+
+        $sending_eth_response = (new \App\Http\Controllers\APIRequestsController())->sendEthAmount(hash(getenv('HASHING_METHOD'), getenv('SECRET_PASSWORD').json_encode($sendEthAmountParams)), 'dentist-approval', $contract->patient_address, $contract->dentist_address, $gasPrice);
+        if(is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
+            $freeETHReceiver->txHash = $sending_eth_response->transactionHash;
+            $freeETHReceiver->save();
+        } else {
+            // deleting the record if the transaction fails
+            $freeETHReceiver->delete();
+        }
     }
 
     protected function getContactClinicPopup(Request $request) {
@@ -578,7 +601,7 @@ class PatientController extends Controller {
             $message->setBody($body, 'text/html');
         });
 
-        if(count(Mail::failures()) > 0) {
+        if (count(Mail::failures()) > 0) {
             return redirect()->route($data['redirect'])->with(['error' => 'Email has not been sent to your dentist, please try again later.']);
         } else {
             return redirect()->route($data['redirect'])->with(['success' => 'Contract sample request has been sent to your dentist successfully.']);
@@ -598,15 +621,15 @@ class PatientController extends Controller {
         $check_up_date = $request->input('check_up_date');
         $teeth_cleaning_date = $request->input('teeth_cleaning_date');
 
-        if(empty($date) && empty($check_up_date) && empty($teeth_cleaning_date)) {
+        if (empty($date) && empty($check_up_date) && empty($teeth_cleaning_date)) {
             return response()->json(['error' => true, 'message' => 'Missing dates.']);
         }
 
         $contract = TemporallyContract::where(array('slug' => $request->input('contract'), 'patient_id' => session('logged_user')['id'], 'status' => 'active'))->get()->first();
-        if(!empty($contract)) {
+        if (!empty($contract)) {
             $timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - strtotime($contract->contract_active_at));
             $yearsActionsToBeExecuted = 1;
-            if(array_key_exists('days', $timeSinceContractSigning) && $timeSinceContractSigning['days'] >= 365) {
+            if (array_key_exists('days', $timeSinceContractSigning) && $timeSinceContractSigning['days'] >= 365) {
                 $yearsActionsToBeExecuted += floor($timeSinceContractSigning['days'] / 365);
             }
 
@@ -616,12 +639,12 @@ class PatientController extends Controller {
             $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
             $dentistEmail = $dentist->email;
             $patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
-            if($request->input('type') == 'check-up' || $request->input('type') == 'teeth-cleaning') {
-                if(empty($date) && \DateTime::createFromFormat('Y-m-d', $date) !== FALSE) {
+            if ($request->input('type') == 'check-up' || $request->input('type') == 'teeth-cleaning') {
+                if (empty($date) && \DateTime::createFromFormat('Y-m-d', $date) !== FALSE) {
                     return response()->json(['error' => true, 'message' => 'Missing or invalid date.']);
                 }
 
-                if($request->input('type') == 'check-up') {
+                if ($request->input('type') == 'check-up') {
                     $currentRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
                     $event = $currentRecordsCount + 1;
                     $aMustRecordsCount = $contract->check_ups_per_year;
@@ -630,7 +653,7 @@ class PatientController extends Controller {
                     $email_body = $email_view->render();
                     $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
                     $type = 'check-ups';
-                } else if($request->input('type') == 'teeth-cleaning') {
+                } else if ($request->input('type') == 'teeth-cleaning') {
                     $currentRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
                     $event = $currentRecordsCount + 1;
                     $aMustRecordsCount = $contract->teeth_cleaning_per_year;
@@ -641,7 +664,7 @@ class PatientController extends Controller {
                     $type = 'teeth cleaning';
                 }
 
-                if($currentRecordsCount < $aMustRecordsCount) {
+                if ($currentRecordsCount < $aMustRecordsCount) {
                     $checkUp = new ContractCheckup();
                     $checkUp->contract_id = $contract->id;
                     $checkUp->type = $request->input('type');
@@ -654,7 +677,7 @@ class PatientController extends Controller {
                         $message->setBody($email_body, 'text/html');
                     });
 
-                    if(count(Mail::failures()) > 0) {
+                    if (count(Mail::failures()) > 0) {
                         return response()->json(['error' => true, 'message' => 'Record saving and email sending to dentist failed, please try again later or contact <a href="mailto:'.EMAIL_SENDER.'">'.EMAIL_SENDER.'</a>.']);
                     } else {
                         $checkUp->save();
@@ -664,12 +687,12 @@ class PatientController extends Controller {
                 } else {
                     return response()->json(['error' => true, 'message' => 'You already have ' . $aMustRecordsCount . ' ' . $type . ' recorded, as agreed in the contract terms.']);
                 }
-            } else if($request->input('type') == 'check-up-and-teeth-cleaning') {
-                if(empty($check_up_date) && empty($teeth_cleaning_date)) {
+            } else if ($request->input('type') == 'check-up-and-teeth-cleaning') {
+                if (empty($check_up_date) && empty($teeth_cleaning_date)) {
                     return response()->json(['error' => true, 'message' => 'Missing dates.']);
                 }
 
-                if(!empty($check_up_date) || !empty($teeth_cleaning_date)) {
+                if (!empty($check_up_date) || !empty($teeth_cleaning_date)) {
                     $currentCheckUpRecordsCount = $this->getCheckUpOrTeethCleaning('check-up', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
                     $checkUpEvent = $currentCheckUpRecordsCount + 1;
                     $currentTeethCleaningRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
@@ -677,7 +700,7 @@ class PatientController extends Controller {
                     $aMustCheckUpRecordsCount = $contract->teeth_cleaning_per_year;
                     $aMustTeethCleaningRecordsCount = $contract->teeth_cleaning_per_year;
 
-                    if($currentCheckUpRecordsCount < $aMustCheckUpRecordsCount && !empty($check_up_date)) {
+                    if ($currentCheckUpRecordsCount < $aMustCheckUpRecordsCount && !empty($check_up_date)) {
                         $checkUp = new ContractCheckup();
                         $checkUp->contract_id = $contract->id;
                         $checkUp->type = 'check-up';
@@ -685,7 +708,7 @@ class PatientController extends Controller {
                         $checkUp->request_date_at = date('Y-m-d H:i:s', strtotime($check_up_date));
                     }
 
-                    if($currentTeethCleaningRecordsCount < $aMustTeethCleaningRecordsCount && !empty($teeth_cleaning_date)) {
+                    if ($currentTeethCleaningRecordsCount < $aMustTeethCleaningRecordsCount && !empty($teeth_cleaning_date)) {
                         $teethCleaning = new ContractCheckup();
                         $teethCleaning->contract_id = $contract->id;
                         $teethCleaning->type = 'teeth-cleaning';
@@ -693,7 +716,7 @@ class PatientController extends Controller {
                         $teethCleaning->request_date_at = date('Y-m-d H:i:s', strtotime($teeth_cleaning_date));
                     }
 
-                    if(isset($checkUp) && isset($teethCleaning)) {
+                    if (isset($checkUp) && isset($teethCleaning)) {
                         // CHECK UP AND TEETH CLEANING
                         $email_view = view('emails/patient-recording-check-up-and-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'check_up_date' => date('Y-m-d', strtotime($check_up_date)), 'teeth_cleaning_date' => date('Y-m-d H:i:s', strtotime($teeth_cleaning_date))]);
                         $email_body = $email_view->render();
@@ -705,7 +728,7 @@ class PatientController extends Controller {
                             $message->setBody($email_body, 'text/html');
                         });
 
-                        if(count(Mail::failures()) > 0) {
+                        if (count(Mail::failures()) > 0) {
                             return response()->json(['error' => true, 'message' => 'Record saving and email sending to dentist failed, please try again later or contact <a href="mailto:'.EMAIL_SENDER.'">'.EMAIL_SENDER.'</a>.']);
                         } else {
                             $checkUp->save();
@@ -713,7 +736,7 @@ class PatientController extends Controller {
 
                             return response()->json(array('success' => true, 'checkUpId' => $checkUp->id, 'teethCleaningId' => $teethCleaning->id, 'checkUpEvent' => $checkUpEvent, 'teethCleaningUpEvent' => $teethCleaningUpEvent, 'aMustCheckUpRecordsCount' => $aMustCheckUpRecordsCount, 'aMustTeethCleaningRecordsCount' => $aMustTeethCleaningRecordsCount));
                         }
-                    } else if(isset($checkUp)) {
+                    } else if (isset($checkUp)) {
                         // CHECK UP
                         $email_view = view('emails/patient-recording-check-up', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d H:i:s', strtotime($request->input('date')))]);
                         $email_body = $email_view->render();
@@ -725,14 +748,14 @@ class PatientController extends Controller {
                             $message->setBody($email_body, 'text/html');
                         });
 
-                        if(count(Mail::failures()) > 0) {
+                        if (count(Mail::failures()) > 0) {
                             return response()->json(['error' => true, 'message' => 'Record saving and email sending to dentist failed, please try again later or contact <a href="mailto:'.EMAIL_SENDER.'">'.EMAIL_SENDER.'</a>.']);
                         } else {
                             $checkUp->save();
 
                             return response()->json(array('success' => true));
                         }
-                    } else if(isset($teethCleaning)) {
+                    } else if (isset($teethCleaning)) {
                         // TEETH CLEANING
                         $email_view = view('emails/patient-recording-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d H:i:s', strtotime($request->input('date')))]);
                         $email_body = $email_view->render();
@@ -744,7 +767,7 @@ class PatientController extends Controller {
                             $message->setBody($email_body, 'text/html');
                         });
 
-                        if(count(Mail::failures()) > 0) {
+                        if (count(Mail::failures()) > 0) {
                             return response()->json(['error' => true, 'message' => 'Record saving and email sending to dentist failed, please try again later or contact <a href="mailto:'.EMAIL_SENDER.'">'.EMAIL_SENDER.'</a>.']);
                         } else {
                             $teethCleaning->save();
@@ -763,7 +786,7 @@ class PatientController extends Controller {
 
     // returning the count of approved by dentist checkups for contract for period of time (year)
     public function getCheckUpOrTeethCleaning($type, $slug, $from, $to, $statuses = array('approved'), $dentist = false) {
-        if($dentist) {
+        if ($dentist) {
             $checkUps = ContractCheckup::leftJoin('temporally_contracts', function($join) {
                 $join->on('contract_checkups.contract_id', '=', 'temporally_contracts.id');
             })->where(array('temporally_contracts.dentist_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->whereIn('contract_checkups.status', $statuses)->whereBetween('contract_checkups.request_date_at', array($from, $to))->get()->all();
@@ -773,7 +796,7 @@ class PatientController extends Controller {
             })->where(array('temporally_contracts.patient_id' => session('logged_user')['id'], 'temporally_contracts.slug' => $slug, 'contract_checkups.type' => $type))->whereIn('contract_checkups.status', $statuses)->whereBetween('contract_checkups.request_date_at', array($from, $to))->get()->all();
         }
 
-        if(!empty($checkUps)) {
+        if (!empty($checkUps)) {
             return sizeof($checkUps);
         } else {
             return 0;
@@ -784,7 +807,7 @@ class PatientController extends Controller {
         $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         $contracts = TemporallyContract::where(array('patient_email' => $logged_patient->email))->get()->all();
 
-        if(!empty($contracts)) {
+        if (!empty($contracts)) {
             return response()->json(['success' => true]);
         } else {
             return response()->json(['error' => true]);
@@ -801,7 +824,7 @@ class PatientController extends Controller {
         $logged_patient = (new APIRequestsController())->getUserData(session('logged_user')['id']);
         $contracts = TemporallyContract::where(array('patient_email' => $logged_patient->email, 'status' => 'pending'))->where('created_at', '>=', date('Y-m-d H:i:s', $request->input('now_timestamp')))->get()->all();
 
-        if(!empty($contracts)) {
+        if (!empty($contracts)) {
             $responseContracts = array();
             foreach($contracts as $contract) {
                 $tempContract = array();

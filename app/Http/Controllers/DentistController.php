@@ -54,7 +54,7 @@ class DentistController extends Controller
             }
 
             if ($contract->status == 'awaiting-approval') {
-                $this_dentist_having_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->all();
+                /*$this_dentist_having_contracts = TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->all();
                 $alreadySentEthToThisUser = FreeETHReceiver::where(array('walletAddress' => $contract->dentist_address))->get()->first();
 
                 if (sizeof($this_dentist_having_contracts) == 1 && empty($alreadySentEthToThisUser)) {
@@ -82,7 +82,7 @@ class DentistController extends Controller
                         // deleting the record if the transaction fails
                         $freeETHReceiver->delete();
                     }
-                }
+                }*/
             }
 
             return view('pages/logged-user/dentist/single-contract-view-'.$contract->status, $params);
