@@ -2066,6 +2066,9 @@ var projectData = {
                         var contract_next_payment = parseInt(on_load_exiting_contract[0]);
                         var current_patient_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf($('.single-contract-view-section').attr('data-patient')));
 
+
+                        // check for pending patient records - check-up or teeth cleaning
+                        var visibleRecord = false;
                         function confirmRecord(record, successCallback) {
                             console.log('confirmRecord');
                             var clickWarningObj = {};
@@ -2140,8 +2143,6 @@ var projectData = {
                             });
                         }
 
-                        // check for pending patient records - check-up or teeth cleaning
-                        var visibleRecord = false;
                         setInterval(function() {
                             if (!visibleRecord && allowAutomaticScripts) {
                                 $.ajax({
