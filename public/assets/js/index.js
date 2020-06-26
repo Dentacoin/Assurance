@@ -2100,7 +2100,7 @@ var projectData = {
                                 }
                             };
                             basic.showConfirm('Are you sure you want to confirm this visit?', 'confirmRecord', clickWarningObj, true, {
-                                onEscape : function() {
+                                'onEscape' : function() {
                                     visibleRecord = false;
                                 }
                             });
@@ -2137,7 +2137,7 @@ var projectData = {
                                 }
                             };
                             basic.showConfirm('Sure you want to continue with declining your patient record?', 'declineRecord', clickWarningObj, true, {
-                                onEscape : function() {
+                                'onEscape' : function() {
                                     visibleRecord = false;
                                 }
                             });
@@ -2178,7 +2178,7 @@ var projectData = {
 
                                             visibleRecord = true;
                                             basic.showDialog(response.html, 'pending-contract-record', null, true, {
-                                                onEscape : function() {
+                                                'onEscape' : function() {
                                                     visibleRecord = false;
                                                 }
                                             });
