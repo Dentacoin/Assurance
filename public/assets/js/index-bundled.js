@@ -73462,7 +73462,7 @@ var dApp = {
 
         if ($('body').hasClass('logged-in')) {
             if ($('body').hasClass('patient-side')) {
-                if ($('.patient-contract-single-page-section').length) {
+                if ($('.patient-contract-single-page-section').length && $('.patient-contract-single-page-section').attr('data-patient') != '') {
                     global_state.account = projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-patient'));
                 }
             } else if ($('body').hasClass('dentist-side')) {
@@ -75060,21 +75060,6 @@ var projectData = {
                                                                                 approval_transaction.sign(new Buffer(transaction_key, 'hex'));
 
                                                                                 fireAssuranceContractCreationTransaction('0x' + approval_transaction.serialize().toString('hex'), nonce + 1);
-
-                                                                                /*var confirmedAllowedTransaction = false;
-                                                                                dApp.web3_1_0.eth.sendSignedTransaction('0x' + approval_transaction.serialize().toString('hex')).on('transactionHash', function(transactionHash) {
-                                                                                    console.log(transactionHash, 'transactionHash');
-                                                                                }).on('confirmation', function(confirmationNumber, receipt) {
-                                                                                    if (!confirmedAllowedTransaction) {
-                                                                                        confirmedAllowedTransaction = true;
-
-                                                                                        fireAssuranceContractCreationTransaction(nonce + 1);
-                                                                                    }
-                                                                                }).on('error', function(error) {
-                                                                                    console.log(error, 'error');
-                                                                                    basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
-                                                                                    hideLoader();
-                                                                                });*/
                                                                             });
                                                                         } else {
                                                                             fireAssuranceContractCreationTransaction();
@@ -75122,53 +75107,6 @@ var projectData = {
 
                                                                             onSuccessfulContractCreation();
                                                                         });
-
-                                                                        /*var confirmedTransaction = false;
-                                                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + contract_creation_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
-                                                                            console.log(transactionHash, 'transactionHash');
-                                                                            console.log({
-                                                                                'transactionHash' : transactionHash,
-                                                                                'to_status' : 'awaiting-approval',
-                                                                                'contract_slug' : $('.init-contract-section').attr('data-contract')
-                                                                            });
-                                                                            var saveTransactionResponse = await saveTransaction({
-                                                                                'transactionHash' : transactionHash,
-                                                                                'to_status' : 'awaiting-approval',
-                                                                                'contract_slug' : $('.init-contract-section').attr('data-contract')
-                                                                            });
-                                                                            console.log(saveTransactionResponse, 'saveTransactionResponse');
-
-                                                                        }).on('confirmation', function(confirmationNumber, receipt) {
-                                                                            if (!confirmedTransaction) {
-                                                                                confirmedTransaction = true;
-
-                                                                                $.ajax({
-                                                                                    type: 'POST',
-                                                                                    url: '/patient/on-blockchain-contract-creation',
-                                                                                    dataType: 'json',
-                                                                                    data: {
-                                                                                        ipfs_hash: response.contract_data.contract_ipfs_hash
-                                                                                    },
-                                                                                    headers: {
-                                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                                    },
-                                                                                    success: function (inner_response) {
-                                                                                        if (inner_response.success) {
-                                                                                            hideLoader();
-                                                                                            basic.closeDialog();
-                                                                                            basic.showDialog(inner_response.success, '', null, true);
-                                                                                            setTimeout(function () {
-                                                                                                window.location.reload();
-                                                                                            }, 5000);
-                                                                                        }
-                                                                                    }
-                                                                                });
-                                                                            }
-                                                                        }).on('error', function(error) {
-                                                                            console.log(error, 'error');
-                                                                            basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
-                                                                            hideLoader();
-                                                                        });*/
                                                                     }
                                                                 }
                                                             }
