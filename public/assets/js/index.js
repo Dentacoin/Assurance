@@ -2660,6 +2660,18 @@ if ($('body').hasClass('logged-in')) {
         $('.onsite-transaction-signing').hide();
     });
 
+    //showing the list for each service category
+    if ($('.show-category-list a')) {
+        $('.show-category-list a').click(function() {
+            if ($(this).attr('data-hidden-list') == 'true') {
+                $(this).attr('data-hidden-list', 'false').html($(this).attr('data-label-opened'));
+            } else {
+                $(this).attr('data-hidden-list', 'true').html($(this).attr('data-label-closed'));
+            }
+            $(this).closest('.show-category-list').find('ul').toggle(300);
+        });
+    }
+
     if ($('body').hasClass('create-contract')) {
         var signature_pad_inited = false;
         styleAvatarUploadButton();
@@ -2673,16 +2685,6 @@ if ($('body').hasClass('logged-in')) {
         if ($('.single-row.proof-of-address').length) {
             bindVerifyAddressLogic();
         }
-
-        //showing the list for each service category
-        $('.show-category-list a').click(function() {
-            if ($(this).attr('data-hidden-list') == 'true') {
-                $(this).attr('data-hidden-list', 'false').html($(this).attr('data-label-opened'));
-            } else {
-                $(this).attr('data-hidden-list', 'true').html($(this).attr('data-label-closed'));
-            }
-            $(this).closest('.show-category-list').find('ul').toggle(300);
-        });
 
         var form_props_arr = ['professional-company-number', 'postal-address', 'country', 'phone', 'website', 'address', 'fname', 'lname', 'email', 'monthly-premium', 'check-ups-per-year', 'teeth-cleaning-per-year'];
         var create_contract_form = $('form#dentist-create-contract');

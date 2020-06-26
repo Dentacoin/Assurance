@@ -1742,6 +1742,19 @@
     min-width: 800px; }
   .module.records-history .mobile-slide {
     display: block; } }
+.module.show-category-list ul {
+  display: none;
+  font-size: 16px;
+  font-family: 'Calibri Light';
+  padding: 5px 0 15px 25px; }
+  .module.show-category-list ul li {
+    list-style: disc inside none; }
+@media screen and (max-width: 767px) {
+  .module.show-category-list {
+    padding-top: 10px;
+    padding-bottom: 5px; }
+    .module.show-category-list ul {
+      padding: 5px 0 15px 0; } }
 
 body {
   background-color: #222d32; }

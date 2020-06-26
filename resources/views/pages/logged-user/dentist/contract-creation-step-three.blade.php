@@ -25,7 +25,7 @@
         </div>
         <div class="single-row flex-row fs-0 padding-bottom-15">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful <a href="https://dentacare.dentacoin.com/" target="_blank" class="text-decoration-underline blue-green-color lato-semibold">Dentacare Journeys</a>:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">1 (90 days)</div>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block not-allowed-cursor">1 (90 days)</div>
         </div>
         <div class="single-row fs-0">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 padding-top-0 margin-bottom-0 inline-block">Services Covered:</label>
@@ -40,7 +40,7 @@
                         <label class="fs-18 calibri-light">General Dentistry</label>
                     </div>
                 </div>
-                <div class="show-category-list">
+                <div class="show-category-list module">
                     <ul>
                         <li>Fillings</li>
                         <li>Caries infiltration</li>
@@ -50,7 +50,6 @@
                         <li>Tooth extraction</li>
                     </ul>
                     <a href="javascript:void(0)" data-hidden-list="true" data-label-closed="See all services in this category" data-label-opened="Hide all services in this category" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
-
                 </div>
                 <div class="pretty single-checkbox-container margin-bottom-5 p-svg p-curve on-white-background">
                     <input type="checkbox" name="general-dentistry[]" value="param_cd" @if(!empty($renew_contract) && in_array('param_cd', $general_dentistry_arr)) checked @endif/>
@@ -62,7 +61,7 @@
                         <label class="fs-18 calibri-light">Cosmetic Dentistry</label>
                     </div>
                 </div>
-                <div class="show-category-list">
+                <div class="show-category-list module">
                     <ul>
                         <li>Composite bonding</li>
                         <li>Porcelain veneers (material & laboratory costs - not covered)</li>
@@ -73,7 +72,6 @@
                         <li>Dentures (material & laboratory costs - not covered)</li>
                     </ul>
                     <a href="javascript:void(0)" data-hidden-list="true" data-label-closed="See all services in this category" data-label-opened="Hide all services in this category" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
-
                 </div>
                 <div class="pretty single-checkbox-container margin-bottom-5 p-svg p-curve on-white-background">
                     <input type="checkbox" name="general-dentistry[]" value="param_id" @if(!empty($renew_contract) && in_array('param_id', $general_dentistry_arr)) checked @endif/>
@@ -85,7 +83,7 @@
                         <label class="fs-18 calibri-light">Implant Dentistry</label>
                     </div>
                 </div>
-                <div class="show-category-list">
+                <div class="show-category-list module">
                     <ul>
                         <li>Implant placement (implants and abutments - not covered)</li>
                         <li>Porcelain veneers (material & laboratory costs - not covered)</li>
@@ -96,7 +94,6 @@
                         <li>Bone augmentation (bone replacement material - not covered)</li>
                     </ul>
                     <a href="javascript:void(0)" data-hidden-list="true" data-label-closed="See all services in this category" data-label-opened="Hide all services in this category" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
-
                 </div>
             </div>
         </div>
@@ -133,7 +130,7 @@
         @endif
         <div class="single-row flex-row fs-0 relative-position">
             <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0 cursor-pointer" for="monthly-premium">Contract Validity:</label>
-            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">Valid until canceled</div>
+            <div class="right-extra-field calibri-regular fs-18 dark-color inline-block not-allowed-cursor">Valid until canceled</div>
         </div>
     </div>
 </div>

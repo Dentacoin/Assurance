@@ -1,7 +1,7 @@
 <section class="container padding-top-50 padding-bottom-50 records-history module">
     <div class="row">
         <div class="col-xs-12 col-lg-10 col-lg-offset-1">
-            <h2 class="fs-34 text-center lato-bold padding-bottom-20">Records History</h2>
+            <h2 class="fs-34 text-center lato-bold padding-bottom-20">Contract History</h2>
             <div class="mobile-overflow-y-auto">
                 <table>
                     <thead>

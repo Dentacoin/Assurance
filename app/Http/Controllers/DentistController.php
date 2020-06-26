@@ -384,8 +384,6 @@ class DentistController extends Controller
                 $patient = (new APIRequestsController())->getUserData($contract->patient_id);
                 $dentist = (new APIRequestsController())->getUserData(session('logged_user')['id']);
 
-                $patient->email = 'miroslav.nedelchev@dentacoin.com';
-
                 $contract_active_at = strtotime($contract->contract_active_at);
                 $timeSinceContractSigning = (new \App\Http\Controllers\Controller())->convertMS(time() - $contract_active_at);
                 $yearsActionsToBeExecuted = 1;

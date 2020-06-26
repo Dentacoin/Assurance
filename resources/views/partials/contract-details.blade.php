@@ -171,6 +171,17 @@
                             <label class="fs-18 calibri-light">General Dentistry</label>
                         </div>
                     </div>
+                    <div class="show-category-list module">
+                        <ul>
+                            <li>Fillings</li>
+                            <li>Caries infiltration</li>
+                            <li>Dental sealants for children</li>
+                            <li>Root canal treatment</li>
+                            <li>Periodontal treatment</li>
+                            <li>Tooth extraction</li>
+                        </ul>
+                        <a href="javascript:void(0)" data-hidden-list="true" data-label-closed="See all services in this category" data-label-opened="Hide all services in this category" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
+                    </div>
                 @endif
 
                 @php($show_cd = false)
@@ -192,6 +203,18 @@
                             <label class="fs-18 calibri-light">Cosmetic Dentistry</label>
                         </div>
                     </div>
+                    <div class="show-category-list module">
+                        <ul>
+                            <li>Composite bonding</li>
+                            <li>Porcelain veneers (material & laboratory costs - not covered)</li>
+                            <li>Composite veneers (material & laboratory costs - not covered)</li>
+                            <li>Inlays & onlays (material & laboratory costs - not covered)</li>
+                            <li>Crowns (material & laboratory costs - not covered)</li>
+                            <li>Bridges (material & laboratory costs - not covered)</li>
+                            <li>Dentures (material & laboratory costs - not covered)</li>
+                        </ul>
+                        <a href="javascript:void(0)" data-hidden-list="true" data-label-closed="See all services in this category" data-label-opened="Hide all services in this category" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
+                    </div>
                 @endif
 
                 @php($show_id = false)
@@ -212,6 +235,18 @@
                             </svg>
                             <label class="fs-18 calibri-light">Implant Dentistry</label>
                         </div>
+                    </div>
+                    <div class="show-category-list module">
+                        <ul>
+                            <li>Implant placement (implants and abutments - not covered)</li>
+                            <li>Porcelain veneers (material & laboratory costs - not covered)</li>
+                            <li>Composite veneers (material & laboratory costs - not covered)</li>
+                            <li>Inlays & onlays (material & laboratory costs - not covered)</li>
+                            <li>Crowns (material & laboratory costs - not covered)</li>
+                            <li>Bridges (material & laboratory costs - not covered)</li>
+                            <li>Bone augmentation (bone replacement material - not covered)</li>
+                        </ul>
+                        <a href="javascript:void(0)" data-hidden-list="true" data-label-closed="See all services in this category" data-label-opened="Hide all services in this category" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
                     </div>
                 @endif
             </div>

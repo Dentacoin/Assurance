@@ -7774,6 +7774,9 @@ input[type='file'].hide-input {
 .popover-el {
   cursor: pointer; }
 
+.not-allowed-cursor {
+  cursor: not-allowed; }
+
 nav.sidenav {
   position: fixed;
   z-index: 105;
@@ -9424,6 +9427,19 @@ select.select-mac-fix {
     min-width: 800px; }
   .module.records-history .mobile-slide {
     display: block; } }
+.module.show-category-list ul {
+  display: none;
+  font-size: 16px;
+  font-family: 'Calibri Light';
+  padding: 5px 0 15px 25px; }
+  .module.show-category-list ul li {
+    list-style: disc inside none; }
+@media screen and (max-width: 767px) {
+  .module.show-category-list {
+    padding-top: 10px;
+    padding-bottom: 5px; }
+    .module.show-category-list ul {
+      padding: 5px 0 15px 0; } }
 
 header {
   width: 100%;
@@ -10326,19 +10342,6 @@ body.logged-in .profile-page-title {
       display: none; }
       .steps-body .wrapper .step.three .show-on-services-pick.renew-contract {
         display: block; }
-    .steps-body .wrapper .step.three .show-category-list ul {
-      display: none;
-      font-size: 16px;
-      font-family: 'Calibri Light';
-      padding: 5px 0 15px 25px; }
-      .steps-body .wrapper .step.three .show-category-list ul li {
-        list-style: disc inside none; }
-    @media screen and (max-width: 767px) {
-      .steps-body .wrapper .step.three .show-category-list {
-        padding-top: 10px;
-        padding-bottom: 5px; }
-        .steps-body .wrapper .step.three .show-category-list ul {
-          padding: 5px 0 15px 0; } }
     @media screen and (max-width: 767px) {
       .steps-body .wrapper .step.three .single-checkbox-container label {
         width: 100%;

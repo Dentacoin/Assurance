@@ -148,6 +148,17 @@
                                                     <label class="fs-18 calibri-light">General Dentistry</label>
                                                 </div>
                                             </div>
+                                            <div class="show-category-list module">
+                                                <ul>
+                                                    <li>Fillings</li>
+                                                    <li>Caries infiltration</li>
+                                                    <li>Dental sealants for children</li>
+                                                    <li>Root canal treatment</li>
+                                                    <li>Periodontal treatment</li>
+                                                    <li>Tooth extraction</li>
+                                                </ul>
+                                                <a href="javascript:void(0)" data-hidden-list="true" data-label-closed="See all services in this category" data-label-opened="Hide all services in this category" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
+                                            </div>
                                         @endif
                                         @if(in_array('param_cd', $general_dentistry))
                                             <div class="pretty margin-bottom-5 p-svg p-curve on-white-background">
@@ -160,6 +171,18 @@
                                                     <label class="fs-18 calibri-light">Cosmetic Dentistry</label>
                                                 </div>
                                             </div>
+                                                <div class="show-category-list module">
+                                                    <ul>
+                                                        <li>Composite bonding</li>
+                                                        <li>Porcelain veneers (material & laboratory costs - not covered)</li>
+                                                        <li>Composite veneers (material & laboratory costs - not covered)</li>
+                                                        <li>Inlays & onlays (material & laboratory costs - not covered)</li>
+                                                        <li>Crowns (material & laboratory costs - not covered)</li>
+                                                        <li>Bridges (material & laboratory costs - not covered)</li>
+                                                        <li>Dentures (material & laboratory costs - not covered)</li>
+                                                    </ul>
+                                                    <a href="javascript:void(0)" data-hidden-list="true" data-label-closed="See all services in this category" data-label-opened="Hide all services in this category" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
+                                                </div>
                                         @endif
                                         @if(in_array('param_id', $general_dentistry))
                                             <div class="pretty margin-bottom-5 p-svg p-curve on-white-background">
@@ -172,6 +195,18 @@
                                                     <label class="fs-18 calibri-light">Implant Dentistry</label>
                                                 </div>
                                             </div>
+                                                <div class="show-category-list module">
+                                                    <ul>
+                                                        <li>Implant placement (implants and abutments - not covered)</li>
+                                                        <li>Porcelain veneers (material & laboratory costs - not covered)</li>
+                                                        <li>Composite veneers (material & laboratory costs - not covered)</li>
+                                                        <li>Inlays & onlays (material & laboratory costs - not covered)</li>
+                                                        <li>Crowns (material & laboratory costs - not covered)</li>
+                                                        <li>Bridges (material & laboratory costs - not covered)</li>
+                                                        <li>Bone augmentation (bone replacement material - not covered)</li>
+                                                    </ul>
+                                                    <a href="javascript:void(0)" data-hidden-list="true" data-label-closed="See all services in this category" data-label-opened="Hide all services in this category" class="lato-bold blue-green-color fs-16 display-block margin-bottom-10">See all services in this category</a>
+                                                </div>
                                         @endif
                                     </div>
                                 </div>
@@ -182,7 +217,7 @@
                                 <div class="single-row fs-14 light-gray-color calibri-light padding-top-10 padding-bottom-40">You are not satisfied with the rate offered? <a href="javascript:void(0)" class="calibri-bold blue-green-color contact-your-dentist">Contact your dentist.</a> </div>
                                 <div class="single-row flex-row fs-0">
                                     <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Contract Validity:</label>
-                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">Valid until canceled</div>
+                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block not-allowed-cursor">Valid until canceled</div>
                                 </div>
                                 <div class="single-row flex-row fs-0">
                                     <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
@@ -194,7 +229,7 @@
                                 </div>
                                 <div class="single-row flex-row fs-0">
                                     <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful <a href="https://dentacare.dentacoin.com/" target="_blank" class="text-decoration-underline blue-green-color lato-semibold">Dentacare Journeys</a>:</label>
-                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">1 (90 days)</div>
+                                    <div class="right-extra-field calibri-regular fs-18 dark-color inline-block not-allowed-cursor">1 (90 days)</div>
                                 </div>
                                 <h3 class="calibri-bold fs-30 dark-color padding-top-70">CONTRACT DETAILS</h3>
                                 <div class="terms-and-conditions-long-list margin-top-30 margin-bottom-60 margin-bottom-xs-30">

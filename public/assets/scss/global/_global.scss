@@ -1737,6 +1737,10 @@ input[type='file'].hide-input {
     cursor: pointer;
 }
 
+.not-allowed-cursor {
+    cursor: not-allowed;
+}
+
 nav.sidenav {
     position: fixed;
     z-index: 105;
