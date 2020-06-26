@@ -9326,7 +9326,6 @@ select.select-mac-fix {
   .module.profile-menu li a span {
     vertical-align: middle; }
 .module.contract-response-message {
-  overflow: hidden;
   padding-bottom: 10px; }
   .module.contract-response-message .wrapper {
     position: relative;
@@ -9335,10 +9334,10 @@ select.select-mac-fix {
     -moz-border-radius: 0 0 6px 6px;
     -ms-border-radius: 0 0 6px 6px;
     border-radius: 0 0 6px 6px;
-    -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-    -moz-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-    -ms-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4); }
+    -webkit-box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
+    -ms-box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4); }
     .module.contract-response-message .wrapper .close-btn {
       color: #126585;
       opacity: 1;
@@ -9350,6 +9349,9 @@ select.select-mac-fix {
       cursor: pointer; }
     .module.contract-response-message .wrapper h1 i {
       color: #888888; }
+    @media screen and (min-width: 992px) {
+      .module.contract-response-message .wrapper .pull-back-to-top {
+        margin-top: -130px; } }
 .module.search-result {
   display: none;
   background-color: white;

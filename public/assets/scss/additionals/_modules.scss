@@ -1635,13 +1635,12 @@
         }
     }
     &.contract-response-message {
-        overflow: hidden;
         padding-bottom: 10px;
         .wrapper {
             position: relative;
             padding: 10px 15px 30px;
             @include rounded(0 0 6px 6px);
-            @include box-shadow(0 2px 6px 0 rgba(0,0,0,.4));
+            @include box-shadow(0 6px 6px 0 rgba(0,0,0,.4));
             .close-btn {
                 color: $blue_green_color;
                 opacity: 1;
@@ -1655,6 +1654,11 @@
             h1 {
                 i {
                     color: #888888;
+                }
+            }
+            @include breakpoint($md) {
+                .pull-back-to-top {
+                    margin-top: -130px; 
                 }
             }
         }
