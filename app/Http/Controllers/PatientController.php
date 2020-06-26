@@ -65,7 +65,7 @@ class PatientController extends Controller {
                 $contract = (new UserController())->automaticContractCancel($contract, false);
             }
 
-            $params = array('contract' => $contract, 'dcn_for_one_usd' => $this->getIndacoinPricesInUSD('DCN'), 'eth_for_one_usd' => $this->getIndacoinPricesInUSD('ETH'));
+            $params = array('contract' => $contract);
             $contract_records = ContractRecord::where(array('contract_id' => $contract->id))->get()->all();
             $contract_checkups = ContractCheckup::where(array('contract_id' => $contract->id))->get()->all();
 
