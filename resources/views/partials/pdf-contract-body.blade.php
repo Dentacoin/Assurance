@@ -71,27 +71,53 @@
         <div class="section-title">CONTRACT CONDITIONS</div>
         <div class="row">
             <label class="inline-block">Required Check-ups per Year:</label>
-            <div class="right-field inline-block">{{$contract->check_ups_per_year}}</div>
+            <div class="right-field inline-block-top">{{$contract->check_ups_per_year}}</div>
         </div>
         <div class="row">
             <label class="inline-block">Required Teeth Cleaning per Year:</label>
-            <div class="right-field inline-block">{{$contract->teeth_cleaning_per_year}}</div>
+            <div class="right-field inline-block-top">{{$contract->teeth_cleaning_per_year}}</div>
         </div>
         <div class="row">
-            <label class="inline-block">Required Successful <a href="https://dentacare.dentacoin.com/" target="_blank" class="text-decoration-underline blue-green-color lato-semibold">Dentacare Journeys</a>:</label>
-            <div class="right-field inline-block">1 (90 days)</div>
+            <label class="inline-block">Required Successful <a href="https://dentacare.dentacoin.com/" target="_blank" class="text-decoration-underline blue-green-color">Dentacare Journeys</a>:</label>
+            <div class="right-field inline-block-top">1 (90 days)</div>
         </div>
         <div class="row">
             <label class="inline-block">Services Covered:</label>
             <div class="right-field inline-block">
                 @if(in_array('param_gd', $services))
                     <div class="svg-row">General Dentistry</div>
+                    <ul class="services-list">
+                        <li>Fillings</li>
+                        <li>Caries infiltration</li>
+                        <li>Dental sealants for children</li>
+                        <li>Root canal treatment</li>
+                        <li>Periodontal treatment</li>
+                        <li>Tooth extraction</li>
+                    </ul>
                 @endif
                 @if(in_array('param_cd', $services))
                     <div class="svg-row">Cosmetic Dentistry</div>
+                    <ul class="services-list">
+                        <li>Composite bonding</li>
+                        <li>Porcelain veneers (material & laboratory costs - not covered)</li>
+                        <li>Composite veneers (material & laboratory costs - not covered)</li>
+                        <li>Inlays & onlays (material & laboratory costs - not covered)</li>
+                        <li>Crowns (material & laboratory costs - not covered)</li>
+                        <li>Bridges (material & laboratory costs - not covered)</li>
+                        <li>Dentures (material & laboratory costs - not covered)</li>
+                    </ul>
                 @endif
                 @if(in_array('param_id', $services))
                     <div class="svg-row">Implant Dentistry</div>
+                    <ul class="services-list">
+                        <li>Implant placement (implants and abutments - not covered)</li>
+                        <li>Porcelain veneers (material & laboratory costs - not covered)</li>
+                        <li>Composite veneers (material & laboratory costs - not covered)</li>
+                        <li>Inlays & onlays (material & laboratory costs - not covered)</li>
+                        <li>Crowns (material & laboratory costs - not covered)</li>
+                        <li>Bridges (material & laboratory costs - not covered)</li>
+                        <li>Bone augmentation (bone replacement material - not covered)</li>
+                    </ul>
                 @endif
             </div>
         </div>

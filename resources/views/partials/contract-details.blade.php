@@ -127,7 +127,7 @@
             <div class="right-extra-field calibri-regular fs-18 dark-color inline-block" id="teeth-cleaning-per-year">@if(!empty($contract)){{$contract->teeth_cleaning_per_year}}@endif</div>
         </div>
         <div class="single-row fs-0 margin-bottom-15">
-            <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful <a href="https://dentacare.dentacoin.com/" target="_blank" class="text-decoration-underline blue-green-color lato-semibold">Dentacare Journeys</a>:</label>
+            <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful <a href="https://dentacare.dentacoin.com/" target="_blank" class="text-decoration-underline blue-green-color">Dentacare Journeys</a>:</label>
             <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">1 (90 days)</div>
         </div>
         @if(!empty($contract) && !empty($calculator_proposals))

@@ -1723,7 +1723,11 @@ input[type='file'].hide-input {
 
 #search-result-parent {
     position: relative;
+    .search-input {
+        background-color: transparent;
+    } 
     &:after {
+        z-index: -1;
         content: '';
         right: 10px;
         border-style: solid;

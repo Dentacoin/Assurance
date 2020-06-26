@@ -40,6 +40,10 @@
             display: inline-block;
             vertical-align: middle;
         }
+        .inline-block-top {
+            display: inline-block;
+            vertical-align: top;
+        }
         label {
             width: 35%;
             font-size: 16px;
@@ -88,5 +92,12 @@
             content: "";
             clear: both;
             display: table;
+        }
+        .services-list {
+            font-size: 16px;
+            padding: 5px 0 15px 25px;
+        }
+        .services-list li {
+            list-style: disc inside none;
         }
     </style></head><body>
