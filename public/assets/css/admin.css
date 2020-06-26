@@ -1084,6 +1084,9 @@
           padding: 10px;
           border-bottom: 1px solid #888888;
           max-width: none !important; } }
+.module.single-contract-tile .patient-dentist-data.position-relative-and-z-index {
+  z-index: 50;
+  position: relative; }
 .module.single-contract-tile .attention-in-process a {
   color: #888888; }
 .module.single-contract-tile .contract-participant {
@@ -1290,6 +1293,9 @@
       background-color: #126585; }
 .module.single-contract-tile .camping-for-popups .popup-step-two {
   display: none; }
+.module.single-contract-tile .camping-for-popups.position-relative-and-z-index {
+  z-index: 40;
+  position: relative; }
 .module.single-contract-tile.mobile .patient-dentist-data {
   display: flex;
   display: -webkit-box;
@@ -1662,7 +1668,7 @@
     .module.contract-response-message .wrapper h1 i {
       color: #888888; }
     @media screen and (min-width: 992px) {
-      .module.contract-response-message .wrapper .pull-back-to-top {
+      .module.contract-response-message .wrapper.pull-back-to-top {
         margin-top: -130px; } }
 .module.search-result {
   display: none;
