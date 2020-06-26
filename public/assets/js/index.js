@@ -2170,7 +2170,7 @@ var projectData = {
                                             visibleRecord = true;
                                             basic.showDialog(response.html, 'pending-contract-record', null, true, {
                                                 onEscape : function() {
-                                                    visibleRecord = true;
+                                                    visibleRecord = false;
                                                 }
                                             });
 
