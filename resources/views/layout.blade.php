@@ -24,8 +24,8 @@
             @if (array_key_exists('slug', $params) && !empty($params['slug']))
                 @php($contractRecord = \App\TemporallyContract::where(array('slug' => $params['slug']))->get()->first())
                 @if (!empty($contractRecord))
-                    @if(!empty($contract->patient_id)) {
-                        <title>{{(new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id)->name}} | Dentacoin Assurance Contract</title>
+                    @if(!empty($contract->patient_id))
+                        <title>{{ (new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id)->name }} | Dentacoin Assurance Contract</title>
                     @else
                         <title>{{$contractRecord->patient_fname . ' ' . $contractRecord->patient_lname}} | Dentacoin Assurance Contract</title>
                     @endif
@@ -36,7 +36,7 @@
             @if (array_key_exists('slug', $params) && !empty($params['slug']))
                 @php($contractRecord = \App\TemporallyContract::where(array('slug' => $params['slug']))->get()->first())
                 @if (!empty($contractRecord))
-                    <title>{{(new \App\Http\Controllers\Controller())->prepareUserName((new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id)->name)}} | Dentacoin Assurance</title>
+                    <title>{{(new \App\Http\Controllers\Controller())->prepareUserName((new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id))}} | Dentacoin Assurance</title>
                 @endif
             @endif
         @endif
