@@ -18,6 +18,15 @@
             <meta property="og:image:width" content="1200"/>
             <meta property="og:image:height" content="630"/>
         @endif
+    @elseif (!empty(Route::current()))
+        @if (Route::current()->getName() == 'dentist-contract-view')
+            @php($params = Route::current()->parameters())
+                {{var_dump($params)}}
+                <title>[Patient Name] | Dentacoin Assurance Contract</title>
+            @endif
+        @elseif (Route::current()->getName() == 'patient-contract-view')
+            <title>Contract with [Title] [Dentist/ Clinic Name] | Dentacoin Assurance</title>
+        @endif
     @endif
     @if(!empty(Route::current()) && Route::current()->getName() == 'home')
         <link rel="canonical" href="{{route('home')}}" />
