@@ -949,7 +949,10 @@ class UserController extends Controller {
                 // select only not synced transactions that 1h passed for them
                 $contractTransactionHashes = contractTransactionHash::where(array('synced_with_assurance_db' => false))->where('created_at', '<', date('Y-m-d H:i:s', strtotime('-1 hour')))->get()->all();
                 if (!empty($contractTransactionHashes)) {
+                    return response()->json(['success' => true, 'data' => array(
+                        'contract' => 55,
 
+                    )]);
                 } else {
                     return response()->json(['error' => true, 'message' => 'Missing data.']);
                 }
