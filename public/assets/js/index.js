@@ -3,7 +3,12 @@ console.log('Don\'t touch the code. Or do ... ¯\\_(ツ)_/¯');
 checkIfCookie();
 
 var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore} = require('./helper');
-var {assurance_config} = require('./assurance_config');
+
+if ($('body').attr('data-network') == 'mainnet') {
+    var {assurance_config} = require('./assurance_config_mainnet');
+} else if ($('body').attr('data-network') == 'rinkeby') {
+    var {assurance_config} = require('./assurance_config_rinkeby');
+}
 
 $(document).ready(async function() {
     await dApp.init();
@@ -183,16 +188,6 @@ var dApp = {
                 }
             });
         },
-        approve: function()  {
-            return dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).send({
-                from: global_state.account,
-                gas: 65000
-            }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
-            }).catch(function(err) {
-                console.error(err);
-            });
-        },
         balanceOf: function(address)  {
             return dApp.dentacoin_token_instance.methods.balanceOf(address).call({}, function(error, result)   {
                 if (!error)  {
@@ -200,37 +195,6 @@ var dApp = {
                 }else {
                     console.error(error);
                 }
-            });
-        }
-    },
-    assurance_proxy_methods: {
-        registerContract: async function(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash)  {
-            if (!projectData.utils.innerAddressCheck(patient_addr) || !projectData.utils.innerAddressCheck(dentist_addr)) {
-                //check if patient and dentist addresses are valid
-                basic.showAlert('Patient and dentist addresses must be valid.');
-                return false;
-            } else if (parseInt(await dApp.dentacoin_token_methods.allowance(patient_addr, assurance_config.assurance_state_address)) <= 0) {
-                basic.showAlert('This patient didn\'t give allowance to Assurance contract to manage his DCN.');
-                return false;
-            } else if (parseInt(value_usd) <= 0 || parseInt(value_dcn) <= 0) {
-                //check if USD and DCN values are valid
-                basic.showAlert('Both USD and DCN values must be greater than 0.');
-                return false;
-            } else if (date_start_contract < 0) {
-                //check if valid timestamp
-                basic.showAlert('Please enter valid date.');
-                return false;
-            } else if (contract_ipfs_hash == '') {
-                //check if ipfs hash is passed
-                basic.showAlert('Please enter valid date.');
-                return false;
-            }
-            return dApp.assurance_proxy_instance.methods.registerContract(patient_addr, dentist_addr, value_usd, value_dcn, date_start_contract, contract_ipfs_hash).send({
-                from: global_state.account
-            }).on('transactionHash', function(hash){
-                basic.showAlert('Your transaction is now pending. Give it a minute and check for confirmation on <a href="https://rinkeby.etherscan.io/tx/'+hash+'" target="_blank" class="etherscan-hash">Etherscan</a>.', 'boobox-alert', true);
-            }).catch(function(err) {
-                console.error(err);
             });
         }
     },
@@ -1707,7 +1671,7 @@ var projectData = {
                                                                                     gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                                                     from: global_state.account,
                                                                                     nonce: dApp.web3_1_0.utils.toHex(nonce),
-                                                                                    chainId: dApp.chain_id,
+                                                                                    chainId: assurance_config.chain_id,
                                                                                     data: approval_function_abi,
                                                                                     to: assurance_config.dentacoin_token_address
                                                                                 };
@@ -1738,7 +1702,7 @@ var projectData = {
                                                                             gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                                             from: global_state.account,
                                                                             nonce: dApp.web3_1_0.utils.toHex(nonce),
-                                                                            chainId: dApp.chain_id,
+                                                                            chainId: assurance_config.chain_id,
                                                                             data: contract_creation_function_abi,
                                                                             to: assurance_config.assurance_proxy_address
                                                                         };
@@ -1985,7 +1949,7 @@ var projectData = {
                                                                         gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                                         from: global_state.account,
                                                                         nonce: dApp.web3_1_0.utils.toHex(nonce),
-                                                                        chainId: dApp.chain_id,
+                                                                        chainId: assurance_config.chain_id,
                                                                         data: contract_approval_function_abi,
                                                                         to: assurance_config.assurance_proxy_address
                                                                     };
@@ -2496,7 +2460,7 @@ async function bindDentistWithdrawEvent(withdrawableDCN, withdrawableUSD) {
                                             gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                             from: global_state.account,
                                             nonce: dApp.web3_1_0.utils.toHex(nonce),
-                                            chainId: dApp.chain_id,
+                                            chainId: assurance_config.chain_id,
                                             data: withdraw_function_abi,
                                             to: assurance_config.assurance_proxy_address
                                         };
@@ -4005,7 +3969,7 @@ function cancelContractEventInit() {
                                                                 gasPrice: dApp.web3_1_0.utils.toHex(on_page_load_gas_price),
                                                                 from: global_state.account,
                                                                 nonce: dApp.web3_1_0.utils.toHex(nonce),
-                                                                chainId: dApp.chain_id,
+                                                                chainId: assurance_config.chain_id,
                                                                 data: contract_cancellation_function_abi,
                                                                 to: assurance_config.assurance_proxy_address
                                                             };
@@ -5365,10 +5329,6 @@ $(document).on('click', '.attention-in-process', function () {
 });
 
 function loadDeferImages() {
-    jQuery('body').addClass('overflow-hidden');
-    var window_width = jQuery(window).width();
-    jQuery('body').removeClass('overflow-hidden');
-
     for(var i = 0, len = jQuery('img[data-defer-src]').length; i < len; i+=1) {
         if(basic.isInViewport(jQuery('img[data-defer-src]').eq(i)) && jQuery('img[data-defer-src]').eq(i).attr('src') == undefined) {
             jQuery('img[data-defer-src]').eq(i).attr('src', jQuery('img[data-defer-src]').eq(i).attr('data-defer-src'));
