@@ -21,10 +21,24 @@
     @elseif (!empty(Route::current()))
         @if (Route::current()->getName() == 'dentist-contract-view')
             @php($params = Route::current()->parameters())
-                {{var_dump($params)}}
-                <title>[Patient Name] | Dentacoin Assurance Contract</title>
+            @if (array_key_exists('slug', $params) && !empty($params['slug']))
+                @php($contractRecord = \App\TemporallyContract::where(array('slug' => $params['slug']))->get()->first())
+                @if (!empty($contractRecord))
+                    @if(!empty($contract->patient_id)) {
+                        <title>{{(new \App\Http\Controllers\APIRequestsController())->getUserData($contract->patient_id)->name}} | Dentacoin Assurance Contract</title>
+                    @else
+                        <title>{{$contractRecord->patient_fname . ' ' . $contractRecord->patient_lname}} | Dentacoin Assurance Contract</title>
+                    @endif
+                @endif
+            @endif
         @elseif (Route::current()->getName() == 'patient-contract-view')
-            <title>Contract with [Title] [Dentist/ Clinic Name] | Dentacoin Assurance</title>
+            @php($params = Route::current()->parameters())
+            @if (array_key_exists('slug', $params) && !empty($params['slug']))
+                @php($contractRecord = \App\TemporallyContract::where(array('slug' => $params['slug']))->get()->first())
+                @if (!empty($contractRecord))
+                    <title>{{(new \App\Http\Controllers\Controller())->prepareUserName((new \App\Http\Controllers\APIRequestsController())->getUserData($contract->dentist_id)->name)}} | Dentacoin Assurance</title>
+                @endif
+            @endif
         @endif
     @endif
     @if(!empty(Route::current()) && Route::current()->getName() == 'home')
