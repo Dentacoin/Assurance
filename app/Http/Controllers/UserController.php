@@ -349,11 +349,13 @@ class UserController extends Controller {
             $contract->is_processing = false;
             $contract->save();
 
-            // let cronjob check know that database is synced with this transaction status
-            $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'to_status' => 'cancelled'))->get()->first();
-            if (!empty($transactionHash)) {
-                $transactionHash->synced_with_assurance_db = true;
-                $transactionHash->save();
+            if(!empty($contract->patient_id)) {
+                // let cronjob check know that database is synced with this transaction status
+                $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'to_status' => 'cancelled'))->get()->first();
+                if (!empty($transactionHash)) {
+                    $transactionHash->synced_with_assurance_db = true;
+                    $transactionHash->save();
+                }
             }
 
             $dentist = (new APIRequestsController())->getUserData($contract->dentist_id);
@@ -1172,12 +1174,7 @@ class UserController extends Controller {
 
                 $this->changeToCancelledStatus($contract, $type, $initiator, $reason, $comments);
 
-
-
-                // let cronjob check know that database is synced with this transaction status
-                $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'to_status' => 'cancelled'))->get()->first();
-
-                return response()->json(['success' => true, 'transactionHash' => $transactionHash]);
+                return response()->json(['success' => true]);
             }
         } else {
             return response()->json(['error' => true]);
