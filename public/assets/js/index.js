@@ -2528,47 +2528,6 @@ async function bindDentistWithdrawEvent(withdrawableDCN) {
 
                                             onSuccessfulContractWithdraw(transactionHash);
                                         });
-
-                                        //sending the transaction
-                                        /*
-                                        var confirmedTransaction = false;
-                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + withdraw_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
-                                            console.log(transactionHash, 'transactionHash');
-
-                                            var saveTransactionResponse = await saveTransaction({
-                                                'transactionHash' : transactionHash,
-                                                'to_status' : 'active-withdraw',
-                                                'contract_slug' : $('.single-contract-view-section').attr('data-contract')
-                                            });
-                                            console.log(saveTransactionResponse, 'saveTransactionResponse');
-                                        }).on('confirmation', function(confirmationNumber, receipt) {
-                                            console.log(confirmationNumber, 'confirmationNumber');
-                                            if (!confirmedTransaction) {
-                                                confirmedTransaction = true;
-
-                                                //SEND EMAIL TO PATIENT
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: '/dentist/notify-patient-for-successful-withdraw',
-                                                    dataType: 'json',
-                                                    data: {
-                                                        transaction_hash: receipt.transactionHash,
-                                                        contract: $('.single-contract-view-section').attr('data-contract')
-                                                    },
-                                                    headers: {
-                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                    },
-                                                    success: async function (response) {
-                                                        history.pushState({},'', '?successful-withdraw=' + receipt.transactionHash);
-                                                        window.location.reload();
-                                                    }
-                                                });
-                                            }
-                                        }).on('error', function(error) {
-                                            console.log(error, 'error');
-                                            basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
-                                            hideLoader();
-                                        });*/
                                     }, 2000);
                                 }
                             }

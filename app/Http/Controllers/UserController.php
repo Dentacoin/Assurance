@@ -949,8 +949,20 @@ class UserController extends Controller {
                 // select only not synced transactions that 1h passed for them
                 $contractTransactionHashes = contractTransactionHash::where(array('synced_with_assurance_db' => false))->where('created_at', '<', date('Y-m-d H:i:s', strtotime('-1 hour')))->get()->all();
                 if (!empty($contractTransactionHashes)) {
+                    foreach ($contractTransactionHashes as $contractTransactionHash) {
+                        $contract = TemporallyContract::where(array('slug' => $contractTransactionHashes->contract_slug))->get()->first();
+
+                        if (!empty($contract)) {
+                            $contractTransactionHash->contract = array(
+                                'patient_address' => $contract->patient_address,
+                                'dentist_address' => $contract->dentist_address
+                            );
+                        }
+                    }
+
                     return response()->json(['success' => true, 'data' => array(
-                        'contract' => 55,
+                        'contract' => $contractTransactionHashes->contract_slug,
+                        'transactionHash' => $contractTransactionHashes->transactionHash
 
                     )]);
                 } else {
@@ -1071,6 +1083,12 @@ class UserController extends Controller {
                 $transaction->transactionHash = trim($request->input('transactionHash'));
                 $transaction->contract_slug = $slug;
                 $transaction->to_status = trim($request->input('to_status'));
+
+                $contractData = $request->input('contractData');
+                if (!empty($contractData)) {
+                    $transaction->data = $contractData;
+                }
+
                 $transaction->save();
 
                 return response()->json(['success' => true]);
@@ -1154,7 +1172,12 @@ class UserController extends Controller {
 
                 $this->changeToCancelledStatus($contract, $type, $initiator, $reason, $comments);
 
-                return response()->json(['success' => true]);
+
+
+                // let cronjob check know that database is synced with this transaction status
+                $transactionHash = contractTransactionHash::where(array('contract_slug' => $contract->slug, 'to_status' => 'cancelled'))->get()->first();
+
+                return response()->json(['success' => true, 'transactionHash' => $transactionHash]);
             }
         } else {
             return response()->json(['error' => true]);

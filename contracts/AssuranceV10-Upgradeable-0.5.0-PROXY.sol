@@ -98,7 +98,9 @@ contract ProxyAssurance is SafeMath {
 
     event logSuccessfulContractBreak(address indexed _dentist_addr, address indexed _patient_addr, uint256 _date);
 
-    event logSuccessfulContractApproval(address indexed _patient_addr, address indexed _dentist_addr);
+    event logSuccessfulDentistApproval(address indexed _patient_addr, address indexed _dentist_addr);
+
+    event logSuccessfulPatientApproval(address indexed _patient_addr, address indexed _dentist_addr);
     // ==================================== /EVENTS ====================================
 
     //can be called by patient and by dentist
@@ -129,13 +131,13 @@ contract ProxyAssurance is SafeMath {
     //called by dentist
     function dentistApproveContract(address _patient_addr) public validPatientDentistAddresses(_patient_addr, msg.sender) checkIfPaused {
         assurance.dentistApproveContract(_patient_addr, msg.sender);
-        emit logSuccessfulContractApproval(_patient_addr, msg.sender);
+        emit logSuccessfulDentistApproval(_patient_addr, msg.sender);
     }
 
     //called by patient
     function patientApproveContract(address _dentist_addr) public validPatientDentistAddresses(msg.sender, _dentist_addr) checkIfPaused {
         assurance.patientApproveContract(msg.sender, _dentist_addr);
-        emit logSuccessfulContractApproval(msg.sender, _dentist_addr);
+        emit logSuccessfulPatientApproval(msg.sender, _dentist_addr);
     }
 
     function singleWithdraw(address _patient_addr) public checkIfPaused {
