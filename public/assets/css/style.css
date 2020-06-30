@@ -10905,33 +10905,6 @@ section.contract-proposal .wrapper .step-fields .singatures-row {
   .pending-and-cancelled-contacts-section .hide-this {
     visibility: hidden; }
 
-.single-contract-view-section .contract-title {
-  display: flex;
-  align-items: center; }
-  .single-contract-view-section .contract-title a {
-    width: 100px;
-    color: #959daa; }
-    .single-contract-view-section .contract-title a.go-back-btn {
-      order: 0; }
-    .single-contract-view-section .contract-title a.view-all-btn {
-      order: 2; }
-  .single-contract-view-section .contract-title h1 {
-    width: calc(100% - 200px);
-    order: 1; }
-  @media screen and (max-width: 991px) {
-    .single-contract-view-section .contract-title {
-      display: block; }
-      .single-contract-view-section .contract-title h1 {
-        width: 100%;
-        padding-top: 25px; }
-      .single-contract-view-section .contract-title a {
-        width: 50%; }
-        .single-contract-view-section .contract-title a.go-back-btn {
-          text-align: right;
-          padding-right: 20px; }
-        .single-contract-view-section .contract-title a.view-all-btn {
-          text-align: left !important;
-          padding-left: 20px; } }
 .single-contract-view-section.cancelled .contract-participant {
   background-color: #ebebeb; }
 .single-contract-view-section.awaiting-approval .checkbox-container .pretty {

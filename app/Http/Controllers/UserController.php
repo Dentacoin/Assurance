@@ -945,6 +945,15 @@ class UserController extends Controller {
                     return response()->json(['error' => true, 'message' => 'False hash.']);
                 }
                 break;
+            case 'not-synced-transactions':
+                // select only not synced transactions that 1h passed for them
+                $contractTransactionHashes = contractTransactionHash::where(array('synced_with_assurance_db' => false))->where('created_at', '<', date('Y-m-d H:i:s', strtotime('-1 hour')))->get()->all();
+                if (!empty($contractTransactionHashes)) {
+
+                } else {
+                    return response()->json(['error' => true, 'message' => 'Missing data.']);
+                }
+                break;
             default:
                 return abort(404);
         }

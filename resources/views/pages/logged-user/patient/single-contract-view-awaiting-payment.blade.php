@@ -10,7 +10,7 @@
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 patient-contract-single-page-section margin-bottom-20" data-monthly-premium="{{$contract->monthly_premium}}" data-patient="{{$contract->patient_address}}" data-dentist="{{$contract->dentist_address}}" data-date-start-contract="{{$contract_active_at}}" data-contract-ipfs="{{$contract->document_hash}}" data-contract="{{$contract->slug}}" @if($contract->is_processing) data-processing-contract="true" @else data-processing-contract="false" @endif>
         <div class="container">
             <div class="row">
-                <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
+                @include('partials.contract-single-page-title')
             </div>
             <div class="row">
                 @include('partials.contract-single-page-nav', ['type' => 'desktop'])

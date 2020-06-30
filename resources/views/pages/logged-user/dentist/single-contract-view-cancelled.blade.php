@@ -25,7 +25,7 @@
     <section class="padding-top-100 padding-top-xs-30 padding-top-sm-50 single-contract-view-section cancelled" data-created-at="{{strtotime($active_timestamp)}}" data-dentist="{{$contract->dentist_address}}">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12"><h1 class="lato-bold text-center fs-45 fs-xs-30">Dentacoin Assurance Contract</h1></div>
+                @include('partials.contract-single-page-title')
             </div>
             <div class="row">
                 @include('partials.contract-single-page-nav', ['type' => 'desktop'])

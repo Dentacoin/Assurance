@@ -1763,6 +1763,33 @@
     padding-bottom: 5px; }
     .module.show-category-list ul {
       padding: 5px 0 15px 0; } }
+.module.contract-title {
+  display: flex;
+  align-items: center; }
+  .module.contract-title a {
+    width: 100px;
+    color: #959daa; }
+    .module.contract-title a.go-back-btn {
+      order: 0; }
+    .module.contract-title a.view-all-btn {
+      order: 2; }
+  .module.contract-title h1 {
+    width: calc(100% - 200px);
+    order: 1; }
+  @media screen and (max-width: 991px) {
+    .module.contract-title {
+      display: block; }
+      .module.contract-title h1 {
+        width: 100%;
+        padding-top: 25px; }
+      .module.contract-title a {
+        width: 50%; }
+        .module.contract-title a.go-back-btn {
+          text-align: right;
+          padding-right: 20px; }
+        .module.contract-title a.view-all-btn {
+          text-align: left !important;
+          padding-left: 20px; } }
 
 body {
   background-color: #222d32; }

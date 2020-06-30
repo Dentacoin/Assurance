@@ -1,40 +1,4 @@
 .single-contract-view-section {
-    .contract-title {
-        display: flex;
-        align-items: center;
-        a {
-            width: 100px;
-            color: #959daa;
-            &.go-back-btn {
-                order: 0;
-            }
-            &.view-all-btn {
-                order: 2;
-            }
-        }
-        h1 {
-            width: calc(100% - 200px);
-            order: 1;
-        }
-        @include breakpoint($sm-down) {
-            display: block;
-            h1 {
-                width: 100%;
-                padding-top: 25px;
-            }
-            a {
-                width: 50%;
-                &.go-back-btn {
-                    text-align: right;
-                    padding-right: 20px;
-                }
-                &.view-all-btn {
-                    text-align: left !important;
-                    padding-left: 20px;
-                }
-            }
-        }
-    }
     &.cancelled {
         .contract-participant {
             background-color: #ebebeb;
