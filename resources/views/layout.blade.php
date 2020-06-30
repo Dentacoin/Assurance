@@ -109,7 +109,7 @@
                     <li class="lato-semibold @if(!empty(Route::current())) @if(Route::current()->getName() == "patient-access") active @endif @endif"><a href="{{route('patient-access')}}" itemprop="url"><span itemprop="name">Patients</span></a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)" itemprop="url" class="white-blue-green-btn open-dentacoin-gateway @if(!empty(Route::current())) @if(Route::current()->getName() == "home") dentist-login @elseif(Route::current()->getName() == "patient-access") patient-register @else dentist-register @endif @endif"><span itemprop="name">SIGN UP</span></a>
+                        <a href="javascript:void(0)" itemprop="url" class="white-blue-green-btn open-dentacoin-gateway @if(!empty(Route::current())) @if(Route::current()->getName() == "home") dentist-register @elseif(Route::current()->getName() == "patient-access") patient-register @else dentist-register @endif @endif"><span itemprop="name">SIGN UP</span></a>
                     </li>
                 </ul>
             </div>
@@ -211,7 +211,7 @@
                                     <li class="inline-block">|</li>
                                     <li class="inline-block @if(!empty(Route::current())) @if(Route::current()->getName() == "patient-access") active @endif @endif"><a href="{{route('patient-access')}}" itemprop="url"><span itemprop="name">Patients</span></a></li>
                                     <li class="inline-block">
-                                        <a href="javascript:void(0)" itemprop="url" class="blue-green-white-btn open-dentacoin-gateway @if(!empty(Route::current())) @if(Route::current()->getName() == "home") dentist-login @elseif(Route::current()->getName() == "patient-access") patient-register @else dentist-register @endif @endif"><span itemprop="name">SIGN UP</span></a>
+                                        <a href="javascript:void(0)" itemprop="url" class="blue-green-white-btn open-dentacoin-gateway @if(!empty(Route::current())) @if(Route::current()->getName() == "home") dentist-register @elseif(Route::current()->getName() == "patient-access") patient-register @else dentist-register @endif @endif"><span itemprop="name">SIGN UP</span></a>
                                     </li>
                                 </ul>
                             </nav>
