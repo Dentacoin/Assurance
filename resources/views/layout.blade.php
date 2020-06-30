@@ -23,7 +23,6 @@
             @php($params = Route::current()->parameters())
                 {{var_dump($params)}}
                 <title>[Patient Name] | Dentacoin Assurance Contract</title>
-            @endif
         @elseif (Route::current()->getName() == 'patient-contract-view')
             <title>Contract with [Title] [Dentist/ Clinic Name] | Dentacoin Assurance</title>
         @endif
