@@ -141,6 +141,11 @@ class UserController extends Controller {
                 $params['withdrawableDCN'] = $withdrawableDCN;
             }
 
+            $withdrawableUSD = $request->input('withdrawableUSD');
+            if(!empty($withdrawableUSD)) {
+                $params['withdrawableUSD'] = $withdrawableUSD;
+            }
+
             $requestType = $request->input('type');
             if(!empty($requestType)) {
                 if($requestType == 'qr-scan') {
@@ -1177,49 +1182,6 @@ class UserController extends Controller {
             ];
 
             session(['logged_user' => $session_arr]);
-
-            return response()->json(['success' => true]);
-        } else {
-            return response()->json(['error' => true]);
-        }
-    }
-
-    protected function saveTransaction(Request $request) {
-        $this->validate($request, [
-            'transactionHash' => 'required',
-            'contract_slug' => 'required',
-            'to_status' => 'required|in:awaiting-approval,active,active-withdraw,cancelled',
-        ], [
-            'transactionHash.required' => 'Transaction hash is required.',
-            'contract_slug.required' => 'Contract is required.',
-            'to_status.required' => 'Status is required.',
-            'to_status.in' => 'Invalid status value.',
-        ]);
-
-        $whereArr = array('slug' => $request->input('contract_slug'));
-        if ($this->checkDentistSession()) {
-            $whereArr['dentist_id'] = session('logged_user')['id'];
-        } else if ($this->checkPatientSession()) {
-            $whereArr['patient_id'] = session('logged_user')['id'];
-        }
-
-        $contract = TemporallyContract::where($whereArr)->get()->first();
-        if (!empty($contract)) {
-            $to_status = trim($request->input('to_status'));
-
-            $transaction = new contractTransactionHash();
-            $transaction->transactionHash = trim($request->input('transactionHash'));
-            $transaction->contract_slug = trim($request->input('contract_slug'));
-            $transaction->to_status = trim($request->input('to_status'));
-
-            if ($to_status == 'cancelled' && !empty($request->input('type')) && !empty($request->input('reason')) && !empty($request->input('comments'))) {
-                $transaction->data = serialize(array('type' => $request->input('type'), 'reason' => $request->input('reason'), 'comments' => $request->input('comments')));
-            }
-
-            $transaction->save();
-
-            $contract->is_processing = true;
-            $contract->save();
 
             return response()->json(['success' => true]);
         } else {

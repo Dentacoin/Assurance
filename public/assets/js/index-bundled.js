@@ -73350,7 +73350,7 @@ $(window).on('resize', function() {
 });
 
 $(window).on('scroll', function()  {
-
+    loadDeferImages();
 });
 
 //on button click next time when you hover the button the color is bugged until you click some other element (until you move out the focus from this button)
@@ -73479,8 +73479,6 @@ var dApp = {
                 }
             }*/
         }
-
-        console.log(global_state, 'Before dApp.initContract()');
 
         return dApp.initContract();
     },
@@ -73734,11 +73732,8 @@ var projectData = {
             if (input.files && input.files[0]) {
                 var filename = input.files[0].name;
 
-                console.log(input.files, 'input.files');
-
                 // check file size
                 if (megaBytesLimit < projectData.utils.bytesToMegabytes(input.files[0].size)) {
-                    console.log('failedMaxSizeCallback1');
                     if (failedMaxSizeCallback != undefined) {
                         failedMaxSizeCallback();
                     }
@@ -73749,7 +73744,6 @@ var projectData = {
                         if ($('.avatar.module .error-handle').length) {
                             $('.avatar.module .error-handle').remove();
                         }
-                        console.log('callback');
 
                         if (callback != undefined) {
                             var reader = new FileReader();
@@ -73759,7 +73753,6 @@ var projectData = {
                             reader.readAsDataURL(input.files[0]);
                         }
                     } else {
-                        console.log('failedExtensionsCallback1');
                         if (failedExtensionsCallback != undefined) {
                             failedExtensionsCallback();
                         }
@@ -73995,7 +73988,6 @@ var projectData = {
             }
         },
         onDocumentReady: async function() {
-            console.log('onDocumentReady');
             if ($('body').hasClass('logged-in')) {
                 if ($('body').hasClass('home') || $('body').hasClass('patient-access')) {
                     // applied for both dentist and patient sides homepages to make contacts in list (slider) with same hight
@@ -74007,7 +73999,6 @@ var projectData = {
                             var now_timestamp = Math.round((new Date()).getTime() / 1000);
                             var foundContracts = [];
                             setInterval(function() {
-                                console.log(foundContracts, 'foundContracts');
                                 $.ajax({
                                     type: 'POST',
                                     url: '/patient/check-for-incoming-pending-contracts',
@@ -74045,7 +74036,6 @@ var projectData = {
                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                         },
                                         success: function (response) {
-                                            console.log(response, 'response');
                                             if (response.success) {
                                                 contractFound = true;
                                                 window.location.reload();
@@ -74125,7 +74115,6 @@ var projectData = {
                         }*/
 
                         if ($('.init-address-suggester').length) {
-                            console.log('load address-combined-login');
                             await $.getScript('https://dentacoin.com/assets/js/address-combined-login.js?v='+new Date().getTime(), function() {});
                         }
 
@@ -74366,8 +74355,6 @@ var projectData = {
                         var timer_label = '';
                         if (time_passed_since_signed > period_to_withdraw && current_patient_dcn_balance < dcn_needed_to_be_payed_to_dentist && dApp.grace_period > time_passed_since_signed % period_to_withdraw) {
                             next_payment_timestamp = (nextWithdrawTimestamp + dApp.grace_period) * 1000;
-                            console.log(now_timestamp, 'now_timestamp');
-                            console.log(next_payment_timestamp, 'next_payment_timestamp');
                             next_payment_timestamp_date_obj = new Date(next_payment_timestamp);
                             next_payment_timestamp_unix = (nextWithdrawTimestamp + dApp.grace_period - now_timestamp);
 
@@ -74744,11 +74731,8 @@ var projectData = {
                         }
                     } else if ($('.contract-header').hasClass('awaiting-payment')) {
                         var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account));
-                        console.log(current_user_dcn_balance, 'current_user_dcn_balance');
                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
-                        console.log(current_user_eth_balance, 'current_user_eth_balance');
                         var monthly_premium_in_dcn = Math.round(projectData.utils.convertUsdToDcn(parseInt($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
-                        console.log(monthly_premium_in_dcn, 'monthly_premium_in_dcn');
                         var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
                         const on_page_load_gwei = ethgasstation_json.safeLow;
                         //adding 10% just in case the transaction dont fail
@@ -74756,7 +74740,6 @@ var projectData = {
 
                         var approval_given = false;
                         var min_allowed_amount = parseInt(await dApp.assurance_state_methods.getMinAllowedAmount());
-                        console.log(min_allowed_amount, 'min_allowed_amount');
                         //if approval is given already SOMEHOW ...
                         if (parseInt(await dApp.dentacoin_token_methods.allowance(projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-patient')), assurance_config.assurance_state_address)) >= min_allowed_amount) {
                             approval_given = true;
@@ -74765,14 +74748,10 @@ var projectData = {
                         if (!approval_given) {
                             //gas estimation for DentacoinToken approval method
                             var gas_cost_for_approval = await dApp.dentacoin_token_instance.methods.approve(assurance_config.assurance_state_address, assurance_config.dentacoins_to_approve).estimateGas({gas: 100000});
-                            console.log(gas_cost_for_approval, 'gas_cost_for_approval');
                         }
-
-                        console.log(assurance_config.dummy_address, projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-dentist')), Math.round($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs'));
 
                         //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                         var gas_cost_for_contract_creation = await dApp.assurance_proxy_instance.methods.registerContract(assurance_config.dummy_address, projectData.utils.checksumAddress($('.patient-contract-single-page-section').attr('data-dentist')), Math.round($('.patient-contract-single-page-section').attr('data-monthly-premium')), monthly_premium_in_dcn, parseInt($('.patient-contract-single-page-section').attr('data-date-start-contract')) + period_to_withdraw, $('.patient-contract-single-page-section').attr('data-contract-ipfs')).estimateGas({from: assurance_config.dummy_address, gas: 1000000});
-                        console.log(gas_cost_for_contract_creation, 'gas_cost_for_contract_creation)');
 
                         var methods_gas_cost;
                         if (!approval_given) {
@@ -75390,7 +75369,6 @@ var projectData = {
                         // check for pending patient records - check-up or teeth cleaning
                         var visibleRecord = false;
                         function confirmRecord(record, successCallback) {
-                            console.log('confirmRecord');
                             var clickWarningObj = {};
                             clickWarningObj.callback = function (result) {
                                 if (result) {
@@ -75427,7 +75405,6 @@ var projectData = {
                         }
 
                         function declineRecord(record, successCallback) {
-                            console.log('declineRecord');
                             var clickWarningObj = {};
                             clickWarningObj.callback = function (result) {
                                 if (result) {
@@ -75477,7 +75454,6 @@ var projectData = {
                                     },
                                     success: function (response) {
                                         if (response.success) {
-                                            console.log(response.data, 'response.data');
                                             if (response.data) {
                                                 Object.keys(response.data).forEach(function(key) {
                                                     if (!$('.records-history.module tr[data-id="'+key+'"]').length) {
@@ -75597,6 +75573,14 @@ var projectData = {
                                 var months_dentist_didnt_withdraw = Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1;
                                 var withdrawableDCN = months_dentist_didnt_withdraw * monthly_premium_in_dcn;
 
+                                if (usdOverDcn) {
+                                    var withdrawableUSD = months_dentist_didnt_withdraw * on_load_exiting_contract[4];
+                                    var withdrawableDCN = Math.round(projectData.utils.convertUsdToDcn(withdrawableUSD));
+                                } else {
+                                    var withdrawableDCN = months_dentist_didnt_withdraw * monthly_premium_in_dcn;
+                                    var withdrawableUSD = Math.round(projectData.utils.convertDcnToUsd(withdrawableDCN));
+                                }
+
                                 // ready to withdraw
                                 $('.camping-for-popups').append('<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center fs-20 contract-response-message module"><div class="wrapper text-center pull-back-to-top"><figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-20"><img alt="Check inside shield" src="/assets/uploads/shield-check.svg" class="max-width-70"></figure><h2 class="lato-bold fs-22 padding-top-15 blue-green-color">TIME TO WITHDRAW</h2><div class="fs-20 padding-top-15">Your money is waiting for you.</div><div class="padding-bottom-20 fs-20">Withdraw the Dentacoin tokens collected by <span class="calibri-bold">'+$('.camping-for-popups').attr('data-patient-name')+'</span>.</div><div class="text-center"><a href="javascript:void(0)" class="dentist-withdraw white-blue-green-btn inline-block max-width-280 max-width-xs-400 margin-bottom-10 width-100"><svg class="inline-block-top margin-right-5" version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 75.7 74.3" style="enable-background:new 0 0 75.7 74.3;max-width: 25px;" xml:space="preserve"><style type="text/css">.st0{fill:#FFFFFF;}</style><metadata><sfw  xmlns="&ns_sfw;"><slices></slices><sliceSourceBounds bottomLeftOrigin="true" height="74.3" width="75.7" x="12.2" y="37.8"></sliceSourceBounds></sfw></metadata><path class="st0" d="M29.7,32.2h-7.5l0,0c-0.1,0-0.2,0-0.3,0h-0.1c-0.1,0-0.1,0-0.2,0.1c-0.1,0-0.1,0-0.2,0.1c-0.1,0-0.1,0.1-0.2,0.1c-0.1,0-0.1,0.1-0.2,0.1l-0.1,0.1c-0.1,0-0.1,0.1-0.2,0.2l0,0L20.6,33c0,0.1-0.1,0.1-0.1,0.2s-0.1,0.1-0.1,0.2c0,0.1-0.1,0.1-0.1,0.2s0,0.1-0.1,0.2c0,0.1,0,0.1,0,0.2s0,0.1,0,0.2v0.1l0,0c0,0.1,0,0.2,0,0.2c0,0.1,0,0.1,0,0.2c0,0.1,0,0.1,0.1,0.2c0,0.1,0,0.1,0.1,0.2c0,0.1,0.1,0.1,0.1,0.2s0.1,0.1,0.1,0.2l0.1,0.1c0,0.1,0.1,0.1,0.1,0.2l0,0l15.4,14.5c0.4,0.4,0.9,0.5,1.4,0.5s1-0.2,1.4-0.5l15.4-14.5c0.8-0.8,0.8-2,0.1-2.8c-0.4-0.5-1-0.7-1.6-0.6h-0.1h-7.5v-2.9c0-1.1-0.9-2-2-2s-2,0.9-2,2v4.9c0,1.1,0.9,2,2,2H48l-10.4,9.8l-10.4-9.8h4.4c1.1,0,2-0.9,2-2v-4.9c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2L29.7,32.2L29.7,32.2z"/><path class="st0" d="M29.7,23.3c0,1.1,0.9,2,2,2c1.1,0,2-0.9,2-2v-3.2c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2V23.3z"/><path class="st0" d="M41.3,23.3c0,1.1,0.9,2,2,2s2-0.9,2-2v-3.2c0-1.1-0.9-2-2-2s-2,0.9-2,2V23.3z"/><path class="st0" d="M29.7,12.8c0,1.1,0.9,2,2,2c1.1,0,2-0.9,2-2v-1.4c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2V12.8z"/><path class="st0" d="M41.3,12.8c0,1.1,0.9,2,2,2s2-0.9,2-2v-1.4c0-1.1-0.9-2-2-2s-2,0.9-2,2V12.8z"/><path class="st0" d="M31.7,4.1c1.1,0,2-0.9,2-2V2c0-1.1-0.9-2-2-2c-1.1,0-2,0.9-2,2v0.1C29.7,3.2,30.6,4.1,31.7,4.1z"/><path class="st0" d="M43.3,4.1c1.1,0,2-0.9,2-2V2c0-1.1-0.9-2-2-2s-2,0.9-2,2v0.1C41.3,3.2,42.2,4.1,43.3,4.1z"/><path class="st0" d="M75.7,51.4V37.2c0-9.4-9.2-17.7-23.4-21.2c-1.1-0.3-2.2,0.4-2.4,1.5c-0.3,1.1,0.4,2.2,1.5,2.4c12.4,3,20.4,9.8,20.4,17.3c0,10.2-15.5,18.9-33.9,18.9S4,47.5,4,37.2c0-7.3,7.8-14.1,19.9-17.2c1.1-0.3,1.7-1.4,1.4-2.4c-0.3-1.1-1.4-1.7-2.4-1.4C9,19.8,0,28,0,37.2v14.2c0,12.8,16.6,22.9,37.9,22.9S75.7,64.2,75.7,51.4z M71.7,47.6v3.9c0,2.9-1.2,5.7-3.5,8.1V51C69.5,49.9,70.7,48.8,71.7,47.6z M11.2,53.6c1.4,0.8,2.9,1.6,4.6,2.3v9.7c-1.7-0.8-3.2-1.7-4.6-2.7V53.6zM19.8,57.4c1.8,0.6,3.6,1,5.5,1.4v10.1c-1.9-0.4-3.8-1-5.5-1.6V57.4z M29.3,59.5c2.1,0.3,4.3,0.5,6.5,0.5v10.2c-2.2-0.1-4.4-0.3-6.5-0.6V59.5z M39.8,60c2.2-0.1,4.3-0.2,6.3-0.5v10.2c-2,0.3-4.2,0.5-6.3,0.6V60z M50.1,58.8c1.9-0.4,3.8-0.9,5.5-1.4v9.9c-1.7,0.6-3.6,1.1-5.5,1.6C50.1,68.9,50.1,58.8,50.1,58.8z M59.7,56c1.6-0.7,3.2-1.4,4.6-2.3v9.4c-1.4,1-2.9,1.8-4.6,2.6V56z M3.9,51.4v-3.9c1,1.2,2.1,2.3,3.3,3.3v8.6C5.1,57,3.9,54.3,3.9,51.4z"/></svg> WITHDRAW NOW</a></div></div></div>');
 
@@ -75606,7 +75590,7 @@ var projectData = {
                                 $('.camping-for-popups .wrapper').addClass('box-shadow-animation');
                                 $('html, body').animate({scrollTop: $('.row.camping-for-popups .wrapper ').offset().top}, 500);
 
-                                bindDentistWithdrawEvent(withdrawableDCN);
+                                bindDentistWithdrawEvent(withdrawableDCN, withdrawableUSD);
                             }
                         }
                     }
@@ -75679,7 +75663,7 @@ var projectData = {
     }
 };
 
-async function bindDentistWithdrawEvent(withdrawableDCN) {
+async function bindDentistWithdrawEvent(withdrawableDCN, withdrawableUSD) {
     var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
     const on_page_load_gwei = ethgasstation_json.safeLow;
     //adding 10% just in case the transaction dont fail
@@ -75728,6 +75712,10 @@ async function bindDentistWithdrawEvent(withdrawableDCN) {
 
             if (withdrawableDCN != undefined) {
                 transactionRecipePopupData.withdrawableDCN = withdrawableDCN;
+            }
+
+            if (withdrawableUSD != undefined) {
+                transactionRecipePopupData.withdrawableUSD = withdrawableUSD;
             }
 
             $.ajax({
@@ -75848,47 +75836,6 @@ async function bindDentistWithdrawEvent(withdrawableDCN) {
 
                                             onSuccessfulContractWithdraw(transactionHash);
                                         });
-
-                                        //sending the transaction
-                                        /*
-                                        var confirmedTransaction = false;
-                                        dApp.web3_1_0.eth.sendSignedTransaction('0x' + withdraw_transaction.serialize().toString('hex')).on('transactionHash', async function(transactionHash) {
-                                            console.log(transactionHash, 'transactionHash');
-
-                                            var saveTransactionResponse = await saveTransaction({
-                                                'transactionHash' : transactionHash,
-                                                'to_status' : 'active-withdraw',
-                                                'contract_slug' : $('.single-contract-view-section').attr('data-contract')
-                                            });
-                                            console.log(saveTransactionResponse, 'saveTransactionResponse');
-                                        }).on('confirmation', function(confirmationNumber, receipt) {
-                                            console.log(confirmationNumber, 'confirmationNumber');
-                                            if (!confirmedTransaction) {
-                                                confirmedTransaction = true;
-
-                                                //SEND EMAIL TO PATIENT
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: '/dentist/notify-patient-for-successful-withdraw',
-                                                    dataType: 'json',
-                                                    data: {
-                                                        transaction_hash: receipt.transactionHash,
-                                                        contract: $('.single-contract-view-section').attr('data-contract')
-                                                    },
-                                                    headers: {
-                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                    },
-                                                    success: async function (response) {
-                                                        history.pushState({},'', '?successful-withdraw=' + receipt.transactionHash);
-                                                        window.location.reload();
-                                                    }
-                                                });
-                                            }
-                                        }).on('error', function(error) {
-                                            console.log(error, 'error');
-                                            basic.showAlert('Something went wrong, please try again later.', 'boobox-alert', true);
-                                            hideLoader();
-                                        });*/
                                     }, 2000);
                                 }
                             }
@@ -76826,13 +76773,11 @@ if (!$('body').hasClass('logged-in')) {
     });
 
     $(document).on('dentistAuthSuccessResponse', async function (event) {
-        console.log('dentistAuthSuccessResponse');
         history.pushState({},'', '?cross-login=true');
         window.location.reload();
     });
 
     $(document).on('patientAuthSuccessResponse', async function (event) {
-        console.log('patientAuthSuccessResponse');
         history.pushState({},'', '?cross-login=true');
         window.location.reload();
     });
@@ -77423,9 +77368,16 @@ function cancelContractEventInit() {
 
                                 var period_to_withdraw = parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw());
                                 var months_dentist_didnt_withdraw = Math.floor((now_timestamp - contract_next_payment) / period_to_withdraw) + 1;
-                                var withdrawableDCN = months_dentist_didnt_withdraw * monthly_premium_in_dcn;
 
-                                bindDentistWithdrawEvent(withdrawableDCN);
+                                if (usdOverDcn) {
+                                    var withdrawableUSD = months_dentist_didnt_withdraw * exiting_contract[4];
+                                    var withdrawableDCN = Math.round(projectData.utils.convertUsdToDcn(withdrawableUSD));
+                                } else {
+                                    var withdrawableDCN = months_dentist_didnt_withdraw * monthly_premium_in_dcn;
+                                    var withdrawableUSD = Math.round(projectData.utils.convertDcnToUsd(withdrawableDCN));
+                                }
+
+                                bindDentistWithdrawEvent(withdrawableDCN, withdrawableUSD);
                             } else {
                                 proceedCancelling();
                             }
@@ -77936,8 +77888,6 @@ function bindCacheKeyEvent(keystore_file) {
                 currentUserAddresses.push(projectData.utils.checksumAddress(currentUserAddressesResponse.data[i].dcn_address));
             }
 
-            console.log(currentUserAddresses, 'currentUserAddresses2');
-
             var keystoreFileAddress = projectData.utils.checksumAddress('0x' + JSON.parse(keystore_file).address);
             if (currentUserAddresses.indexOf(keystoreFileAddress) != -1) {
                 if ($('.proof-of-address #your-secret-key-password').val().trim() == '' || $('.proof-of-address #your-secret-key-password').val().trim().length > 100 || $('.proof-of-address #your-secret-key-password').val().trim().length < 6) {
@@ -78260,19 +78210,7 @@ async function checkEmailAndReturnData(email, type) {
     });
 }
 
-async function saveTransaction(data) {
-    return await $.ajax({
-        type: 'POST',
-        url: '/save-transaction',
-        dataType: 'json',
-        data: data,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-}
-
-function showWarningTestingVersion() {
+/*function showWarningTestingVersion() {
     if (basic.cookies.get('warning-test-version') != '1' && !$('.my-contracts-iframe').length) {
         basic.showDialog('<div class="container-fluid"><div class="row fs-0"><div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 inline-block"><img src="/assets/images/warning-pop-up.png" class="hide-xs"></div><div class="col-xs-12 col-md-5 col-sm-6 text-center inline-block padding-top-20 padding-bottom-20"><div class="warning"><img class="max-width-50" src="/assets/images/attention.svg" alt="attention icon"></div><div class="lato-bold fs-30" style="color: #ff8d8d;">WARNING:</div><div class="black-warning lato-bold fs-30 dark-color">THIS IS A TEST WEBSITE VERSION.</div><div class="additional-text padding-top-20 padding-bottom-20 fs-20">Please do not make any transactions as your funds will be lost.We will notify you via email when the official version is launched.</div><div class="btn-container"><a href="javascript:void(0)" class="white-blue-green-btn min-width-220 understood">I UNDERSTAND</a></div></div></div></div>', 'warning-test-version', true);
         $('.warning-test-version .understood').click(function() {
@@ -78286,7 +78224,7 @@ function showWarningTestingVersion() {
 
     }
 }
-showWarningTestingVersion();
+showWarningTestingVersion();*/
 
 function initPopupEvents(scroll_to_buy_section) {
     projectData.initiators.initTooltips();
@@ -78638,7 +78576,6 @@ function multipleUseWalletAddressesLogic() {
 }
 
 function submitTransactionToApi(data, successCallback) {
-    console.log(data, 'submitTransactionToApi');
     $.ajax({
         type: 'POST',
         url: '/submit-assurance-transaction',
@@ -78746,5 +78683,18 @@ function showContractAttentionInProcess() {
 $(document).on('click', '.attention-in-process', function () {
     showContractAttentionInProcess();
 });
+
+function loadDeferImages() {
+    jQuery('body').addClass('overflow-hidden');
+    var window_width = jQuery(window).width();
+    jQuery('body').removeClass('overflow-hidden');
+
+    for(var i = 0, len = jQuery('img[data-defer-src]').length; i < len; i+=1) {
+        if(basic.isInViewport(jQuery('img[data-defer-src]').eq(i)) && jQuery('img[data-defer-src]').eq(i).attr('src') == undefined) {
+            jQuery('img[data-defer-src]').eq(i).attr('src', jQuery('img[data-defer-src]').eq(i).attr('data-defer-src'));
+        }
+    }
+}
+loadDeferImages();
 }).call(this,require("buffer").Buffer)
 },{"./assurance_config":545,"./helper":546,"buffer":52,"ethereumjs-tx":363}]},{},[547]);

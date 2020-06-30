@@ -81,11 +81,11 @@
                                 <label class="calibri-light inline-block light-gray-color fs-16 padding-right-15 margin-bottom-0">Monthly Premium:</label>
                                 <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">{{$contract->monthly_premium}} USD</div>
                             </div>
-                            <div class="blurred-contract-terms-container">
+                            <div class="blurred-contract-terms-container text-center">
                                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-top-40 padding-bottom-40">
-                                    <img alt="Blurred contract terms" itemprop="contentUrl" src="/assets/uploads/blurred-contract-terms.png"/>
+                                    <img alt="Blurred contract terms" itemprop="contentUrl" data-defer-src="/assets/uploads/blurred-contract-terms.png"/>
                                 </figure>
-                                <button class="open-dentacoin-gateway patient-login track-event-sign-up-to-see-details white-blue-green-btn" data-route="{{}}" data-slug="">SIGN UP TO SEE DETAILS</button>
+                                <button class="open-dentacoin-gateway patient-register track-event-sign-up-to-see-details white-blue-green-btn" data-route="{{}}" data-slug="">SIGN UP TO SEE DETAILS</button>
                             </div>
                         </div>
                     </div>

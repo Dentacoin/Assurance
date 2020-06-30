@@ -5,10 +5,10 @@
         <div class="usd_val">$<span></span></div>
         <div class="dcn_val">= <span></span> DCN</div>
     </div>
-@elseif (!empty($withdrawableDCN))
+@elseif (!empty($withdrawableDCN) && !empty($withdrawableUSD))
     @php($dentacoin_data = (new \App\Http\Controllers\APIRequestsController())->getDentacoinDataByExternalProvider())
     <div class="section-blue-green-background text-center">
-        <div class="usd_val">$<span>{{number_format($dentacoin_data['USD'] * $withdrawableDCN, 2, '.', '')}}</span></div>
+        <div class="usd_val">$<span>{{$withdrawableUSD}}</span></div>
         <div class="dcn_val">= <span>{{$withdrawableDCN}}</span> DCN</div>
     </div>
 @endif

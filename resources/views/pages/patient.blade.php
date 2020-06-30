@@ -24,7 +24,7 @@
                     <picture itemscope="" itemtype="http://schema.org/ImageObject">
                         <source media="(max-width: 450px)" srcset="/assets/uploads/mobile-male-dentist.jpg" />
                         <source media="(max-width: 768px)" srcset="/assets/uploads/dentist-small.jpg" />
-                        <img alt="Two dentists" itemprop="contentUrl" src="/assets/uploads/dentist-big.jpg"/>
+                        <img alt="I'm dentist background" itemprop="contentUrl" data-defer-src="/assets/uploads/dentist-big.jpg"/>
                     </picture>
                     <span class="hidden-container">
                         <a href="/" class="white-transparent-btn">I'm a Dentist</a>
@@ -35,7 +35,7 @@
                     <picture itemscope="" itemtype="http://schema.org/ImageObject">
                         <source media="(max-width: 450px)" srcset="/assets/uploads/mobile-female-dentist.jpg" />
                         <source media="(max-width: 768px)" srcset="/assets/uploads/patient-small.jpg" />
-                        <img alt="Two dentists" itemprop="contentUrl" src="/assets/uploads/patient-big.jpg"/>
+                        <img alt="I'm patient background" itemprop="contentUrl" data-defer-src="/assets/uploads/patient-big.jpg"/>
                     </picture>
                     <span class="hidden-container">
                         <a href="/patient" class="white-transparent-btn">I'm a Patient</a>
@@ -55,7 +55,7 @@
             </div>
             <div class="row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="col-xs-12 col-sm-3 col-sm-offset-1 col-md-offset-0 col-lg-1 col-lg-offset-2 inline-block text-center">
-                    <img alt="Sign up" class="max-width-100" itemprop="contentUrl" src="/assets/uploads/sign-up.svg"/>
+                    <img alt="Sign up" class="max-width-100" itemprop="contentUrl" data-defer-src="/assets/uploads/sign-up.svg"/>
                 </figure>
                 <div class="inline-block col-xs-12 col-sm-6 col-md-4 text-center-xs">
                     <div class="fs-26 fs-xs-20 lato-bold padding-bottom-10 padding-top-10">Sign Up</div>
@@ -67,7 +67,7 @@
             </div>
             <div class="row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="col-xs-12 col-sm-3 col-sm-offset-1 col-md-offset-0 col-lg-1 col-lg-offset-2 inline-block text-center">
-                    <img alt="Pay monthly" class="max-width-100" itemprop="contentUrl" src="/assets/uploads/pay-monthly.svg"/>
+                    <img alt="Pay monthly" class="max-width-100" itemprop="contentUrl" data-defer-src="/assets/uploads/pay-monthly.svg"/>
                 </figure>
                 <div class="inline-block col-xs-12 col-sm-6 col-md-4 text-center-xs">
                     <div class="fs-26 fs-xs-20 lato-bold padding-bottom-10 padding-top-10">Pay monthly</div>
@@ -79,7 +79,7 @@
             </div>
             <div class="row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="col-xs-12 col-sm-3 col-sm-offset-1 col-md-offset-0 col-lg-1 col-lg-offset-2 inline-block text-center">
-                    <img alt="Get covered" class="max-width-100" itemprop="contentUrl" src="/assets/uploads/get-covered.svg"/>
+                    <img alt="Get covered" class="max-width-100" itemprop="contentUrl" data-defer-src="/assets/uploads/get-covered.svg"/>
                 </figure>
                 <div class="inline-block col-xs-12 col-sm-6 col-md-4 text-center-xs">
                     <div class="fs-26 fs-xs-20 lato-bold padding-bottom-10 padding-top-10">Get covered</div>
@@ -91,7 +91,7 @@
             </div>
             <div class="row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="col-xs-12 col-sm-3 col-sm-offset-1 col-md-offset-0 col-lg-1 col-lg-offset-2 inline-block text-center">
-                    <img alt="Take control" class="max-width-100" itemprop="contentUrl" src="/assets/uploads/take-control.svg"/>
+                    <img alt="Take control" class="max-width-100" itemprop="contentUrl" data-defer-src="/assets/uploads/take-control.svg"/>
                 </figure>
                 <div class="inline-block col-xs-12 col-sm-6 col-md-4 text-center-xs">
                     <div class="fs-26 fs-xs-20 lato-bold padding-bottom-10 padding-top-10">Take control</div>
@@ -114,7 +114,7 @@
         <div class="custom-container">
             <div class="custom-row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
-                    <img alt="Children" itemprop="contentUrl" src="/assets/uploads/no-private-insurance.jpg"/>
+                    <img alt="No private insurance" itemprop="contentUrl" data-defer-src="/assets/uploads/no-private-insurance.jpg"/>
                 </figure>
                 <div class="line-and-bullet inline-block"><div class="line"><div class="bullet"></div></div></div>
                 <div class="inline-block content">
@@ -126,7 +126,7 @@
             </div>
             <div class="custom-row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block order-2">
-                    <img alt="Children" itemprop="contentUrl" src="/assets/uploads/children.jpg"/>
+                    <img alt="Kids Care" itemprop="contentUrl" data-defer-src="/assets/uploads/children.jpg"/>
                 </figure>
                 <div class="inline-block content order-1">
                     <div class="wrapper">
@@ -138,7 +138,7 @@
             </div>
             <div class="custom-row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
-                    <img alt="Children" itemprop="contentUrl" src="/assets/uploads/post-treatment.jpg"/>
+                    <img alt="Post-treatment" itemprop="contentUrl" data-defer-src="/assets/uploads/post-treatment.jpg"/>
                 </figure>
                 <div class="line-and-bullet inline-block"><div class="line"><div class="bullet"></div></div></div>
                 <div class="inline-block content">
@@ -173,7 +173,7 @@
         <picture class="two-dentists" itemscope="" itemtype="http://schema.org/ImageObject">
             <source media="(max-width: 768px)" srcset="/assets/uploads/dentist-800-not-loged-in-patients-page.png" />
             <source media="(max-width: 1400px)" srcset="/assets/uploads/dentist-1366-not-loged-in-patients-page.png" />
-            <img alt="Dentist" itemprop="contentUrl" src="/assets/uploads/dentist-1920-not-loged-in-patients-page.png"/>
+            <img alt="Dentist" itemprop="contentUrl" data-defer-src="/assets/uploads/dentist-1920-not-loged-in-patients-page.png"/>
         </picture>
         <div class="container absolute-container">
             <div class="row">

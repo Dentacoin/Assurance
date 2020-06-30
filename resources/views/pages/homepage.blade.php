@@ -2,7 +2,7 @@
 @section("content")
     <section class="module intro-section">
         <picture itemscope="" itemtype="http://schema.org/ImageObject">
-            <img alt="Two dentists" itemprop="contentUrl" src="/assets/uploads/assurance-home-img.jpg"/>
+            <img alt="Two dentists" itemprop="contentUrl" data-defer-src="/assets/uploads/assurance-home-img.jpg"/>
         </picture>
         <div class="absolute-container container">
             <div class="row">
@@ -23,7 +23,7 @@
                     <picture itemscope="" itemtype="http://schema.org/ImageObject">
                         <source media="(max-width: 450px)" srcset="/assets/uploads/mobile-male-dentist.jpg" />
                         <source media="(max-width: 768px)" srcset="/assets/uploads/dentist-small.jpg" />
-                        <img alt="Two dentists" itemprop="contentUrl" src="/assets/uploads/dentist-big.jpg"/>
+                        <img alt="I'm dentist background" itemprop="contentUrl" data-defer-src="/assets/uploads/dentist-big.jpg"/>
                     </picture>
                     <span class="hidden-container">
                         <a href="/" class="white-transparent-btn">I'm a Dentist</a>
@@ -34,7 +34,7 @@
                     <picture itemscope="" itemtype="http://schema.org/ImageObject">
                         <source media="(max-width: 450px)" srcset="/assets/uploads/mobile-female-dentist.jpg" />
                         <source media="(max-width: 768px)" srcset="/assets/uploads/patient-small.jpg" />
-                        <img alt="Two dentists" itemprop="contentUrl" src="/assets/uploads/patient-big.jpg"/>
+                        <img alt="I'm patient background" itemprop="contentUrl" data-defer-src="/assets/uploads/patient-big.jpg"/>
                     </picture>
                     <span class="hidden-container">
                         <a href="/patient" class="white-transparent-btn">I'm a Patient</a>
@@ -54,7 +54,7 @@
             </div>
             <div class="row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="col-xs-12 col-sm-3 col-sm-offset-1 col-md-offset-0 col-lg-1 col-lg-offset-2 inline-block text-center">
-                    <img alt="" class="max-width-100" itemprop="contentUrl" src="/assets/uploads/sign-up.svg"/>
+                    <img alt="Sign up icon" class="max-width-100" itemprop="contentUrl" data-defer-src="/assets/uploads/sign-up.svg"/>
                 </figure>
                 <div class="inline-block col-xs-12 col-sm-6 col-md-4 text-center-xs">
                     <div class="fs-26 lato-bold padding-bottom-10">Sign Up</div>
@@ -66,7 +66,7 @@
             </div>
             <div class="row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="col-xs-12 col-sm-3 col-sm-offset-1 col-md-offset-0 col-lg-1 col-lg-offset-2 inline-block text-center">
-                    <img alt="" class="max-width-100" itemprop="contentUrl" src="/assets/uploads/get-paid.svg"/>
+                    <img alt="Get paid icon" class="max-width-100" itemprop="contentUrl" data-defer-src="/assets/uploads/get-paid.svg"/>
                 </figure>
                 <div class="inline-block col-xs-12 col-sm-6 col-md-4 text-center-xs">
                     <div class="fs-26 lato-bold padding-bottom-10">Get Paid</div>
@@ -78,7 +78,7 @@
             </div>
             <div class="row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="col-xs-12 col-sm-3 col-sm-offset-1 col-md-offset-0 col-lg-1 col-lg-offset-2 inline-block text-center">
-                    <img alt="" class="max-width-100" itemprop="contentUrl" src="/assets/uploads/prevent.svg"/>
+                    <img alt="Prevent icon" class="max-width-100" itemprop="contentUrl" data-defer-src="/assets/uploads/prevent.svg"/>
                 </figure>
                 <div class="inline-block col-xs-12 col-sm-6 col-md-4 text-center-xs">
                     <div class="fs-26 lato-bold padding-bottom-10">Prevent</div>
@@ -90,7 +90,7 @@
             </div>
             <div class="row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="col-xs-12 col-sm-3 col-sm-offset-1 col-md-offset-0 col-lg-1 col-lg-offset-2 inline-block text-center">
-                    <img alt="" class="max-width-100" itemprop="contentUrl" src="/assets/uploads/automate.svg"/>
+                    <img alt="Automate icon" class="max-width-100" itemprop="contentUrl" data-defer-src="/assets/uploads/automate.svg"/>
                 </figure>
                 <div class="inline-block col-xs-12 col-sm-6 col-md-4 text-center-xs">
                     <div class="fs-26 lato-bold padding-bottom-10">Automate</div>
@@ -102,7 +102,7 @@
             </div>
             <div class="row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="col-xs-12 col-sm-3 col-sm-offset-1 col-md-offset-0 col-lg-1 col-lg-offset-2 inline-block text-center">
-                    <img alt="" class="max-width-100" itemprop="contentUrl" src="/assets/uploads/maximize.svg"/>
+                    <img alt="Maximize icon" class="max-width-100" itemprop="contentUrl" data-defer-src="/assets/uploads/maximize.svg"/>
                 </figure>
                 <div class="inline-block col-xs-12 col-sm-6 col-md-4 text-center-xs">
                     <div class="fs-26 lato-bold padding-bottom-10">Maximize</div>
@@ -130,7 +130,7 @@
         <div class="custom-container">
             <div class="custom-row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">
-                    <img alt="Children" itemprop="contentUrl" src="/assets/uploads/children.jpg"/>
+                    <img alt="Children" itemprop="contentUrl" data-defer-src="/assets/uploads/children.jpg"/>
                 </figure>
                 <div class="line-and-bullet inline-block"><div class="line"><div class="bullet"></div></div></div>
                 <div class="inline-block content">
@@ -142,7 +142,7 @@
             </div>
             <div class="custom-row fs-0 flex no-flex-xs">
                 <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block order-2">
-                    <img alt="Children" itemprop="contentUrl" src="/assets/uploads/post-treatment.jpg"/>
+                    <img alt="Post-treatment" itemprop="contentUrl" data-defer-src="/assets/uploads/post-treatment.jpg"/>
                 </figure>
                 <div class="inline-block content order-1">
                     <div class="wrapper">
@@ -160,7 +160,7 @@
                 <div class="row fs-0">
                     <picture class="inline-block col-sm-4 col-lg-offset-1 hide-xs" itemscope="" itemtype="http://schema.org/ImageObject">
                         <source media="(max-width: 768px)" srcset="/assets/uploads/dentist-testimonial-section-small.png" />
-                        <img alt="Two dentists" itemprop="contentUrl" src="/assets/uploads/dentist-testimonial-section-big.png"/>
+                        <img alt="Two dentists" itemprop="contentUrl" data-defer-src="/assets/uploads/dentist-testimonial-section-big.png"/>
                     </picture>
                     <div class="col-xs-12 col-sm-8 col-lg-6 inline-block">
                         <div class="testimonials-slider">
@@ -170,9 +170,9 @@
                                     <div class="img-title-job fs-0">
                                         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block-top">
                                             @if(empty($testimonial->media_name))
-                                                <img src="/assets/images/avatar-icon.svg" alt="" itemprop="contentUrl"/>
+                                                <img data-defer-src="/assets/images/avatar-icon.svg" alt="Avatar icon" itemprop="contentUrl"/>
                                             @else
-                                                <img src="{{$testimonial->media_name}}" alt="{{$testimonial->media_alt}}" itemprop="contentUrl"/>
+                                                <img data-defer-src="{{$testimonial->media_name}}" alt="{{$testimonial->media_alt}}" itemprop="contentUrl"/>
                                             @endif
                                         </figure>
                                         <div class="title-job inline-block-top">
