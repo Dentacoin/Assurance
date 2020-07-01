@@ -71,16 +71,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="padding-top-20 text-center">
+                    <div class="btn-container padding-top-30">
+                        <a href="javascript:void(0)" class="white-blue-green-btn min-width-220 buy-crypto-btn">BUY</a>
+                    </div>
+                    <div class="padding-top-30 text-center">
                         Powered by
                         <figure itemscope="" itemtype="http://schema.org/ImageObject" class="padding-bottom-10">
                             <img alt="Indacoin logo" itemprop="contentUrl" src="/assets/images/indacoin-logo.svg" class="width-100 max-width-150"/>
                         </figure>
                         <div>All transactions are solely handled by Indacoin Limited.</div>
                         <a href="https://indacoin.com/" target="_blank" class="text-decoration-underline blue-green-color">www.indacoin.com</a>
-                    </div>
-                    <div class="btn-container padding-top-30">
-                        <a href="javascript:void(0)" class="white-blue-green-btn min-width-220 buy-crypto-btn">BUY</a>
                     </div>
                 </div>
             </div>

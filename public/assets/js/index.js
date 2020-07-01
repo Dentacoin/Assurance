@@ -1608,8 +1608,8 @@ var projectData = {
                                                             }
                                                         });
 
-                                                        $('.recipe-popup .usd_val span').html($('.patient-contract-single-page-section').attr('data-monthly-premium'));
-                                                        $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
+                                                        // $('.recipe-popup .usd_val span').html($('.patient-contract-single-page-section').attr('data-monthly-premium'));
+                                                        // $('.recipe-popup .dcn_val span').html(monthly_premium_in_dcn);
 
                                                         $('.recipe-popup .ether-fee .field').html(eth_fee);
 
@@ -5227,7 +5227,7 @@ function submitTransactionToApi(data, successCallback) {
     data.network = $('body').attr('data-network');
     $.ajax({
         type: 'POST',
-        url: '/submit-assurance-transaction',
+        url: 'http://assurance.dentacoin.com/submit-assurance-transaction',
         dataType: 'json',
         data: data,
         success: function(response) {

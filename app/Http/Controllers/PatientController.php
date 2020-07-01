@@ -651,7 +651,7 @@ class PatientController extends Controller {
 
                     $email_view = view('emails/patient-recording-check-up', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d', strtotime($request->input('date')))]);
                     $email_body = $email_view->render();
-                    $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
+                    $email_subject = 'ACTION REQUIRED: Confirm '.$patient->name.'\'s visit';
                     $type = 'check-ups';
                 } else if ($request->input('type') == 'teeth-cleaning') {
                     $currentRecordsCount = $this->getCheckUpOrTeethCleaning('teeth-cleaning', $contract->slug, $periodBegin, $periodEnd, array('sent', 'approved'));
@@ -660,7 +660,7 @@ class PatientController extends Controller {
 
                     $email_view = view('emails/patient-recording-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d', strtotime($request->input('date')))]);
                     $email_body = $email_view->render();
-                    $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
+                    $email_subject = 'ACTION REQUIRED: Confirm '.$patient->name.'\'s visit';
                     $type = 'teeth cleaning';
                 }
 
@@ -720,7 +720,7 @@ class PatientController extends Controller {
                         // CHECK UP AND TEETH CLEANING
                         $email_view = view('emails/patient-recording-check-up-and-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'check_up_date' => date('Y-m-d', strtotime($check_up_date)), 'teeth_cleaning_date' => date('Y-m-d H:i:s', strtotime($teeth_cleaning_date))]);
                         $email_body = $email_view->render();
-                        $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
+                        $email_subject = 'ACTION REQUIRED: Confirm '.$patient->name.'\'s visit';
 
                         Mail::send(array(), array(), function($message) use ($email_body, $email_subject, $dentistEmail) {
                             $message->to($dentistEmail)->subject($email_subject);
@@ -740,7 +740,7 @@ class PatientController extends Controller {
                         // CHECK UP
                         $email_view = view('emails/patient-recording-check-up', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d H:i:s', strtotime($request->input('date')))]);
                         $email_body = $email_view->render();
-                        $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
+                        $email_subject = 'ACTION REQUIRED: Confirm '.$patient->name.'\'s visit';
 
                         Mail::send(array(), array(), function($message) use ($email_body, $email_subject, $dentistEmail) {
                             $message->to($dentistEmail)->subject($email_subject);
@@ -759,7 +759,7 @@ class PatientController extends Controller {
                         // TEETH CLEANING
                         $email_view = view('emails/patient-recording-teeth-cleaning', ['dentist' => $dentist, 'patient' => $patient, 'contract_slug' => $contract->slug, 'visit_date' => date('Y-m-d H:i:s', strtotime($request->input('date')))]);
                         $email_body = $email_view->render();
-                        $email_subject = '[Action required] Confirm '.$patient->name.'\'s visit';
+                        $email_subject = 'ACTION REQUIRED: Confirm '.$patient->name.'\'s visit';
 
                         Mail::send(array(), array(), function($message) use ($email_body, $email_subject, $dentistEmail) {
                             $message->to($dentistEmail)->subject($email_subject);

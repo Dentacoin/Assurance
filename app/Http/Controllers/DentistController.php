@@ -403,6 +403,8 @@ class DentistController extends Controller
                 if($currentCheckups < $contract->check_ups_per_year && $currentTeethCleanings < $contract->teeth_cleaning_per_year) {
                     if($contract->check_ups_per_year - $currentCheckups > 1) {
                         $checkUpsLabel = 'check-ups';
+                    }
+                    if($contract->teeth_cleaning_per_year - $currentTeethCleanings > 1) {
                         $teethCleaningsLabel = 'teeth cleanings';
                     }
                     $approvedRecordRecordsLeft = '<br><br><br>You have ' . ($contract->check_ups_per_year - $currentCheckups) . ' more '.$checkUpsLabel.' and ' . ($contract->teeth_cleaning_per_year - $currentTeethCleanings) . ' more '.$teethCleaningsLabel.' recommended this year.';
@@ -419,12 +421,12 @@ class DentistController extends Controller
                 }
 
                 if($request->input('action') == 'confirm') {
-                    $subject = $this->prepareUserName($dentist) . ' confirmed your record';
+                    $subject = $this->prepareUserName($dentist) . ' confirmed your visit';
 
                     $email_view = view('emails/dentist-approving-contract-record', ['dentist' => $dentist, 'patient_name' => $patient->name, 'type' => $recordEmailType, 'approvedRecordRecordsLeft' => $approvedRecordRecordsLeft]);
                     $emailBody = $email_view->render();
                 } else if($request->input('action') == 'decline') {
-                    $subject = $this->prepareUserName($dentist) . ' ' . $dentist->name . ' declined your record';
+                    $subject = $this->prepareUserName($dentist) . ' declined your visit';
 
                     $email_view = view('emails/dentist-declining-contract-record', ['dentist' => $dentist, 'patient_name' => $patient->name, 'type' => $recordEmailType, 'recordGetTypeParam' => $recordGetTypeParam, 'slug' => $contract->slug]);
                     $emailBody = $email_view->render();

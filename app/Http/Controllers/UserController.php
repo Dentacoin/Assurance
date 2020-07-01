@@ -335,7 +335,7 @@ class UserController extends Controller {
             $initiator_body = $initiator_email_view->render();
 
             Mail::send(array(), array(), function($message) use ($initiator_body, $initiator, $patient_name) {
-                $message->to($initiator->email)->subject('Successfully Cancelled Contract With ' . $patient_name);
+                $message->to($initiator->email)->subject('Successfully Cancelled Contract with ' . $patient_name);
                 $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
                 $message->setBody($initiator_body, 'text/html');
             });
@@ -368,16 +368,16 @@ class UserController extends Controller {
             $body = $email_view->render();
 
             Mail::send(array(), array(), function($message) use ($body, $dentist, $initiator) {
-                $message->to($dentist->email)->subject($initiator->name . ' Has Cancelled Their Contract');
+                $message->to($dentist->email)->subject($initiator->name . ' has cancelled their contract');
                 $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
                 $message->setBody($body, 'text/html');
             });
 
-            $initiator_email_view = view('emails/notifier-for-successfully-contract-cancel', ['initiator' => $this->prepareUserName($initiator), 'opposite_side' => $dentist->name, 'url' => route('patient-contract-view', ['slug' => $contract->slug]), 'reason' => $reason]);
+            $initiator_email_view = view('emails/notifier-for-successfully-contract-cancel', ['initiator' => $this->prepareUserName($initiator), 'opposite_side' => $this->prepareUserName($dentist), 'url' => route('patient-contract-view', ['slug' => $contract->slug]), 'reason' => $reason]);
             $initiator_body = $initiator_email_view->render();
 
             Mail::send(array(), array(), function($message) use ($initiator_body, $initiator, $dentist) {
-                $message->to($initiator->email)->subject('Successfully Cancelled Contract With ' . $dentist->name);
+                $message->to($initiator->email)->subject('Successfully Cancelled Contract with ' . $this->prepareUserName($dentist));
                 $message->from(EMAIL_SENDER, 'Dentacoin Assurance Team')->replyTo(EMAIL_SENDER, 'Dentacoin Assurance Team');
                 $message->setBody($initiator_body, 'text/html');
             });
@@ -1101,11 +1101,26 @@ class UserController extends Controller {
             if($request->input('to_status') == 'cancelled') {
                 $comments = trim($request->input('comments'));
                 if (isset($comments)) {
-                    $hashArray = array('slug' => $request->input('slug'), 'transactionHash' => $request->input('transactionHash'), 'to_status' => $request->input('to_status'), 'type' => $request->input('type'), 'reason' => trim($request->input('reason')), 'comments' => $comments);
+                    $hashArray = array(
+                        'slug' => $request->input('slug'),
+                        'transactionHash' => $request->input('transactionHash'),
+                        'to_status' => $request->input('to_status'),
+                        'type' => $request->input('type'),
+                        'reason' => trim($request->input('reason')),
+                        'comments' => $comments
+                    );
                 } else {
-                    $hashArray = array('slug' => $request->input('slug'), 'transactionHash' => $request->input('transactionHash'), 'to_status' => $request->input('to_status'), 'type' => $request->input('type'), 'reason' => $request->input('reason'));
+                    $hashArray = array(
+                        'slug' => $request->input('slug'),
+                        'transactionHash' => $request->input('transactionHash'),
+                        'to_status' => $request->input('to_status'),
+                        'type' => $request->input('type'),
+                        'reason' => $request->input('reason')
+                    );
                 }
                 $hash = hash('sha256', getenv('SECRET_PASSWORD').json_encode($hashArray));
+
+                return response()->json(['error' => true, '$hashArray' => $hashArray]);
             } else {
                 $hash = hash('sha256', getenv('SECRET_PASSWORD').json_encode(array('slug' => $request->input('slug'), 'transactionHash' => $request->input('transactionHash'), 'to_status' => $request->input('to_status'))));
             }

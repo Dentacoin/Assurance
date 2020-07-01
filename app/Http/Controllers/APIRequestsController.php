@@ -318,7 +318,7 @@ class APIRequestsController extends Controller {
         $curl = curl_init();
 
         if ($type == 'dentist-approval') {
-            $json = '{"hash":"'.$hash.'", "type":"'.$type.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "gas_price":"'.$gasPrice.'"}';
+            $json = '{"hash":"'.$hash.'", "type":"'.$type.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "gas_price":"'.$gasPrice.'", "network":"'.getenv('NETWORK').'"}';
         } else if ($type == 'patient-approval-and-contract-creation') {
             $json = '{"hash":"'.$hash.'", "type":"'.$type.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "value_usd":"'.$value_usd.'", "monthly_premium_in_dcn":"'.$monthly_premium_in_dcn.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$contract_ipfs_hash.'", "gas_price":"'.$gasPrice.'", "network":"'.getenv('NETWORK').'"}';
         }
