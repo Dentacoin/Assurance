@@ -5224,6 +5224,7 @@ function multipleUseWalletAddressesLogic() {
 }
 
 function submitTransactionToApi(data, successCallback) {
+    data.network = $('body').attr('data-network');
     $.ajax({
         type: 'POST',
         url: '/submit-assurance-transaction',

@@ -251,7 +251,7 @@ class UserController extends Controller {
             if(isset(session('logged_user')['type'])) {
                 if(session('logged_user')['type'] == 'dentist') {
                     $route = 'home';
-                }else if(session('logged_user')['type'] == 'patient') {
+                } else if(session('logged_user')['type'] == 'patient') {
                     $route = 'patient-access';
                 }
                 $request->session()->forget('logged_user');

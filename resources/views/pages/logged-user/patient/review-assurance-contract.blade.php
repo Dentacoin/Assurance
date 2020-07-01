@@ -145,7 +145,7 @@
                                                     <svg class="svg svg-icon" viewBox="0 0 20 20">
                                                         <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
                                                     </svg>
-                                                    <label class="fs-18 calibri-light">General Dentistry</label>
+                                                    <label class="fs-18 calibri-light padding-bottom-0">General Dentistry</label>
                                                 </div>
                                             </div>
                                             <div class="show-category-list module">
@@ -168,7 +168,7 @@
                                                     <svg class="svg svg-icon" viewBox="0 0 20 20">
                                                         <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
                                                     </svg>
-                                                    <label class="fs-18 calibri-light">Cosmetic Dentistry</label>
+                                                    <label class="fs-18 calibri-light padding-bottom-0">Cosmetic Dentistry</label>
                                                 </div>
                                             </div>
                                                 <div class="show-category-list module">
@@ -192,7 +192,7 @@
                                                     <svg class="svg svg-icon" viewBox="0 0 20 20">
                                                         <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
                                                     </svg>
-                                                    <label class="fs-18 calibri-light">Implant Dentistry</label>
+                                                    <label class="fs-18 calibri-light padding-bottom-0">Implant Dentistry</label>
                                                 </div>
                                             </div>
                                                 <div class="show-category-list module">
@@ -215,20 +215,20 @@
                                     <div class="right-extra-field calibri-bold fs-25 dark-color inline-block">{{$contract->monthly_premium}} USD</div>
                                 </div>
                                 <div class="single-row fs-14 light-gray-color calibri-light padding-top-10 padding-bottom-40">You are not satisfied with the rate offered? <a href="javascript:void(0)" class="calibri-bold blue-green-color contact-your-dentist">Contact your dentist.</a> </div>
-                                <div class="single-row flex-row fs-0">
-                                    <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Contract Validity:</label>
+                                <div class="single-row fs-0">
+                                    <label class="inline-block calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Contract Validity:</label>
                                     <div class="right-extra-field calibri-regular fs-18 dark-color inline-block not-allowed-cursor">Valid until canceled</div>
                                 </div>
-                                <div class="single-row flex-row fs-0">
-                                    <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
+                                <div class="single-row fs-0">
+                                    <label class="inline-block calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Check-ups per Year:</label>
                                     <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$contract->check_ups_per_year}}</div>
                                 </div>
-                                <div class="single-row flex-row fs-0">
-                                    <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Teeth Cleaning per Year:</label>
+                                <div class="single-row fs-0">
+                                    <label class="inline-block calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Teeth Cleaning per Year:</label>
                                     <div class="right-extra-field calibri-regular fs-18 dark-color inline-block">{{$contract->teeth_cleaning_per_year}}</div>
                                 </div>
-                                <div class="single-row flex-row fs-0">
-                                    <label class="calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful <a href="https://dentacare.dentacoin.com/" target="_blank" class="text-decoration-underline blue-green-color">Dentacare Journeys</a>:</label>
+                                <div class="single-row fs-0">
+                                    <label class="inline-block calibri-light light-gray-color fs-16 padding-right-15 margin-bottom-0">Required Successful <a href="https://dentacare.dentacoin.com/" target="_blank" class="text-decoration-underline blue-green-color">Dentacare Journeys</a>:</label>
                                     <div class="right-extra-field calibri-regular fs-18 dark-color inline-block not-allowed-cursor">1 (90 days)</div>
                                 </div>
                                 <h3 class="calibri-bold fs-30 dark-color padding-top-70">CONTRACT DETAILS</h3>

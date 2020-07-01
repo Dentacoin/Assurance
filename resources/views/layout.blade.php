@@ -98,7 +98,7 @@
         var HOME_URL = '{{ route("home") }}';
     </script>
 </head>
-<body class="@if(!empty(Route::current())) {{Route::current()->getName()}} @else class-404 @endif @if(\App\Http\Controllers\UserController::instance()->checkSession()) logged-in @if(\App\Http\Controllers\UserController::instance()->checkPatientSession()) patient-side logged-patient @elseif(\App\Http\Controllers\UserController::instance()->checkDentistSession()) dentist-side logged-dentist @endif @endif @if(isset($mobile)) @if($mobile) mobile @else not-mobile @endif @endif" @if(getenv('CHAIN_ID') == 1) data-network="mainnet" @elseif (getenv('CHAIN_ID') == 4) data-network="rinkeby" @endif>
+<body class="@if(!empty(Route::current())) {{Route::current()->getName()}} @else class-404 @endif @if(\App\Http\Controllers\UserController::instance()->checkSession()) logged-in @if(\App\Http\Controllers\UserController::instance()->checkPatientSession()) patient-side logged-patient @elseif(\App\Http\Controllers\UserController::instance()->checkDentistSession()) dentist-side logged-dentist @endif @endif @if(isset($mobile)) @if($mobile) mobile @else not-mobile @endif @endif" @if(getenv('NETWORK') == 'mainnet') data-network="mainnet" @elseif (getenv('NETWORK') == 'rinkeby') data-network="rinkeby" @endif>
     @if(isset($mobile) && $mobile)
         <nav class="sidenav">
             <div class="wrapper">

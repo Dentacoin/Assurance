@@ -320,7 +320,7 @@ class APIRequestsController extends Controller {
         if ($type == 'dentist-approval') {
             $json = '{"hash":"'.$hash.'", "type":"'.$type.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "gas_price":"'.$gasPrice.'"}';
         } else if ($type == 'patient-approval-and-contract-creation') {
-            $json = '{"hash":"'.$hash.'", "type":"'.$type.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "value_usd":"'.$value_usd.'", "monthly_premium_in_dcn":"'.$monthly_premium_in_dcn.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$contract_ipfs_hash.'", "gas_price":"'.$gasPrice.'"}';
+            $json = '{"hash":"'.$hash.'", "type":"'.$type.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "value_usd":"'.$value_usd.'", "monthly_premium_in_dcn":"'.$monthly_premium_in_dcn.'", "time":"'.$time.'", "contract_ipfs_hash":"'.$contract_ipfs_hash.'", "gas_price":"'.$gasPrice.'", "network":"'.getenv('NETWORK').'"}';
         }
 
         curl_setopt_array($curl, array(
@@ -466,7 +466,7 @@ class APIRequestsController extends Controller {
     public function cancelIfLatePayment($hash, $patient_address, $dentist_address, $gasPrice) {
         $curl = curl_init();
 
-        $json = '{"hash":"'.$hash.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "gas_price":"'.$gasPrice.'"}';
+        $json = '{"hash":"'.$hash.'", "patient_address":"'.$patient_address.'", "dentist_address":"'.$dentist_address.'", "gas_price":"'.$gasPrice.'", "network":"'.getenv('NETWORK').'"}';
 
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
