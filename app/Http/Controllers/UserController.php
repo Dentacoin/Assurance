@@ -1099,15 +1099,14 @@ class UserController extends Controller {
             //$approveContractStatusChange = (new APIRequestsController())->approveContractStatusChange($contract->patient_address, $contract->dentist_address, $request->input('to_status'));
             //if(is_object($approveContractStatusChange) && property_exists($approveContractStatusChange, 'success') && $approveContractStatusChange->success) {
             if($request->input('to_status') == 'cancelled') {
-                $comments = trim($request->input('comments'));
-                if (isset($comments)) {
+                if ($request->has('comments')) {
                     $hashArray = array(
                         'slug' => $request->input('slug'),
                         'transactionHash' => $request->input('transactionHash'),
                         'to_status' => $request->input('to_status'),
                         'type' => $request->input('type'),
                         'reason' => trim($request->input('reason')),
-                        'comments' => $comments
+                        'comments' => trim($request->input('comments'))
                     );
                 } else {
                     $hashArray = array(
@@ -1119,8 +1118,6 @@ class UserController extends Controller {
                     );
                 }
                 $hash = hash('sha256', getenv('SECRET_PASSWORD').json_encode($hashArray));
-
-                return response()->json(['error' => true, '$hashArray' => $hashArray]);
             } else {
                 $hash = hash('sha256', getenv('SECRET_PASSWORD').json_encode(array('slug' => $request->input('slug'), 'transactionHash' => $request->input('transactionHash'), 'to_status' => $request->input('to_status'))));
             }
