@@ -7857,6 +7857,9 @@ select.select-mac-fix {
     display: block;
     text-align: center; } }
 
+.ui-tooltip {
+  z-index: 2000000010 !important; }
+
 .white-blue-green-btn {
   font-size: 20px;
   color: white;

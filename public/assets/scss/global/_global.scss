@@ -1824,3 +1824,7 @@ select.select-mac-fix {
         text-align: center;
     }
 }
+
+.ui-tooltip {
+    z-index: 2000000010 !important;
+}
