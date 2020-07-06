@@ -76962,7 +76962,7 @@ if ($('form#invite-dentists').length) {
         }
 
         if (!basic.validateUrl(this_form.find('input[name="website"]').val().trim())) {
-            customErrorHandle(this_form.find('input[name="website"]').parent(), 'Please enter your website URL starting with http:// or https://.');
+            customErrorHandle(this_form.find('input[name="website"]').parent(), 'Please enter website URL starting with http:// or https://.');
             errors = true;
         }
 

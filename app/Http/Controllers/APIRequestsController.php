@@ -142,7 +142,9 @@ class APIRequestsController extends Controller {
             CURLOPT_POST => 1,
             CURLOPT_URL => 'https://api.dentacoin.com/api/users/',
             CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POSTFIELDS => $post_fields_arr
+            CURLOPT_POSTFIELDS => array(
+                'users_details' => (new \App\Http\Controllers\Controller())->encrypt(json_encode($post_fields_arr) , getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'))
+            )
         ));
 
         $resp = json_decode(curl_exec($curl));
@@ -168,7 +170,9 @@ class APIRequestsController extends Controller {
             CURLOPT_POST => 1,
             CURLOPT_URL => 'https://api.dentacoin.com/api/users/',
             CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POSTFIELDS => $post_fields_arr
+            CURLOPT_POSTFIELDS => array(
+                'users_details' => (new \App\Http\Controllers\Controller())->encrypt(json_encode($post_fields_arr) , getenv('API_ENCRYPTION_METHOD'), getenv('API_ENCRYPTION_KEY'))
+            )
         ));
 
         $resp = json_decode(curl_exec($curl));
