@@ -185,7 +185,7 @@ class APIRequestsController extends Controller {
         }
     }
 
-    public function getUserData($id, $logging = false) {
+    public function getUserData($id, $fullResponse = false) {
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -197,7 +197,7 @@ class APIRequestsController extends Controller {
         curl_close($curl);
 
         if (!empty($resp) && property_exists($resp, 'data') && !empty($resp->data))   {
-            if ($logging) {
+            if ($fullResponse) {
                 return $resp;
             } else {
                 return $resp->data;
