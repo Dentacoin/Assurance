@@ -27,15 +27,6 @@ class HandlePatientSession
             //if logged user with other role trying to access routes protected by this middleware
             return redirect()->route('home', ['cross-login' => true]);
         } else {
-            if($user_controller->checkSession()) {
-                $validateAccessTokenResponse = (new APIRequestsController())->validateAccessToken();
-                if (!empty($validateAccessTokenResponse) && is_object($validateAccessTokenResponse) && property_exists($validateAccessTokenResponse, 'success') && !$validateAccessTokenResponse->success) {
-                    $request->session()->forget('logged_user');
-
-                    return Redirect::to(BASE_URL . '?show-login=true');
-                }
-            }
-
             return $next($request);
         }
     }
