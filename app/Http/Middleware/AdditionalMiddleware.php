@@ -6,6 +6,7 @@ use Closure;
 use App;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
 
 class AdditionalMiddleware
 {
