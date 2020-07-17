@@ -562,10 +562,12 @@ class UserController extends Controller {
             $type = $this->decrypt(Input::get('type'));
             $token = $this->decrypt(Input::get('token'));
 
-            $user = (new APIRequestsController())->getUserData($slug, true);
-            if($user) {
+            $userData = (new APIRequestsController())->getUserData($slug, true);
+            if (!empty($userData) && is_object($userData) && property_exists($userData, 'success') && $userData->success) {
+                $user = $userData->data;
                 $approved_statuses = array('approved','test','added_by_clinic_claimed','added_by_dentist_claimed');
-                if($user->self_deleted != NULL) {
+
+                if (property_exists($user, 'self_deleted') && $user->self_deleted != NULL) {
                     return abort(404);
                 } else if(!in_array($user->status, $approved_statuses)) {
                     return abort(404);
