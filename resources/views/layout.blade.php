@@ -47,12 +47,12 @@
     <style>
 
     </style>
-    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.65">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.65">
+    <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.66">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.66">
     @if((new \App\Http\Controllers\UserController())->checkSession())
         <link rel="stylesheet" type="text/css" href="https://dentacoin.com/assets/libs/dentacoin-package/css/style.css?v={{time()}}">
     @else
-        <link rel="stylesheet" type="text/css" href="https://dentacoin.com/assets/libs/dentacoin-login-gateway/css/dentacoin-login-gateway-style.css?v=1.0.65"/>
+        <link rel="stylesheet" type="text/css" href="https://dentacoin.com/assets/libs/dentacoin-login-gateway/css/dentacoin-login-gateway-style.css?v=1.0.66"/>
     @endif
 
     @if(empty($_COOKIE['performance_cookies']) && empty($_COOKIE['functionality_cookies']) && empty($_COOKIE['marketing_cookies']) && empty($_COOKIE['strictly_necessary_policy']))
@@ -298,16 +298,16 @@
     @endif
 
     {{--/Show the sticky calculate button only for dentists--}}
-    <script src="https://dentacoin.com/assets/js/basic.js?v=1.0.65"></script>
-    <script src="/dist/js/front-libs-script.js?v=1.0.65"></script>
+    <script src="https://dentacoin.com/assets/js/basic.js?v=1.0.66"></script>
+    <script src="/dist/js/front-libs-script.js?v=1.0.66"></script>
     {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
     <script src="https://dentacoin.com/assets/libs/dentacoin-package/js/init.js?v={{time()}}"></script>
     @if(!(new \App\Http\Controllers\UserController())->checkSession())
-        <script src="https://dentacoin.com/assets/libs/dentacoin-login-gateway/js/init.js?v=1.0.65"></script>
+        <script src="https://dentacoin.com/assets/libs/dentacoin-login-gateway/js/init.js?v=1.0.66"></script>
     @endif
-    <script src="https://dentacoin.com/assets/js/address-combined-login.js?v=1.0.65"></script>
+    <script src="https://dentacoin.com/assets/js/address-combined-login.js?v=1.0.66"></script>
 
-    <script src="/assets/js/index-bundled.js?v=1.0.65"></script>
+    <script src="/assets/js/index-bundled.js?v=1.0.66"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaVeHq_LOhQndssbmw-aDnlMwUG73yCdk&libraries=places&language=en"></script>
 
     {{--Multiple errors from laravel validation--}}

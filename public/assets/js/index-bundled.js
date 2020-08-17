@@ -78624,5 +78624,12 @@ function loadDeferImages() {
     }
 }
 loadDeferImages();
+
+if (typeof(dcnCookie) != undefined) {
+    dcnCookie.init({
+        'google_app_id' : 'UA-108398439-4',
+        'fb_app_id' : '2366034370318681'
+    });
+}
 }).call(this,require("buffer").Buffer)
 },{"./assurance_config_mainnet":545,"./assurance_config_rinkeby":546,"./helper":547,"buffer":52,"ethereumjs-tx":363}]},{},[548]);
