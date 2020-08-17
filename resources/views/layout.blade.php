@@ -50,10 +50,14 @@
     <link rel="stylesheet" type="text/css" href="/dist/css/front-libs-style.css?v=1.0.65">
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=1.0.65">
     @if((new \App\Http\Controllers\UserController())->checkSession())
-        <link rel="stylesheet" type="text/css" href="https://dentacoin.com/assets/libs/dentacoin-mini-hub/css/style.css?v=1.0.65">
+        <link rel="stylesheet" type="text/css" href="https://dentacoin.com/assets/libs/dentacoin-package/css/style.css?v={{time()}}">
     @else
         <link rel="stylesheet" type="text/css" href="https://dentacoin.com/assets/libs/dentacoin-login-gateway/css/dentacoin-login-gateway-style.css?v=1.0.65"/>
-@endif
+    @endif
+
+    @if(empty($_COOKIE['performance_cookies']) && empty($_COOKIE['functionality_cookies']) && empty($_COOKIE['marketing_cookies']) && empty($_COOKIE['strictly_necessary_policy']))
+        <link rel="stylesheet" type="text/css" href="https://dentacoin.com/assets/libs/dentacoin-package/css/style-cookie.css?v={{time()}}">
+    @endif
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398439-4"></script>
@@ -292,35 +296,13 @@
             </a>
         </figure>
     @endif
-    <div class="bottom-fixed-container">
-        {{--Show the sticky calculate button only for dentists--}}
-        {{--<a href="https://dentacoin.com/holiday-calendar-2019" target="_blank" class="display-block banner">
-            <picture itemscope="" itemtype="http://schema.org/ImageObject">
-                <source media="(max-width: 992px)" srcset="//dentacoin.com/assets/uploads/mobile-christmas-banner-small.gif"/>
-                <img src="//dentacoin.com/assets/uploads/christmas-banner.gif" alt="Holiday calendar banner" class="width-100" itemprop="contentUrl"/>
-            </picture>
-        </a>--}}
-        @if(empty($_COOKIE['performance_cookies']) && empty($_COOKIE['functionality_cookies']) && empty($_COOKIE['marketing_cookies']) && empty($_COOKIE['strictly_necessary_policy']))
-            <div class="privacy-policy-cookie">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="text inline-block">This site uses cookies. Find out more on how we use cookies in our <a href="https://dentacoin.com/privacy-policy" class="link" target="_blank">Privacy Policy</a>. | <a href="javascript:void(0);" class="link adjust-cookies">Adjust cookies</a></div>
-                            <div class="button inline-block"><a href="javascript:void(0);" class="white-blue-green-btn  accept-all">Accept all cookies</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-    </div>
 
     {{--/Show the sticky calculate button only for dentists--}}
     <script src="https://dentacoin.com/assets/js/basic.js?v=1.0.65"></script>
     <script src="/dist/js/front-libs-script.js?v=1.0.65"></script>
     {{--<script src="/dist/js/front-script.js?v=1.0.13"></script>--}}
-    @if((new \App\Http\Controllers\UserController())->checkSession())
-        <script src="https://dentacoin.com/assets/libs/dentacoin-mini-hub/js/init.js?v=1.0.65"></script>
-    @else
+    <script src="https://dentacoin.com/assets/libs/dentacoin-package/js/init.js?v={{time()}}"></script>
+    @if(!(new \App\Http\Controllers\UserController())->checkSession())
         <script src="https://dentacoin.com/assets/libs/dentacoin-login-gateway/js/init.js?v=1.0.65"></script>
     @endif
     <script src="https://dentacoin.com/assets/js/address-combined-login.js?v=1.0.65"></script>
