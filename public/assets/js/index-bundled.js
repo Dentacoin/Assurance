@@ -74044,7 +74044,7 @@ var projectData = {
                         }*/
 
                         if ($('.init-address-suggester').length) {
-                            await $.getScript('https://dentacoin.com/assets/js/address-combined-login.js?v='+new Date().getTime(), function() {});
+                            await $.getScript('https://dentacoin.com/assets/libs/dentacoin-login-gateway/js/address-combined-login.js?v='+new Date().getTime(), function() {});
                         }
 
                         if ($('.terms-and-conditions-long-list').length) {
