@@ -12,7 +12,7 @@
         var HOME_URL = '{{ route("home") }}';
     </script>
 </head>
-<body class="@if(\App\Http\Controllers\UserController::instance()->checkSession()) logged-in @endif">
+<body class="@if(\App\Http\Controllers\UserController::instance()->checkSession()) logged-in @endif" data-network="{{getenv('NETWORK')}}">
     <div class="my-contracts-container my-contracts-iframe">
         <div class="profile-page-title">
             <figure itemscope="" itemtype="http://schema.org/ImageObject" class="inline-block">

@@ -5290,7 +5290,7 @@ function loadDeferImages() {
 }
 loadDeferImages();
 
-if (typeof(dcnCookie) != undefined) {
+if (typeof(dcnCookie) != 'undefined') {
     dcnCookie.init({
         'google_app_id' : 'UA-108398439-4',
         'fb_app_id' : '2366034370318681'
