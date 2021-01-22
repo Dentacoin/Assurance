@@ -567,6 +567,37 @@ class UserController extends Controller {
 
             $userData = (new APIRequestsController())->getUserData($slug, true);
             var_dump($userData);
+
+            if (!empty($userData) && is_object($userData) && property_exists($userData, 'success') && $userData->success) {
+                echo "<br><br>";
+                var_dump('dataExist');
+                $user = $userData->data;
+                $approved_statuses = array('approved','test','added_by_clinic_claimed','added_by_dentist_claimed');
+
+                if (property_exists($user, 'self_deleted') && $user->self_deleted != NULL) {
+                    echo "<br><br>";
+                    var_dump('self_deleted');
+                    return abort(404);
+                } else if(!in_array($user->status, $approved_statuses)) {
+                    echo "<br><br>";
+                    var_dump('NotApprovedStatus');
+                    return abort(404);
+                } else {
+                    echo "<br><br>";
+                    var_dump('sessionCreation');
+                    $session_arr = [
+                        'token' => $token,
+                        'id' => $slug,
+                        'type' => $type
+                    ];
+                    die();
+
+                    session(['logged_user' => $session_arr]);
+                    return redirect()->route('home');
+                }
+            } else {
+                return abort(404);
+            }
             die();
         } else {
             if(!empty(Input::get('slug')) && !empty(Input::get('type')) && !empty(Input::get('token'))) {
