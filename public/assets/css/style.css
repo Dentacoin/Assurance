@@ -7883,7 +7883,7 @@ select.select-mac-fix {
   -o-transition: 0.3s;
   -ms-transition: 0.3s;
   transition: 0.3s; }
-  .blue-green-white-btn .white-border {
+  .blue-green-white-btn.white-border {
     border: 2px solid white; }
   .blue-green-white-btn path {
     fill: #126585; }

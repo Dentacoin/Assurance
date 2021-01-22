@@ -186,7 +186,7 @@
         <div class="container second-absolute-container">
             <div class="row">
                 <div class="col-xs-12 col-sm-5 col-sm-offset-6 col-md-6 col-md-offset-6 text-center">
-                    <a href="javascript:void(0)" class="blue-green-white-btn open-dentacoin-gateway patient-register show-signing margin-top-50 margin-top-xs-25">SIGN UP TO GET STARTED</a>
+                    <a href="javascript:void(0)" class="blue-green-white-btn white-border open-dentacoin-gateway patient-register show-signing margin-top-50 margin-top-xs-25">SIGN UP TO GET STARTED</a>
                     {{--<div class="padding-bottom-10">
                         <a href="javascript:void(0)" class="facebook-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" data-type="patient"><i class="fa fa-facebook-official inline-block fs-30 margin-right-20" aria-hidden="true"></i><span class="inline-block">Continue with Facebook</span></a>
                     </div>
