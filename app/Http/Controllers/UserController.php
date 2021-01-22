@@ -592,6 +592,11 @@ class UserController extends Controller {
                     ];
 
                     session(['logged_user' => $session_arr]);
+
+
+                    $validateAccessTokenResponse = (new APIRequestsController())->validateAccessToken();
+                    var_dump($validateAccessTokenResponse);
+                    die();
                     return redirect()->route('home');
                 }
             } else {

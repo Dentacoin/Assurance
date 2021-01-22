@@ -26,8 +26,6 @@ class AdditionalMiddleware
         $user_controller = new App\Http\Controllers\UserController();
         if($user_controller->checkSession()) {
             $validateAccessTokenResponse = (new App\Http\Controllers\APIRequestsController())->validateAccessToken();
-            var_dump($validateAccessTokenResponse);
-            die('haha');
             if (!empty($validateAccessTokenResponse) && is_object($validateAccessTokenResponse) && property_exists($validateAccessTokenResponse, 'success') && !$validateAccessTokenResponse->success) {
                 $request->session()->forget('logged_user');
 
