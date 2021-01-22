@@ -200,7 +200,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <a href="javascript:void(0)" class="white-blue-green-btn min-width-220 open-dentacoin-gateway dentist-login show-signing">SIGN UP</a>
+                    <a href="javascript:void(0)" class="white-blue-green-btn min-width-220 open-dentacoin-gateway dentist-register show-signing">SIGN UP</a>
                 </div>
             </div>
         </div>

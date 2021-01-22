@@ -186,13 +186,13 @@
         <div class="container second-absolute-container">
             <div class="row">
                 <div class="col-xs-12 col-sm-5 col-sm-offset-6 col-md-6 col-md-offset-6 text-center">
-                    <h3 class="lato-regular fs-30 fs-xs-22 fs-sm-20 white-color padding-bottom-30 padding-bottom-xs-10 padding-bottom-sm-10 text-center">SIGN UP TO GET STARTED</h3>
-                    <div class="padding-bottom-10">
+                    <a href="javascript:void(0)" class="blue-green-white-btn open-dentacoin-gateway patient-register show-signing margin-top-50 margin-top-xs-25">SIGN UP TO GET STARTED</a>
+                    {{--<div class="padding-bottom-10">
                         <a href="javascript:void(0)" class="facebook-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" data-type="patient"><i class="fa fa-facebook-official inline-block fs-30 margin-right-20" aria-hidden="true"></i><span class="inline-block">Continue with Facebook</span></a>
                     </div>
                     <div>
                         <a href="javascript:void(0)"  class="civic-custom-btn social-login-btn calibri-regular fs-20" data-url="//api.dentacoin.com/api/register" data-platform="assurance" data-type="patient">with Civic</a>
-                    </div>
+                    </div>--}}
                 </div>
             </div>
         </div>
