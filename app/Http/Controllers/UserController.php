@@ -556,35 +556,22 @@ class UserController extends Controller {
     }
 
     protected function manageCustomCookie(Request $request) {
-        if (!empty(Input::get('test'))) {
+        if(!empty(Input::get('slug')) && !empty(Input::get('type')) && !empty(Input::get('token'))) {
+            //logging
             $slug = $this->decrypt(Input::get('slug'));
             $type = $this->decrypt(Input::get('type'));
             $token = $this->decrypt(Input::get('token'));
 
-            var_dump($slug);
-            var_dump($type);
-            var_dump($token);
-
             $userData = (new APIRequestsController())->getUserData($slug, true);
-            var_dump($userData);
-
             if (!empty($userData) && is_object($userData) && property_exists($userData, 'success') && $userData->success) {
-                echo "<br><br>";
-                var_dump('dataExist');
                 $user = $userData->data;
                 $approved_statuses = array('approved','test','added_by_clinic_claimed','added_by_dentist_claimed');
 
                 if (property_exists($user, 'self_deleted') && $user->self_deleted != NULL) {
-                    echo "<br><br>";
-                    var_dump('self_deleted');
                     return abort(404);
                 } else if(!in_array($user->status, $approved_statuses)) {
-                    echo "<br><br>";
-                    var_dump('NotApprovedStatus');
                     return abort(404);
                 } else {
-                    echo "<br><br>";
-                    var_dump('sessionCreation');
                     $session_arr = [
                         'token' => $token,
                         'id' => $slug,
@@ -592,59 +579,25 @@ class UserController extends Controller {
                     ];
 
                     session(['logged_user' => $session_arr]);
-
-
-                    $validateAccessTokenResponse = (new APIRequestsController())->validateAccessToken();
-                    var_dump($validateAccessTokenResponse);
-                    die();
                     return redirect()->route('home');
                 }
             } else {
                 return abort(404);
+            }
+        } else if(!empty(Input::get('logout-token'))) {
+            //logging out
+            $token = $this->decrypt(Input::get('logout-token'));
+
+            if(session('logged_user')['token'] == $token) {
+                $request->session()->forget('logged_user');
+
+                return redirect()->route('home');
             }
         } else {
-            if(!empty(Input::get('slug')) && !empty(Input::get('type')) && !empty(Input::get('token'))) {
-                //logging
-                $slug = $this->decrypt(Input::get('slug'));
-                $type = $this->decrypt(Input::get('type'));
-                $token = $this->decrypt(Input::get('token'));
-
-                $userData = (new APIRequestsController())->getUserData($slug, true);
-                if (!empty($userData) && is_object($userData) && property_exists($userData, 'success') && $userData->success) {
-                    $user = $userData->data;
-                    $approved_statuses = array('approved','test','added_by_clinic_claimed','added_by_dentist_claimed');
-
-                    if (property_exists($user, 'self_deleted') && $user->self_deleted != NULL) {
-                        return abort(404);
-                    } else if(!in_array($user->status, $approved_statuses)) {
-                        return abort(404);
-                    } else {
-                        $session_arr = [
-                            'token' => $token,
-                            'id' => $slug,
-                            'type' => $type
-                        ];
-
-                        session(['logged_user' => $session_arr]);
-                        return redirect()->route('home');
-                    }
-                } else {
-                    return abort(404);
-                }
-            } else if(!empty(Input::get('logout-token'))) {
-                //logging out
-                $token = $this->decrypt(Input::get('logout-token'));
-
-                if(session('logged_user')['token'] == $token) {
-                    $request->session()->forget('logged_user');
-
-                    return redirect()->route('home');
-                }
-            } else {
-                return abort(404);
-            }
+            return abort(404);
         }
     }
+
 
     // method for cancelling contracts on single page contract visiting. This method is built, because we cannot have the cronjob running every seconds and sometimes users might see contract that have to be cancelled as active one
     public function automaticContractCancel($contract, $onBlockchain = true) {
