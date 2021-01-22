@@ -129,6 +129,9 @@
     display: inline-block;
     cursor: pointer;
     text-decoration: none !important;
+    .white-border {  
+        border: 2px solid white;
+    }
     @include rounded(4px);
     @include simple_transition(.3s);
     path {
