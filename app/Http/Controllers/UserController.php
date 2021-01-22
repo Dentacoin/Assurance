@@ -556,48 +556,61 @@ class UserController extends Controller {
     }
 
     protected function manageCustomCookie(Request $request) {
-        if(!empty(Input::get('slug')) && !empty(Input::get('type')) && !empty(Input::get('token'))) {
-            //logging
+        if (!empty(Input::get('test'))) {
             $slug = $this->decrypt(Input::get('slug'));
             $type = $this->decrypt(Input::get('type'));
             $token = $this->decrypt(Input::get('token'));
 
+            var_dump($slug);
+            var_dump($type);
+            var_dump($token);
+
             $userData = (new APIRequestsController())->getUserData($slug, true);
-            if (!empty($userData) && is_object($userData) && property_exists($userData, 'success') && $userData->success) {
-                $user = $userData->data;
-                $approved_statuses = array('approved','test','added_by_clinic_claimed','added_by_dentist_claimed');
+            var_dump($userData);
+            die();
+        } else {
+            if(!empty(Input::get('slug')) && !empty(Input::get('type')) && !empty(Input::get('token'))) {
+                //logging
+                $slug = $this->decrypt(Input::get('slug'));
+                $type = $this->decrypt(Input::get('type'));
+                $token = $this->decrypt(Input::get('token'));
 
-                if (property_exists($user, 'self_deleted') && $user->self_deleted != NULL) {
-                    return abort(404);
-                } else if(!in_array($user->status, $approved_statuses)) {
-                    return abort(404);
+                $userData = (new APIRequestsController())->getUserData($slug, true);
+                if (!empty($userData) && is_object($userData) && property_exists($userData, 'success') && $userData->success) {
+                    $user = $userData->data;
+                    $approved_statuses = array('approved','test','added_by_clinic_claimed','added_by_dentist_claimed');
+
+                    if (property_exists($user, 'self_deleted') && $user->self_deleted != NULL) {
+                        return abort(404);
+                    } else if(!in_array($user->status, $approved_statuses)) {
+                        return abort(404);
+                    } else {
+                        $session_arr = [
+                            'token' => $token,
+                            'id' => $slug,
+                            'type' => $type
+                        ];
+
+                        session(['logged_user' => $session_arr]);
+                        return redirect()->route('home');
+                    }
                 } else {
-                    $session_arr = [
-                        'token' => $token,
-                        'id' => $slug,
-                        'type' => $type
-                    ];
+                    return abort(404);
+                }
+            } else if(!empty(Input::get('logout-token'))) {
+                //logging out
+                $token = $this->decrypt(Input::get('logout-token'));
 
-                    session(['logged_user' => $session_arr]);
+                if(session('logged_user')['token'] == $token) {
+                    $request->session()->forget('logged_user');
+
                     return redirect()->route('home');
                 }
             } else {
                 return abort(404);
             }
-        } else if(!empty(Input::get('logout-token'))) {
-            //logging out
-            $token = $this->decrypt(Input::get('logout-token'));
-
-            if(session('logged_user')['token'] == $token) {
-                $request->session()->forget('logged_user');
-
-                return redirect()->route('home');
-            }
-        } else {
-            return abort(404);
         }
     }
-
 
     // method for cancelling contracts on single page contract visiting. This method is built, because we cannot have the cronjob running every seconds and sometimes users might see contract that have to be cancelled as active one
     public function automaticContractCancel($contract, $onBlockchain = true) {

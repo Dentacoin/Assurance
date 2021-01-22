@@ -3070,8 +3070,6 @@ if ($('body').hasClass('logged-in') && !$('.my-contracts-iframe').length) {
         }
     }
 
-
-
     /*if ($('.logged-user-hamburger').length) {
         $('.logged-user-hamburger').click(function() {
             $('.logged-mobile-profile-menu').addClass('active');
