@@ -590,7 +590,6 @@ class UserController extends Controller {
                         'id' => $slug,
                         'type' => $type
                     ];
-                    die();
 
                     session(['logged_user' => $session_arr]);
                     return redirect()->route('home');
@@ -598,7 +597,6 @@ class UserController extends Controller {
             } else {
                 return abort(404);
             }
-            die();
         } else {
             if(!empty(Input::get('slug')) && !empty(Input::get('type')) && !empty(Input::get('token'))) {
                 //logging
