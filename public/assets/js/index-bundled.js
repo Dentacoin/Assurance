@@ -88519,9 +88519,6 @@ var projectData = {
         bonusPercentagesToGasEstimations: 10
     },
     utils: {
-        getGasPrice: async function () {
-            return await $.getJSON('https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=' + config_variable.etherscan_api_key);
-        },
         innerAddressCheck: function(address)    {
             //checking if passed address is valid
             return dApp.web3_1_0.utils.isAddress(address);
@@ -88635,6 +88632,11 @@ var projectData = {
             history.replaceState && history.replaceState(
                 null, '', location.pathname + location.search.replace(regex, '').replace(/^&/, '?')
             );
+        }
+    },
+    requests: {
+        getGasPrice: async function () {
+            return await $.getJSON('https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=' + config_variable.etherscan_api_key);
         }
     },
     initiators: {
