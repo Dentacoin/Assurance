@@ -1,6 +1,7 @@
 console.log('Don\'t touch the code. Or do ... ¯\\_(ツ)_/¯');
 
 var {getWeb3, importKeystoreFile, decryptKeystore, decryptDataByPlainKey, importPrivateKey, decryptDataByKeystore} = require('./helper');
+var {config_variable} = require('./config');
 
 if ($('body').attr('data-network') == 'mainnet') {
     var {assurance_config} = require('./assurance_config_mainnet');
@@ -256,9 +257,12 @@ var dApp = {
 
 var projectData = {
     variables: {
-        bonusPercentagesToGasEstimations: 15
+        bonusPercentagesToGasEstimations: 10
     },
     utils: {
+        getGasPrice: async function () {
+            return await $.getJSON('https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=' + config_variable.etherscan_api_key);
+        },
         innerAddressCheck: function(address)    {
             //checking if passed address is valid
             return dApp.web3_1_0.utils.isAddress(address);
@@ -1327,8 +1331,11 @@ var projectData = {
                         var current_user_dcn_balance = parseInt(await dApp.dentacoin_token_methods.balanceOf(global_state.account));
                         var current_user_eth_balance = parseFloat(dApp.web3_1_0.utils.fromWei(await dApp.helper.getAddressETHBalance(global_state.account)));
                         var monthly_premium_in_dcn = Math.round(projectData.utils.convertUsdToDcn(parseInt($('.patient-contract-single-page-section').attr('data-monthly-premium'))));
-                        var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
-                        const on_page_load_gwei = ethgasstation_json.safeLow;
+                        //var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
+                        //const on_page_load_gwei = ethgasstation_json.safeLow;
+                        var gasPriceObject = await projectData.requests.getGasPrice();
+                        const on_page_load_gwei = gasPriceObject.result.SafeGasPrice;
+
                         //adding 10% just in case the transaction dont fail
                         const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
@@ -1746,8 +1753,10 @@ var projectData = {
                         $('.first-payment').html(projectData.utils.dateObjToFormattedDate(new Date((parseInt($('.single-contract-view-section').attr('data-created-at')) + parseInt(await dApp.assurance_state_methods.getPeriodToWithdraw())) * 1000)));
 
                         if ($('.single-contract-view-section').hasClass('awaiting-approval')) {
-                            var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
-                            const on_page_load_gwei = ethgasstation_json.safeLow;
+                            //var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
+                            //const on_page_load_gwei = ethgasstation_json.safeLow;
+                            var gasPriceObject = await projectData.requests.getGasPrice();
+                            const on_page_load_gwei = gasPriceObject.result.SafeGasPrice;
                             //adding 10% just in case the transaction dont fail
                             const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
@@ -2260,8 +2269,10 @@ var projectData = {
 };
 
 async function bindDentistWithdrawEvent(withdrawableDCN, withdrawableUSD) {
-    var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
-    const on_page_load_gwei = ethgasstation_json.safeLow;
+    //var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
+    //const on_page_load_gwei = ethgasstation_json.safeLow;
+    var gasPriceObject = await projectData.requests.getGasPrice();
+    const on_page_load_gwei = gasPriceObject.result.SafeGasPrice;
     //adding 10% just in case the transaction dont fail
     const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
@@ -3775,8 +3786,10 @@ function cancelContractEventInit() {
                                                 }
                                             });
 
-                                            var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
-                                            const on_page_load_gwei = ethgasstation_json.safeLow;
+                                            //var ethgasstation_json = await $.getJSON('https://ethgasstation.info/json/ethgasAPI.json');
+                                            //const on_page_load_gwei = ethgasstation_json.safeLow;
+                                            var gasPriceObject = await projectData.requests.getGasPrice();
+                                            const on_page_load_gwei = gasPriceObject.result.SafeGasPrice;
                                             //adding 10% just in case the transaction dont fail
                                             const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
