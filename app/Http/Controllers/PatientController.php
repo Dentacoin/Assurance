@@ -368,7 +368,7 @@ class PatientController extends Controller {
                 if (sizeof($this_patient_having_contracts) == 0 && empty($alreadySentEthToThisUser)) {
                     //only if no previous contracts, aka sending only for first contract
                     //request to nodejs server, if the transaction fails the nodejs server will recover back the tokens to user balance in DB
-                    $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
+                    /*$gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
                     $sendEthAmountParams = array(
                         'patient_address' => $contract->patient_address,
                         'dentist_address' => $contract->dentist_address,
@@ -385,7 +385,7 @@ class PatientController extends Controller {
 
                     if (is_object($sending_eth_response) && property_exists($sending_eth_response, 'success') && $sending_eth_response->success) {
                         $freeETHReceiver->txHash = $sending_eth_response->transactionHash;
-                        $freeETHReceiver->save();
+                        $freeETHReceiver->save();*/
 
                         $contractRecord = new ContractRecord();
                         $contractRecord->contract_id = $contract->id;
@@ -403,12 +403,12 @@ class PatientController extends Controller {
 
                         $contract->save();
                         return redirect()->route('patient-contract-view', ['slug' => $data['contract']])/*->with(['congratulations' => true])*/;
-                    } else {
+                    /*} else {
                         // deleting the record if the transaction fails
                         $freeETHReceiver->delete();
 
                         return redirect()->route('contract-proposal', ['slug' => $data['contract']])->with(['error' => "1 IPFS uploading is not working at the moment, please try to sign this contract later again or contact <a href='mailto:assurance@dentacoin.com'>Dentacoin team</a>."]);
-                    }
+                    }*/
                 } else {
                     $contractRecord = new ContractRecord();
                     $contractRecord->contract_id = $contract->id;
@@ -542,7 +542,7 @@ class PatientController extends Controller {
         $contractRecord->save();
 
         // send ETH to dentist for the approval
-        $gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
+        /*$gasPrice = (int)(new APIRequestsController())->getGasEstimationFromEthgasstation();
         $sendEthAmountParams = array(
             'patient_address' => $contract->patient_address,
             'dentist_address' => $contract->dentist_address,
@@ -562,7 +562,7 @@ class PatientController extends Controller {
         } else {
             // deleting the record if the transaction fails
             $freeETHReceiver->delete();
-        }
+        }*/
     }
 
     protected function getContactClinicPopup(Request $request) {
