@@ -1339,7 +1339,7 @@ var projectData = {
                         const on_page_load_gwei = gasPriceObject.result.SafeGasPrice;
 
                         //adding 10% just in case the transaction dont fail
-                        const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
+                        const on_page_load_gas_price = on_page_load_gwei * 1000000000 + ((on_page_load_gwei * 1000000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
                         var approval_given = false;
                         var min_allowed_amount = parseInt(await dApp.assurance_state_methods.getMinAllowedAmount());
@@ -1760,7 +1760,7 @@ var projectData = {
                             var gasPriceObject = await projectData.requests.getGasPrice();
                             const on_page_load_gwei = gasPriceObject.result.SafeGasPrice;
                             //adding 10% just in case the transaction dont fail
-                            const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
+                            const on_page_load_gas_price = on_page_load_gwei * 1000000000 + ((on_page_load_gwei * 1000000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
                             //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                             var gas_cost_for_contract_approval = await dApp.assurance_proxy_instance.methods.dentistApproveContract($('.single-contract-view-section').attr('data-patient')).estimateGas({from: global_state.account, gas: 100000});
@@ -2276,7 +2276,7 @@ async function bindDentistWithdrawEvent(withdrawableDCN, withdrawableUSD) {
     var gasPriceObject = await projectData.requests.getGasPrice();
     const on_page_load_gwei = gasPriceObject.result.SafeGasPrice;
     //adding 10% just in case the transaction dont fail
-    const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
+    const on_page_load_gas_price = on_page_load_gwei * 1000000000 + ((on_page_load_gwei * 1000000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
     //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
     var gas_cost_for_withdraw = await dApp.assurance_proxy_instance.methods.singleWithdraw($('.single-contract-view-section').attr('data-patient')).estimateGas({
@@ -3793,7 +3793,7 @@ function cancelContractEventInit() {
                                             var gasPriceObject = await projectData.requests.getGasPrice();
                                             const on_page_load_gwei = gasPriceObject.result.SafeGasPrice;
                                             //adding 10% just in case the transaction dont fail
-                                            const on_page_load_gas_price = on_page_load_gwei * 100000000 + ((on_page_load_gwei * 100000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
+                                            const on_page_load_gas_price = on_page_load_gwei * 1000000000 + ((on_page_load_gwei * 1000000000) * projectData.variables.bonusPercentagesToGasEstimations / 100);
 
                                             //for the estimation going to use our internal address which aldready did gave before his allowance in DentacoinToken contract. In order to receive the gas estimation we need to pass all the method conditions and requires
                                             var gas_cost_for_contract_cancellation = await dApp.assurance_proxy_instance.methods.breakContract(projectData.utils.checksumAddress(response.contract_data.patient), projectData.utils.checksumAddress(response.contract_data.dentist)).estimateGas({
