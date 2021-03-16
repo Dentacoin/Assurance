@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Input;
 class HomeController extends Controller
 {
     public function getView()   {
+        die('Maintenance');
         if((new UserController())->checkDentistSession()) {
             if(TemporallyContract::where(array('dentist_id' => session('logged_user')['id']))->get()->first()) {
                 return (new DentistController())->getContractsView();
