@@ -1,5 +1,4 @@
 <?php
-die('Maintenance');
 
 /**
  * Laravel - A PHP Framework For Web Artisans

@@ -17,7 +17,11 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::get('sitemap.xml', 'Controller@getSitemap')->name('sitemap');
 
     //======================================= PAGES ========================================
-    Route::get('/', 'HomeController@getView')->name('home');
+    //Route::get('/', 'HomeController@getView')->name('home');
+    Route::get('/', function() {
+
+        die('Maintenance.1');
+    })->name('home');
 
     Route::get('/support-guide', 'SupportGuideController@getView')->name('support-guide');
 
