@@ -26,9 +26,6 @@ class HomeController extends Controller
                 return redirect()->route('patient-access');
             }
         } else {
-            die('Maintenance.');
-            var_dump((new APIRequestsController())->getTestimonials());
-            die();
             return view('pages/homepage', ['testimonials' => (new APIRequestsController())->getTestimonials()]);
         }
     }
