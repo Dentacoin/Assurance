@@ -9397,12 +9397,12 @@ header {
         padding-bottom: 10px; }
       header > .container .logged-user-nav > .hidden-box-parent figure.header-avatar {
         width: 50px;
-        margin-left: 10px;
-        overflow: hidden;
-        -webkit-border-radius: 50%;
-        -moz-border-radius: 50%;
-        -ms-border-radius: 50%;
-        border-radius: 50%; }
+        margin-left: 10px; }
+        header > .container .logged-user-nav > .hidden-box-parent figure.header-avatar img {
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          -ms-border-radius: 50%;
+          border-radius: 50%; }
     header > .container .logged-user-nav .up-arrow {
       color: white;
       position: absolute;

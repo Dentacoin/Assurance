@@ -135,4 +135,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     Route::get('/custom-cookie', 'UserController@manageCustomCookie')->name('custom-cookie');
 
     Route::any('/info/{slug}', 'UserController@handleApiEndpoints')->name('api-endpoints');
+
+    Route::post('/get-unseen-notifications-count', function() {
+        return (new \App\Http\Controllers\APIRequestsController())->getUnseenNotificationsCount(true);
+    })->middleware('HandleUserSession')->name('get-unseen-notifications-count');
 });

@@ -752,4 +752,32 @@ class APIRequestsController extends Controller {
             return false;
         }
     }
+
+    public function getUnseenNotificationsCount($returnAsJson = false)  {
+        $header = array();
+        $header[] = 'Accept: */*';
+        $header[] = 'Authorization: Bearer ' . session('logged_user')['token'];
+        $header[] = 'Cache-Control: no-cache';
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => getenv('API_DOMAIN').'/api/unseen-notifications-count/',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_HTTPHEADER => $header
+        ));
+
+        $resp = json_decode(curl_exec($curl));
+        curl_close($curl);
+
+        if (!empty($resp))   {
+            if ($returnAsJson) {
+                return response()->json($resp);
+            } else {
+                return $resp;
+            }
+        } else {
+            return false;
+        }
+    }
 }

@@ -48,8 +48,9 @@ header {
                 figure.header-avatar {
                     width: 50px;
                     margin-left: 10px;
-                    overflow: hidden;
-                    @include rounded(50%);
+                    img {
+                        @include rounded(50%);
+                    }
                 }
             }
             .up-arrow {
