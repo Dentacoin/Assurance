@@ -819,6 +819,13 @@ class UserController extends Controller {
             case 'wallets-one-week-behind':
                 return DB::table('public_keys')->where('created_at', '>', date('Y-m-d', strtotime('-7 days')))->count();
                 break;
+            case 'wallets-one-month-behind':
+                return DB::table('public_keys')->where('created_at', '>', date('Y-m-d', strtotime('-1 month')))->count();
+                break;
+            case 'wallets-for-the-current-month':
+                $first_day_of_this_month = new \DateTime('first day of this month');
+                return DB::table('public_keys')->where('created_at', '>', strtotime($first_day_of_this_month->format('Y-m-d')))->count();
+                break;
             case 'wallets':
                 return DB::table('public_keys')->count();
                 break;
