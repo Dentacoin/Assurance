@@ -824,7 +824,7 @@ class UserController extends Controller {
                 break;
             case 'wallets-for-the-current-month':
                 $first_day_of_this_month = new \DateTime('first day of this month');
-                return DB::table('public_keys')->where('created_at', '>', strtotime($first_day_of_this_month->format('Y-m-d')))->count();
+                return DB::table('public_keys')->where('created_at', '>', $first_day_of_this_month->format('Y-m-d'))->count();
                 break;
             case 'wallets':
                 return DB::table('public_keys')->count();
