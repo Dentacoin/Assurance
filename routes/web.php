@@ -32,6 +32,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
 
     Route::post('/save-mobile-id', 'WalletInstructionsController@saveMobileDeviceId')->name('save-mobile-id');
 
+    Route::post('/send-push-notification', 'WalletInstructionsController@sendPushNotificationIfLegit')->name('send-push-notification');
+
     Route::post('/get-calculator-html', 'HomeController@getCalculatorHtml')->name('get-calculator-html');
 
     Route::post('/get-calculator-result', 'HomeController@getCalculatorResult')->name('get-calculator-result');

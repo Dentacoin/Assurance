@@ -59,4 +59,27 @@ class WalletInstructionsController extends Controller
         //}
         //return response()->json(['error' => true]);
     }
+
+    protected function sendPushNotificationIfLegit(Request $request) {
+        $this->validate($request, [
+            'address' => 'required',
+            'amount' => 'required',
+            'type' => 'required'
+        ], [
+            'address.required' => 'Missing parameters.',
+            'amount.required' => 'Missing parameters.',
+            'type.required' => 'Missing parameters.'
+        ]);
+
+        if (strlen(trim($request->input('address'))) == 42) {
+            $key = PublicKey::where(array('address' => trim($request->input('address'))))->get()->first();
+            if ($key && !empty($key->mobile_device_id)) {
+                $this->sendPushNotification(array($key->mobile_device_id), 'Dentacoin Wallet', 'Received: ' . trim($request->input('amount')) . trim($request->input('type')));
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
 }

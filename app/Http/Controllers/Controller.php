@@ -293,5 +293,25 @@ class Controller extends BaseController
             return $userData->name;
         }
     }
+
+    public function sendPushNotification($registrationIds, $title = null, $body = null) {
+        $fields = array('registration_ids' => $registrationIds, 'notification' => array('title' => $title, 'body' => $body));
+
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch,CURLOPT_POST, true);
+        curl_setopt($ch,CURLOPT_HTTPHEADER, array(
+            'Authorization: key='.getenv('WALLET_PUSH_NOTIFICATION_KEY'),
+            'Content-Type: application/json'
+        ));
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($fields));
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        Log::useDailyFiles(storage_path().'/logs/Wallet-sendPushNotification-logs.log');
+        Log::info('sendPushNotification method.', [$registrationIds => json_encode($registrationIds), 'title' => $title, 'body' => $body]);
+    }
 }
 
