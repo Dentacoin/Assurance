@@ -311,7 +311,7 @@ class Controller extends BaseController
         curl_close($ch);
 
         Log::useDailyFiles(storage_path().'/logs/Wallet-sendPushNotification-logs.log');
-        Log::info('sendPushNotification method.', [$registrationIds => json_encode($registrationIds), 'title' => $title, 'body' => $body]);
+        Log::info('sendPushNotification method.', ['registrationIds' => json_encode($registrationIds), 'title' => $title, 'body' => $body]);
     }
 }
 

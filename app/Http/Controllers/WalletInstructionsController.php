@@ -62,24 +62,43 @@ class WalletInstructionsController extends Controller
 
     protected function sendPushNotificationIfLegit(Request $request) {
         $this->validate($request, [
-            'address' => 'required',
-            'title' => 'required',
-            'body' => 'required'
+            'from' => 'required',
+            'to' => 'required',
+            'amount' => 'required',
+            'type' => 'required',
+            'hash' => 'required'
         ], [
-            'address.required' => 'Missing parameters.',
-            'title.required' => 'Missing parameters.',
-            'body.required' => 'Missing parameters.'
+            'from.required' => 'Missing parameters.',
+            'to.required' => 'Missing parameters.',
+            'amount.required' => 'Missing parameters.',
+            'type.required' => 'Missing parameters.',
+            'hash.required' => 'Missing parameters.'
         ]);
 
-        if (strlen(trim($request->input('address'))) == 42) {
-            $key = PublicKey::where(array('address' => trim($request->input('address'))))->get()->first();
-            if ($key && !empty($key->mobile_device_id)) {
-                $this->sendPushNotification(array($key->mobile_device_id), trim($request->input('title')), trim($request->input('body')));
+        $hashParams = array(
+            'from' => trim($request->input('from')),
+            'to' => trim($request->input('to')),
+            'amount' => trim($request->input('amount')),
+            'type' => trim($request->input('type'))
+        );
+
+        Log::useDailyFiles(storage_path().'/logs/Wallet-test-logs.log');
+        Log::info('sendPushNotification method.', ['hashParams' => json_encode($hashParams)]);
+
+        if (trim($request->input('hash')) == hash('sha256', getenv('WALLET_REQUESTS_ENCRYPTION_KEY').json_encode($hashParams))) {
+            if (strlen(trim($request->input('from'))) == 42 && strlen(trim($request->input('to'))) == 42) {
+                $key = PublicKey::where(array('address' => trim($request->input('to'))))->get()->first();
+                if ($key && !empty($key->mobile_device_id)) {
+                    $formattedAddress = mb_substr(trim($request->input('from')), 0, 5) . '...' . mb_substr(trim($request->input('from')), strlen(trim($request->input('from'))) -5, 5);
+                    $this->sendPushNotification(array($key->mobile_device_id), 'Received: ' . trim($request->input('amount')). ' ' . trim($request->input('type')), 'From: ' . $formattedAddress);
+                } else {
+                    return response()->json(['success' => false, 'message' => 'False mobile ID.']);
+                }
             } else {
-                return response()->json(['success' => false]);
+                return response()->json(['success' => false, 'message' => 'False address.']);
             }
         } else {
-            return response()->json(['error' => true]);
+            return response()->json(['success' => false, 'message' => 'False hash.']);
         }
     }
 }
