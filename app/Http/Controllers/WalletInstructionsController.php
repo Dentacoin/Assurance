@@ -63,18 +63,18 @@ class WalletInstructionsController extends Controller
     protected function sendPushNotificationIfLegit(Request $request) {
         $this->validate($request, [
             'address' => 'required',
-            'amount' => 'required',
-            'type' => 'required'
+            'title' => 'required',
+            'body' => 'required'
         ], [
             'address.required' => 'Missing parameters.',
-            'amount.required' => 'Missing parameters.',
-            'type.required' => 'Missing parameters.'
+            'title.required' => 'Missing parameters.',
+            'body.required' => 'Missing parameters.'
         ]);
 
         if (strlen(trim($request->input('address'))) == 42) {
             $key = PublicKey::where(array('address' => trim($request->input('address'))))->get()->first();
             if ($key && !empty($key->mobile_device_id)) {
-                $this->sendPushNotification(array($key->mobile_device_id), 'Dentacoin Wallet', 'Received: ' . trim($request->input('amount')) . trim($request->input('type')));
+                $this->sendPushNotification(array($key->mobile_device_id), trim($request->input('title')), trim($request->input('body')));
             } else {
                 return response()->json(['success' => false]);
             }
