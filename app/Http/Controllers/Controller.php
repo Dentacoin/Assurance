@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 use App\MenuElement;
 use App\Menu;
 use Dompdf\Dompdf;
-
+use Log;
 
 class Controller extends BaseController
 {

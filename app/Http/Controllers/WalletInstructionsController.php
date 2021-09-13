@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\PublicKey;
 use Illuminate\Http\Request;
+use Log;
 
 class WalletInstructionsController extends Controller
 {
