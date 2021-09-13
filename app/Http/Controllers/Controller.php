@@ -297,7 +297,7 @@ class Controller extends BaseController
 
     public function sendPushNotification($registrationIds, $title = null, $body = null) {
         //$fields = array('registration_ids' => $registrationIds, 'notification' => array('title' => $title, 'body' => $body));
-        $fields = array('to' => $registrationIds, 'data' => array('title' => $title, 'body' => $body), 'priority' => 'high');
+        $fields = array('to' => $registrationIds, 'data' => array('title' => $title, 'body' => $body, 'id' => 1), 'priority' => 'high');
 
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
