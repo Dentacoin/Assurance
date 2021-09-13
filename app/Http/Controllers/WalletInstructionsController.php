@@ -84,7 +84,7 @@ class WalletInstructionsController extends Controller
         );
 
         Log::useDailyFiles(storage_path().'/logs/Wallet-test-logs.log');
-        Log::info('sendPushNotification method.', ['hashParams' => json_encode($hashParams)]);
+        Log::info('sendPushNotification method.', ['hashParams' => json_encode($hashParams), 'hash' => trim($request->input('hash')), 'hash1' => hash('sha256', getenv('WALLET_REQUESTS_ENCRYPTION_KEY').json_encode($hashParams))]);
 
         if (trim($request->input('hash')) == hash('sha256', getenv('WALLET_REQUESTS_ENCRYPTION_KEY').json_encode($hashParams))) {
             if (strlen(trim($request->input('from'))) == 42 && strlen(trim($request->input('to'))) == 42) {
