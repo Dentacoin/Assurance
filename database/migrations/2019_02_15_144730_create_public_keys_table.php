@@ -17,6 +17,7 @@ class CreatePublicKeysTable extends Migration
             $table->increments('id');
             $table->string('address', 42)->unique();
             $table->string('public_key')->unique();
+            $table->text('mobile_device_id')->nullable();
             $table->timestamps();
         });
     }

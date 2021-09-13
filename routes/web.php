@@ -30,6 +30,8 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     //======================================= AJAX ========================================
     Route::post('/save-public-key', 'WalletInstructionsController@savePublicKey')->name('save-public-key');
 
+    Route::post('/save-mobile-id', 'WalletInstructionsController@saveMobileDeviceId')->name('save-mobile-id');
+
     Route::post('/get-calculator-html', 'HomeController@getCalculatorHtml')->name('get-calculator-html');
 
     Route::post('/get-calculator-result', 'HomeController@getCalculatorResult')->name('get-calculator-result');
