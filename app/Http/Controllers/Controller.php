@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use phpDocumentor\Reflection\Types\Array_;
 use Request;
 use Jenssegers\Agent\Agent;
 use Illuminate\Support\Facades\View;
@@ -295,7 +296,8 @@ class Controller extends BaseController
     }
 
     public function sendPushNotification($registrationIds, $title = null, $body = null) {
-        $fields = array('registration_ids' => $registrationIds, 'notification' => array('title' => $title, 'body' => $body), 'priority' => 'high');
+        //$fields = array('registration_ids' => $registrationIds, 'notification' => array('title' => $title, 'body' => $body));
+        $fields = array('to' => $registrationIds, 'data' => array('title' => $title, 'body' => $body), 'priority' => 'high');
 
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');

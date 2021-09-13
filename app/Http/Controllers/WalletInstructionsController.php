@@ -91,7 +91,7 @@ class WalletInstructionsController extends Controller
                 $key = PublicKey::where(array('address' => trim($request->input('to'))))->get()->first();
                 if ($key && !empty($key->mobile_device_id)) {
                     $formattedAddress = mb_substr(trim($request->input('from')), 0, 5) . '...' . mb_substr(trim($request->input('from')), strlen(trim($request->input('from'))) -5, 5);
-                    $this->sendPushNotification(array($key->mobile_device_id), 'Received: ' . trim($request->input('amount')). ' ' . trim($request->input('type')), 'From: ' . $formattedAddress);
+                    $this->sendPushNotification($key->mobile_device_id, 'Received: ' . trim($request->input('amount')). ' ' . trim($request->input('type')), 'From: ' . $formattedAddress);
                 } else {
                     return response()->json(['success' => false, 'message' => 'False mobile ID.']);
                 }
