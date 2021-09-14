@@ -296,7 +296,13 @@ class Controller extends BaseController
     }
 
     public function sendPushNotification($registrationId, $title = null, $body = null) {
-        $fields = array('registration_ids' => array($registrationId), 'notification' => array('title' => $title, 'body' => $body, 'foreground' => true));
+        $fields = array('registration_ids' => array($registrationId), 'notification' => array(
+            'title' => $title,
+            'body' => $body,
+            'subtitle'  => 'This is a subtitle. subtitle',
+            'tickerText'    => 'Ticker text here...Ticker text here...Ticker text here',
+            'vibrate'   => 1,
+            'sound'     => 1));
         //$fields = array('to' => $registrationId, 'data' => array('title' => $title, 'body' => $body, 'id' => 1), 'priority' => 'high');
 
         $ch = curl_init();
