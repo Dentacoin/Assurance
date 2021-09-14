@@ -303,7 +303,7 @@ class Controller extends BaseController
             'sound'     => 1),
             'priority'=> 'high',
             'data' => [
-                'click_action'=> 'FLUTTER_NOTIFICATION_CLICK',
+                "click_action" => "http://shareurcodes.com",
                 'status'=> 'done',
             ]
         );
