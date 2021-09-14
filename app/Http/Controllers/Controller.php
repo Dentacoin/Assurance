@@ -299,10 +299,14 @@ class Controller extends BaseController
         $fields = array('registration_ids' => array($registrationId), 'notification' => array(
             'title' => $title,
             'body' => $body,
-            'subtitle'  => 'This is a subtitle. subtitle',
-            'tickerText'    => 'Ticker text here...Ticker text here...Ticker text here',
             'vibrate'   => 1,
-            'sound'     => 1));
+            'sound'     => 1),
+            'priority'=> 'high',
+            'data' => [
+                'click_action'=> 'FLUTTER_NOTIFICATION_CLICK',
+                'status'=> 'done',
+            ]
+        );
         //$fields = array('to' => $registrationId, 'data' => array('title' => $title, 'body' => $body, 'id' => 1), 'priority' => 'high');
 
         $ch = curl_init();
