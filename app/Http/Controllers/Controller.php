@@ -296,15 +296,17 @@ class Controller extends BaseController
     }
 
     public function sendPushNotification($registrationId, $title = null, $body = null) {
-        $fields = array('registration_ids' => array($registrationId), 'notification' => array(
-            'title' => $title,
-            'body' => $body,
-            'vibrate'   => 1,
-            'sound'     => 1),
+        $fields = array(
+            'registration_ids' => array($registrationId),
+            'notification' => array(
+                'title' => $title,
+                'body' => $body,
+                'vibrate' => 1,
+                'sound' => 1
+            ),
             'priority'=> 'high',
             'data' => [
                 "click_action" => "http://shareurcodes.com",
-                'status'=> 'done',
             ]
         );
         //$fields = array('to' => $registrationId, 'data' => array('title' => $title, 'body' => $body, 'id' => 1), 'priority' => 'high');

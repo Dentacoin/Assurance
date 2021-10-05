@@ -45,7 +45,7 @@ class WalletInstructionsController extends Controller
         ]);
 
         //if($request->input('password') == getenv('CROSS_WEBSITE_PASSWORD')) {
-        if (strlen(trim($request->input('address'))) == 42) {
+        if (strlen(trim($request->input('address'))) == 42 && !empty(trim($request->input('mobile_device_id'))) && trim($request->input('mobile_device_id')) != 'null') {
             $key = PublicKey::where(array('address' => trim($request->input('address'))))->get()->first();
             if ($key) {
                 $key->mobile_device_id = trim($request->input('mobile_device_id'));
