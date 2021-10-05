@@ -48,6 +48,13 @@ class WalletInstructionsController extends Controller
         if (strlen(trim($request->input('address'))) == 42 && !empty(trim($request->input('mobile_device_id'))) && trim($request->input('mobile_device_id')) != 'null') {
             $key = PublicKey::where(array('address' => trim($request->input('address'))))->get()->first();
             if ($key) {
+                // if there is already existing public key with THIS mobile_device_id then delete it
+                $keyToEmptyMobileDeviceId = PublicKey::where(array('mobile_device_id' => trim($request->input('mobile_device_id'))))->get()->first();
+                if (!empty($keyToEmptyMobileDeviceId)) {
+                    $keyToEmptyMobileDeviceId->mobile_device_id = NULL;
+                    $keyToEmptyMobileDeviceId->save();
+                }
+
                 $key->mobile_device_id = trim($request->input('mobile_device_id'));
                 $key->save();
                 return response()->json(['success' => true]);
