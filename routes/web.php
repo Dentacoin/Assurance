@@ -28,11 +28,15 @@ Route::group(['prefix' => '/', 'middleware' => 'frontEndMiddleware'], function (
     /*Route::get('/my-contracts', 'UserController@getMyContractsView')->middleware('HandleUserSession')->name('my-contracts');*/
 
     //======================================= AJAX ========================================
-    Route::post('/save-public-key', 'WalletInstructionsController@savePublicKey')->name('save-public-key');
+    Route::post('/save-public-key', 'WalletController@savePublicKey')->name('save-public-key');
 
-    Route::post('/save-mobile-id', 'WalletInstructionsController@saveMobileDeviceId')->name('save-mobile-id');
+    Route::post('/save-message-relay', 'WalletController@saveMessageRelay')->name('save-message-relay');
 
-    Route::post('/send-push-notification', 'WalletInstructionsController@sendPushNotificationIfLegit')->name('send-push-notification');
+    Route::get('/get-message-relays/{wallet}', 'WalletController@getMessageRelaysForWallet')->name('get-message-relays');
+
+    Route::post('/save-mobile-id', 'WalletController@saveMobileDeviceId')->name('save-mobile-id');
+
+    Route::post('/send-push-notification', 'WalletController@sendPushNotificationIfLegit')->name('send-push-notification');
 
     Route::post('/get-calculator-html', 'HomeController@getCalculatorHtml')->name('get-calculator-html');
 

@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\PublicKey;
+use App\WalletRelayedMessage;
 use Illuminate\Http\Request;
 use Log;
 
-class WalletInstructionsController extends Controller
+class WalletController extends Controller
 {
     protected function savePublicKey(Request $request) {
         $this->validate($request, [
@@ -33,6 +34,43 @@ class WalletInstructionsController extends Controller
         }
         //}
         //return response()->json(['error' => true]);
+    }
+
+    protected function saveMessageRelay(Request $request) {
+        $this->validate($request, [
+            'wallet' => 'required',
+            'tx_hash' => 'required',
+        ], [
+            'wallet.required' => 'Missing parameters.',
+            'tx_hash.required' => 'Missing parameters.'
+        ]);
+
+        if (strlen(trim($request->input('wallet'))) == 42) {
+            $check_key = WalletRelayedMessage::where(array('wallet' => trim($request->input('wallet'))))->get()->first();
+            if (!$check_key) {
+                $message = new WalletRelayedMessage();
+                $message->wallet = trim($request->input('wallet'));
+                $message->tx_hash = trim($request->input('tx_hash'));
+                $message->save();
+                return response()->json(['success' => true]);
+            }
+            return response()->json(['success' => false]);
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
+
+    protected function getMessageRelaysForWallet($wallet) {
+        if (strlen(trim($wallet)) == 42) {
+            $messages = WalletRelayedMessage::where(array('wallet' => trim($wallet)))->get()->all();
+            if ($messages) {
+                return response()->json(['success' => true, 'data' => $messages]);
+            } else {
+                return response()->json(['error' => true]);
+            }
+        } else {
+            return response()->json(['error' => true]);
+        }
     }
 
     protected function saveMobileDeviceId(Request $request) {
