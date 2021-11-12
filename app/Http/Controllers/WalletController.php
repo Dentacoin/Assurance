@@ -46,15 +46,12 @@ class WalletController extends Controller
         ]);
 
         if (strlen(trim($request->input('wallet'))) == 42) {
-            $check_key = WalletRelayedMessage::where(array('wallet' => trim($request->input('wallet'))))->get()->first();
-            if (!$check_key) {
-                $message = new WalletRelayedMessage();
-                $message->wallet = trim($request->input('wallet'));
-                $message->tx_hash = trim($request->input('tx_hash'));
-                $message->save();
-                return response()->json(['success' => true]);
-            }
-            return response()->json(['success' => false]);
+            $message = new WalletRelayedMessage();
+            $message->wallet = trim($request->input('wallet'));
+            $message->tx_hash = trim($request->input('tx_hash'));
+            $message->save();
+            
+            return response()->json(['success' => true]);
         } else {
             return response()->json(['error' => true]);
         }
