@@ -50,7 +50,7 @@ class WalletController extends Controller
             $message->wallet = trim($request->input('wallet'));
             $message->tx_hash = trim($request->input('tx_hash'));
             $message->save();
-            
+
             return response()->json(['success' => true]);
         } else {
             return response()->json(['error' => true]);
@@ -133,7 +133,13 @@ class WalletController extends Controller
                 $key = PublicKey::where(array('address' => trim($request->input('to'))))->get()->first();
                 if ($key && !empty($key->mobile_device_id)) {
                     $formattedAddress = mb_substr(trim($request->input('from')), 0, 5) . '...' . mb_substr(trim($request->input('from')), strlen(trim($request->input('from'))) -5, 5);
-                    $this->sendPushNotification($key->mobile_device_id, 'Received: ' . trim($request->input('amount')). ' ' . trim($request->input('type')), 'From: ' . $formattedAddress);
+                    $type = trim($request->input('type'));
+                    if ($type == 'ETH2.0') {
+                        $type = 'Optimistic ETH';
+                    } else if ($type == 'DCN2.0') {
+                        $type = 'DCN on Optimism';
+                    }
+                    $this->sendPushNotification($key->mobile_device_id, 'Received ' . trim($request->input('amount')). ' ' . $type, 'From: ' . $formattedAddress);
                 } else {
                     return response()->json(['success' => false, 'message' => 'False mobile ID.']);
                 }
